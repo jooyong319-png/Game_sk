@@ -121,6 +121,11 @@ main {
   color: #ba68c8;
 }
 
+.category-new_server {
+  background: rgba(255, 87, 34, 0.15);
+  color: #ff8a65;
+}
+
 .dday {
   font-size: 0.8rem;
   font-weight: 700;
