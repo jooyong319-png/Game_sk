@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 02:40 KST (개발자 사이클 — 이번 주/다음 주 빠른 필터 칩 완료)
+마지막 갱신: 2026-05-28 04:00 KST (기획자 사이클 — TODO 큐 1개 → 5개로 보충, 사용자 요청 푸터 교체 처리완료 아카이브 이동)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -42,9 +42,41 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ### 1순위 — 캘린더 카테고리 색 범례
 - 캘린더 뷰 상단(`.calendar-nav` 아래 또는 그리드 위)에 작은 범례 1줄 — `● 국내 모바일  ● 국내 PC/콘솔  ● 글로벌 대작  ● 신규 서버`
-- 각 점 색은 기존 카테고리 색 그대로 재사용
-- 리스트 뷰에서는 범례 숨김 (`hidden`)
+- 각 점 색은 기존 카테고리 색(`.day-dot`에 쓰던 4색) 그대로 재사용. 신규 색 X.
+- 리스트 뷰 전환 시 범례는 `hidden` 처리 (`applyView()`에서 함께 토글)
 - 모바일에서 한 줄에 안 들어가면 자연스럽게 줄바꿈 허용 (`flex-wrap: wrap`)
+- 변경 예상: index.html +5/styles.css +10/script.js +3 = 50줄 미만
+
+### 2순위 — 위시리스트 2단계: `위시리스트만 보기` 토글 칩
+- 기존 `.quick-chips` 섹션에 세 번째 칩 `위시리스트만 보기` (`#chip-wishlist`, `class="chip-btn"`) 추가 (이번 주/다음 주 칩 옆)
+- 상태 변수 `wishlistOnly` (boolean) 신설 — 칩 활성 시 `renderGames()` 필터 체인에 `if (wishlistOnly && !wishlist.has(g.id)) return false;` 분기 추가
+- `updateCategoryCounts()`의 base 집합에도 동일 분기 반영 (활성 시 카테고리 (N) 카운트도 위시리스트 기준)
+- 이번 주/다음 주 칩과 **독립 토글** (셋 다 동시 활성 가능) — `wishlistOnly`는 별도 변수라 충돌 없음
+- 활성 시 기존 `.chip-btn.active` 스타일 그대로 재사용 (신규 색 X)
+- 위시리스트 비어있을 때 칩 켜면 기존 `.empty-state` 메시지 그대로 노출 — 별도 처리 불필요
+- 새로고침 시 상태는 휘발 (저장 X — 이번 주/다음 주 칩과 동일 정책)
+- 변경 예상: index.html +1/script.js +15/styles.css +0 = 50줄 미달
+
+### 3순위 — 푸터에 데이터 마지막 갱신일 표시
+- `index.html` 푸터에 `<p class="footer-updated">데이터 마지막 갱신: <span id="footer-updated-date">—</span></p>` 한 줄 추가 (기존 운영자 정보 2줄 아래)
+- `script.js` `loadGames()` 응답 파싱 직후, `data.last_updated`(ISO 문자열)를 `YYYY-MM-DD HH:mm` 형식으로 변환하여 `#footer-updated-date` 텍스트에 주입 (`new Date(...).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })` 또는 substring 5자리 자르기 둘 다 OK)
+- `last_updated` 비어있거나 파싱 실패 시 `<p class="footer-updated">`를 `hidden` 처리
+- 스타일: 기존 푸터 톤(`#999` 등) 그대로, 신규 색·폰트 X. CSS 추가 0~3줄 정도.
+- 변경 예상: index.html +1/script.js +6/styles.css +2 = 50줄 미달
+
+### 4순위 — 카드 hover 시 D-Day 라벨 펄스 강조 (CSS-only)
+- 리스트 뷰 카드 hover 시 D-Day 라벨에 부드러운 펄스 애니메이션 — `@keyframes pulse-dday` 1개 정의 + `.card:hover .d-day` (또는 현재 D-Day 표시 셀렉터) `animation: pulse-dday 1s ease-in-out infinite`
+- 펄스는 `opacity: 1 → 0.7 → 1` 또는 `transform: scale(1) → 1.06 → 1` 정도로 가볍게 — 어지러울 만큼 X
+- 신규 색 도입 X (기존 D-Day 강조 톤 그대로)
+- 접근성: `@media (prefers-reduced-motion: reduce) { .card:hover .d-day { animation: none; } }`
+- JS 변경 0, CSS 단독 작업. 변경 예상: styles.css +10/-0 = 50줄 한참 미달
+
+### 5순위 — 캘린더 day-detail-panel ESC 키로 닫기
+- 캘린더 셀 클릭으로 `#day-detail-panel`이 열려있는 상태에서 ESC 키 누르면 → 패널 닫기(`hidden=true`) + 선택된 셀의 `.selected` 클래스 제거 + `selectedDay = null` 초기화
+- 단, **모달이 열려있으면 모달 우선** (기존 모달 ESC 핸들러 그대로 유지) — 모달 닫고 나서 다시 ESC 누르면 패널 닫힘
+- 구현: `document` keydown 핸들러에서 `e.key === 'Escape' && modal.hidden && !panel.hidden` 조건일 때만 패널 닫기
+- 변경: script.js 단일 파일, +10 LOC 내외
+
 
 ## 알려진 버그 (BUGS)
 - [2026-05-27] ✅ (수정됨 12:20, QA 검증 12:40) 캘린더 4단계 배포 후 사이트 전체 렌더 실패 — `script.js`에서 `selectedDay`를 TDZ 상태로 참조하던 문제. `let selectedDay = null;` 선언을 모듈 최상단(line 12, `let categories = {};` 직후)으로 끌어올려 해결. QA 재검증 완료: 콘솔 에러 0, 캘린더/패널/네비/모달 7개 요건 모두 정상 동작.
@@ -55,10 +87,9 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 게임 트레일러 YouTube 임베드
 - 카카오톡 공유 기능
 - 일간/주간 뷰 (월간 안정화 후)
-- 위시리스트 2단계 — `위시리스트만 보기` 필터 칩 (1단계 완료 후)
-- 카드 hover 시 출시일 카운트다운 애니메이션
 
 ## 최근 변경 로그
+- 2026-05-28 04:00 [기획자] TODO 큐 1개 → 5개로 보충: 캘린더 카테고리 색 범례(1) + 위시리스트 2단계 필터 칩(2) + 푸터 데이터 갱신일 표시(3) + 카드 hover D-Day 펄스(4) + 캘린더 패널 ESC 닫기(5). 위시리스트 2단계와 카드 hover 카운트다운은 IDEAS에서 끌어옴(IDEAS에서 제거). USER_REQUESTS의 푸터 교체는 이미 완료·QA ✅이므로 활성 → 처리 완료 아카이브로 이동. SEO 보류 요청은 그대로 보류. 완료 처리: 0개(직전 빠른 필터 칩은 PROJECT_STATUS 완료 섹션에 이미 반영됨, QA ✅ 03:40).
 - 2026-05-28 02:40 [개발자] 이번 주/다음 주 빠른 필터 칩 완료: `index.html`에 `.filters` 바로 아래 `.quick-chips` 섹션 신설, `<button id="chip-this-week"|"chip-next-week" class="chip-btn">` 2개. `script.js`에 `let weekFilter = null` 상태 + `getWeekRange(offset)` 헬퍼(월요일 시작, end는 다음 월요일 00:00 exclusive — Sunday 포함). `renderGames()` 필터 체인과 `updateCategoryCounts()` base 양쪽에 `weekFilter` 분기 추가(기존 카테고리/플랫폼/기간/검색과 AND). 칩 click 핸들러는 토글식 — 같은 칩 재클릭 시 해제, 다른 칩 클릭 시 교체(둘 중 하나만 활성). `applyWeekChips()`로 `.active` 클래스 + `aria-pressed` 일괄 동기화. `styles.css`에 `.quick-chips` flex 줄 + `.chip-btn` 기본 톤(기존 `.view-toggle-btn`과 동일 #2a2e38/#3a3e48) + `.chip-btn.active`(파란 보더 #4a90e2 + 밝은 배경 rgba(74,144,226,0.15) — `.view-toggle-btn.active`와 정확히 같은 톤). 변경: index.html +5/-0, script.js +32/-0, styles.css +7/-0 = 총 +44/-0 (50줄 한계 미달).
 - 2026-05-28 02:20 [개발자] 위시리스트 1단계 완료: `script.js`에 `WISHLIST_KEY='gcalen.wishlist'` 상수와 `wishlist` Set 초기화(localStorage JSON 파싱, try/catch), `saveWishlist()` 헬퍼 신설(페이지 로드 1회). `renderCard()`의 `.card-header` 우측을 `.card-header-right` 그룹으로 감싸 기존 D-Day 라벨 옆에 `<button class="wishlist-btn">★/☆</button>` 추가, 활성 시 `.active` 클래스 + `★` + `aria-pressed="true"`. `gamesList` click 핸들러 맨 앞에 `.wishlist-btn` 가로채기 분기 — `stopPropagation()` 후 Set add/remove + 클래스/텍스트/aria-pressed in-place 토글 + `saveWishlist()`. 재렌더 없이 즉시 UI 반영. `styles.css` 끝에 `.card-header-right`(flex gap 0.5rem), `.wishlist-btn`(transparent, color #666, font 1.15rem), hover/active/`.active` 색은 모두 기존 #f5b400 톤만 사용. 필터링은 미포함(다음 단계). 변경: script.js +20/-1, styles.css +7/-0 = 총 +27/-1 (50줄 한계 미달).
 - 2026-05-28 01:20 [개발자] 빈 상태 안내 메시지 완료: 리스트 뷰는 기존 `<p class="loading">…</p>`를 `<p class="empty-state">조건에 맞는 게임이 없어요. 필터를 조정해 보세요.</p>`로 교체 (텍스트 + 클래스 변경). 캘린더 뷰는 `#calendar-empty` 1줄 신설(`.calendar-view` 하단, 기본 hidden), `renderCalendar()` 끝에서 `dayMap` 키 개수가 0이면 노출. CSS는 `.empty-state` (#999 톤) + `.games-grid .empty-state {grid-column:1/-1}` + 캘린더용 `.empty-state--inline` (셀 카드와 동일 다크 박스). 변경: index.html +1, script.js +3/-1, styles.css +5/-0 = 총 +9/-1.
