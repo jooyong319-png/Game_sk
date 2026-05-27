@@ -277,3 +277,13 @@ footer {
 }
 .modal .source-link:hover { text-decoration: underline; }
 body.modal-open { overflow: hidden; }
+
+/* --- Monthly calendar skeleton (Stage 1) --- */
+.calendar-view { background:#1a1d24; border:1px solid #2a2e38; border-radius:10px; padding:1rem; margin-bottom:1.5rem; }
+#calendar-month-label { text-align:center; font-size:1.15rem; margin-bottom:0.75rem; color:#e6e6e6; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.calendar-grid .weekday { text-align:center; font-size:0.78rem; color:#888; padding:0.3rem 0; }
+.calendar-grid .day { background:#0f1115; border:1px solid #2a2e38; border-radius:6px; padding:0.5rem; min-height:60px; font-size:0.85rem; color:#ccc; }
+.calendar-grid .day.other-month { opacity:0.35; }
+.calendar-grid .day.today { border-color:#4a90e2; background:rgba(74,144,226,0.15); color:#fff; font-weight:700; }
+@media (max-width:480px) { .calendar-grid .day { min-height:44px; font-size:0.75rem; padding:0.3rem; } }

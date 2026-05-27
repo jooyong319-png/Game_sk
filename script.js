@@ -187,3 +187,27 @@ platformFilter.addEventListener('change', renderGames);
 periodFilter.addEventListener('change', renderGames);
 
 loadData();
+
+
+// --- Monthly calendar (Stage 1: skeleton only) ---
+function renderCalendarSkeleton() {
+  const grid = document.getElementById('calendar-grid');
+  const label = document.getElementById('calendar-month-label');
+  if (!grid || !label) return;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const y = today.getFullYear(), m = today.getMonth();
+  label.textContent = `${y}년 ${m + 1}월`;
+  const start = new Date(y, m, 1 - new Date(y, m, 1).getDay());
+  const weekdays = ['일','월','화','수','목','금','토']
+    .map(d => `<div class="weekday">${d}</div>`).join('');
+  let cells = '';
+  for (let i = 0; i < 42; i++) {
+    const d = new Date(start); d.setDate(start.getDate() + i);
+    const cls = ['day'];
+    if (d.getMonth() !== m) cls.push('other-month');
+    if (d.getTime() === today.getTime()) cls.push('today');
+    cells += `<div class="${cls.join(' ')}">${d.getDate()}</div>`;
+  }
+  grid.innerHTML = weekdays + cells;
+}
+renderCalendarSkeleton();
