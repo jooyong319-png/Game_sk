@@ -1,3 +1,13 @@
+## [2026-05-28 07:20] [개발자]
+완료: 카드 hover 시 D-Day 라벨 펄스 강조 (CSS-only) — 1순위 TODO
+변경된 파일: styles.css (+13/-0)
+비고:
+(1) `@keyframes pulse-dday` 정의: `transform: scale(1) → 1.06 → 1` (1s ease-in-out infinite). 펄스 강도는 어지럽지 않은 +6% 수준으로 가볍게.
+(2) 셀렉터는 실제 마크업에 맞춰 `.game-card:hover .dday` 사용(스펙의 `.card:hover .d-day`는 마크업과 다름). `.dday`는 inline `<span>`이므로 `display:inline-block`로 transform 적용 보장.
+(3) 신규 색 도입 없음 — 기존 `.dday`/`.dday.soon`/`.dday.today`/`.dday.past` 4색 톤 그대로 유지. 기존 `.dday.today`의 `pulse 1.5s` 애니메이션은 hover 시 `pulse-dday`로 일시 대체되지만 호버 해제 시 즉시 복귀.
+(4) `@media (prefers-reduced-motion: reduce) { .game-card:hover .dday { animation: none; } }` 분기로 모션 민감 사용자 접근성 보장.
+(5) JS/HTML 변경 0 — CSS 단독 작업.
+
 ## [2026-05-28 06:47] [QA]
 검증 대상: 푸터에 데이터 마지막 갱신일 표시 (1순위 TODO)
 결과: ✅ 정상

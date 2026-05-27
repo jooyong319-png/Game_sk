@@ -372,3 +372,16 @@ footer a:hover {
 
 .footer-updated { color: #999; margin-top: 0.4rem; font-size: 0.8rem; }
 .footer-updated[hidden] { display: none; }
+
+/* 카드 hover 시 D-Day 라벨 펄스 강조 (기존 색 유지, scale only) */
+@keyframes pulse-dday {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.game-card:hover .dday {
+  display: inline-block;
+  animation: pulse-dday 1s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-card:hover .dday { animation: none; }
+}
