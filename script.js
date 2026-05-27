@@ -94,7 +94,7 @@ function renderCard(game) {
   const approxMark = game.release_date_approx ? ' (예정)' : '';
 
   return `
-    <article class="game-card${imminent}">
+    <article class="game-card${imminent}" data-id="${escapeHtml(game.id)}">
       <div class="card-header">
         <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
         ${dDayLabel}
@@ -135,6 +135,52 @@ function escapeHtml(text) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[c]));
 }
+
+
+// --- Detail modal ---
+const modal = document.getElementById('game-modal');
+const modalBody = document.getElementById('modal-body');
+
+function openModal(gameId) {
+  const game = allGames.find(g => g.id === gameId);
+  if (!game) return;
+  const releaseDate = new Date(game.release_date);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dayDiff = Math.ceil((releaseDate - today) / 86400000);
+  const dDay = dayDiff < 0 ? '출시됨' : (dayDiff === 0 ? 'D-DAY' : 'D-' + dayDiff);
+  const categoryLabel = categories[game.category] || game.category;
+  const approx = game.release_date_approx ? ' (예정)' : '';
+  modalBody.innerHTML = `
+    <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
+    <h2 id="modal-title">${escapeHtml(game.name_ko || game.name_en)}</h2>
+    ${game.name_en && game.name_ko && game.name_en !== game.name_ko ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
+    <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${approx} · ${dDay}</div>
+    ${game.platforms?.length ? `<div class="modal-row"><strong>플랫폼</strong>${game.platforms.map(escapeHtml).join(', ')}</div>` : ''}
+    ${game.genres?.length ? `<div class="modal-row"><strong>장르</strong>${game.genres.map(escapeHtml).join(', ')}</div>` : ''}
+    ${game.developer ? `<div class="modal-row"><strong>개발</strong>${escapeHtml(game.developer)}</div>` : ''}
+    ${game.publisher ? `<div class="modal-row"><strong>퍼블리셔</strong>${escapeHtml(game.publisher)}</div>` : ''}
+    ${game.description ? `<p class="desc" style="margin-top:0.6rem">${escapeHtml(game.description)}</p>` : ''}
+    ${game.source_url ? `<a class="source-link" href="${escapeHtml(game.source_url)}" target="_blank" rel="noopener noreferrer">출처 보기 →</a>` : ''}
+  `;
+  modal.hidden = false;
+  document.body.classList.add('modal-open');
+}
+
+function closeModal() {
+  modal.hidden = true;
+  document.body.classList.remove('modal-open');
+}
+
+gamesList.addEventListener('click', e => {
+  const card = e.target.closest('.game-card');
+  if (card && card.dataset.id) openModal(card.dataset.id);
+});
+modal.addEventListener('click', e => {
+  if (e.target === modal || e.target.classList.contains('modal-close')) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !modal.hidden) closeModal();
+});
 
 categoryFilter.addEventListener('change', renderGames);
 platformFilter.addEventListener('change', renderGames);
