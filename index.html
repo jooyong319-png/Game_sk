@@ -50,7 +50,12 @@
     </section>
 
     <section id="calendar-view" class="calendar-view">
-      <h2 id="calendar-month-label"></h2>
+      <div class="calendar-header">
+        <button id="calendar-prev" class="calendar-nav-btn" type="button" aria-label="이전 달">‹</button>
+        <h2 id="calendar-month-label"></h2>
+        <button id="calendar-next" class="calendar-nav-btn" type="button" aria-label="다음 달">›</button>
+        <button id="calendar-today" class="calendar-today-btn" type="button">오늘로</button>
+      </div>
       <div id="calendar-grid" class="calendar-grid"></div>
     </section>
 

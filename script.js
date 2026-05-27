@@ -190,13 +190,18 @@ periodFilter.addEventListener('change', renderGames);
 loadData();
 
 
-// --- Monthly calendar (Stage 2: skeleton + per-day dots) ---
+// --- Monthly calendar (Stage 3: prev/next/today nav) ---
+let calendarYear, calendarMonth;
 function renderCalendar() {
   const grid = document.getElementById('calendar-grid');
   const label = document.getElementById('calendar-month-label');
   if (!grid || !label) return;
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  const y = today.getFullYear(), m = today.getMonth();
+  if (calendarYear === undefined) {
+    calendarYear = today.getFullYear();
+    calendarMonth = today.getMonth();
+  }
+  const y = calendarYear, m = calendarMonth;
   label.textContent = `${y}년 ${m + 1}월`;
   const start = new Date(y, m, 1 - new Date(y, m, 1).getDay());
   const dayMap = {};
@@ -234,3 +239,26 @@ function renderCalendar() {
   grid.innerHTML = weekdays + cells;
 }
 renderCalendar();
+
+const calPrevBtn = document.getElementById('calendar-prev');
+const calNextBtn = document.getElementById('calendar-next');
+const calTodayBtn = document.getElementById('calendar-today');
+if (calPrevBtn) calPrevBtn.addEventListener('click', () => {
+  if (calendarYear === undefined) { const t = new Date(); calendarYear = t.getFullYear(); calendarMonth = t.getMonth(); }
+  calendarMonth--;
+  if (calendarMonth < 0) { calendarMonth = 11; calendarYear--; }
+  renderCalendar();
+});
+if (calNextBtn) calNextBtn.addEventListener('click', () => {
+  if (calendarYear === undefined) { const t = new Date(); calendarYear = t.getFullYear(); calendarMonth = t.getMonth(); }
+  calendarMonth++;
+  if (calendarMonth > 11) { calendarMonth = 0; calendarYear++; }
+  renderCalendar();
+});
+if (calTodayBtn) calTodayBtn.addEventListener('click', () => {
+  const t = new Date();
+  calendarYear = t.getFullYear();
+  calendarMonth = t.getMonth();
+  renderCalendar();
+});
+
