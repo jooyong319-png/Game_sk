@@ -12,6 +12,16 @@ let allGames = [];
 let categories = {};
 let selectedDay = null;
 let searchQuery = '';
+let weekFilter = null; // null | 'this' | 'next'
+
+function getWeekRange(offset) {
+  const t = new Date(); t.setHours(0,0,0,0);
+  const dow = t.getDay();
+  const toMon = dow === 0 ? -6 : -(dow - 1);
+  const start = new Date(t); start.setDate(t.getDate() + toMon + offset * 7);
+  const end = new Date(start); end.setDate(start.getDate() + 7);
+  return { start, end };
+}
 
 const WISHLIST_KEY = 'gcalen.wishlist';
 let wishlist = new Set();
@@ -74,6 +84,12 @@ function renderGames() {
       if (release < today || release > future) return false;
     }
 
+    if (weekFilter) {
+      const r = getWeekRange(weekFilter === 'next' ? 1 : 0);
+      const rel = new Date(g.release_date);
+      if (rel < r.start || rel >= r.end) return false;
+    }
+
     return true;
   });
 
@@ -105,6 +121,11 @@ function updateCategoryCounts() {
       const release = new Date(g.release_date);
       const future = new Date(today); future.setDate(today.getDate() + days);
       if (release < today || release > future) return false;
+    }
+    if (weekFilter) {
+      const r = getWeekRange(weekFilter === 'next' ? 1 : 0);
+      const rel = new Date(g.release_date);
+      if (rel < r.start || rel >= r.end) return false;
     }
     return true;
   });
@@ -396,3 +417,14 @@ try { savedView = localStorage.getItem(VIEW_KEY) || 'calendar'; } catch (_) {}
 applyView(savedView);
 if (viewCalendarBtn) viewCalendarBtn.addEventListener('click', () => applyView('calendar'));
 if (viewListBtn) viewListBtn.addEventListener('click', () => applyView('list'));
+
+
+// Quick week chips (this week / next week, Mon-Sun, toggle, AND with other filters)
+const chipThis = document.getElementById('chip-this-week');
+const chipNext = document.getElementById('chip-next-week');
+function applyWeekChips() {
+  if (chipThis) { chipThis.classList.toggle('active', weekFilter === 'this'); chipThis.setAttribute('aria-pressed', weekFilter === 'this' ? 'true' : 'false'); }
+  if (chipNext) { chipNext.classList.toggle('active', weekFilter === 'next'); chipNext.setAttribute('aria-pressed', weekFilter === 'next' ? 'true' : 'false'); }
+}
+if (chipThis) chipThis.addEventListener('click', () => { weekFilter = (weekFilter === 'this') ? null : 'this'; applyWeekChips(); renderGames(); });
+if (chipNext) chipNext.addEventListener('click', () => { weekFilter = (weekFilter === 'next') ? null : 'next'; applyWeekChips(); renderGames(); });

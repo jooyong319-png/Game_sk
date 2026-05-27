@@ -1,3 +1,27 @@
+## [2026-05-28 02:40] [개발자]
+완료: 이번 주 / 다음 주 빠른 필터 칩 (1순위 TODO)
+- `index.html`: `.filters` 섹션 바로 아래에 `<section class="quick-chips">` 신설, 그 안에 `<button id="chip-this-week" class="chip-btn" aria-pressed="false">이번 주 출시</button>` + `<button id="chip-next-week" class="chip-btn" aria-pressed="false">다음 주 출시</button>` 2개. 칩 영역은 view-toggle/search-bar/filters와 시각적 일관성 유지.
+- `script.js`:
+  - 상단(`let searchQuery = '';` 직후)에 `let weekFilter = null` 상태 + `getWeekRange(offset)` 헬퍼 신설. 헬퍼는 오늘 기준 그 주의 월요일을 start로, 다음 월요일 00:00을 end(exclusive)로 반환 → Sunday까지 포함, dow=0(일요일)일 때도 정상 처리.
+  - `renderGames()` 필터 체인의 period filter 직후에 `weekFilter` 분기 추가 — `rel < r.start || rel >= r.end`로 컷, 기존 카테고리/플랫폼/기간/검색 필터와 자연스럽게 AND.
+  - `updateCategoryCounts()`의 base 집합 산출 로직에도 동일 분기 추가 → 칩 활성 시 카테고리 옵션 (N) 카운트도 그 주 범위 기준으로 갱신.
+  - 파일 끝에 `chipThis`/`chipNext` 참조 + `applyWeekChips()` 헬퍼(클래스+aria-pressed 일괄 동기화) + 각 칩의 click 핸들러. 토글식 — 같은 칩 재클릭 시 `weekFilter=null`로 해제, 다른 칩 클릭 시 교체(둘 다 활성은 의미 없으니 자연스럽게 한 쪽만 active).
+  - 기간 필터 select와는 별개 상태로 운영 — 둘 다 켜져 있으면 둘 다 적용되어 AND 결합(기간 필터로 90일을 켜둔 채 "다음 주" 칩 누르면 다음 주 게임만 남음).
+- `styles.css` 끝에 `.quick-chips` (flex/gap/wrap) + `.chip-btn` (기존 `.view-toggle-btn`과 동일한 #2a2e38/#3a3e48 다크 톤) + `.chip-btn.active` (파란 보더 `#4a90e2` + 밝은 배경 `rgba(74,144,226,0.15)` — `.view-toggle-btn.active`와 정확히 같은 톤) 4블록. 신규 색 없음.
+변경된 파일: index.html (+5/-0), script.js (+32/-0), styles.css (+7/-0) — 총 +44/-0 (50줄 한계 미달)
+비고: QA에서 확인 부탁드립니다 (오늘 = 2026-05-28 목요일 기준 이번 주 = 5/25(월)~5/31(일), 다음 주 = 6/1(월)~6/7(일)) —
+  (1) `.filters` 바로 아래에 회색 칩 2개 노출, 기본 상태는 `.active` 없음, aria-pressed=false
+  (2) `이번 주 출시` 클릭 → 칩이 파란 보더 + 밝은 배경(`.view-toggle-btn.active`와 동일 톤)으로 변경, aria-pressed=true. 리스트 뷰에 release_date가 2026-05-25~2026-05-31 범위인 게임만 노출 (5/27 출시된 007 퍼스트 라이트 포함되어야 함)
+  (3) 같은 칩 재클릭 → 칩 비활성화, 전체 게임 복원
+  (4) `다음 주 출시` 클릭 → 6/1~6/7 범위 게임만 노출. 데이터셋에 없으면 빈 상태 안내(`empty-state`) 노출
+  (5) `이번 주` 활성 상태에서 `다음 주` 클릭 → 둘 다 활성이 아니라 다음 주만 활성(교체) — 상태 변수가 단일 변수(null|'this'|'next')라 토글 충돌 X
+  (6) 카테고리 필터/플랫폼 필터/검색과 AND 결합 — 예: `이번 주` + 카테고리=글로벌 대작 적용 시 그 주에 출시된 글로벌 대작 게임만 노출
+  (7) 카테고리 select 옵션의 `(N)` 카운트도 칩 활성 시 그 주 범위 기준으로 갱신 (`updateCategoryCounts()`도 weekFilter 반영)
+  (8) 기간 필터(앞으로 30일/90일/...)와 칩은 별개 — 둘 다 켜져 있으면 둘 다 적용되어 AND 결합 (기간 1년 + 이번 주 칩 = 이번 주 출시 게임만)
+  (9) 캘린더 뷰는 영향 없음 (renderCalendar는 자체 dayMap을 사용하므로 weekFilter 미반영 — 의도된 동작, 필요 시 다음 단계에서 별도 다룸)
+  (10) 새로고침 시 칩 상태는 휘발 (저장 안 함 — TODO 명세에 영속화 요구 없음)
+다음 1순위 TODO: 캘린더 카테고리 색 범례로 갱신됨.
+
 ## [2026-05-28 02:40] [QA]
 검증 대상: 위시리스트 1단계 (별 토글 UI + localStorage 저장)
 결과: ✅ 정상
