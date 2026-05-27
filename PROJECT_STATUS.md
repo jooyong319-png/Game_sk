@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 04:20 KST (개발자 사이클 — 캘린더 카테고리 색 범례 완료)
+마지막 갱신: 2026-05-28 05:20 KST (개발자 사이클 — 위시리스트 2단계 토글 칩 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -38,34 +38,25 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] 위시리스트 1단계: 카드 우상단 ⭐ 토글 버튼(빈★/채워진★), 클릭 시 `localStorage 'gcalen.wishlist'` 배열에 game.id add/remove, 페이지 로드 시 Set으로 복원해 카드 렌더 시 활성 상태 반영. 상세 모달 열림 방지 위해 별 클릭 시 `event.stopPropagation()`. 필터링은 다음 단계(IDEAS의 위시리스트 2단계). 색은 기존 강조 톤(`#f5b400`)만 사용.
 - [x] 이번 주/다음 주 빠른 필터 칩: `.filters` 아래 `.quick-chips` 섹션에 `이번 주 출시`/`다음 주 출시` 버튼 2개. `weekFilter` 상태(`null|'this'|'next'`) + `getWeekRange(offset)` 헬퍼(월~일 범위, end는 다음 월요일 00:00 exclusive)로 release_date 매칭. `renderGames()` 필터 체인과 `updateCategoryCounts()` base에 모두 반영(기존 카테고리/플랫폼/기간/검색과 AND 결합). 토글식 — 같은 칩 재클릭 시 해제, 두 칩 중 하나만 활성 가능. 활성 시 `.chip-btn.active` (`.view-toggle-btn.active`와 동일한 파란 보더 + 밝은 배경 톤).
 - [x] 캘린더 카테고리 색 범례: `.calendar-view` 내부, `.calendar-header` 아래·그리드 위에 `#calendar-legend` 4색(국내 모바일/국내 PC/콘솔/글로벌 대작/신규 서버) 범례 1줄 노출. 점 색은 기존 `.day-dot` 4색 그대로 재사용(신규 색 X). `flex-wrap:wrap`으로 모바일 줄바꿈 허용. 리스트 뷰 전환 시 `applyView()`에서 명시 토글 + 부모 `.calendar-view` hidden 캐스케이드 양쪽으로 안전 처리.
+- [x] 위시리스트 2단계: `.quick-chips`에 `#chip-wishlist` (`위시리스트만 보기`) 칩 추가. `wishlistOnly` 불리언 상태 신설, `renderGames()` 필터 체인 및 `updateCategoryCounts()` base 양쪽에 `if (wishlistOnly && !wishlist.has(g.id)) return false;` 분기 추가. 이번 주/다음 주 칩과 **독립 토글**(셋 다 동시 활성 가능). 활성 시 기존 `.chip-btn.active` 스타일 재사용(신규 색·CSS X). 위시리스트 비어있을 때 칩 켜면 기존 `.empty-state` 메시지 자동 노출. 새로고침 시 휘발(저장 X — 이번 주/다음 주 칩과 동일 정책).
 
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 위시리스트 2단계: `위시리스트만 보기` 토글 칩
-- 기존 `.quick-chips` 섹션에 세 번째 칩 `위시리스트만 보기` (`#chip-wishlist`, `class="chip-btn"`) 추가 (이번 주/다음 주 칩 옆)
-- 상태 변수 `wishlistOnly` (boolean) 신설 — 칩 활성 시 `renderGames()` 필터 체인에 `if (wishlistOnly && !wishlist.has(g.id)) return false;` 분기 추가
-- `updateCategoryCounts()`의 base 집합에도 동일 분기 반영 (활성 시 카테고리 (N) 카운트도 위시리스트 기준)
-- 이번 주/다음 주 칩과 **독립 토글** (셋 다 동시 활성 가능) — `wishlistOnly`는 별도 변수라 충돌 없음
-- 활성 시 기존 `.chip-btn.active` 스타일 그대로 재사용 (신규 색 X)
-- 위시리스트 비어있을 때 칩 켜면 기존 `.empty-state` 메시지 그대로 노출 — 별도 처리 불필요
-- 새로고침 시 상태는 휘발 (저장 X — 이번 주/다음 주 칩과 동일 정책)
-- 변경 예상: index.html +1/script.js +15/styles.css +0 = 50줄 미달
-
-### 2순위 — 푸터에 데이터 마지막 갱신일 표시
+### 1순위 — 푸터에 데이터 마지막 갱신일 표시
 - `index.html` 푸터에 `<p class="footer-updated">데이터 마지막 갱신: <span id="footer-updated-date">—</span></p>` 한 줄 추가 (기존 운영자 정보 2줄 아래)
 - `script.js` `loadGames()` 응답 파싱 직후, `data.last_updated`(ISO 문자열)를 `YYYY-MM-DD HH:mm` 형식으로 변환하여 `#footer-updated-date` 텍스트에 주입 (`new Date(...).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })` 또는 substring 5자리 자르기 둘 다 OK)
 - `last_updated` 비어있거나 파싱 실패 시 `<p class="footer-updated">`를 `hidden` 처리
 - 스타일: 기존 푸터 톤(`#999` 등) 그대로, 신규 색·폰트 X. CSS 추가 0~3줄 정도.
 - 변경 예상: index.html +1/script.js +6/styles.css +2 = 50줄 미달
 
-### 3순위 — 카드 hover 시 D-Day 라벨 펄스 강조 (CSS-only)
+### 2순위 — 카드 hover 시 D-Day 라벨 펄스 강조 (CSS-only)
 - 리스트 뷰 카드 hover 시 D-Day 라벨에 부드러운 펄스 애니메이션 — `@keyframes pulse-dday` 1개 정의 + `.card:hover .d-day` (또는 현재 D-Day 표시 셀렉터) `animation: pulse-dday 1s ease-in-out infinite`
 - 펄스는 `opacity: 1 → 0.7 → 1` 또는 `transform: scale(1) → 1.06 → 1` 정도로 가볍게 — 어지러울 만큼 X
 - 신규 색 도입 X (기존 D-Day 강조 톤 그대로)
 - 접근성: `@media (prefers-reduced-motion: reduce) { .card:hover .d-day { animation: none; } }`
 - JS 변경 0, CSS 단독 작업. 변경 예상: styles.css +10/-0 = 50줄 한참 미달
 
-### 4순위 — 캘린더 day-detail-panel ESC 키로 닫기
+### 3순위 — 캘린더 day-detail-panel ESC 키로 닫기
 - 캘린더 셀 클릭으로 `#day-detail-panel`이 열려있는 상태에서 ESC 키 누르면 → 패널 닫기(`hidden=true`) + 선택된 셀의 `.selected` 클래스 제거 + `selectedDay = null` 초기화
 - 단, **모달이 열려있으면 모달 우선** (기존 모달 ESC 핸들러 그대로 유지) — 모달 닫고 나서 다시 ESC 누르면 패널 닫힘
 - 구현: `document` keydown 핸들러에서 `e.key === 'Escape' && modal.hidden && !panel.hidden` 조건일 때만 패널 닫기
@@ -83,6 +74,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-28 05:20 [개발자] 위시리스트 2단계(`위시리스트만 보기` 토글 칩) 완료: `index.html` `.quick-chips`에 `<button id="chip-wishlist" class="chip-btn">위시리스트만 보기</button>` 세 번째 칩 추가. `script.js`에 `let wishlistOnly = false` 상태(`weekFilter` 아래) + `renderGames()` 필터 체인과 `updateCategoryCounts()` base 양쪽에 `if (wishlistOnly && !wishlist.has(g.id)) return false;` 분기 추가. 파일 끝에 `chipWish` 참조 + `applyWishlistChip()` 헬퍼(클래스+aria-pressed 동기화) + click 핸들러(독립 토글). 이번 주/다음 주 칩과 셋 다 동시 활성 가능(별도 변수). 활성 시 기존 `.chip-btn.active` 스타일 그대로 재사용(신규 CSS X). 위시리스트 비어있을 때 켜면 기존 `.empty-state` 자동 노출. 새로고침 시 휘발(이번 주/다음 주 칩과 동일 정책). 변경: index.html +1/-0, script.js +13/-0, styles.css +0/-0 = 총 +14/-0 (50줄 한참 미달, 예상치 +1/+15/+0=16과 거의 일치).
 - 2026-05-28 04:20 [개발자] 캘린더 카테고리 색 범례 완료: `index.html` `.calendar-view` 내부, `.calendar-header` 바로 아래에 `<div id="calendar-legend" class="calendar-legend">` 신설(4색 점+한글 라벨 — 국내 모바일/국내 PC/콘솔/글로벌 대작/신규 서버). `styles.css` 끝에 `.calendar-legend`(flex + flex-wrap + center + #aaa 텍스트 + 0.78rem) / `.legend-item`(inline-flex gap) / `.legend-dot`(8px 원형) / 카테고리별 `.legend-dot.category-*` 4색(`.day-dot`과 동일한 #81c784/#64b5f6/#ba68c8/#ff8a65) 9블록 추가. `script.js`에 `calendarLegendEl` 참조 + `applyView()` 내 `calendarLegendEl.hidden = (v !== 'calendar')` 명시 토글. 부모 `.calendar-view` hidden 캐스케이드와 이중 안전. 변경: index.html +6/-0, script.js +2/-0, styles.css +10/-0 = 총 +18/-0 (50줄 한계 미달).
 - 2026-05-28 04:00 [기획자] TODO 큐 1개 → 5개로 보충: 캘린더 카테고리 색 범례(1) + 위시리스트 2단계 필터 칩(2) + 푸터 데이터 갱신일 표시(3) + 카드 hover D-Day 펄스(4) + 캘린더 패널 ESC 닫기(5). 위시리스트 2단계와 카드 hover 카운트다운은 IDEAS에서 끌어옴(IDEAS에서 제거). USER_REQUESTS의 푸터 교체는 이미 완료·QA ✅이므로 활성 → 처리 완료 아카이브로 이동. SEO 보류 요청은 그대로 보류. 완료 처리: 0개(직전 빠른 필터 칩은 PROJECT_STATUS 완료 섹션에 이미 반영됨, QA ✅ 03:40).
 - 2026-05-28 02:40 [개발자] 이번 주/다음 주 빠른 필터 칩 완료: `index.html`에 `.filters` 바로 아래 `.quick-chips` 섹션 신설, `<button id="chip-this-week"|"chip-next-week" class="chip-btn">` 2개. `script.js`에 `let weekFilter = null` 상태 + `getWeekRange(offset)` 헬퍼(월요일 시작, end는 다음 월요일 00:00 exclusive — Sunday 포함). `renderGames()` 필터 체인과 `updateCategoryCounts()` base 양쪽에 `weekFilter` 분기 추가(기존 카테고리/플랫폼/기간/검색과 AND). 칩 click 핸들러는 토글식 — 같은 칩 재클릭 시 해제, 다른 칩 클릭 시 교체(둘 중 하나만 활성). `applyWeekChips()`로 `.active` 클래스 + `aria-pressed` 일괄 동기화. `styles.css`에 `.quick-chips` flex 줄 + `.chip-btn` 기본 톤(기존 `.view-toggle-btn`과 동일 #2a2e38/#3a3e48) + `.chip-btn.active`(파란 보더 #4a90e2 + 밝은 배경 rgba(74,144,226,0.15) — `.view-toggle-btn.active`와 정확히 같은 톤). 변경: index.html +5/-0, script.js +32/-0, styles.css +7/-0 = 총 +44/-0 (50줄 한계 미달).

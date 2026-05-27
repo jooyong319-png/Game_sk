@@ -13,6 +13,7 @@ let categories = {};
 let selectedDay = null;
 let searchQuery = '';
 let weekFilter = null; // null | 'this' | 'next'
+let wishlistOnly = false; // wishlist-only filter chip
 
 function getWeekRange(offset) {
   const t = new Date(); t.setHours(0,0,0,0);
@@ -90,6 +91,8 @@ function renderGames() {
       if (rel < r.start || rel >= r.end) return false;
     }
 
+    if (wishlistOnly && !wishlist.has(g.id)) return false;
+
     return true;
   });
 
@@ -127,6 +130,7 @@ function updateCategoryCounts() {
       const rel = new Date(g.release_date);
       if (rel < r.start || rel >= r.end) return false;
     }
+    if (wishlistOnly && !wishlist.has(g.id)) return false;
     return true;
   });
   const countByCat = {};
@@ -430,3 +434,12 @@ function applyWeekChips() {
 }
 if (chipThis) chipThis.addEventListener('click', () => { weekFilter = (weekFilter === 'this') ? null : 'this'; applyWeekChips(); renderGames(); });
 if (chipNext) chipNext.addEventListener('click', () => { weekFilter = (weekFilter === 'next') ? null : 'next'; applyWeekChips(); renderGames(); });
+
+// Wishlist-only chip (independent toggle, AND with week chips and other filters)
+const chipWish = document.getElementById('chip-wishlist');
+function applyWishlistChip() {
+  if (!chipWish) return;
+  chipWish.classList.toggle('active', wishlistOnly);
+  chipWish.setAttribute('aria-pressed', wishlistOnly ? 'true' : 'false');
+}
+if (chipWish) chipWish.addEventListener('click', () => { wishlistOnly = !wishlistOnly; applyWishlistChip(); renderGames(); });

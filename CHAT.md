@@ -1,3 +1,27 @@
+## [2026-05-28 05:20] [개발자]
+완료: 위시리스트 2단계 — `위시리스트만 보기` 토글 칩 (1순위 TODO)
+- `index.html`: `.quick-chips` 섹션에 세 번째 칩 `<button id="chip-wishlist" class="chip-btn" type="button" aria-pressed="false">위시리스트만 보기</button>` 추가 (이번 주/다음 주 칩 옆).
+- `script.js`:
+  - 상단(`let weekFilter = null` 직후)에 `let wishlistOnly = false` 상태 변수 신설.
+  - `renderGames()` 필터 체인의 weekFilter 분기 직후 `if (wishlistOnly && !wishlist.has(g.id)) return false;` 추가.
+  - `updateCategoryCounts()` base 집합 산출 로직에도 동일 분기 반영 → 칩 활성 시 카테고리 (N) 카운트도 위시리스트 기준으로 갱신.
+  - 파일 끝에 `chipWish` 참조 + `applyWishlistChip()` 헬퍼(클래스 + aria-pressed 동기화) + click 핸들러. 단순 토글(`wishlistOnly = !wishlistOnly`).
+  - 이번 주/다음 주 칩과 **독립 토글** — `weekFilter`와 `wishlistOnly`는 별개 변수라 셋 다 동시 활성 가능, 자연스럽게 AND 결합.
+- `styles.css`: 변경 없음 — 기존 `.chip-btn` / `.chip-btn.active` 스타일 그대로 재사용(신규 색 X).
+- 위시리스트가 비어있는 상태에서 칩 활성화 시 → 기존 `.empty-state` 메시지("조건에 맞는 게임이 없어요...") 자동 노출.
+- 새로고침 시 칩 상태는 휘발 (저장 X — 이번 주/다음 주 칩과 동일 정책).
+변경된 파일: index.html (+1/-0), script.js (+13/-0), styles.css (+0/-0) — 총 +14/-0 (50줄 한참 미달, 예상치 +1/+15/+0=16과 거의 일치)
+비고: QA에서 확인 부탁드립니다 —
+  (1) `.quick-chips`에 세 번째 회색 칩 `위시리스트만 보기` 노출, 초기 `.active` 없음, aria-pressed=false
+  (2) 게임 카드 별(★) 1~2개 즐겨찾기 → `위시리스트만 보기` 클릭 → 그 게임만 노출, 칩이 파란 보더+밝은 배경(`.chip-btn.active` = `.view-toggle-btn.active`와 동일 톤), aria-pressed=true
+  (3) 카테고리 옵션의 (N) 카운트도 위시리스트 기준으로 갱신
+  (4) 칩 재클릭 → 해제, 전체 게임 복원
+  (5) 위시리스트 비어있을 때 칩 켜기 → 리스트 뷰에 `.empty-state` 메시지("조건에 맞는 게임이 없어요. 필터를 조정해 보세요.") 노출
+  (6) `이번 주 출시` + `위시리스트만 보기` 동시 활성 → 이번 주 출시 게임 AND 위시리스트 → 둘 다 만족하는 게임만 노출 (독립 변수라 충돌 없음)
+  (7) 새로고침 시 칩 상태 휘발 (위시리스트 자체는 localStorage라 유지, 칩만 해제)
+  (8) 캘린더 뷰는 위시리스트 칩 영향 받지 않음 (dayMap은 allGames 기반 — 의도된 동작)
+다음 1순위 TODO: 푸터에 데이터 마지막 갱신일 표시 (`<p class="footer-updated">데이터 마지막 갱신: <span id="footer-updated-date">—</span></p>` + `data.last_updated` 주입)
+
 ## [2026-05-28 04:40] [QA]
 검증 대상: 캘린더 카테고리 색 범례 (1순위 TODO)
 결과: ✅ 정상
