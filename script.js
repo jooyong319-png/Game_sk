@@ -398,9 +398,11 @@ const calendarViewEl = document.getElementById('calendar-view');
 const listViewEl = document.getElementById('games-list');
 const viewCalendarBtn = document.getElementById('view-calendar');
 const viewListBtn = document.getElementById('view-list');
+const calendarLegendEl = document.getElementById('calendar-legend');
 function applyView(view) {
   const v = (view === 'list') ? 'list' : 'calendar';
   if (calendarViewEl) calendarViewEl.hidden = (v !== 'calendar');
+  if (calendarLegendEl) calendarLegendEl.hidden = (v !== 'calendar');
   if (listViewEl) listViewEl.hidden = (v !== 'list');
   if (viewCalendarBtn) {
     viewCalendarBtn.setAttribute('aria-pressed', v === 'calendar' ? 'true' : 'false');

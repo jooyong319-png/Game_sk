@@ -359,3 +359,13 @@ footer a:hover {
 .chip-btn { background:#2a2e38; color:#aaa; border:1px solid #3a3e48; border-radius:6px; padding:0.45rem 0.9rem; font-size:0.9rem; cursor:pointer; font-family:inherit; transition:border-color 0.15s, color 0.15s, background 0.15s; }
 .chip-btn:hover { border-color:#4a90e2; }
 .chip-btn.active { background:rgba(74,144,226,0.15); color:#e6e6e6; border-color:#4a90e2; }
+
+/* Calendar category color legend — reuses existing .day-dot 4 colors */
+.calendar-legend { display:flex; flex-wrap:wrap; gap:0.6rem 1rem; justify-content:center; padding:0.4rem 0 0.75rem; font-size:0.78rem; color:#aaa; }
+.calendar-legend[hidden] { display:none; }
+.legend-item { display:inline-flex; align-items:center; gap:0.35rem; }
+.legend-dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+.legend-dot.category-mobile_kr { background:#81c784; }
+.legend-dot.category-pc_console_kr { background:#64b5f6; }
+.legend-dot.category-global_aaa { background:#ba68c8; }
+.legend-dot.category-new_server { background:#ff8a65; }

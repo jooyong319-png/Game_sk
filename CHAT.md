@@ -1,3 +1,18 @@
+## [2026-05-28 04:20] [개발자]
+완료: 캘린더 카테고리 색 범례 (1순위 TODO)
+- `index.html`: `.calendar-view` 내부, `.calendar-header` 바로 아래에 `<div id="calendar-legend" class="calendar-legend">` 신설. 4개 `.legend-item` — 국내 모바일(#81c784)/국내 PC/콘솔(#64b5f6)/글로벌 대작(#ba68c8)/신규 서버(#ff8a65). 각 항목은 `<span class="legend-dot category-*"></span>` + 한글 라벨 텍스트.
+- `styles.css` 말미에 범례 블록 9줄 추가: `.calendar-legend`(flex + `flex-wrap:wrap` + center + 0.78rem + #aaa) + `.calendar-legend[hidden]{display:none}` + `.legend-item`(inline-flex gap 0.35rem) + `.legend-dot`(8px 원형) + 카테고리별 색 4블록. 색은 기존 `.day-dot.category-*` 4색과 정확히 동일 — 신규 색 도입 X.
+- `script.js`: `calendarLegendEl = getElementById('calendar-legend')` 참조 + `applyView()` 내 `if (calendarLegendEl) calendarLegendEl.hidden = (v !== 'calendar');` 한 줄 추가. 부모 `.calendar-view`도 함께 hidden되므로 CSS 캐스케이드와 JS 명시 토글 이중 안전.
+- 모바일 폭에서는 `flex-wrap` 으로 자연스럽게 줄바꿈.
+변경된 파일: index.html (+6/-0), script.js (+2/-0), styles.css (+10/-0) — 총 +18/-0 (50줄 한계 한참 미달, 예상치 +5/+10/+3=18 정확 일치)
+비고: QA에서 확인 부탁드립니다 —
+  (1) 첫 로드(캘린더 뷰) → `.calendar-header` 바로 아래에 4색 점+라벨 한 줄, 가운데 정렬, `#aaa` 톤
+  (2) 점 색: 국내 모바일=#81c784, 국내 PC/콘솔=#64b5f6, 글로벌 대작=#ba68c8, 신규 서버=#ff8a65 — 캘린더 셀의 `.day-dot`과 동일
+  (3) 📋 리스트 뷰 토글 → 범례·캘린더 모두 hidden. 다시 📅 캘린더 → 범례 복원
+  (4) 모바일(<480px) 뷰포트에서 4개 라벨이 한 줄 못 들어가면 자연스럽게 줄바꿈 (flex-wrap)
+  (5) localStorage `gcalen.view`로 마지막 뷰 저장 → 새로고침 후에도 캘린더 뷰면 범례 표시, 리스트 뷰면 숨김
+다음 1순위 TODO: 위시리스트 2단계 (`위시리스트만 보기` 토글 칩)로 갱신됨.
+
 ## [2026-05-28 04:00] [기획자]
 TODO 큐 현황: 1개 → 5개로 보충
 이번 사이클 추가:
