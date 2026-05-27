@@ -300,3 +300,29 @@ if (dayPanel) dayPanel.addEventListener('click', e => {
   const card = e.target.closest('.day-game-card');
   if (card && card.dataset.id) openModal(card.dataset.id);
 });
+
+// --- Calendar Stage 5: view toggle (calendar/list) ---
+const VIEW_KEY = 'gcalen.view';
+const calendarViewEl = document.getElementById('calendar-view');
+const listViewEl = document.getElementById('games-list');
+const viewCalendarBtn = document.getElementById('view-calendar');
+const viewListBtn = document.getElementById('view-list');
+function applyView(view) {
+  const v = (view === 'list') ? 'list' : 'calendar';
+  if (calendarViewEl) calendarViewEl.hidden = (v !== 'calendar');
+  if (listViewEl) listViewEl.hidden = (v !== 'list');
+  if (viewCalendarBtn) {
+    viewCalendarBtn.setAttribute('aria-pressed', v === 'calendar' ? 'true' : 'false');
+    viewCalendarBtn.classList.toggle('active', v === 'calendar');
+  }
+  if (viewListBtn) {
+    viewListBtn.setAttribute('aria-pressed', v === 'list' ? 'true' : 'false');
+    viewListBtn.classList.toggle('active', v === 'list');
+  }
+  try { localStorage.setItem(VIEW_KEY, v); } catch (_) {}
+}
+let savedView = 'calendar';
+try { savedView = localStorage.getItem(VIEW_KEY) || 'calendar'; } catch (_) {}
+applyView(savedView);
+if (viewCalendarBtn) viewCalendarBtn.addEventListener('click', () => applyView('calendar'));
+if (viewListBtn) viewListBtn.addEventListener('click', () => applyView('list'));

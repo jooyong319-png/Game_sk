@@ -1,3 +1,29 @@
+## [2026-05-27 22:20] [개발자]
+완료: 월간 캘린더 뷰 5단계 — 캘린더/리스트 뷰 토글 (1순위 TODO)
+- `index.html`: `.filters` 위에 `<section class="view-toggle">`에 두 버튼 추가
+  - `#view-calendar` (📅 캘린더, 초기 `aria-pressed="true"`)
+  - `#view-list` (📋 리스트, 초기 `aria-pressed="false"`)
+- `script.js` (모듈 하단 신규 섹션 추가):
+  - `applyView(view)`: `#calendar-view`와 `#games-list` 둘 중 하나만 `hidden=false`, 다른 하나는 `hidden=true`, 활성 버튼에 `.active` + `aria-pressed="true"` 부여, `localStorage.setItem('gcalen.view', 'calendar'|'list')` 저장
+  - 초기화: `localStorage.getItem('gcalen.view') || 'calendar'` → 기본값 calendar, 새로고침 시 마지막 선택 복원
+  - 두 버튼에 클릭 핸들러 바인딩 (try/catch로 localStorage 비활성 환경 대비)
+- `styles.css`:
+  - `.view-toggle` (flex, gap 0.5rem, margin-bottom 1rem)
+  - `.view-toggle-btn` (다크 팔레트 #2a2e38 배경, #3a3e48 보더, 호버 시 #4a90e2 보더 — 캘린더 nav 버튼과 같은 톤)
+  - `.view-toggle-btn.active` (rgba(74,144,226,0.15) 배경 + #4a90e2 보더 + #e6e6e6 글자)
+  - `.calendar-view[hidden], #games-list[hidden] { display:none; }` — `display:grid` / `display` 기본값이 `[hidden]` 디폴트를 덮어쓰는 문제 방지
+- 기존 캘린더 4단계 동작(셀 클릭/패널/모달)·필터·푸터 그대로 유지, 새 색·폰트 미도입
+변경된 파일: index.html (+5/-0), script.js (+26/-0), styles.css (+6/-0) — 총 +37/-0 (50줄 한계 미만)
+비고: QA에서 확인 부탁드립니다 —
+  (1) 첫 진입 시 캘린더 뷰가 기본 노출, 토글 버튼 두 개 보이고 📅 캘린더가 활성(파란 보더+밝은 배경)
+  (2) 📋 리스트 클릭 시 캘린더 영역(헤더/그리드/패널) 숨겨지고 게임 카드 그리드 노출, 활성 표시가 리스트 버튼으로 이동
+  (3) 새로고침 시 마지막 선택(예: 리스트) 그대로 복원, `localStorage`에 `gcalen.view: list` 저장 확인
+  (4) 다시 📅 캘린더 클릭 → 캘린더 노출 + 5/27 today/점/모달 등 기존 동작 정상
+  (5) 모바일(<480px)에서 토글 줄바꿈 깨짐 없는지 (`view-toggle` flex)
+  (6) localStorage 비활성(시크릿 모드) 환경에서도 콘솔 에러 없이 동작 (try/catch)
+다음 사이클은 (새 1순위) 검색 기능 예정.
+변경된 파일: index.html, script.js, styles.css
+
 ## [2026-05-27 12:40] [QA]
 검증 대상: 캘린더 4단계 TDZ 핫픽스 (selectedDay 선언을 모듈 상단으로 hoist)
 결과: ✅ 정상
