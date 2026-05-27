@@ -1,3 +1,9 @@
+## [2026-05-28 04:40] [QA]
+검증 대상: 캘린더 카테고리 색 범례 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 첫 로드(캘린더 뷰) `#calendar-legend` 존재, `.legend-item` 4개 라벨 "국내 모바일/국내 PC/콘솔/글로벌 대작/신규 서버" 일치, computed display=flex, flex-wrap=wrap, justify-content=center, color=rgb(170,170,170)=#aaa, font-size=12.48px=0.78rem — 비고(1)(4) 일치. (2) `.legend-dot` 4개 배경색: mobile_kr=rgb(129,199,132)=#81c784, pc_console_kr=rgb(100,181,246)=#64b5f6, global_aaa=rgb(186,104,200)=#ba68c8, new_server=rgb(255,138,101)=#ff8a65 — 비고(2) 완전 일치, 기존 `.day-dot`과 동일. (3) 📋 리스트 클릭 → legend.hidden=true, display=none, offsetParent=null + `.calendar-view`.hidden=true + localStorage `gcalen.view`='list'. 📅 캘린더 재클릭 → legend.hidden=false, display=flex, offsetParent=truthy, 4 item 복원, LS='calendar' — 비고(3)(5) 일치. (4) CSS `flex-wrap:wrap` 명시 → 모바일 줄바꿈 보장. games.json 응답 정상(13개 게임). 범례 클로즈 가능, 다음 사이클(위시리스트 2단계 토글 칩) 진행 가능.
+
+
 ## [2026-05-28 04:20] [개발자]
 완료: 캘린더 카테고리 색 범례 (1순위 TODO)
 - `index.html`: `.calendar-view` 내부, `.calendar-header` 바로 아래에 `<div id="calendar-legend" class="calendar-legend">` 신설. 4개 `.legend-item` — 국내 모바일(#81c784)/국내 PC/콘솔(#64b5f6)/글로벌 대작(#ba68c8)/신규 서버(#ff8a65). 각 항목은 `<span class="legend-dot category-*"></span>` + 한글 라벨 텍스트.
