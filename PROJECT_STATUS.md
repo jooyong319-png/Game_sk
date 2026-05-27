@@ -42,36 +42,32 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] 푸터에 데이터 마지막 갱신일 표시: `index.html` 푸터 운영자 정보 2줄 아래에 `<p class="footer-updated">데이터 마지막 갱신: <span id="footer-updated-date">—</span></p>` 추가. `script.js`에 `footerUpdatedEl`/`footerUpdatedWrap` 참조 + `loadData()` 응답 파싱 직후 분기 신설: `data.last_updated` ISO 문자열을 `new Date(...)`로 파싱, 유효하면 `YYYY-MM-DD HH:mm` 형식(브라우저 로컬 TZ, 한국 사용자 → KST)으로 텍스트 주입 + `hidden=false`, 비어있거나 `isNaN`이면 `<p>` `hidden=true`. `styles.css` 끝에 `.footer-updated`(#999, 0.8rem, 0.4rem margin-top) + `[hidden]` 보강 2줄. 신규 색·폰트 도입 X(기존 푸터 #666/#999 톤만 사용).
 - [x] 카드 hover 시 D-Day 라벨 펄스 강조 (CSS-only): `.game-card:hover .dday`에 `@keyframes pulse-dday` (`transform: scale(1)→1.06→1`, 1s ease-in-out infinite) 적용. `display:inline-block`로 inline `<span>`에서도 transform 적용 보장. 신규 색 도입 X (기존 D-Day 톤 그대로). `@media (prefers-reduced-motion: reduce)`에서 `animation: none` 분기로 접근성 보장. JS 변경 0.
 
+- [x] 캘린더 day-detail-panel ESC 키로 닫기: `script.js`의 기존 모달 ESC 핸들러를 확장. `e.key !== 'Escape'`이면 조기 return, `!modal.hidden`이면 기존대로 `closeModal()` 호출 후 return(모달 우선). 그 외에 `dayPanel && !dayPanel.hidden`이면 `dayPanel.hidden = true; selectedDay = null; renderCalendar();`로 패널 닫기 + 셀의 `.selected` 클래스 제거. JS 단일 파일, +9/-1.
+
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 캘린더 day-detail-panel ESC 키로 닫기
-- 캘린더 셀 클릭으로 `#day-detail-panel`이 열려있는 상태에서 ESC 키 누르면 → 패널 닫기(`hidden=true`) + 선택된 셀의 `.selected` 클래스 제거 + `selectedDay = null` 초기화
-- 단, **모달이 열려있으면 모달 우선** (기존 모달 ESC 핸들러 그대로 유지) — 모달 닫고 나서 다시 ESC 누르면 패널 닫힘
-- 구현: `document` keydown 핸들러에서 `e.key === 'Escape' && modal.hidden && !panel.hidden` 조건일 때만 패널 닫기
-- 변경: script.js 단일 파일, +10 LOC 내외
-
-### 2순위 — 위시리스트 칩에 개수 뱃지 표시
+### 1순위 — 위시리스트 칩에 개수 뱃지 표시
 - `#chip-wishlist` 버튼 라벨을 `위시리스트만 보기 (N)` 형식으로 표시. N은 `wishlist` Set 크기.
 - 페이지 로드 시 1회 + 별 토글 시(localStorage 갱신 시점)마다 라벨 갱신. 헬퍼 `updateWishlistChipLabel()` 신설(원본 라벨 `위시리스트만 보기`는 `dataset.baseLabel`에 캐싱).
 - N=0이어도 라벨에 `(0)` 그대로 표시 (대시보드 일관성). 칩 활성/비활성 시각은 그대로(스타일 변경 X).
 - 신규 CSS·HTML 구조 변경 X — `<button>` 텍스트만 동적 갱신.
 - 변경: script.js +10 LOC 내외 (단일 파일).
 
-### 3순위 — 상세 모달 헤더에 위시리스트 별 토글 버튼 추가
+### 2순위 — 상세 모달 헤더에 위시리스트 별 토글 버튼 추가
 - 게임 상세 모달(`#game-modal`) 헤더의 제목(`#modal-title`) 오른쪽에 `<button class="modal-wishlist-btn">★/☆</button>` 추가.
 - 카드의 별과 동일한 동작: 클릭 시 `wishlist` Set add/remove + `saveWishlist()` + 같은 게임의 카드 별(`.wishlist-btn[data-game-id="..."]`)도 in-place 동기화 + 칩 라벨 갱신(2순위와 연동).
 - 비활성=`☆`+`#666`, 활성=`★`+`#f5b400` (기존 톤 그대로). 신규 색 도입 X.
 - 모달 열 때 현재 게임 id에 대해 `wishlist.has(id)`로 초기 상태 반영.
 - 변경: index.html (모달 구조 살짝 수정), script.js, styles.css. 총 +20 LOC 내외.
 
-### 4순위 — 카드 image_url null 일 때 placeholder 처리
+### 3순위 — 카드 image_url null 일 때 placeholder 처리
 - 현재 `game.image_url` 사용 위치를 점검(없으면 카드/모달에서 누락된 영역이 있을 수 있음). 카드 또는 모달의 이미지 영역이 비어있을 때 카테고리 색 그라데이션 placeholder를 표시.
 - 카테고리별 색은 기존 `.day-dot.category-*` 4색 재사용(#81c784/#64b5f6/#ba68c8/#ff8a65). 그라데이션은 해당 색 → 30% 어두운 색 linear-gradient(135deg).
 - placeholder 안에는 카테고리 한글 라벨 텍스트(`#ddd`, 0.85rem) 1줄 중앙 정렬. 신규 색 도입 X.
 - 클릭/접근성은 기존 카드와 동일하게 유지(별도 cursor 변경 없음).
 - 변경: script.js + styles.css. 총 +20 LOC 내외.
 
-### 5순위 — 캘린더 요일 헤더 한국식 색상 (CSS-only)
+### 4순위 — 캘린더 요일 헤더 한국식 색상 (CSS-only)
 - 캘린더 그리드의 요일 헤더(`일/월/화/수/목/금/토`) 텍스트 색을 한국식으로: 일요일=빨강 톤(#e57373, 기존 D-Day 톤), 토요일=파랑 톤(#64b5f6, 기존 PC/콘솔 카테고리 색). 그 외 요일은 기존 톤 유지.
 - 셀 자체(`.day`)의 텍스트 색은 변경하지 않음 — 헤더만(과한 시각적 잡음 방지). 신규 색 도입 X(기존 팔레트에서 차용).
 - 구현: `.weekday:nth-child(1) { color:#e57373 }` / `.weekday:nth-child(7) { color:#64b5f6 }` 2줄. JS/HTML 변경 0.
@@ -88,6 +84,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-28 08:20 [개발자] 캘린더 day-detail-panel ESC 닫기 완료: `script.js`의 기존 keydown 핸들러를 확장 — `e.key !== 'Escape'` 조기 return, `!modal.hidden`이면 `closeModal()` 후 return(**모달 우선** 정책 유지), 그 외 `dayPanel && !dayPanel.hidden`이면 `dayPanel.hidden = true; selectedDay = null; renderCalendar();` 실행해 패널 닫기 + 셀의 `.selected` 클래스 제거. `renderCalendar()` 재호출로 `selectedDay === iso` 비교가 모두 false가 되어 자연스럽게 `.selected`가 사라짐(기존 토글식 셀 재클릭과 동일 경로). 모달이 열려있을 땐 기존 단일 ESC 동작(모달만 닫힘) 그대로 보존 — 사용자가 다시 ESC를 누르면 그때 패널이 닫힘. `dayPanel` 참조는 keydown 콜백 내부라 이벤트 발생 시점엔 이미 모듈 전체 평가가 끝나 있어 TDZ 무관(추가로 null-guard `dayPanel &&` 포함). 변경: script.js +9/-1 = 총 +8 (50줄 한참 미달, 예상치 +10과 거의 일치).
 - 2026-05-28 08:00 [기획자] TODO 큐 1개 → 5개로 보충: 캘린더 패널 ESC 닫기(1, 기존 유지) + 위시리스트 칩 개수 뱃지(2) + 상세 모달 별 토글(3) + 카드 image_url placeholder(4) + 캘린더 요일 헤더 한국식 색(5). 위시리스트 2단계가 안정화된 흐름을 이어 위시리스트 UX 보강 2건(2,3순위) 추가. image_url placeholder는 데이터에 null 값이 다수라 시각 마감용으로 끌어옴. 완료 처리: 0개(직전 카드 hover D-Day 펄스는 PROJECT_STATUS 완료 섹션에 이미 반영됨, QA ✅ 07:40). IDEAS 이동: 0개(3사이클째 머문 항목 없음). IDEAS에서 끌어옴: 0개(IDEAS의 출시일별 그룹핑/통계 차트/YouTube 임베드/카카오톡 공유/일간 뷰는 모두 50줄 초과 가능성 있어 보류). 사용자 요청 처리: 활성 0개, 보류 SEO는 지시대로 손대지 않음.
 - 2026-05-28 07:20 [개발자] 카드 hover D-Day 펄스 강조(CSS-only) 완료: `styles.css` 끝에 `@keyframes pulse-dday`(`transform: scale(1)→1.06→1`) 정의 + `.game-card:hover .dday { display:inline-block; animation: pulse-dday 1s ease-in-out infinite; }` 추가. inline `<span>`에서도 transform 적용되도록 `display:inline-block` 명시. 신규 색 도입 X (기존 D-Day `.dday`/`.dday.soon`/`.dday.today`/`.dday.past` 톤 그대로 — 색 변경 0). `@media (prefers-reduced-motion: reduce) { .game-card:hover .dday { animation: none; } }` 분기로 모션 민감 사용자 접근성 보장. JS/HTML 변경 0. 변경: styles.css +13/-0 = 총 +13/-0 (50줄 한참 미달, 예상치 +10과 거의 일치 — 주석 1줄 + reduced-motion 분기로 약간 늘어남).
 - 2026-05-28 06:20 [개발자] 푸터 데이터 마지막 갱신일 표시 완료: `index.html` 푸터에 `<p class="footer-updated">데이터 마지막 갱신: <span id="footer-updated-date">—</span></p>` 한 줄 추가(기존 운영자 정보 2줄 바로 아래). `script.js`에 `footerUpdatedEl`/`footerUpdatedWrap` 모듈 상단 참조 + `loadData()` 내 `lastUpdatedEl` 블록 직후 분기 신설: `data.last_updated` ISO → `new Date(...)` 파싱, 유효(`!isNaN`) 시 `pad(n)` 헬퍼로 `YYYY-MM-DD HH:mm`(브라우저 로컬 TZ — KST 사용자는 그대로 KST) 주입 + `wrap.hidden=false`, 비어있거나 파싱 실패 시 `wrap.hidden=true`. `styles.css` 끝에 `.footer-updated { color:#999; margin-top:0.4rem; font-size:0.8rem; }` + `.footer-updated[hidden] { display:none; }` 2줄 추가(신규 색 X — 기존 푸터 #666/#999 톤 그대로). 변경: index.html +1/-0, script.js +13/-0, styles.css +3/-0 = 총 +17/-0 (50줄 한참 미달, 예상치 +1/+6/+2=9와 거의 일치 — 안전한 fallback 로직 더해져 약간 늘어남).

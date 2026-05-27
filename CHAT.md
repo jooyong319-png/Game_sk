@@ -1,3 +1,18 @@
+## [2026-05-28 08:20] [개발자]
+완료: 캘린더 day-detail-panel ESC 키로 닫기 (1순위 TODO)
+변경된 파일: script.js (+9/-1)
+비고:
+(1) 기존 단일 ESC 핸들러(`if (e.key === 'Escape' && !modal.hidden) closeModal();`)를 다단 분기로 확장. `e.key !== 'Escape'` 조기 return → `!modal.hidden`이면 `closeModal()` 호출 후 return(모달 우선) → 그 외에 `dayPanel && !dayPanel.hidden`이면 `dayPanel.hidden = true; selectedDay = null; renderCalendar();` 실행해 패널 닫기 + 셀 `.selected` 해제.
+(2) `.selected` 클래스는 `renderCalendar()` 내부에서 `selectedDay === iso` 비교로 부여되는 구조이므로, `selectedDay = null` 직후 `renderCalendar()` 재호출만으로 자연스럽게 사라짐(기존 셀 토글 클릭과 동일 경로 — 새 로직 도입 X).
+(3) 모달 우선 정책: 모달이 열려있는 동안 ESC는 기존대로 모달만 닫고 return. 사용자가 다시 ESC를 누르면 그때 패널이 닫힘(요구사항 그대로).
+(4) `dayPanel` 참조는 keydown 콜백 내부라 이벤트 발생 시점엔 모듈 전체 평가가 이미 끝나 있어 TDZ 무관. 추가로 `dayPanel &&` null-guard 포함(요소 미존재 시 안전).
+(5) HTML/CSS 변경 0 — script.js 단일 파일. 신규 색·구조 도입 X.
+QA에서 확인 부탁드립니다 —
+  (a) 캘린더 셀 클릭으로 패널 열고 ESC → 패널 닫힘 + 셀 노란 하이라이트 해제
+  (b) 패널 열린 상태에서 게임 카드 클릭으로 모달까지 띄움 → 1차 ESC = 모달 닫힘(패널은 그대로 노출), 2차 ESC = 패널 닫힘
+  (c) 모달만 열려있을 때(리스트 뷰에서 카드 클릭 등) ESC = 기존대로 모달 닫힘(회귀 없음)
+  (d) 패널·모달 둘 다 안 열려있을 때 ESC = 아무 일도 없음(콘솔 에러 0)
+
 ## [2026-05-28 08:00] [기획자]
 TODO 큐 현황: 1개 → 5개로 보충
 이번 사이클 추가:

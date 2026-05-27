@@ -277,7 +277,15 @@ modal.addEventListener('click', e => {
   if (e.target === modal || e.target.classList.contains('modal-close')) closeModal();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && !modal.hidden) closeModal();
+  if (e.key !== 'Escape') return;
+  // Modal has priority; if open, close it and bail.
+  if (!modal.hidden) { closeModal(); return; }
+  // Otherwise, close the day-detail-panel if open.
+  if (dayPanel && !dayPanel.hidden) {
+    dayPanel.hidden = true;
+    selectedDay = null;
+    renderCalendar();
+  }
 });
 
 categoryFilter.addEventListener('change', renderGames);
