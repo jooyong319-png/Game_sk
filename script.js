@@ -38,6 +38,7 @@ async function loadData() {
 }
 
 function renderGames() {
+  updateCategoryCounts();
   const selectedCategory = categoryFilter.value;
   const selectedPlatform = platformFilter.value.toLowerCase();
   const days = parseInt(periodFilter.value, 10);
@@ -77,6 +78,37 @@ function renderGames() {
   }
 
   gamesList.innerHTML = filtered.map(renderCard).join('');
+}
+
+function updateCategoryCounts() {
+  if (!categoryFilter) return;
+  const selectedPlatform = platformFilter.value.toLowerCase();
+  const days = parseInt(periodFilter.value, 10);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const base = allGames.filter(g => {
+    if (searchQuery) {
+      const hay = ((g.name_ko || '') + ' ' + (g.name_en || '')).toLowerCase();
+      if (!hay.includes(searchQuery)) return false;
+    }
+    if (selectedPlatform) {
+      const platforms = (g.platforms || []).map(p => p.toLowerCase());
+      if (!platforms.some(p => p.includes(selectedPlatform))) return false;
+    }
+    if (days > 0) {
+      const release = new Date(g.release_date);
+      const future = new Date(today); future.setDate(today.getDate() + days);
+      if (release < today || release > future) return false;
+    }
+    return true;
+  });
+  const countByCat = {};
+  for (const g of base) countByCat[g.category] = (countByCat[g.category] || 0) + 1;
+  for (const opt of categoryFilter.options) {
+    if (!opt.dataset.baseLabel) opt.dataset.baseLabel = opt.textContent;
+    const c = opt.value === '' ? base.length : (countByCat[opt.value] || 0);
+    opt.textContent = opt.dataset.baseLabel + ' (' + c + ')';
+    opt.style.color = c === 0 ? '#666' : '';
+  }
 }
 
 function renderCard(game) {
