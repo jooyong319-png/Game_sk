@@ -27,6 +27,7 @@ async function loadData() {
     }
 
     renderGames();
+    if (typeof renderCalendar === 'function') renderCalendar();
   } catch (err) {
     console.error(err);
     gamesList.innerHTML = `<p class="error">데이터를 불러오지 못했어요: ${err.message}</p>`;
@@ -189,8 +190,8 @@ periodFilter.addEventListener('change', renderGames);
 loadData();
 
 
-// --- Monthly calendar (Stage 1: skeleton only) ---
-function renderCalendarSkeleton() {
+// --- Monthly calendar (Stage 2: skeleton + per-day dots) ---
+function renderCalendar() {
   const grid = document.getElementById('calendar-grid');
   const label = document.getElementById('calendar-month-label');
   if (!grid || !label) return;
@@ -198,16 +199,38 @@ function renderCalendarSkeleton() {
   const y = today.getFullYear(), m = today.getMonth();
   label.textContent = `${y}년 ${m + 1}월`;
   const start = new Date(y, m, 1 - new Date(y, m, 1).getDay());
+  const dayMap = {};
+  for (const g of allGames) {
+    if (!g.release_date) continue;
+    const rd = new Date(g.release_date);
+    if (rd.getFullYear() === y && rd.getMonth() === m) {
+      (dayMap[rd.getDate()] = dayMap[rd.getDate()] || []).push(g);
+    }
+  }
   const weekdays = ['일','월','화','수','목','금','토']
     .map(d => `<div class="weekday">${d}</div>`).join('');
   let cells = '';
   for (let i = 0; i < 42; i++) {
     const d = new Date(start); d.setDate(start.getDate() + i);
     const cls = ['day'];
-    if (d.getMonth() !== m) cls.push('other-month');
+    const isOther = d.getMonth() !== m;
+    if (isOther) cls.push('other-month');
     if (d.getTime() === today.getTime()) cls.push('today');
-    cells += `<div class="${cls.join(' ')}">${d.getDate()}</div>`;
+    let dots = '';
+    if (!isOther) {
+      const list = dayMap[d.getDate()] || [];
+      if (list.length) {
+        const shown = list.slice(0, 3);
+        const overflow = list.length - 3;
+        const tip = list.map(x => x.name_ko || x.name_en).join(', ');
+        const dotEls = shown.map(g =>
+          `<span class="day-dot category-${g.category}"></span>`).join('');
+        const more = overflow > 0 ? `<span class="day-dot-more">+${overflow}</span>` : '';
+        dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}</div>`;
+      }
+    }
+    cells += `<div class="${cls.join(' ')}">${d.getDate()}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
 }
-renderCalendarSkeleton();
+renderCalendar();
