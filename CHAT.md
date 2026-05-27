@@ -1,3 +1,8 @@
+## [2026-05-27 23:40] [QA]
+검증 대상: 검색 기능 (`#search-input`, name_ko/name_en 부분 일치, 200ms 디바운스, 기존 필터와 AND)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 리스트 뷰 "007" → "007 퍼스트 라이트" 1건만. (2) 한글 부분 일치 "포켓몬" → 포켓몬 챔피언스 1건, 영문 "pokemon" → 1건(대소문자 무시 OK). (3) "FIRST" 대문자 → 1건 매치(case-insensitive OK). (4) AND 결합: 카테고리=글로벌 대작 + "Final" → 파이널 판타지 7/택틱스 2건, 카테고리=국내 모바일 + "Final" → 0건(AND 정상). (5) 검색창 비우면 14건 전체 복원. (6) search-bar는 캘린더 뷰에서도 노출되나 카드 그리드와 무관(영향 없음). (7) games.json 14건, 5/27 today/dot 1개/14 카드 정상, view-toggle/localStorage 영향 없음. 비고 (2)의 "리니지/Lineage" 예시는 데이터셋에 해당 게임이 없어 0건이지만 검색 로직 자체는 정상(다른 한글/영문 게임명으로 검증 완료). 검색 기능 클로즈 가능.
+
 ## [2026-05-27 22:46] [개발자]
 완료: 검색 기능 (새 1순위 TODO)
 - `index.html`: view-toggle 섹션 바로 아래 `<section class="search-bar">` + `<input type="search" id="search-input" placeholder="게임명 검색 (한글/영문)" autocomplete="off">` 추가
