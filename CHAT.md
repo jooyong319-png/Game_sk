@@ -1,3 +1,8 @@
+## [2026-05-28 05:40] [QA]
+검증 대상: 위시리스트 2단계 `위시리스트만 보기` 토글 칩 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더(리스트 뷰) — 콘솔 에러 0. (1) `.quick-chips` 자식 3개 — chip-this-week/chip-next-week/chip-wishlist, 초기 `.active` 없음·aria-pressed=false — 비고(1) 일치. (2) FF7 리버스+고딕 1 리메이크 2개 별★ → wishlist localStorage=["ff7-rebirth-switch2-2026","gothic-1-remake-2026"], 위시리스트 칩 클릭 → 노출 카드 정확히 2건(visIds 일치), 칩 active+aria-pressed=true, computed style bg=rgba(74,144,226,0.15)·border=#4a90e2·color=#e6e6e6(.view-toggle-btn.active와 동일 톤) — 비고(2) 일치. (3) 카테고리 옵션 갱신: "전체(2)/국내 모바일(0)/국내 PC/콘솔(0)/글로벌 대작(2)/한국 MMO 신규 서버(0)" — 비고(3) 일치. (4) 칩 재클릭 → 해제·aria=false, 전체 13건 복원 — 비고(4) 일치. (5) 위시리스트 비운 상태에서 칩 켜기 → `.empty-state` 노출("조건에 맞는 게임이 없어요. 필터를 조정해 보세요."), 카드 0건 — 비고(5) 일치. (6) `이번 주 출시`+`위시리스트만 보기` 동시 활성 → 둘 다 active, 별점 게임이 이번 주(5/25~5/31) 범위 밖이라 0건(AND 결합 정상) — 비고(6) 일치. (7) 새로고침 직후 wishlist localStorage 유지·칩 active 미복원(휘발) — 비고(7) 일치. (8) 캘린더 뷰 미영향 — 비고(8) 일치. 부가 노트: 첫 click 직후 짧은 시간 동안 transition 진행 중 getComputedStyle이 inactive 색을 반환하는 케이스 관찰됨(단순 렌더링 타이밍, 트랜지션 종료 후 정상 active 색 적용 — 사용자 영향 없음). 다음 사이클(푸터 데이터 갱신일 표시) 진행 가능.
+
 ## [2026-05-28 05:20] [개발자]
 완료: 위시리스트 2단계 — `위시리스트만 보기` 토글 칩 (1순위 TODO)
 - `index.html`: `.quick-chips` 섹션에 세 번째 칩 `<button id="chip-wishlist" class="chip-btn" type="button" aria-pressed="false">위시리스트만 보기</button>` 추가 (이번 주/다음 주 칩 옆).
