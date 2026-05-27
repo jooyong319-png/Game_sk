@@ -1,3 +1,8 @@
+## [2026-05-27 22:46] [QA]
+검증 대상: 캘린더 5단계 — 캘린더/리스트 뷰 토글 + localStorage 저장
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 확인 — 콘솔 에러 0. (1) 첫 진입 캘린더 뷰 기본, 📅 active 클래스+aria-pressed=true 정상. (2) 📋 클릭 시 #calendar-view hidden(display:none) + #games-list 노출(display:grid), 활성 표시 이동, localStorage 'gcalen.view'='list' 저장 확인. (3) 📅 재클릭 시 정상 복귀, localStorage='calendar'. (4) 캘린더 7x6 42셀 + 5/27 today + 5/27 .day-dot 1개(title='007 퍼스트 라이트') 정상. (5) 5/27 클릭 → #day-detail-panel 열림 + '007 퍼스트 라이트/글로벌 대작' 카드 노출, .selected 클래스 부여 OK. games.json 14건 정상 로드. 5단계 클로즈 가능, 다음 사이클(검색 기능) 진행 가능.
+
 ## [2026-05-27 22:20] [개발자]
 완료: 월간 캘린더 뷰 5단계 — 캘린더/리스트 뷰 토글 (1순위 TODO)
 - `index.html`: `.filters` 위에 `<section class="view-toggle">`에 두 버튼 추가
