@@ -9,19 +9,31 @@
 <body>
   <header>
     <h1>🎮 게임 출시 캘린더</h1>
-    <p class="subtitle">앞으로 출시될 게임들을 한눈에</p>
+    <p class="subtitle">국내외 신규 출시 게임을 한눈에</p>
+    <p id="last-updated" class="last-updated"></p>
   </header>
 
   <main>
     <section class="filters">
       <label>
+        카테고리:
+        <select id="category-filter">
+          <option value="">전체</option>
+          <option value="mobile_kr">국내 모바일</option>
+          <option value="pc_console_kr">국내 PC/콘솔</option>
+          <option value="global_aaa">글로벌 대작</option>
+        </select>
+      </label>
+      <label>
         플랫폼:
         <select id="platform-filter">
           <option value="">전체</option>
-          <option value="4">PC</option>
-          <option value="187">PlayStation 5</option>
-          <option value="186">Xbox Series X/S</option>
-          <option value="7">Nintendo Switch</option>
+          <option value="pc">PC</option>
+          <option value="ps5">PlayStation 5</option>
+          <option value="xbox">Xbox Series X/S</option>
+          <option value="switch">Nintendo Switch</option>
+          <option value="ios">iOS</option>
+          <option value="android">Android</option>
         </select>
       </label>
       <label>
@@ -29,7 +41,9 @@
         <select id="period-filter">
           <option value="30">앞으로 30일</option>
           <option value="90">앞으로 90일</option>
-          <option value="365">앞으로 1년</option>
+          <option value="180">앞으로 6개월</option>
+          <option value="365" selected>앞으로 1년</option>
+          <option value="0">전체</option>
         </select>
       </label>
     </section>
@@ -40,7 +54,7 @@
   </main>
 
   <footer>
-    <p>데이터 출처: RAWG API · 3명의 AI가 협업해서 만드는 사이트</p>
+    <p>3명의 AI Claude가 협업하고, 1명의 리서처 Claude가 매일 9시에 신규 정보를 추가합니다</p>
   </footer>
 
   <script src="/script.js"></script>

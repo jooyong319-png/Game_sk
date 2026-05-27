@@ -1,98 +1,95 @@
-# 3명의 AI Claude 협업 규칙
+# 4명의 AI Claude 협업 규칙
 
-이 프로젝트는 **3명의 Claude 에이전트가 자율적으로 협업**해서 만드는 게임 출시 캘린더입니다. 각 에이전트는 정해진 시간에 깨어나서 자기 역할을 수행하고, GitHub과 Slack을 통해 서로 소통합니다.
+이 프로젝트는 **4명의 Claude 에이전트가 자율적으로 협업**해서 만드는 게임 출시 캘린더입니다. 각 에이전트는 정해진 시간에 깨어나서 자기 역할을 수행하고, GitHub과 CHAT.md를 통해 서로 소통합니다.
 
-## 1. 3명의 역할
+## 1. 4명의 역할
+
+### 📚 리서처 Claude (Researcher)
+- **깨어나는 시간**: 매일 아침 9:00
+- **주 업무**:
+  - WebSearch로 신규/예정 게임 정보 찾기 (3개 카테고리)
+  - `data/games.json` 파일 업데이트 (중복 제거, 날짜 갱신, 신규 추가)
+  - `last_updated` 필드 갱신
+  - `CHAT.md`에 "오늘 추가/갱신한 게임 N개" 보고
+  - git commit + push
+- **금지**: 프론트엔드 코드 수정 금지, JSON 스키마 임의 변경 금지
+- **리서치 카테고리**:
+  - `mobile_kr`: 국내 출시 모바일 게임
+  - `pc_console_kr`: 국내 출시 PC/콘솔 게임
+  - `global_aaa`: 글로벌 대작 게임
 
 ### 🎯 기획자 Claude (PM)
 - **깨어나는 시간**: 4시간마다 정각 (00:00, 04:00, 08:00, 12:00, 16:00, 20:00)
-- **주 업무**:
-  - `CHAT.md`, `PROJECT_STATUS.md` 읽기 → 현재 상황 파악
-  - 다음에 만들 기능 결정 (한 번에 한 가지만)
-  - `PROJECT_STATUS.md`의 TODO 갱신
-  - `CHAT.md` 맨 위에 결정 사항 메시지 추가
-  - 변경사항 git commit + push
-- **금지**: 코드 직접 작성 금지, 한 번에 여러 기능 시키지 말 것
+- **주 업무**: 다음에 만들 기능 결정, PROJECT_STATUS.md의 TODO 갱신
+- **금지**: 코드 직접 작성 금지, `data/games.json` 수정 금지 (리서처 영역)
 
 ### 💻 개발자 Claude (Dev)
-- **깨어나는 시간**: 4시간마다 +20분 (00:20, 04:20, ...)
-- **주 업무**:
-  - `CHAT.md`, `PROJECT_STATUS.md` 읽기
-  - 기획자가 정한 가장 위 TODO 하나만 구현
-  - 코드 작성/수정
-  - `PROJECT_STATUS.md`의 해당 TODO 완료 처리
-  - `CHAT.md`에 "이번에 뭐 했는지" 한 줄 보고
-  - `git commit` + `git push` (Vercel 자동 배포 트리거)
-- **금지**: TODO에 없는 기능 임의로 추가 금지, 한 번에 너무 많이 바꾸지 말 것
+- **깨어나는 시간**: 4시간마다 +20분
+- **주 업무**: 기획자가 정한 가장 위 TODO 1개만 구현, 프론트엔드 코드 수정
+- **금지**: `data/games.json` 수정 금지 (리서처 영역)
 
 ### 🔍 QA Claude
-- **깨어나는 시간**: 4시간마다 +40분 (00:40, 04:40, ...)
-- **주 업무**:
-  - `CHAT.md`, `PROJECT_STATUS.md` 읽기
-  - 배포된 URL을 fetch 또는 Chrome으로 열어서 실제 동작 확인
-  - 콘솔 에러, UI 깨짐, 데이터 표시 문제 점검
-  - 문제 발견 시 `PROJECT_STATUS.md`의 BUGS 섹션에 추가
-  - 개선 제안은 IDEAS 섹션에 추가
-  - `CHAT.md`에 "이번에 발견한 거" 보고
-  - 변경사항 git commit + push
-- **금지**: 코드 직접 수정 금지, IDEAS는 강제하지 말고 제안만
+- **깨어나는 시간**: 4시간마다 +40분
+- **주 업무**: 배포된 https://game-sk.vercel.app/ 확인, 버그/개선 제안 등록
+- **금지**: 코드/데이터 직접 수정 금지
 
-## 2. 협업 규칙
+## 2. 영역 분리
 
-### 공유 파일들
-모든 에이전트의 단일 진실 공급원. 매번 깨어날 때 가장 먼저 읽어야 함.
+- **리서처**: `data/*.json`, `CHAT.md`, `PROJECT_STATUS.md`
+- **기획자**: `CHAT.md`, `PROJECT_STATUS.md`, `AGENTS.md`
+- **개발자**: `*.html`, `*.css`, `*.js` (단, `data/*` 제외), `CHAT.md`, `PROJECT_STATUS.md`
+- **QA**: `CHAT.md`, `PROJECT_STATUS.md`만 수정
 
-- `PROJECT_STATUS.md`: 현재 상태, TODO, 버그, 아이디어 (구조화된 정보)
-- `CHAT.md`: 에이전트들 간 실시간 대화 로그 (Slack 대체)
-- `AGENTS.md`: 이 협업 규칙 문서
+## 3. 작업 흐름
 
-구조:
 ```
-## 현재 단계
-Phase 1 (PC/콘솔 글로벌)
-
-## 완료한 기능
-- [x] 기본 게임 목록 표시
-- ...
-
-## 다음 TODO (우선순위 순)
-1. (기획자가 결정한 다음 작업)
-
-## 알려진 버그 (BUGS)
-- ...
-
-## 개선 아이디어 (IDEAS)
-- ...
-
-## 최근 변경 로그
-- 2026-05-27 14:00 [개발자] X 기능 추가
+매일 09:00  → 리서처: games.json 업데이트
+4시간:00    → 기획자: 다음 TODO 결정
+4시간:20    → 개발자: TODO 보고 코드 작성, push
+4시간:40    → QA: 배포된 사이트 점검
 ```
 
-### 작업 흐름
+## 4. data/games.json 스키마
+
+```json
+{
+  "schema_version": 1,
+  "last_updated": "ISO 날짜",
+  "last_researched_by": "...",
+  "categories": { "mobile_kr": "...", "pc_console_kr": "...", "global_aaa": "..." },
+  "games": [
+    {
+      "id": "고유-슬러그-2026",
+      "name_ko": "한국어명",
+      "name_en": "English",
+      "release_date": "2026-MM-DD",
+      "release_date_approx": false,
+      "category": "mobile_kr | pc_console_kr | global_aaa",
+      "platforms": ["PC", "PS5", ...],
+      "developer": "...",
+      "publisher": "...",
+      "description": "한 줄 설명",
+      "genres": ["RPG", ...],
+      "image_url": null,
+      "source_url": "출처 URL"
+    }
+  ]
+}
 ```
-기획자(정각) → 다음 TODO 결정
-   ↓
-개발자(:20) → TODO 보고 코드 작성, push
-   ↓
-QA(:40)    → 배포된 사이트 점검, 결과 보고
-   ↓ (다음 시간)
-기획자     → QA 결과 보고 다음 TODO 결정
-```
 
-### 절대 규칙
-1. **자기 영역만 손대기**: 기획자는 코드 안 만짐, 개발자는 임의 기획 안 함, QA는 코드 안 고침
-2. **한 번에 한 가지만**: 매 사이클당 한 가지 작은 변경만. 큰 거 하지 말 것
-3. **항상 PROJECT_STATUS.md 먼저 읽기**: 컨텍스트가 매번 새로 시작되므로, 이 파일이 유일한 기억
-4. **변경 로그 남기기**: 누가 언제 뭘 했는지 기록
-5. **막히면 STOP**: 3사이클 동안 같은 TODO에 진척이 없으면 그 작업을 IDEAS로 옮기고 다른 거 시도
+## 5. Phase 1 목표
 
-## 3. 종료 조건
+- [x] 정적 JSON 기반 데이터 구조
+- [x] 카테고리/플랫폼/기간 필터
+- [x] D-Day 표시 + 출시 임박 강조
+- [ ] 게임 카드 클릭 시 상세 모달
+- [ ] 검색 기능 (게임명)
+- [ ] 위시리스트 (localStorage)
+- [ ] 카테고리별 개수 뱃지
 
-다음 중 하나라도 만족하면 자동 종료 (스케줄 작업 비활성화):
-- Phase 1 모든 목표 완료
-- 50 사이클 도달
-- 3사이클 연속 같은 자리에서 멈춤 (산으로 가는 징조)
+## 6. 절대 규칙
 
-## 4. Phase 1 목표 (이걸로 시작)
-
-기본 게임 출시
+1. 자기 영역만 손대기
+2. 한 사이클에 한 가지만
+3. 항상 PROJECT_STATUS.md, CHAT.md 먼저 읽기
+4. 3사이클 동안 같은 자리면 IDEAS로 이동
