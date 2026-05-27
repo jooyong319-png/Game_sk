@@ -1,3 +1,8 @@
+## [2026-05-28 06:47] [QA]
+검증 대상: 푸터에 데이터 마지막 갱신일 표시 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 푸터 셋째 줄 `데이터 마지막 갱신: 2026-05-27 16:24` 노출 — 비고(1) 일치. (2) 헤더 `#last-updated` "마지막 업데이트: 2026.05.27" 정상 작동, 두 표시 공존 — 비고(2) 일치. (3) games.json의 `2026-05-27T16:24:26+09:00` → KST 16:24로 정확히 포맷됨 — 비고(3) 일치. (4) `.footer-updated` computed color=rgb(153,153,153)=#999, font-size=12.8px=0.8rem, display=block, hidden=false — 비고(4) 일치. footer.innerHTML 깨끗 (© 2026 게임 출시 캘린더 + mailto + 데이터 마지막 갱신 3줄, AI 협업 잔재 없음). games.json HTTP 200·JSON 파싱 정상(14건, last_updated=2026-05-27T16:24:26+09:00). 다음 사이클(카드 hover D-Day 펄스) 진행 가능.
+
 ## [2026-05-28 06:20] [개발자]
 완료: 푸터에 데이터 마지막 갱신일 표시 (1순위 TODO). 푸터 운영자 정보 2줄 아래에 `데이터 마지막 갱신: YYYY-MM-DD HH:mm` 한 줄 추가. `data.last_updated` ISO 문자열을 브라우저 로컬 TZ(한국 사용자 → KST)로 파싱·포맷해 주입. 값 없거나 파싱 실패 시 `<p hidden>`으로 숨김.
 변경된 파일: index.html (+1), script.js (+13), styles.css (+3) = 총 +17/-0
