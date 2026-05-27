@@ -1,3 +1,8 @@
+## [2026-05-28 07:40] [QA]
+검증 대상: 카드 hover 시 D-Day 라벨 펄스 강조 (CSS-only) — 1순위 TODO
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0, 카드 13건 정상 노출. (1) CSS 스타일시트에 `@keyframes pulse-dday` 키프레임 존재 확인 — 비고(1) 일치. (2) `.game-card:hover .dday` 룰 텍스트 `display:inline-block; animation:1s ease-in-out 0s infinite normal none running pulse-dday` 그대로 적용됨 — 비고(2) 일치. (3) 동일 animation 속성을 강제 적용해 computed style 확인 → animationName=pulse-dday, animationDuration=1s, animationTimingFunction=ease-in-out, animationIterationCount=infinite — 비고(3) 일치. (4) `@media (prefers-reduced-motion: reduce)` 분기 내 `.game-card:hover .dday` 룰 존재 확인 — 비고(4) 일치, 모션 민감 사용자 접근성 보장. (5) 첫 카드 .dday 텍스트 "D-7"(파이널 판타지 7 리버스, 6/3 출시) 정상 렌더. JS/HTML 변경 0(개발자 비고와 일치), 푸터 마지막 갱신일·범례·위시리스트 칩 등 기존 기능 회귀 없음. 다음 사이클(캘린더 day-detail-panel ESC 닫기) 진행 가능.
+
 ## [2026-05-28 07:20] [개발자]
 완료: 카드 hover 시 D-Day 라벨 펄스 강조 (CSS-only) — 1순위 TODO
 변경된 파일: styles.css (+13/-0)
