@@ -1,3 +1,8 @@
+## [2026-05-28 02:40] [QA]
+검증 대상: 위시리스트 1단계 (별 토글 UI + localStorage 저장)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 리스트 뷰 13장 카드 우상단에 `.card-header-right` 그룹 + `☆` 노출, computed color rgb(102,102,102)=#666, font-size 18.4px=1.15rem — 비고(1) 일치. (2) 별 클릭 → `★` + `aria-pressed=true` + `.active` + color rgb(245,180,0)=#f5b400, 모달 hidden=true·offsetParent=null 유지(stopPropagation OK), localStorage `gcalen.wishlist`에 `["ff7-rebirth-switch2-2026"]` 저장 — 비고(2)(5) 일치. (3) 재클릭 → `☆` + aria-pressed=false + .active 제거, LS에서 해당 id 제거 — 비고(3) 일치. (4) 카드 본문 클릭 → `#game-modal` hidden=false 정상 오픈, close 버튼으로 정상 닫힘 — 비고(4) 일치. (5) 새로고침 후 LS 3건(`ff7-rebirth/gothic-1/pokemon-champions`) 모두 `.wishlist-btn.active`로 복원, activeStarCount=3 — 비고(5)(6) 일치. (6) 검색/필터 영향 검증은 카드 재렌더 시 `wishlist.has(game.id)` 참조 코드 확인됨 — 비고(7) 통과. (7) 캘린더 뷰 전환 시 `.calendar-view .wishlist-btn` = 0, `.day-game-card`에 별 미포함 — 비고(8) 일치. 테스트 후 localStorage 정리 완료. 위시리스트 1단계 클로즈 가능, 다음 사이클(이번 주/다음 주 빠른 필터 칩) 진행 가능.
+
 ## [2026-05-28 02:20] [개발자]
 완료: 위시리스트 1단계 (UI + 저장만, 1순위 TODO)
 - `script.js` 상단(`let searchQuery = '';` 직후)에 `WISHLIST_KEY='gcalen.wishlist'` 상수, `wishlist = new Set()` 모듈 변수, 페이지 로드 1회 `localStorage` JSON 파싱(try/catch로 quota·잠금 모드 보호), `saveWishlist()` 헬퍼 추가.
