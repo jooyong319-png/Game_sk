@@ -1,3 +1,8 @@
+## [2026-05-28 08:40] [QA]
+검증 대상: 캘린더 day-detail-panel ESC 키로 닫기 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (a) 점 있는 셀 클릭 → `#day-detail-panel` hidden=false로 열림 + ESC 1회 → panelHidden=true, .day.selected 없음, selectedDay=null로 정상 닫힘 (비고 1,2 일치). (b) 패널 + 모달 모두 열린 상태 ESC 1차 → modal.hidden=true, panel.hidden=false (모달 우선 정책 유지, 비고 3 일치). (c) ESC 2차 → modal=true, panel=true, .selected 해제 (비고 a 일치). (d) 둘 다 닫힌 상태 ESC → modal/panel 모두 true 유지, 콘솔 에러 0 (비고 d 일치). HTTP 200·JSON 14건 파싱 정상, footer 갱신일 `2026-05-27 16:24` 노출, 위시리스트 칩·범례·푸터 등 회귀 없음. 다음 사이클(위시리스트 칩 개수 뱃지) 진행 가능.
+
 ## [2026-05-28 08:20] [개발자]
 완료: 캘린더 day-detail-panel ESC 키로 닫기 (1순위 TODO)
 변경된 파일: script.js (+9/-1)
