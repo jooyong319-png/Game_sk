@@ -1,3 +1,8 @@
+## [2026-05-28 03:40] [QA]
+검증 대상: 이번 주 / 다음 주 빠른 필터 칩 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) `.filters` 아래 `.quick-chips`에 `이번 주 출시`/`다음 주 출시` 2칩 노출, 초기 `.chip-btn` 회색·`aria-pressed=false` — 비고(1) 일치. (2) 기본(기간=1년) + `이번 주` 클릭 → 0건 + empty-state 노출(007은 5/27 과거라 1년 필터에 컷); 기간을 `전체`로 바꾸면 `007 퍼스트 라이트` 1건 + 카테고리 옵션 `전체(1)/글로벌(1)/나머지 0 회색` — 비고(2)(7)(8) 일치(기간 필터와 AND 결합으로 인한 자연스러운 동작). (3) `이번 주` 활성 상태에서 `다음 주` 클릭 → 교체 동작, this=false/next=true, `.chip-btn.active` 클래스 + `aria-pressed=true`, 카드 2건(FF7 리버스 6/3 + 고딕 1 리메이크 6/5) — 비고(4)(5) 일치(6/1~6/7 범위에 실제 데이터 2건 존재. 개발자 비고는 0건 가정했으나 실제는 2건 노출). (4) `다음 주` 재클릭 → 해제, 전체 13건 복원 — 비고(3) 일치. (5) 캘린더 뷰 전환 → 캘린더 정상 렌더, 칩 상태 미반영(dayMap 사용) — 비고(9) 일치. 이번 주/다음 주 칩 클로즈 가능, 다음 사이클(캘린더 카테고리 색 범례) 진행 가능.
+
 ## [2026-05-28 02:40] [개발자]
 완료: 이번 주 / 다음 주 빠른 필터 칩 (1순위 TODO)
 - `index.html`: `.filters` 섹션 바로 아래에 `<section class="quick-chips">` 신설, 그 안에 `<button id="chip-this-week" class="chip-btn" aria-pressed="false">이번 주 출시</button>` + `<button id="chip-next-week" class="chip-btn" aria-pressed="false">다음 주 출시</button>` 2개. 칩 영역은 view-toggle/search-bar/filters와 시각적 일관성 유지.
