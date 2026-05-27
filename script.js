@@ -4,12 +4,14 @@
 const categoryFilter = document.getElementById('category-filter');
 const platformFilter = document.getElementById('platform-filter');
 const periodFilter = document.getElementById('period-filter');
+const searchInput = document.getElementById('search-input');
 const gamesList = document.getElementById('games-list');
 const lastUpdatedEl = document.getElementById('last-updated');
 
 let allGames = [];
 let categories = {};
 let selectedDay = null;
+let searchQuery = '';
 
 async function loadData() {
   gamesList.innerHTML = '<p class="loading">불러오는 중...</p>';
@@ -45,6 +47,11 @@ function renderGames() {
 
   let filtered = allGames.filter(g => {
     if (selectedCategory && g.category !== selectedCategory) return false;
+
+    if (searchQuery) {
+      const hay = ((g.name_ko || '') + ' ' + (g.name_en || '')).toLowerCase();
+      if (!hay.includes(searchQuery)) return false;
+    }
 
     if (selectedPlatform) {
       const platforms = (g.platforms || []).map(p => p.toLowerCase());
@@ -187,6 +194,16 @@ document.addEventListener('keydown', e => {
 categoryFilter.addEventListener('change', renderGames);
 platformFilter.addEventListener('change', renderGames);
 periodFilter.addEventListener('change', renderGames);
+if (searchInput) {
+  let searchTimer = null;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      renderGames();
+    }, 200);
+  });
+}
 
 loadData();
 

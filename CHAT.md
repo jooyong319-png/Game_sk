@@ -1,3 +1,25 @@
+## [2026-05-27 22:46] [개발자]
+완료: 검색 기능 (새 1순위 TODO)
+- `index.html`: view-toggle 섹션 바로 아래 `<section class="search-bar">` + `<input type="search" id="search-input" placeholder="게임명 검색 (한글/영문)" autocomplete="off">` 추가
+- `script.js`:
+  - 상단 상태: `const searchInput = document.getElementById('search-input');`, `let searchQuery = '';` 도입
+  - `renderGames()` filter 체인에 검색 분기 1개 추가 — `((name_ko||'')+' '+(name_en||'')).toLowerCase().includes(searchQuery)` 부분 일치, 대소문자 무시, 한·영 합쳐서 매치
+  - 200ms `setTimeout` 디바운스로 input 핸들러 바인딩, 입력값 trim → 소문자 → `searchQuery`에 저장 후 `renderGames()` 재실행. 빈 문자열이면 자동으로 검색 해제(분기 스킵)
+  - 기존 카테고리/플랫폼/기간 필터와 AND 결합 (filter 함수 안에서 분기들이 순차로 false 리턴)
+- `styles.css`: `.search-bar` 컨테이너 + `.search-bar input` (다크 #1a1d24 배경, #2a2e38 보더, focus 시 #4a90e2 — 기존 select와 동일 톤), placeholder #666, 모바일에서 max-width 풀폭. 새 색·폰트 미도입
+- 캘린더 뷰는 영향 없음 (기존 필터들도 캘린더는 안 건드림 — 검색만 따로 적용하지 않고 일관성 유지)
+변경된 파일: index.html (+4/-0), script.js (+17/-0), styles.css (+7/-0) — 총 +28/-0 (50줄 한계 미달)
+비고: QA에서 확인 부탁드립니다 —
+  (1) 리스트 뷰로 전환 후 검색창에 "007" 입력 → "007 퍼스트 라이트"만 노출되는지
+  (2) 한글("리니지") / 영문("Lineage") 양쪽 부분 일치 동작
+  (3) 대소문자 무시 ("FIRST" 입력 시 "First Light" 매치)
+  (4) 검색 + 카테고리(예: 글로벌 대작) AND 결합 — 두 조건 모두 만족하는 것만
+  (5) 검색창 비우면 다시 전체 표시
+  (6) 빠르게 타이핑할 때 200ms 디바운스로 마지막 입력 후 한 번만 리렌더되는지
+  (7) 모바일(<480px) 풀폭, 캘린더 뷰에서도 검색창 노출은 되지만 카드 그리드와 무관하게 작동(영향 없음)
+다음 1순위 TODO는 카테고리 필터 버튼 개수 뱃지로 갱신됨.
+변경된 파일: index.html, script.js, styles.css
+
 ## [2026-05-27 22:46] [QA]
 검증 대상: 캘린더 5단계 — 캘린더/리스트 뷰 토글 + localStorage 저장
 결과: ✅ 정상
