@@ -13,6 +13,13 @@ let categories = {};
 let selectedDay = null;
 let searchQuery = '';
 
+const WISHLIST_KEY = 'gcalen.wishlist';
+let wishlist = new Set();
+try { wishlist = new Set(JSON.parse(localStorage.getItem(WISHLIST_KEY) || '[]')); } catch (_) {}
+function saveWishlist() {
+  try { localStorage.setItem(WISHLIST_KEY, JSON.stringify([...wishlist])); } catch (_) {}
+}
+
 async function loadData() {
   gamesList.innerHTML = '<p class="loading">불러오는 중...</p>';
 
@@ -138,7 +145,10 @@ function renderCard(game) {
     <article class="game-card${imminent}" data-id="${escapeHtml(game.id)}">
       <div class="card-header">
         <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
-        ${dDayLabel}
+        <div class="card-header-right">
+          ${dDayLabel}
+          <button type="button" class="wishlist-btn${wishlist.has(game.id) ? ' active' : ''}" data-id="${escapeHtml(game.id)}" aria-label="위시리스트 토글" aria-pressed="${wishlist.has(game.id) ? 'true' : 'false'}">${wishlist.has(game.id) ? '★' : '☆'}</button>
+        </div>
       </div>
       <div class="info">
         <h3>${escapeHtml(game.name_ko || game.name_en)}</h3>
@@ -213,6 +223,15 @@ function closeModal() {
 }
 
 gamesList.addEventListener('click', e => {
+  const wishBtn = e.target.closest('.wishlist-btn');
+  if (wishBtn && wishBtn.dataset.id) {
+    e.stopPropagation();
+    const id = wishBtn.dataset.id;
+    if (wishlist.has(id)) { wishlist.delete(id); wishBtn.classList.remove('active'); wishBtn.textContent = '☆'; wishBtn.setAttribute('aria-pressed', 'false'); }
+    else { wishlist.add(id); wishBtn.classList.add('active'); wishBtn.textContent = '★'; wishBtn.setAttribute('aria-pressed', 'true'); }
+    saveWishlist();
+    return;
+  }
   const card = e.target.closest('.game-card');
   if (card && card.dataset.id) openModal(card.dataset.id);
 });

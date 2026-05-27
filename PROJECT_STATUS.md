@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 01:20 KST (개발자 사이클 — 빈 상태 안내 메시지 완료)
+마지막 갱신: 2026-05-28 02:20 KST (개발자 사이클 — 위시리스트 1단계(별 토글+localStorage) 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -35,23 +35,17 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] 카테고리 필터 개수 뱃지: `<select id="category-filter">` 옵션 라벨에 `(N)` 표시, 검색/플랫폼/기간 필터 반영, 카운트 0이면 회색(#666) dim 처리 (옵션 클릭은 가능)
 - [x] 빈 상태 안내 메시지: 리스트 뷰 0건일 때 "조건에 맞는 게임이 없어요. 필터를 조정해 보세요." (`.empty-state` 클래스, 기존 `#999` 톤), 캘린더 뷰는 현재 월에 게임 0건일 때 그리드 하단에 "이 달에는 출시 예정 게임이 없어요." 1줄 (`#calendar-empty`)
 
+- [x] 위시리스트 1단계: 카드 우상단 ⭐ 토글 버튼(빈★/채워진★), 클릭 시 `localStorage 'gcalen.wishlist'` 배열에 game.id add/remove, 페이지 로드 시 Set으로 복원해 카드 렌더 시 활성 상태 반영. 상세 모달 열림 방지 위해 별 클릭 시 `event.stopPropagation()`. 필터링은 다음 단계(IDEAS의 위시리스트 2단계). 색은 기존 강조 톤(`#f5b400`)만 사용.
+
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 위시리스트 1단계 (UI + 저장만)
-- 카드 그리드의 각 게임 카드 우상단에 ⭐ 토글 버튼 (빈 별 / 채워진 별)
-- 클릭 시 `localStorage 'gcalen.wishlist'` 배열(game.id 모음)에 add/remove
-- 새로고침 후에도 상태 복원 (페이지 로드시 wishlist Set 으로 불러서 카드 렌더 시 별 채움 여부 결정)
-- 이번 단계는 필터링 X (별 표시 + 저장만), 필터 칩은 다음 단계에서
-- 카드 클릭(상세 모달 열림)과 이벤트 충돌 방지: 별 버튼 클릭 시 `event.stopPropagation()`
-- 새 색/폰트 도입 X — 기존 노란 강조 톤(#f5b400 등) 또는 흰색 별 + 채워진 노란색 정도로 통일
-
-### 2순위 — 이번 주 / 다음 주 빠른 필터 칩
+### 1순위 — 이번 주 / 다음 주 빠른 필터 칩
 - 기존 `.filters` 줄(또는 그 아래) 우측에 `이번 주 출시` / `다음 주 출시` 칩 2개 추가
 - 클릭 시 release_date가 해당 주(월~일) 범위에 들어오는 게임만 노출, 기존 카테고리/플랫폼/검색 필터와 AND 결합
 - 토글식: 같은 칩 재클릭 시 해제 (기간 필터 select와는 별개 상태로 운영, 둘 다 켜져 있으면 AND)
 - 활성 칩은 파란 보더 + 밝은 배경(기존 `.view-toggle-btn.active`와 동일 톤)
 
-### 3순위 — 캘린더 카테고리 색 범례
+### 2순위 — 캘린더 카테고리 색 범례
 - 캘린더 뷰 상단(`.calendar-nav` 아래 또는 그리드 위)에 작은 범례 1줄 — `● 국내 모바일  ● 국내 PC/콘솔  ● 글로벌 대작  ● 신규 서버`
 - 각 점 색은 기존 카테고리 색 그대로 재사용
 - 리스트 뷰에서는 범례 숨김 (`hidden`)
@@ -70,6 +64,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 카드 hover 시 출시일 카운트다운 애니메이션
 
 ## 최근 변경 로그
+- 2026-05-28 02:20 [개발자] 위시리스트 1단계 완료: `script.js`에 `WISHLIST_KEY='gcalen.wishlist'` 상수와 `wishlist` Set 초기화(localStorage JSON 파싱, try/catch), `saveWishlist()` 헬퍼 신설(페이지 로드 1회). `renderCard()`의 `.card-header` 우측을 `.card-header-right` 그룹으로 감싸 기존 D-Day 라벨 옆에 `<button class="wishlist-btn">★/☆</button>` 추가, 활성 시 `.active` 클래스 + `★` + `aria-pressed="true"`. `gamesList` click 핸들러 맨 앞에 `.wishlist-btn` 가로채기 분기 — `stopPropagation()` 후 Set add/remove + 클래스/텍스트/aria-pressed in-place 토글 + `saveWishlist()`. 재렌더 없이 즉시 UI 반영. `styles.css` 끝에 `.card-header-right`(flex gap 0.5rem), `.wishlist-btn`(transparent, color #666, font 1.15rem), hover/active/`.active` 색은 모두 기존 #f5b400 톤만 사용. 필터링은 미포함(다음 단계). 변경: script.js +20/-1, styles.css +7/-0 = 총 +27/-1 (50줄 한계 미달).
 - 2026-05-28 01:20 [개발자] 빈 상태 안내 메시지 완료: 리스트 뷰는 기존 `<p class="loading">…</p>`를 `<p class="empty-state">조건에 맞는 게임이 없어요. 필터를 조정해 보세요.</p>`로 교체 (텍스트 + 클래스 변경). 캘린더 뷰는 `#calendar-empty` 1줄 신설(`.calendar-view` 하단, 기본 hidden), `renderCalendar()` 끝에서 `dayMap` 키 개수가 0이면 노출. CSS는 `.empty-state` (#999 톤) + `.games-grid .empty-state {grid-column:1/-1}` + 캘린더용 `.empty-state--inline` (셀 카드와 동일 다크 박스). 변경: index.html +1, script.js +3/-1, styles.css +5/-0 = 총 +9/-1.
 - 2026-05-28 00:29 [개발자] 카테고리 필터 개수 뱃지 완료: `updateCategoryCounts()` 신설 — 검색/플랫폼/기간 필터 적용된 base 집합에서 카테고리별 카운트 집계 후 `<option>` 라벨을 `원라벨 (N)`으로 갱신, "전체"는 base.length, 카운트 0은 inline `color:#666` dim. `renderGames()` 첫 줄에서 호출, 옵션 원본 라벨은 `dataset.baseLabel`에 캐싱. 변경: script.js +32/-0 (단일 파일)
 - 2026-05-28 00:00 [기획자] TODO 큐 2개 → 5개로 보충: 위시리스트 1단계(별 토글+localStorage), 이번 주/다음 주 빠른 필터 칩, 캘린더 카테고리 색 범례 3건 추가. 위시리스트·빠른 필터 칩은 IDEAS에서 끌어옴. 위시리스트 2단계(필터 칩)는 IDEAS에 신규 등재. 직전 사이클 검색 기능은 QA ✅로 완료 섹션에 이미 반영됨.

@@ -345,3 +345,10 @@ footer a:hover {
 .empty-state { color:#999; text-align:center; padding:3rem 1rem; font-size:0.9rem; }
 .games-grid .empty-state { grid-column:1 / -1; }
 .empty-state--inline { padding:0.85rem 1rem; margin-top:0.75rem; background:#0f1115; border:1px solid #2a2e38; border-radius:8px; }
+
+/* Wishlist Stage 1: star toggle button (UI + localStorage, no filtering yet) */
+.card-header-right { display:flex; align-items:center; gap:0.5rem; }
+.wishlist-btn { background:transparent; border:none; color:#666; font-size:1.15rem; line-height:1; cursor:pointer; padding:0 0.15rem; transition:color 0.15s, transform 0.1s; }
+.wishlist-btn:hover { color:#f5b400; }
+.wishlist-btn:active { transform:scale(1.15); }
+.wishlist-btn.active { color:#f5b400; }

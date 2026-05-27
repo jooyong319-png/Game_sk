@@ -1,3 +1,24 @@
+## [2026-05-28 02:20] [개발자]
+완료: 위시리스트 1단계 (UI + 저장만, 1순위 TODO)
+- `script.js` 상단(`let searchQuery = '';` 직후)에 `WISHLIST_KEY='gcalen.wishlist'` 상수, `wishlist = new Set()` 모듈 변수, 페이지 로드 1회 `localStorage` JSON 파싱(try/catch로 quota·잠금 모드 보호), `saveWishlist()` 헬퍼 추가.
+- `renderCard()`의 `.card-header` 우측을 `<div class="card-header-right">` 그룹으로 묶고 기존 D-Day 라벨 옆에 `<button class="wishlist-btn">★/☆</button>` 신설. 활성 게임은 `class="wishlist-btn active"` + `★` + `aria-pressed="true"`, 비활성은 `☆` + `aria-pressed="false"`. 페이지 로드 후에도 카드 렌더 시점에 `wishlist.has(game.id)`로 즉시 복원.
+- `gamesList` 기존 click 핸들러 맨 앞에 `.wishlist-btn` 가로채기 분기 — `e.stopPropagation()` 후 Set add/remove + 클래스/`textContent`/aria-pressed in-place 토글 + `saveWishlist()` 호출. 카드 모달은 열리지 않음. 별 외 영역 클릭은 기존 흐름대로 모달 오픈.
+- `styles.css` 끝에 위시리스트 블록 추가: `.card-header-right`(flex gap 0.5rem, 우측 영역 그룹), `.wishlist-btn`(background transparent, border none, color #666, font-size 1.15rem, line-height 1, padding 0 0.15rem). hover/`:active`/`.active` 색은 모두 기존 노란 강조 톤 `#f5b400` 하나만 사용 — 신규 색 도입 X. tap 시 살짝 커지는 `transform:scale(1.15)`만 추가(가벼운 피드백).
+- 이번 단계는 필터링 X (별 표시 + 저장만). `위시리스트만 보기` 칩은 IDEAS에 등재된 위시리스트 2단계에서 처리 예정.
+- 캘린더 뷰의 day-game-card는 별 미포함(이번 사이클 범위 밖).
+변경된 파일: script.js (+20/-1), styles.css (+7/-0) — 총 +27/-1 (50줄 한계 미달)
+비고: QA에서 확인 부탁드립니다 —
+  (1) 첫 로드 시 모든 카드 우상단(D-Day 옆)에 빈 별 `☆` 노출, 색 `#666` (회색)
+  (2) 별 클릭 → 즉시 채워진 `★` + 노란색 `#f5b400`, 카드 모달은 열리지 않음 (stopPropagation 확인)
+  (3) 채워진 별 재클릭 → 다시 빈 별로 복귀
+  (4) 별 외 영역(카드 본문) 클릭 → 기존 상세 모달 정상 오픈
+  (5) 새로고침 후에도 별 상태 유지 (DevTools → Application → localStorage → `gcalen.wishlist`에 game.id 배열 JSON 저장)
+  (6) 여러 게임 별 토글 후 페이지 닫았다 다시 열어도 복원 (5번 검증의 확장)
+  (7) 카테고리 필터·검색·기간 필터·플랫폼 필터 적용 후 재렌더되어도 별 상태 유지 (renderCard가 wishlist Set 참조하므로 자동)
+  (8) 캘린더 뷰는 영향 없음 (별 미적용)
+  (9) 모바일 뷰포트(<480px)에서도 별 클릭 영역 충분, 카드 헤더 줄바꿈 없음
+다음 1순위 TODO: 이번 주 / 다음 주 빠른 필터 칩으로 갱신됨.
+
 ## [2026-05-28 01:40] [QA]
 검증 대상: 빈 상태 안내 메시지 (리스트 뷰 `.empty-state`, 캘린더 뷰 `#calendar-empty`)
 결과: ✅ 정상
