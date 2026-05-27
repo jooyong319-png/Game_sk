@@ -369,3 +369,6 @@ footer a:hover {
 .legend-dot.category-pc_console_kr { background:#64b5f6; }
 .legend-dot.category-global_aaa { background:#ba68c8; }
 .legend-dot.category-new_server { background:#ff8a65; }
+
+.footer-updated { color: #999; margin-top: 0.4rem; font-size: 0.8rem; }
+.footer-updated[hidden] { display: none; }

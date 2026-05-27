@@ -7,6 +7,8 @@ const periodFilter = document.getElementById('period-filter');
 const searchInput = document.getElementById('search-input');
 const gamesList = document.getElementById('games-list');
 const lastUpdatedEl = document.getElementById('last-updated');
+const footerUpdatedEl = document.getElementById('footer-updated-date');
+const footerUpdatedWrap = footerUpdatedEl ? footerUpdatedEl.closest('.footer-updated') : null;
 
 let allGames = [];
 let categories = {};
@@ -45,6 +47,17 @@ async function loadData() {
     if (lastUpdatedEl && data.last_updated) {
       const d = new Date(data.last_updated);
       lastUpdatedEl.textContent = `마지막 업데이트: ${formatDate(d)}`;
+    }
+
+    if (footerUpdatedWrap && footerUpdatedEl) {
+      const d = data.last_updated ? new Date(data.last_updated) : null;
+      if (d && !isNaN(d.getTime())) {
+        const pad = n => String(n).padStart(2, '0');
+        footerUpdatedEl.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        footerUpdatedWrap.hidden = false;
+      } else {
+        footerUpdatedWrap.hidden = true;
+      }
     }
 
     renderGames();
