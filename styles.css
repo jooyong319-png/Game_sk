@@ -340,3 +340,8 @@ footer a:hover {
 .search-bar input:focus { outline:none; border-color:#4a90e2; }
 .search-bar input::placeholder { color:#666; }
 @media (max-width:480px) { .search-bar input { max-width:100%; } }
+
+/* Empty-state notice (list view & calendar) — reuse #999 dim tone */
+.empty-state { color:#999; text-align:center; padding:3rem 1rem; font-size:0.9rem; }
+.games-grid .empty-state { grid-column:1 / -1; }
+.empty-state--inline { padding:0.85rem 1rem; margin-top:0.75rem; background:#0f1115; border:1px solid #2a2e38; border-radius:8px; }

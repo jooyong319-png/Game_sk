@@ -1,3 +1,20 @@
+## [2026-05-28 01:20] [개발자]
+완료: 빈 상태 안내 메시지 (1순위 TODO)
+- 리스트 뷰: 필터/검색 결과 0건일 때 `gamesList.innerHTML`을 `<p class="loading">조건에 맞는 게임이 없어요. 필터를 바꿔보세요.</p>` → `<p class="empty-state">조건에 맞는 게임이 없어요. 필터를 조정해 보세요.</p>`로 교체 (TODO 명세 문구 그대로). 클래스도 `loading` → `empty-state`로 분리해 의미 분명히.
+- 캘린더 뷰: `index.html`의 `.calendar-view` 내부, `#day-detail-panel` 바로 아래에 `<p id="calendar-empty" class="empty-state empty-state--inline" hidden>이 달에는 출시 예정 게임이 없어요.</p>` 추가. `renderCalendar()` 끝에서 그 월의 `dayMap` 키 개수가 0이면 `hidden=false`로 노출, 1개 이상이면 다시 hidden=true. 셀 패널의 빈 날짜 안내(`.day-empty`)와는 독립 동작.
+- `styles.css` 말미에 `.empty-state` (color:#999, padding:3rem 1rem, center), `.games-grid .empty-state { grid-column:1/-1 }`(리스트 그리드 풀폭), `.empty-state--inline` (캘린더용: padding 줄이고 셀 카드와 동일한 다크 박스 톤 — #0f1115 배경, #2a2e38 보더, radius 8px) 3블록 추가. 새 색·폰트 도입 X, 기존 `#999` 흐린 톤 그대로 재사용.
+- 캘린더는 필터를 적용하지 않으므로 `dayMap` 기준만으로 충분. 리스트 뷰의 0건 판정은 기존 filter 체인이 그대로 처리.
+변경된 파일: index.html (+1/-0), script.js (+3/-1), styles.css (+5/-0) — 총 +9/-1 (50줄 한계 미달)
+비고: QA에서 확인 부탁드립니다 —
+  (1) 리스트 뷰에서 카테고리=한국 MMO 신규 서버 단독 선택 → "조건에 맞는 게임이 없어요. 필터를 조정해 보세요." 한 줄 노출 (현재 데이터셋에서 0건)
+  (2) 같은 시나리오에서 검색창에 임의 문자열(예: "zzzz") 입력 → 동일 메시지 노출
+  (3) 필터/검색 해제(전체 + 검색 비움) → 메시지 사라지고 카드 그리드 복원
+  (4) 캘린더 뷰에서 다음/이전 달 이동(예: 2027년 12월처럼 데이터 없는 달) → 그리드 아래에 "이 달에는 출시 예정 게임이 없어요." 1줄 노출, 셀에 점 표시도 없음
+  (5) 데이터 있는 달(예: 2026년 5월·6월)로 돌아오면 calendar-empty 안내 자동으로 숨김
+  (6) 캘린더 셀 클릭 → 빈 날짜는 기존 "이 날짜에 출시 예정 게임 없음"(.day-empty) 그대로, calendar-empty와 별도 동작
+  (7) 색/폰트는 모두 기존 `#999` 톤 그대로, 신규 팔레트 없음 (개발자 도구로 색 확인 시 #999/#0f1115/#2a2e38만 사용)
+다음 1순위 TODO: 위시리스트 1단계 (UI + 저장만)로 갱신됨.
+
 ## [2026-05-28 00:40] [QA]
 검증 대상: 카테고리 필터 개수 뱃지 (`updateCategoryCounts()`, `<option>` 라벨에 `(N)` 표시, 0은 dim)
 결과: ✅ 정상

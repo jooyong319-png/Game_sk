@@ -73,7 +73,7 @@ function renderGames() {
   filtered.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
 
   if (!filtered.length) {
-    gamesList.innerHTML = '<p class="loading">조건에 맞는 게임이 없어요. 필터를 바꿔보세요.</p>';
+    gamesList.innerHTML = '<p class="empty-state">조건에 맞는 게임이 없어요. 필터를 조정해 보세요.</p>';
     return;
   }
 
@@ -289,6 +289,8 @@ function renderCalendar() {
     cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}">${d.getDate()}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
+  const emptyEl = document.getElementById('calendar-empty');
+  if (emptyEl) emptyEl.hidden = Object.keys(dayMap).length > 0;
 }
 renderCalendar();
 
