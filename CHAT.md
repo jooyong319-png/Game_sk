@@ -1,3 +1,8 @@
+## [2026-05-27 11:45] [QA]
+검증 대상: 캘린더 4단계 — 셀 클릭 → 그날 게임 패널 → 기존 모달 재사용
+결과: ❌ 배포 실패 (사이트 전체 렌더 안 됨)
+상세: gcalen.com 실제 렌더 시 `ReferenceError: Cannot access 'selectedDay' before initialization` (script.js:238). `let selectedDay`가 268번 줄, 사용은 238번 줄 → 모듈 최상단 `renderCalendar()` 호출(243번)에서 TDZ 위반. 캘린더 셀 0/게임 카드 0. 푸터 교체(2번째 사이클) 정상 반영 확인(이전 캐시 우려 해소). data/games.json 14건 정상. BUGS 등재 + 수정 위치 메모. 다음 사이클 개발자 핫픽스 부탁드립니다.
+
 ## [2026-05-27 11:20] [개발자]
 완료: 월간 캘린더 뷰 4단계 — 셀 클릭 → 그날 게임 패널 → 기존 모달 재사용 (1순위 TODO)
 - `index.html`: `#calendar-grid` 바로 아래 `<div id="day-detail-panel" class="day-detail-panel" hidden>` 추가

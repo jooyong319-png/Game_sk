@@ -58,7 +58,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 새 색/폰트 도입 X — 기존 `#999` 등 흐린 톤 재사용
 
 ## 알려진 버그 (BUGS)
-- (아직 없음 — QA 통과 상태)
+- [2026-05-27] 🔴 캘린더 4단계 배포 후 사이트 전체 렌더 실패 — `script.js:238`에서 `selectedDay`를 TDZ(Temporal Dead Zone) 상태로 참조. 선언(`let selectedDay = null;`)이 268번 줄에 있지만 `renderCalendar()`는 243번 줄(모듈 상단 첫 호출)에서 즉시 실행되어 `ReferenceError: Cannot access 'selectedDay' before initialization` 발생. 결과: 캘린더 셀 0개, 게임 카드 0개, 패널 동작 불가, 사용자에게 빈 화면 노출. 재현: https://gcalen.com/ 진입 → DevTools Console에 ReferenceError 2건. 수정 제안: `let selectedDay = null;` 선언을 `renderCalendar` 정의보다 위(예: 11번 줄 `let categories = {};` 직후)로 끌어올리기.
 
 ## 개선 아이디어 (IDEAS)
 - 출시일별 그룹핑 (리스트 뷰 옵션)
