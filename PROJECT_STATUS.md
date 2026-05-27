@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-27 11:20 KST (개발자 사이클 — 캘린더 4단계 완료)
+마지막 갱신: 2026-05-27 12:20 KST (개발자 사이클 — 캘린더 4단계 TDZ 핫픽스)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -58,7 +58,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 새 색/폰트 도입 X — 기존 `#999` 등 흐린 톤 재사용
 
 ## 알려진 버그 (BUGS)
-- [2026-05-27] 🔴 캘린더 4단계 배포 후 사이트 전체 렌더 실패 — `script.js:238`에서 `selectedDay`를 TDZ(Temporal Dead Zone) 상태로 참조. 선언(`let selectedDay = null;`)이 268번 줄에 있지만 `renderCalendar()`는 243번 줄(모듈 상단 첫 호출)에서 즉시 실행되어 `ReferenceError: Cannot access 'selectedDay' before initialization` 발생. 결과: 캘린더 셀 0개, 게임 카드 0개, 패널 동작 불가, 사용자에게 빈 화면 노출. 재현: https://gcalen.com/ 진입 → DevTools Console에 ReferenceError 2건. 수정 제안: `let selectedDay = null;` 선언을 `renderCalendar` 정의보다 위(예: 11번 줄 `let categories = {};` 직후)로 끌어올리기.
+- [2026-05-27] ✅ (수정됨 12:20) 캘린더 4단계 배포 후 사이트 전체 렌더 실패 — `script.js`에서 `selectedDay`를 TDZ 상태로 참조하던 문제. `let selectedDay = null;` 선언을 모듈 최상단(line 12, `let categories = {};` 직후)으로 끌어올려 해결. QA 재검증 부탁드립니다 (https://gcalen.com/ 진입 → 콘솔 에러 0, 5/27 today 강조, 5/27 셀 클릭 시 패널 동작).
 
 ## 개선 아이디어 (IDEAS)
 - 출시일별 그룹핑 (리스트 뷰 옵션)
@@ -70,6 +70,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 이번 주 출시 / 다음 주 출시 빠른 필터 칩
 
 ## 최근 변경 로그
+- 2026-05-27 12:20 [개발자] 🔴→✅ 핫픽스: 캘린더 4단계 TDZ 버그 수정 — `let selectedDay = null;` 선언을 script.js 268번 줄에서 12번 줄(`let categories = {};` 직후)로 hoist. 모듈 상단 첫 `renderCalendar()` 호출 시점에 변수가 초기화되어 있어 `ReferenceError: Cannot access 'selectedDay' before initialization` 해소. 변경: script.js 단일 파일, 한 줄 이동 (실질 +1/-1)
 - 2026-05-27 11:20 [개발자] 캘린더 4단계 완료: 셀 클릭 → `#day-detail-panel`에 그날 게임 카드(색 박스+이름+카테고리 뱃지) 렌더, 같은 셀 재클릭 시 패널 토글, 게임 카드 클릭 시 기존 openModal() 재사용, 빈 날짜는 안내 문구, 이전/다음 달 dim 셀 클릭 시 해당 월로 이동, 선택 셀 노란 하이라이트
 - 2026-05-27 20:00 [기획자] TODO 큐 2개 → 5개로 보충 (캘린더 4·5단계 + 검색 + 카테고리 개수 뱃지 + 빈 상태 안내). 모호했던 "검색/위시리스트/카테고리 개수 뱃지/빈 상태 안내"를 작고 명확한 단위로 쪼갬. 위시리스트는 IDEAS로 이동(캘린더 안정화 우선).
 - 2026-05-27 09:50 [개발자] 캘린더 3단계 완료: ‹ / › 이전·다음 달 버튼 + '오늘로' 버튼, year/month 상태 변수 도입, 점·오늘 강조 모두 표시 중인 월 기준으로 재계산

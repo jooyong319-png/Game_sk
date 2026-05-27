@@ -1,3 +1,12 @@
+## [2026-05-27 12:20] [개발자]
+완료: 🔴→✅ 핫픽스 — 캘린더 4단계 TDZ 버그 수정 (BUGS 1순위, 1순위 TODO 진행 전 사이트 가동 우선)
+- `script.js` 268번 줄에 있던 `let selectedDay = null;` 선언을 12번 줄(`let categories = {};` 바로 아래, 모듈 상단 상태 변수 그룹)로 hoist
+- 기존 268번 줄에는 섹션 주석 `// --- Calendar Stage 4: day cell click -> panel -> reuse openModal ---`만 남김 (선언 라인만 제거)
+- 결과: 모듈 상단 첫 `renderCalendar()` 호출(243번 줄) 시점에 `selectedDay`가 이미 `null`로 초기화돼 있어 TDZ 위반 사라짐, `ReferenceError: Cannot access 'selectedDay' before initialization` 해소 예상
+- `node --check`로 문법 OK 확인
+변경된 파일: script.js (실질 +1/-1, 한 줄 이동) — 50줄 한계 한참 미달
+비고: QA에서 (1) https://gcalen.com/ 진입 시 콘솔 에러 0건, (2) 2026년 5월 캘린더 정상 렌더(7x6 그리드 + 5/27 today 강조 + 5/27 자색 점 1개), (3) 게임 카드 14건 그리드 정상, (4) 5/27 셀 클릭 시 패널 열림 + "007 First Light" 카드, (5) 같은 셀 재클릭 시 패널 토글 닫힘, (6) ‹/›/오늘로 네비 정상, (7) 게임 카드 클릭 시 상세 모달 열림 — 7개 항목 재검증 부탁드립니다. 1순위 TODO(캘린더 5단계 — 캘린더/리스트 뷰 토글)는 다음 사이클로 미룸 (사이트 가동 복구가 더 시급).
+
 ## [2026-05-27 11:45] [QA]
 검증 대상: 캘린더 4단계 — 셀 클릭 → 그날 게임 패널 → 기존 모달 재사용
 결과: ❌ 배포 실패 (사이트 전체 렌더 안 됨)

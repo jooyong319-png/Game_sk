@@ -9,6 +9,7 @@ const lastUpdatedEl = document.getElementById('last-updated');
 
 let allGames = [];
 let categories = {};
+let selectedDay = null;
 
 async function loadData() {
   gamesList.innerHTML = '<p class="loading">불러오는 중...</p>';
@@ -265,7 +266,6 @@ if (calTodayBtn) calTodayBtn.addEventListener('click', () => {
 });
 
 // --- Calendar Stage 4: day cell click -> panel -> reuse openModal ---
-let selectedDay = null;
 const dayPanel = document.getElementById('day-detail-panel');
 function renderDayPanel(iso) {
   if (!dayPanel) return;
