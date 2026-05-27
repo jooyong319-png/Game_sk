@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게임 출시 캘린더</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🎮 게임 출시 캘린더</h1>
+    <p class="subtitle">앞으로 출시될 게임들을 한눈에</p>
+  </header>
+
+  <main>
+    <section class="filters">
+      <label>
+        플랫폼:
+        <select id="platform-filter">
+          <option value="">전체</option>
+          <option value="4">PC</option>
+          <option value="187">PlayStation 5</option>
+          <option value="186">Xbox Series X/S</option>
+          <option value="7">Nintendo Switch</option>
+        </select>
+      </label>
+      <label>
+        기간:
+        <select id="period-filter">
+          <option value="30">앞으로 30일</option>
+          <option value="90">앞으로 90일</option>
+          <option value="365">앞으로 1년</option>
+        </select>
+      </label>
+    </section>
+
+    <section id="games-list" class="games-grid">
+      <p class="loading">불러오는 중...</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>데이터 출처: RAWG API · 3명의 AI가 협업해서 만드는 사이트</p>
+  </footer>
+
+  <script src="/script.js"></script>
+</body>
+</html>

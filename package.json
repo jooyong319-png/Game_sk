@@ -1,0 +1,10 @@
+{
+  "name": "game-release-calendar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "3명의 AI Claude가 협업해서 만드는 게임 출시 캘린더",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  }
+}
