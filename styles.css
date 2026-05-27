@@ -287,3 +287,12 @@ body.modal-open { overflow: hidden; }
 .calendar-grid .day.other-month { opacity:0.35; }
 .calendar-grid .day.today { border-color:#4a90e2; background:rgba(74,144,226,0.15); color:#fff; font-weight:700; }
 @media (max-width:480px) { .calendar-grid .day { min-height:44px; font-size:0.75rem; padding:0.3rem; } }
+
+footer a {
+  color: #888;
+  text-decoration: none;
+  border-bottom: 1px dotted #555;
+}
+footer a:hover {
+  color: #aaa;
+}
