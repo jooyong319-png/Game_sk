@@ -234,7 +234,9 @@ function renderCalendar() {
         dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}</div>`;
       }
     }
-    cells += `<div class="${cls.join(' ')}">${d.getDate()}${dots}</div>`;
+    const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if (selectedDay === iso && !isOther) cls.push('selected');
+    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}">${d.getDate()}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
 }
@@ -262,3 +264,39 @@ if (calTodayBtn) calTodayBtn.addEventListener('click', () => {
   renderCalendar();
 });
 
+// --- Calendar Stage 4: day cell click -> panel -> reuse openModal ---
+let selectedDay = null;
+const dayPanel = document.getElementById('day-detail-panel');
+function renderDayPanel(iso) {
+  if (!dayPanel) return;
+  const [y, m, d] = iso.split('-').map(Number);
+  const list = allGames.filter(g => g.release_date === iso);
+  const head = `<h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3>`;
+  if (!list.length) { dayPanel.innerHTML = head + '<p class="day-empty">이 날짜에 출시 예정 게임 없음</p>'; }
+  else {
+    dayPanel.innerHTML = head + list.map(g => {
+      const label = categories[g.category] || g.category;
+      return `<div class="day-game-card" data-id="${escapeHtml(g.id)}"><span class="day-game-color category-${g.category}"></span><span class="day-game-name">${escapeHtml(g.name_ko || g.name_en)}</span><span class="category-tag category-${g.category}">${escapeHtml(label)}</span></div>`;
+    }).join('');
+  }
+  dayPanel.hidden = false;
+}
+const calGrid = document.getElementById('calendar-grid');
+if (calGrid) calGrid.addEventListener('click', e => {
+  const cell = e.target.closest('.day');
+  if (!cell || !cell.dataset.date) return;
+  const iso = cell.dataset.date;
+  if (cell.dataset.other === '1') {
+    const [yy, mm] = iso.split('-').map(Number);
+    calendarYear = yy; calendarMonth = mm - 1;
+    selectedDay = null; if (dayPanel) dayPanel.hidden = true;
+    renderCalendar(); return;
+  }
+  if (selectedDay === iso) { selectedDay = null; if (dayPanel) dayPanel.hidden = true; }
+  else { selectedDay = iso; renderDayPanel(iso); }
+  renderCalendar();
+});
+if (dayPanel) dayPanel.addEventListener('click', e => {
+  const card = e.target.closest('.day-game-card');
+  if (card && card.dataset.id) openModal(card.dataset.id);
+});

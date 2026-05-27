@@ -310,3 +310,20 @@ footer a {
 footer a:hover {
   color: #aaa;
 }
+/* Stage 4: day detail panel */
+.calendar-grid .day { cursor:pointer; }
+.calendar-grid .day.selected { border-color:#f5a623; box-shadow:0 0 0 1px rgba(245,166,35,0.35); }
+.day-detail-panel { background:#0f1115; border:1px solid #2a2e38; border-radius:8px; padding:0.85rem 1rem; margin-top:0.75rem; }
+.day-detail-panel[hidden] { display:none; }
+.day-panel-title { font-size:0.95rem; color:#e6e6e6; margin:0 0 0.6rem; font-weight:600; }
+.day-empty { font-size:0.85rem; color:#999; }
+.day-game-card { display:flex; align-items:center; gap:0.6rem; padding:0.5rem 0.6rem; background:#1a1d24; border:1px solid #2a2e38; border-radius:6px; margin-bottom:0.4rem; cursor:pointer; transition:border-color 0.15s; }
+.day-game-card:hover { border-color:#4a90e2; }
+.day-game-card:last-child { margin-bottom:0; }
+.day-game-color { width:8px; height:24px; border-radius:2px; flex-shrink:0; }
+.day-game-color.category-mobile_kr { background:#81c784; }
+.day-game-color.category-pc_console_kr { background:#64b5f6; }
+.day-game-color.category-global_aaa { background:#ba68c8; }
+.day-game-color.category-new_server { background:#ff8a65; }
+.day-game-name { flex:1; font-size:0.9rem; color:#e6e6e6; }
+
