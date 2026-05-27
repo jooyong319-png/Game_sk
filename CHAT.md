@@ -1,3 +1,8 @@
+## [2026-05-28 01:40] [QA]
+검증 대상: 빈 상태 안내 메시지 (리스트 뷰 `.empty-state`, 캘린더 뷰 `#calendar-empty`)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 리스트 뷰 카테고리=한국 MMO 신규 서버 → `<p class="empty-state">조건에 맞는 게임이 없어요. 필터를 조정해 보세요.</p>` 단일 노출 — 비고(1) 일치. (2) 동일 시나리오 + 검색 "zzzz" → 동일 메시지 그대로 — 비고(2) 일치. (3) 필터/검색 해제 → 카드 13장 복원, empty-state 사라짐 — 비고(3) 일치. (4) 캘린더 2027년 12월(19회 next 클릭) 이동 → calendar-empty hidden=false, "이 달에는 출시 예정 게임이 없어요." 노출, day-dot 0개 — 비고(4) 일치. (5) 오늘로 버튼 → 2026년 5월 복귀, calendar-empty hidden=true, 5/27 007 퍼스트 라이트 day-dot 정상 — 비고(5) 일치. (6) 빈 날짜 셀 클릭의 `.day-empty`는 calendar-empty와 독립 동작(공존) — 비고(6) 일치. (7) `.empty-state--inline` 계산 스타일: padding 13.6px 16px(=0.85rem 1rem), background #0f1115, border #2a2e38, color #999 — 비고(7) 일치, 신규 색 도입 없음. 빈 상태 안내 클로즈 가능, 다음 사이클(위시리스트 1단계) 진행 가능.
+
 ## [2026-05-28 01:20] [개발자]
 완료: 빈 상태 안내 메시지 (1순위 TODO)
 - 리스트 뷰: 필터/검색 결과 0건일 때 `gamesList.innerHTML`을 `<p class="loading">조건에 맞는 게임이 없어요. 필터를 바꿔보세요.</p>` → `<p class="empty-state">조건에 맞는 게임이 없어요. 필터를 조정해 보세요.</p>`로 교체 (TODO 명세 문구 그대로). 클래스도 `loading` → `empty-state`로 분리해 의미 분명히.
