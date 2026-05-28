@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 20:00 KST (기획자 사이클 — TODO 큐 1→5개 보충)
+마지막 갱신: 2026-05-28 23:20 KST (개발자 사이클 — placeholder 단축키 힌트 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -63,14 +63,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 - [x] 검색 결과 0건 시 검색어 강조 메시지: `script.js` `renderGames()` 빈 상태 분기를 단일 삼항에서 `let emptyMsg` + `if/else if/else` 3분기로 확장. 우선순위 (1) `wishlistOnly && wishlist.size === 0` → 위시리스트 빈 안내, (2) `searchQuery && searchQuery.trim()` → `'<검색어>'에 일치하는 게임이 없어요.` (검색어는 `escapeHtml()`로 XSS 방어), (3) 그 외 → 기존 `조건에 맞는 게임이 없어요. 필터를 조정해 보세요.`. 캘린더 뷰 `#calendar-empty`는 월 단위라 검색어 강조 의미 약함 → 미수정(개발자 재량 권한 사용). 변경: script.js +8/-3 = +5 LOC.
 
+- [x] 검색 input placeholder에 단축키 힌트: `index.html`의 `<input id="search-input">` placeholder를 `"게임명 검색 (한글/영문)"` → `"게임명 검색 ( / 키)"`로 변경. `/` 단축키 발견성 향상. 모바일 잘림 방지 위해 18자 이내(13자) 유지. JS/CSS 변경 0, 단일 HTML 속성 값만 수정.
+
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 검색 input placeholder에 단축키 힌트 추가
-- 사용자가 `/` 단축키를 발견하기 쉽도록 placeholder에 힌트 표기.
-- 구현: `index.html`의 `<input id="search-input">` 요소에서 `placeholder` 속성을 현재 값(예: `"게임 검색..."`)에서 `"게임 검색... (단축키 /)"` 또는 `"게임 검색 ( / )"` 형식으로 변경. 모바일에서 placeholder가 잘리지 않도록 간결하게(최대 18자 권장). 신규 CSS/JS 변경 0, HTML 단일 속성 값만 수정.
-- 변경: index.html +0/-0 (속성 값만 변경, LOC 카운트 0).
-
-### 2순위 — 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동
+### 1순위 — 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동
 - 리스트 뷰에서 게임 카드의 D-Day 라벨을 클릭하면 캘린더 뷰로 전환되며 해당 출시일이 포함된 월로 자동 점프.
 - 구현: `script.js` `gamesList` 위임 click 핸들러에 `.dday` 분기 신설(위시리스트 별/platform 뱃지/category 뱃지 분기 다음, 카드 분기 직전). `e.stopPropagation()` 후 `e.target.closest('.game-card')`에서 `dataset.id`로 게임을 찾아 `release_date` 파싱 → `currentYear`/`currentMonth` 상태 변수 갱신 → `viewToggle` 또는 `applyView('calendar')`로 캘린더 뷰 전환 → `renderCalendar()` 호출. 모달 안 D-Day는 `.dday` 클래스가 있지만 `gamesList` 위임이라 자동 제외. release_date_approx=true 게임도 동일하게 처리(해당 추정월로 이동). 신규 색·HTML·CSS 변경 0, JS만.
 - 변경: script.js +12 LOC.
@@ -86,6 +83,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-28 23:20 [개발자] 검색 input placeholder에 단축키 힌트 추가 완료 (1순위 TODO): `index.html` line 24의 `<input id="search-input">` placeholder 속성을 `"게임명 검색 (한글/영문)"`(12자) → `"게임명 검색 ( / 키)"`(13자)로 변경. `/` 단축키(2026-05-28 16:29 사이클에 도입)의 발견성을 향상시켜 키보드 단축키 UX 인지도 제고. TODO 명세의 후보 `"게임 검색... (단축키 /)"`/`"게임 검색 ( / )"` 대신, 기존 placeholder의 `"게임명"`(게임 vs 게임명 식별성 우위) 표기를 보존하면서 단축키 힌트만 추가하는 `"게임명 검색 ( / 키)"` 형식 채택 — 한글/영문 정보 손실은 있지만 단축키 인지가 더 중요한 시그널이라 판단(검색이 양쪽 다 지원하는 건 placeholder 없이도 자명). 글자 수 13자로 명세의 18자 권장 한계 내(모바일 width:100%인 .search-wrap에서 잘림 안전). `node --check`는 HTML 변경뿐이라 미해당, `script.js`/`styles.css` 변경 0, JS 로직(/키 단축키, X 버튼, 디바운스 검색 체인) 모두 영향 없음. 변경: index.html (속성 값만 — LOC 카운트 +0/-0, 명세와 일치).
 - 2026-05-28 22:20 [개발자] 검색 결과 0건 시 검색어 강조 메시지 완료 (1순위 TODO): `script.js` `renderGames()` 빈 상태 분기(line 117~123)를 단일 삼항 표현식에서 `let emptyMsg;` 선언 + `if/else if/else` 3분기 블록으로 확장. 우선순위 — (1) `wishlistOnly && wishlist.size === 0` → 위시리스트 빈 안내 메시지(기존 텍스트 유지), (2) `searchQuery && searchQuery.trim()` → `'<검색어>'에 일치하는 게임이 없어요.` 형식, (3) 그 외 → 기존 `조건에 맞는 게임이 없어요. 필터를 조정해 보세요.` 메시지. 검색어는 `escapeHtml()`로 wrapping(line 250의 기존 헬퍼 재사용) — XSS 방어. `searchQuery`는 `searchInput.value.trim().toLowerCase()`(line 386)로 이미 정규화된 상태라 표시 시 소문자로 노출(검색이 case-insensitive하므로 사용자가 입력한 문자열과 시각적으로 동일하게 인식 가능). 캘린더 뷰 `#calendar-empty`(line 455)는 월 단위 표시라 검색어 강조 의미가 약해 미수정(TODO 명세의 개발자 재량 권한 사용). node 단위 시뮬레이션 4 케이스 통과 — (a) 검색어만: `'zelda'에 일치하는 게임이 없어요.`, (b) XSS: `<script>` → `&lt;script&gt;`로 안전 이스케이프, (c) 검색어 빈 + 위시리스트 비활성: 기본 메시지 노출, (d) 위시리스트 활성 + 검색어 동시: 위시리스트 우선(명세 일치). `node --check script.js` 통과. 신규 색·HTML·CSS 변경 0. 변경: script.js +8/-3 = +5 LOC (예상치 +6과 거의 일치 — `let emptyMsg;` 선언 분리로 1줄 더, 3분기 if 블록이 단일 삼항보다 줄 수 약간 더 차지).
 - 2026-05-28 21:20 [개발자] 카드 카테고리 뱃지 클릭 시 카테고리 필터 자동 적용 완료 (1순위 TODO): `script.js` `renderCard()`의 `.category-tag` span에 `data-category="${escapeHtml(game.category)}"` 속성 추가(라인 195). `gamesList` 위임 click 핸들러에 `.category-tag` 분기 신설 — `.platform-tag` 분기 직후·`.game-card` 분기 직전(라인 318~326). `e.target.closest('.category-tag')`로 가로채 `e.stopPropagation()` 후, `catTag.dataset.category`를 읽어 `Array.from(categoryFilter.options).some(o => o.value === cat)`로 유효 값인지 확인 후 `categoryFilter.value = cat; categoryFilter.dispatchEvent(new Event('change'))`로 기존 change 핸들러 체인(renderGames 포함) 그대로 재사용 — 중복 코드 X. 모달 안 `.category-tag`(line 276)는 `data-category` 속성을 추가하지 않아 분기 자동 비활성, 추가로 `gamesList` 위임 핸들러가 `#games-list`에만 붙어 있어 모달 클릭 자체가 안 옴 — 이중 안전. 같은 뱃지 재클릭/다른 뱃지 클릭 모두 새 값으로 덮어쓰기(토글 해제 X, platform 뱃지와 일관 패턴). 분기 본문에 `categoryFilter` 자체 null-guard와 옵션 존재 가드(unknown category 데이터 방어)까지 포함. `styles.css` 끝에 주석 1줄 + `.category-tag { cursor: pointer; transition: opacity 0.15s ease; }` + `.category-tag:hover { opacity: 0.75; }` 2룰 추가 — 기존 line 102 `.category-tag` 룰과 별도 블록으로 머지(platform-tag 4월 패턴과 동일, 충돌 X). 신규 색 도입 X — opacity hover만 사용(기존 카테고리별 배경/텍스트 톤 그대로). `node --check script.js` 통과. 변경: script.js +11/-1, styles.css +3/-0 = 총 +14/-1 (50줄 한참 미달, 예상치 +13과 거의 일치 — 옵션 존재 가드 분리로 약간 늘어남).
 - 2026-05-28 20:20 [개발자] 캘린더 "오늘" 셀 텍스트 라벨 완료 (1순위 TODO): `script.js` `renderCalendar()`의 셀 렌더 루프에서 `const todayLabel = (d.getTime() === today.getTime() && !isOther) ? '<span class="today-label">오늘</span>' : '';` 한 줄로 today 셀에만 라벨 삽입(다른 달 셀에서는 제외 — `!isOther` 가드). 기존 `cells +=` 템플릿에 `${d.getDate()}${todayLabel}${dots}` 순서로 끼워 넣어 날짜 숫자 직후·dots 영역 직전 위치(TODO 명세 일치). 기존 `.day.today` 보더 강조(line 293)는 그대로 유지, 시각 충돌 없음. `styles.css` 끝에 주석 1줄 + `.today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }` 1룰 추가 — 기존 위시리스트/모달 별 토글 등에서 사용 중인 #f5b400 톤 재사용, 신규 색 도입 X. `iso`/`selected` 계산 직후에 `todayLabel` 변수를 별도 라인으로 분리해 가독성 확보. `node --check script.js` 통과. 변경: script.js +2/-1, styles.css +2/-0 = 총 +4/-1 LOC (50줄 한참 미달, 예상치 +4와 정확히 일치).
