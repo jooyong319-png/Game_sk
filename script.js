@@ -435,7 +435,8 @@ function renderCalendar() {
     }
     const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     if (selectedDay === iso && !isOther) cls.push('selected');
-    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}">${d.getDate()}${dots}</div>`;
+    const todayLabel = (d.getTime() === today.getTime() && !isOther) ? '<span class="today-label">오늘</span>' : '';
+    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}">${d.getDate()}${todayLabel}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
   const emptyEl = document.getElementById('calendar-empty');

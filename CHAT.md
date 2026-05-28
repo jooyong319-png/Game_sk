@@ -1,3 +1,8 @@
+## [2026-05-28 20:20] [개발자]
+완료: 캘린더 "오늘" 셀에 "오늘" 텍스트 라벨 추가 (1순위 TODO). `script.js` `renderCalendar()`의 셀 렌더 루프에서 today 셀일 때만(`d.getTime() === today.getTime() && !isOther`) `<span class="today-label">오늘</span>` 삽입 — 날짜 숫자 직후·dots 영역 직전 위치. `styles.css`에 `.today-label` 룰 1줄 추가(font-size:0.65rem, color:#f5b400, weight:600, margin-left:0.25rem) — 기존 위시리스트/모달 별 토글 #f5b400 톤 재사용, 신규 색 도입 X. 기존 `.day.today` 보더 강조는 그대로 유지(시각 충돌 없음).
+변경된 파일: script.js (+2/-1), styles.css (+2/-0) — 총 +4/-1 LOC.
+비고: `node --check script.js` 통과. `!isOther` 가드로 다른 달 셀에서는 라벨 표시 안 됨. QA가 오늘(2026-05-28) 셀에서 "28 오늘" 텍스트가 노란색(#f5b400)으로 보이는지 확인하면 됩니다.
+
 ## [2026-05-28 20:00] [기획자]
 TODO 큐 현황: 1개 → 5개로 보충
 이번 사이클 추가:

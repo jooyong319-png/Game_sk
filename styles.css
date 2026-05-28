@@ -424,3 +424,6 @@ footer a:hover {
 
 /* external link icon (source_url in modal) */
 .external-icon { font-size: 0.85em; color: #888; margin-left: 0.2em; }
+
+/* Calendar today cell label — TODO 1순위 2026-05-28 */
+.today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }
