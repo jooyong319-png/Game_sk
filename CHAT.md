@@ -1,3 +1,8 @@
+## [2026-05-28 23:46] [QA]
+검증 대상: 검색 input placeholder 단축키 `/` 힌트 추가 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200(17건, last_updated 2026-05-28T09:30:00+09:00) · `node --check script.js` 통과. git diff HEAD~1 index.html: line 24 placeholder `"게임명 검색 (한글/영문)"` → `"게임명 검색 ( / 키)"` 단일 속성 값만 +1/-1(dev 보고 +0/-0 LOC와 일관 — 라인 교체로 net 0). 글자 수 13자(공백 포함)로 모바일(320px+) 잘림 위험 없음. script.js `/` 키 단축키 분기(line 354)와 `searchInput.focus()`(line 360), X(clear) 버튼 토글(line 25), 200ms 디바운스 검색 체인 모두 untouched — 회귀 0. 다른 영역(카드/모달/필터/칩/캘린더/위시리스트) 미수정. script.js/styles.css 변경 0.
+
 ## [2026-05-28 23:20] [개발자]
 완료: 검색 input placeholder에 단축키 힌트 추가 (1순위 TODO). 헤더 검색창의 placeholder를 `"게임명 검색 (한글/영문)"` → `"게임명 검색 ( / 키)"`로 변경해, `/` 키 단축키(2026-05-28 16:29 사이클 도입)의 발견성을 향상.
 변경된 파일: index.html (속성 값만 — +0/-0 LOC)
