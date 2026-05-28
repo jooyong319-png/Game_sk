@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 12:00 KST (기획자 사이클 — TODO 큐 1개 → 5개로 보충)
+마지막 갱신: 2026-05-28 12:28 KST (개발자 사이클 — 1순위 캘린더 요일 헤더 한국식 색상 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -46,36 +46,31 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] 위시리스트 칩에 개수 뱃지 표시: `#chip-wishlist` 버튼 라벨을 `위시리스트만 보기 (N)` 형식으로 동적 갱신. `updateWishlistChipLabel()` 헬퍼 신설 — 첫 호출 시 원본 라벨을 `chipWish.dataset.baseLabel`에 캐싱, 매번 `baseLabel + ' (' + wishlist.size + ')'`로 textContent 재할당. 페이지 로드 시 1회 호출 + 카드 별 토글 click 핸들러의 `saveWishlist()` 직후에도 호출(별 토글 시 라벨 즉시 갱신). N=0이어도 `(0)` 그대로 표시. 칩 활성/비활성 시각 변화 없음(스타일·HTML·CSS 변경 0). 변경: script.js +8/-0.
 - [x] 상세 모달 헤더에 위시리스트 별 토글 버튼: `openModal()` 템플릿의 `<h2 id="modal-title">`를 `.modal-title-row` flex 컨테이너로 감싸 그 안에 `<button class="modal-wishlist-btn">★/☆</button>` 신설(제목 우측 정렬, `justify-content:space-between`). 카드의 별과 동일한 동작 — `modal` click 핸들러 맨 앞에 `.modal-wishlist-btn` 가로채기 분기 추가: `wishlist` Set add/remove + `saveWishlist()` + 같은 게임의 카드 `.wishlist-btn[data-id]`를 in-place 동기화(클래스/텍스트/aria-pressed) + `updateWishlistChipLabel()` 호출(칩 라벨 동기). `CSS.escape` 가용 시 사용해 셀렉터 안전성 확보. 모달 열 때마다 템플릿이 `wishlist.has(game.id)`로 초기 상태(★/☆+active+aria-pressed)를 그대로 렌더. 비활성=`☆`+`#666`, 활성=`★`+`#f5b400`(기존 `.wishlist-btn` 톤 재사용). 신규 색·index.html 변경 X (modal-body가 완전 동적이라 정적 HTML 수정 불요). 변경: script.js +14/-1, styles.css +8/-0 = 총 +22/-1.
 - [x] 카드/모달 image_url null placeholder 처리: `script.js` `renderCard()`에 `cardImage` const 신설 — `game.image_url`이 truthy면 `<div class="card-image"><img src="…" loading="lazy">`, falsy면 `<div class="card-image card-image-placeholder category-${cat}"><span>${categoryLabel}</span></div>`. `<article>` 첫 자식으로 삽입(card-header 위). `openModal()`에도 동일 패턴으로 `modalImage` 신설, `modalBody.innerHTML` 맨 앞에 삽입(카테고리 태그 위). `styles.css` 끝에 `.card-image`(110px, overflow:hidden) + `.card-image img`(object-fit:cover) + `.card-image-placeholder`(flex center) + `.card-image-placeholder span`(#ddd, 0.85rem) + 카테고리별 4색 `linear-gradient(135deg, base, 30% darker)` (#81c784→#5a8b5c / #64b5f6→#467fac / #ba68c8→#82488c / #ff8a65→#b26146 — 기존 `.day-dot` 4색 재사용, 신규 색 도입 X) + `.modal-image`(160px, border-radius 8px). 변경: script.js +8/-0, styles.css +12/-0 = 총 +20/-0.
+- [x] 캘린더 요일 헤더 한국식 색상: `.calendar-grid .weekday:nth-child(1) { color:#e57373 }` (일요일 빨강 톤, 기존 D-Day `.dday.past` #e57373 재사용) + `.calendar-grid .weekday:nth-child(7) { color:#64b5f6 }` (토요일 파랑 톤, 기존 PC/콘솔 카테고리 색 재사용). 그 외 요일은 기존 `#888` 그대로. 셀(`.day`)의 텍스트 색은 변경하지 않음 — 헤더만. 신규 색 도입 X. JS/HTML 변경 0. styles.css에 주석 1줄 + 룰 2줄 = +3 LOC.
 
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 캘린더 요일 헤더 한국식 색상 (CSS-only)
-- 캘린더 그리드의 요일 헤더(`일/월/화/수/목/금/토`) 텍스트 색을 한국식으로: 일요일=빨강 톤(#e57373, 기존 D-Day 톤), 토요일=파랑 톤(#64b5f6, 기존 PC/콘솔 카테고리 색). 그 외 요일은 기존 톤 유지.
-- 셀 자체(`.day`)의 텍스트 색은 변경하지 않음 — 헤더만(과한 시각적 잡음 방지). 신규 색 도입 X(기존 팔레트에서 차용).
-- 구현: `.weekday:nth-child(1) { color:#e57373 }` / `.weekday:nth-child(7) { color:#64b5f6 }` 2줄. JS/HTML 변경 0.
-- 변경: styles.css +4 LOC 내외.
-
-### 2순위 — 검색 input에 X(clear) 버튼 추가
+### 1순위 — 검색 input에 X(clear) 버튼 추가
 - 헤더의 `#search-input` 우측에 작은 X 버튼(`#search-clear`)을 절대 배치. 입력값이 있을 때만 노출(빈 값이면 `hidden`).
 - 클릭 시 `searchInput.value = ''` + `input` 이벤트 강제 dispatch(기존 200ms 디바운스 필터 체인 그대로 재사용) + `searchInput.focus()`. 결과적으로 검색 해제 + 카드/캘린더 즉시 재렌더.
 - 구현 위치: `index.html`에서 `#search-input`을 `.search-wrap` div로 감싸 그 안에 `<button id="search-clear" type="button" hidden aria-label="검색어 지우기">×</button>` 1줄 추가. `script.js`의 검색 핸들러에 `searchClear.hidden = !searchInput.value` 한 줄 + click 핸들러. `styles.css`에 `.search-wrap{position:relative}` + `#search-clear`(absolute, right:0.5rem, top:50%, transform:translateY(-50%), transparent, color:#999, font-size:1.1rem, cursor:pointer) + hover #ccc.
 - 신규 색 도입 X(기존 #999/#ccc 톤). 모바일 풀폭에서도 동작.
 - 변경: index.html +3, script.js +6, styles.css +8 = 총 +17 LOC 내외.
 
-### 3순위 — 위시리스트 칩 빈 상태 전용 안내 메시지
+### 2순위 — 위시리스트 칩 빈 상태 전용 안내 메시지
 - `wishlistOnly === true && wishlist.size === 0`일 때 리스트 뷰의 빈 상태 메시지를 일반 `"조건에 맞는 게임이 없어요. 필터를 조정해 보세요."`가 아닌 전용 문구로 교체: `"아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요."`.
 - 구현: `script.js` `renderGames()` 빈 상태 분기에서 `wishlistOnly && wishlist.size === 0`이면 다른 텍스트 주입. 캘린더 뷰 `#calendar-empty`도 동일 분기 적용.
 - 신규 CSS/색 도입 X(기존 `.empty-state` 클래스 그대로 재사용). HTML 변경 0.
 - 변경: script.js +6 LOC 내외.
 
-### 4순위 — 카드 platform 뱃지 클릭 시 해당 플랫폼 자동 필터 적용
+### 3순위 — 카드 platform 뱃지 클릭 시 해당 플랫폼 자동 필터 적용
 - 카드의 `.platform-badge`(또는 현재 platform 표시 요소)에 click 핸들러 추가 — 클릭 시 `#platform-filter`의 value를 해당 플랫폼으로 설정 + `change` 이벤트 강제 dispatch(기존 필터 체인 재사용). 같은 뱃지를 다시 누르거나 다른 뱃지를 누르면 새 값으로 갱신.
 - 카드 자체 클릭(모달 열기)와 충돌 방지: 뱃지 click 핸들러에서 `e.stopPropagation()` 필수.
 - 시각: 뱃지에 hover 시 살짝 강조(기존 .platform-badge에 `cursor:pointer` + opacity hover). 신규 색 도입 X.
 - 구현 위치: `gamesList` 위임 click 핸들러 맨 앞에 `.platform-badge` 분기(별/카드 분기 사이). 모달 안의 platform 뱃지는 일단 제외(혼란 방지).
 - 변경: script.js +10, styles.css +3 = 총 +13 LOC 내외.
 
-### 5순위 — 푸터 데이터 갱신일 옆에 상대 시간 표시 ("3시간 전")
+### 4순위 — 푸터 데이터 갱신일 옆에 상대 시간 표시 ("3시간 전")
 - 현재 푸터: `데이터 마지막 갱신: 2026-05-28 09:30`. 그 뒤에 괄호로 상대 시간 추가 → `데이터 마지막 갱신: 2026-05-28 09:30 (3시간 전)`.
 - 구현: `script.js`에 `formatRelativeTime(date)` 헬퍼 신설 — `(Date.now() - date) / 60000` 계산해 분/시간/일 단위 분기(1분 미만="방금 전", 60분 미만="N분 전", 24시간 미만="N시간 전", 30일 미만="N일 전", 그 이상=빈 문자열). 기존 `data.last_updated` 파싱 직후 결과 문자열을 ` (${rel})` 형식으로 덧붙여 `footerUpdatedEl.textContent`에 주입.
 - 신규 색·HTML·CSS 변경 0. 30일 이상 지나면 상대 표기 생략(절대 날짜만 유지).
@@ -92,6 +87,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-28 12:28 [개발자] 캘린더 요일 헤더 한국식 색상 완료 (CSS-only, 1순위 TODO): `styles.css` 끝에 주석 1줄 + `.calendar-grid .weekday:nth-child(1) { color:#e57373 }` (일요일=빨강 톤, 기존 `.dday.past` 색 재사용) + `.calendar-grid .weekday:nth-child(7) { color:#64b5f6 }` (토요일=파랑 톤, 기존 PC/콘솔 카테고리 색 재사용) 3줄 추가. 셀렉터에 `.calendar-grid` 부모 한정자를 두어 캘린더 그리드 내부 첫/일곱째 자식이 weekday일 때만 적용 → `.day` 셀(8~49번째 자식)과 셀렉터 충돌 없음(`.weekday`로 클래스 한정). 신규 색 도입 X — 기존 팔레트(`#e57373` D-Day past, `#64b5f6` PC/콘솔 카테고리)에서 차용. 그 외 요일(월~금)은 기존 `.calendar-grid .weekday { color:#888 }`(line 290) 그대로 상속. JS/HTML 변경 0. 변경: styles.css +3/-0 (50줄 한참 미달, 예상치 +4와 거의 일치).
 - 2026-05-28 12:00 [기획자] TODO 큐 1개 → 5개로 보충: 캘린더 요일 헤더 한국식 색(1, 기존 유지) + 검색 input X(clear) 버튼(2) + 위시리스트 칩 빈 상태 전용 메시지(3) + 카드 platform 뱃지 클릭 시 필터 자동 적용(4) + 푸터 갱신일 상대 시간(5). 완료 처리: 0개(직전 카드/모달 image_url placeholder는 PROJECT_STATUS 완료 섹션에 이미 반영됨, QA ✅ 11:40). IDEAS 이동: 0개(3사이클째 머문 항목 없음). IDEAS에서 끌어옴: 0개(출시일별 그룹핑/통계 차트/YouTube 임베드/카카오톡 공유/일간 뷰는 모두 50줄 초과 위험 있어 보류). 사용자 요청 처리: 활성 0개, 보류 SEO는 지시대로 손대지 않음.
 - 2026-05-28 11:20 [개발자] 카드/모달 image_url null placeholder 처리 완료: 데이터의 `image_url`이 전부 null인 상황에서 카드/모달 이미지 영역이 비어있던 문제 해결. `script.js` `renderCard()`에 `cardImage` const 신설 — `game.image_url` truthy면 `<div class="card-image"><img src="…" alt="…" loading="lazy">` 렌더, falsy면 `<div class="card-image card-image-placeholder category-${cat}"><span>${categoryLabel}</span></div>` 렌더. `<article>` 첫 자식으로 삽입(`card-header` 위). `openModal()`에도 동일 패턴으로 `modalImage` 신설 후 `modalBody.innerHTML` 맨 앞에 삽입(category-tag 위). `styles.css` 끝에 9블록 추가: `.card-image`(width:100%, height:110px, overflow:hidden), `.card-image img`(object-fit:cover, display:block), `.card-image-placeholder`(flex center align), `.card-image-placeholder span`(#ddd, 0.85rem, weight:500), 카테고리별 4색 `linear-gradient(135deg, base, 30%-darker)` — #81c784→#5a8b5c (mobile_kr) / #64b5f6→#467fac (pc_console_kr) / #ba68c8→#82488c (global_aaa) / #ff8a65→#b26146 (new_server). 30% 어두운 색은 base RGB × 0.7 계산값(기존 `.day-dot` 4색 재사용, 신규 색 도입 X). `.modal-image`는 height:160px + border-radius:8px + margin-bottom:0.8rem(모달은 카드보다 약간 크게). 클릭/접근성은 기존 카드 동작 그대로(placeholder는 디스플레이 전용 — pointer-events 변경 X). 변경: script.js +8/-0, styles.css +12/-0 = 총 +20/-0 (50줄 한계 미달, 예상치 +20과 정확히 일치).
 - 2026-05-28 10:20 [개발자] 상세 모달 헤더 위시리스트 별 토글 완료: `openModal()` 템플릿에서 `<h2 id="modal-title">`를 `.modal-title-row` flex 컨테이너로 감싸 그 우측에 `<button class="modal-wishlist-btn">★/☆</button>` 추가 — 매 모달 열림마다 `wishlist.has(game.id)`로 초기 상태(★/☆ + `.active` + aria-pressed) 렌더. `modal` click 핸들러 맨 앞에 `.modal-wishlist-btn` 가로채기 분기 추가(`stopPropagation()` 후) — Set add/remove + `saveWishlist()` + `document.querySelector('.wishlist-btn[data-id=...]')`로 같은 게임의 카드 별을 in-place 동기화(클래스/텍스트/aria-pressed) + `updateWishlistChipLabel()` 호출(칩 라벨 즉시 갱신). 셀렉터 안전성 위해 `window.CSS && CSS.escape ? CSS.escape(id) : id` fallback. 기존 modal 닫기 분기(`modal === e.target || .modal-close`)는 그대로 보존 — 별 클릭 분기에서 early return하므로 회귀 없음. `styles.css` 끝에 `.modal-title-row`(flex/space-between/gap 0.5rem) + `.modal-title-row h2`(margin-bottom:0 — 기존 `.modal h2 {margin-bottom:0.3rem}` 오버라이드) + `.modal-wishlist-btn`(transparent, #666, 1.4rem, padding 0 0.25rem, transition) + `:hover`/`:active`/`.active`(모두 #f5b400 — 기존 `.wishlist-btn` 톤 완전 재사용). 신규 색 도입 X. index.html 미수정 — modal-body가 완전 동적이라 정적 HTML 수정 불요(TODO 가이드와 약간 다르지만 변경 최소화 우선). 변경: script.js +14/-1, styles.css +8/-0 = 총 +22/-1 (50줄 한참 미달, 예상치 +20과 거의 일치).

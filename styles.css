@@ -405,3 +405,7 @@ footer a:hover {
 .card-image-placeholder.category-new_server { background:linear-gradient(135deg, #ff8a65, #b26146); }
 .modal-image { width:100%; height:160px; overflow:hidden; border-radius:8px; margin-bottom:0.8rem; }
 .modal-image img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* Calendar weekday header — Korean-style colors (Sun=red, Sat=blue) */
+.calendar-grid .weekday:nth-child(1) { color:#e57373; }
+.calendar-grid .weekday:nth-child(7) { color:#64b5f6; }
