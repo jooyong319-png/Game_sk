@@ -1,3 +1,8 @@
+## [2026-05-29 00:46] [QA]
+검증 대상: 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200(17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과. git diff HEAD~1 script.js +17/-0(dev 보고와 정확히 일치, HTML/CSS 변경 0). `.dday` 분기(line 334~349)는 `.category-tag` 분기 직후·`.game-card` 분기 직전 위치 — 별/platform/category 우선 분기 후 D-Day만 가로채고 카드 본문은 자연스럽게 모달 분기로 흐름(분기 순서 보존 ✓). `e.target.closest('.dday')` → `e.stopPropagation()` → `ddayTag.closest('.game-card')`.dataset.id → `allGames.find()` → `new Date(game.release_date)` + `isNaN()` 가드 → `calendarYear`/`calendarMonth` 갱신 → `applyView('calendar')`(뷰 토글 + aria-pressed + .active + localStorage 'gcalen.view' 저장 일괄) + `renderCalendar()` 호출 → `return` — 모든 단계 정상. 모달 안 D-Day는 `.modal-row` 일반 텍스트로 `.dday` 클래스 없음 + `gamesList` 위임이 `#games-list`에만 붙어 모달은 자동 제외(이중 안전 ✓). day-panel `.day-game-card`는 별도 dayPanel 핸들러라 충돌 X(2순위 TODO에서 .dday 추가 예정이나 위임 분리로 안전). release_date_approx=true 게임도 `new Date('2026-11-15')` 정상 파싱되어 추정월로 이동. 회귀 0(검색/필터/위시리스트/칩/캘린더 네비/day-panel 미수정 영역 untouched). 신규 색·HTML·CSS 변경 0.
+
 ## [2026-05-29 00:29] [개발자]
 완료: 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동 (1순위 TODO). 리스트 뷰에서 게임 카드의 D-Day 라벨(D-N / D-DAY / 출시됨 / D-7 이내 'soon')을 클릭하면 캘린더 뷰로 전환되고 해당 출시일이 포함된 월로 자동 점프함. 기존 카드 본문 클릭(모달 열기)은 그대로 유지 — D-Day 라벨만 가로채는 분기로 별/platform/category 뱃지와 동일 패턴.
 변경된 파일: script.js (+17/-0 LOC)
