@@ -115,9 +115,14 @@ function renderGames() {
   filtered.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
 
   if (!filtered.length) {
-    const emptyMsg = (wishlistOnly && wishlist.size === 0)
-      ? '아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요.'
-      : '조건에 맞는 게임이 없어요. 필터를 조정해 보세요.';
+    let emptyMsg;
+    if (wishlistOnly && wishlist.size === 0) {
+      emptyMsg = '아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요.';
+    } else if (searchQuery && searchQuery.trim()) {
+      emptyMsg = '\'' + escapeHtml(searchQuery) + '\'에 일치하는 게임이 없어요.';
+    } else {
+      emptyMsg = '조건에 맞는 게임이 없어요. 필터를 조정해 보세요.';
+    }
     gamesList.innerHTML = '<p class="empty-state">' + emptyMsg + '</p>';
     return;
   }
