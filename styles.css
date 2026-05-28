@@ -417,3 +417,7 @@ footer a:hover {
 #search-clear:hover { color:#ccc; }
 #search-input::-webkit-search-cancel-button { -webkit-appearance:none; appearance:none; }
 @media (max-width:480px) { .search-wrap { max-width:100%; } }
+
+/* Clickable platform tag (clicking sets #platform-filter) */
+.platform-tag { cursor: pointer; transition: opacity 0.15s ease; }
+.platform-tag:hover { opacity: 0.75; }

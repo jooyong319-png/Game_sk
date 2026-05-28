@@ -1,3 +1,24 @@
+## [2026-05-28 15:29] [개발자]
+완료: 카드 platform 뱃지 클릭 시 해당 플랫폼 필터 자동 적용 (1순위 TODO). 게임 카드 하단의 platform 뱃지(`.platform-tag`)를 클릭하면 `#platform-filter` 드롭다운이 해당 플랫폼 값으로 자동 설정되고 기존 필터 체인이 그대로 동작해 카드 목록이 즉시 좁혀짐. 카드 자체 클릭(모달 열기)와 충돌 없음.
+변경된 파일: script.js (+11/-0), styles.css (+4/-0) = 총 +15/-0
+비고:
+(1) JS: `gamesList.addEventListener('click', ...)` 위임 핸들러에서 위시리스트 별 토글 분기 직후·카드(`.game-card`) 분기 직전에 `.platform-tag` 분기 11줄 삽입. `e.target.closest('.platform-tag')`로 뱃지 캐치 → `e.stopPropagation()` (카드 모달 충돌 방지, TODO 명세 필수 조건). 뱃지 텍스트를 소문자화 후 `platformFilter.options`를 순회하며 `opt.value && label.includes(opt.value)` 첫 매치를 채택. 매칭 결과: 'PC'→pc, 'PS5'→ps5, 'Switch'→switch, 'Switch 2'→switch, 'Xbox Series X/S'→xbox, 'iOS'→ios, 'Android'→android — 데이터의 모든 7종 platform이 정상 매핑됨(JSON에서 추출해 확인).
+(2) 필터 적용: `platformFilter.value = matchValue; platformFilter.dispatchEvent(new Event('change'))`로 기존 `platformFilter.addEventListener('change', renderGames)` 체인 그대로 재사용 — 중복 코드/재구현 X, `renderGames`→`updateCategoryCounts`→캘린더 dot 재계산까지 자동 흐름.
+(3) 토글 정책: 같은 뱃지 재클릭/다른 뱃지 클릭 모두 새 값으로 갱신(토글 해제 없음 — TODO 명세 일치). 매치 안 되는 뱃지(unknown) 시 노옵.
+(4) CSS: `styles.css` 끝에 주석 1줄 + `.platform-tag { cursor: pointer; transition: opacity 0.15s ease; }`와 `.platform-tag:hover { opacity: 0.75; }` 2룰 추가. 기존 `.platform-tag` 룰(line 205, background:#2a2e38 / color:#bbb)과 머지 — 충돌 없음, 신규 색 도입 X. cursor:pointer로 클릭 가능 시각 힌트 + 0.75 opacity hover로 피드백.
+(5) 모달 안 platform 표시: 모달 본문은 `${game.platforms.map(escapeHtml).join(', ')}` 단순 텍스트 join이라 `.platform-tag` 클래스 없음 → 자동 제외(TODO 명세 일치, 혼란 방지).
+(6) 회귀 안전: `gamesList` 핸들러 위시리스트 분기·카드 분기 모두 변경 0. `modal` 핸들러·캘린더 패널·검색·필터·칩 등 다른 영역 미수정. `node --check script.js` 통과.
+
+QA에서 확인 부탁드립니다 —
+  (a) 카드 하단 platform 뱃지(예: 'PC', 'PS5', 'Switch 2', 'Xbox Series X/S' 등)에 마우스 올리면 `cursor:pointer`와 살짝 흐려지는 hover 효과(opacity 0.75)
+  (b) 'PS5' 뱃지 클릭 → 상단 플랫폼 드롭다운이 'PlayStation 5'로 자동 설정 + 카드/캘린더가 PS5 게임만 표시. 모달 안 열림(stopPropagation 확인)
+  (c) 'Xbox Series X/S' 뱃지 클릭 → 드롭다운 'Xbox Series X/S'로 설정(label.includes('xbox')) + 해당 게임만 표시
+  (d) 'Switch 2' 뱃지 클릭 → 드롭다운 'Nintendo Switch'로 설정(label.includes('switch')) + Switch/Switch 2 모두 표시(기존 `includes` 매칭 동작)
+  (e) 'PC' → pc, 'iOS' → ios, 'Android' → android 모두 정상 매핑
+  (f) 같은 뱃지 재클릭 또는 다른 뱃지 클릭 시 새 값으로 갱신(드롭다운 '전체'로 토글 해제되지 않음 — 명세대로)
+  (g) 모달 안의 platform 텍스트(`개발`/`퍼블리셔` 등과 같은 줄에 'PC, PS5' 식으로 나오는 부분)는 클릭해도 반응 없음(`.platform-tag` 클래스 X)
+  (h) 콘솔 에러 0, 기존 카테고리/플랫폼/기간/검색/위시리스트/칩 회귀 없음
+
 ## [2026-05-28 14:40] [QA]
 검증 대상: 위시리스트 칩 빈 상태 전용 안내 메시지 (1순위 TODO)
 결과: ✅ 정상

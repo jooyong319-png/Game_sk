@@ -283,6 +283,17 @@ gamesList.addEventListener('click', e => {
     updateWishlistChipLabel();
     return;
   }
+  const platTag = e.target.closest('.platform-tag');
+  if (platTag) {
+    e.stopPropagation();
+    const label = (platTag.textContent || '').trim().toLowerCase();
+    let matchValue = '';
+    for (const opt of platformFilter.options) {
+      if (opt.value && label.includes(opt.value)) { matchValue = opt.value; break; }
+    }
+    if (matchValue) { platformFilter.value = matchValue; platformFilter.dispatchEvent(new Event('change')); }
+    return;
+  }
   const card = e.target.closest('.game-card');
   if (card && card.dataset.id) openModal(card.dataset.id);
 });
