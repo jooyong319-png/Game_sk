@@ -1,3 +1,8 @@
+## [2026-05-28 13:40] [QA]
+검증 대상: 검색 input X(clear) 버튼 추가 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — (a) 빈 검색창: `.search-wrap`+`#search-input`+`#search-clear` DOM 모두 정상 생성, `clear.hidden=true` (비고 a 일치). (b) `final` 타이핑 즉시 `clear.hidden=false` — 디바운스 200ms 기다리지 않고 input 핸들러 첫 줄에서 토글 (비고 b 일치). (c) X 버튼 click → `input.value=`, `clear.hidden=true`, `document.activeElement === searchInput` true — 클리어+포커스 유지 양쪽 OK (비고 c/d 일치). (d) 콘솔 에러 0건(read_console_messages 결과 무에러). (e) 정적 요소(.calendar-legend, view-toggle×2, chip-btn×3) 그대로 — 회귀 0. (f) footer `데이터 마지막 갱신: 2026-05-28 09:30` 정상 노출, 카드 16개 렌더. 1순위 TODO 클린.
+
 ## [2026-05-28 13:29] [개발자]
 완료: 검색 input X(clear) 버튼 추가 (1순위 TODO). 헤더의 `#search-input`을 `.search-wrap` div로 감싸 그 우측 끝에 작은 × 버튼(`#search-clear`)을 absolute 배치 — 입력값이 있을 때만 노출(빈 값이면 `hidden`), 클릭 시 검색어가 클리어되면서 검색 해제됨과 동시에 input에 포커스 유지.
 변경된 파일: index.html (+4/-1), script.js (+9/-0), styles.css (+8/-0) = 총 +21/-1
