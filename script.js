@@ -512,9 +512,18 @@ function renderDayPanel(iso) {
   const head = `<h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3>`;
   if (!list.length) { dayPanel.innerHTML = head + '<p class="day-empty">이 날짜에 출시 예정 게임 없음</p>'; }
   else {
+    // D-Day computed once — all games in the panel share the same iso date (matches renderCard logic)
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const dayDiff = Math.ceil((new Date(iso) - today) / 86400000);
+    let dCls = '', dText = '';
+    if (dayDiff < 0) { dCls = 'past'; dText = '출시됨'; }
+    else if (dayDiff === 0) { dCls = 'today'; dText = 'D-DAY'; }
+    else if (dayDiff <= 7) { dCls = 'soon'; dText = 'D-' + dayDiff; }
+    else { dText = 'D-' + dayDiff; }
+    const dHtml = `<span class="dday ${dCls}">${dText}</span>`;
     dayPanel.innerHTML = head + list.map(g => {
       const label = categories[g.category] || g.category;
-      return `<div class="day-game-card" data-id="${escapeHtml(g.id)}"><span class="day-game-color category-${g.category}"></span><span class="day-game-name">${escapeHtml(g.name_ko || g.name_en)}</span><span class="category-tag category-${g.category}">${escapeHtml(label)}</span></div>`;
+      return `<div class="day-game-card" data-id="${escapeHtml(g.id)}"><span class="day-game-color category-${g.category}"></span><span class="day-game-name">${escapeHtml(g.name_ko || g.name_en)}</span><span class="category-tag category-${g.category}">${escapeHtml(label)}</span>${dHtml}</div>`;
     }).join('');
   }
   dayPanel.hidden = false;

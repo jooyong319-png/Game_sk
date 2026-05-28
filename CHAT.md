@@ -1,3 +1,26 @@
+## [2026-05-29 01:30] [개발자]
+완료: 캘린더 day-detail-panel 게임 카드에 D-Day 라벨 추가 (1순위 TODO). 캘린더 셀 클릭 시 열리는 `#day-detail-panel`의 `.day-game-card`에 카테고리 뱃지 직후 D-Day 라벨(`출시됨`/`D-DAY`/`D-7 이내 soon`/`D-N`)을 표시해 리스트 뷰 카드와 정보 일관성 확보.
+변경된 파일: script.js (+10/-1 LOC, styles.css 미수정)
+비고:
+(1) `renderDayPanel()`의 `else` 분기(line 514) 상단에 D-Day 계산 블록 9줄 신설. 같은 iso 날짜를 공유하는 모든 카드라 루프 외부에서 한 번만 계산: `const today = new Date(); today.setHours(0,0,0,0);` + `Math.ceil((new Date(iso) - today) / 86400000)`로 dayDiff 산출, 4분기 if/else로 `dCls`/`dText` 할당 후 `dHtml` 템플릿 문자열 생성.
+(2) 분기: `dayDiff < 0` → `past`/`출시됨`, `=== 0` → `today`/`D-DAY`, `<= 7` → `soon`/`D-N`, 그 외 → 빈 클래스 + `D-N`. `renderCard()` line 170~189 로직과 분기 동일.
+(3) 템플릿에서 `.category-tag` 닫는 태그 직후·`</div>` 직전에 `${dHtml}` 1자리 삽입.
+(4) release_date_approx 게임도 동일 처리 — 별도 가드 X. 이유: `renderCard()` 실제 코드(line 170~189)도 approx 가드 없음(TODO 명세의 "헬퍼가 빈 문자열 반환하도록 가드" 안내는 부정확했음 → "기존 renderCard() 동작과 일치 확인" 권한으로 실제 동작에 맞춤). 추정일 게임도 D-Day 노출되어 시각 일관성 확보.
+(5) `styles.css` 미수정 — 기존 `.day-game-card`(line 320)가 이미 `display:flex; align-items:center; gap:0.6rem;`라 D-Day가 마지막 flex 자식으로 자연스럽게 우측 정렬됨(`.day-game-name`의 `flex:1`이 중앙을 채워서). `.dday`(line 129~146)의 기존 스타일(0.8rem, weight 700, soon/today/past 4색) 그대로 재사용 → 리스트 뷰와 시각 일관성 ✓.
+(6) 카드 본문 click → 모달 열기 동작 변경 X. 기존 `dayPanel` click 위임(`e.target.closest('.day-game-card')`, line 538)이 `.dday` 자식 클릭도 부모 카드로 버블링해 `openModal(card.dataset.id)` 호출. 명세대로 D-Day는 정보 표시용 — 클릭 시 모달 열림(특별 분기 X).
+(7) `gamesList` 위임의 `.dday` 클릭 분기(line 334~349)는 `#games-list`에만 붙어 있어 dayPanel과 충돌 X(이중 안전 — 명세 일치). 리스트 뷰에서 D-Day 클릭 → 캘린더 점프 동작은 그대로 유지.
+(8) `node --check script.js` 통과. 신규 색·HTML·CSS 변경 0. 예상 +5 LOC와 약간 초과(+9 LOC) — 계산 블록의 4분기 분리로 늘어남, 50줄 한계 한참 미달.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 캘린더 뷰에서 게임이 출시되는 셀(점이 표시된 셀)을 클릭 → day-detail-panel 노출 → 각 `.day-game-card` 우측 끝에 D-Day 라벨이 보이는지(예: 오늘 셀 → `D-DAY`, 7일 이내 → 주황 톤 `D-N`, 미래 → 회색 `D-N`, 과거 → 옅은 `출시됨`)
+  (b) 라벨 색상이 리스트 뷰 카드의 D-Day와 동일(0.8rem, weight 700, soon/today/past 4색)
+  (c) 카드 본문(색 박스/이름/카테고리 뱃지 영역) click → 기존대로 상세 모달 열림(회귀 0)
+  (d) D-Day 라벨 영역 click도 카드 본문 click과 동일하게 상세 모달 열림(별도 분기 없이 부모 카드로 버블링)
+  (e) day-panel 외 영역(리스트 뷰 카드 D-Day 클릭 → 캘린더 점프, gamesList 위임)은 회귀 없이 정상 동작
+  (f) release_date_approx=true 게임(예: `2026-12-31` 분기 추정)도 day-panel에서 D-Day 정상 노출(가드 없음 — renderCard와 일관)
+  (g) `.day-game-card` flex 레이아웃에서 게임명이 길어도 D-Day가 우측에 안정적으로 정렬되는지(narrow viewport 320px 기준 검토 권장)
+  (h) 콘솔 에러 0건, day-panel 토글(같은 셀 재클릭으로 닫기) / ESC 닫기 / 다른 달 셀 클릭 시 월 이동 등 기존 동작 회귀 없음
+
 ## [2026-05-29 00:46] [QA]
 검증 대상: 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동 (1순위 TODO)
 결과: ✅ 정상
