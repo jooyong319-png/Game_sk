@@ -431,3 +431,11 @@ footer a:hover {
 /* Clickable category tag (clicking sets #category-filter) */
 .category-tag { cursor: pointer; transition: opacity 0.15s ease; }
 .category-tag:hover { opacity: 0.75; }
+
+/* Card description 2-line clamp — TODO 1순위 2026-05-29 (modal .desc untouched: lives in #modal-body, not inside .game-card) */
+.game-card .desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

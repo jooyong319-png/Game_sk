@@ -1,3 +1,22 @@
+## [2026-05-29 02:20] [개발자]
+완료: 카드 description 2줄 CSS 클램프 (1순위 TODO). 데이터의 `description`이 길어져도 카드 본문 높이가 일관되도록 2줄 클램프를 카드 한정자로 적용. 모달 본문 `.desc`는 `#modal-body` 하위라 자동 제외되어 전체 description 노출 유지.
+변경된 파일: styles.css (+8/-0 LOC)
+비고:
+(1) `styles.css` 끝에 주석 1줄(`/* Card description 2-line clamp — TODO 1순위 2026-05-29 (modal .desc untouched: lives in #modal-body, not inside .game-card) */`) + `.game-card .desc { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }` 룰 블록 6줄 추가.
+(2) 셀렉터를 `.game-card .desc`로 한정 — 카드(`renderCard()` line 211, `<article class="game-card">...<p class="desc">`)에만 적용. 모달(`openModal()` line 289, `modalBody.innerHTML`에 `<p class="desc" style="margin-top:0.6rem">`)은 `#modal-body` 하위라 `.game-card` 부모가 없어 자동 제외 → 모달 description 전체 텍스트 그대로 노출(TODO 명세 `"모달 안 description은 line-clamp 미적용 확인 필수"` 일치).
+(3) 기존 `.desc` 룰(styles.css line 178, `color:#bbb; font-size:0.85rem; line-height:1.4`)은 그대로 상속 — 신규 색·폰트·HTML·JS 변경 0. 카드 높이는 0.85rem × 1.4 line-height × 2줄로 안정 정렬되어 description 길이 차이로 인한 그리드 정렬 깨짐 해결.
+(4) `python3` 단위 검증으로 `styles.css`의 `{`/`}` 개수 `169/169` 균형 확인 완료 — 룰 블록이 닫힘 없이 빠진 케이스 0.
+(5) 예상치 +5 LOC 대비 +8 LOC (주석 1줄 + 빈 줄 + 룰 블록 6줄). 6줄 블록은 한 줄 짜리 `.game-card .desc { ... }` 인라인으로 줄일 수도 있었지만, `-webkit-*` prefix 속성 4개 가독성을 위해 멀티라인 유지. 50줄 한계 한참 미달.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 리스트 뷰에서 description이 긴 게임 카드(예: 데이터의 긴 한 줄 설명)가 2줄로 잘리고 `…`(ellipsis) 없이 자연 cut-off로 처리되는지(`overflow:hidden`만 적용했으므로 ellipsis 없이 잘림 — 명세는 `text-overflow:ellipsis`까지 요구하지 않았음)
+  (b) 짧은 description(1줄 이하)은 그대로 1줄 또는 0줄로 노출되고 카드 높이도 영향 없음
+  (c) 카드 그리드의 모든 카드 높이가 description 길이 차이에 관계없이 정렬됨(주요 목적 — 그리드 정렬 일관성)
+  (d) 같은 카드 클릭 → 상세 모달 열림 → 모달 안 description은 `.game-card` 부모가 없어 2줄 클램프 미적용, 전체 텍스트 노출(다른 description이 카드에서는 짧게 보이지만 모달에서는 전체 보임)
+  (e) 캘린더 day-detail-panel(`.day-game-card`)에는 `.desc` 클래스 자체가 없어 영향 없음 (회귀 0)
+  (f) 콘솔 에러 0건, 기존 카드 hover/별 토글/D-Day 라벨/뱃지 클릭 등 다른 동작 회귀 없음
+  (g) 모바일(320px+)에서도 2줄 클램프 정상 동작(viewport별 line break 위치는 자연스럽게 달라지지만 2줄 한도는 유지)
+
 ## [2026-05-29 01:46] [QA]
 검증 대상: 캘린더 day-detail-panel 게임 카드에 D-Day 라벨 추가 (1순위 TODO)
 결과: ✅ 정상
