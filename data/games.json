@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-27T16:24:26+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-27T16:24:26+09:00 (reset & cross-verified)",
+  "last_updated": "2026-05-28T09:30:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-05-28T09:30:00+09:00 (cross-verified 3 sources)",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -74,6 +74,27 @@
       "source_url": "https://thqnordic.com/news/colony-calling-gothic-1-remake-drops-june-2026"
     },
     {
+      "id": "pokemon-champions-mobile-2026",
+      "name_ko": "포켓몬 챔피언스 (모바일)",
+      "name_en": "Pokemon Champions",
+      "release_date": "2026-06-15",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "The Pokemon Company",
+      "publisher": "The Pokemon Company",
+      "description": "포켓몬 배틀 특화 멀티플랫폼 게임의 모바일 버전. 6월 출시 예정(정확 날짜 미정).",
+      "genres": [
+        "대전",
+        "수집형"
+      ],
+      "image_url": null,
+      "source_url": "https://pokemonkorea.co.kr/pokemon_champions"
+    },
+    {
       "id": "ff-tactics-ivalice-chronicles-2026",
       "name_ko": "파이널 판타지 택틱스 - 이발리스 크로니클즈",
       "name_en": "Final Fantasy Tactics - The Ivalice Chronicles",
@@ -140,25 +161,47 @@
       "source_url": "https://en.wikipedia.org/wiki/Hell_Let_Loose:_Vietnam"
     },
     {
-      "id": "pokemon-champions-mobile-2026",
-      "name_ko": "포켓몬 챔피언스 (모바일)",
-      "name_en": "Pokemon Champions",
-      "release_date": "2026-06-15",
-      "release_date_approx": true,
-      "category": "mobile_kr",
+      "id": "ea-sports-ufc-6-2026",
+      "name_ko": "EA 스포츠 UFC 6",
+      "name_en": "EA Sports UFC 6",
+      "release_date": "2026-06-19",
+      "release_date_approx": false,
+      "category": "global_aaa",
       "platforms": [
-        "Android",
-        "iOS"
+        "PS5",
+        "Xbox Series X/S"
       ],
-      "developer": "The Pokemon Company",
-      "publisher": "The Pokemon Company",
-      "description": "포켓몬 배틀 특화 멀티플랫폼 게임의 모바일 버전. 6월 출시 예정(정확 날짜 미정).",
+      "developer": "EA Vancouver",
+      "publisher": "Electronic Arts",
+      "description": "Markerless Capture와 차세대 Sapien 기술을 활용한 EA의 차세대 UFC 격투 게임. Ultimate Edition은 6월 12일 얼리 액세스.",
       "genres": [
-        "대전",
-        "수집형"
+        "스포츠",
+        "격투"
       ],
       "image_url": null,
-      "source_url": "https://pokemonkorea.co.kr/pokemon_champions"
+      "source_url": "https://news.ea.com/press-releases/press-releases-details/2026/Fight-Your-Fight-EA-SPORTS-UFC-6-Arrives-June-19-Delivering-Next-Level-Fighter-Individuality-and-Gameplay-Depth/default.aspx"
+    },
+    {
+      "id": "ac-black-flag-resynced-2026",
+      "name_ko": "어쌔신 크리드: 블랙 플래그 리싱크드",
+      "name_en": "Assassin's Creed Black Flag Resynced",
+      "release_date": "2026-07-09",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X/S"
+      ],
+      "developer": "Ubisoft Singapore",
+      "publisher": "Ubisoft",
+      "description": "어쌔신 크리드 IV 블랙 플래그의 풀 리메이크. 최신 Anvil 엔진으로 새로 개발, 신규 엔딩과 추가 콘텐츠 포함. 싱글 플레이 전용.",
+      "genres": [
+        "액션",
+        "어드벤처"
+      ],
+      "image_url": null,
+      "source_url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/3pdOduSqqhRaxjaGYP4QP7/assassins-creed-black-flag-resynced-out-july-9-everything-you-need-to-know"
     },
     {
       "id": "digimon-time-stranger-switch-2026",
@@ -180,6 +223,27 @@
       ],
       "image_url": null,
       "source_url": "https://www.gematsu.com/2026/02/digimon-story-time-stranger-coming-to-switch-2-switch-on-july-9-in-japan-july-10-worldwide"
+    },
+    {
+      "id": "pro-spirit-2026",
+      "name_ko": "프로야구 스피리츠 2026",
+      "name_en": "eBaseball: PRO SPIRIT 2026",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PS5",
+        "PC"
+      ],
+      "developer": "Konami",
+      "publisher": "Konami Digital Entertainment",
+      "description": "코나미의 프로야구 스피리츠 시리즈 신작. 시리즈 최초 한국어 자막 지원(출시 직후 업데이트 적용). 2026 WBC 모드와 액티브 드래프트 시스템 도입.",
+      "genres": [
+        "스포츠",
+        "야구"
+      ],
+      "image_url": null,
+      "source_url": "https://www.konami.com/games/prospi/2026/us/en-us/"
     },
     {
       "id": "splatoon-raiders-2026",
