@@ -1,3 +1,20 @@
+## [2026-05-28 18:20] [개발자]
+완료: 모달 내 source_url 외부 링크 아이콘(↗) 추가 (1순위 TODO). 카드 클릭 → 상세 모달 본문 하단의 `출처 보기 →` 링크에서 화살표 `→`가 외부 링크 아이콘 `↗`로 바뀌고, `.external-icon` 클래스로 살짝 작고 흐린 톤(#888, 0.85em)으로 스타일링됨. `target="_blank" rel="noopener noreferrer"`는 이미 적용되어 있어 그대로 유지 — 새 탭에서 열리는 동작은 변경 없음.
+변경된 파일: script.js (텍스트 한 군데 교체), styles.css (+3 LOC)
+비고:
+(1) 현 코드 상태 확인 → TODO 명세는 "교체"를 가정했지만 실제 `openModal()` 출처 라인(script.js:285)은 이미 `target="_blank" rel="noopener noreferrer"`가 적용되어 있었고 텍스트도 `출처 보기 →` 형식이라 TODO 예시(`출처: <a href="..."> 게임명</a>`)와는 달랐음. 명세의 의도(spirit) 자체는 "외부 링크 아이콘 + _blank/noopener"이므로 아이콘 부분만 추가 적용 — `출처 보기 →</a>`를 `출처 보기 <span class="external-icon">↗</span></a>`로 교체.
+(2) `script.js` 변경: 285번 줄 하나의 정확한 부분문자열 치환만 수행(파이썬 카운트 1회 확인). 외부 링크 아이콘이 `<span>`으로 감싸져 CSS로 독립 스타일링 가능. `game.source_url` falsy 가드는 기존 삼항(`${game.source_url ? ... : ''}`) 그대로 유지 — `source_url`이 없는 게임은 라인 자체가 생략됨(회귀 0).
+(3) `styles.css` 변경: 파일 맨 끝에 주석 1줄 + 빈 줄 + `.external-icon { font-size: 0.85em; color: #888; margin-left: 0.2em; }` 1룰 추가 = +3 LOC. 색은 기존 footer-updated(#999)/legend-item 톤대와 일관된 #888 사용 — 신규 색 도입 X. `font-size`를 부모의 0.85배로 잡아 텍스트보다 약간 작게, `margin-left:0.2em`으로 텍스트와 살짝 떼어 가독성 확보.
+(4) HTML 변경 0 — modal-body가 완전 동적으로 채워져 정적 HTML(`index.html`) 수정 불필요. 위시리스트 별/카테고리 태그 등 기존 모달 요소도 모두 미수정.
+(5) 검증: `node --check script.js` 통과. 텍스트 치환은 파이썬 `content.count(old) == 1` assert로 정확히 1회 매치 보장 후 실행.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 에서 아무 게임 카드든 클릭 → 모달이 뜨고 본문 맨 아래에 `출처 보기 ↗` 링크가 보임 (기존 `→`가 `↗`로 바뀌었는지)
+  (b) `↗` 아이콘이 본문 텍스트(`출처 보기`)보다 살짝 작고 흐린 회색 톤(#888)으로 표시 — 모달 텍스트 본 색(#ddd 류)과 명확히 구분
+  (c) 링크 클릭 시 **새 탭**에서 source_url 열림(기존 동작 유지, _blank 이미 적용돼 있던 부분)
+  (d) `source_url`이 없는 게임(데이터에 있다면)은 `출처 보기` 라인 자체가 모달에 안 뜸 — 기존 falsy 가드 정상 동작 유지
+  (e) 카드/캘린더/검색/필터/칩/위시리스트 등 다른 영역 회귀 없음, 콘솔 에러 0건
+
 ## [2026-05-28 17:40] [QA]
 검증 대상: 카드/모달 출시일 옆 한글 요일 표시 (1순위 TODO)
 결과: ✅ 정상

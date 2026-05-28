@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 17:20 KST (개발자 사이클 — 카드/모달 출시일 옆 한글 요일 표시 완료, TODO 1→3→2)
+마지막 갱신: 2026-05-28 18:20 KST (개발자 사이클 — 모달 source_url 외부 링크 아이콘(↗) 완료, TODO 2→1)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -57,16 +57,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] 푸터 데이터 갱신일 옆 상대 시간 표시: `script.js`에 `formatRelativeTime(date)` 헬퍼 신설 — `(Date.now() - date) / 60000` 계산해 1분 미만='방금 전', 60분 미만='N분 전', 24시간 미만='N시간 전', 30일 미만='N일 전', 그 이상=빈 문자열. `loadData()` 푸터 분기에서 `absStr`/`rel` 분리 후 `rel`이 비지 않으면 `${absStr} (${rel})`, 비면 `absStr`만 주입. 30일 초과 시 절대 날짜만 유지. HTML/CSS 변경 0. 변경: script.js +15/-1.
 - [x] 검색 input 키보드 단축키 (`/` 포커스 + `ESC` 클리어): `script.js`의 기존 keydown 핸들러 맨 위에 `e.key === '/'` 분기 추가 — `document.activeElement`의 tagName이 INPUT/TEXTAREA가 아니고 `isContentEditable`도 false일 때 `e.preventDefault(); searchInput.focus(); searchInput.select();` 실행 후 return. ESC 분기에서 모달/캘린더 패널 둘 다 닫힌 상태일 때(`return` 추가로 패널 닫기 다음 단계 진입 차단) `document.activeElement === searchInput && searchInput.value`이면 `searchInput.value=''; searchInput.dispatchEvent(new Event('input'));`로 X 버튼과 동일 경로 클리어. 모달/패널 우선 정책 유지 — 모달 열려있으면 ESC는 모달만 닫고 종료, 패널 열려있으면 패널만 닫고 종료. 신규 색·HTML·CSS 변경 0. 변경: script.js +19/-1.
 - [x] 카드/모달 출시일 옆 출시 요일 표시: `script.js`에 `getKoreanWeekday(dateStr)` 헬퍼 신설 — `new Date(dateStr + 'T00:00:00')` 파싱, `['일','월','화','수','목','금','토'][d.getDay()]` 반환, falsy/invalid 시 빈 문자열. `renderCard()` `.release-date` 라인과 `openModal()` `출시일` 행 양쪽에 `${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}` 식 삽입 — `release_date_approx === true`면 요일 생략(추정 날짜라 의미 없음). 신규 색·HTML·CSS 변경 0. 변경: script.js +9/-2.
+- [x] 모달 내 source_url 외부 링크 아이콘(↗): `script.js` `openModal()`의 출처 링크 텍스트 `출처 보기 →`를 `출처 보기 <span class="external-icon">↗</span>`로 교체 (기존 `target="_blank" rel="noopener noreferrer"`는 이미 적용되어 있어 그대로 유지). `game.source_url` 가드 분기도 그대로. `styles.css` 끝에 `.external-icon { font-size:0.85em; color:#888; margin-left:0.2em; }` 1룰 추가 (기존 #888 톤 재사용, 신규 색 도입 X). HTML 변경 0. 변경: script.js +0/-0(텍스트만 교체 — 라인 길이 증가만), styles.css +3/-0(주석 1줄 + 빈 줄 + 룰 1줄) = 총 +3/-0 LOC.
 
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 모달 내 source_url 외부 링크 아이콘(↗) + `target="_blank" rel="noopener"`
-- 현재 모달의 `출처` 링크가 그냥 텍스트 링크. 외부 사이트로 이동하는 게 명확하지 않고 같은 탭에서 열림.
-- 구현: `script.js` `openModal()`의 `출처: <a href="${game.source_url}">${게임명}</a>` 부분을 `<a href="${game.source_url}" target="_blank" rel="noopener noreferrer">${게임명} <span class="external-icon">↗</span></a>`로 교체. `game.source_url`이 falsy면 라인 전체 생략(기존 동작 유지).
-- `styles.css`에 `.external-icon { font-size:0.85em; color:#888; margin-left:0.2em; }` 1줄 추가. 신규 색 도입 X(#888 기존 톤 재사용).
-- 변경: script.js +3 LOC, styles.css +1 LOC.
-
-### 2순위 — 캘린더 "오늘" 셀에 "오늘" 텍스트 라벨 추가
+### 1순위 — 캘린더 "오늘" 셀에 "오늘" 텍스트 라벨 추가
 - 현재 캘린더 "오늘" 셀은 노란 보더로만 강조. 더 명시적으로 셀 상단에 작은 "오늘" 라벨 표시.
 - 구현: `script.js` `renderCalendar()`에서 `.day.today` 셀 렌더 시 날짜 숫자 옆에 `<span class="today-label">오늘</span>` 삽입(기존 dot 영역 위, 날짜 숫자와 같은 라인 또는 그 아래). `styles.css` 끝에 `.today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }` 1줄 추가(기존 위시리스트 #f5b400 톤 재사용, 신규 색 X).
 - 변경: script.js +3 LOC, styles.css +1 LOC.
@@ -82,6 +77,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-28 18:20 [개발자] 모달 source_url 외부 링크 아이콘(↗) 완료 (1순위 TODO): `script.js` `openModal()`의 출처 링크 본문 `출처 보기 →`를 `출처 보기 <span class="external-icon">↗</span>`로 교체. 기존 `target="_blank" rel="noopener noreferrer"`는 이미 적용된 상태였어서 그대로 유지(TODO 명세는 "교체"였지만 실제 현 코드엔 이미 _blank/noopener 적용 — 명세의 spirit인 "외부 링크 아이콘 표시" 부분만 추가). `game.source_url` falsy 가드는 기존 삼항 그대로(`${game.source_url ? ... : ''}`). `styles.css` 끝에 주석 1줄 + `.external-icon { font-size: 0.85em; color: #888; margin-left: 0.2em; }` 1룰 추가 — 기존 #888 톤 재사용(footer-updated/legend-item 등에서도 사용 중), 신규 색 도입 X. HTML 변경 0. `node --check script.js` 통과. 변경: script.js (텍스트만 교체 — 라인 길이 증가만, +0/-0 LOC 카운트), styles.css +3/-0 = 총 +3 LOC (50줄 한참 미달, 예상치 +4와 거의 일치).
 - 2026-05-28 17:20 [개발자] 카드/모달 출시일 옆 한글 요일 표시 완료 (1순위 TODO): `script.js`에 `getKoreanWeekday(dateStr)` 헬퍼 신설(`formatDate` 직후, `formatRelativeTime` 직전 — 날짜 헬퍼 그룹 일관성). 본문 4줄: `if (!dateStr) return '';`, `new Date(dateStr + 'T00:00:00')` 파싱(시간 부분 명시로 TZ shift 회피), `isNaN(d.getTime())` 가드, `['일','월','화','수','목','금','토'][d.getDay()]` 반환. `renderCard()` `.release-date` 라인 + `openModal()` `출시일` 행 양쪽에 인라인 삼항 `${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}`를 `${approxMark}`/`${approx}` 직전에 삽입 — `release_date_approx === true`면 요일 생략(추정 날짜라 요일 의미 없음, TODO 명세 일치), 헬퍼가 빈 문자열 반환하면(invalid date) 괄호 자체 생략. 형식: `2026.06.12 (금)` (출시일 포맷이 `YYYY.MM.DD`라 TODO 예시 `2026-06-12 (금)`와 구분자만 다름 — 기존 `formatDate` 그대로 재사용). `getKoreanWeekday` 단위 테스트(node CLI): '2026-06-12'→'금', '2026-05-28'→'목', '2026-05-31'→'일', null/''/'not-a-date'→'' 모두 통과. 신규 색·HTML·CSS 변경 0. `node --check script.js` 통과. 변경: script.js +9/-2 (50줄 한참 미달, 예상치 +10과 거의 일치 — 헬퍼는 함수 선언 6줄 + 빈 줄 1줄로 7줄, renderCard/openModal 각 1줄씩 교체 = 총 +9/-2).
 - 2026-05-28 16:29 [개발자] 검색 input 키보드 단축키 (`/` 포커스 + `ESC` 클리어) 완료 (1순위 TODO): `script.js`의 기존 `document.addEventListener('keydown', ...)` 핸들러 맨 위에 `e.key === '/'` 분기 신설 — `document.activeElement`의 `tagName`이 `INPUT`/`TEXTAREA`가 아니고 `isContentEditable`도 false일 때(인라인 변수 `active`/`tag`/`inText`로 분기) `e.preventDefault(); searchInput.focus(); searchInput.select();` 실행 후 `return`. 텍스트 입력 컨텍스트 안에서는 `/` 키 자연 입력 보장(차단 X). 기존 ESC 본문에서 (a) 모달 열림 → `closeModal(); return;` 그대로, (b) `dayPanel && !dayPanel.hidden` 블록 끝에 `return` 1줄 추가해 패널 닫기 후 검색 클리어로 흘러내리는 것 차단(모달/패널 우선 정책 명시), (c) 마지막에 `searchInput && document.activeElement === searchInput && searchInput.value` 가드와 함께 `searchInput.value=''; searchInput.dispatchEvent(new Event('input'));` 추가 — X 버튼 click 핸들러와 동일 경로 재사용으로 `searchClear.hidden=true`, `searchQuery=''` 리셋, `renderGames()` 재실행 모두 자동. 신규 색·HTML·CSS 변경 0. `node --check script.js` 통과. 변경: script.js +19/-1 (50줄 한참 미달, 예상 +12와 거의 일치 — `/` 분기에서 `active`/`tag`/`inText` 변수 3개 분리 + 패널 분기에 `return` 1줄 + 마지막 검색 클리어 가드 라인 분리 등으로 약간 늘어남).
 - 2026-05-28 16:20 [개발자] 푸터 데이터 갱신일 옆 상대 시간 표시 완료 (1순위 TODO): `script.js`에 `formatRelativeTime(date)` 헬퍼 신설 — `(Date.now() - date.getTime()) / 60000` 계산해 1분 미만 → '방금 전', 60분 미만 → `Math.floor(diffMin)분 전`, 24시간 미만 → `Math.floor(diffH)시간 전`, 30일 미만 → `Math.floor(diffD)일 전`, 그 이상 → 빈 문자열. 날짜 invalid 시(null/NaN) 빈 문자열 안전 반환. `loadData()` 푸터 블록에서 기존 단일 `textContent` 할당을 `absStr`(기존 `YYYY-MM-DD HH:mm` 문자열) + `rel = formatRelativeTime(d)` 두 단계로 분리한 뒤 `rel`이 비어있지 않을 때만 `${absStr} (${rel})` 형식으로, 비어있으면 `absStr`만 주입 — 30일 초과 시 절대 날짜만 유지하는 명세 일치. HTML/CSS 변경 0, JS 단일 파일 수정. `node --check script.js` 통과. 변경: script.js +15/-1 (50줄 한참 미달, 예상 +12와 거의 일치 — absStr/rel/조건부 할당을 별도 라인으로 분리해 약간 늘어남).
