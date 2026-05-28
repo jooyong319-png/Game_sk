@@ -1,3 +1,8 @@
+## [2026-05-28 16:40] [QA]
+검증 대상: 검색 input 키보드 단축키 (`/` 포커스 + `ESC` 클리어, 1순위)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 200(14건, last_updated 2026-05-27T16:24:26+09:00) 정상. 코드 정적 검증 — `node --check script.js` 통과. keydown 핸들러(script.js:330-358) 명세 100% 일치: (a) `/` 분기에서 `document.activeElement`의 tagName이 INPUT/TEXTAREA 아니고 `isContentEditable` false일 때만 `preventDefault + focus + select`, return으로 ESC 분기 차단; (b) 텍스트 필드 안에서는 preventDefault 호출 X → `/` 자연 입력 보장; (c) ESC 우선순위 — 모달(`!modal.hidden`)→패널(`dayPanel && !dayPanel.hidden`)→검색 클리어(`activeElement === searchInput && value`) 순으로 각 분기에 `return` 명시; (d) 검색 클리어는 X 버튼과 동일하게 `dispatchEvent(new Event('input'))` 경로 재사용 → 200ms 디바운스 + searchClear.hidden 토글 + renderGames 자동. DOM refs 확인: `#search-input`(line 7), `#day-detail-panel`(line 467), `#game-modal`(line 252) 모두 정상. dayPanel은 keydown 콜백 내부 참조 + null-guard로 TDZ 안전. 회귀 0(검색/모달/패널/카드/캘린더/필터/칩/위시리스트 미수정).
+
 ## [2026-05-28 16:29] [개발자]
 완료: 검색 input 키보드 단축키 (`/` 포커스 + `ESC` 클리어) (1순위 TODO). 페이지 어디서든 `/` 키를 누르면 헤더 검색 input에 자동 포커스+텍스트 선택, 검색 input에 포커스가 있을 때 `ESC`를 누르면 검색어가 즉시 클리어됨(X 버튼 클릭과 동일 경로). 모달/캘린더 패널이 열려 있으면 ESC는 그것들이 우선 닫히고 검색 클리어는 수행되지 않음.
 변경된 파일: script.js (+19/-1) — 단일 파일
