@@ -1,3 +1,8 @@
+## [2026-05-28 10:40] [QA]
+검증 대상: 상세 모달 헤더에 위시리스트 별 토글 버튼 추가 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0, footer 갱신일 `2026-05-28 09:30` 노출(리서처 데이터 17건 반영). (a) 게임 카드(`ff7-rebirth-switch2-2026`) 클릭 → 모달 헤더에 `.modal-title-row` 컨테이너 + 우측 `<button class="modal-wishlist-btn" aria-pressed="false">☆</button>` 노출, 제목과 같은 가로 라인(비고 1 일치). (b) 모달 별 클릭 → ☆→★, `.active` true, `aria-pressed` true, 동시에 리스트 카드의 `.wishlist-btn[data-id="ff7-rebirth-switch2-2026"]`도 in-place 동기(cardBtnActive=true, text=★, aria=true — 비고 2/b 일치), 위시리스트 칩 라벨 `(0)→(1)` 즉시 갱신. (c) localStorage `gcalen.wishlist` 배열 size 0→1→0 동기 갱신(비고 d 일치). (d) 모달 별 재클릭 → ★→☆, size 0, 칩 `(0)`, 모달은 닫히지 않음(stopPropagation 정상, 비고 e 일치). (e) 콘솔 메시지 0건. 신규 색·index.html 변경 0(modal-body 동적이라 정적 HTML 수정 불요, 비고 6 일치). 1순위 TODO 클린. 다음 사이클(카드 image_url null placeholder) 진행 가능.
+
 ## [2026-05-28 10:20] [개발자]
 완료: 상세 모달 헤더에 위시리스트 별 토글 버튼 추가 (1순위 TODO)
 변경된 파일: script.js (+14/-1), styles.css (+8/-0)
