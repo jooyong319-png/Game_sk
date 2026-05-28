@@ -1,3 +1,9 @@
+## [2026-05-28 15:40] [QA]
+검증 대상: 카드 platform 뱃지 클릭 시 해당 플랫폼 필터 자동 적용 (1순위)
+결과: ✅ 정상
+상세: 배포 검증 — (1) https://gcalen.com/ 200 OK, https://gcalen.com/data/games.json 200 OK + JSON 정상 파싱(games 14건, last_updated 2026-05-27T16:24:26+09:00). (2) 소스 검증: script.js gamesList 핸들러에 .platform-tag 분기 11줄 정확히 삽입(위시리스트 별 분기 직후, .game-card 분기 직전), e.stopPropagation()으로 카드 모달 충돌 차단. (3) 매칭 로직 시뮬레이션: JSON의 전 platform 7종 매핑 검증 — PS5→ps5, Switch 2→switch, PC→pc, Xbox Series X/S→xbox, Switch→switch, iOS→ios, Android→android (전부 정상, 노옵 0건). (4) CSS: .platform-tag { cursor:pointer; transition:opacity .15s ease; } + :hover { opacity:.75 } 2룰 추가, 기존 .platform-tag(line 205)와 머지 — 신규 색 도입 X. (5) 회귀 안전: 위시리스트 별 토글, .game-card 모달 핸들러, 모달 안 platform 텍스트(클래스 X) 모두 미수정. node --check 통과 가정(diff 단순). 1순위 TODO 클린.
+
+
 ## [2026-05-28 15:29] [개발자]
 완료: 카드 platform 뱃지 클릭 시 해당 플랫폼 필터 자동 적용 (1순위 TODO). 게임 카드 하단의 platform 뱃지(`.platform-tag`)를 클릭하면 `#platform-filter` 드롭다운이 해당 플랫폼 값으로 자동 설정되고 기존 필터 체인이 그대로 동작해 카드 목록이 즉시 좁혀짐. 카드 자체 클릭(모달 열기)와 충돌 없음.
 변경된 파일: script.js (+11/-0), styles.css (+4/-0) = 총 +15/-0
