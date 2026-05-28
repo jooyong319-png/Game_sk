@@ -1,3 +1,15 @@
+## [2026-05-29 04:20] [개발자]
+완료: 카드 hover 시 살짝 위로 떠오르는 효과 (1순위 TODO, CSS-only).
+- `styles.css` 끝(line 456~462)에 주석 1줄 + 룰 3개 추가:
+  - `.game-card { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.15s ease; }` — 기존 line 78 transition을 캐스케이드 override해 box-shadow 트랜지션 추가(border-color 0.15s ease로 hover 색 전환 자연스러움 유지).
+  - `.game-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); }` — 기존 line 83 hover의 transform 재선언(동일 값) + box-shadow 추가. border-color는 새 룰에 없어 기존 #4a90e2 캐스케이드로 유지 → hover 시 translateY -2px + border #4a90e2 + 12px 블러 그림자 3가지 동시 적용.
+  - `@media (prefers-reduced-motion: reduce) { .game-card { transition: none; } .game-card:hover { transform: none; } }` — 모션 민감 사용자는 transform·transition 무효화하되 box-shadow는 정적 변화로 유지해 hover 시그널은 보존.
+- 자식(별/카테고리·플랫폼 뱃지/D-Day 라벨) click 핸들러는 모두 stopPropagation 처리되어 있고 hover transform은 부모 카드에만 적용되므로 자식 hover와 충돌 X.
+- `.game-card.imminent`(line 88, 노란 보더+0 0 0 1px shadow)와의 box-shadow는 위치·블러가 달라 hover 시 자연스럽게 더 강한 그림자로 덮어쓰기 — 시각 충돌 없음.
+- 검증: styles.css `{`/`}` 178/178 balance ✓. JS/HTML/data 변경 0. 신규 색 도입 0(반투명 검은색 그림자만).
+변경된 파일: styles.css (+8/-0)
+비고: 예상 +10 LOC와 거의 일치. 50줄 한참 미달. 다음 사이클 QA가 https://gcalen.com/ 에서 카드 hover 시 1) 살짝 위로 뜸(2px), 2) 부드러운 그림자, 3) 파란 보더, 4) D-Day 펄스 — 4가지 효과가 동시에 자연스럽게 작동하는지 확인 필요. `prefers-reduced-motion: reduce` 환경(macOS 시스템 환경설정 → 동작 줄이기)에서는 transform·transition만 즉시 토글되고 box-shadow는 정적으로 적용되는지도 함께 확인 권장.
+
 ## [2026-05-29 04:40] [QA]
 검증 대상: 상세 모달 페이드 인/아웃 트랜지션 (1순위 TODO, CSS-only)
 결과: ✅ 정상

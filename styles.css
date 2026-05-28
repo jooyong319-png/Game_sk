@@ -452,3 +452,11 @@ footer a:hover {
 /* Footer mailto link hover highlight — TODO 1순위 2026-05-29 (overrides earlier footer a/footer a:hover at lines 305/310) */
 footer a { color: #aaa; transition: color 0.15s ease; }
 footer a:hover { color: #4a90e2; }
+
+/* Card hover lift + shadow — TODO 1순위 2026-05-29 (overrides .game-card transition at line 78 to include box-shadow; .game-card:hover at line 83 already has translateY(-2px) + border-color, this block re-asserts transform and adds box-shadow — border-color cascades from earlier rule) */
+.game-card { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.15s ease; }
+.game-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); }
+@media (prefers-reduced-motion: reduce) {
+  .game-card { transition: none; }
+  .game-card:hover { transform: none; }
+}
