@@ -1,3 +1,8 @@
+## [2026-05-28 09:40] [QA]
+검증 대상: 위시리스트 칩에 개수 뱃지 표시 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0, last_updated `2026-05-28 09:30` 노출. (a) 초기 로드 시 `#chip-wishlist` 라벨 `위시리스트만 보기 (0)` 형식 정상(localStorage 비어있는 상태, 비고 1 일치). (b) 카드 ☆→★ 토글 클릭 3회 → 칩 (0)→(1)→(2)→(3), 다시 첫 카드 토글 해제 → (2), 매 토글마다 localStorage `gcalen.wishlist` 배열과 동기 갱신 — `saveWishlist()` 직후 라벨 즉시 반영(비고 2 일치). (c) 새로고침 후 칩 라벨 (2) 유지 + active ★ 별 2개 DOM 복원(`activeStarsCount=2`, `gcalen.wishlist` 그대로, 비고 a/c 일치). (d) 칩 자체 클릭 → `.active` true + aria-pressed true + visibleCards 16→2(필터 동작), 재클릭 → active false + 16개 복원 — 기존 토글 시각/동작 회귀 없음. (e) 카테고리 옵션 카운트 `전체(16)/모바일(2)/PC콘솔(3)/글로벌(11)/MMO(0)` 정상, 검색 `final` 입력 시 2건으로 좁혀짐 — 다른 칩·필터 회귀 없음. 위시리스트 칩 개수 뱃지 1순위 TODO 클린.
+
 ## [2026-05-28 09:20] [개발자]
 완료: 위시리스트 칩에 개수 뱃지 표시 (1순위 TODO)
 변경된 파일: script.js (+8/-0)
