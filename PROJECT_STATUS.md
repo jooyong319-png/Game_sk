@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 15:29 KST (개발자 사이클 — 1순위 카드 platform 뱃지 클릭 → 플랫폼 필터 자동 적용 완료)
+마지막 갱신: 2026-05-28 16:00 KST (기획자 사이클 — TODO 큐 1개 → 5개로 보충)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -62,6 +62,29 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 신규 색·HTML·CSS 변경 0. 30일 이상 지나면 상대 표기 생략(절대 날짜만 유지).
 - 변경: script.js +12 LOC 내외.
 
+### 2순위 — 검색 input 키보드 단축키 (`/` 포커스 + `ESC` 클리어)
+- 외부 환경 어디서든 `/` 키 누르면 검색 input에 자동 포커스(input/textarea/contenteditable 안에선 무시), input 포커스 상태에서 `ESC` 누르면 검색어 클리어(`#search-clear` 클릭과 동일 경로). 모달/캘린더 패널이 열려있으면 `ESC`는 기존 동작(모달 또는 패널 닫기) 우선이라 검색 클리어는 무시.
+- 구현: `script.js`의 기존 keydown 핸들러(`if (e.key !== 'Escape') return;` 분기) 위에 `/` 키 분기 추가 — `e.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement?.tagName) && !document.activeElement?.isContentEditable`이면 `e.preventDefault(); searchInput.focus(); searchInput.select();`. 기존 ESC 분기 본문에서 `modal.hidden && dayPanel.hidden`이고 `document.activeElement === searchInput && searchInput.value`이면 `searchInput.value=''; searchInput.dispatchEvent(new Event('input'));` 추가.
+- 신규 색·HTML·CSS 변경 0. `searchInput.placeholder`에 `(/ 키로 빠른 검색)` 같은 안내 추가는 하지 마(별도 사이클).
+- 변경: script.js +12 LOC 내외.
+
+### 3순위 — 카드/모달 출시일 옆에 출시 요일 표시
+- 현재 카드 본문 `출시일: 2026-06-12` → `출시일: 2026-06-12 (금)` 형식으로 한글 요일 약자(`일/월/화/수/목/금/토`) 추가. 모달의 `출시일` 라인도 동일 패턴.
+- 구현: `script.js`에 `getKoreanWeekday(dateStr)` 헬퍼 신설 — `new Date(dateStr + 'T00:00:00')` 파싱, `['일','월','화','수','목','금','토'][d.getDay()]` 반환, 파싱 실패 시 빈 문자열. `renderCard()` 출시일 라인의 `${game.release_date}`를 `${game.release_date} (${getKoreanWeekday(game.release_date)})`로 교체. `openModal()` 동일 패턴. `release_date_approx === true`면 요일 표시 생략(추정 날짜라 요일 의미 없음).
+- 신규 색·HTML·CSS 변경 0.
+- 변경: script.js +10 LOC 내외.
+
+### 4순위 — 모달 내 source_url 외부 링크 아이콘(↗) + `target="_blank" rel="noopener"`
+- 현재 모달의 `출처` 링크가 그냥 텍스트 링크. 외부 사이트로 이동하는 게 명확하지 않고 같은 탭에서 열림.
+- 구현: `script.js` `openModal()`의 `출처: <a href="${game.source_url}">${게임명}</a>` 부분을 `<a href="${game.source_url}" target="_blank" rel="noopener noreferrer">${게임명} <span class="external-icon">↗</span></a>`로 교체. `game.source_url`이 falsy면 라인 전체 생략(기존 동작 유지).
+- `styles.css`에 `.external-icon { font-size:0.85em; color:#888; margin-left:0.2em; }` 1줄 추가. 신규 색 도입 X(#888 기존 톤 재사용).
+- 변경: script.js +3 LOC, styles.css +1 LOC.
+
+### 5순위 — 캘린더 "오늘" 셀에 "오늘" 텍스트 라벨 추가
+- 현재 캘린더 "오늘" 셀은 노란 보더로만 강조. 더 명시적으로 셀 상단에 작은 "오늘" 라벨 표시.
+- 구현: `script.js` `renderCalendar()`에서 `.day.today` 셀 렌더 시 날짜 숫자 옆에 `<span class="today-label">오늘</span>` 삽입(기존 dot 영역 위, 날짜 숫자와 같은 라인 또는 그 아래). `styles.css` 끝에 `.today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }` 1줄 추가(기존 위시리스트 #f5b400 톤 재사용, 신규 색 X).
+- 변경: script.js +3 LOC, styles.css +1 LOC.
+
 ## 알려진 버그 (BUGS)
 - [2026-05-27] ✅ (수정됨 12:20, QA 검증 12:40) 캘린더 4단계 배포 후 사이트 전체 렌더 실패 — `script.js`에서 `selectedDay`를 TDZ 상태로 참조하던 문제. `let selectedDay = null;` 선언을 모듈 최상단(line 12, `let categories = {};` 직후)으로 끌어올려 해결. QA 재검증 완료: 콘솔 에러 0, 캘린더/패널/네비/모달 7개 요건 모두 정상 동작.
 
@@ -73,6 +96,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-28 16:00 [기획자] TODO 큐 1개 → 5개로 보충: 푸터 갱신일 상대 시간(1, 기존 유지) + 검색 input `/` 포커스/ESC 클리어 단축키(2) + 카드/모달 출시일 옆 한글 요일 표시(3) + 모달 source_url 외부 링크 아이콘↗ + target=_blank(4) + 캘린더 "오늘" 셀 라벨(5). 완료 처리: 0개(직전 platform 뱃지 클릭은 완료 섹션에 이미 반영됨, QA ✅ 15:40). IDEAS 이동: 0개(3사이클째 머문 항목 없음). IDEAS에서 끌어옴: 0개(출시일별 그룹핑/통계 차트/YouTube 임베드/카카오톡 공유/일간 뷰는 모두 50줄 초과 위험 있어 보류). 사용자 요청 처리: 활성 0개, 보류 SEO는 지시대로 손대지 않음. 5건 모두 +1시간 안에 처리 가능한 작은 단위.
 - 2026-05-28 15:29 [개발자] 카드 platform 뱃지 클릭 시 해당 플랫폼 필터 자동 적용 완료 (1순위 TODO): `script.js` `gamesList` 위임 click 핸들러에 `.platform-tag` 분기 신설 — 위시리스트 별 토글 분기 직후·카드 분기(`.game-card`) 직전에 삽입(별/카드 사이). `e.stopPropagation()`로 카드 모달 충돌 방지 후, 뱃지 textContent를 소문자화하여 `platformFilter.options`를 순회 → `opt.value && label.includes(opt.value)` 첫 매치를 채택(예: 'Xbox Series X/S'→xbox, 'Switch 2'→switch, 'PS5'→ps5, 'PC'→pc, 'Android'→android, 'iOS'→ios — 모두 정상 매핑). 매치 시 `platformFilter.value = matchValue; platformFilter.dispatchEvent(new Event('change'))`로 기존 change 핸들러(`renderGames` 호출 체인) 그대로 재사용 — 중복 코드 X. 같은 뱃지 재클릭/다른 뱃지 클릭 모두 새 값으로 덮어쓰기(토글 해제 X, 명세 일치). 매치 실패(unknown 뱃지) 시 노옵. 모달 안 platform 표시는 `${game.platforms.map(escapeHtml).join(', ')}` 단순 텍스트라 `.platform-tag` 클래스 없음 → 자동 제외(TODO 명세 일치). `styles.css` 끝에 주석 1줄 + `.platform-tag { cursor: pointer; transition: opacity 0.15s ease; }`(기존 `.platform-tag` 룰과 머지 — 충돌 X) + `.platform-tag:hover { opacity: 0.75; }` 2룰 추가. 신규 색 도입 X — opacity hover만 사용(기존 #2a2e38 배경 #bbb 텍스트 그대로). `node --check script.js` 통과. 변경: script.js +11/-0, styles.css +4/-0 = 총 +15/-0 (50줄 한참 미달, 예상치 +13과 거의 일치 — Xbox/Switch 2 같은 복합 라벨 매칭 위해 옵션 순회 루프 더해져 약간 늘어남).
 - 2026-05-28 14:29 [개발자] 위시리스트 칩 빈 상태 전용 안내 메시지 완료 (1순위 TODO): `script.js` `renderGames()`의 빈 상태 분기를 단일 텍스트 주입에서 조건부로 교체 — `const emptyMsg = (wishlistOnly && wishlist.size === 0) ? '아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요.' : '조건에 맞는 게임이 없어요. 필터를 조정해 보세요.';` 후 기존 `<p class="empty-state">` 래퍼는 그대로 유지하며 `+ emptyMsg +`로 본문 삽입. `renderCalendar()` 끝부분 `#calendar-empty` 토글 분기도 함께 확장 — 기존 `emptyEl.hidden = Object.keys(dayMap).length > 0;` 한 줄을 `if (emptyEl) { ... }` 블록으로 묶어 `hidden` 토글 유지 + `emptyEl.textContent`를 동일 `(wishlistOnly && wishlist.size === 0)` 조건으로 위시리스트 안내 또는 기존 `'이 달에는 출시 예정 게임이 없어요.'`로 재할당. 두 뷰 모두 기존 `.empty-state` 클래스 톤(#999) 그대로 재사용 → 신규 CSS/색 도입 0, HTML 변경 0, 단일 파일 수정. 회귀 안전: `wishlistOnly`/`wishlist`는 모듈 상단 선언된 기존 상태 변수 직접 참조(추가 imports/refs X), 캘린더의 `hidden` 토글은 기존 `Object.keys(dayMap).length > 0` 식 그대로(메시지 텍스트만 추가 분기) — 위시리스트 모드가 아닐 때 기존 동작 100% 동일. 변경: script.js +10/-2 = 총 +8 LOC (50줄 한참 미달, 예상치 +6과 거의 일치 — 캘린더 분기를 if 블록으로 감싸느라 2줄 더 늘어남).
 - 2026-05-28 13:29 [개발자] 검색 input X(clear) 버튼 완료 (1순위 TODO): `index.html`의 `<section class="search-bar">` 내부 `<input id="search-input">`을 `<div class="search-wrap">`로 감싸 그 안에 `<button id="search-clear" type="button" hidden aria-label="검색어 지우기">×</button>` 추가. `script.js`에 `const searchClear = document.getElementById('search-clear');` 모듈 상단 참조 한 줄 신설 + 기존 input 이벤트 핸들러 맨 앞(디바운스 외부)에 `if (searchClear) searchClear.hidden = !searchInput.value;` 한 줄 추가 → 입력 즉시 X 버튼 노출/숨김. 파일 끝에 `searchClear` click 핸들러 신설: `searchInput.value = ''; searchInput.dispatchEvent(new Event('input')); searchInput.focus();` — input 이벤트 강제 dispatch로 기존 200ms 디바운스 필터 체인 그대로 재사용(중복 코드 X), 결과적으로 `searchQuery=''`로 리셋되어 카드/캘린더 자동 재렌더 + 포커스 유지로 추가 검색 입력 가능. `styles.css` 끝에 주석 1줄 + 7블록 추가: `.search-wrap`(position:relative, display:inline-block, width:100%, max-width:360px — 입력 max-width와 동일하게 잡아 X 버튼이 input 우측 끝에 anchor), `.search-wrap input`(padding-right:1.75rem — 텍스트와 X 버튼 영역 분리), `#search-clear`(absolute, right:0.5rem, top:50%, transform:translateY(-50%), background:transparent, border:none, color:#999, font-size:1.1rem, cursor:pointer, padding:0 0.25rem, line-height:1), `:hover { color:#ccc }`, `#search-input::-webkit-search-cancel-button { -webkit-appearance:none; appearance:none; }` (Chrome/Safari 기본 X 버튼 숨겨 커스텀 X와 중복 노출 방지), `@media (max-width:480px) { .search-wrap { max-width:100%; } }` (모바일 풀폭). 신규 색 도입 X — 기존 #999/#ccc 톤만 사용(input placeholder #666과도 일관). 변경: index.html +4/-1, script.js +9/-0, styles.css +8/-0 = 총 +21/-1 (50줄 한참 미달, 예상치 +17과 거의 일치 — webkit 기본 X 숨김 룰 1줄 + 모바일 미디어 쿼리 1줄로 약간 늘어남).
