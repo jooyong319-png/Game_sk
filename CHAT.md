@@ -1,3 +1,24 @@
+## [2026-05-29 00:29] [개발자]
+완료: 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동 (1순위 TODO). 리스트 뷰에서 게임 카드의 D-Day 라벨(D-N / D-DAY / 출시됨 / D-7 이내 'soon')을 클릭하면 캘린더 뷰로 전환되고 해당 출시일이 포함된 월로 자동 점프함. 기존 카드 본문 클릭(모달 열기)은 그대로 유지 — D-Day 라벨만 가로채는 분기로 별/platform/category 뱃지와 동일 패턴.
+변경된 파일: script.js (+17/-0 LOC)
+비고:
+(1) `gamesList` 위임 click 핸들러에 `.dday` 분기 1개 신설. 위치: `.category-tag` 분기 직후·`.game-card` 분기 직전 — 위시리스트 별/platform/category 모두 우선 분기로 처리된 뒤 D-Day 클릭만 도달, 카드 본문 클릭은 그 뒤로 자연스럽게 모달 분기에 흘러감(분기 순서 보존).
+(2) 본문: `const ddayTag = e.target.closest('.dday');` → `if (ddayTag)` 블록 안에서 `e.stopPropagation()`, `cardEl = ddayTag.closest('.game-card')`로 부모 카드 검색, `allGames.find(g => g.id === cardEl.dataset.id)`로 게임 객체 추출, `new Date(game.release_date)` 파싱(NaN 가드) → `calendarYear`/`calendarMonth` 상태 갱신 → `applyView('calendar')` + `renderCalendar()` 호출 → `return`.
+(3) `applyView('calendar')`가 calendar/list 토글 + `aria-pressed`/`.active` + localStorage 'gcalen.view' 저장을 한 번에 처리(코드 라인 ~515)하므로 추가 호출 불필요. `renderCalendar()`는 갱신된 year/month 기준으로 그리드·dot·today 강조·요일 헤더 모두 재계산.
+(4) 모달 안 D-Day는 `<div class="modal-row">...출시일 ... · D-N</div>` 형태의 일반 텍스트(라인 ~285)라 `.dday` 클래스 없음 → 모달 클릭 자체가 `gamesList` 위임에 닿지 않음(이중 안전).
+(5) `.day-game-card`(캘린더 day-panel)에도 현재 `.dday` 클래스 없음(2순위 TODO에서 추가 예정). 추가되더라도 dayPanel은 별도 핸들러에 등록되어 있어 `gamesList` 위임과 충돌 없음.
+(6) release_date_approx=true 게임도 동일 처리 — `new Date('2026-06')` 같은 추정 ISO도 `getFullYear()`/`getMonth()`로 정상 추출되어 추정월로 이동.
+(7) `node --check script.js` 통과. 신규 색·HTML·CSS 변경 0.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 리스트 뷰에서 게임 카드의 D-Day 라벨(우상단, 별 옆 'D-N'/'D-DAY'/'출시됨')에 hover 시 cursor 기본 상태 그대로(추가 hover 스타일은 추후 사이클에서 추가 가능 — 이번 사이클은 동작만)
+  (b) D-Day 라벨 클릭 → 캘린더 뷰로 즉시 전환되고 해당 게임의 출시월로 캘린더가 이동(예: 2026-08-15 출시 게임 클릭 → 2026년 8월 캘린더 노출)
+  (c) 카드 본문(카드 이미지/제목/설명 영역) 클릭은 기존대로 상세 모달이 뜨고, D-Day 클릭과 충돌 없음
+  (d) 모달 안의 D-Day 텍스트(출시일 행 뒷부분)는 클릭해도 아무 일도 일어나지 않음
+  (e) 캘린더 뷰에서 다른 셀로 이동 후 리스트 뷰 복귀 → 다른 카드의 D-Day 클릭 시 새 월로 정상 이동(상태 변수 정상 갱신)
+  (f) 새로고침 후 'gcalen.view' localStorage가 'calendar'로 저장되어 캘린더 뷰로 시작하는지(applyView 부수효과)
+  (g) 콘솔 에러 0건, 다른 영역(검색/필터/위시리스트/칩/캘린더 네비/day-panel) 회귀 없음
+
 ## [2026-05-29 00:00] [기획자]
 TODO 큐 현황: 1개 → 5개로 보충
 이번 사이클 추가:

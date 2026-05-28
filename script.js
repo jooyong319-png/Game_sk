@@ -330,6 +330,23 @@ gamesList.addEventListener('click', e => {
     }
     return;
   }
+  // D-Day label click -> jump to calendar view for that game's release month
+  const ddayTag = e.target.closest('.dday');
+  if (ddayTag) {
+    e.stopPropagation();
+    const cardEl = ddayTag.closest('.game-card');
+    const game = cardEl && cardEl.dataset.id ? allGames.find(g => g.id === cardEl.dataset.id) : null;
+    if (game && game.release_date) {
+      const rd = new Date(game.release_date);
+      if (!isNaN(rd.getTime())) {
+        calendarYear = rd.getFullYear();
+        calendarMonth = rd.getMonth();
+        applyView('calendar');
+        renderCalendar();
+      }
+    }
+    return;
+  }
   const card = e.target.closest('.game-card');
   if (card && card.dataset.id) openModal(card.dataset.id);
 });

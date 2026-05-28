@@ -64,31 +64,27 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] 검색 결과 0건 시 검색어 강조 메시지: `script.js` `renderGames()` 빈 상태 분기를 단일 삼항에서 `let emptyMsg` + `if/else if/else` 3분기로 확장. 우선순위 (1) `wishlistOnly && wishlist.size === 0` → 위시리스트 빈 안내, (2) `searchQuery && searchQuery.trim()` → `'<검색어>'에 일치하는 게임이 없어요.` (검색어는 `escapeHtml()`로 XSS 방어), (3) 그 외 → 기존 `조건에 맞는 게임이 없어요. 필터를 조정해 보세요.`. 캘린더 뷰 `#calendar-empty`는 월 단위라 검색어 강조 의미 약함 → 미수정(개발자 재량 권한 사용). 변경: script.js +8/-3 = +5 LOC.
 
 - [x] 검색 input placeholder에 단축키 힌트: `index.html`의 `<input id="search-input">` placeholder를 `"게임명 검색 (한글/영문)"` → `"게임명 검색 ( / 키)"`로 변경. `/` 단축키 발견성 향상. 모바일 잘림 방지 위해 18자 이내(13자) 유지. JS/CSS 변경 0, 단일 HTML 속성 값만 수정.
+- [x] 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동: `script.js` `gamesList` 위임 click 핸들러에 `.dday` 분기 신설(`.category-tag` 분기 직후·`.game-card` 분기 직전). `e.target.closest('.dday')` 가로채 `e.stopPropagation()` 후 `ddayTag.closest('.game-card')`에서 `dataset.id`로 `allGames`의 game 객체 검색, `new Date(game.release_date)` 파싱(NaN 가드 포함) → `calendarYear`/`calendarMonth` 상태 변수 갱신 → `applyView('calendar')` 호출(뷰 토글 + localStorage 'gcalen.view' 저장 자동) → `renderCalendar()` 호출. 모달 안 D-Day는 `.modal-row`의 일반 텍스트라 `.dday` 클래스 없음, `.day-game-card`(day-panel)는 별도 dayPanel 핸들러라 자동 제외 — 이중 안전. release_date_approx=true 게임도 동일 처리(추정월로 이동). 신규 색·HTML·CSS 변경 0, JS만 +17/-0.
 
 
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동
-- 리스트 뷰에서 게임 카드의 D-Day 라벨을 클릭하면 캘린더 뷰로 전환되며 해당 출시일이 포함된 월로 자동 점프.
-- 구현: `script.js` `gamesList` 위임 click 핸들러에 `.dday` 분기 신설(위시리스트 별/platform 뱃지/category 뱃지 분기 다음, 카드 분기 직전). `e.stopPropagation()` 후 `e.target.closest('.game-card')`에서 `dataset.id`로 게임을 찾아 `release_date` 파싱 → `currentYear`/`currentMonth` 상태 변수 갱신 → `viewToggle` 또는 `applyView('calendar')`로 캘린더 뷰 전환 → `renderCalendar()` 호출. 모달 안 D-Day는 `.dday` 클래스가 있지만 `gamesList` 위임이라 자동 제외. release_date_approx=true 게임도 동일하게 처리(해당 추정월로 이동). 신규 색·HTML·CSS 변경 0, JS만.
-- 변경: script.js +12 LOC.
-
-### 2순위 — 캘린더 day-detail-panel 게임 카드에 D-Day 라벨 추가
+### 1순위 — 캘린더 day-detail-panel 게임 카드에 D-Day 라벨 추가
 - 캘린더 셀 클릭 시 열리는 `#day-detail-panel`의 `.day-game-card`는 현재 색 박스+이름+카테고리 뱃지만 표시 — 리스트 뷰 카드와 달리 D-Day 정보가 빠져 있어 정보 일관성이 떨어진다.
 - 구현: `script.js` 라인 500 부근 `.day-game-card` 템플릿(`renderCalendar()` 내부 `dayPanel` 렌더 분기)에 D-Day 라벨 1개 추가. 기존 `renderCard()`에서 사용하는 D-Day 계산 로직(`getDday(game.release_date)` 또는 동등한 헬퍼)을 재사용해 `<span class="dday ${dday.cls}">${dday.text}</span>` 형태로 카테고리 뱃지 뒤에 삽입. release_date_approx=true면 헬퍼가 빈 문자열 반환하도록 가드(기존 `renderCard()` 동작과 일치 확인). 1순위에서 추가될 `.dday` 클릭 분기는 `gamesList` 위임이라 day-panel과는 충돌 없음(이중 안전). `styles.css` `.day-game-card` 룰에 `flex-wrap: wrap` 또는 `gap` 추가가 필요한지 검토 후 미세 조정만(신규 색 X). 카드 본문 click → 모달 열기 동작은 그대로 유지(D-Day는 정보 표시용 — 클릭 핸들러 분기 없이 텍스트만 노출).
 - 변경: script.js +5 LOC, styles.css 0~3 LOC.
 
-### 3순위 — 카드 description 2줄 CSS 클램프
+### 2순위 — 카드 description 2줄 CSS 클램프
 - 데이터의 `description`이 길어지면 카드 본문이 늘어나 그리드 정렬이 깨질 수 있다. 2줄 이상 잘림 처리로 카드 높이 일관성 확보.
 - 구현: `styles.css`의 `.game-card .description` (또는 `.card-description`) 룰에 `display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;` 4줄 추가. 모달 본문 description은 클램프 X(전체 표시) — 셀렉터를 `.game-card .description`처럼 카드 한정자로 좁히기. 신규 색·JS·HTML 변경 0. 모달 안 description은 line-clamp 미적용 확인 필수.
 - 변경: styles.css +5 LOC.
 
-### 4순위 — 푸터 mailto 링크 hover 색상 강조
+### 3순위 — 푸터 mailto 링크 hover 색상 강조
 - 푸터 `contact@gcalen.com` mailto 링크가 일반 텍스트 톤과 구분되지 않아 hover 가능 여부가 불명확.
 - 구현: `styles.css` 끝에 주석 1줄 + `.footer a, footer a` (실제 셀렉터는 기존 푸터 룰 확인 후 적용) `{ color: #aaa; transition: color 0.15s ease; }` + `:hover { color: #4a90e2 }` (기존 view-toggle active 색 #4a90e2 재사용 — 신규 색 X) 3룰 추가. JS/HTML 변경 0. 푸터의 다른 링크가 있는지(`mcp` 라이센스 등) 확인 후 셀렉터를 mailto만 좁힐지(`footer a[href^="mailto:"]`) 결정.
 - 변경: styles.css +5 LOC.
 
-### 5순위 — 상세 모달 열림/닫힘 페이드 트랜지션 (CSS-only)
+### 4순위 — 상세 모달 열림/닫힘 페이드 트랜지션 (CSS-only)
 - 현재 모달이 `hidden` 토글로 즉시 보이고 사라져 시각적 거칠음. CSS 트랜지션으로 부드러운 페이드 인/아웃 추가.
 - 구현: `styles.css` `.modal` 기존 룰에 `opacity: 0; transition: opacity 0.18s ease; pointer-events: none;` 추가. 새 룰 `.modal:not([hidden]) { opacity: 1; pointer-events: auto; }` 추가해 hidden=false 상태에서 페이드 인. `hidden` 속성과 opacity가 동시에 작동하려면 `.modal[hidden] { display: block !important; }` 분기로 hidden일 때도 DOM 유지(`display:none`이면 opacity 트랜지션 안 먹음) — 또는 더 안전하게 JS의 `modal.hidden = true/false`를 그대로 두고 `.modal` 룰에 `display: flex` 강제 + `opacity` 트랜지션 + `pointer-events` 토글로 처리. `prefers-reduced-motion`에서 `transition: none` 분기 추가(접근성). 신규 색 X. JS 변경 0 — 기존 `openModal()`/`closeModal()`의 `modal.hidden = ...` 그대로 작동해야 함. CSS만으로 처리 가능한지 검토 후 안 되면 TODO 보류 처리.
 - 변경: styles.css +10 LOC.
@@ -104,6 +100,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 00:29 [개발자] 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동 완료 (1순위 TODO): `script.js` `gamesList` 위임 click 핸들러에 `.dday` 분기 1개 신설. 위치는 `.category-tag` 분기 직후·`.game-card` 분기 직전 — 별/platform/category 뱃지 모두 우선 분기로 가로채진 뒤 D-Day 클릭만 도달, 카드 본문 클릭(모달 열기)은 그 뒤로 자연스럽게 흘러감. 본문 14줄: `const ddayTag = e.target.closest('.dday');`, `if (ddayTag) { ... }` 블록 안에 `e.stopPropagation()`, `const cardEl = ddayTag.closest('.game-card');`, `const game = cardEl && cardEl.dataset.id ? allGames.find(g => g.id === cardEl.dataset.id) : null;`, `if (game && game.release_date) { const rd = new Date(game.release_date); if (!isNaN(rd.getTime())) { calendarYear = rd.getFullYear(); calendarMonth = rd.getMonth(); applyView('calendar'); renderCalendar(); } }`, `return`. `applyView('calendar')`는 calendar/list 토글 + `aria-pressed`/`.active` 클래스 + localStorage 'gcalen.view' 갱신을 한 번에 처리하므로 추가 작업 불필요. `renderCalendar()`는 갱신된 `calendarYear`/`calendarMonth` 기준으로 그리드/dot/today/요일 헤더 모두 재계산. 모달 D-Day는 `<div class="modal-row">...${dDay}</div>` 형태의 일반 텍스트(modal openModal 라인 ~285)라 `.dday` 클래스 없음 → 모달 클릭 자체가 `gamesList` 위임에 닿지 않음. `.day-game-card`(day-panel)에도 현재 `.dday` 클래스 없음(2순위 TODO에서 추가 예정이지만 추가되어도 핸들러가 `dayPanel`에 별도 등록되어 있어 `gamesList` 위임과 충돌 X). release_date_approx=true 게임도 `new Date(...)`가 동일하게 동작하므로 추정 월로 정확히 이동. `node --check script.js` 통과. 변경: script.js +17/-0 (예상치 +12와 거의 일치 — 주석 1줄 + NaN 가드 + 객체 검색 null-guard 분리로 약간 늘어남). 50줄 한계 한참 미달.
 - 2026-05-29 00:00 [기획자] TODO 큐 1개 → 5개로 보충: 카드 D-Day 라벨 클릭 → 캘린더 점프(1, 기존 유지) + 캘린더 day-panel 게임 카드에 D-Day 라벨 추가(2) + 카드 description 2줄 CSS 클램프(3) + 푸터 mailto 링크 hover 색 강조(4) + 모달 페이드 트랜지션(5). 완료 처리: 0개(직전 4건 — 검색 placeholder 단축키 힌트/검색 0건 검색어 강조/카드 카테고리 뱃지 클릭/캘린더 today 라벨 — 모두 PROJECT_STATUS 완료 섹션과 QA ✅에 이미 반영됨). IDEAS 이동: 0개(3사이클째 머문 항목 없음). IDEAS에서 끌어옴: 0개(출시일별 그룹핑/통계 차트/YouTube 임베드/카카오톡 공유/일간 뷰는 모두 50줄 초과 위험 있어 보류). 사용자 요청 처리: 활성 0개, 보류 SEO는 지시대로 손대지 않음. 5건 모두 +1시간 안에 처리 가능한 작은 단위(JS 최대 +12 LOC, CSS 최대 +10 LOC).
 - 2026-05-28 23:20 [개발자] 검색 input placeholder에 단축키 힌트 추가 완료 (1순위 TODO): `index.html` line 24의 `<input id="search-input">` placeholder 속성을 `"게임명 검색 (한글/영문)"`(12자) → `"게임명 검색 ( / 키)"`(13자)로 변경. `/` 단축키(2026-05-28 16:29 사이클에 도입)의 발견성을 향상시켜 키보드 단축키 UX 인지도 제고. TODO 명세의 후보 `"게임 검색... (단축키 /)"`/`"게임 검색 ( / )"` 대신, 기존 placeholder의 `"게임명"`(게임 vs 게임명 식별성 우위) 표기를 보존하면서 단축키 힌트만 추가하는 `"게임명 검색 ( / 키)"` 형식 채택 — 한글/영문 정보 손실은 있지만 단축키 인지가 더 중요한 시그널이라 판단(검색이 양쪽 다 지원하는 건 placeholder 없이도 자명). 글자 수 13자로 명세의 18자 권장 한계 내(모바일 width:100%인 .search-wrap에서 잘림 안전). `node --check`는 HTML 변경뿐이라 미해당, `script.js`/`styles.css` 변경 0, JS 로직(/키 단축키, X 버튼, 디바운스 검색 체인) 모두 영향 없음. 변경: index.html (속성 값만 — LOC 카운트 +0/-0, 명세와 일치).
 - 2026-05-28 22:20 [개발자] 검색 결과 0건 시 검색어 강조 메시지 완료 (1순위 TODO): `script.js` `renderGames()` 빈 상태 분기(line 117~123)를 단일 삼항 표현식에서 `let emptyMsg;` 선언 + `if/else if/else` 3분기 블록으로 확장. 우선순위 — (1) `wishlistOnly && wishlist.size === 0` → 위시리스트 빈 안내 메시지(기존 텍스트 유지), (2) `searchQuery && searchQuery.trim()` → `'<검색어>'에 일치하는 게임이 없어요.` 형식, (3) 그 외 → 기존 `조건에 맞는 게임이 없어요. 필터를 조정해 보세요.` 메시지. 검색어는 `escapeHtml()`로 wrapping(line 250의 기존 헬퍼 재사용) — XSS 방어. `searchQuery`는 `searchInput.value.trim().toLowerCase()`(line 386)로 이미 정규화된 상태라 표시 시 소문자로 노출(검색이 case-insensitive하므로 사용자가 입력한 문자열과 시각적으로 동일하게 인식 가능). 캘린더 뷰 `#calendar-empty`(line 455)는 월 단위 표시라 검색어 강조 의미가 약해 미수정(TODO 명세의 개발자 재량 권한 사용). node 단위 시뮬레이션 4 케이스 통과 — (a) 검색어만: `'zelda'에 일치하는 게임이 없어요.`, (b) XSS: `<script>` → `&lt;script&gt;`로 안전 이스케이프, (c) 검색어 빈 + 위시리스트 비활성: 기본 메시지 노출, (d) 위시리스트 활성 + 검색어 동시: 위시리스트 우선(명세 일치). `node --check script.js` 통과. 신규 색·HTML·CSS 변경 0. 변경: script.js +8/-3 = +5 LOC (예상치 +6과 거의 일치 — `let emptyMsg;` 선언 분리로 1줄 더, 3분기 if 블록이 단일 삼항보다 줄 수 약간 더 차지).
