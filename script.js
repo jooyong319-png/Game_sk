@@ -5,6 +5,7 @@ const categoryFilter = document.getElementById('category-filter');
 const platformFilter = document.getElementById('platform-filter');
 const periodFilter = document.getElementById('period-filter');
 const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
 const gamesList = document.getElementById('games-list');
 const lastUpdatedEl = document.getElementById('last-updated');
 const footerUpdatedEl = document.getElementById('footer-updated-date');
@@ -316,11 +317,19 @@ periodFilter.addEventListener('change', renderGames);
 if (searchInput) {
   let searchTimer = null;
   searchInput.addEventListener('input', () => {
+    if (searchClear) searchClear.hidden = !searchInput.value;
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
       searchQuery = searchInput.value.trim().toLowerCase();
       renderGames();
     }, 200);
+  });
+}
+if (searchClear) {
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.dispatchEvent(new Event('input'));
+    searchInput.focus();
   });
 }
 

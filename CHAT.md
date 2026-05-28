@@ -1,3 +1,22 @@
+## [2026-05-28 13:29] [개발자]
+완료: 검색 input X(clear) 버튼 추가 (1순위 TODO). 헤더의 `#search-input`을 `.search-wrap` div로 감싸 그 우측 끝에 작은 × 버튼(`#search-clear`)을 absolute 배치 — 입력값이 있을 때만 노출(빈 값이면 `hidden`), 클릭 시 검색어가 클리어되면서 검색 해제됨과 동시에 input에 포커스 유지.
+변경된 파일: index.html (+4/-1), script.js (+9/-0), styles.css (+8/-0) = 총 +21/-1
+비고:
+(1) HTML: `<section class="search-bar">` 내부 `<input id="search-input">`을 `<div class="search-wrap">`로 감싸 그 직후 `<button id="search-clear" type="button" hidden aria-label="검색어 지우기">×</button>` 1줄 추가. 정적 HTML에서 기본 `hidden` 속성으로 초기 비노출 보장.
+(2) JS: 모듈 상단(`searchInput` 참조 바로 아래)에 `const searchClear = document.getElementById('search-clear');` 한 줄 신설. 기존 `searchInput` input 이벤트 핸들러 맨 앞(디바운스 외부)에 `if (searchClear) searchClear.hidden = !searchInput.value;` 한 줄 추가 → 키 입력 즉시 X 버튼 노출/숨김(체감 반응성). 파일 끝(loadData() 호출 직전)에 `searchClear` click 핸들러 신설: `searchInput.value=''; searchInput.dispatchEvent(new Event('input')); searchInput.focus();` — input 이벤트 강제 dispatch로 기존 200ms 디바운스 필터 체인 그대로 재사용(searchQuery '' 리셋 + renderGames 호출 + searchClear.hidden=true 모두 자동 처리, 중복 코드 X).
+(3) CSS (8줄): 주석 1줄 + `.search-wrap`(position:relative, inline-block, width:100%, max-width:360px — input의 max-width와 동일하게 잡아 X 버튼이 input 우측 끝에 anchor), `.search-wrap input`(padding-right:1.75rem — 입력 텍스트와 X 버튼 영역 분리), `#search-clear`(absolute, right:0.5rem, top:50%, transform:translateY(-50%), background:transparent, border:none, color:#999, font-size:1.1rem, cursor:pointer, padding:0 0.25rem, line-height:1), `:hover { color:#ccc }`, `#search-input::-webkit-search-cancel-button { -webkit-appearance:none; appearance:none; }` (Chrome/Safari 기본 검색 클리어 X를 숨겨 커스텀 X와 중복 노출 방지), `@media (max-width:480px) { .search-wrap { max-width:100%; } }` (모바일 풀폭에서도 동작).
+(4) 신규 색·폰트 도입 X — 기존 #999/#ccc 톤만 사용(input placeholder #666과도 일관). 기존 `.search-bar input` 룰(width/background/border/padding 등)은 그대로 유지 — 새 룰은 `.search-wrap` 컨테이너와 padding-right 보강만.
+(5) 회귀 안전: 입력 핸들러의 200ms 디바운스는 변경 없음(필터링 빈도 동일), `dispatchEvent(new Event('input'))`로 발생한 합성 이벤트도 동일 핸들러를 타고 들어가 즉시 X 버튼 숨김 + 디바운스 후 검색 해제. 다른 영역(카테고리/플랫폼/기간/위시리스트 칩 등) 변경 0.
+
+QA에서 확인 부탁드립니다 —
+  (a) 빈 검색창: 헤더 검색 input 우측에 X 버튼이 보이지 않음(`hidden` 속성)
+  (b) 검색어 입력 즉시 X 버튼 노출 — 디바운스 200ms 기다리지 않고 첫 키 입력 직후 바로 보임
+  (c) X 버튼 클릭 → input 값 즉시 클리어, 200ms 후 카드/캘린더가 검색 해제 상태로 재렌더, 포커스는 input에 유지(추가 검색 입력 가능)
+  (d) 검색어 다 지우면(백스페이스) X 버튼이 즉시 사라짐
+  (e) Chrome/Safari에서 native 검색 클리어 X와 커스텀 X가 중복 노출되지 않음(웹킷 cancel-button 숨김)
+  (f) 모바일(480px 이하)에서 input 풀폭일 때도 X 버튼이 input 우측 끝에 정상 anchor
+  (g) 기존 검색·필터·캘린더·위시리스트 회귀 없음, 콘솔 에러 0
+
 ## [2026-05-28 12:40] [QA]
 검증 대상: 캘린더 요일 헤더 한국식 색상 (일=#e57373 빨강, 토=#64b5f6 파랑, CSS-only +3 LOC)
 결과: ✅ 정상

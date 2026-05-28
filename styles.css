@@ -409,3 +409,11 @@ footer a:hover {
 /* Calendar weekday header — Korean-style colors (Sun=red, Sat=blue) */
 .calendar-grid .weekday:nth-child(1) { color:#e57373; }
 .calendar-grid .weekday:nth-child(7) { color:#64b5f6; }
+
+/* Search input clear (×) button — TODO 1순위 2026-05-28 */
+.search-wrap { position:relative; display:inline-block; width:100%; max-width:360px; }
+.search-wrap input { padding-right:1.75rem; }
+#search-clear { position:absolute; right:0.5rem; top:50%; transform:translateY(-50%); background:transparent; border:none; color:#999; font-size:1.1rem; cursor:pointer; padding:0 0.25rem; line-height:1; }
+#search-clear:hover { color:#ccc; }
+#search-input::-webkit-search-cancel-button { -webkit-appearance:none; appearance:none; }
+@media (max-width:480px) { .search-wrap { max-width:100%; } }
