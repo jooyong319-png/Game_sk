@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 13:29 KST (개발자 사이클 — 1순위 검색 input X(clear) 버튼 완료)
+마지막 갱신: 2026-05-28 14:29 KST (개발자 사이클 — 1순위 위시리스트 칩 빈 상태 전용 안내 메시지 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -50,22 +50,19 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 - [x] 검색 input X(clear) 버튼: `index.html`의 `#search-input`을 `.search-wrap` div로 감싸 그 안에 `<button id="search-clear" type="button" hidden aria-label="검색어 지우기">×</button>` 추가. `script.js`에 `searchClear` 모듈 상단 참조 + 기존 input 핸들러 안에 `if (searchClear) searchClear.hidden = !searchInput.value;` 즉시(디바운스 외부) 토글 한 줄 + `searchClear` click 핸들러 신설 — `searchInput.value=''; searchInput.dispatchEvent(new Event('input')); searchInput.focus();` (기존 200ms 디바운스 필터 체인 그대로 재사용해 검색 해제 + 카드/캘린더 즉시 재렌더). `styles.css` 끝에 `.search-wrap`(position:relative, inline-block, width:100%, max-width:360px), `.search-wrap input`(padding-right:1.75rem — X 버튼 영역 확보), `#search-clear`(absolute, right:0.5rem, top:50%, transform:translateY(-50%), transparent, color:#999, font-size:1.1rem, cursor:pointer, padding:0 0.25rem, line-height:1), `:hover { color:#ccc }`, `#search-input::-webkit-search-cancel-button { -webkit-appearance:none; appearance:none; }` (webkit 기본 X 버튼 숨겨 중복 노출 방지), `@media (max-width:480px) { .search-wrap { max-width:100%; } }` 추가. 신규 색 도입 X(기존 #999/#ccc 톤 그대로). 변경: index.html +4/-1, script.js +9/-0, styles.css +8/-0 = 총 +21/-1.
 
+
+- [x] 위시리스트 칩 빈 상태 전용 안내 메시지: `script.js` `renderGames()` 빈 상태 분기에서 `wishlistOnly && wishlist.size === 0`이면 일반 메시지 대신 `"아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요."`로 교체. `renderCalendar()`의 `#calendar-empty`도 동일 분기 — `textContent`를 조건에 따라 위시리스트 안내(빈 위시리스트) 또는 기존 `"이 달에는 출시 예정 게임이 없어요."`로 재할당. 두 뷰 모두 `.empty-state` 클래스 그대로 재사용(신규 CSS/색 도입 X), HTML 변경 0. JS만 +10/-2.
+
 ## 다음 TODO (우선순위 순)
 
-### 1순위 — 위시리스트 칩 빈 상태 전용 안내 메시지
-- `wishlistOnly === true && wishlist.size === 0`일 때 리스트 뷰의 빈 상태 메시지를 일반 `"조건에 맞는 게임이 없어요. 필터를 조정해 보세요."`가 아닌 전용 문구로 교체: `"아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요."`.
-- 구현: `script.js` `renderGames()` 빈 상태 분기에서 `wishlistOnly && wishlist.size === 0`이면 다른 텍스트 주입. 캘린더 뷰 `#calendar-empty`도 동일 분기 적용.
-- 신규 CSS/색 도입 X(기존 `.empty-state` 클래스 그대로 재사용). HTML 변경 0.
-- 변경: script.js +6 LOC 내외.
-
-### 2순위 — 카드 platform 뱃지 클릭 시 해당 플랫폼 자동 필터 적용
+### 1순위 — 카드 platform 뱃지 클릭 시 해당 플랫폼 자동 필터 적용
 - 카드의 `.platform-badge`(또는 현재 platform 표시 요소)에 click 핸들러 추가 — 클릭 시 `#platform-filter`의 value를 해당 플랫폼으로 설정 + `change` 이벤트 강제 dispatch(기존 필터 체인 재사용). 같은 뱃지를 다시 누르거나 다른 뱃지를 누르면 새 값으로 갱신.
 - 카드 자체 클릭(모달 열기)와 충돌 방지: 뱃지 click 핸들러에서 `e.stopPropagation()` 필수.
 - 시각: 뱃지에 hover 시 살짝 강조(기존 .platform-badge에 `cursor:pointer` + opacity hover). 신규 색 도입 X.
 - 구현 위치: `gamesList` 위임 click 핸들러 맨 앞에 `.platform-badge` 분기(별/카드 분기 사이). 모달 안의 platform 뱃지는 일단 제외(혼란 방지).
 - 변경: script.js +10, styles.css +3 = 총 +13 LOC 내외.
 
-### 3순위 — 푸터 데이터 갱신일 옆에 상대 시간 표시 ("3시간 전")
+### 2순위 — 푸터 데이터 갱신일 옆에 상대 시간 표시 ("3시간 전")
 - 현재 푸터: `데이터 마지막 갱신: 2026-05-28 09:30`. 그 뒤에 괄호로 상대 시간 추가 → `데이터 마지막 갱신: 2026-05-28 09:30 (3시간 전)`.
 - 구현: `script.js`에 `formatRelativeTime(date)` 헬퍼 신설 — `(Date.now() - date) / 60000` 계산해 분/시간/일 단위 분기(1분 미만="방금 전", 60분 미만="N분 전", 24시간 미만="N시간 전", 30일 미만="N일 전", 그 이상=빈 문자열). 기존 `data.last_updated` 파싱 직후 결과 문자열을 ` (${rel})` 형식으로 덧붙여 `footerUpdatedEl.textContent`에 주입.
 - 신규 색·HTML·CSS 변경 0. 30일 이상 지나면 상대 표기 생략(절대 날짜만 유지).
@@ -82,6 +79,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-28 14:29 [개발자] 위시리스트 칩 빈 상태 전용 안내 메시지 완료 (1순위 TODO): `script.js` `renderGames()`의 빈 상태 분기를 단일 텍스트 주입에서 조건부로 교체 — `const emptyMsg = (wishlistOnly && wishlist.size === 0) ? '아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요.' : '조건에 맞는 게임이 없어요. 필터를 조정해 보세요.';` 후 기존 `<p class="empty-state">` 래퍼는 그대로 유지하며 `+ emptyMsg +`로 본문 삽입. `renderCalendar()` 끝부분 `#calendar-empty` 토글 분기도 함께 확장 — 기존 `emptyEl.hidden = Object.keys(dayMap).length > 0;` 한 줄을 `if (emptyEl) { ... }` 블록으로 묶어 `hidden` 토글 유지 + `emptyEl.textContent`를 동일 `(wishlistOnly && wishlist.size === 0)` 조건으로 위시리스트 안내 또는 기존 `'이 달에는 출시 예정 게임이 없어요.'`로 재할당. 두 뷰 모두 기존 `.empty-state` 클래스 톤(#999) 그대로 재사용 → 신규 CSS/색 도입 0, HTML 변경 0, 단일 파일 수정. 회귀 안전: `wishlistOnly`/`wishlist`는 모듈 상단 선언된 기존 상태 변수 직접 참조(추가 imports/refs X), 캘린더의 `hidden` 토글은 기존 `Object.keys(dayMap).length > 0` 식 그대로(메시지 텍스트만 추가 분기) — 위시리스트 모드가 아닐 때 기존 동작 100% 동일. 변경: script.js +10/-2 = 총 +8 LOC (50줄 한참 미달, 예상치 +6과 거의 일치 — 캘린더 분기를 if 블록으로 감싸느라 2줄 더 늘어남).
 - 2026-05-28 13:29 [개발자] 검색 input X(clear) 버튼 완료 (1순위 TODO): `index.html`의 `<section class="search-bar">` 내부 `<input id="search-input">`을 `<div class="search-wrap">`로 감싸 그 안에 `<button id="search-clear" type="button" hidden aria-label="검색어 지우기">×</button>` 추가. `script.js`에 `const searchClear = document.getElementById('search-clear');` 모듈 상단 참조 한 줄 신설 + 기존 input 이벤트 핸들러 맨 앞(디바운스 외부)에 `if (searchClear) searchClear.hidden = !searchInput.value;` 한 줄 추가 → 입력 즉시 X 버튼 노출/숨김. 파일 끝에 `searchClear` click 핸들러 신설: `searchInput.value = ''; searchInput.dispatchEvent(new Event('input')); searchInput.focus();` — input 이벤트 강제 dispatch로 기존 200ms 디바운스 필터 체인 그대로 재사용(중복 코드 X), 결과적으로 `searchQuery=''`로 리셋되어 카드/캘린더 자동 재렌더 + 포커스 유지로 추가 검색 입력 가능. `styles.css` 끝에 주석 1줄 + 7블록 추가: `.search-wrap`(position:relative, display:inline-block, width:100%, max-width:360px — 입력 max-width와 동일하게 잡아 X 버튼이 input 우측 끝에 anchor), `.search-wrap input`(padding-right:1.75rem — 텍스트와 X 버튼 영역 분리), `#search-clear`(absolute, right:0.5rem, top:50%, transform:translateY(-50%), background:transparent, border:none, color:#999, font-size:1.1rem, cursor:pointer, padding:0 0.25rem, line-height:1), `:hover { color:#ccc }`, `#search-input::-webkit-search-cancel-button { -webkit-appearance:none; appearance:none; }` (Chrome/Safari 기본 X 버튼 숨겨 커스텀 X와 중복 노출 방지), `@media (max-width:480px) { .search-wrap { max-width:100%; } }` (모바일 풀폭). 신규 색 도입 X — 기존 #999/#ccc 톤만 사용(input placeholder #666과도 일관). 변경: index.html +4/-1, script.js +9/-0, styles.css +8/-0 = 총 +21/-1 (50줄 한참 미달, 예상치 +17과 거의 일치 — webkit 기본 X 숨김 룰 1줄 + 모바일 미디어 쿼리 1줄로 약간 늘어남).
 - 2026-05-28 12:28 [개발자] 캘린더 요일 헤더 한국식 색상 완료 (CSS-only, 1순위 TODO): `styles.css` 끝에 주석 1줄 + `.calendar-grid .weekday:nth-child(1) { color:#e57373 }` (일요일=빨강 톤, 기존 `.dday.past` 색 재사용) + `.calendar-grid .weekday:nth-child(7) { color:#64b5f6 }` (토요일=파랑 톤, 기존 PC/콘솔 카테고리 색 재사용) 3줄 추가. 셀렉터에 `.calendar-grid` 부모 한정자를 두어 캘린더 그리드 내부 첫/일곱째 자식이 weekday일 때만 적용 → `.day` 셀(8~49번째 자식)과 셀렉터 충돌 없음(`.weekday`로 클래스 한정). 신규 색 도입 X — 기존 팔레트(`#e57373` D-Day past, `#64b5f6` PC/콘솔 카테고리)에서 차용. 그 외 요일(월~금)은 기존 `.calendar-grid .weekday { color:#888 }`(line 290) 그대로 상속. JS/HTML 변경 0. 변경: styles.css +3/-0 (50줄 한참 미달, 예상치 +4와 거의 일치).
 - 2026-05-28 12:00 [기획자] TODO 큐 1개 → 5개로 보충: 캘린더 요일 헤더 한국식 색(1, 기존 유지) + 검색 input X(clear) 버튼(2) + 위시리스트 칩 빈 상태 전용 메시지(3) + 카드 platform 뱃지 클릭 시 필터 자동 적용(4) + 푸터 갱신일 상대 시간(5). 완료 처리: 0개(직전 카드/모달 image_url placeholder는 PROJECT_STATUS 완료 섹션에 이미 반영됨, QA ✅ 11:40). IDEAS 이동: 0개(3사이클째 머문 항목 없음). IDEAS에서 끌어옴: 0개(출시일별 그룹핑/통계 차트/YouTube 임베드/카카오톡 공유/일간 뷰는 모두 50줄 초과 위험 있어 보류). 사용자 요청 처리: 활성 0개, 보류 SEO는 지시대로 손대지 않음.
