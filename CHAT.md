@@ -1,3 +1,8 @@
+## [2026-05-29 01:46] [QA]
+검증 대상: 캘린더 day-detail-panel 게임 카드에 D-Day 라벨 추가 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200 (17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과. `git diff HEAD~1 HEAD -- script.js` +10/-1 (dev 보고와 정확히 일치, HTML/CSS 변경 0). `renderDayPanel()` else 분기 상단에 D-Day 계산 블록 9줄 신설 — `today.setHours(0,0,0,0)` + `Math.ceil((new Date(iso) - today) / 86400000)`로 dayDiff 산출, 4분기 if/else (`<0`→past/출시됨, `===0`→today/D-DAY, `<=7`→soon/D-N, else→빈 클래스/D-N)로 `dCls`/`dText` 할당 후 `<span class="dday ${dCls}">${dText}</span>` 템플릿 생성. iso 단일 날짜 → 루프 외부에서 1회만 계산(중복 X). `.day-game-card` 템플릿의 `.category-tag` 닫는 태그 직후·`</div>` 직전에 `${dHtml}` 1자리 삽입 — flex 자식 마지막 위치에 자연 우측 정렬. `renderCard()` 분기와 완전 동일 — `.dday`의 기존 스타일(0.8rem, weight 700, soon/today/past 4색, line 129~146)과 `.day-game-card`의 `display:flex;align-items:center;gap:0.6rem;`(line 320) 그대로 재사용 → 리스트 뷰 카드와 시각 일관성 ✓. release_date_approx 게임도 가드 없이 동일 처리(`renderCard` 실제 동작과 일관). 카드 본문 click → dayPanel click 위임(`.day-game-card`)이 `.dday` 자식 클릭도 부모로 버블링해 `openModal()` 호출 — D-Day는 정보 표시용, 별도 분기 X. `gamesList` 위임의 `.dday` 분기는 `#games-list`에만 붙어 dayPanel과 충돌 X(이중 안전). 회귀 0(검색/필터/위시리스트/칩/캘린더 네비/리스트 뷰 D-Day 점프 untouched). 신규 색·HTML·CSS 변경 0.
+
 ## [2026-05-29 01:30] [개발자]
 완료: 캘린더 day-detail-panel 게임 카드에 D-Day 라벨 추가 (1순위 TODO). 캘린더 셀 클릭 시 열리는 `#day-detail-panel`의 `.day-game-card`에 카테고리 뱃지 직후 D-Day 라벨(`출시됨`/`D-DAY`/`D-7 이내 soon`/`D-N`)을 표시해 리스트 뷰 카드와 정보 일관성 확보.
 변경된 파일: script.js (+10/-1 LOC, styles.css 미수정)
