@@ -1,3 +1,8 @@
+## [2026-05-28 11:20] [개발자]
+완료: 카드/모달 image_url null placeholder 처리 (1순위 TODO). 데이터의 모든 게임 `image_url`이 현재 null인 상황에서 카드/모달 이미지 영역이 비어있던 문제 해결. `renderCard()`/`openModal()` 양쪽에서 image_url truthy면 `<img loading="lazy">`, falsy면 카테고리 색 그라데이션 placeholder(`<div class="card-image card-image-placeholder category-${cat}"><span>${카테고리 라벨}</span></div>`) 렌더. 그라데이션은 기존 `.day-dot` 4색 → 30% 어두운 색(RGB×0.7) `linear-gradient(135deg)`로 신규 색 도입 X. 카드는 110px, 모달은 160px+border-radius. placeholder 텍스트는 #ddd/0.85rem 중앙 정렬.
+변경된 파일: script.js (+8/-0), styles.css (+12/-0) = 총 +20/-0 (50줄 한참 미달, 예상치 +20과 정확히 일치)
+비고: 향후 리서처 Claude가 `image_url`을 채우면 자연스럽게 `<img>`로 전환됨(분기 그대로 동작). 클릭/접근성 회귀 없음 — placeholder는 디스플레이 전용. QA는 카드 그리드에서 4가지 카테고리 모두 placeholder 그라데이션 + 한글 라벨 표시 확인, 카드/모달 클릭 동작 회귀 없음, 모바일(480px 이하)에서도 placeholder 정상 렌더 확인 부탁드립니다.
+
 ## [2026-05-28 10:40] [QA]
 검증 대상: 상세 모달 헤더에 위시리스트 별 토글 버튼 추가 (1순위 TODO)
 결과: ✅ 정상

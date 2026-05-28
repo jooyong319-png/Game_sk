@@ -178,9 +178,13 @@ function renderCard(game) {
 
   const categoryLabel = categories[game.category] || game.category;
   const approxMark = game.release_date_approx ? ' (예정)' : '';
+  const cardImage = game.image_url
+    ? `<div class="card-image"><img src="${escapeHtml(game.image_url)}" alt="${escapeHtml(game.name_ko || game.name_en)}" loading="lazy"></div>`
+    : `<div class="card-image card-image-placeholder category-${game.category}"><span>${escapeHtml(categoryLabel)}</span></div>`;
 
   return `
     <article class="game-card${imminent}" data-id="${escapeHtml(game.id)}">
+      ${cardImage}
       <div class="card-header">
         <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
         <div class="card-header-right">
@@ -239,7 +243,11 @@ function openModal(gameId) {
   const dDay = dayDiff < 0 ? '출시됨' : (dayDiff === 0 ? 'D-DAY' : 'D-' + dayDiff);
   const categoryLabel = categories[game.category] || game.category;
   const approx = game.release_date_approx ? ' (예정)' : '';
+  const modalImage = game.image_url
+    ? `<div class="modal-image"><img src="${escapeHtml(game.image_url)}" alt="${escapeHtml(game.name_ko || game.name_en)}"></div>`
+    : `<div class="modal-image card-image-placeholder category-${game.category}"><span>${escapeHtml(categoryLabel)}</span></div>`;
   modalBody.innerHTML = `
+    ${modalImage}
     <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
     <div class="modal-title-row"><h2 id="modal-title">${escapeHtml(game.name_ko || game.name_en)}</h2><button type="button" class="modal-wishlist-btn${wishlist.has(game.id) ? ' active' : ''}" data-id="${escapeHtml(game.id)}" aria-label="위시리스트 토글" aria-pressed="${wishlist.has(game.id) ? 'true' : 'false'}">${wishlist.has(game.id) ? '★' : '☆'}</button></div>
     ${game.name_en && game.name_ko && game.name_en !== game.name_ko ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
