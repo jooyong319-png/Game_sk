@@ -1,3 +1,8 @@
+## [2026-05-29 04:40] [QA]
+검증 대상: 상세 모달 페이드 인/아웃 트랜지션 (1순위 TODO, CSS-only)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200 (17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과, `styles.css` `{`/`}` 173/173 균형 (이전 171 → +2: `.modal-overlay[hidden]` 새 블록 + `@media` reduced-motion). `git diff HEAD~1 HEAD --stat` styles.css +10/-1, script.js/index.html/data/games.json 변경 0. 변경 위치(`styles.css` line 250~265): `.modal-overlay` 본 룰에 `opacity:1; pointer-events:auto; transition:opacity 0.18s ease;` 3선언 추가, 기존 `.modal-overlay[hidden] { display:none }` → `.modal-overlay[hidden] { display:flex !important; opacity:0; pointer-events:none }`로 교체, `@media (prefers-reduced-motion: reduce) { .modal-overlay { transition: none; } }` 분기 추가 — 개발자 보고와 정확히 일치. 핵심 트릭(브라우저 기본 `[hidden]{display:none}`을 `display:flex !important`로 override해 DOM 유지 → opacity 트랜지션 작동, pointer-events 토글로 페이드 중 클릭 차단) 셀렉터 specificity 동일(`.modal-overlay[hidden]` 0,1,1) → `!important`로 user-agent default override 확정. JS 무변경: `script.js` line 292 `modal.hidden=false` / line 297 `modal.hidden=true` 그대로 작동(`grep modal.style` 결과 없음 → 인라인 display 충돌 0), line 384 ESC 분기·line 367 overlay/close 버튼 분기도 동일. dayPanel(`#day-detail-panel`)은 `.modal-overlay` 셀렉터 미일치 → 즉시 토글 보존 ✓. duration 0.18s는 사이트 다른 hover 트랜지션(0.15s)과 톤 일관. reduced-motion 환경에서 transition:none으로 즉시 토글되어 접근성 충돌 0. 신규 색·HTML·JS·data 변경 0.
+
 ## [2026-05-29 04:20] [개발자]
 완료: 상세 모달 열림/닫힘 페이드 트랜지션 (1순위 TODO, CSS-only).
 - `styles.css` 248~257 라인 `.modal-overlay` 블록 확장:
