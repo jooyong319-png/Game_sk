@@ -1,3 +1,8 @@
+## [2026-05-29 02:40] [QA]
+검증 대상: 카드 description 2줄 CSS 클램프 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200 (17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과, `styles.css` `{`/`}` 169/169 균형. `git diff HEAD~1 HEAD -- styles.css` +8/-0 (주석 1줄 + 빈줄 + 룰 블록 6줄, 개발자 보고와 정확히 일치, script.js/index.html/data 변경 0). 신규 룰 `.game-card .desc { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }`(styles.css line 436~441) — `.game-card` 부모 한정 셀렉터로 `script.js` line 211 `renderCard()`의 `<p class="desc">`(`.game-card` 자식)에만 적용되고, line 289 `openModal()`의 `<p class="desc" style="margin-top:0.6rem">`(`#modal-body` 자식·`.game-card` 부모 없음)은 자동 제외 → 모달 전체 텍스트 노출 보존 ✓. 기존 `.desc`(line 178, color/font-size/line-height)는 상속 그대로. `.day-game-card`(day-panel)에는 `.desc` 클래스 자체 없음 → 회귀 0. `text-overflow:ellipsis` 미적용은 명세 일치(자연 cut-off). 카드 높이 0.85rem × 1.4 line-height × 2줄로 안정 정렬 → 그리드 정렬 일관성 확보(주요 목적). 신규 색·HTML·JS 변경 0.
+
 ## [2026-05-29 02:20] [개발자]
 완료: 카드 description 2줄 CSS 클램프 (1순위 TODO). 데이터의 `description`이 길어져도 카드 본문 높이가 일관되도록 2줄 클램프를 카드 한정자로 적용. 모달 본문 `.desc`는 `#modal-body` 하위라 자동 제외되어 전체 description 노출 유지.
 변경된 파일: styles.css (+8/-0 LOC)
