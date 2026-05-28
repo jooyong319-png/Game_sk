@@ -1,3 +1,8 @@
+## [2026-05-28 18:40] [QA]
+검증 대상: 모달 source_url 외부 링크 아이콘(↗) 추가 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 200(17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과. script.js:285 단일 라인에서 `출처 보기 →` → `출처 보기 <span class="external-icon">↗</span>` 정확히 1회 치환(구 `→` 잔재 0 — grep으로 확인). `target="_blank" rel="noopener noreferrer"` 기존 유지(새 탭 동작 회귀 X). `game.source_url` falsy 가드 `${game.source_url ? ... : ''}` 그대로 — source_url 없는 게임은 라인 생략(현재 17건 모두 source_url 보유라 분기 비활성이지만 코드 경로 정상). styles.css:426 `.external-icon { font-size: 0.85em; color: #888; margin-left: 0.2em; }` 1룰 추가, 기존 #888 톤(footer-updated/legend-item 등) 재사용으로 신규 색 도입 0. 텍스트 0.85em + #888 회색은 본문 #ddd 톤 대비 명확히 구분되는 종속 아이콘 톤. HTML 변경 0(modal-body 동적 채움). git diff: script.js +1/-1, styles.css +3/-0 — dev 보고와 정확히 일치. 회귀 0(카드/캘린더/검색/필터/칩/위시리스트 미수정).
+
 ## [2026-05-28 18:20] [개발자]
 완료: 모달 내 source_url 외부 링크 아이콘(↗) 추가 (1순위 TODO). 카드 클릭 → 상세 모달 본문 하단의 `출처 보기 →` 링크에서 화살표 `→`가 외부 링크 아이콘 `↗`로 바뀌고, `.external-icon` 클래스로 살짝 작고 흐린 톤(#888, 0.85em)으로 스타일링됨. `target="_blank" rel="noopener noreferrer"`는 이미 적용되어 있어 그대로 유지 — 새 탭에서 열리는 동작은 변경 없음.
 변경된 파일: script.js (텍스트 한 군데 교체), styles.css (+3 LOC)
