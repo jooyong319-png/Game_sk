@@ -1,3 +1,14 @@
+## [2026-05-29 06:40] [QA]
+검증 대상: 캘린더 day-detail-panel 명시적 닫기(×) 버튼 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200 (17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과, `styles.css` `{`/`}` 181/181 균형 (이전 178 → +3 룰: `.day-panel-header` + `.day-panel-close` + `.day-panel-close:hover`). 변경 위치 확인 — `script.js` line 512 `head` 변수가 `<div class="day-panel-header"><h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3><button class="day-panel-close" aria-label="패널 닫기">×</button></div>` 플렉스 래퍼로 교체 ✓, line 546~553 dayPanel click 위임에 `.day-panel-close` 분기 신설 — `e.target.closest('.day-panel-close')` 가로채 `e.stopPropagation()` 후 `dayPanel.hidden = true; selectedDay = null; renderCalendar();` 실행 후 `return`으로 카드 분기와 분리 ✓. 기존 ESC 핸들러(line 386~390) 본문과 정확히 동일 로직 재사용 — 일관성 확보. 셀의 `.selected` 클래스는 renderCalendar의 `selectedDay === iso` 비교로 자동 제거되어 별도 DOM 조작 불요 ✓. `styles.css` line 465~467 신규 3룰: `.day-panel-header { display:flex; justify-content:space-between; align-items:center; }` + `.day-panel-close { background:transparent; border:none; color:#888; font-size:1.2rem; cursor:pointer; padding:0 0.3rem; line-height:1; transition:color 0.15s ease; }` + `.day-panel-close:hover { color:#ddd; }` — 개발자 보고와 정확히 일치. 신규 색 도입 0 (#888/#ddd 기존 그레이 톤, 모달 `.modal-close` 패턴과 일관 UX). 빈 분기(`<p class="day-empty">`)/게임 분기(`.day-game-card` 리스트) 양쪽 모두 동일 헤더가 `head` 변수에서 자동 노출 ✓. `reduced-motion` 환경에서는 color 트랜지션만 작동(transform 없음)이라 접근성 충돌 0. HTML/data 변경 0.
+
+## [2026-05-28 06:46] [QA]
+검증 대상: 푸터에 데이터 마지막 갱신일 표시 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 푸터 셋째 줄  노출 — 비고(1) 일치. (2) 헤더  "마지막 업데이트: 2026.05.27" 정상 작동, 두 표시 공존 — 비고(2) 일치. (3) games.json의 `2026-05-27T16:24:26+09:00` → KST 16:24로 정확히 포맷됨 — 비고(3) 일치. (4) `.footer-updated` computed color=rgb(153,153,153)=#999, font-size=12.8px=0.8rem, display=block, hidden=false — 비고(4) 일치. footer.innerHTML 깨끗(© 2026 게임 출시 캘린더 + mailto + 데이터 마지막 갱신 3줄만, AI 협업 잔재 없음). games.json HTTP 200·JSON 파싱 정상(14건, last_updated=2026-05-27T16:24:26+09:00). 다음 사이클(카드 hover D-Day 펄스) 진행 가능.
+
+
 ## [2026-05-29 06:20] [개발자]
 완료: 캘린더 day-detail-panel 명시적 닫기(×) 버튼 (1순위 TODO).
 - `script.js` `renderDayPanel()` line 512 `head` 변수의 `<h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3>` 단일 노드 → `<div class="day-panel-header"><h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3><button class="day-panel-close" aria-label="패널 닫기">×</button></div>` 플렉스 래퍼로 교체. 빈 분기(`<p class="day-empty">`)·게임 분기(`.day-game-card` 리스트) 양쪽 모두 동일 헤더 자동 노출 → 일관성 ✓.
