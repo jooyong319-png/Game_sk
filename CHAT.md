@@ -1,3 +1,21 @@
+## [2026-05-28 17:20] [개발자]
+완료: 카드/모달 출시일 옆 한글 요일 표시 (1순위 TODO). 카드 본문과 상세 모달의 출시일 라인 끝에 `(금)` 같은 한글 요일 약자가 괄호로 추가됨. `release_date_approx === true`인 추정 출시일에는 요일 표시 생략(요일 의미가 없으므로).
+변경된 파일: script.js (+9/-2) — 단일 파일
+비고:
+(1) 헬퍼: `getKoreanWeekday(dateStr)` 신설 — `formatDate` 함수 바로 아래(`formatRelativeTime` 위) 배치해 날짜 헬퍼 그룹 일관성 유지. 본문 4줄: (a) `if (!dateStr) return '';` (b) `const d = new Date(dateStr + 'T00:00:00');` — 시간 부분 명시로 브라우저 TZ에 따른 날짜 shift 회피(Korea KST 기준 +09:00이라 UTC 자정에 파싱하면 전날로 밀릴 수 있음) (c) `if (isNaN(d.getTime())) return '';` (d) `return ['일','월','화','수','목','금','토'][d.getDay()];`
+(2) renderCard 수정: `.release-date` 라인의 `${formatDate(releaseDate)}${approxMark}` 사이에 인라인 삼항 추가 — `${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}`. `release_date_approx === true`면 빈 문자열로 요일 생략(TODO 명세 일치). 헬퍼가 빈 문자열 반환(invalid date)이면 괄호 자체 생략 — 이중 가드.
+(3) openModal 수정: `출시일` 모달 행 `${formatDate(releaseDate)}${approx} · ${dDay}` 의 `formatDate(releaseDate)` 직후에 동일한 삼항 표현식 삽입 — 형식: `2026.06.12 (금) · D-15`. `dDay`는 항상 요일 뒤에 옴(approxMark 위치와 일관).
+(4) 형식 차이: TODO 예시는 `2026-06-12 (금)` 하이픈 구분자였지만 기존 `formatDate`가 `2026.06.12` 점 구분자라 결과는 `2026.06.12 (금)`. 구분자는 사이트 전반 일관성 유지 차원에서 변경하지 않음(formatDate 수정 X — 영향 범위 확장 회피).
+(5) 헬퍼 단위 테스트 (node CLI 실행): `'2026-06-12'`→`'금'`, `'2026-05-28'`→`'목'`, `'2026-05-31'`→`'일'`, `null`/`''`/`'not-a-date'`→`''` 모두 명세 일치.
+(6) 영향 범위: 신규 색·HTML·CSS 변경 0. JS 단일 파일 수정. `node --check script.js` 통과. 카드/모달 외 영역(캘린더/검색/필터/칩/위시리스트) 미수정.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 리스트 뷰에서 각 카드의 `📅 YYYY.MM.DD` 라인 끝에 `(요일)` 표시 — 예: `📅 2026.06.12 (금)`, `📅 2026.05.31 (일)`
+  (b) 카드 클릭 → 상세 모달의 `출시일` 행도 동일하게 `YYYY.MM.DD (요일) · D-N` 형식으로 노출
+  (c) `data/games.json`에서 `release_date_approx: true`인 게임이 있다면(현재 데이터에 있는지는 리서처 영역) 그 게임은 요일 괄호 없이 `📅 2026.06.12 (예정)` 그대로 표시 — 추정 날짜는 요일 생략
+  (d) 요일 약자가 한국식 단일 글자(`일/월/화/수/목/금/토`)로만 표시되는지(영문/긴 형식 잔재 없음)
+  (e) 콘솔 에러 0건, 다른 영역(캘린더/검색/필터/칩/위시리스트) 회귀 없음
+
 ## [2026-05-28 16:40] [QA]
 검증 대상: 검색 input 키보드 단축키 (`/` 포커스 + `ESC` 클리어, 1순위)
 결과: ✅ 정상

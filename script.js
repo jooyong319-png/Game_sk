@@ -202,7 +202,7 @@ function renderCard(game) {
         <h3>${escapeHtml(game.name_ko || game.name_en)}</h3>
         ${game.name_en && game.name_ko && game.name_en !== game.name_ko
           ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
-        <div class="release-date">📅 ${formatDate(releaseDate)}${approxMark}</div>
+        <div class="release-date">📅 ${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approxMark}</div>
         ${game.description ? `<p class="desc">${escapeHtml(game.description)}</p>` : ''}
         <div class="meta">
           ${game.developer ? `<div class="meta-row">🛠️ ${escapeHtml(game.developer)}</div>` : ''}
@@ -226,6 +226,13 @@ function formatDate(d) {
   if (!d) return '';
   if (typeof d === 'string') d = new Date(d);
   return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function getKoreanWeekday(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d.getTime())) return '';
+  return ['일', '월', '화', '수', '목', '금', '토'][d.getDay()];
 }
 
 function formatRelativeTime(date) {
@@ -269,7 +276,7 @@ function openModal(gameId) {
     <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
     <div class="modal-title-row"><h2 id="modal-title">${escapeHtml(game.name_ko || game.name_en)}</h2><button type="button" class="modal-wishlist-btn${wishlist.has(game.id) ? ' active' : ''}" data-id="${escapeHtml(game.id)}" aria-label="위시리스트 토글" aria-pressed="${wishlist.has(game.id) ? 'true' : 'false'}">${wishlist.has(game.id) ? '★' : '☆'}</button></div>
     ${game.name_en && game.name_ko && game.name_en !== game.name_ko ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
-    <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${approx} · ${dDay}</div>
+    <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approx} · ${dDay}</div>
     ${game.platforms?.length ? `<div class="modal-row"><strong>플랫폼</strong>${game.platforms.map(escapeHtml).join(', ')}</div>` : ''}
     ${game.genres?.length ? `<div class="modal-row"><strong>장르</strong>${game.genres.map(escapeHtml).join(', ')}</div>` : ''}
     ${game.developer ? `<div class="modal-row"><strong>개발</strong>${escapeHtml(game.developer)}</div>` : ''}
