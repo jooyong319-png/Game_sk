@@ -1,3 +1,22 @@
+## [2026-05-28 10:20] [개발자]
+완료: 상세 모달 헤더에 위시리스트 별 토글 버튼 추가 (1순위 TODO)
+변경된 파일: script.js (+14/-1), styles.css (+8/-0)
+비고:
+(1) `openModal()` 템플릿에서 `<h2 id="modal-title">`를 `.modal-title-row` flex 컨테이너로 감싸 우측에 `<button class="modal-wishlist-btn">★/☆</button>` 추가. 모달 열릴 때마다 템플릿이 `wishlist.has(game.id)`로 초기 상태(★/☆ 텍스트 + `.active` 클래스 + aria-pressed) 렌더 — 별도 setter 없음.
+(2) `modal` click 핸들러 맨 앞에 `.modal-wishlist-btn` 가로채기 분기 신설(`e.stopPropagation()` + early return). Set add/remove + `saveWishlist()` + 카드의 같은 게임 별(`.wishlist-btn[data-id="..."]`)을 `document.querySelector()`로 찾아 in-place 동기화(클래스/텍스트/aria-pressed) + `updateWishlistChipLabel()` 호출(칩 라벨 즉시 갱신). 카드가 현재 보이지 않으면(필터링 등) 셀렉터가 null이라도 안전(분기 보호).
+(3) 셀렉터 안전성: `window.CSS && CSS.escape ? CSS.escape(id) : id` — 구형 브라우저 fallback. 현 데이터의 id는 ASCII slug라 escape 없어도 동작하지만 보수적으로.
+(4) 비활성=`☆`+`#666`, 활성=`★`+`#f5b400` — 기존 `.wishlist-btn` 톤 100% 재사용. 신규 색 도입 X. CSS: `.modal-title-row`(flex/space-between/gap 0.5rem) + `.modal-title-row h2`(margin-bottom:0, 기존 `.modal h2 {margin-bottom:0.3rem}` 오버라이드) + `.modal-wishlist-btn` 기본/hover/active/`.active` 5블록.
+(5) 기존 modal 닫기 분기(`e.target === modal || .modal-close`)는 별 클릭 분기 뒤에 그대로 보존 — 별 클릭 시 early return하므로 닫기 회귀 없음.
+(6) index.html 미수정 — modal-body가 완전 동적이라 정적 HTML 변경 불필요(TODO 가이드와 약간 다르지만 변경 최소화 우선). 모달 외 다른 영역(카드/캘린더/칩) 변경 0.
+
+QA에서 확인 부탁드립니다 —
+  (a) 게임 카드 클릭 → 모달 헤더 우측에 ☆ 또는 ★(이미 위시리스트인 게임) 노출, 제목과 같은 가로 라인
+  (b) 모달의 별 클릭 → ★↔☆ 즉시 토글, 동시에 (해당 카드가 리스트 뷰에서 보이면) 카드의 별도 동기 토글, 위시리스트 칩 라벨의 N도 ±1 즉시 갱신
+  (c) 모달 닫고 다시 같은 게임 열면 토글된 상태 그대로 노출(`wishlist.has(id)` 일치)
+  (d) localStorage `gcalen.wishlist` 배열도 동기 갱신(새로고침 후 유지)
+  (e) 모달의 닫기 동작(× 버튼, 오버레이 클릭, ESC) 회귀 없음 — 별 클릭은 모달을 닫지 않음(stopPropagation)
+  (f) 콘솔 에러 0, 다른 영역(캘린더 점/패널/카드 hover D-Day 펄스 등) 회귀 없음
+
 ## [2026-05-28 09:40] [QA]
 검증 대상: 위시리스트 칩에 개수 뱃지 표시 (1순위 TODO)
 결과: ✅ 정상

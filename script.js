@@ -241,7 +241,7 @@ function openModal(gameId) {
   const approx = game.release_date_approx ? ' (예정)' : '';
   modalBody.innerHTML = `
     <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
-    <h2 id="modal-title">${escapeHtml(game.name_ko || game.name_en)}</h2>
+    <div class="modal-title-row"><h2 id="modal-title">${escapeHtml(game.name_ko || game.name_en)}</h2><button type="button" class="modal-wishlist-btn${wishlist.has(game.id) ? ' active' : ''}" data-id="${escapeHtml(game.id)}" aria-label="위시리스트 토글" aria-pressed="${wishlist.has(game.id) ? 'true' : 'false'}">${wishlist.has(game.id) ? '★' : '☆'}</button></div>
     ${game.name_en && game.name_ko && game.name_en !== game.name_ko ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
     <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${approx} · ${dDay}</div>
     ${game.platforms?.length ? `<div class="modal-row"><strong>플랫폼</strong>${game.platforms.map(escapeHtml).join(', ')}</div>` : ''}
@@ -275,6 +275,19 @@ gamesList.addEventListener('click', e => {
   if (card && card.dataset.id) openModal(card.dataset.id);
 });
 modal.addEventListener('click', e => {
+  const wishBtn = e.target.closest('.modal-wishlist-btn');
+  if (wishBtn && wishBtn.dataset.id) {
+    e.stopPropagation();
+    const id = wishBtn.dataset.id;
+    const wasIn = wishlist.has(id);
+    if (wasIn) { wishlist.delete(id); wishBtn.classList.remove('active'); wishBtn.textContent = '☆'; wishBtn.setAttribute('aria-pressed', 'false'); }
+    else { wishlist.add(id); wishBtn.classList.add('active'); wishBtn.textContent = '★'; wishBtn.setAttribute('aria-pressed', 'true'); }
+    saveWishlist();
+    const cardBtn = document.querySelector('.wishlist-btn[data-id="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
+    if (cardBtn) { cardBtn.classList.toggle('active', !wasIn); cardBtn.textContent = !wasIn ? '★' : '☆'; cardBtn.setAttribute('aria-pressed', !wasIn ? 'true' : 'false'); }
+    updateWishlistChipLabel();
+    return;
+  }
   if (e.target === modal || e.target.classList.contains('modal-close')) closeModal();
 });
 document.addEventListener('keydown', e => {

@@ -385,3 +385,11 @@ footer a:hover {
 @media (prefers-reduced-motion: reduce) {
   .game-card:hover .dday { animation: none; }
 }
+
+/* Modal title row + wishlist button (reuse existing #f5b400 wishlist tone) */
+.modal-title-row { display:flex; align-items:center; justify-content:space-between; gap:0.5rem; }
+.modal-title-row h2 { margin-bottom:0; }
+.modal-wishlist-btn { background:transparent; border:none; color:#666; font-size:1.4rem; line-height:1; cursor:pointer; padding:0 0.25rem; transition:color 0.15s, transform 0.1s; }
+.modal-wishlist-btn:hover { color:#f5b400; }
+.modal-wishlist-btn:active { transform:scale(1.15); }
+.modal-wishlist-btn.active { color:#f5b400; }
