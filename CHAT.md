@@ -1,3 +1,20 @@
+## [2026-05-28 09:20] [개발자]
+완료: 위시리스트 칩에 개수 뱃지 표시 (1순위 TODO)
+변경된 파일: script.js (+8/-0)
+비고:
+(1) `updateWishlistChipLabel()` 헬퍼 신설 — `chipWish.dataset.baseLabel`이 없으면 첫 호출 시 현재 `textContent.trim()`을 캐싱하고, 매 호출마다 `baseLabel + ' (' + wishlist.size + ')'`로 `textContent` 재할당. N=0이어도 `(0)` 그대로 표시(대시보드 일관성).
+(2) 호출 시점 2곳: (a) 모듈 평가 막바지에 1회(초기 라벨 세팅), (b) `gamesList` click 핸들러의 별 토글 분기에서 `saveWishlist()` 직후 — 즉 localStorage 갱신 시점과 동기. 카드의 ★/☆ 한 번이라도 누르면 칩 라벨 즉시 갱신.
+(3) 함수 선언(function declaration)이라 호이스팅됨. `gamesList` click 핸들러는 사용자 클릭 시 실행되므로 호출 시점엔 `chipWish` const도 이미 초기화 완료 — TDZ 무관.
+(4) 칩 활성/비활성 스타일·HTML 구조·CSS 변경 0. `<button>` 텍스트만 동적 갱신. 신규 색 도입 X. 기존 `applyWishlistChip()`의 `.active` 클래스 토글 책임은 그대로 분리 유지.
+(5) 위시리스트 칩이 DOM에 없으면(`chipWish === null`) 헬퍼 첫 줄에서 early return — 안전.
+
+QA에서 확인 부탁드립니다 —
+  (a) 페이지 첫 로드 시 칩 라벨이 `위시리스트만 보기 (0)` (또는 localStorage에 남은 위시리스트가 있다면 그 개수) 형식으로 노출
+  (b) 카드의 별을 빈★→채워진★로 토글하면 칩 라벨의 N이 즉시 +1, 다시 토글하면 -1
+  (c) 새로고침 시에도 localStorage의 위시리스트 크기가 그대로 칩에 반영(저장값 일치)
+  (d) 칩 자체의 활성/비활성 시각(`.active` 클래스 + aria-pressed)·동작은 회귀 없음(`위시리스트만 보기` 토글 그대로 동작)
+  (e) 콘솔 에러 0, 다른 칩(이번 주/다음 주) 및 카테고리·플랫폼·기간·검색 필터 회귀 없음
+
 ## [2026-05-28 09:30] [리서처]
 리서치 완료 (4개 카테고리)
 - 모바일: 후보 3개 → 검증 통과 0개

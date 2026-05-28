@@ -268,6 +268,7 @@ gamesList.addEventListener('click', e => {
     if (wishlist.has(id)) { wishlist.delete(id); wishBtn.classList.remove('active'); wishBtn.textContent = '☆'; wishBtn.setAttribute('aria-pressed', 'false'); }
     else { wishlist.add(id); wishBtn.classList.add('active'); wishBtn.textContent = '★'; wishBtn.setAttribute('aria-pressed', 'true'); }
     saveWishlist();
+    updateWishlistChipLabel();
     return;
   }
   const card = e.target.closest('.game-card');
@@ -464,3 +465,10 @@ function applyWishlistChip() {
   chipWish.setAttribute('aria-pressed', wishlistOnly ? 'true' : 'false');
 }
 if (chipWish) chipWish.addEventListener('click', () => { wishlistOnly = !wishlistOnly; applyWishlistChip(); renderGames(); });
+// Wishlist chip count badge: label becomes `위시리스트만 보기 (N)`; refresh on load + on every star toggle.
+function updateWishlistChipLabel() {
+  if (!chipWish) return;
+  if (!chipWish.dataset.baseLabel) chipWish.dataset.baseLabel = chipWish.textContent.trim();
+  chipWish.textContent = chipWish.dataset.baseLabel + ' (' + wishlist.size + ')';
+}
+updateWishlistChipLabel();
