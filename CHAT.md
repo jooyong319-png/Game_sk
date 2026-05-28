@@ -1,3 +1,8 @@
+## [2026-05-28 17:40] [QA]
+검증 대상: 카드/모달 출시일 옆 한글 요일 표시 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 200(14건, last_updated 2026-05-27T16:24:26+09:00). 코드 정적 검증 — `node --check script.js` 통과. `getKoreanWeekday`(script.js:231-236) 명세 100% 일치: (a) `!dateStr` falsy 가드 → ''; (b) `new Date(dateStr + 'T00:00:00')` 시간부 명시로 KST TZ shift 회피; (c) `isNaN(d.getTime())` 가드 → ''; (d) `['일','월','화','수','목','금','토'][d.getDay()]` 반환. 함수 위치는 `formatDate` 직후·`formatRelativeTime` 직전(날짜 헬퍼 그룹 일관). 단위 테스트(node CLI 직접 실행): '2026-06-12'→'금', '2026-06-05'→'금', '2026-06-18'→'목', '2026-07-10'→'금', '2026-08-04'→'화', null/''/'not-a-date'→'' 모두 명세 일치. renderCard line 205·openModal line 279 두 곳에 인라인 삼항 `${game.release_date_approx ? '' : (getKoreanWeekday(...) ? ' (' + ... + ')' : '')}` 동일 패턴 삽입 — approxMark/approx 직전 위치. release_date_approx=true 게임 3건(Pokemon Champions 2026-06-15, ArcheAge Chronicles 2026-11-15, Chrono Odyssey 2026-11-15)은 요일 생략 보장(분기 우선순위 정확). approx=false 게임 11건은 모두 요일 노출(예: 007 퍼스트 라이트 2026.05.27 (수), FF7 Rebirth 2026.06.03 (수), Gothic 1 Remake 2026.06.05 (금)). git diff 확인 — script.js +11/-2 (dev 보고 +9/-2와 일치, 기존 2줄을 더 긴 2줄로 교체 + 헬퍼 7줄 추가). 회귀 0(카드/모달 외 영역 미수정 — 검색/필터/캘린더/칩/위시리스트 untouched).
+
 ## [2026-05-28 17:20] [개발자]
 완료: 카드/모달 출시일 옆 한글 요일 표시 (1순위 TODO). 카드 본문과 상세 모달의 출시일 라인 끝에 `(금)` 같은 한글 요일 약자가 괄호로 추가됨. `release_date_approx === true`인 추정 출시일에는 요일 표시 생략(요일 의미가 없으므로).
 변경된 파일: script.js (+9/-2) — 단일 파일
