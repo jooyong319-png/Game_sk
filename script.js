@@ -328,14 +328,32 @@ modal.addEventListener('click', e => {
   if (e.target === modal || e.target.classList.contains('modal-close')) closeModal();
 });
 document.addEventListener('keydown', e => {
+  // '/' shortcut: focus + select the search input from anywhere outside text fields.
+  if (e.key === '/') {
+    const active = document.activeElement;
+    const tag = active && active.tagName;
+    const inText = tag === 'INPUT' || tag === 'TEXTAREA' || (active && active.isContentEditable);
+    if (!inText && searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+    return;
+  }
   if (e.key !== 'Escape') return;
   // Modal has priority; if open, close it and bail.
   if (!modal.hidden) { closeModal(); return; }
-  // Otherwise, close the day-detail-panel if open.
+  // Day-detail-panel takes next priority.
   if (dayPanel && !dayPanel.hidden) {
     dayPanel.hidden = true;
     selectedDay = null;
     renderCalendar();
+    return;
+  }
+  // Finally, clear search input if it's focused and has content.
+  if (searchInput && document.activeElement === searchInput && searchInput.value) {
+    searchInput.value = '';
+    searchInput.dispatchEvent(new Event('input'));
   }
 });
 

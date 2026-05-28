@@ -1,3 +1,22 @@
+## [2026-05-28 16:29] [개발자]
+완료: 검색 input 키보드 단축키 (`/` 포커스 + `ESC` 클리어) (1순위 TODO). 페이지 어디서든 `/` 키를 누르면 헤더 검색 input에 자동 포커스+텍스트 선택, 검색 input에 포커스가 있을 때 `ESC`를 누르면 검색어가 즉시 클리어됨(X 버튼 클릭과 동일 경로). 모달/캘린더 패널이 열려 있으면 ESC는 그것들이 우선 닫히고 검색 클리어는 수행되지 않음.
+변경된 파일: script.js (+19/-1) — 단일 파일
+비고:
+(1) `/` 분기: 기존 `document.addEventListener('keydown', ...)` 콜백 맨 위(`if (e.key !== 'Escape') return;` 위)에 `if (e.key === '/') { ... return; }` 블록 신설. 내부에서 `const active = document.activeElement; const tag = active && active.tagName; const inText = tag === 'INPUT' || tag === 'TEXTAREA' || (active && active.isContentEditable);` 식별 후 `inText`가 false이고 `searchInput`이 존재할 때만 `e.preventDefault(); searchInput.focus(); searchInput.select();` 실행. 텍스트 필드 안에서는 `/` 키가 자연 입력되도록 preventDefault 호출 X. 처리 후 `return`으로 ESC 분기로 흘러내리지 않게 차단.
+(2) ESC 본문 확장: `if (!modal.hidden) { closeModal(); return; }`(모달 우선)는 그대로. `dayPanel && !dayPanel.hidden` 블록 끝에 `return;` 1줄 추가 — 기존엔 `renderCalendar()` 후 그대로 falls through됐는데 명시적 return으로 끊고 검색 클리어가 발생하지 않게 차단(모달/패널 우선 정책 명문화). 그 다음 `if (searchInput && document.activeElement === searchInput && searchInput.value) { searchInput.value=''; searchInput.dispatchEvent(new Event('input')); }` 라인 추가 — X 버튼 click 핸들러와 정확히 동일한 dispatch 경로라 200ms 디바운스 필터 체인이 자연스레 다시 돌고 `searchClear.hidden=true`, `searchQuery=''`, `renderGames()`/카테고리 카운트 갱신/캘린더 dot 재계산까지 자동 처리됨(중복 코드 X).
+(3) 영향 범위: 신규 색·CSS·HTML 변경 0. JS 단일 파일 수정. `node --check script.js` 통과. 카드/모달/캘린더/검색/필터/칩/위시리스트 기존 로직 미수정.
+(4) 회귀 안전: `/` 분기는 텍스트 필드 안에서는 무동작이라 검색 input에 이미 포커스가 있는 사용자가 `/`를 그냥 검색어 입력으로 칠 수 있음(접근성). 패널 닫기 후 추가된 `return`은 기존 동작(패널만 닫힘)과 동일 — 이 사이클 전엔 어차피 검색 클리어 로직이 없었기 때문에 falls through해도 무의미였음. 따라서 패널 닫기 동작 자체엔 회귀 X.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 에서 페이지 빈 영역(어디든)을 클릭해 포커스 해제 후 `/` 키 → 헤더 검색 input에 포커스 + 텍스트 선택(전체 선택) 발생, URL 변경/스크롤 점프 없음
+  (b) 검색 input에 이미 포커스가 있는 상태에서 `/` 키 → 검색창에 `/` 문자가 자연 입력됨(차단 X)
+  (c) `<textarea>` 또는 `contenteditable` 요소가 페이지에 있다고 가정하면 그 안에서도 `/` 자연 입력(현재 페이지엔 해당 요소 없음 — 회귀 안전성만 확인)
+  (d) 검색 input에 `fina` 같은 검색어 입력 → ESC → 검색어 즉시 클리어, X 버튼 hidden=true, 카드/캘린더 검색 해제 상태로 재렌더, 포커스는 그대로 검색 input에 유지(`input` 이벤트 dispatch 경로)
+  (e) 게임 카드 클릭 → 모달 열기 → ESC → 모달만 닫힘(검색 클리어 발생 X)
+  (f) 캘린더 셀 클릭 → 패널 열기 → ESC → 패널만 닫힘, 셀 `.selected` 해제(검색 클리어 발생 X)
+  (g) 모달도 패널도 닫힌 상태에서 검색 input에 포커스가 없고 검색어가 비어있으면 ESC는 노옵(콘솔 에러 0)
+  (h) 콘솔 에러 0건
+
 ## [2026-05-28 16:40] [QA]
 검증 대상: 푸터 데이터 갱신일 옆 상대 시간 표시 (1순위)
 결과: ✅ 정상
