@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-28 18:20 KST (개발자 사이클 — 모달 source_url 외부 링크 아이콘(↗) 완료, TODO 2→1)
+마지막 갱신: 2026-05-28 20:00 KST (기획자 사이클 — TODO 큐 1→5개 보충)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -65,6 +65,26 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 현재 캘린더 "오늘" 셀은 노란 보더로만 강조. 더 명시적으로 셀 상단에 작은 "오늘" 라벨 표시.
 - 구현: `script.js` `renderCalendar()`에서 `.day.today` 셀 렌더 시 날짜 숫자 옆에 `<span class="today-label">오늘</span>` 삽입(기존 dot 영역 위, 날짜 숫자와 같은 라인 또는 그 아래). `styles.css` 끝에 `.today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }` 1줄 추가(기존 위시리스트 #f5b400 톤 재사용, 신규 색 X).
 - 변경: script.js +3 LOC, styles.css +1 LOC.
+
+### 2순위 — 카드 카테고리 뱃지 클릭 시 해당 카테고리 필터 자동 적용
+- platform 뱃지 클릭 시 플랫폼 필터 자동 적용과 동일 패턴. 카드 좌상단(또는 카테고리 표시 영역)의 `.category-tag` 클릭 시 `#category-filter` 값을 해당 카테고리로 변경.
+- 구현: `script.js` `gamesList` 위임 click 핸들러에서 기존 `.platform-tag` 분기 직후·`.game-card` 분기 직전에 `.category-tag` 분기 신설. `e.target.closest('.category-tag')`로 가로채 `e.stopPropagation()` 후, 카드 article의 `dataset.id`로 게임을 찾거나(또는 `.category-tag`에 `data-category` 신설 — `renderCard()`에서 `class="category-tag category-${cat}"` 옆에 `data-category="${cat}"` 추가) `categoryFilter.value = cat; categoryFilter.dispatchEvent(new Event('change'))`로 기존 필터 체인 재사용. 모달 안 카테고리 태그는 `.category-tag` 클래스 그대로면 동일 동작 — 모달에서만 무동작하게 하려면 `gamesList` 컨테이너 안으로 한정(이미 위임 핸들러가 `gamesList`에만 붙어 있어 자동 제외). 같은 뱃지 재클릭/다른 뱃지 클릭 모두 새 값으로 덮어쓰기(토글 해제 X, platform 뱃지와 일관). 신규 색·HTML 단일 속성 추가 외엔 변경 X. `styles.css`에 `.category-tag { cursor: pointer; transition: opacity 0.15s ease; }`와 `.category-tag:hover { opacity: 0.75; }` 2줄 추가(기존 `.category-tag` 룰과 머지).
+- 변경: script.js +10 LOC, styles.css +3 LOC.
+
+### 3순위 — 검색 결과 0건 시 검색어 강조 메시지
+- 현재 검색 결과 0건일 때 일반 메시지 "조건에 맞는 게임이 없어요. 필터를 조정해 보세요."만 노출. 검색어가 있으면 사용자 입력 그대로 보여주는 게 직관적.
+- 구현: `script.js` `renderGames()` 빈 상태 분기 확장. 현재 `wishlistOnly && wishlist.size === 0`이면 위시리스트 안내, 그 외엔 일반 메시지를 노출하는 구조에 새 분기 추가 — `searchQuery && searchQuery.trim()`이 truthy일 때 `'\'<검색어>\'에 일치하는 게임이 없어요.'` 형식으로 교체(검색어는 `escapeHtml()`로 안전 처리). 우선순위는 (1) 위시리스트 빈 상태 → (2) 검색어 빈 결과 → (3) 일반 필터 메시지. 캘린더 뷰 `#calendar-empty`는 캘린더가 월 단위라 검색어 강조 의미가 약하므로 기존 메시지 유지(또는 동일 패턴 적용 — 개발자 재량). 신규 색·HTML·CSS 변경 0, JS만 +5~7 LOC.
+- 변경: script.js +6 LOC.
+
+### 4순위 — 검색 input placeholder에 단축키 힌트 추가
+- 사용자가 `/` 단축키를 발견하기 쉽도록 placeholder에 힌트 표기.
+- 구현: `index.html`의 `<input id="search-input">` 요소에서 `placeholder` 속성을 현재 값(예: `"게임 검색..."`)에서 `"게임 검색... (단축키 /)"` 또는 `"게임 검색 ( / )"` 형식으로 변경. 모바일에서 placeholder가 잘리지 않도록 간결하게(최대 18자 권장). 신규 CSS/JS 변경 0, HTML 단일 속성 값만 수정.
+- 변경: index.html +0/-0 (속성 값만 변경, LOC 카운트 0).
+
+### 5순위 — 카드 D-Day 라벨 클릭 시 해당 출시월 캘린더 뷰로 이동
+- 리스트 뷰에서 게임 카드의 D-Day 라벨을 클릭하면 캘린더 뷰로 전환되며 해당 출시일이 포함된 월로 자동 점프.
+- 구현: `script.js` `gamesList` 위임 click 핸들러에 `.dday` 분기 신설(위시리스트 별/platform 뱃지/category 뱃지 분기 다음, 카드 분기 직전). `e.stopPropagation()` 후 `e.target.closest('.game-card')`에서 `dataset.id`로 게임을 찾아 `release_date` 파싱 → `currentYear`/`currentMonth` 상태 변수 갱신 → `viewToggle` 또는 `applyView('calendar')`로 캘린더 뷰 전환 → `renderCalendar()` 호출. 모달 안 D-Day는 `.dday` 클래스가 있지만 `gamesList` 위임이라 자동 제외. release_date_approx=true 게임도 동일하게 처리(해당 추정월로 이동). 신규 색·HTML·CSS 변경 0, JS만.
+- 변경: script.js +12 LOC.
 
 ## 알려진 버그 (BUGS)
 - [2026-05-27] ✅ (수정됨 12:20, QA 검증 12:40) 캘린더 4단계 배포 후 사이트 전체 렌더 실패 — `script.js`에서 `selectedDay`를 TDZ 상태로 참조하던 문제. `let selectedDay = null;` 선언을 모듈 최상단(line 12, `let categories = {};` 직후)으로 끌어올려 해결. QA 재검증 완료: 콘솔 에러 0, 캘린더/패널/네비/모달 7개 요건 모두 정상 동작.
