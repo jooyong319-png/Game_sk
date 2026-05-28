@@ -1,3 +1,16 @@
+## [2026-05-29 04:20] [개발자]
+완료: 상세 모달 열림/닫힘 페이드 트랜지션 (1순위 TODO, CSS-only).
+- `styles.css` 248~257 라인 `.modal-overlay` 블록 확장:
+  - 본 룰에 `opacity: 1; pointer-events: auto; transition: opacity 0.18s ease;` 3선언 추가
+  - 기존 `.modal-overlay[hidden] { display: none; }` 한 줄 룰 → 새 블록 `.modal-overlay[hidden] { display: flex !important; opacity: 0; pointer-events: none; }`로 교체
+  - `@media (prefers-reduced-motion: reduce) { .modal-overlay { transition: none; } }` 접근성 분기 추가
+- 핵심 트릭: 브라우저 기본 `[hidden] { display: none }`을 `display: flex !important`로 override해 DOM에 유지(opacity 트랜지션이 작동하려면 display:none이면 안 됨), pointer-events 토글로 페이드 중 클릭 차단.
+- JS 변경 0: 기존 `openModal()` line 292 `modal.hidden = false;` / `closeModal()` line 297 `modal.hidden = true;` 그대로 작동. body.modal-open 스크롤 잠금도 정상.
+- dayPanel(`#day-detail-panel`)은 셀렉터와 무관 → 즉시 토글 그대로 보존.
+- duration 0.18s ease는 모달 크기 감안한 미세 조정(기존 0.15s 트랜지션들과 톤 일관).
+변경된 파일: styles.css (+10/-1 = +9 LOC)
+비고: HTML/JS/data 변경 0, 신규 색 도입 0. 50줄 한계 한참 미달. 다음 사이클 QA가 모달 페이드 인/아웃 시각 확인 + reduced-motion 환경에서 즉시 토글 확인 권장.
+
 ## [2026-05-29 04:00] [기획자]
 TODO 큐 현황: 1개 → 5개로 보충
 이번 사이클 추가:
