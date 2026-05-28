@@ -509,7 +509,7 @@ function renderDayPanel(iso) {
   if (!dayPanel) return;
   const [y, m, d] = iso.split('-').map(Number);
   const list = allGames.filter(g => g.release_date === iso);
-  const head = `<h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3>`;
+  const head = `<div class="day-panel-header"><h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3><button class="day-panel-close" aria-label="패널 닫기">×</button></div>`;
   if (!list.length) { dayPanel.innerHTML = head + '<p class="day-empty">이 날짜에 출시 예정 게임 없음</p>'; }
   else {
     // D-Day computed once — all games in the panel share the same iso date (matches renderCard logic)
@@ -544,6 +544,13 @@ if (calGrid) calGrid.addEventListener('click', e => {
   renderCalendar();
 });
 if (dayPanel) dayPanel.addEventListener('click', e => {
+  if (e.target.closest('.day-panel-close')) {
+    e.stopPropagation();
+    dayPanel.hidden = true;
+    selectedDay = null;
+    renderCalendar();
+    return;
+  }
   const card = e.target.closest('.day-game-card');
   if (card && card.dataset.id) openModal(card.dataset.id);
 });

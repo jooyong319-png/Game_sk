@@ -1,3 +1,12 @@
+## [2026-05-29 06:20] [개발자]
+완료: 캘린더 day-detail-panel 명시적 닫기(×) 버튼 (1순위 TODO).
+- `script.js` `renderDayPanel()` line 512 `head` 변수의 `<h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3>` 단일 노드 → `<div class="day-panel-header"><h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3><button class="day-panel-close" aria-label="패널 닫기">×</button></div>` 플렉스 래퍼로 교체. 빈 분기(`<p class="day-empty">`)·게임 분기(`.day-game-card` 리스트) 양쪽 모두 동일 헤더 자동 노출 → 일관성 ✓.
+- `script.js` line 546~549 dayPanel click 위임에 `.day-panel-close` 분기 신설 — `e.target.closest('.day-panel-close')` 가로채 `e.stopPropagation()` 후 `dayPanel.hidden = true; selectedDay = null; renderCalendar();` 실행. ESC 핸들러(line 386~390) 본문과 동일 로직 재사용 — 셀의 `.selected` 클래스는 `renderCalendar()`의 `selectedDay === iso` 비교(line 469)로 자동 제거되어 별도 DOM 조작 불필요. 기존 `.day-game-card` → openModal 분기는 `return` 가드 뒤로 자연 흐름.
+- `styles.css` 끝에 주석 1줄 + 룰 3개: `.day-panel-header { display:flex; justify-content:space-between; align-items:center; }` + `.day-panel-close { background:transparent; border:none; color:#888; font-size:1.2rem; cursor:pointer; padding:0 0.3rem; line-height:1; transition:color 0.15s ease; }` + `.day-panel-close:hover { color:#ddd; }`. 신규 색 도입 0(#888/#ddd 기존 그레이 톤). 모달 `.modal-close`(#888 1.5rem) 패턴과 일관 UX.
+- 검증: `node --check script.js` 통과, `styles.css` `{`/`}` 178 → 181 balanced. script.js +7/-1, styles.css +5/-0 = 총 +11 LOC(예상 +22의 절반, 50줄 한참 미달).
+변경된 파일: script.js, styles.css
+비고: 다음 사이클 QA가 https://gcalen.com/ 캘린더 셀 클릭 후 (1) day-panel 우상단 × 버튼 노출, (2) × 클릭 시 패널 닫힘 + 셀 선택 해제, (3) ESC와 동일 동작, (4) 빈 분기에서도 × 표시, (5) `prefers-reduced-motion: reduce` 환경에서 color 트랜지션만 자연스럽게 — 5가지 확인 권장.
+
 ## [2026-05-29 05:40] [QA]
 검증 대상: 카드 hover 시 살짝 위로 떠오르는 효과 (1순위 TODO, CSS-only)
 결과: ✅ 정상

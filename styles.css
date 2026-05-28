@@ -460,3 +460,8 @@ footer a:hover { color: #4a90e2; }
   .game-card { transition: none; }
   .game-card:hover { transform: none; }
 }
+
+/* Day-panel header w/ explicit close (×) button — TODO 1순위 2026-05-29 (.day-panel-title at line 327 keeps existing color/size; header just wraps it in a flex row with close button on the right; tones #888/#ddd match site neutral grays) */
+.day-panel-header { display: flex; justify-content: space-between; align-items: center; }
+.day-panel-close { background: transparent; border: none; color: #888; font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; line-height: 1; transition: color 0.15s ease; }
+.day-panel-close:hover { color: #ddd; }
