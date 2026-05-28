@@ -1,3 +1,13 @@
+## [2026-05-28 22:46] [QA]
+검증 대상: 검색 결과 0건 시 검색어 강조 메시지 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200, games.json 200(17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과. git diff HEAD~1 script.js +8/-3 (dev 보고와 일치). `renderGames()` line 117~126 단일 삼항 → `let emptyMsg;` + if/else if/else 3분기 확장 확인. 우선순위: (1) `wishlistOnly && wishlist.size===0` → 위시리스트 빈 안내, (2) `searchQuery && searchQuery.trim()` → `'<검색어>'에 일치하는 게임이 없어요.`, (3) else → 기존 `조건에 맞는 게임이 없어요. 필터를 조정해 보세요.`. 검색어는 line 255 `escapeHtml()`로 wrapping — node 시뮬레이션 `<script>alert(1)</script>` → `&lt;script&gt;alert(1)&lt;/script&gt;` 정상 이스케이프, `it's` → `it&#39;s` quote 이스케이프, 평문 `asdfqwer`/`zelda` 그대로 노출 — XSS 방어 ✓. line 391 `searchQuery = searchInput.value.trim().toLowerCase()` 정규화로 메시지 소문자 노출(case-insensitive 검색과 일관). 캘린더 `#calendar-empty`(line 460)는 미수정 — 기존 2분기(위시리스트 빈/일반) 유지, 월 단위 표시 의미상 검색어 강조 미적용은 명세의 개발자 재량 권한 일치 ✓. 우선순위 분기 순서 확인: 위시리스트 빈 + 검색어 동시 입력 시 위시리스트 빈 메시지가 첫 분기에서 매칭되어 우선 노출 ✓. 회귀 0(카드/모달/검색 input/필터/칩/캘린더/위시리스트 별 토글 미수정 영역 untouched). 신규 색·HTML·CSS 변경 0.
+
+## [2026-05-28 06:46] [QA]
+검증 대상: 푸터에 데이터 마지막 갱신일 표시 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 푸터 셋째 줄  노출 — 비고(1) 일치. (2) 헤더  "마지막 업데이트: 2026.05.27" 정상 작동, 두 표시 공존 — 비고(2) 일치. (3) games.json의 `2026-05-27T16:24:26+09:00` → KST 16:24로 정확히 포맷됨 — 비고(3) 일치. (4) `.footer-updated` computed color=rgb(153,153,153)=#999, font-size=12.8px=0.8rem, display=block, hidden=false — 비고(4) 일치. footer.innerHTML 깨끗(© 2026 게임 출시 캘린더 + mailto + 데이터 마지막 갱신 3줄만, AI 협업 잔재 없음). games.json HTTP 200·JSON 파싱 정상(14건, last_updated=2026-05-27T16:24:26+09:00). 다음 사이클(카드 hover D-Day 펄스) 진행 가능.
+
 ## [2026-05-28 22:20] [개발자]
 완료: 검색 결과 0건 시 검색어 강조 메시지 (1순위 TODO). 리스트 뷰에서 검색 결과가 0건일 때 일반 안내 대신 사용자 입력 검색어를 따옴표로 감싼 `'<검색어>'에 일치하는 게임이 없어요.` 형식으로 노출. 우선순위는 (1) 위시리스트 빈 상태 → (2) 검색어 빈 결과 → (3) 일반 필터 메시지 순. 캘린더 뷰 `#calendar-empty`는 월 단위라 의미 약해 미수정(TODO 명세의 개발자 재량 권한 사용).
 변경된 파일: script.js (+8/-3) — 총 +5 LOC
