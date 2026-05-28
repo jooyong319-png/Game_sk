@@ -465,3 +465,7 @@ footer a:hover { color: #4a90e2; }
 .day-panel-header { display: flex; justify-content: space-between; align-items: center; }
 .day-panel-close { background: transparent; border: none; color: #888; font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; line-height: 1; transition: color 0.15s ease; }
 .day-panel-close:hover { color: #ddd; }
+
+/* 검색 결과 건수 표시 - TODO 1순위 (2026-05-29) */
+.search-count { color: #888; font-size: 0.85rem; margin-left: 0.5rem; }
+@media (max-width: 480px) { .search-count { display: block; margin-left: 0; margin-top: 0.3rem; } }

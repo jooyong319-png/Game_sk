@@ -6,6 +6,7 @@ const platformFilter = document.getElementById('platform-filter');
 const periodFilter = document.getElementById('period-filter');
 const searchInput = document.getElementById('search-input');
 const searchClear = document.getElementById('search-clear');
+const searchCount = document.getElementById('search-count');
 const gamesList = document.getElementById('games-list');
 const lastUpdatedEl = document.getElementById('last-updated');
 const footerUpdatedEl = document.getElementById('footer-updated-date');
@@ -113,6 +114,15 @@ function renderGames() {
   });
 
   filtered.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+
+  if (searchCount) {
+    if (searchQuery && searchQuery.trim()) {
+      searchCount.textContent = filtered.length + '건 일치';
+      searchCount.hidden = false;
+    } else {
+      searchCount.hidden = true;
+    }
+  }
 
   if (!filtered.length) {
     let emptyMsg;
