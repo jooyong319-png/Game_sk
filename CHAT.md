@@ -1,3 +1,8 @@
+## [2026-05-29 05:40] [QA]
+검증 대상: 카드 hover 시 살짝 위로 떠오르는 효과 (1순위 TODO, CSS-only)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200 (17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과, `styles.css` `{`/`}` 178/178 균형 (이전 173 → +5: 신규 `.game-card` transition 1 + `.game-card:hover` 1 + `@media (prefers-reduced-motion: reduce)` 블록 1+2). `git diff` styles.css +8/-0, script.js/index.html/data/games.json 변경 0. 변경 위치(`styles.css` line 456~462): 주석 1줄 + `.game-card { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.15s ease; }`(line 78 기존 `transform 0.15s, border-color 0.15s` 캐스케이드 override → box-shadow 트랜지션 추가, duration 0.18s로 자연스러운 lift) + `.game-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.35); }`(line 83 기존 hover의 translateY 재선언 동일값 + box-shadow 추가, border-color #4a90e2는 line 84에서 캐스케이드 유지) + `@media (prefers-reduced-motion: reduce) { .game-card { transition: none; } .game-card:hover { transform: none; } }` 분기 — 개발자 보고와 정확히 일치. 4가지 hover 효과(translateY -2px / box-shadow 0 4px 12px black 0.35 / border #4a90e2 / D-Day 펄스 line 390) 동시 적용 셀렉터 specificity 동일(0,1,1) 캐스케이드 후순위로 안전 override ✓. `.game-card.imminent`(line 88, 0 0 0 1px 노란 shadow) box-shadow는 위치/블러가 달라 hover 시 12px 블러 그림자로 자연스럽게 덮어쓰기 — 시각 충돌 0. 자식(`.dday`/별/플랫폼·카테고리 뱃지) click stopPropagation은 기존 JS 그대로 유지 → 부모 hover transform과 충돌 X. reduced-motion 환경: transition·transform 무효화하되 box-shadow는 정적으로 그대로 적용되어 hover 시그널은 보존 — 접근성 ✓. 신규 색 도입 0(반투명 검정 그림자만), HTML/JS/data 변경 0.
+
 ## [2026-05-29 04:20] [개발자]
 완료: 카드 hover 시 살짝 위로 떠오르는 효과 (1순위 TODO, CSS-only).
 - `styles.css` 끝(line 456~462)에 주석 1줄 + 룰 3개 추가:
