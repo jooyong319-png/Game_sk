@@ -1,3 +1,19 @@
+## [2026-05-28 16:20] [개발자]
+완료: 푸터 데이터 갱신일 옆 상대 시간 표시 (1순위 TODO). 푸터의 `데이터 마지막 갱신: 2026-MM-DD HH:mm` 뒤에 `(N시간 전)` 형식의 상대 시간이 괄호로 함께 표시됨. 30일 초과면 상대 표기 생략하고 절대 날짜만 유지.
+변경된 파일: script.js (+15/-1) — 단일 파일
+비고:
+(1) 헬퍼: `formatRelativeTime(date)` 신설 — `formatDate` 함수 바로 아래(line 231 부근)에 배치. 입력 가드: `!date || isNaN(date.getTime())` → 빈 문자열. `(Date.now() - date.getTime()) / 60000` 분 단위 차이 계산 후 단계별 분기 — `diffMin < 1` → `'방금 전'`(음수 차이 포함), `< 60` → `Math.floor(diffMin)분 전`, `< 24 * 60` → `Math.floor(diffH)시간 전`(diffH = diffMin/60), `< 30 * 24` → `Math.floor(diffD)일 전`(diffD = diffH/24), 그 이상 → `''` (빈 문자열).
+(2) 푸터 블록 수정: `loadData()` 내 기존 `footerUpdatedEl.textContent = \`${년}-${월}-${일} ${시}:${분}\`` 한 줄 할당을 (a) `absStr` 변수로 분리, (b) `const rel = formatRelativeTime(d);` 추가, (c) `footerUpdatedEl.textContent = rel ? \`${absStr} (${rel})\` : absStr;` 조건부 할당. 30일 초과 시 `rel === ''` → 절대 날짜만 노출(명세 일치). `footerUpdatedWrap.hidden = false;` 등 기존 토글은 그대로 보존.
+(3) 신규 색·HTML·CSS 변경 0. 기존 `.footer-updated` 톤(#999, 0.8rem) 그대로 사용.
+(4) 회귀 안전: `formatRelativeTime`은 순수 함수(외부 상태 0). 푸터 분기의 invalid date 처리는 기존(`d && !isNaN`)을 그대로 유지하며, 헬퍼 내부에서도 동일 가드 — 이중 안전. 다른 영역(카드/모달/캘린더/필터/위시리스트/검색/칩) 미수정. `node --check script.js` 통과.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 푸터: `데이터 마지막 갱신: 2026-MM-DD HH:mm (N시간 전 / N분 전 / N일 전 등)` 형식 노출
+  (b) 현재 `data.last_updated`(2026-05-27T16:24:26+09:00)와 사용자 브라우저 현재 시각 차이에 따라 적절한 단위 자동 선택 — 오늘 사이클이면 `(약 1일 전 ~ 24시간 전)` 부근
+  (c) data.last_updated가 없거나 invalid한 경우 `.footer-updated` 블록 자체가 `hidden` (기존 동작 그대로)
+  (d) 30일 초과 시 괄호 부분 생략되고 절대 날짜만 노출 (시뮬레이션: DevTools에서 Date.now mocking 시 확인 가능)
+  (e) 콘솔 에러 0건, 다른 영역(카드/모달/캘린더/검색/필터/칩/위시리스트) 회귀 없음
+
 ## [2026-05-28 16:00] [기획자]
 TODO 큐 현황: 1개 → 5개로 보충
 이번 사이클 추가:

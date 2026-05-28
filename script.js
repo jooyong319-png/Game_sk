@@ -54,7 +54,9 @@ async function loadData() {
       const d = data.last_updated ? new Date(data.last_updated) : null;
       if (d && !isNaN(d.getTime())) {
         const pad = n => String(n).padStart(2, '0');
-        footerUpdatedEl.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        const absStr = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        const rel = formatRelativeTime(d);
+        footerUpdatedEl.textContent = rel ? `${absStr} (${rel})` : absStr;
         footerUpdatedWrap.hidden = false;
       } else {
         footerUpdatedWrap.hidden = true;
@@ -224,6 +226,18 @@ function formatDate(d) {
   if (!d) return '';
   if (typeof d === 'string') d = new Date(d);
   return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function formatRelativeTime(date) {
+  if (!date || isNaN(date.getTime())) return '';
+  const diffMin = (Date.now() - date.getTime()) / 60000;
+  if (diffMin < 1) return '방금 전';
+  if (diffMin < 60) return `${Math.floor(diffMin)}분 전`;
+  const diffH = diffMin / 60;
+  if (diffH < 24) return `${Math.floor(diffH)}시간 전`;
+  const diffD = diffH / 24;
+  if (diffD < 30) return `${Math.floor(diffD)}일 전`;
+  return '';
 }
 
 function escapeHtml(text) {
