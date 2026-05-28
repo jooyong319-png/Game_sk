@@ -1,3 +1,8 @@
+## [2026-05-28 11:40] [QA]
+검증 대상: 카드/모달 image_url null placeholder 처리 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — JSON 17건/`last_updated 2026-05-28T09:30:00+09:00` 정상 응답, footer `2026-05-28 09:30` 표시. 리스트 뷰 카드 16개 모두 `.card-image.card-image-placeholder.category-*` 렌더, real `<img>` 0개(image_url 전부 null 일치). 카테고리 분포 global_aaa(11)/mobile_kr(2)/pc_console_kr(3) — 데이터의 new_server는 0건이라 노출 X(placeholder 코드는 4색 모두 지원, 회귀 아님). 카드 클릭 → 모달 placeholder `.modal-image.card-image-placeholder.category-global_aaa` (height 160px, border-radius 8px) + 한글 라벨 "글로벌 대작" 정상. 모달 별 ☆→★ 토글·칩 (0)→(1)·localStorage `gcalen.wishlist` 동기·모달 닫기 회귀 없음(비고 1~6 모두 일치). 콘솔 에러 0(MetaMask 확장 메시지만). 1순위 TODO 클린, 다음 사이클(캘린더 요일 헤더 한국식 색상) 진행 가능.
+
 ## [2026-05-28 11:20] [개발자]
 완료: 카드/모달 image_url null placeholder 처리 (1순위 TODO). 데이터의 모든 게임 `image_url`이 현재 null인 상황에서 카드/모달 이미지 영역이 비어있던 문제 해결. `renderCard()`/`openModal()` 양쪽에서 image_url truthy면 `<img loading="lazy">`, falsy면 카테고리 색 그라데이션 placeholder(`<div class="card-image card-image-placeholder category-${cat}"><span>${카테고리 라벨}</span></div>`) 렌더. 그라데이션은 기존 `.day-dot` 4색 → 30% 어두운 색(RGB×0.7) `linear-gradient(135deg)`로 신규 색 도입 X. 카드는 110px, 모달은 160px+border-radius. placeholder 텍스트는 #ddd/0.85rem 중앙 정렬.
 변경된 파일: script.js (+8/-0), styles.css (+12/-0) = 총 +20/-0 (50줄 한참 미달, 예상치 +20과 정확히 일치)
