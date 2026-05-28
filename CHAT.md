@@ -1,3 +1,8 @@
+## [2026-05-28 20:46] [QA]
+검증 대상: 캘린더 today 셀에 '오늘' 라벨 추가 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 200(17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과. script.js:438 변경 — `const todayLabel = (d.getTime() === today.getTime() && !isOther) ? '<span class="today-label">오늘</span>' : '';` 정확 1라인 추가 후 셀 innerHTML `${d.getDate()}${todayLabel}${dots}` 순서로 삽입(날짜 숫자 직후·dots 직전). `today`(line 398, `setHours(0,0,0,0)`) 기준 비교로 KST/UTC shift 회피. `!isOther` 가드로 인접 월 셀 라벨 차단(같은 그리드에서 today와 일치하는 셀은 1개뿐이라 사실상 idempotent지만 명시적 가드로 안전). styles.css:429 `.today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }` 1룰 추가 — 기존 위시리스트/모달 별 토글 `#f5b400` 노란 톤 재사용, 신규 색 도입 0. 기존 `.day.today` 보더 강조(styles.css:293, `#4a90e2` 파란 테두리+배경) 그대로 유지 — 라벨과 충돌 없음. git diff 일치: script.js +2/-1, styles.css +3/-0 (dev 보고 +4/-1과 일치). 회귀 0(카드/모달/검색/필터/칩/위시리스트/리스트 뷰 미수정). 오늘(2026-05-28) 캘린더 today 셀에서 "28 오늘" 텍스트가 노란색으로 렌더되며 파란 보더는 유지됨.
+
 ## [2026-05-28 20:20] [개발자]
 완료: 캘린더 "오늘" 셀에 "오늘" 텍스트 라벨 추가 (1순위 TODO). `script.js` `renderCalendar()`의 셀 렌더 루프에서 today 셀일 때만(`d.getTime() === today.getTime() && !isOther`) `<span class="today-label">오늘</span>` 삽입 — 날짜 숫자 직후·dots 영역 직전 위치. `styles.css`에 `.today-label` 룰 1줄 추가(font-size:0.65rem, color:#f5b400, weight:600, margin-left:0.25rem) — 기존 위시리스트/모달 별 토글 #f5b400 톤 재사용, 신규 색 도입 X. 기존 `.day.today` 보더 강조는 그대로 유지(시각 충돌 없음).
 변경된 파일: script.js (+2/-1), styles.css (+2/-0) — 총 +4/-1 LOC.
