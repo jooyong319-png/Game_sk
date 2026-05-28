@@ -1,3 +1,13 @@
+## [2026-05-28 21:40] [QA]
+검증 대상: 카드 카테고리 뱃지 클릭 시 카테고리 필터 자동 적용 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200(17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과. script.js:195 `.category-tag` span에 `data-category="${escapeHtml(game.category)}"` 1개 속성 추가 확인 — 모달 line 276 `.category-tag`는 `data-category` 없음(분기 자동 비활성, 명세 일치). script.js:318~326 `.platform-tag` 분기 직후·`.game-card` 분기 직전에 `.category-tag` 분기 신설 — `e.target.closest('.category-tag')` 가로채 `e.stopPropagation()` 후 `Array.from(categoryFilter.options).some(o => o.value === cat)` 옵션 존재 가드(unknown category 데이터 방어) 통과 시 `categoryFilter.value = cat; categoryFilter.dispatchEvent(new Event('change'))`로 기존 change 핸들러 체인(renderGames + dot 재계산 + 카운트 갱신) 그대로 재사용 — 중복 코드 X. `gamesList` 위임 핸들러가 `#games-list`에만 붙어 있어 모달/day-panel 클릭은 전파 안 됨(이중 안전 — line 495 day-game-card 내부 `.category-tag`도 자동 제외). styles.css:432~433 `.category-tag { cursor: pointer; transition: opacity 0.15s ease; }` + `.category-tag:hover { opacity: 0.75; }` 2룰 추가, 기존 line 102 `.category-tag` 룰과 별도 블록으로 머지 — platform-tag 패턴과 동일, 충돌 X. 신규 색 도입 X(기존 카테고리별 배경/텍스트 톤 그대로). 4개 카테고리(mobile_kr/pc_console_kr/global_aaa/new_server) 모두 옵션 존재 가드 통과. git diff: script.js +11/-1, styles.css +4/-0 (dev 보고 +14/-1과 정확히 일치 — styles는 주석 1줄 포함 +4). 회귀 0(검색/플랫폼 뱃지/위시리스트/캘린더/칩/모달 미수정 영역 untouched).
+
+## [2026-05-28 06:46] [QA]
+검증 대상: 푸터에 데이터 마지막 갱신일 표시 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 푸터 셋째 줄  노출 — 비고(1) 일치. (2) 헤더  "마지막 업데이트: 2026.05.27" 정상 작동, 두 표시 공존 — 비고(2) 일치. (3) games.json의 `2026-05-27T16:24:26+09:00` → KST 16:24로 정확히 포맷됨 — 비고(3) 일치. (4) `.footer-updated` computed color=rgb(153,153,153)=#999, font-size=12.8px=0.8rem, display=block, hidden=false — 비고(4) 일치. footer.innerHTML 깨끗(© 2026 게임 출시 캘린더 + mailto + 데이터 마지막 갱신 3줄만, AI 협업 잔재 없음). games.json HTTP 200·JSON 파싱 정상(14건, last_updated=2026-05-27T16:24:26+09:00). 다음 사이클(카드 hover D-Day 펄스) 진행 가능.
+
 ## [2026-05-28 21:20] [개발자]
 완료: 카드 카테고리 뱃지 클릭 시 해당 카테고리 필터 자동 적용 (1순위 TODO). 리스트 뷰 카드의 카테고리 뱃지(예: "국내 모바일", "글로벌 대작")를 클릭하면 헤더의 `#category-filter` 셀렉트가 해당 카테고리로 즉시 변경되고 기존 필터 체인(`renderGames()` + 캘린더 dot 재계산 + 카테고리 카운트 갱신)이 자동 실행됨. 모달 안 카테고리 뱃지는 `data-category` 속성을 추가하지 않아 무동작 — 분기 자동 비활성, 추가로 `gamesList` 위임 핸들러가 `#games-list`에만 붙어 있어 모달 클릭 자체가 전파되지 않음(이중 안전).
 변경된 파일: script.js (+11/-1), styles.css (+3/-0) — 총 +14/-1 LOC
