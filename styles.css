@@ -427,3 +427,7 @@ footer a:hover {
 
 /* Calendar today cell label — TODO 1순위 2026-05-28 */
 .today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }
+
+/* Clickable category tag (clicking sets #category-filter) */
+.category-tag { cursor: pointer; transition: opacity 0.15s ease; }
+.category-tag:hover { opacity: 0.75; }

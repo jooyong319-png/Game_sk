@@ -1,3 +1,21 @@
+## [2026-05-28 21:20] [개발자]
+완료: 카드 카테고리 뱃지 클릭 시 해당 카테고리 필터 자동 적용 (1순위 TODO). 리스트 뷰 카드의 카테고리 뱃지(예: "국내 모바일", "글로벌 대작")를 클릭하면 헤더의 `#category-filter` 셀렉트가 해당 카테고리로 즉시 변경되고 기존 필터 체인(`renderGames()` + 캘린더 dot 재계산 + 카테고리 카운트 갱신)이 자동 실행됨. 모달 안 카테고리 뱃지는 `data-category` 속성을 추가하지 않아 무동작 — 분기 자동 비활성, 추가로 `gamesList` 위임 핸들러가 `#games-list`에만 붙어 있어 모달 클릭 자체가 전파되지 않음(이중 안전).
+변경된 파일: script.js (+11/-1), styles.css (+3/-0) — 총 +14/-1 LOC
+비고:
+(1) `renderCard()` 수정: 카드 헤더의 `.category-tag` span에 `data-category="${escapeHtml(game.category)}"` 속성 1개 추가(라인 195). 모달 `openModal()`(라인 276)의 `.category-tag`는 손대지 않음 — 클릭 분기가 자동 비활성 상태로 유지.
+(2) `gamesList` click 핸들러 확장: 기존 `.platform-tag` 분기 직후·`.game-card` 분기 직전 위치에 `.category-tag` 분기 신설. 본문 8줄: `const catTag = e.target.closest('.category-tag');`, `if (catTag && catTag.dataset.category)` 가드, `e.stopPropagation()`, `const cat = catTag.dataset.category;`, `Array.from(categoryFilter.options).some(o => o.value === cat)` 옵션 존재 가드(unknown category 데이터 방어), 통과 시 `categoryFilter.value = cat; categoryFilter.dispatchEvent(new Event('change'));`로 기존 change 핸들러 체인 재사용(중복 코드 X), `return`.
+(3) 같은 뱃지 재클릭 / 다른 뱃지 클릭 모두 새 값으로 덮어쓰기(토글 해제 X) — TODO 명세 일치 및 platform 뱃지 분기와 일관 패턴 유지.
+(4) `styles.css` 변경: 파일 끝에 주석 1줄 + `.category-tag { cursor: pointer; transition: opacity 0.15s ease; }` + `.category-tag:hover { opacity: 0.75; }` 2룰 추가. 기존 line 102의 `.category-tag` 룰(배경/색/padding 등)과는 별도 블록으로 머지 — platform-tag 4월 패턴과 동일 구조라 충돌 없음. 신규 색 도입 X — opacity hover만 사용(카테고리별 색은 기존 `.category-tag.category-*` 룰 그대로).
+(5) `node --check script.js` 통과.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 리스트 뷰에서 카드의 카테고리 뱃지(좌상단)에 hover 시 cursor:pointer + 살짝 흐려짐(opacity 0.75) 표시
+  (b) 카테고리 뱃지 클릭 → 헤더 `카테고리` 드롭다운이 해당 카테고리로 즉시 변경되고 필터링된 카드만 노출, 캘린더 뷰의 dot도 동일 필터 반영
+  (c) `(N)` 카운트 뱃지가 변경된 카테고리 기준으로 다시 계산되는지(카테고리 카운트는 base 집합에서 카테고리만 제외하므로 그대로 N 표시되어야 함)
+  (d) 카드 본문 클릭 시는 기존대로 상세 모달이 뜨고(뱃지 클릭과 충돌 없음), 모달 안 카테고리 뱃지는 클릭해도 아무 일도 일어나지 않음
+  (e) 4가지 카테고리(mobile_kr / pc_console_kr / global_aaa / new_server) 모두에서 정상 동작
+  (f) 콘솔 에러 0건, 다른 영역(검색/플랫폼 뱃지/위시리스트/캘린더/칩) 회귀 없음
+
 ## [2026-05-28 20:46] [QA]
 검증 대상: 캘린더 today 셀에 '오늘' 라벨 추가 (1순위 TODO)
 결과: ✅ 정상

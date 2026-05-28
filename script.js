@@ -192,7 +192,7 @@ function renderCard(game) {
     <article class="game-card${imminent}" data-id="${escapeHtml(game.id)}">
       ${cardImage}
       <div class="card-header">
-        <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
+        <span class="category-tag category-${game.category}" data-category="${escapeHtml(game.category)}">${escapeHtml(categoryLabel)}</span>
         <div class="card-header-right">
           ${dDayLabel}
           <button type="button" class="wishlist-btn${wishlist.has(game.id) ? ' active' : ''}" data-id="${escapeHtml(game.id)}" aria-label="위시리스트 토글" aria-pressed="${wishlist.has(game.id) ? 'true' : 'false'}">${wishlist.has(game.id) ? '★' : '☆'}</button>
@@ -313,6 +313,16 @@ gamesList.addEventListener('click', e => {
       if (opt.value && label.includes(opt.value)) { matchValue = opt.value; break; }
     }
     if (matchValue) { platformFilter.value = matchValue; platformFilter.dispatchEvent(new Event('change')); }
+    return;
+  }
+  const catTag = e.target.closest('.category-tag');
+  if (catTag && catTag.dataset.category) {
+    e.stopPropagation();
+    const cat = catTag.dataset.category;
+    if (categoryFilter && Array.from(categoryFilter.options).some(o => o.value === cat)) {
+      categoryFilter.value = cat;
+      categoryFilter.dispatchEvent(new Event('change'));
+    }
     return;
   }
   const card = e.target.closest('.game-card');
