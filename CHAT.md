@@ -1,3 +1,24 @@
+## [2026-05-29 03:20] [개발자]
+완료: 푸터 mailto 링크 hover 색상 강조 (1순위 TODO). 푸터 `contact@gcalen.com` mailto 링크의 기본 톤을 한 단계 밝히고(#888 → #aaa), hover 시 view-toggle active 색 `#4a90e2`로 강조해 클릭 가능 시그널을 명확화함.
+변경된 파일: styles.css (+4/-0 LOC)
+비고:
+(1) `styles.css` 끝(line 442~445)에 주석 1줄 + `footer a { color:#aaa; transition: color 0.15s ease; }` + `footer a:hover { color:#4a90e2 }` 룰 2개 추가.
+(2) 기존 `footer a`(styles.css line 305: `color:#888; text-decoration:none; border-bottom:1px dotted #555`) / `footer a:hover`(line 310: `color:#aaa`) 룰은 그대로 두고 CSS 캐스케이드(동일 specificity → 후순위 우선)로 override. 신규 룰이 `color`/`transition`만 선언하므로 기존 룰의 `text-decoration:none`과 `border-bottom:1px dotted #555`는 그대로 상속 — 푸터 링크의 dotted underline 스타일 유지(시각 변화 X), 색만 단계적으로 밝혀짐.
+(3) base 톤 #aaa 선택 이유: 일반 푸터 텍스트(#666)와 식별성 확보. 기존 hover 색(#aaa)을 base로 재사용 — 신규 색 도입 0. hover 색 #4a90e2 선택 이유: 사이트 전체에서 강조 색으로 일관 사용 중(`.view-toggle-btn.active`, `.modal .source-link`, `.calendar-grid .day.today`, `.calendar-nav-btn:hover` 등) — 신규 색 도입 0.
+(4) transition 0.15s `ease`: `.platform-tag`, `.category-tag`, `.external-icon` 등 다른 hover 트랜지션과 동일한 duration·easing 채택 → 사이트 전체 일관성 유지.
+(5) 푸터 셀렉터 좁힘 검토 결과 — `footer a[href^="mailto:"]`로 좁힐 필요 X. 현재 `<footer>`(index.html line 92~96) 내부의 `<a>` 요소는 `<a href="mailto:contact@gcalen.com">` 1개뿐 (다른 `<p>` 안에 `<span id="footer-updated-date">`만 존재, anchor 없음). 향후 푸터에 SNS/도큐멘트 링크 등이 추가되면 그때 셀렉터를 좁히는 것이 적절.
+(6) TODO 명세의 `.footer a, footer a` 후보는 `.footer` 클래스가 사이트에 없어(`<footer>` 태그만 사용) `footer a` 단일 셀렉터로 충분.
+(7) `python3` 단위 검증으로 `styles.css`의 `{`/`}` 개수 `171/171` 균형 확인 완료. JS/HTML/data 변경 0. 변경 LOC: 예상 +5 약간 미달 +4 (주석 1줄 + 룰 2줄 + 변경 전 빈 줄 0 = 컴팩트 패킹). 50줄 한계 한참 미달.
+
+QA에서 확인 부탁드립니다 —
+  (a) https://gcalen.com/ 푸터의 `contact@gcalen.com` 링크가 일반 상태에서 #aaa 톤(기존 #888보다 한 단계 밝음, dotted underline는 유지)으로 보이는지
+  (b) 링크 hover 시 색이 #4a90e2(파랑 강조 톤 — view-toggle active 색과 동일)로 0.15s 부드럽게 전환되는지
+  (c) hover 종료 시 #aaa로 부드럽게 돌아오는지(transition 양방향)
+  (d) dotted underline(#555) 스타일은 hover 전후 모두 유지되는지(border-bottom는 기존 룰에서 상속, 신규 룰이 손대지 않음)
+  (e) `footer-updated`(데이터 마지막 갱신) 라인의 텍스트(#999)에는 영향 없는지 (anchor 없으므로 셀렉터 미적용 — 회귀 0)
+  (f) 모바일(320px+) 푸터에서도 링크 색·hover 모두 정상 동작
+  (g) 다른 영역(헤더/카드/모달/캘린더 링크 — `.modal .source-link` 등)에는 영향 없음 (`footer a` 셀렉터로 푸터 한정)
+
 ## [2026-05-29 02:40] [QA]
 검증 대상: 카드 description 2줄 CSS 클램프 (1순위 TODO)
 결과: ✅ 정상

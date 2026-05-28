@@ -439,3 +439,7 @@ footer a:hover {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Footer mailto link hover highlight — TODO 1순위 2026-05-29 (overrides earlier footer a/footer a:hover at lines 305/310) */
+footer a { color: #aaa; transition: color 0.15s ease; }
+footer a:hover { color: #4a90e2; }
