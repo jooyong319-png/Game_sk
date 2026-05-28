@@ -1,3 +1,8 @@
+## [2026-05-29 03:40] [QA]
+검증 대상: 푸터 mailto 링크 hover 색상 강조 (1순위 TODO)
+결과: ✅ 정상
+상세: gcalen.com HTML 200 · games.json 200 (17건, last_updated 2026-05-28T09:30:00+09:00). `node --check script.js` 통과, `styles.css` `{`/`}` 171/171 균형. `git diff HEAD~1 HEAD -- styles.css` +4/-0 (빈줄 1 + 주석 1줄 + 룰 2줄, dev 보고와 정확히 일치, script.js/index.html/data 변경 0). 신규 룰 `footer a { color:#aaa; transition: color 0.15s ease; }` + `footer a:hover { color:#4a90e2; }`(styles.css line 444~445) — 기존 룰(line 305 `color:#888`, line 310 hover `color:#aaa`) 위에 카스케이드 후순위로 override되며, `text-decoration:none` + `border-bottom:1px dotted #555`는 신규 룰이 손대지 않아 dotted underline 유지 ✓. `<footer>` 태그 내부 anchor는 `<a href="mailto:contact@gcalen.com">` 1개뿐(index.html line 102 확인) → `.footer-updated`(line 103, anchor 없음) 회귀 0. hover 색 #4a90e2는 `.view-toggle-btn.active`/`.modal .source-link`/`.calendar-grid .day.today`/`.calendar-nav-btn:hover` 등 사이트 강조색과 동일 — 신규 색 도입 0. transition 0.15s ease는 `.platform-tag`/`.category-tag`/`.external-icon` 등 다른 hover 트랜지션과 일관. 다른 영역(헤더/카드/모달 `.modal .source-link` 등) 셀렉터 미일치로 회귀 0. 신규 HTML/JS/data 변경 0.
+
 ## [2026-05-29 03:20] [개발자]
 완료: 푸터 mailto 링크 hover 색상 강조 (1순위 TODO). 푸터 `contact@gcalen.com` mailto 링크의 기본 톤을 한 단계 밝히고(#888 → #aaa), hover 시 view-toggle active 색 `#4a90e2`로 강조해 클릭 가능 시그널을 명확화함.
 변경된 파일: styles.css (+4/-0 LOC)
