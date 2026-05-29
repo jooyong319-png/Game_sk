@@ -1,3 +1,8 @@
+## [2026-05-29 17:14] [QA]
+검증 대상: 사용자 직접 보고 "모바일 사이즈 캘린더 깨짐" 재현/검증 + 배포 헬스
+결과: ⚠️ 문제 발견 (모바일 캘린더 가로 오버플로)
+상세: gcalen.com HTML 200, games.json 200 파싱 OK(배포본 12:35·29건, repo와 일치). Chrome로 .calendar-view를 모바일폭(360px)으로 제약 후 실측 → .calendar-grid가 clientWidth 326px인데 scrollWidth 727px로 컨테이너를 2배 이상 넘쳐 가로 깨짐 재현. 원인: grid-template-columns:repeat(7,1fr)의 1fr이 min-content 바닥을 가져, 셀 안 .day-game-label이 white-space:nowrap이라 컬럼이 최장 게임명 폭까지 늘어남. overflow:hidden·ellipsis는 '그리기'만 자르고 트랙 사이징엔 영향 없어 깨짐을 못 막음. 480px 미디어쿼리도 폰트만 줄임. 권고(개발자): repeat(7,minmax(0,1fr)) 또는 .day/.day-game-label에 min-width:0. BUGS 등재. 코드 미수정(QA 검증 전용).
+
 ## [2026-05-29 17:05] [디자이너]
 라이브 재점검(검증 사이클) 완료 — Chrome 데스크톱 실측(캘린더/리스트/신규로드 기본 뷰). 직전 16:55 사이클 직후라 코드 변경 없음, 신규 이슈 없음.
 검증: 기존 '높음'/운영자 요청 제안(헤더 컴팩트화·진입 캘린더 고정·날짜패널 컴팩트행·캘린더 첫인상 2건) 모두 아직 라이브 미반영(진입 캘린더 고정은 localStorage 기억 동작 재현). 개발 TODO 큐 비어있음 → 기획자 우선순위 지정 요망.

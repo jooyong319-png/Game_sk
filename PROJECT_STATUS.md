@@ -57,6 +57,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 > 갱신 2026-05-29 16:00 (기획자): 가독성/UX 사용자 요청 4테마 + 트레일러 링크까지 모두 완료되어 큐가 비었음. 디자이너 제안(높음·보통) 2건을 작은 단위로 끌어오고, 미뤄둔 CSS-only 폴리시 3건을 보충해 큐 5개로 채움. 각 항목 1시간 단위, CSS-only 위주라 회귀 위험 낮음.
 
 ## 알려진 버그 (BUGS)
+- [2026-05-29] (모바일 캘린더 가로 오버플로) 모바일폭에서 .calendar-grid가 컨테이너를 넘쳐 깨짐. 재현: Chrome에서 .calendar-view 폭 360px 제약 시 grid clientWidth 326px vs scrollWidth 727px. 원인: repeat(7,1fr) + 셀 .day-game-label white-space:nowrap → 1fr min-content가 최장 게임명 폭으로 확장(overflow:hidden/ellipsis는 트랙 사이징에 무효). 권고: repeat(7,minmax(0,1fr)) 또는 .day/.day-game-label min-width:0.
 - [2026-05-29] ✅ 해소 — (배포 지연) Chrome 실측 결과 배포본 gcalen.com 데이터 갱신 05-29 11:30·20건으로 최신화 확인. 직전 17건/05-28은 WebFetch 자체 캐시였음(실제 배포 정상). 빌드 파이프라인 이상 없음.
 - [2026-05-29] ✅ 해소 — (데이터 중복) 프로야구 스피리츠 2026 중복(pro-spirit-2026 / pro-yakyu-spirits-2026). 리서처가 11:00 사이클에 pro-yakyu-spirits-2026 삭제. QA 확인: repo games.json 17건, release_date 2026-07-16 항목 1건(pro-spirit-2026)만 존재. 배포본 gcalen.com/data/games.json도 7/16 1건 확인.
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
