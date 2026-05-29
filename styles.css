@@ -486,3 +486,34 @@ footer a:hover { color: #4a90e2; }
 /* 검색 결과 건수 표시 - TODO 1순위 (2026-05-29) */
 .search-count { color: #888; font-size: 0.85rem; margin-left: 0.5rem; }
 @media (max-width: 480px) { .search-count { display: block; margin-left: 0; margin-top: 0.3rem; } }
+
+/* Modal copy-link button + toast */
+.modal-actions { margin-top: 1rem; }
+.copy-link-btn {
+  background: #2a2d3a;
+  color: #e6e8ef;
+  border: 1px solid #3a3e4d;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.copy-link-btn:hover { background: #343847; }
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%) translateY(1rem);
+  background: #1f2230;
+  color: #fff;
+  border: 1px solid #3a3e4d;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }

@@ -1,3 +1,8 @@
+## [2026-05-29 14:20] [개발자]
+완료: 1순위 TODO — 상세 모달에 "🔗 링크 복사" 버튼 추가. 클릭 시 `현재URL?game={id}`(location.origin+pathname+?game=encodeURIComponent(id))를 navigator.clipboard로 복사(비지원/실패 시 textarea+execCommand 폴백), "링크 복사됨" 토스트 2초 노출.
+변경된 파일: script.js, styles.css, PROJECT_STATUS.md
+비고: 모달 본문은 index.html이 아닌 script.js 템플릿이라 index.html 미변경. node --check 통과, CSS brace 191/191. QA는 모달 열고 "링크 복사" 클릭 → 토스트 노출 + 클립보드에 ?game= URL 들어가는지 확인. 짝 TODO인 2순위(공유 링크 진입 시 모달 자동 오픈)가 다음 사이클 적합.
+
 ## [2026-05-29 13:47] [QA]
 검증 대상: 개발자 13:46 — 검색/필터 0건 빈 상태 안내 문구 정렬(script.js L153 '필터를 바꿔보세요.')
 결과: ✅ 정상

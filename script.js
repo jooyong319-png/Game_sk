@@ -304,6 +304,32 @@ function escapeHtml(text) {
 }
 
 
+// --- Toast + copy helpers ---
+let toastTimer = null;
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.className = 'toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); if (cb) cb(); } catch (_) {}
+  document.body.removeChild(ta);
+}
+
 // --- Detail modal ---
 const modal = document.getElementById('game-modal');
 const modalBody = document.getElementById('modal-body');
@@ -332,6 +358,7 @@ function openModal(gameId) {
     ${game.publisher ? `<div class="modal-row"><strong>퍼블리셔</strong>${escapeHtml(game.publisher)}</div>` : ''}
     ${game.description ? `<p class="desc" style="margin-top:0.6rem">${escapeHtml(game.description)}</p>` : ''}
     ${game.source_url ? `<a class="source-link" href="${escapeHtml(game.source_url)}" target="_blank" rel="noopener noreferrer">출처 보기 <span class="external-icon">↗</span></a>` : ''}
+    <div class="modal-actions"><button type="button" class="copy-link-btn" data-id="${escapeHtml(game.id)}">🔗 링크 복사</button></div>
   `;
   modal.hidden = false;
   document.body.classList.add('modal-open');
@@ -395,6 +422,16 @@ gamesList.addEventListener('click', e => {
   if (card && card.dataset.id) openModal(card.dataset.id);
 });
 modal.addEventListener('click', e => {
+  const copyBtn = e.target.closest('.copy-link-btn');
+  if (copyBtn && copyBtn.dataset.id) {
+    e.stopPropagation();
+    const url = location.origin + location.pathname + '?game=' + encodeURIComponent(copyBtn.dataset.id);
+    const done = () => showToast('링크 복사됨');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(() => fallbackCopy(url, done));
+    } else { fallbackCopy(url, done); }
+    return;
+  }
   const wishBtn = e.target.closest('.modal-wishlist-btn');
   if (wishBtn && wishBtn.dataset.id) {
     e.stopPropagation();
