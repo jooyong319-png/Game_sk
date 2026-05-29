@@ -651,16 +651,18 @@ if (calTodayBtn) calTodayBtn.addEventListener('click', () => {
 
 // --- Calendar Stage 4: day cell click -> panel -> reuse openModal ---
 // Active filters (category/platform/period/week/wishlist/search) — shared by the day panel.
-function getActiveFilteredGames() {
+function getActiveFilteredGames(floorIso) {
   const selectedCategory = categoryFilter.value;
   const selectedPlatform = platformFilter.value.toLowerCase();
   const days = parseInt(periodFilter.value, 10);
   const today = new Date(); today.setHours(0, 0, 0, 0);
+  // 기간필터 하한: 보통은 오늘이지만, 날짜패널이 지난 날짜를 클릭하면 그 날짜를 바닥으로 삼아 그날 게임이 누락되지 않게 함
+  const floor = floorIso ? new Date(floorIso) : today; floor.setHours(0, 0, 0, 0);
   return allGames.filter(g => {
     if (selectedCategory && g.category !== selectedCategory) return false;
     if (searchQuery) { const hay = ((g.name_ko || '') + ' ' + (g.name_en || '')).toLowerCase(); if (!hay.includes(searchQuery)) return false; }
     if (selectedPlatform) { const ps = (g.platforms || []).map(x => x.toLowerCase()); if (!ps.some(x => x.includes(selectedPlatform))) return false; }
-    if (days > 0) { const rel = new Date(g.release_date); const fut = new Date(today); fut.setDate(today.getDate() + days); if (rel < today || rel > fut) return false; }
+    if (days > 0) { const rel = new Date(g.release_date); const fut = new Date(today); fut.setDate(today.getDate() + days); if (rel < floor || rel > fut) return false; }
     if (weekFilter) { const r = getWeekRange(weekFilter === 'next' ? 1 : 0); const rel = new Date(g.release_date); if (rel < r.start || rel >= r.end) return false; }
     if (wishlistOnly && !wishlist.has(g.id)) return false;
     return true;
@@ -671,7 +673,7 @@ function getActiveFilteredGames() {
 function renderDayPanel(iso) {
   if (!dayPanel) return;
   const wd = getKoreanWeekday(iso);
-  const list = getActiveFilteredGames()
+  const list = getActiveFilteredGames(iso)
     .filter(g => g.release_date && g.release_date >= iso)
     .sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
   const title = `${formatDate(iso)}${wd ? ' (' + wd + ')' : ''} 이후 출시 ${list.length}건`;
