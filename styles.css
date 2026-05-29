@@ -517,3 +517,6 @@ footer a:hover { color: #4a90e2; }
   z-index: 1000;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Day panel: '그날 이후 출시' grouped list — scrollable so long lists don't push page (TODO 1순위 2026-05-29) */
+.day-panel-list { max-height: 60vh; overflow-y: auto; margin-top: 0.6rem; }

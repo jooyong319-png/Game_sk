@@ -596,29 +596,40 @@ if (calTodayBtn) calTodayBtn.addEventListener('click', () => {
 
 // --- Calendar Stage 4: day cell click -> panel -> reuse openModal ---
 const dayPanel = document.getElementById('day-detail-panel');
+// Active filters (category/platform/period/week/wishlist/search) — shared by the day panel.
+function getActiveFilteredGames() {
+  const selectedCategory = categoryFilter.value;
+  const selectedPlatform = platformFilter.value.toLowerCase();
+  const days = parseInt(periodFilter.value, 10);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return allGames.filter(g => {
+    if (selectedCategory && g.category !== selectedCategory) return false;
+    if (searchQuery) { const hay = ((g.name_ko || '') + ' ' + (g.name_en || '')).toLowerCase(); if (!hay.includes(searchQuery)) return false; }
+    if (selectedPlatform) { const ps = (g.platforms || []).map(x => x.toLowerCase()); if (!ps.some(x => x.includes(selectedPlatform))) return false; }
+    if (days > 0) { const rel = new Date(g.release_date); const fut = new Date(today); fut.setDate(today.getDate() + days); if (rel < today || rel > fut) return false; }
+    if (weekFilter) { const r = getWeekRange(weekFilter === 'next' ? 1 : 0); const rel = new Date(g.release_date); if (rel < r.start || rel >= r.end) return false; }
+    if (wishlistOnly && !wishlist.has(g.id)) return false;
+    return true;
+  });
+}
+
+// Day cell click -> games released on/after that date, grouped by date (reuses list grouping). openModal reused on click.
 function renderDayPanel(iso) {
   if (!dayPanel) return;
-  const [y, m, d] = iso.split('-').map(Number);
-  const list = allGames.filter(g => g.release_date === iso);
-  const head = `<div class="day-panel-header"><h3 class="day-panel-title">${y}년 ${m}월 ${d}일</h3><button class="day-panel-close" aria-label="패널 닫기">×</button></div>`;
-  if (!list.length) { dayPanel.innerHTML = head + '<p class="day-empty">이 날짜에 출시 예정 게임 없음</p>'; }
-  else {
-    // D-Day computed once — all games in the panel share the same iso date (matches renderCard logic)
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    const dayDiff = Math.ceil((new Date(iso) - today) / 86400000);
-    let dCls = '', dText = '';
-    if (dayDiff < 0) { dCls = 'past'; dText = '출시됨'; }
-    else if (dayDiff === 0) { dCls = 'today'; dText = 'D-DAY'; }
-    else if (dayDiff <= 7) { dCls = 'soon'; dText = 'D-' + dayDiff; }
-    else { dText = 'D-' + dayDiff; }
-    const dHtml = `<span class="dday ${dCls}">${dText}</span>`;
-    dayPanel.innerHTML = head + list.map(g => {
-      const label = categories[g.category] || g.category;
-      return `<div class="day-game-card" data-id="${escapeHtml(g.id)}"><span class="day-game-color category-${g.category}"></span><span class="day-game-name">${escapeHtml(g.name_ko || g.name_en)}</span><span class="category-tag category-${g.category}">${escapeHtml(label)}</span>${dHtml}</div>`;
-    }).join('');
+  const wd = getKoreanWeekday(iso);
+  const list = getActiveFilteredGames()
+    .filter(g => g.release_date && g.release_date >= iso)
+    .sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+  const title = `${formatDate(iso)}${wd ? ' (' + wd + ')' : ''} 이후 출시 ${list.length}건`;
+  const head = `<div class="day-panel-header"><h3 class="day-panel-title">${title}</h3><button class="day-panel-close" aria-label="패널 닫기">×</button></div>`;
+  if (!list.length) {
+    dayPanel.innerHTML = head + '<p class="day-empty">이 날짜 이후 출시 예정 게임이 없어요.</p>';
+  } else {
+    dayPanel.innerHTML = head + '<div class="day-panel-list">' + renderGroupedList(list) + '</div>';
   }
   dayPanel.hidden = false;
 }
+
 const calGrid = document.getElementById('calendar-grid');
 if (calGrid) calGrid.addEventListener('click', e => {
   const cell = e.target.closest('.day');
@@ -642,7 +653,17 @@ if (dayPanel) dayPanel.addEventListener('click', e => {
     renderCalendar();
     return;
   }
-  const card = e.target.closest('.day-game-card');
+  const wishBtn = e.target.closest('.wishlist-btn');
+  if (wishBtn && wishBtn.dataset.id) {
+    e.stopPropagation();
+    const id = wishBtn.dataset.id;
+    if (wishlist.has(id)) { wishlist.delete(id); wishBtn.classList.remove('active'); wishBtn.textContent = '☆'; wishBtn.setAttribute('aria-pressed', 'false'); }
+    else { wishlist.add(id); wishBtn.classList.add('active'); wishBtn.textContent = '★'; wishBtn.setAttribute('aria-pressed', 'true'); }
+    saveWishlist();
+    updateWishlistChipLabel();
+    return;
+  }
+  const card = e.target.closest('.game-card');
   if (card && card.dataset.id) openModal(card.dataset.id);
 });
 
