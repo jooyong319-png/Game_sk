@@ -588,7 +588,7 @@ function renderCalendar() {
     emptyEl.hidden = Object.keys(dayMap).length > 0;
     emptyEl.textContent = (wishlistOnly && wishlist.size === 0)
       ? '아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요.'
-      : '이 달에는 출시 예정 게임이 없어요.';
+      : '이 달 출시 일정이 없어요. ‹ ›로 다른 달을 살펴보세요.';
   }
 }
 renderCalendar();
