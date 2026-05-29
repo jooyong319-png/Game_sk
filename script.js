@@ -66,6 +66,19 @@ async function loadData() {
 
     renderStatsSummary();
     renderGames();
+    // 최초 1회: 캘린더를 '오늘 이후 가장 가까운 출시 달'로 초기화 (사용자 네비 후엔 건드리지 않음)
+    if (!calendarMonthInitialized) {
+      const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+      const upcoming = allGames
+        .map(g => new Date(g.release_date))
+        .filter(d => !isNaN(d.getTime()) && d >= t0)
+        .sort((a, b) => a - b);
+      if (upcoming.length) {
+        calendarYear = upcoming[0].getFullYear();
+        calendarMonth = upcoming[0].getMonth();
+      }
+      calendarMonthInitialized = true;
+    }
     if (typeof renderCalendar === 'function') renderCalendar();
     openGameFromUrl();
   } catch (err) {
@@ -516,6 +529,7 @@ loadData();
 
 // --- Monthly calendar (Stage 3: prev/next/today nav) ---
 let calendarYear, calendarMonth;
+let calendarMonthInitialized = false;
 function renderCalendar() {
   const grid = document.getElementById('calendar-grid');
   const label = document.getElementById('calendar-month-label');
