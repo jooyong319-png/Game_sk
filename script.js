@@ -67,6 +67,7 @@ async function loadData() {
     renderStatsSummary();
     renderGames();
     if (typeof renderCalendar === 'function') renderCalendar();
+    openGameFromUrl();
   } catch (err) {
     console.error(err);
     gamesList.innerHTML = `<p class="error">데이터를 불러오지 못했어요: ${err.message}</p>`;
@@ -367,6 +368,15 @@ function openModal(gameId) {
 function closeModal() {
   modal.hidden = true;
   document.body.classList.remove('modal-open');
+}
+
+
+// Auto-open detail modal when arriving via a shared ?game={id} link (called after data load).
+function openGameFromUrl() {
+  try {
+    const id = new URLSearchParams(location.search).get('game');
+    if (id && allGames.some(g => g.id === id)) openModal(id);
+  } catch (_) {}
 }
 
 gamesList.addEventListener('click', e => {

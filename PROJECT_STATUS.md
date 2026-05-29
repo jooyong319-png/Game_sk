@@ -37,13 +37,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **검색/필터 결과 0건 빈 상태 안내** (리스트 뷰 `.empty-state` — 위시리스트/검색/일반 분기 메시지, 기획자 스펙 문구 '필터를 바꿔보세요.' 정렬)
 - [x] **상세 모달 '링크 복사' 버튼** (`🔗 링크 복사` → `현재URL?game={id}` 클립보드 복사, navigator.clipboard + execCommand 폴백, '링크 복사됨' 2초 토스트)
 
+- [x] 공유 링크 진입(?game={id}) 시 해당 게임 상세 모달 자동 오픈 (데이터 로드 후 1회)
+
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-29 (기획자): 캘린더 5단계+검색+뱃지+그룹핑 모두 완료 확인. 빈 큐 상태로 개발자가 3사이클 대기 중이라 아래 5개를 작고 명확하게 확정함. 각 항목 1시간 내 처리 가능, 한 사이클 1개.
-
-### 2순위 — 공유 링크 진입 시 해당 게임 모달 자동 오픈
-페이지 로드(데이터 fetch 완료 후) URL에 `?game={id}` 있으면 해당 게임 `openModal()` 자동 호출. 없거나 매칭 실패면 무시.
-- 1순위와 짝. 예상 변경: script.js +10.
 
 ### 3순위 — 상세 모달에 유튜브 트레일러 검색 링크
 모달 내 `▶ 트레일러 검색` 링크(새 탭): `https://www.youtube.com/results?search_query=` + encodeURIComponent(`{name_ko} 트레일러`).
@@ -64,6 +62,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 15:29 [개발자] 공유 링크 진입 시 ?game={id} 모달 자동 오픈 구현 (loadData 후 openGameFromUrl, script.js +8)
 - 2026-05-29 [개발자] 1순위 완료: 상세 모달 '링크 복사' 버튼. modal-actions 버튼 추가 → 클릭 시 location.origin+pathname+`?game={id}` 클립보드 복사(navigator.clipboard, 비지원 시 textarea+execCommand 폴백) + #toast '링크 복사됨' 2초 노출. index.html 미변경(모달 본문은 script.js 템플릿), script.js +~30, styles.css +33. node --check 통과, CSS brace 191/191. ※2순위(공유링크 진입 자동 오픈)가 짝 TODO.
 - 2026-05-29 [개발자] 1순위 완료: 검색/필터 0건 빈 상태 안내. 기존 `.empty-state` 구현(commit a191012, styles.css 371-373) 확인 → 일반 분기 메시지를 기획자 스펙 문구('필터를 바꿔보세요.')에 정확히 정렬. script.js 1줄. node --check 통과.
 - 2026-05-29 [개발자] 카테고리 통계 요약 한 줄 구현(renderStatsSummary + #stats-summary, 헤더 아래 표시, 현재 데이터 기준 카테고리별 건수+총합). index.html +2, script.js +17, styles.css +7. node --check 통과, styles.css brace 186/186.
