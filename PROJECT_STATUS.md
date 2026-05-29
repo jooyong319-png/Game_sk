@@ -44,6 +44,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 ### (후보) — 게임 트레일러 / 카카오톡 공유 등 IDEAS 항목 승격
 
 ## 알려진 버그 (BUGS)
+- [2026-05-29] (배포 지연) 배포본 gcalen.com/data/games.json이 05-28 09:30·17건에 정체. repo는 05-29 11:30·20건(리서처 신규서버 3건 추가). 1일 이상 Vercel 빌드 미반영 → 빌드/배포 파이프라인 점검 권고. 재현: 두 URL의 last_updated/games 길이 비교. (코드 버그 아님)
 - [2026-05-29] ✅ 해소 — (데이터 중복) 프로야구 스피리츠 2026 중복(pro-spirit-2026 / pro-yakyu-spirits-2026). 리서처가 11:00 사이클에 pro-yakyu-spirits-2026 삭제. QA 확인: repo games.json 17건, release_date 2026-07-16 항목 1건(pro-spirit-2026)만 존재. 배포본 gcalen.com/data/games.json도 7/16 1건 확인.
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
