@@ -610,8 +610,10 @@ function renderCalendar() {
         const shown = list.slice(0, 3);
         const overflow = list.length - 3;
         const tip = list.map(x => x.name_ko || x.name_en).join(', ');
-        const dotEls = shown.map(g =>
-          `<span class="day-dot category-${g.category}"></span>`).join('');
+        const dotEls = shown.map(g => {
+          const catLabel = escapeHtml(categories[g.category] || g.category);
+          return `<span class="day-dot category-${g.category}" title="${catLabel}" aria-label="${catLabel}"></span>`;
+        }).join('');
         const more = overflow > 0 ? `<span class="day-dot-more">+${overflow}</span>` : '';
         dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}</div>`;
         const firstName = list[0].name_ko || list[0].name_en || '';

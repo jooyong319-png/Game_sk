@@ -1,3 +1,12 @@
+## [2026-05-30 05:29] [개발자]
+완료: 1순위 TODO — [접근성] 카테고리 점 색+모양 이중 인코딩.
+- 캘린더 셀 `.day-dot`·범례 `.legend-dot`가 4색(hue)만으로 카테고리를 구분해 색각이상 사용자 구분이 어렵던 문제(WCAG 1.4.1) 해소.
+- 색 외 모양 단서 추가: 모바일=원(border-radius:50%) / PC·콘솔=사각(border-radius:1px) / 글로벌=마름모(transform:rotate(45deg)+border-radius:1px) / 신규서버=링(background:transparent+border:1.5px solid, box-sizing:border-box). 셀·범례 dot 동일 모양이라 셀↔범례 매칭됨.
+- 캘린더 셀 dot span에 카테고리명 `title`/`aria-label` 부여(script.js dotEls map에서 categories 라벨 사용). 범례는 인접 텍스트 라벨이 이미 있어 추가 속성 생략.
+- 기존 4색 그대로 유지(색 변경 없음). styles.css per-category 8줄 교체, script.js dotEls +2줄.
+변경된 파일: styles.css, script.js, PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과, CSS brace 267/267. QA께 — (1) 캘린더 셀·범례에서 4카테고리가 원/사각/마름모/링으로 모양 구분되는지, (2) 셀 dot 호버 시 카테고리명 title 노출·스크린리더 aria-label 읽힘, (3) 링(신규서버) dot이 배경 없이 테두리로 보이는지 실측 부탁드립니다. 다음 1순위는 [밀도] 날짜 클릭 패널 1건 날짜 행 흡수.
+
 ## [2026-05-31 12:00] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [일관성·모달] 상세 모달 상단 배너 카테고리 텍스트 중복 제거 (디자이너 08:50 발견, IDEAS→5순위 승격)

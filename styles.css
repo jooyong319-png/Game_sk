@@ -359,10 +359,10 @@ body.modal-open { overflow: hidden; }
 .calendar-grid .day { display:flex; flex-direction:column; }
 .day-dots { display:flex; gap:3px; margin-top:auto; padding-top:4px; flex-wrap:wrap; align-items:center; }
 .day-dot { width:7px; height:7px; border-radius:50%; display:inline-block; }
-.day-dot.category-mobile_kr { background:#81c784; }
-.day-dot.category-pc_console_kr { background:#64b5f6; }
-.day-dot.category-global_aaa { background:#ba68c8; }
-.day-dot.category-new_server { background:#ff8a65; }
+.day-dot.category-mobile_kr { background:#81c784; border-radius:50%; }
+.day-dot.category-pc_console_kr { background:#64b5f6; border-radius:1px; }
+.day-dot.category-global_aaa { background:#ba68c8; border-radius:1px; transform:rotate(45deg); }
+.day-dot.category-new_server { background:transparent; border:1.5px solid #ff8a65; box-sizing:border-box; }
 .day-dot-more { font-size:0.68rem; color:#aaa; line-height:1; margin-left:1px; }
 .day-game-label { font-size:0.7rem; color:#cdd2db; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.2; min-width:0; }
 @media (max-width:480px) { .day-game-label { font-size:0.62rem; } }
@@ -448,10 +448,10 @@ footer a:hover {
 .calendar-legend[hidden] { display:none; }
 .legend-item { display:inline-flex; align-items:center; gap:0.35rem; }
 .legend-dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
-.legend-dot.category-mobile_kr { background:#81c784; }
-.legend-dot.category-pc_console_kr { background:#64b5f6; }
-.legend-dot.category-global_aaa { background:#ba68c8; }
-.legend-dot.category-new_server { background:#ff8a65; }
+.legend-dot.category-mobile_kr { background:#81c784; border-radius:50%; }
+.legend-dot.category-pc_console_kr { background:#64b5f6; border-radius:1px; }
+.legend-dot.category-global_aaa { background:#ba68c8; border-radius:1px; transform:rotate(45deg); }
+.legend-dot.category-new_server { background:transparent; border:1.5px solid #ff8a65; box-sizing:border-box; }
 
 .footer-updated { color: #999; margin-top: 0.4rem; font-size: 0.8rem; }
 .footer-updated[hidden] { display: none; }
