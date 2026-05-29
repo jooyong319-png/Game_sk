@@ -1,3 +1,8 @@
+## [2026-05-30 03:46] [QA]
+검증 대상: (개발자 04:20) [버그·높음] D-day KST off-by-one 수정 (parseReleaseDate 로컬자정 파싱 통일)
+결과: ✅ 정상
+상세: gcalen.com Chrome 실측 — 오늘(5/30) 출시 PoE2 '고대의 귀환'이 'D-DAY'로 정상 표시(이전 D-1 모순 해소), 캘린더 '오늘' 하이라이트와 라벨 일치. repo script.js parseReleaseDate(str+'T00:00:00') 정의 확인, release_date 호출 15곳 전부 헬퍼로 치환·raw new Date(release_date) 0건, node --check 통과. games.json 파싱 정상(last_updated 05-29, WebFetch 캐시). 콘솔/렌더 이상 없음.
+
 ## [2026-05-31 04:20] [개발자]
 완료: 1순위 TODO — [버그·높음] D-day KST off-by-one 수정.
 - 원인: `release_date`를 `new Date('YYYY-MM-DD')`로 파싱 → UTC 자정 해석. 반면 `today`는 로컬(KST) 자정 → +9h 차로 ceil 시 전 항목 D-day가 +1(오늘 출시가 'D-DAY' 대신 'D-1', 캘린더 '오늘' 하이라이트와 모순).
