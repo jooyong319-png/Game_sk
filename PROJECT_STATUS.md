@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-29 15:46 (개발자 — 퀵칩 필터 행 이동+모바일 가로 스크롤 완료)
+마지막 갱신: 2026-05-29 15:56 (개발자 — 캘린더 셀 키우고 대표 게임명 텍스트 노출 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -41,23 +41,19 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[캘린더] 날짜 클릭 시 '그날 이후 출시 전체' 목록 패널** (release_date>=클릭일, 날짜별 그룹핑 리스트 재활용, 현재 필터 반영, openModal 재사용, 패널 세로 스크롤) — 개발자 완료 2026-05-29
 - [x] **[가독성] 본문/메타 텍스트 대비·크기 상향** (`.desc`#cdd2db `.meta-row`#b3b8c2/0.85rem `.subtitle`#9aa0ac `.name-en`#8b92a0, `.info h3`1.1rem; 카테고리태그/링크 색 미변경) — 개발자 완료 2026-05-29
 - [x] **[컨트롤 정리] 검색바 + 필터 한 줄 묶기** (`.controls-row` flex 래퍼, 데스크탑 가로/≤480px 세로, gap 1rem, 검색 input max-width 360px 유지) — 개발자 완료 2026-05-29
+- [x] **[캘린더] 셀 키우고 대표 게임명 1건 텍스트 노출** (`.day` min-height 60→84/모바일 44→60, 그날 첫 게임 `name_ko`를 `.day-game-label` 1줄 말줄임으로, 점은 보조 유지) — 개발자 완료 2026-05-29
 - [x] **[컨트롤 정리] 퀵칩을 필터 행 끝으로 이동 + 모바일 가로 스크롤** (`.quick-chips`를 `.controls-row` 안 필터 우측 끝으로 이동, 데스크탑 `margin-left:auto`, ≤480px `flex-wrap:nowrap;overflow-x:auto`·chip `flex:0 0 auto`) — 개발자 완료 2026-05-29
 
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-29 (기획자): **사용자 직접 요청 — "전체적으로 보기 편하게" 가독성/UX 개선**(USER_REQUESTS 활성). 4개 테마를 개발자 1시간 단위로 쪼갬. 한 사이클 1개. CSS only 항목은 회귀 위험 낮음.
 
-### 1순위 — [캘린더] 셀 키우고 대표 게임명 1건 텍스트 노출
-점(dot)만으로는 그날 뭐가 나오는지 안 보임. 셀을 키우고 그날 첫 게임명을 텍스트로(1줄 말줄임).
-- `.calendar-grid .day` min-height 60→84(모바일 44→60). 렌더에서 그날 게임 있으면 첫 게임 `name_ko`를 `.day-game-label`(font 0.7rem, 1줄 ellipsis)로 추가, 점은 보조 유지.
-- 예상 변경: script.js ~12줄, styles.css ~8줄. (50줄 넘으면 '셀 크기'와 '게임명 노출' 두 TODO로 분리)
-
-### 2순위 — [정리] 핵심 색을 :root CSS 변수로 1차 토큰화
+### 1순위 — [정리] 핵심 색을 :root CSS 변수로 1차 토큰화
 파일 하단에 "overrides earlier rule" 패치가 누적됨. 색부터 변수화해 일관성 확보(겉보기 변화 없음, 리팩터).
 - `:root`에 `--bg`,`--surface`,`--border`,`--text`,`--text-dim`,`--text-faint`,`--accent` 정의 후 가장 많이 쓰이는 #0f1115/#1a1d24/#2a2e38/#e6e6e6/#4a90e2부터 치환. 한 번에 전부 X, 핵심 색만.
 - 예상 변경: styles.css ~30줄(치환). 동작/외형 변화 없어야 함(QA: 시각 회귀 확인).
 
-### 3순위 — 상세 모달에 유튜브 트레일러 검색 링크
+### 2순위 — 상세 모달에 유튜브 트레일러 검색 링크
 모달 내 `▶ 트레일러 검색` 링크(새 탭): `https://www.youtube.com/results?search_query=` + encodeURIComponent(`{name_ko} 트레일러`).
 - 임베드 아님(데이터 없음), 검색 링크만. 예상 변경: index.html +1, script.js +5.
 
@@ -78,6 +74,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 15:56 [개발자] 1순위 완료: [캘린더] 셀 키우고 대표 게임명 1건 텍스트 노출. renderCalendar에서 그날 첫 게임 name_ko를 `.day-game-label`(0.7rem, 1줄 ellipsis, title 툴팁)로 추가, 점(dot)은 보조 유지. `.calendar-grid .day` min-height 60→84(≤480px 44→60), 셀 flex-column 유지로 라벨은 날짜 아래·점은 하단. script.js +3, styles.css 3곳(min-height 2 + .day-game-label 규칙 신설). node --check 통과, CSS brace 204/204.
 - 2026-05-29 15:46 [개발자] 1순위 완료: [컨트롤 정리] 퀵칩을 필터 행 끝으로 이동 + 모바일 가로 스크롤. `.quick-chips` section을 `.controls-row` 안(필터 뒤)으로 이동, 데스크탑은 `margin-left:auto`로 우측 끝 정렬. ≤480px에서 `flex-wrap:nowrap;overflow-x:auto`+chip `flex:0 0 auto`로 줄바꿈 대신 가로 스크롤. 동작 로직 미변경(위치/스타일만). index.html(위치 이동), styles.css +6. CSS brace 201/201.
 - 2026-05-29 [개발자] 1순위 완료: [컨트롤 정리] 검색바+필터 한 줄 묶기. `.controls-row` flex 래퍼로 `.search-bar`+`.filters`를 같은 행에(align-items:flex-end, gap 1rem, flex-wrap). 자식 margin-bottom 0, 래퍼에 margin-bottom 1.5rem. ≤480px는 flex-direction:column·align-items:stretch로 세로. 검색 input max-width 360px 유지. index.html +3(래퍼 div), styles.css +5. CSS brace 197/197.
 - 2026-05-29 [개발자] 1순위 완료: [가독성] 본문/메타 텍스트 대비·크기 상향(CSS only). styles.css 6곳 수정 — .subtitle #888→#9aa0ac, .info h3 1.05→1.1rem, .name-en #777→#8b92a0, .desc #bbb→#cdd2db, .meta-row 0.8→0.85rem·#999→#b3b8c2. 카테고리 태그/링크 색·모달 .name-en 미변경. CSS brace 192/192.

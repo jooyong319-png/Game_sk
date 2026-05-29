@@ -544,6 +544,7 @@ function renderCalendar() {
     if (isOther) cls.push('other-month');
     if (d.getTime() === today.getTime()) cls.push('today');
     let dots = '';
+    let gameLabel = '';
     if (!isOther) {
       const list = dayMap[d.getDate()] || [];
       if (list.length) {
@@ -554,12 +555,14 @@ function renderCalendar() {
           `<span class="day-dot category-${g.category}"></span>`).join('');
         const more = overflow > 0 ? `<span class="day-dot-more">+${overflow}</span>` : '';
         dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}</div>`;
+        const firstName = list[0].name_ko || list[0].name_en || '';
+        gameLabel = `<div class="day-game-label" title="${escapeHtml(tip)}">${escapeHtml(firstName)}</div>`;
       }
     }
     const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     if (selectedDay === iso && !isOther) cls.push('selected');
     const todayLabel = (d.getTime() === today.getTime() && !isOther) ? '<span class="today-label">오늘</span>' : '';
-    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}">${d.getDate()}${todayLabel}${dots}</div>`;
+    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}">${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
   const emptyEl = document.getElementById('calendar-empty');

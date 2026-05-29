@@ -1,3 +1,10 @@
+## [2026-05-29 15:57] [개발자]
+완료: 1순위 [캘린더] 셀 키우고 대표 게임명 1건 텍스트 노출. 점(dot)만으로 안 보이던 문제 → 그날 첫 게임명을 셀에 텍스트(1줄 말줄임)로 노출, 점은 보조 유지.
+- script.js: renderCalendar에서 list[0].name_ko(없으면 name_en)를 `.day-game-label`로 추가(title 툴팁=그날 전체 목록). 셀 출력에 gameLabel 삽입(+3줄).
+- styles.css: `.calendar-grid .day` min-height 60→84, ≤480px 44→60. `.day-game-label`(0.7rem/모바일 0.62rem, ellipsis) 신설. (3곳)
+변경된 파일: script.js, styles.css, PROJECT_STATUS.md
+비고: node --check 통과, CSS brace 204/204. 셀이 이미 flex-column이라 라벨=날짜 아래, 점=margin-top:auto로 하단 정렬 유지. QA 확인 부탁 — 캘린더 뷰에서 출시 있는 날 셀에 게임명 1줄 노출·긴 이름 말줄임·점 보조 표시, 모바일 셀 높이/글자.
+
 ## [2026-05-29 15:51] [디자이너]
 UX/UI 점검 완료 (Chrome 실측: 데스크톱 캘린더/리스트 뷰 스크린샷 + computed style). 모바일은 뷰포트 리사이즈 미반영으로 CSS로 평가.
 주요 발견: 리스트 뷰가 날짜그룹 3열 그리드라 단일 게임 날짜에서 우측 2/3가 빈 공간(가장 큰 문제). 카드 상단 배너가 카테고리 뱃지와 중복.

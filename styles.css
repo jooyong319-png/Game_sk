@@ -314,10 +314,10 @@ body.modal-open { overflow: hidden; }
 .calendar-nav-btn:hover, .calendar-today-btn:hover { background:#3a3e48; border-color:#4a90e2; }
 .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
 .calendar-grid .weekday { text-align:center; font-size:0.78rem; color:#888; padding:0.3rem 0; }
-.calendar-grid .day { background:#0f1115; border:1px solid #2a2e38; border-radius:6px; padding:0.5rem; min-height:60px; font-size:0.85rem; color:#ccc; }
+.calendar-grid .day { background:#0f1115; border:1px solid #2a2e38; border-radius:6px; padding:0.5rem; min-height:84px; font-size:0.85rem; color:#ccc; }
 .calendar-grid .day.other-month { opacity:0.35; }
 .calendar-grid .day.today { border-color:#4a90e2; background:rgba(74,144,226,0.15); color:#fff; font-weight:700; }
-@media (max-width:480px) { .calendar-grid .day { min-height:44px; font-size:0.75rem; padding:0.3rem; } }
+@media (max-width:480px) { .calendar-grid .day { min-height:60px; font-size:0.75rem; padding:0.3rem; } }
 /* Stage 2: per-day dots */
 .calendar-grid .day { display:flex; flex-direction:column; }
 .day-dots { display:flex; gap:3px; margin-top:auto; padding-top:4px; flex-wrap:wrap; align-items:center; }
@@ -327,6 +327,8 @@ body.modal-open { overflow: hidden; }
 .day-dot.category-global_aaa { background:#ba68c8; }
 .day-dot.category-new_server { background:#ff8a65; }
 .day-dot-more { font-size:0.68rem; color:#aaa; line-height:1; margin-left:1px; }
+.day-game-label { font-size:0.7rem; color:#cdd2db; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.2; }
+@media (max-width:480px) { .day-game-label { font-size:0.62rem; } }
 
 footer a {
   color: #888;
