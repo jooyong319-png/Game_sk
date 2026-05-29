@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-29T11:30:00+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-29T11:30:00+09:00",
+  "last_updated": "2026-05-29T11:00:00+09:00",
+  "last_researched_by": "Claude (manual bulk update)",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -397,47 +397,26 @@
       "source_url": "https://www.inven.co.kr/webzine/news/?news=316867"
     },
     {
-      "id": "lordnine-server-dinapheri-20260327",
-      "name_ko": "로드나인: 성장 가속 서버 '디나페리' 오픈",
+      "id": "odin-server-aegir-20260626",
+      "name_ko": "오딘: 발할라 라이징 - 신규 서버 '에기르' 오픈",
       "name_en": null,
-      "release_date": "2026-03-27",
+      "release_date": "2026-06-26",
       "release_date_approx": false,
       "category": "new_server",
       "platforms": [
-        "PC",
         "Android",
-        "iOS"
+        "iOS",
+        "PC"
       ],
-      "developer": "로드나인",
-      "publisher": "스마일게이트",
-      "description": "'가르바나' 이후 약 6개월 만의 신규 서버. 빠른 성장 지원, 필드·월드보스 보상 개선, PvP 패널티 완화(2026-03-27 오픈).",
+      "developer": "오딘: 발할라 라이징",
+      "publisher": "카카오게임즈",
+      "description": "오딘 3주년 기념 신규 서버 '에기르' 오픈 (6/26 정기점검 후).",
       "genres": [
         "MMORPG",
         "신규 서버"
       ],
       "image_url": null,
-      "source_url": "https://l9.onstove.com/ko/promotion/dinapheri/260327"
-    },
-    {
-      "id": "aion2-server-poeta-ishalgen-20251127",
-      "name_ko": "아이온2: 신규 서버 '포에타'·'이스할겐' 오픈",
-      "name_en": null,
-      "release_date": "2025-11-27",
-      "release_date_approx": false,
-      "category": "new_server",
-      "platforms": [
-        "Android",
-        "iOS"
-      ],
-      "developer": "아이온2",
-      "publisher": "엔씨소프트",
-      "description": "출시 일주일 만의 증설 신규 서버(천족 '포에타', 마족 '이스할겐'). 오픈 직후 대기열 1만 돌파(2025-11-27 오픈).",
-      "genres": [
-        "MMORPG",
-        "신규 서버"
-      ],
-      "image_url": null,
-      "source_url": "https://www.gameple.co.kr/news/articleView.html?idxno=214546"
+      "source_url": "https://www.kakaogamescorp.com/news/press/detail/2268"
     }
   ]
 }
