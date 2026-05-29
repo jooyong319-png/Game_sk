@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-29 (개발자 — [안정성] 에러 fallback 가드 구현 + 클로버된 STATUS/USER_REQUESTS 복구, 큐 4→3)
+마지막 갱신: 2026-05-29 12:30 (개발자 — [헤더] 좌측정렬+컴팩트화 완료, 큐 3→2)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -60,20 +60,17 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[캘린더] 날짜 클릭 패널 한 줄 컴팩트 행 전환** (패널 전용 renderDayRows: `색점·게임명·플랫폼·D-day·☆`, min-height 44px, 날짜그룹 헤더 유지, 클릭/Enter·Space=openModal·☆=위시 토글 재사용, 표시범위 '그날 이후 전체' 유지, 내부 스크롤 제거→인라인 확장) — 개발자 완료 2026-05-29 21:40
 - [x] **[긴급·버그] 라이브 전체 다운(script.js TDZ dayPanel ReferenceError) 복구** (`const dayPanel` 선언을 첫 사용 L477 위(모달 핸들부 L379)로 hoist, Stage4 중복 선언 제거. runtime DOM 스텁 로드로 top-level ReferenceError 0건 확인) — 개발자 완료 2026-05-29 22:20
 - [x] **[안정성] 로딩/크래시 에러 상태 fallback** (index.html에 script.js와 독립된 inline `<script>` 가드: 9초 내 캘린더 grid·게임 리스트 미렌더 시 `.load-fallback`로 '데이터를 불러오지 못했어요' + 새로고침 버튼 노출. 500ms 폴링으로 정상 렌더 감지 시 타이머 자기-해제. 메인 스크립트가 죽어도 동작) — 개발자 완료 2026-05-29
+- [x] **[헤더] 좌측정렬 + 컴팩트화로 캘린더를 첫 화면 위로** (운영자 요청; CSS-only: `header` 패딩 2.5/1.5rem→1.25/1rem·`text-align` center→left, h1 2rem→1.7rem·margin-bottom 0.25rem 축소, 헤더 자식 max-width:1200px+1rem gutter로 `<main>`과 좌측 정렬(gradient bg는 full-bleed 유지), stats-summary text-align left 정렬. 상단 높이 절감→첫 화면에 캘린더 상향. 모바일 ≤480px 정렬 유지) — 개발자 완료 2026-05-29 12:30
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-05-29 (개발자): [안정성] 에러 fallback 가드 완료 → 큐에서 제거(4→3). 나머지 운영자/디자이너 요청 3건이 1~3순위로 한 칸씩 승격. ⚠️ 기획자 11:11 커밋이 이 STATUS·USER_REQUESTS를 옛 스냅샷으로 되돌려(완료기능 ~25건·버그/IDEAS 이력 소실, 완료작업을 재-TODO로 등재) 이번 사이클에 부모 커밋(a3c71b5)에서 두 파일 복구함. 기획자 차기 사이클에서 큐 재확인 권장.
+> 갱신 2026-05-29 12:30 (개발자): [헤더] 좌측정렬·컴팩트화 완료 → 큐에서 제거(3→2). 나머지 2건이 1~2순위로 한 칸씩 승격. ⚠️ 기획자 11:11 커밋이 이 STATUS·USER_REQUESTS를 옛 스냅샷으로 되돌려(완료기능 ~25건·버그/IDEAS 이력 소실, 완료작업을 재-TODO로 등재) 이번 사이클에 부모 커밋(a3c71b5)에서 두 파일 복구함. 기획자 차기 사이클에서 큐 재확인 권장.
 
-1. **[헤더] 좌측정렬 + 컴팩트화로 캘린더를 첫 화면 위로** (운영자 요청)
-   - 헤더 상하 패딩 축소, 제목/부제 좌측정렬, stats-summary 한 줄 유지 → 상단 높이 절감(첫 화면에 캘린더가 더 올라오게).
-   - CSS-only(레이아웃/정렬/패딩만), 텍스트·기능 변경 없음. 모바일에서도 정렬 깨지지 않게 ≤480px 확인.
-
-2. **[뷰] 진입 시 기본 뷰를 캘린더로 고정** (운영자 요청, 보통)
+1. **[뷰] 진입 시 기본 뷰를 캘린더로 고정** (운영자 요청, 보통)
    - `localStorage 'gcalen.view'`가 비어있을 때(최초 방문) 기본값을 `'calendar'`로. 이미 선택 기억 로직 있으니 기본값만 조정.
    - 기존 토글/기억 동작은 유지. JS 1~2줄.
 
-3. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통→승격')
+2. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통→승격')
    - 선택 셀 보더가 임박 셀(.day-soon) 보더와 색 충돌 → 선택은 보더 대신 옅은 배경 채움+inset 링으로 표현. 오늘=파랑/임박=amber 보더는 그대로 유지해 3상태(오늘/임박/선택) 위계 분리.
    - CSS-only(`.day.selected` 등 규칙만), 신규 색 추가 없이 기존 토큰 재사용.
 
@@ -113,6 +110,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 12:30 [개발자] 1순위 완료: [헤더] 좌측정렬+컴팩트화. styles.css만 수정(+14/-5) — `header` 패딩 `2.5rem 1rem 1.5rem`→`1.25rem 1rem 1rem`·`text-align center→left`, `header h1` 2rem→1.7rem·margin-bottom 0.5→0.25rem, 헤더 3개 자식(h1/.subtitle/.last-updated)에 `max-width:1200px;margin:auto;padding:0 1rem`로 `<main>`과 좌측 정렬(gradient는 full-bleed 유지), `.stats-summary` text-align center→left. 상단 수직 높이 절감으로 캘린더가 첫 화면 위로. CSS-only(텍스트/기능 무변경), brace 258/258.
 - 2026-05-29 [개발자] [안정성] 에러 fallback 가드 구현(index.html 독립 inline script + .load-fallback CSS). ⚠️ 기획자 11:11 커밋의 STATUS/USER_REQUESTS 회귀를 부모 커밋에서 복구.
 - 2026-05-29 22:20 [개발자] 긴급 1순위 완료: 라이브 전체 다운(script.js TDZ dayPanel ReferenceError) 복구. `const dayPanel = document.getElementById('day-detail-panel');`를 모달 핸들 선언부(L379, 첫 사용 keydown L477·ESC L525 위)로 hoist하고 Stage4의 중복 선언(구 L652) 제거. node --check는 TDZ 미검출이라 runtime DOM 스텁으로 top-level 실행해 ReferenceError 0건 확인. script.js만 수정(+1/-1줄). QA에 라이브 콘솔 ReferenceError 0건+캘린더 셀 렌더+날짜 패널/ESC 동작 실측 요청.
 - 2026-05-29 22:00 [기획자] 라이브 전체 다운(script.js TDZ dayPanel ReferenceError, QA 21:47 보고)을 긴급 1순위 TODO로 등재. 디자이너 에러상태 fallback(높음)을 2순위 승격. 기존 운영자/디자이너 TODO 3건은 3~5순위로 밀림. 큐 3→5개. 코드 미수정(문서만).

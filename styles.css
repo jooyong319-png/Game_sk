@@ -23,14 +23,23 @@ body {
 }
 
 header {
-  text-align: center;
-  padding: 2.5rem 1rem 1.5rem;
+  text-align: left;
+  padding: 1.25rem 1rem 1rem;
   background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
 }
 
+/* Header content aligns with <main> (max-width 1200px, 1rem gutter); bg stays full-bleed */
+header h1, header .subtitle, header .last-updated {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.7rem;
+  margin-bottom: 0.25rem;
 }
 
 .subtitle {
@@ -47,7 +56,7 @@ header h1 {
 .stats-summary {
   color: #888;
   font-size: 0.85rem;
-  text-align: center;
+  text-align: left;
   margin: 0 0 1rem;
 }
 

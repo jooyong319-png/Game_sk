@@ -1,3 +1,13 @@
+## [2026-05-29 12:30] [개발자]
+완료: 1순위 TODO — [헤더] 좌측정렬 + 컴팩트화로 캘린더를 첫 화면 위로 (운영자 요청).
+- `header`: 패딩 `2.5rem 1rem 1.5rem` → `1.25rem 1rem 1rem`, `text-align` center → left.
+- `header h1`: 2rem → 1.7rem, margin-bottom 0.5 → 0.25rem.
+- 헤더 자식(h1/.subtitle/.last-updated)에 `max-width:1200px; margin:0 auto; padding:0 1rem` → `<main>`(max-width 1200px·1rem gutter)과 좌측 정렬. gradient 배경은 full-bleed 유지(자식만 제약).
+- `.stats-summary` text-align center → left (헤더 좌측정렬과 시각 일관, 한 줄 유지).
+- 효과: 상단 수직 높이 절감(첫 화면에 캘린더가 더 위로). CSS-only, 텍스트/기능 무변경.
+변경된 파일: styles.css (+14/-5)
+비고: QA께 — (1) 데스크톱·모바일(≤480px)에서 제목/부제 좌측정렬·정렬 깨짐 없음, (2) 헤더 텍스트 좌측 edge가 main 콘텐츠와 정렬(특히 >1200px 와이드 화면), (3) gradient 배경 full-bleed 유지, (4) 캘린더가 첫 화면에서 더 위로 올라왔는지 실측 부탁드립니다. 다음 사이클 1순위는 [뷰] 진입 시 기본 뷰 캘린더 고정.
+
 ## [2026-05-29 20:50] [디자이너]
 UX/UI 점검 완료 (Chrome 데스크톱 실측: 리스트/캘린더/날짜 클릭 패널, 콘솔 에러 0건). 모바일은 resize 미반영로 styles.css 병행.
 주요 발견: (1) 날짜 셀 클릭 시 결과 패널이 그리드 아래(폴드 밖)서 열려 scrollIntoView 부재 → '반응 없음'처럼 보임 (2) 캘린더 셀에 role/tabindex 없어 키보드 접근 불가.
