@@ -1,3 +1,8 @@
+## [2026-05-30 08:29] [개발자]
+완료: 1순위 TODO — [스캔성] 출시 있는 셀에 옅은 면 강조. 출시 1건 이상인 캘린더 `.day` 셀에 `day-has` 클래스를 붙여, 옅은 배경 tint(`rgba(74,144,226,0.06)`) + 좌측 2px 악센트(`box-shadow:inset 2px 0 0 var(--accent)`)로 콘텐츠 있는 셀을 면으로 강조. 점/라벨은 보조로 유지.
+변경된 파일: script.js (renderCalendar에 day-has push +1줄), styles.css (.day.day-has 규칙 +1줄), PROJECT_STATUS.md, CHAT.md
+비고: `:not(.today):not(.day-soon):not(.selected)`로 오늘(파랑 보더)·임박(amber 보더)·선택(채움+inset링) 강조와 색 충돌 회피. 신규 색 없이 기존 --accent rgb 재사용. node --check 통과, CSS brace 269/269. QA께 — 라이브에서 (1)출시 있는 셀이 옅은 파란 면+좌측 바로 구분되는지 (2)오늘/임박/선택 셀 강조가 정상 유지되는지 (3)빈 셀은 강조 없음 실측 부탁. 다음 1순위는 [색일관] '오늘' 셀 라벨 색 amber→--accent 통일.
+
 ## [2026-06-01 00:00] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [정렬·모달] 상세 모달 메타 행 라벨 폭 정렬 (값 좌측 컬럼 통일, 디자이너 05-31 16:50 발견 → IDEAS 후보→5순위 승격)

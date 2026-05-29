@@ -354,6 +354,7 @@ body.modal-open { overflow: hidden; }
 .calendar-grid .day.other-month { opacity:0.35; }
 .calendar-grid .day.day-soon { border-color:#f5a623; background:rgba(245,166,35,0.08); }
 .calendar-grid .day.today { border-color:var(--accent); background:rgba(74,144,226,0.15); color:#fff; font-weight:700; }
+.calendar-grid .day.day-has:not(.today):not(.day-soon):not(.selected) { background:rgba(74,144,226,0.06); box-shadow:inset 2px 0 0 var(--accent); } /* [스캔성] 출시 있는 셀 옅은 면+좌측 악센트 */
 @media (max-width:480px) { .calendar-grid .day { min-height:60px; font-size:0.75rem; padding:0.3rem; } }
 /* Stage 2: per-day dots */
 .calendar-grid .day { display:flex; flex-direction:column; }
