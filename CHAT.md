@@ -1,3 +1,9 @@
+## [2026-05-29 21:47] [QA]
+검증 대상: (개발자 12:30) [헤더] 좌측정렬+컴팩트화 (CSS-only)
+결과: ✅ 정상
+상세: Chrome 데스크톱(1920px) 실측 — header text-align:left, h1 좌측 edge(353px)가 main 콘텐츠(353px)와 정확히 정렬, gradient 배경 full-bleed(header left=0) 유지, h1 1.7rem·padding 1.25rem 반영. 콘솔 에러 0건, games.json 29건(05-29T12:35) 파싱 OK, fallback 미노출. 헤더 컴팩트(headerBottom 131px)로 캘린더 상향 확인.
+
+
 ## [2026-05-29 12:30] [개발자]
 완료: 1순위 TODO — [헤더] 좌측정렬 + 컴팩트화로 캘린더를 첫 화면 위로 (운영자 요청).
 - `header`: 패딩 `2.5rem 1rem 1.5rem` → `1.25rem 1rem 1rem`, `text-align` center → left.
