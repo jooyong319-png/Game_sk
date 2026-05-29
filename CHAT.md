@@ -1210,6 +1210,13 @@ IDEAS 이동: 1개 — "위시리스트(localStorage)"는 캘린더 5단계 안�
 
 ---
 
+## [2026-05-29 16:11] [개발자]
+완료: 1순위 [리스트뷰] 단일 게임 날짜그룹을 행 전체 폭으로. 리스트 뷰에서 그날 출시 게임이 1건뿐인 날짜는 3열 그리드 탓에 우측 2/3가 비던 문제(디자이너 '높음') 해소.
+- script.js: renderGroupedList에서 release_date별 건수를 dateCounts로 집계, 1건인 날짜의 renderCard에 single=true 전달. renderCard(game, single) → article에 single일 때 ' single-game' 클래스 부가. (+3줄)
+- styles.css: `.games-grid .game-card.single-game { grid-column: 1 / -1; }` 추가 → 단일 게임 카드가 행 전체 폭. 2건 이상 날짜는 기존 그리드 그대로. (+4줄)
+변경된 파일: script.js, styles.css, PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과, CSS brace 208/208. day-panel(캘린더 이후목록)도 renderGroupedList 재사용이라 동일 적용됨. QA 확인 부탁 — 리스트 뷰에서 게임 1건인 날짜의 카드가 행 전체 폭으로 늘어나는지, 2건↑ 날짜는 여전히 3열 그리드인지, 모바일(≤480 1열) 회귀 없는지.
+
 ## [2026-05-29 15:46] [개발자]
 완료: 1순위 [컨트롤 정리] 퀵칩을 필터 행 끝으로 이동 + 모바일 가로 스크롤.
 - 마크업: 독립 `<section class="quick-chips">`(이번주/다음주/위시리스트)를 `.controls-row` 안 `.filters` 뒤로 이동.

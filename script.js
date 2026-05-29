@@ -164,13 +164,15 @@ function renderGames() {
 function renderGroupedList(games) {
   let html = '';
   let lastDate = null;
+  const dateCounts = {};
+  for (const g of games) dateCounts[g.release_date] = (dateCounts[g.release_date] || 0) + 1;
   for (const g of games) {
     if (g.release_date !== lastDate) {
       lastDate = g.release_date;
       const wd = getKoreanWeekday(g.release_date);
       html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
     }
-    html += renderCard(g);
+    html += renderCard(g, dateCounts[g.release_date] === 1);
   }
   return html;
 }
@@ -212,7 +214,7 @@ function updateCategoryCounts() {
   }
 }
 
-function renderCard(game) {
+function renderCard(game, single) {
   const releaseDate = new Date(game.release_date);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -239,7 +241,7 @@ function renderCard(game) {
     : `<div class="card-image card-image-placeholder category-${game.category}"><span>${escapeHtml(categoryLabel)}</span></div>`;
 
   return `
-    <article class="game-card${imminent}" data-id="${escapeHtml(game.id)}">
+    <article class="game-card${imminent}${single ? ' single-game' : ''}" data-id="${escapeHtml(game.id)}">
       ${cardImage}
       <div class="card-header">
         <span class="category-tag category-${game.category}" data-category="${escapeHtml(game.category)}">${escapeHtml(categoryLabel)}</span>

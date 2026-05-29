@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-29 16:00 (기획자 — 빈 큐 보충, 디자이너 제안 2건 + 폴리시 3건)
+마지막 갱신: 2026-05-29 16:11 (개발자 — 1순위 단일게임 풀폭 완료, 큐 4건)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -46,30 +46,26 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 - [x] **[정리] 핵심 색 :root CSS 변수 1차 토큰화** (`:root`에 --bg/--surface/--border/--text/--text-dim/--text-faint/--accent 정의, 최다 사용 5색 #0f1115/#1a1d24/#2a2e38/#e6e6e6/#4a90e2 → var() 치환, 외형 무변화 리팩터) — 개발자 완료 2026-05-29
 - [x] **[모달] 유튜브 트레일러 검색 링크** (상세 모달 modal-actions에 `▶ 트레일러 검색` 새 탭 링크, `youtube.com/results?search_query={name_ko} 트레일러`, 임베드 아님) — 개발자 완료 2026-05-29
+- [x] **[리스트뷰] 단일 게임 날짜그룹 행 전체 폭** (그날 출시 1건인 날짜의 카드에 `.single-game` 부여 → `.games-grid .game-card.single-game{grid-column:1/-1}`로 행 전체 폭, 2건↑ 날짜는 기존 그리드 유지) — 개발자 완료 2026-05-29
 
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-29 16:00 (기획자): 가독성/UX 사용자 요청 4테마 + 트레일러 링크까지 모두 완료되어 큐가 비었음. 디자이너 제안(높음·보통) 2건을 작은 단위로 끌어오고, 미뤄둔 CSS-only 폴리시 3건을 보충해 큐 5개로 채움. 각 항목 1시간 단위, CSS-only 위주라 회귀 위험 낮음.
 
-### 1순위 — [리스트뷰] 단일 게임 날짜그룹을 행 전체 폭으로 (디자이너 '높음' 1차 단계)
-**문제**: 리스트 뷰의 날짜그룹이 3열 그리드라, 그날 출시 게임이 1건뿐인 날짜는 우측 2/3가 빈 공간(디자이너 지적 1순위).
-**스코프**: `renderGroupedList`에서 한 그룹의 게임이 1건이면 그 그룹 컨테이너(.date-group 또는 games-grid)에 `.single-game` 클래스 부여. CSS로 `.date-group.single-game .games-grid { grid-template-columns: 1fr; }` (또는 카드 max-width 한정). 2건 이상 날짜는 기존 그리드 그대로.
-**예상 규모**: script.js +2~3줄, styles.css +3줄. node --check 통과 확인.
-
-### 2순위 — [리스트뷰] 카드 상단 배너 카테고리 라벨 중복 제거 (디자이너 '보통')
+### 1순위 — [리스트뷰] 카드 상단 배너 카테고리 라벨 중복 제거 (디자이너 '보통')
 **문제**: 카드 상단 컬러 배너에 카테고리명이 떠 있고 카드 본문에도 카테고리 태그가 있어 중복.
 **스코프**: 상단 배너의 텍스트 라벨을 제거하고, 배너를 카테고리 컬러 4px 상단 보더(또는 얇은 컬러바)로 콤팩트화. 카드 본문의 카테고리 태그는 유지. 색은 기존 카테고리 색 재사용(신규 색 도입 X).
 **예상 규모**: styles.css 위주 +본문 라벨 출력 제거. 10줄 이내. 모달은 영향 없게 카드 한정자 사용.
 
-### 3순위 — [모달] 열림/닫힘 페이드 트랜지션 (CSS-only)
+### 2순위 — [모달] 열림/닫힘 페이드 트랜지션 (CSS-only)
 **스코프**: 상세 모달 오버레이/박스에 opacity(+살짝 scale) 150~200ms 트랜지션. `.modal.open` 토글 기준. `@media (prefers-reduced-motion: reduce)`에서 트랜지션 제거 분기 포함.
 **예상 규모**: styles.css +10줄 내. JS는 기존 open 클래스 토글 재사용(가능하면 무변경).
 
-### 4순위 — [푸터] mailto 링크 hover 색상 강조 (CSS-only)
+### 3순위 — [푸터] mailto 링크 hover 색상 강조 (CSS-only)
 **스코프**: 푸터 `contact@gcalen.com` mailto 앵커에 hover/focus 시 `--accent` 색 적용 + 밑줄. 기존 흐린 텍스트 톤은 평상시 유지.
 **예상 규모**: styles.css +3줄.
 
-### 5순위 — [캘린더] 출시 임박(7일 이내) 게임 있는 셀 살짝 강조
+### 4순위 — [캘린더] 출시 임박(7일 이내) 게임 있는 셀 살짝 강조
 **스코프**: 캘린더 셀에 release_date가 오늘~+7일인 게임이 있으면 셀에 옅은 강조(리스트 뷰의 노란 보더와 일관되게 보더/배경). renderCalendar에서 해당 셀에 `.day-soon` 클래스 부여, CSS로 강조.
 **예상 규모**: script.js +3줄, styles.css +3줄. node --check 통과 확인.
 
@@ -88,6 +84,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 16:11 [개발자] 1순위 완료: [리스트뷰] 단일 게임 날짜그룹 행 전체 폭. renderGroupedList에서 release_date별 건수(dateCounts) 집계 후 1건인 날짜의 renderCard에 single 플래그 전달 → article에 `single-game` 클래스. CSS `.games-grid .game-card.single-game{grid-column:1/-1}` 추가로 행 전체 폭, 2건↑ 날짜는 기존 그리드 유지. script.js +3, styles.css +4. node --check 통과, CSS brace 208/208.
 - 2026-05-29 [개발자] 1순위 완료: [모달] 유튜브 트레일러 검색 링크. openModal 템플릿 modal-actions에 `▶ 트레일러 검색` 앵커 추가(새 탭, `https://www.youtube.com/results?search_query=`+encodeURIComponent(`{name_ko||name_en} 트레일러`)). 임베드 아닌 검색 링크. styles.css에 `.trailer-search-link`(copy-link-btn 톤 동일)+`.modal-actions` flex/gap. script.js 1줄, styles.css +12. node --check 통과, CSS brace 207/207.
 - 2026-05-29 17:20 [개발자] 1순위 완료: [정리] 핵심 색 :root CSS 변수 1차 토큰화. styles.css 상단에 `:root` 7개 토큰(--bg/--surface/--border/--text/--text-dim/--text-faint/--accent) 정의, 최다 사용 5색(#0f1115→--bg, #1a1d24→--surface, #2a2e38→--border, #e6e6e6→--text, #4a90e2→--accent)을 var()로 치환. 치환 49곳(border16/accent12/text9/surface7/bg5). --text-dim/--text-faint는 토큰만 선언(치환은 차기). 외형/동작 무변화 리팩터. CSS brace 205/205.
 - 2026-05-29 15:56 [개발자] 1순위 완료: [캘린더] 셀 키우고 대표 게임명 1건 텍스트 노출. renderCalendar에서 그날 첫 게임 name_ko를 `.day-game-label`(0.7rem, 1줄 ellipsis, title 툴팁)로 추가, 점(dot)은 보조 유지. `.calendar-grid .day` min-height 60→84(≤480px 44→60), 셀 flex-column 유지로 라벨은 날짜 아래·점은 하단. script.js +3, styles.css 3곳(min-height 2 + .day-game-label 규칙 신설). node --check 통과, CSS brace 204/204.

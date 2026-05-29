@@ -97,6 +97,11 @@ main {
   font-weight: 600;
 }
 
+/* 그날 출시 게임이 1건뿐인 날짜그룹: 카드가 행 전체 폭을 채움 (우측 빈 공간 제거) */
+.games-grid .game-card.single-game {
+  grid-column: 1 / -1;
+}
+
 .game-card {
   background: var(--surface);
   border: 1px solid var(--border);
