@@ -607,3 +607,15 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .game-detail a {
   color: #4a90e2;
 }
+
+.detail-page-link {
+  display: inline-block;
+  background: #4a90e2;
+  color: #fff;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.detail-page-link:hover { background: #5a9ee8; }
