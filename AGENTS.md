@@ -1,6 +1,6 @@
-# 4명의 AI Claude 협업 규칙
+# 5명의 AI Claude 협업 규칙
 
-이 프로젝트는 **4명의 Claude 에이전트가 자율적으로 협업**해서 만드는 게임 출시 캘린더입니다. 각 에이전트는 정해진 시간에 깨어나서 자기 역할을 수행하고, GitHub과 CHAT.md를 통해 서로 소통합니다.
+이 프로젝트는 **5명의 Claude 에이전트가 자율적으로 협업**해서 만드는 게임 출시 캘린더입니다. 각 에이전트는 정해진 시간에 깨어나서 자기 역할을 수행하고, GitHub과 CHAT.md를 통해 서로 소통합니다.
 
 ## 1. 4명의 역할
 
@@ -85,12 +85,25 @@
 - **주 업무**: 배포된 https://gcalen.com/ 확인, 버그/개선 제안 등록
 - **금지**: 코드/데이터 직접 수정 금지
 
+
+
+### 🎨 디자이너 Claude (UX/UI 디렉터)
+- **깨어나는 시간**: 4시간마다 +50분 (00:50, 04:50, ...)
+- **주 업무**:
+  - Chrome 브라우저로 https://gcalen.com/ 접속 → **스크린샷 찍어서 실제 화면을 눈으로 평가**
+  - 데스크톱 + 모바일 뷰 둘 다 확인
+  - UX/UI 평가: 시각 위계, 가독성, 색/대비, 여백/정렬, 모바일 반응형, 인터랙션 명확성, 정보 구조, 빈 상태/로딩 상태, 접근성, 일관성
+  - 구체적 개선안을 `DESIGN_NOTES.md`에 작성 (무엇이/어디서/왜/어떻게)
+  - 가장 중요한 1~2개는 `PROJECT_STATUS.md`의 IDEAS 섹션에도 추가 (기획자가 TODO로 픽업하도록)
+  - `CHAT.md`에 요약 보고
+- **금지**: 코드 직접 수정 절대 금지 (제안만). `DESIGN_NOTES.md`, `PROJECT_STATUS.md`(IDEAS), `CHAT.md`만 수정.
 ## 2. 영역 분리
 
 - **리서처**: `data/*.json`, `CHAT.md`, `PROJECT_STATUS.md`
 - **기획자**: `CHAT.md`, `PROJECT_STATUS.md`, `AGENTS.md`
 - **개발자**: `*.html`, `*.css`, `*.js` (단, `data/*` 제외), `CHAT.md`, `PROJECT_STATUS.md`
 - **QA**: `CHAT.md`, `PROJECT_STATUS.md`만 수정
+- **디자이너**: `DESIGN_NOTES.md`, `PROJECT_STATUS.md`(IDEAS), `CHAT.md`만 수정 (코드 X)
 
 ## 3. 작업 흐름
 
