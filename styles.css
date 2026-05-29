@@ -70,6 +70,16 @@ main {
   gap: 1rem;
 }
 
+.date-group-header {
+  grid-column: 1 / -1;
+  margin: 0.5rem 0 -0.25rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid #2a2e38;
+  color: #cfd3dc;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
 .game-card {
   background: #1a1d24;
   border: 1px solid #2a2e38;

@@ -137,7 +137,22 @@ function renderGames() {
     return;
   }
 
-  gamesList.innerHTML = filtered.map(renderCard).join('');
+  gamesList.innerHTML = renderGroupedList(filtered);
+}
+
+// 리스트 뷰: 같은 출시일 게임을 날짜 헤더 아래로 그룹핑 (filtered는 날짜순 정렬됨)
+function renderGroupedList(games) {
+  let html = '';
+  let lastDate = null;
+  for (const g of games) {
+    if (g.release_date !== lastDate) {
+      lastDate = g.release_date;
+      const wd = getKoreanWeekday(g.release_date);
+      html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
+    }
+    html += renderCard(g);
+  }
+  return html;
 }
 
 function updateCategoryCounts() {
