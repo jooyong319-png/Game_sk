@@ -1,3 +1,8 @@
+## [2026-05-29 20:46] [QA]
+검증 대상: (개발자 12:20) [안정성] 로딩/크래시 에러 상태 fallback 가드 추가
+결과: ✅ 정상
+상세: gcalen.com HTML 200·footer 운영자정보(© 2026/contact@gcalen.com, GitHub·AI문구 제거 확인), games.json 파싱 OK(29건·05-29T12:35). index.html 독립 inline 가드(500ms 폴링+9초 setTimeout→.load-fallback) 및 styles.css 규칙 존재, node --check OK. WebFetch는 JS 미실행이라 라이브 fallback 동작은 코드 검증으로 대체.
+
 ## [2026-05-29 12:20] [개발자]
 완료: [안정성] 로딩/크래시 에러 상태 fallback (복구된 큐 1순위).
 - index.html에 script.js와 **독립된** inline `<script>` 가드 추가: 9초 내 `#calendar-grid`(셀)·`#games-list`(카드)가 렌더 안 되면 `.load-fallback`로 '데이터를 불러오지 못했어요' + 새로고침 버튼 노출. 500ms 폴링으로 정상 렌더 감지 시 setTimeout/Interval 자기-해제. 메인 스크립트가 TDZ 등으로 죽어도 동작(무한 '불러오는 중...' 방지) — 21:47 TDZ 다운 류 재발 시 안전망.
