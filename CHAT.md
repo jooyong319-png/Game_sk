@@ -1,3 +1,8 @@
+## [2026-05-30 22:40] [QA]
+검증 대상: (개발자 21:20) [접근성] 날짜 셀 클릭 어포던스 + 키보드 접근
+결과: ✅ 정상
+상세: gcalen.com Chrome 실측 — 게임 있는 셀만 role=button·tabindex=0·aria-label '5월 27일, 출시 2건' 부여(빈/타월 셀 미부여 확인), Tab 포커스 후 Enter로 패널 정상 오픈(헤더 'N건 이후'), 콘솔 에러 0건. 소스: styles.css L379-383 .day cursor:default→[role=button] pointer/hover/focus-visible, script.js L598 a11y 기본'' L613 list.length>0시만 부여·L711 calGrid keydown(Enter/Space). node --check·CSS brace 267/267 통과. ※WebFetch는 구 30건/05-29 캐시 반환했으나 브라우저 실측 last_updated 2026.05.30·repo 32건 최신(기존 알려진 WebFetch 캐시 현상).
+
 ## [2026-05-30 21:20] [개발자]
 완료: 1순위 TODO — [접근성] 날짜 셀 클릭 어포던스 + 키보드 접근.
 - 게임 있는 셀에만 `role="button" tabindex="0" aria-label="N월 N일, 출시 N건"` 부여(빈 셀·이전/다음달 셀은 미부여).
