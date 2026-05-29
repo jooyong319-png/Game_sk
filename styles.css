@@ -1,3 +1,13 @@
+:root {
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --border: #2a2e38;
+  --text: #e6e6e6;
+  --text-dim: #aaa;
+  --text-faint: #888;
+  --accent: #4a90e2;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,8 +16,8 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
-  background: #0f1115;
-  color: #e6e6e6;
+  background: var(--bg);
+  color: var(--text);
   line-height: 1.5;
   min-height: 100vh;
 }
@@ -15,7 +25,7 @@ body {
 header {
   text-align: center;
   padding: 2.5rem 1rem 1.5rem;
-  background: linear-gradient(180deg, #1a1d24 0%, #0f1115 100%);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
 }
 
 header h1 {
@@ -63,9 +73,9 @@ main {
 }
 
 .filters select {
-  background: #1a1d24;
-  color: #e6e6e6;
-  border: 1px solid #2a2e38;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   font-size: 0.95rem;
@@ -81,15 +91,15 @@ main {
   grid-column: 1 / -1;
   margin: 0.5rem 0 -0.25rem;
   padding-bottom: 0.35rem;
-  border-bottom: 1px solid #2a2e38;
+  border-bottom: 1px solid var(--border);
   color: #cfd3dc;
   font-size: 0.95rem;
   font-weight: 600;
 }
 
 .game-card {
-  background: #1a1d24;
-  border: 1px solid #2a2e38;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.15s, border-color 0.15s;
@@ -99,7 +109,7 @@ main {
 
 .game-card:hover {
   transform: translateY(-2px);
-  border-color: #4a90e2;
+  border-color: var(--accent);
 }
 
 .game-card.imminent {
@@ -113,7 +123,7 @@ main {
   align-items: center;
   padding: 0.7rem 1rem;
   background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid #2a2e38;
+  border-bottom: 1px solid var(--border);
 }
 
 .category-tag {
@@ -187,7 +197,7 @@ main {
 }
 
 .release-date {
-  color: #4a90e2;
+  color: var(--accent);
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -220,7 +230,7 @@ main {
 }
 
 .platform-tag {
-  background: #2a2e38;
+  background: var(--border);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
   color: #bbb;
@@ -250,7 +260,7 @@ footer {
   padding: 2rem 1rem;
   color: #666;
   font-size: 0.85rem;
-  border-top: 1px solid #2a2e38;
+  border-top: 1px solid var(--border);
   margin-top: 3rem;
 }
 
@@ -281,7 +291,7 @@ footer {
   .modal-overlay { transition: none; }
 }
 .modal {
-  background: #1a1d24; border: 1px solid #2a2e38;
+  background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; width: 90vw; max-width: 560px;
   max-height: 85vh; overflow-y: auto;
   padding: 1.5rem; position: relative;
@@ -299,24 +309,24 @@ footer {
 .modal .modal-row strong { color: #888; margin-right: 0.4rem; }
 .modal .source-link {
   display: inline-block; margin-top: 0.8rem;
-  color: #4a90e2; text-decoration: none; font-size: 0.9rem;
+  color: var(--accent); text-decoration: none; font-size: 0.9rem;
 }
 .modal .source-link:hover { text-decoration: underline; }
 body.modal-open { overflow: hidden; }
 
 /* --- Monthly calendar skeleton (Stage 1) --- */
-.calendar-view { background:#1a1d24; border:1px solid #2a2e38; border-radius:10px; padding:1rem; margin-bottom:1.5rem; }
-#calendar-month-label { text-align:center; font-size:1.15rem; margin:0; color:#e6e6e6; min-width:7rem; }
+.calendar-view { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem; margin-bottom:1.5rem; }
+#calendar-month-label { text-align:center; font-size:1.15rem; margin:0; color:var(--text); min-width:7rem; }
 .calendar-header { display:flex; align-items:center; justify-content:center; gap:0.5rem; margin-bottom:0.75rem; flex-wrap:wrap; }
-.calendar-nav-btn, .calendar-today-btn { background:#2a2e38; color:#e6e6e6; border:1px solid #3a3e48; border-radius:6px; cursor:pointer; font-family:inherit; }
+.calendar-nav-btn, .calendar-today-btn { background:var(--border); color:var(--text); border:1px solid #3a3e48; border-radius:6px; cursor:pointer; font-family:inherit; }
 .calendar-nav-btn { font-size:1.2rem; line-height:1; padding:0.2rem 0.65rem; }
 .calendar-today-btn { font-size:0.82rem; padding:0.35rem 0.7rem; margin-left:0.25rem; }
-.calendar-nav-btn:hover, .calendar-today-btn:hover { background:#3a3e48; border-color:#4a90e2; }
+.calendar-nav-btn:hover, .calendar-today-btn:hover { background:#3a3e48; border-color:var(--accent); }
 .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
 .calendar-grid .weekday { text-align:center; font-size:0.78rem; color:#888; padding:0.3rem 0; }
-.calendar-grid .day { background:#0f1115; border:1px solid #2a2e38; border-radius:6px; padding:0.5rem; min-height:84px; font-size:0.85rem; color:#ccc; }
+.calendar-grid .day { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:0.5rem; min-height:84px; font-size:0.85rem; color:#ccc; }
 .calendar-grid .day.other-month { opacity:0.35; }
-.calendar-grid .day.today { border-color:#4a90e2; background:rgba(74,144,226,0.15); color:#fff; font-weight:700; }
+.calendar-grid .day.today { border-color:var(--accent); background:rgba(74,144,226,0.15); color:#fff; font-weight:700; }
 @media (max-width:480px) { .calendar-grid .day { min-height:60px; font-size:0.75rem; padding:0.3rem; } }
 /* Stage 2: per-day dots */
 .calendar-grid .day { display:flex; flex-direction:column; }
@@ -341,25 +351,25 @@ footer a:hover {
 /* Stage 4: day detail panel */
 .calendar-grid .day { cursor:pointer; }
 .calendar-grid .day.selected { border-color:#f5a623; box-shadow:0 0 0 1px rgba(245,166,35,0.35); }
-.day-detail-panel { background:#0f1115; border:1px solid #2a2e38; border-radius:8px; padding:0.85rem 1rem; margin-top:0.75rem; }
+.day-detail-panel { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.85rem 1rem; margin-top:0.75rem; }
 .day-detail-panel[hidden] { display:none; }
-.day-panel-title { font-size:0.95rem; color:#e6e6e6; margin:0 0 0.6rem; font-weight:600; }
+.day-panel-title { font-size:0.95rem; color:var(--text); margin:0 0 0.6rem; font-weight:600; }
 .day-empty { font-size:0.85rem; color:#999; }
-.day-game-card { display:flex; align-items:center; gap:0.6rem; padding:0.5rem 0.6rem; background:#1a1d24; border:1px solid #2a2e38; border-radius:6px; margin-bottom:0.4rem; cursor:pointer; transition:border-color 0.15s; }
-.day-game-card:hover { border-color:#4a90e2; }
+.day-game-card { display:flex; align-items:center; gap:0.6rem; padding:0.5rem 0.6rem; background:var(--surface); border:1px solid var(--border); border-radius:6px; margin-bottom:0.4rem; cursor:pointer; transition:border-color 0.15s; }
+.day-game-card:hover { border-color:var(--accent); }
 .day-game-card:last-child { margin-bottom:0; }
 .day-game-color { width:8px; height:24px; border-radius:2px; flex-shrink:0; }
 .day-game-color.category-mobile_kr { background:#81c784; }
 .day-game-color.category-pc_console_kr { background:#64b5f6; }
 .day-game-color.category-global_aaa { background:#ba68c8; }
 .day-game-color.category-new_server { background:#ff8a65; }
-.day-game-name { flex:1; font-size:0.9rem; color:#e6e6e6; }
+.day-game-name { flex:1; font-size:0.9rem; color:var(--text); }
 
 /* Stage 5: view toggle */
 .view-toggle { display:flex; gap:0.5rem; margin-bottom:1rem; }
-.view-toggle-btn { background:#2a2e38; color:#aaa; border:1px solid #3a3e48; border-radius:6px; padding:0.45rem 0.9rem; font-size:0.9rem; cursor:pointer; font-family:inherit; transition:border-color 0.15s, color 0.15s, background 0.15s; }
-.view-toggle-btn:hover { border-color:#4a90e2; }
-.view-toggle-btn.active { background:rgba(74,144,226,0.15); color:#e6e6e6; border-color:#4a90e2; }
+.view-toggle-btn { background:var(--border); color:#aaa; border:1px solid #3a3e48; border-radius:6px; padding:0.45rem 0.9rem; font-size:0.9rem; cursor:pointer; font-family:inherit; transition:border-color 0.15s, color 0.15s, background 0.15s; }
+.view-toggle-btn:hover { border-color:var(--accent); }
+.view-toggle-btn.active { background:rgba(74,144,226,0.15); color:var(--text); border-color:var(--accent); }
 .calendar-view[hidden], #games-list[hidden] { display:none; }
 
 /* Controls row: search + filters on one horizontal line (desktop) */
@@ -377,15 +387,15 @@ footer a:hover {
 
 /* Search bar */
 .search-bar { margin-bottom: 1rem; }
-.search-bar input { width:100%; max-width:360px; background:#1a1d24; color:#e6e6e6; border:1px solid #2a2e38; padding:0.55rem 0.85rem; border-radius:6px; font-size:0.95rem; font-family:inherit; }
-.search-bar input:focus { outline:none; border-color:#4a90e2; }
+.search-bar input { width:100%; max-width:360px; background:var(--surface); color:var(--text); border:1px solid var(--border); padding:0.55rem 0.85rem; border-radius:6px; font-size:0.95rem; font-family:inherit; }
+.search-bar input:focus { outline:none; border-color:var(--accent); }
 .search-bar input::placeholder { color:#666; }
 @media (max-width:480px) { .search-bar input { max-width:100%; } }
 
 /* Empty-state notice (list view & calendar) — reuse #999 dim tone */
 .empty-state { color:#999; text-align:center; padding:3rem 1rem; font-size:0.9rem; }
 .games-grid .empty-state { grid-column:1 / -1; }
-.empty-state--inline { padding:0.85rem 1rem; margin-top:0.75rem; background:#0f1115; border:1px solid #2a2e38; border-radius:8px; }
+.empty-state--inline { padding:0.85rem 1rem; margin-top:0.75rem; background:var(--bg); border:1px solid var(--border); border-radius:8px; }
 
 /* Wishlist Stage 1: star toggle button (UI + localStorage, no filtering yet) */
 .card-header-right { display:flex; align-items:center; gap:0.5rem; }
@@ -397,9 +407,9 @@ footer a:hover {
 
 /* Quick week chips — same active tone as .view-toggle-btn.active (blue border + light bg) */
 .quick-chips { display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
-.chip-btn { background:#2a2e38; color:#aaa; border:1px solid #3a3e48; border-radius:6px; padding:0.45rem 0.9rem; font-size:0.9rem; cursor:pointer; font-family:inherit; transition:border-color 0.15s, color 0.15s, background 0.15s; }
-.chip-btn:hover { border-color:#4a90e2; }
-.chip-btn.active { background:rgba(74,144,226,0.15); color:#e6e6e6; border-color:#4a90e2; }
+.chip-btn { background:var(--border); color:#aaa; border:1px solid #3a3e48; border-radius:6px; padding:0.45rem 0.9rem; font-size:0.9rem; cursor:pointer; font-family:inherit; transition:border-color 0.15s, color 0.15s, background 0.15s; }
+.chip-btn:hover { border-color:var(--accent); }
+.chip-btn.active { background:rgba(74,144,226,0.15); color:var(--text); border-color:var(--accent); }
 
 /* Calendar category color legend — reuses existing .day-dot 4 colors */
 .calendar-legend { display:flex; flex-wrap:wrap; gap:0.6rem 1rem; justify-content:center; padding:0.4rem 0 0.75rem; font-size:0.78rem; color:#aaa; }
@@ -483,7 +493,7 @@ footer a:hover {
 
 /* Footer mailto link hover highlight — TODO 1순위 2026-05-29 (overrides earlier footer a/footer a:hover at lines 305/310) */
 footer a { color: #aaa; transition: color 0.15s ease; }
-footer a:hover { color: #4a90e2; }
+footer a:hover { color: var(--accent); }
 
 /* Card hover lift + shadow — TODO 1순위 2026-05-29 (overrides .game-card transition at line 78 to include box-shadow; .game-card:hover at line 83 already has translateY(-2px) + border-color, this block re-asserts transform and adds box-shadow — border-color cascades from earlier rule) */
 .game-card { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.15s ease; }

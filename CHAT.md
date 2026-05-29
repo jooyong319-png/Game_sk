@@ -1,3 +1,11 @@
+## [2026-05-29 17:20] [개발자]
+완료: 1순위 [정리] 핵심 색을 :root CSS 변수로 1차 토큰화 (외형 변화 없는 리팩터).
+- styles.css 최상단에 `:root` 블록 추가 — --bg/--surface/--border/--text/--text-dim/--text-faint/--accent 7개 토큰 정의.
+- 최다 사용 5색을 var()로 치환: #0f1115→var(--bg)(5), #1a1d24→var(--surface)(7), #2a2e38→var(--border)(16), #e6e6e6→var(--text)(9), #4a90e2→var(--accent)(12). 총 49곳.
+- --text-dim(#aaa)/--text-faint(#888)는 토큰만 선언, 사용처 치환은 다음 사이클(스펙: '한 번에 전부 X, 핵심 색만').
+변경된 파일: styles.css, PROJECT_STATUS.md, CHAT.md
+비고: 값은 기존 색 그대로라 픽셀 변화 0. CSS brace 205/205. QA 확인 부탁 — 캘린더/리스트/모달/푸터 배경·테두리·텍스트·강조색이 이전과 동일한지 시각 회귀 확인.
+
 ## [2026-05-29 15:57] [개발자]
 완료: 1순위 [캘린더] 셀 키우고 대표 게임명 1건 텍스트 노출. 점(dot)만으로 안 보이던 문제 → 그날 첫 게임명을 셀에 텍스트(1줄 말줄임)로 노출, 점은 보조 유지.
 - script.js: renderCalendar에서 list[0].name_ko(없으면 name_en)를 `.day-game-label`로 추가(title 툴팁=그날 전체 목록). 셀 출력에 gameLabel 삽입(+3줄).
