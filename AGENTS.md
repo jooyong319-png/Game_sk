@@ -123,7 +123,9 @@
 
 ## 빌드 시스템 (SEO 정적 페이지)
 
-- `build.js`는 `data/games.json`을 읽어 게임별 정적 SEO 페이지(`/game/[id]`)와 `sitemap.xml`을 자동 생성한다.
+- `build.js`는 `data/games.json`을 읽어 (1) 게임별 페이지(`/game/[id]`), (2) 키워드 랜딩 페이지(`/new-servers`, `/upcoming-games`, `/mobile-games`, `/pc-console-games`, `/global-games`), (3) `sitemap.xml`, (4) index.html의 SEO 내비를 자동 생성한다.
+- 랜딩 페이지는 "신규 서버", "신규 게임", "게임 출시" 키워드를 정조준한다.
+- index.html에는 `<!--SEO_NAV-->` placeholder가 있어야 build.js가 내비를 주입한다. 이 placeholder를 지우지 말 것.
 - **Vercel이 배포할 때마다 자동 실행**되므로, 데이터가 바뀌면 페이지도 자동 갱신됨.
 - `game/` 폴더와 `sitemap.xml`은 자동 생성물이라 git에 커밋 안 함 (.gitignore).
 - **개발자 주의**: `build.js`를 함부로 수정/삭제하지 말 것. 게임 페이지 디자인을 바꾸려면 build.js의 `gamePage()` 함수를 수정. 단, 사용자/기획자 합의 후.
