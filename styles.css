@@ -333,7 +333,7 @@ body.modal-open { overflow: hidden; }
 .calendar-nav-btn { font-size:1.2rem; line-height:1; padding:0.2rem 0.65rem; }
 .calendar-today-btn { font-size:0.82rem; padding:0.35rem 0.7rem; margin-left:0.25rem; }
 .calendar-nav-btn:hover, .calendar-today-btn:hover { background:#3a3e48; border-color:var(--accent); }
-.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; }
 .calendar-grid .weekday { text-align:center; font-size:0.78rem; color:#888; padding:0.3rem 0; }
 .calendar-grid .day { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:0.5rem; min-height:84px; font-size:0.85rem; color:#ccc; }
 .calendar-grid .day.other-month { opacity:0.35; }
@@ -349,7 +349,7 @@ body.modal-open { overflow: hidden; }
 .day-dot.category-global_aaa { background:#ba68c8; }
 .day-dot.category-new_server { background:#ff8a65; }
 .day-dot-more { font-size:0.68rem; color:#aaa; line-height:1; margin-left:1px; }
-.day-game-label { font-size:0.7rem; color:#cdd2db; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.2; }
+.day-game-label { font-size:0.7rem; color:#cdd2db; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.2; min-width:0; }
 @media (max-width:480px) { .day-game-label { font-size:0.62rem; } }
 
 footer a {

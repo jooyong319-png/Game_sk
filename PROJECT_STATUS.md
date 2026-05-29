@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-29 16:28 (개발자 — 모달 박스 페이드+스케일 트랜지션 완료, 큐 2건)
+마지막 갱신: 2026-05-29 (개발자 — 모바일 캘린더 가로 오버플로 버그수정, TODO 큐 비어있음)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -57,7 +57,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 > 갱신 2026-05-29 16:00 (기획자): 가독성/UX 사용자 요청 4테마 + 트레일러 링크까지 모두 완료되어 큐가 비었음. 디자이너 제안(높음·보통) 2건을 작은 단위로 끌어오고, 미뤄둔 CSS-only 폴리시 3건을 보충해 큐 5개로 채움. 각 항목 1시간 단위, CSS-only 위주라 회귀 위험 낮음.
 
 ## 알려진 버그 (BUGS)
-- [2026-05-29] (모바일 캘린더 가로 오버플로) 모바일폭에서 .calendar-grid가 컨테이너를 넘쳐 깨짐. 재현: Chrome에서 .calendar-view 폭 360px 제약 시 grid clientWidth 326px vs scrollWidth 727px. 원인: repeat(7,1fr) + 셀 .day-game-label white-space:nowrap → 1fr min-content가 최장 게임명 폭으로 확장(overflow:hidden/ellipsis는 트랙 사이징에 무효). 권고: repeat(7,minmax(0,1fr)) 또는 .day/.day-game-label min-width:0.
+- [2026-05-29] ✅ 해소 — (모바일 캘린더 가로 오버플로) 개발자 fix: grid-template-columns repeat(7,1fr)→repeat(7,minmax(0,1fr)) + .day-game-label min-width:0. 트랙이 최장 게임명 폭으로 확장되던 원인 제거(minmax 0 바닥 + flex/grid 자식 min-width:0). QA 모바일폭 재측정 권고. [이전 보고] 모바일폭에서 .calendar-grid가 컨테이너를 넘쳐 깨짐. 재현: Chrome에서 .calendar-view 폭 360px 제약 시 grid clientWidth 326px vs scrollWidth 727px. 원인: repeat(7,1fr) + 셀 .day-game-label white-space:nowrap → 1fr min-content가 최장 게임명 폭으로 확장(overflow:hidden/ellipsis는 트랙 사이징에 무효). 권고: repeat(7,minmax(0,1fr)) 또는 .day/.day-game-label min-width:0.
 - [2026-05-29] ✅ 해소 — (배포 지연) Chrome 실측 결과 배포본 gcalen.com 데이터 갱신 05-29 11:30·20건으로 최신화 확인. 직전 17건/05-28은 WebFetch 자체 캐시였음(실제 배포 정상). 빌드 파이프라인 이상 없음.
 - [2026-05-29] ✅ 해소 — (데이터 중복) 프로야구 스피리츠 2026 중복(pro-spirit-2026 / pro-yakyu-spirits-2026). 리서처가 11:00 사이클에 pro-yakyu-spirits-2026 삭제. QA 확인: repo games.json 17건, release_date 2026-07-16 항목 1건(pro-spirit-2026)만 존재. 배포본 gcalen.com/data/games.json도 7/16 1건 확인.
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
@@ -77,6 +77,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 [개발자] (버그수정) 모바일 캘린더 가로 오버플로 해소. TODO 큐 비어있어 BUGS 등재된 사용자보고+QA검증 버그를 처리. styles.css 2줄: L336 `repeat(7,1fr)`→`repeat(7,minmax(0,1fr))`, L352 `.day-game-label`에 `min-width:0` 추가. minmax(0,*)로 그리드 트랙이 min-content 바닥(=최장 게임명 폭) 밑으로 줄어들 수 있게 하고, nowrap 라벨이 flex/grid 자식으로서 줄어들도록 min-width:0 부여 → ellipsis가 트랙 사이징에 반영됨. node --check 통과, CSS brace 239/239.
 - 2026-05-29 17:40 [개발자] [캘린더] 출시 임박(오늘~+7일) 게임 있는 셀 .day-soon 강조 추가 (script.js +2줄, styles.css +1줄, CSS brace 217/217·node --check 통과)
 - 2026-05-29 [개발자] 1순위 완료: [푸터] mailto 링크 hover/focus 강조. `footer a:hover, footer a:focus`에 `color:var(--accent)` + `text-decoration:underline` 적용(기존 511~513 색 hover 블록을 focus·밑줄 포함으로 확장). 평상시 톤 #aaa 유지, CSS-only(styles.css 1줄 교체). node/brace 216/216.
 - 2026-05-29 16:28 [개발자] 1순위 완료: [모달] 열림/닫힘 페이드+스케일 트랜지션. `.modal` 박스에 `opacity`+`transform:scale` 트랜지션(0.18s ease) 추가, `.modal-overlay[hidden] .modal{opacity:0;scale(0.97)}`로 열림 시 살짝 확대되며 페이드인/닫힘 시 페이드아웃. 오버레이 opacity 페이드는 기존 구현 활용(무변경). `@media(prefers-reduced-motion:reduce)`에 `.modal` 트랜지션 제거+transform:none 분기 추가. JS 무변경(기존 modal.hidden 토글이 `[hidden]` 셀렉터 구동). styles.css +6, CSS brace 216/216, node --check 통과.
