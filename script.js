@@ -193,8 +193,8 @@ function renderGroupedList(games) {
 function updateCategoryCounts() {
   if (!categoryFilter) return;
   const selectedPlatform = platformFilter.value.toLowerCase();
-  const days = parseInt(periodFilter.value, 10);
-  const today = new Date(); today.setHours(0, 0, 0, 0);
+  // 통계 요약(#stats-summary)과 동일 모집단(allGames)을 쓰도록 기간(period) 날짜창은 카운트에서 제외.
+  // 기간 필터는 실제 표시 목록(renderGames)에만 적용. 플랫폼/검색/주/위시 필터는 카운트에 계속 반영.
   const base = allGames.filter(g => {
     if (searchQuery) {
       const hay = ((g.name_ko || '') + ' ' + (g.name_en || '')).toLowerCase();
@@ -203,11 +203,6 @@ function updateCategoryCounts() {
     if (selectedPlatform) {
       const platforms = (g.platforms || []).map(p => p.toLowerCase());
       if (!platforms.some(p => p.includes(selectedPlatform))) return false;
-    }
-    if (days > 0) {
-      const release = new Date(g.release_date);
-      const future = new Date(today); future.setDate(today.getDate() + days);
-      if (release < today || release > future) return false;
     }
     if (weekFilter) {
       const r = getWeekRange(weekFilter === 'next' ? 1 : 0);
