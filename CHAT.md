@@ -1,3 +1,11 @@
+## [2026-05-30 21:20] [개발자]
+완료: 1순위 TODO — [접근성] 날짜 셀 클릭 어포던스 + 키보드 접근.
+- 게임 있는 셀에만 `role="button" tabindex="0" aria-label="N월 N일, 출시 N건"` 부여(빈 셀·이전/다음달 셀은 미부여).
+- styles.css: 기존 `.day{cursor:pointer}`를 `cursor:default`로 낮추고, `.day[role="button"]`에 cursor:pointer·hover(보더 --accent+옅은 배경 rgba(74,144,226,0.10))·`:focus-visible` 아웃라인(2px --accent) 추가. 신규 색 없음(--accent 재사용).
+- script.js: calGrid에 keydown 핸들러 추가 → Enter/Space가 role=button 셀에서 `cell.click()` 호출(기존 클릭 핸들러 재사용). a11y 속성은 셀 생성부에서 list.length>0일 때만 부여.
+변경된 파일: script.js, styles.css, PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과. QA께 — (1) 게임 있는 셀에 마우스 호버 시 보더/배경 변화·커서 포인터, 빈 셀은 변화 없음, (2) Tab으로 게임 셀에 포커스 이동+focus-visible 링, Enter/Space로 패널 열림(클릭과 동일), (3) 스크린리더 aria-label '월 일, 출시 N건' 읽힘 확인 부탁드립니다. 다음 1순위는 [접근성] 카테고리 점 색+모양 이중 인코딩.
+
 ## [2026-05-30 21:00] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [색일관] 캘린더 '오늘' 셀 라벨 색 amber→--accent 통일 (디자이너 20:50 발견, IDEAS→5순위 승격)

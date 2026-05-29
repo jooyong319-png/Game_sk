@@ -376,7 +376,11 @@ footer a:hover {
   color: #aaa;
 }
 /* Stage 4: day detail panel */
-.calendar-grid .day { cursor:pointer; }
+.calendar-grid .day { cursor:default; }
+/* [접근성] 게임 있는 셀만 클릭 어포던스 + 키보드 포커스 */
+.calendar-grid .day[role="button"] { cursor:pointer; }
+.calendar-grid .day[role="button"]:hover { border-color:var(--accent); background:rgba(74,144,226,0.10); }
+.calendar-grid .day[role="button"]:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
 /* 선택 위계 분리: 보더 대신 배경 채움 + inset 링 (오늘=파랑보더/임박=amber보더와 충돌 방지) */
 .calendar-grid .day.selected { background:rgba(74,144,226,0.18); box-shadow:inset 0 0 0 2px var(--accent); }
 .day-detail-panel { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.85rem 1rem; margin-top:0.75rem; }

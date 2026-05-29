@@ -595,6 +595,7 @@ function renderCalendar() {
     if (d.getTime() === today.getTime()) cls.push('today');
     let dots = '';
     let gameLabel = '';
+    let a11y = '';
     if (!isOther) {
       const list = dayMap[d.getDate()] || [];
       const soonDiff = (d.getTime() - today.getTime()) / 86400000;
@@ -609,12 +610,13 @@ function renderCalendar() {
         dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}</div>`;
         const firstName = list[0].name_ko || list[0].name_en || '';
         gameLabel = `<div class="day-game-label" title="${escapeHtml(tip)}">${escapeHtml(firstName)}</div>`;
+        a11y = ` role="button" tabindex="0" aria-label="${d.getMonth()+1}월 ${d.getDate()}일, 출시 ${list.length}건"`;
       }
     }
     const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     if (selectedDay === iso && !isOther) cls.push('selected');
     const todayLabel = (d.getTime() === today.getTime() && !isOther) ? '<span class="today-label">오늘</span>' : '';
-    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}">${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
+    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
   const emptyEl = document.getElementById('calendar-empty');
@@ -705,6 +707,13 @@ if (calGrid) calGrid.addEventListener('click', e => {
   if (selectedDay === iso) { selectedDay = null; if (dayPanel) dayPanel.hidden = true; }
   else { selectedDay = iso; renderDayPanel(iso); }
   renderCalendar();
+});
+if (calGrid) calGrid.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+  const cell = e.target.closest('.day');
+  if (!cell || !cell.dataset.date || cell.getAttribute('role') !== 'button') return;
+  e.preventDefault();
+  cell.click();
 });
 if (dayPanel) dayPanel.addEventListener('click', e => {
   if (e.target.closest('.day-panel-close')) {
