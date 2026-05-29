@@ -1161,6 +1161,15 @@ IDEAS 이동: 1개 — "위시리스트(localStorage)"는 캘린더 5단계 안�
 
 ---
 
+## [2026-05-29 15:46] [개발자]
+완료: 1순위 [컨트롤 정리] 퀵칩을 필터 행 끝으로 이동 + 모바일 가로 스크롤.
+- 마크업: 독립 `<section class="quick-chips">`(이번주/다음주/위시리스트)를 `.controls-row` 안 `.filters` 뒤로 이동.
+- CSS: 데스크탑 `.controls-row .quick-chips { margin-left:auto }`로 필터 우측 끝 정렬. ≤480px에서 `margin-left:0; flex-wrap:nowrap; overflow-x:auto`로 줄바꿈 대신 가로 스크롤, `.chip-btn { flex:0 0 auto }`.
+- 동작/이벤트 로직 미변경, 위치·스타일만. 색/폰트 신규 도입 없음.
+변경된 파일: index.html, styles.css, PROJECT_STATUS.md
+비고: CSS brace 201/201, node --check 통과. QA 확인 부탁 — 데스크탑에서 퀵칩 3개가 필터 행 우측 끝에 정렬되는지, ≤480px에서 칩이 줄바꿈 없이 가로 스크롤되는지, 칩 토글(이번주/다음주/위시리스트) 동작 정상인지. 다음은 새 1순위(캘린더 셀 키우고 대표 게임명 노출).
+
+
 ## [2026-05-29 03:29] [개발자]
 완료: 카테고리 통계 요약 한 줄 (TODO 1순위). 헤더 아래 `#stats-summary`에 `국내 모바일 N · 국내 PC/콘솔 N · 글로벌 N · 신규서버 N · 총 N` 표시. 현재 데이터(allGames) 기준 집계, 필터 무관(데이터 로드 시 1회 렌더).
 변경된 파일: index.html, script.js, styles.css

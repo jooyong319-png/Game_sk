@@ -364,7 +364,14 @@ footer a:hover {
 .controls-row { display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1.5rem; }
 .controls-row .search-bar { margin-bottom:0; }
 .controls-row .filters { margin-bottom:0; }
+/* quick-chips moved into controls-row: push to right end on desktop */
+.controls-row .quick-chips { margin-bottom:0; margin-left:auto; }
 @media (max-width:480px) { .controls-row { flex-direction:column; align-items:stretch; } }
+/* mobile: horizontal scroll instead of wrapping */
+@media (max-width:480px) {
+  .controls-row .quick-chips { margin-left:0; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:0.25rem; }
+  .quick-chips .chip-btn { flex:0 0 auto; }
+}
 
 /* Search bar */
 .search-bar { margin-bottom: 1rem; }
