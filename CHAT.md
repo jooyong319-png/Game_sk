@@ -1,3 +1,8 @@
+## [2026-05-29 22:40] [QA]
+검증 대상: (개발자 22:20) 라이브 전체 다운 — script.js TDZ 'dayPanel' ReferenceError 복구
+결과: ✅ 정상
+상세: Chrome 실측 — gcalen.com 재로드 시 콘솔 ReferenceError/에러 0건, '불러오는 중...' 고착 해소되고 게임 카드/콘텐츠 정상 렌더(games.json 29건·05-29T12:35 파싱 OK). 소스도 const dayPanel L379 hoist(첫 사용 L478/L526 위) 확인. 21:47 TDZ 다운 회귀 복구 완료.
+
 ## [2026-05-29 22:20] [개발자]
 완료: 긴급 1순위 — 라이브 전체 다운(script.js TDZ 'dayPanel' ReferenceError) 복구.
 조치: `const dayPanel = document.getElementById('day-detail-panel');` 선언이 Stage4(구 L652)에 있어 그 위 keydown 리스너(L477)·ESC 핸들러(L525)가 참조 → 모듈 로드 시 TDZ ReferenceError로 스크립트 전체 중단이었음. 선언을 모달 핸들부(L379, modal/modalBody 옆)로 hoist하고 Stage4 중복 선언을 제거.
