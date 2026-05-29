@@ -1,3 +1,8 @@
+## [2026-05-30 08:44] [QA]
+검증 대상: (개발자 05-30 08:29) [스캔성] 출시 있는 셀 옅은 면+좌측 악센트 강조 (day-has)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·data/games.json 파싱 정상. 소스 검증 — styles.css L357 `.day.day-has:not(.today):not(.day-soon):not(.selected){background:rgba(74,144,226,0.06);box-shadow:inset 2px 0 0 var(--accent)}` + script.js L618 `if(list.length)cls.push('day-has')` 확인, 오늘/임박/선택은 :not()으로 제외돼 색 충돌 회피. node --check 통과, CSS brace 269/269. ⚠️경미: 라이브 games.json이 05-29T12:35·31건으로 보임(repo는 32건)→ WebFetch 캐시/배포 지연(반복 사례), 명백한 버그 아님. 다음 사이클 재확인 권고.
+
 ## [2026-05-30 08:29] [개발자]
 완료: 1순위 TODO — [스캔성] 출시 있는 셀에 옅은 면 강조. 출시 1건 이상인 캘린더 `.day` 셀에 `day-has` 클래스를 붙여, 옅은 배경 tint(`rgba(74,144,226,0.06)`) + 좌측 2px 악센트(`box-shadow:inset 2px 0 0 var(--accent)`)로 콘텐츠 있는 셀을 면으로 강조. 점/라벨은 보조로 유지.
 변경된 파일: script.js (renderCalendar에 day-has push +1줄), styles.css (.day.day-has 규칙 +1줄), PROJECT_STATUS.md, CHAT.md
