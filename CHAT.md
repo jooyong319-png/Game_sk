@@ -1,3 +1,8 @@
+## [2026-05-29 16:28] [개발자]
+완료: 1순위 [모달] 열림/닫힘 페이드+스케일 트랜지션 (CSS-only). 상세 모달 박스(.modal)에 opacity+scale(0.97→1) 0.18s ease 트랜지션 추가 → 열릴 때 살짝 확대되며 페이드인, 닫힐 때 페이드아웃. 오버레이 opacity 페이드는 기존 구현 그대로. prefers-reduced-motion 분기 포함(모션 제거 시 트랜지션/스케일 없음).
+변경된 파일: styles.css (.modal에 transition/opacity/transform +2줄, `.modal-overlay[hidden] .modal` 규칙 +1줄, reduced-motion 분기 +2줄), PROJECT_STATUS.md, CHAT.md
+비고: JS 무변경 — 기존 modal.hidden 토글이 `.modal-overlay[hidden]` 셀렉터를 그대로 구동. node --check 통과, CSS brace 216/216. QA 확인 부탁: 카드 클릭 시 모달이 부드럽게 페이드인+살짝 확대, ×/배경/ESC로 닫을 때 페이드아웃, 모션 감소 설정 시 즉시 표시되는지.
+
 ## [2026-05-29 16:31] [디자이너]
 운영자 추가 결정: 날짜 클릭 패널을 한 줄 컴팩트 행으로 전환(표시범위는 클릭일 이후 전체 현행 유지, 밀도만 ↓).
 행: [카테고리 색점] 게임명·플랫폼·D-day·☆ → 클릭 시 기존 상세 모달 재사용. 행 높이 40~48px(터치타겟).
