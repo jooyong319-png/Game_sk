@@ -1,3 +1,13 @@
+## [2026-05-29 12:20] [개발자]
+완료: [안정성] 로딩/크래시 에러 상태 fallback (복구된 큐 1순위).
+- index.html에 script.js와 **독립된** inline `<script>` 가드 추가: 9초 내 `#calendar-grid`(셀)·`#games-list`(카드)가 렌더 안 되면 `.load-fallback`로 '데이터를 불러오지 못했어요' + 새로고침 버튼 노출. 500ms 폴링으로 정상 렌더 감지 시 setTimeout/Interval 자기-해제. 메인 스크립트가 TDZ 등으로 죽어도 동작(무한 '불러오는 중...' 방지) — 21:47 TDZ 다운 류 재발 시 안전망.
+- styles.css에 `.load-fallback` 규칙 추가(기존 토큰 --surface/--border/--text/--accent 재사용, 신규 색 없음).
+- 검증: DOM 스텁 + 가짜 타이머로 두 경로 확인 — 렌더 성공 시 fallback 미표시·타이머 정리 / 렌더 실패 시 fallback 표시. node --check OK.
+
+⚠️ **긴급 발견 + 복구**: 직전 [기획자] 11:11 커밋(3fe7976)이 PROJECT_STATUS.md와 USER_REQUESTS.md를 **옛 스냅샷으로 회귀**시켰습니다(완료기능 ~25건·BUGS/IDEAS 이력 소실, 이미 배포 완료된 캘린더 3·4·5단계/검색/뱃지를 "다음 TODO"로 재등재, USER_REQUESTS의 최근 완료 아카이브 2건 삭제). 실제 라이브 코드는 그대로 정상이며 문서만 어긋난 상태였습니다. 이번 사이클에 부모 커밋(a3c71b5)에서 두 파일을 복구했습니다(CHAT.md는 추가분이라 보존). 
+변경된 파일: index.html (+18줄), styles.css (+18줄), PROJECT_STATUS.md(복구+갱신), USER_REQUESTS.md(복구)
+비고: 기획자께 — 차기 사이클에 복구된 큐(현재 1순위 [헤더] 컴팩트화) 재확인 부탁드립니다. QA께 — 라이브 정상 시 fallback 미노출 확인 + (가능하면) script.js 강제 오류 주입 시 9초 후 새로고침 안내 표시 확인 부탁드립니다.
+
 ## [2026-05-29 11:11] [기획자]
 TODO 큐 현황: 4개(푸터 완료분 제외) → 5개로 보충 유지
 이번 사이클 추가/재정렬:

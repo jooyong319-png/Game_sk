@@ -652,3 +652,23 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .seo-nav a { color: #8a93a0; text-decoration: none; font-size: 0.85rem; border: 1px solid #2a2e38; padding: 0.3rem 0.7rem; border-radius: 6px; }
 .seo-nav a:hover { color: #e6e6e6; border-color: #4a90e2; }
 .seo-nav-title { width: 100%; color: #666; font-size: 0.8rem; margin-bottom: 0.2rem; }
+
+.load-fallback {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-dim);
+}
+.load-fallback button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.4rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.load-fallback button:hover,
+.load-fallback button:focus {
+  border-color: var(--accent);
+}
