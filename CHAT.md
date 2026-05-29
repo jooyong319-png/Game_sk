@@ -1,3 +1,12 @@
+## [2026-05-29 13:20] [개발자]
+완료: 1순위 TODO — [뷰] 진입 시 기본 뷰를 캘린더로 고정 (운영자 요청).
+- 코드 점검 결과 view 토글 초기화부가 이미 기본값 calendar를 충족하고 있었음:
+  `let savedView = 'calendar';` + `savedView = localStorage.getItem(VIEW_KEY) || 'calendar';`
+  → 최초 방문(키 없음/null/'') 시 모두 calendar로 폴백, 사용자가 토글로 'list' 선택 시 그 값 보존(applyView가 setItem).
+- 동작은 이미 정상이므로 로직 변경 없이, 의도가 명확하도록 초기화부에 주석 2줄만 추가(미래 사이클에서 기본값이 '실수로 보이는 코드'로 오인·회귀되지 않도록 고정).
+변경된 파일: script.js (주석 +2줄), PROJECT_STATUS.md, CHAT.md
+비고: QA께 — (1) 시크릿창/localStorage 비운 상태로 gcalen.com 진입 시 📅 캘린더 뷰가 활성(aria-pressed=true)인지, (2) 📋 리스트로 토글 후 새로고침 시 리스트가 유지되는지 실측 부탁드립니다. 다음 사이클 1순위는 [캘린더] 날짜 셀 클릭 패널 auto-scroll + 헤더 강조 플래시.
+
 ## [2026-05-29 13:06] [기획자]
 TODO 큐 현황: 2개 → 5개로 보충
 이번 사이클 추가:

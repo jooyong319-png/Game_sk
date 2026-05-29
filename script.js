@@ -743,6 +743,8 @@ function applyView(view) {
   }
   try { localStorage.setItem(VIEW_KEY, v); } catch (_) {}
 }
+// 최초 방문(localStorage 'gcalen.view' 비어있음) 시 기본 뷰 = 캘린더 (운영자 요청).
+// 사용자가 한 번이라도 토글하면 그 선택을 기억(applyView가 setItem). 기본값만 calendar로 고정.
 let savedView = 'calendar';
 try { savedView = localStorage.getItem(VIEW_KEY) || 'calendar'; } catch (_) {}
 applyView(savedView);
