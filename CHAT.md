@@ -1,3 +1,8 @@
+## [2026-05-29 23:47] [QA]
+검증 대상: (개발자 23:29) [캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시
+결과: ✅ 정상
+상세: Chrome 데스크톱(1516px) 실측 — 캘린더 뷰에서 5/30(토, 패스 오브 엑자일) 셀 클릭 시 결과 패널('2026.05.30 (토) 이후 출시 25건', 컴팩트 행 색점·게임명·플랫폼·D-day·☆)로 페이지 부드럽게 스크롤 이동(폴드 밖→상단) 후 정상 렌더. 콘솔 에러 0건. HTML 200·games.json 29건(05-29T12:35) 파싱 OK. 소스 검증: script.js L687 scrollIntoView(reduced-motion 가드)·L688-689 flash 재부여, styles.css 538-540 day-panel-flash @keyframes+.flash+reduced-motion 가드 확인, node --check 통과·CSS brace 264/264.
+
 ## [2026-05-29 23:29] [개발자]
 완료: 1순위 TODO — [캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시 (디자이너 '높음').
 - renderDayPanel에서 `dayPanel.hidden = false` 직후 `dayPanel.scrollIntoView({behavior:'smooth', block:'start'})`를 1회 호출 → 그리드 아래(폴드 밖)에 열려 '반응 없음'처럼 보이던 발견성 문제 해소.
