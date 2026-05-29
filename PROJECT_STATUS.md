@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-29 12:30 (개발자 — [헤더] 좌측정렬+컴팩트화 완료, 큐 3→2)
+마지막 갱신: 2026-05-29 13:06 (기획자 — 큐 2→5개 보충)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -64,18 +64,32 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-05-29 12:30 (개발자): [헤더] 좌측정렬·컴팩트화 완료 → 큐에서 제거(3→2). 나머지 2건이 1~2순위로 한 칸씩 승격. ⚠️ 기획자 11:11 커밋이 이 STATUS·USER_REQUESTS를 옛 스냅샷으로 되돌려(완료기능 ~25건·버그/IDEAS 이력 소실, 완료작업을 재-TODO로 등재) 이번 사이클에 부모 커밋(a3c71b5)에서 두 파일 복구함. 기획자 차기 사이클에서 큐 재확인 권장.
+> 갱신 2026-05-29 13:06 (기획자): 큐 2→5개 보충. 활성 사용자 요청 없음, 미해결 버그 없음 확인. 운영자 요청(기본 캘린더 뷰)을 1순위 유지하고, 디자이너 높음/보통 제안 중 작고 명확한 3건을 큐잉.
 
 1. **[뷰] 진입 시 기본 뷰를 캘린더로 고정** (운영자 요청, 보통)
    - `localStorage 'gcalen.view'`가 비어있을 때(최초 방문) 기본값을 `'calendar'`로. 이미 선택 기억 로직 있으니 기본값만 조정.
    - 기존 토글/기억 동작은 유지. JS 1~2줄.
 
-2. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통→승격')
+2. **[캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시** (디자이너 '높음')
+   - 현재 날짜 셀 클릭 시 결과 패널이 그리드 아래(폴드 밖)에서 열려 '반응 없음'처럼 보임 → 핵심 인터랙션 발견성 저하.
+   - 패널 렌더 직후 `panel.scrollIntoView({behavior:'smooth', block:'start'})` 1회 호출 + 패널 제목/상단에 0.6~0.8s 강조 플래시(배경 1회 페이드, `prefers-reduced-motion` 시 즉시/플래시 생략).
+   - JS 1~2줄 + CSS 플래시 키프레임 1개. 신규 색 없이 기존 토큰 재사용.
+
+3. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통')
    - 선택 셀 보더가 임박 셀(.day-soon) 보더와 색 충돌 → 선택은 보더 대신 옅은 배경 채움+inset 링으로 표현. 오늘=파랑/임박=amber 보더는 그대로 유지해 3상태(오늘/임박/선택) 위계 분리.
    - CSS-only(`.day.selected` 등 규칙만), 신규 색 추가 없이 기존 토큰 재사용.
 
+4. **[리스트/패널] 날짜 그룹 헤더 sticky 고정** (디자이너 '보통')
+   - 긴 리스트/날짜 패널 스크롤 시 `.date-group-header`가 사라져 날짜 맥락 상실 → `position:sticky; top:0` + 불투명 배경(스크롤 중 뒤 카드 비침 방지)으로 그룹 훑는 동안 날짜 고정.
+   - 리스트 뷰·날짜 패널 공통 적용. CSS-only(헤더에 sticky/배경/z-index 1줄대), 신규 색 없이 `--bg`/`--surface` 재사용.
+
+5. **[접근성] 날짜 셀 클릭 어포던스 + 키보드 접근** (디자이너 '보통')
+   - 게임 있는 날짜 셀에 `cursor:pointer` + 호버 배경/보더로 클릭 가능함을 시각화.
+   - 키보드 접근: 게임 있는 셀에 `tabindex="0"`·`role="button"`·`aria-label`(예: "5월 27일, 출시 N건") 부여, `focus-visible` 링, Enter/Space로 클릭과 동일 동작(기존 셀 클릭 핸들러 재사용).
+   - script.js(셀 생성 시 속성/키 핸들러) + styles.css(cursor/hover/focus-visible). 신규 색 없음.
+
 ### (큐 소진 후 후보, IDEAS에서)
-날짜 셀 클릭 어포던스(cursor:pointer+호버/키보드 접근), 리스트 뷰 풀폭 행 카드 폴리시 — 디자이너 재점검 후 끌어옴.
+D-day 배지 근접도 색 단계화(≤7 amber/≤30 중립/>30 흐린톤), 리스트 뷰 풀폭 행 카드 폴리시 — 디자이너 재점검 후 끌어옴.
 
 
 ## 알려진 버그 (BUGS)
@@ -112,6 +126,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 13:06 [기획자] TODO 큐 2→5개 보충. 활성 사용자 요청 0·미해결 버그 0 확인 후 디자이너 높음/보통 제안 3건(날짜패널 auto-scroll·날짜그룹헤더 sticky·셀 키보드 접근)을 작고 명확한 TODO로 큐잉. 운영자 요청(기본 캘린더 뷰) 1순위 유지. 코드 미수정(문서만).
 - 2026-05-29 12:30 [개발자] 1순위 완료: [헤더] 좌측정렬+컴팩트화. styles.css만 수정(+14/-5) — `header` 패딩 `2.5rem 1rem 1.5rem`→`1.25rem 1rem 1rem`·`text-align center→left`, `header h1` 2rem→1.7rem·margin-bottom 0.5→0.25rem, 헤더 3개 자식(h1/.subtitle/.last-updated)에 `max-width:1200px;margin:auto;padding:0 1rem`로 `<main>`과 좌측 정렬(gradient는 full-bleed 유지), `.stats-summary` text-align center→left. 상단 수직 높이 절감으로 캘린더가 첫 화면 위로. CSS-only(텍스트/기능 무변경), brace 258/258.
 - 2026-05-29 [개발자] [안정성] 에러 fallback 가드 구현(index.html 독립 inline script + .load-fallback CSS). ⚠️ 기획자 11:11 커밋의 STATUS/USER_REQUESTS 회귀를 부모 커밋에서 복구.
 - 2026-05-29 22:20 [개발자] 긴급 1순위 완료: 라이브 전체 다운(script.js TDZ dayPanel ReferenceError) 복구. `const dayPanel = document.getElementById('day-detail-panel');`를 모달 핸들 선언부(L379, 첫 사용 keydown L477·ESC L525 위)로 hoist하고 Stage4의 중복 선언(구 L652) 제거. node --check는 TDZ 미검출이라 runtime DOM 스텁으로 top-level 실행해 ReferenceError 0건 확인. script.js만 수정(+1/-1줄). QA에 라이브 콘솔 ReferenceError 0건+캘린더 셀 렌더+날짜 패널/ESC 동작 실측 요청.
