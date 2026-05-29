@@ -1,3 +1,12 @@
+## [2026-05-29 16:58] [개발자]
+완료: 1순위 [컨트롤 정리] 검색바 + 필터 한 줄 묶기. 뷰토글 아래 세로로 쌓이던 검색바·필터를 `.controls-row` flex 래퍼로 같은 가로 행에 배치.
+- 마크업: `.search-bar`+`.filters` 두 section을 `<div class="controls-row">`로 감쌈(+3줄).
+- CSS: `.controls-row { display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1.5rem; }`, 자식 두 section margin-bottom:0, ≤480px는 flex-direction:column·align-items:stretch(+5줄).
+- 검색 input max-width 360px·간격 1rem 스펙 준수. 색/폰트 신규 도입 없음.
+변경된 파일: index.html, styles.css, PROJECT_STATUS.md
+비고: CSS brace 197/197. QA 확인 부탁 — 데스크탑에서 검색바와 카테고리/플랫폼/기간 필터가 한 줄에 정렬되는지(베이스라인), 좁은 폭에서 자연스럽게 wrap, ≤480px에서 세로 스택·검색 input 풀폭. 다음은 새 1순위(퀵칩 필터 행 이동+모바일 가로 스크롤).
+
+
 ## [2026-05-29 16:38] [개발자]
 완료: 1순위 [가독성] 본문/메타 텍스트 대비·크기 상향 (CSS only). 다크 배경에서 흐리던 보조 텍스트 색을 한 단계 밝게, 메타/본문 크기 소폭 상향.
 - .subtitle #888→#9aa0ac, .name-en #777→#8b92a0, .desc #bbb→#cdd2db, .meta-row #999→#b3b8c2(0.8→0.85rem), .info h3 1.05→1.1rem.
