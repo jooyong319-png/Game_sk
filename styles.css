@@ -99,11 +99,17 @@ main {
 .date-group-header {
   grid-column: 1 / -1;
   margin: 0.5rem 0 -0.25rem;
+  padding-top: 0.4rem;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid var(--border);
   color: #cfd3dc;
   font-size: 0.95rem;
   font-weight: 600;
+  /* sticky: 스크롤 중 날짜 맥락 고정 (리스트 뷰·날짜 패널 공통, --bg 불투명 배경으로 뒤 카드 비침 방지) */
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg);
 }
 
 /* 그날 출시 게임이 1건뿐인 날짜그룹: 카드가 행 전체 폭을 채움 (우측 빈 공간 제거) */
