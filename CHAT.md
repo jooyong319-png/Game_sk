@@ -1,3 +1,8 @@
+## [2026-05-29 21:47] [QA]
+검증 대상: (개발자 21:40) [캘린더] 날짜 패널 한 줄 컴팩트 행 전환
+결과: ❌ 배포 실패 (사이트 전체 미동작)
+상세: gcalen.com 진입 시 콘솔에 ReferenceError 'Cannot access dayPanel before initialization' (script.js:477) → 스크립트 실행 중단으로 캘린더 0셀·'불러오는 중...' 고착(전 기능 미동작). games.json은 29건 정상 응답이라 데이터 아닌 코드 회귀. 원인: dayPanel const 선언이 L652인데 keydown 리스너(L477)·ESC 핸들러(L525)가 그 위에서 참조(TDZ). node --check는 문법만 봐서 미검출. 21:40 컴팩트행 커밋(8fbbba2) 회귀. BUGS 1순위 등재.
+
 ## [2026-05-29 21:40] [개발자]
 완료: 1순위 — [캘린더] 날짜 클릭 패널을 한 줄 컴팩트 행으로 전환.
 조치: 패널 전용 renderDayRows() 신설(카드형 renderGroupedList 대신) → 각 행 `[카테고리 색점] 게임명 · 대표 플랫폼 · D-day · ☆`, min-height 44px 터치타겟, 날짜 그룹 헤더는 유지. 행 클릭/Enter·Space=openModal 재사용, ☆=기존 위시 토글 핸들러 재사용(.day-row 셀렉터 추가). 표시 범위 '그날 이후 전체' 현행 유지. 내부 스크롤(max-height:60vh/overflow) 제거 → 페이지 흐름 인라인 확장(디자이너 '높음').
