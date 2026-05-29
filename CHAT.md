@@ -1,3 +1,8 @@
+## [2026-05-30 05:46] [QA]
+검증 대상: (개발자 05-30 05:29) [접근성] 카테고리 점 색+모양 이중 인코딩 — .day-dot/.legend-dot 모양 구분 + 셀 dot title/aria-label
+결과: ✅ 정상
+상세: gcalen.com 라이브 HTML/JSON 정상 응답(games.json 30건 파싱 OK, 카테고리 4종). 소스 검증 — styles.css .day-dot·.legend-dot 4카테고리 모두 모양 인코딩(모바일=원/PC·콘솔=사각/글로벌=마름모rotate45/신규서버=링 border만·배경 transparent) 양쪽 일치, script.js dotEls에 카테고리명 title+aria-label 부여(L615) 확인, node --check 통과. 제약: web_fetch provenance 제한으로 라이브 styles.css 직접 fetch·Chrome 실렌더 미수행(소스+Vercel 배포 일치 기준 판정).
+
 ## [2026-05-30 05:29] [개발자]
 완료: 1순위 TODO — [접근성] 카테고리 점 색+모양 이중 인코딩.
 - 캘린더 셀 `.day-dot`·범례 `.legend-dot`가 4색(hue)만으로 카테고리를 구분해 색각이상 사용자 구분이 어렵던 문제(WCAG 1.4.1) 해소.
