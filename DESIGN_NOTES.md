@@ -18,6 +18,41 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-05-30 00:50] [디자이너] — 운영자 요청: 이모지 전면 제거 -> SVG 라인 아이콘 세트
+운영자 직접 요청 "이모티콘 쓰지 말고 최대한 SVG로". 클린 미니멀 방향과 정확히 부합(Linear/Vercel류는 전부 일관된 라인 SVG). 이모지는 OS/브라우저마다 색·크기·baseline이 달라 클린 미니멀의 '일관성'을 깨므로 인라인 SVG로 통일.
+
+### 현재 이모지/기호 인벤토리 (전수)
+- 🎮 헤더 제목 (index.html:53)
+- 📅 캘린더 토글 / 📋 리스트 토글 (index.html:60-61)
+- 📅 모달 출시일 (script.js:297)
+- 🛠️ 개발사 / 🏢 배급사 메타 (script.js:300-301)
+- 📄 전체 페이지 / ▶ 트레일러 검색 / 🔗 링크 복사 (modal-actions, script.js:405)
+- ★/☆ 위시리스트 토글 (script.js 다수: 219·290·396·430-431·499-503·719-720, 빈상태 안내문 163·624)
+- ‹ › 캘린더 이전/다음 (index.html:119·121) — 이모지는 아니나 SVG chevron이 더 또렷
+
+### 제안 (우선순위 순)
+1. **인라인 SVG 아이콘 세트 도입 + 이모지 전량 치환** — 우선순위: 보통
+   - 단일 파일 유지를 위해 index.html에 숨김 SVG 스프라이트(`<svg style="display:none"><symbol id="ic-..." viewBox="0 0 24 24">...</symbol>...</svg>`) 1벌 정의 후, 사용처에서 `<svg class="icon" aria-hidden="true"><use href="#ic-calendar"/></svg>`로 참조. JS 템플릿(script.js)도 `<use>` 마크업으로 교체.
+   - 스타일 규칙: **Lucide/Feather 톤**(viewBox 24, `stroke=currentColor`, `fill=none`, `stroke-width:1.8`, `stroke-linecap/linejoin:round`). 크기 토큰 `.icon{width:1em;height:1em;vertical-align:-0.125em}`로 텍스트와 정렬. `currentColor`라 hover/active 색 자동 상속.
+   - 필요한 아이콘: calendar, list, wrench(개발사), building(배급사), file-text(전체 페이지), play(트레일러), link(링크 복사), gamepad 또는 로고(헤더), chevron-left/right(네비), star(위시).
+   - a11y: 텍스트 라벨 있는 버튼의 아이콘은 `aria-hidden="true"`(라벨이 읽힘). 아이콘만 있는 버튼(위시·네비)은 기존 `aria-label` 유지.
+
+2. **위시리스트 ★/☆ -> SVG star (채움/외곽 토글)** — 우선순위: 보통
+   - 현재 JS가 `textContent='★'/'☆'` 교체 방식 -> SVG 한 개 두고 **`.active`일 때 `fill`만 토글**(외곽=fill:none/stroke, 활성=fill:currentColor[amber]). textContent 스왑 제거. aria-pressed 유지.
+   - 이점: 글꼴별 별 모양 편차 제거, 클린한 라인 별, active 시 fill 트랜지션으로 미세 피드백(클린 미니멀의 절제된 마이크로 인터랙션).
+
+3. **‹ › 네비 -> chevron SVG + 본문 문구 정리** — 우선순위: 낮음
+   - 버튼 기호를 chevron SVG로. 단, 빈상태 안내문 "‹ ›로 다른 달을..."(index.html:132, script.js:625)의 '‹ ›'는 더 이상 화면 기호와 안 맞으니 "양옆 화살표로" 등 텍스트로 교체.
+
+4. **메타 이모지(🛠️🏢📅)는 SVG로 바꾸거나 아예 제거 검토** — 우선순위: 낮음
+   - 클린 미니멀에선 메타 행을 아이콘 없이 라벨만('개발사 OOO')으로 두는 것도 깔끔. SVG로 바꾸든 제거하든 택1(개발사/배급사는 라벨, 출시일만 calendar 아이콘 유지 권장).
+
+### 비고
+- 이건 **앞으로의 규칙**이기도 함: UI에 새 이모지 추가 금지, 아이콘은 SVG 세트에서. 다른 에이전트(개발/리서처)도 따르도록 AGENTS.md에 한 줄 규칙 추가를 기획자/개발자에게 권고(디자이너는 문서 권한상 직접 수정 안 함).
+- 1번(스프라이트+치환)이 토대 -> 한 번에 도입하고, 2~4번을 같은 PR에 묶으면 효율적. 큰 색 변경 없음(currentColor 상속).
+
+---
+
 ## [2026-05-30 00:30] [디자이너] — 운영자 요청: 클린 미니멀(Linear/Vercel 풍) 리프레시 방향
 운영자(쌀먹닷컴) 직접 요청 "더 트렌디하게" -> 방향 확정: **클린 미니멀**. 막연한 폴리시가 아니라 아래 구체 실행안으로 분해. 개발자는 한 사이클에 1~2개씩 픽업(전부 CSS 중심, 일부 폰트 로드/소규모 JS). 큰 색 변경 없이 '톤·여백·타이포·라운드'로 세련도를 올리는 게 핵심.
 
