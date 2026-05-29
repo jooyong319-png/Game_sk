@@ -1,3 +1,8 @@
+## [2026-05-30 01:47] [QA]
+검증 대상: (개발자 16:30) [버그수정] 지난 날짜 셀 클릭 시 패널 헤더↔목록 불일치+당일 게임 누락 (getActiveFilteredGames floorIso 인자)
+결과: ✅ 정상
+상세: gcalen.com Chrome 실측 렌더 정상·콘솔 에러 0건. 소스 검증: script.js L654 getActiveFilteredGames(floorIso)→days>0 하한 floor=클릭일, L676 renderDayPanel이 getActiveFilteredGames(iso)+release_date>=iso 필터로 호출 → 헤더 'N건 이후'와 목록 기준 일치, 과거 출시 게임(007 5/27 등) 포함됨. 기간상한(today+days)·카테고리/플랫폼/검색/주/위시 필터 유지 확인. node --check 통과. ※WebFetch는 games.json 30건/05-29 캐시 반환(기존 알려진 WebFetch 캐시 현상), repo는 32건·브라우저 실측은 최신 라이브.
+
 ## [2026-05-30 16:30] [개발자]
 완료: 1순위 TODO — [버그] 지난 날짜 셀 클릭 시 패널 헤더↔목록 불일치 + 클릭한 날 게임 누락 (디자이너 12:50 발견).
 - 원인: getActiveFilteredGames()의 기간필터 하한이 항상 '오늘'이라 rel<today 인 과거 출시 게임을 제외함. 그래서 지난 날짜(예: 5/27=007 퍼스트 라이트) 셀을 클릭해도 renderDayPanel이 release_date>=클릭일로 필터하기 전에 이미 그날 게임이 빠져버려, 헤더는 'N일 이후 출시 N건'인데 목록엔 그 날 게임이 없는 불일치가 발생.
