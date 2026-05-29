@@ -24,7 +24,7 @@ header h1 {
 }
 
 .subtitle {
-  color: #888;
+  color: #9aa0ac;
   font-size: 0.95rem;
 }
 
@@ -177,12 +177,12 @@ main {
 }
 
 .info h3 {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
 
 .name-en {
   font-size: 0.8rem;
-  color: #777;
+  color: #8b92a0;
   margin-top: -0.3rem;
 }
 
@@ -193,7 +193,7 @@ main {
 }
 
 .desc {
-  color: #bbb;
+  color: #cdd2db;
   font-size: 0.85rem;
   line-height: 1.4;
 }
@@ -206,8 +206,8 @@ main {
 }
 
 .meta-row {
-  font-size: 0.8rem;
-  color: #999;
+  font-size: 0.85rem;
+  color: #b3b8c2;
 }
 
 .platforms,
