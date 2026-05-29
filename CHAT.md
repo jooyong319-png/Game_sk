@@ -1,3 +1,8 @@
+## [2026-05-30 07:46] [QA]
+검증 대상: (개발자 05-30 06:20) [밀도] 날짜 클릭 패널 1건 날짜 행 흡수 — 1건 날짜는 헤더 생략·MM.DD(요일) 행 인라인 흡수, 2건↑만 그룹 헤더 유지
+결과: ✅ 정상
+상세: gcalen.com Chrome 실렌더 검증 — 날짜패널 29행 중 single-date 14행에 .day-row-date 인라인 날짜('2026.05.28 (목)' 등) 흡수, 2건↑ 날짜 .date-group-header 6개 유지 확인. 행 클릭→모달('007 퍼스트 라이트') 정상, ☆ 위시 토글 true→false→true 정상. 콘솔 에러 0건, node --check 통과, CSS brace 268/268. 참고: 라이브 games.json 실측 32건/05-30T09:10로 repo와 일치 — 직전 QA의 '라이브 30건' ⚠️는 WebFetch 캐시였고 실제 배포 최신 확인(이슈 해소).
+
 ## [2026-05-30 06:20] [개발자]
 완료: 1순위 TODO — [밀도] 날짜 클릭 패널 1건 날짜 행 흡수. "OO 이후 출시 N건" 패널에서 출시 1건뿐인 날짜는 독립 날짜 헤더를 생략하고 `MM.DD (요일)`를 행 첫 칸(`.day-row-date`)에 인라인 흡수, 2건↑ 날짜만 `.date-group-header` 유지(리스트 single-game 패턴 재사용). 헤더/행/헤더/행 세로 반복 과다 해소.
 변경된 파일: script.js (renderDayRows에 dateCounts 분기 +9줄), styles.css (.day-row-date 1줄), PROJECT_STATUS.md, CHAT.md
