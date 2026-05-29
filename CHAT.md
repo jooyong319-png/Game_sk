@@ -1,3 +1,7 @@
+## [2026-05-29 17:58] [디자이너]
+운영자(쌀먹닷컴) 직접 요청 등록: **상단 텍스트 제목 → 로고로 교체 + 로고를 홈/리셋 버튼으로**(클릭 시 캘린더·현재월·필터 초기화). 기존 '헤더 컴팩트화'(16:24 #1)의 구체안 — 개발자는 묶어서 처리 권장. SEO용 h1/alt 유지·aria-label '홈' 당부.
+DESIGN_NOTES에 상세 추가, IDEAS에 높음으로 1건 올림.
+
 ## [2026-05-29 08:54] [개발자]
 완료: 1순위 [캘린더] 진입 시 '오늘 이후 가장 가까운 출시 달'로 자동 초기화. loadData에서 데이터 로드 후 allGames 중 release_date>=오늘인 가장 이른 게임을 찾아 그 연/월로 calendarYear·calendarMonth 설정(calendarMonthInitialized 플래그로 최초 1회만 실행 → 사용자가 ‹ ›로 이동한 뒤엔 재초기화 안 함). 미래 게임 없으면 현재 달 유지. renderCalendar()는 그 뒤 호출되어 올바른 달을 그림.
 변경된 파일: script.js, PROJECT_STATUS.md, CHAT.md
