@@ -459,6 +459,12 @@ footer a:hover {
 .card-image-placeholder.category-pc_console_kr { background:linear-gradient(135deg, #64b5f6, #467fac); }
 .card-image-placeholder.category-global_aaa { background:linear-gradient(135deg, #ba68c8, #82488c); }
 .card-image-placeholder.category-new_server { background:linear-gradient(135deg, #ff8a65, #b26146); }
+/* Compact category color bar — replaces text-label placeholder banner (dup removed; body category-tag kept). Reuses existing category colors. */
+.card-banner { width:100%; height:4px; }
+.card-banner.category-mobile_kr { background:#5a8b5c; }
+.card-banner.category-pc_console_kr { background:#467fac; }
+.card-banner.category-global_aaa { background:#82488c; }
+.card-banner.category-new_server { background:#b26146; }
 .modal-image { width:100%; height:160px; overflow:hidden; border-radius:8px; margin-bottom:0.8rem; }
 .modal-image img { width:100%; height:100%; object-fit:cover; display:block; }
 

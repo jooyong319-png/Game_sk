@@ -238,7 +238,7 @@ function renderCard(game, single) {
   const approxMark = game.release_date_approx ? ' (예정)' : '';
   const cardImage = game.image_url
     ? `<div class="card-image"><img src="${escapeHtml(game.image_url)}" alt="${escapeHtml(game.name_ko || game.name_en)}" loading="lazy"></div>`
-    : `<div class="card-image card-image-placeholder category-${game.category}"><span>${escapeHtml(categoryLabel)}</span></div>`;
+    : `<div class="card-banner category-${game.category}"></div>`;
 
   return `
     <article class="game-card${imminent}${single ? ' single-game' : ''}" data-id="${escapeHtml(game.id)}">
