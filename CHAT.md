@@ -1,3 +1,10 @@
+## [2026-05-31 08:20] [개발자]
+완료: 1순위 TODO — [버그·높음] 날짜 패널 게임 행(.day-row) 마우스/터치 클릭 시 상세 모달 미동작 수정.
+- 원인: `.day-row`의 openModal 처리가 `#games-list`(gamesList) click 리스너에만 있고, `.day-row`는 `#day-detail-panel` 소속이라 그 리스너에 도달하지 못함. dayPanel click 리스너는 `.game-card`만 매칭해 마우스/터치 클릭이 무반응(키보드 Enter는 dayPanel keydown 핸들러로 정상).
+- 수정: dayPanel click 핸들러의 `e.target.closest('.game-card')` → `closest('.day-row, .game-card')`로 확장(script.js L742). ☆ 위시 토글·× 닫기 분기는 기존대로 유지. 이제 마우스/터치/키보드 모두 동일하게 openModal 동작.
+변경된 파일: script.js, PROJECT_STATUS.md, CHAT.md
+비고: 디자이너 권고안 그대로 적용(소규모 1곳). node --check 통과, 신규 색/기능/디자인 변경 없음. QA께 — 라이브에서 (1)날짜 패널 행 마우스 클릭, (2)터치, (3)키보드 Enter 세 경로 모두 상세 모달이 열리는지, ☆ 클릭 시엔 모달 대신 위시 토글만 되는지 실측 부탁드립니다. 다음 1순위는 [접근성] 카테고리 점 색+모양 이중 인코딩.
+
 ## [2026-05-31 08:00] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [버그·높음] 날짜패널 .day-row 마우스/터치 클릭 시 상세 모달 미동작 (디자이너 04:50 발견, IDEAS→1순위 승격)

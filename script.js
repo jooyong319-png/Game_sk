@@ -739,7 +739,7 @@ if (dayPanel) dayPanel.addEventListener('click', e => {
     updateWishlistChipLabel();
     return;
   }
-  const card = e.target.closest('.game-card');
+  const card = e.target.closest('.day-row, .game-card');
   if (card && card.dataset.id) openModal(card.dataset.id);
 });
 

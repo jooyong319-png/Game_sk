@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 08:00 (기획자 — 날짜패널 행 클릭 모달 버그 1순위 등재, 큐 4→5)
+마지막 갱신: 2026-05-31 08:20 (개발자 — 날짜패널 .day-row 마우스 클릭 모달 버그 수정 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -69,32 +69,28 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[버그수정] 지난 날짜 셀 클릭 시 패널 헤더↔목록 불일치+당일 게임 누락 해소** (원인: getActiveFilteredGames 기간필터 하한이 today라 rel<today 과거 게임 제외 → 지난 날짜 클릭해도 그날 게임 빠짐, renderDayPanel은 >=iso로 필터하나 이미 제외된 뒤. 수정: getActiveFilteredGames(floorIso) 선택 인자 추가, 기간필터 하한을 floor=클릭한 날짜로 사용. renderDayPanel이 getActiveFilteredGames(iso) 호출 → 클릭한 날 게임 포함되어 헤더 'N건 이후'와 목록 일치. 카테고리/플랫폼/기간상한/검색/주/위시 필터 반영 유지) — 개발자 완료 2026-05-30 16:30
 - [x] **[접근성] 날짜 셀 클릭 어포던스 + 키보드 접근** (게임 있는 셀만 role="button"·tabindex=0·aria-label '·월 ·일, 출시 N건' 부여, cursor:pointer+호버(보더 accent+옅은 배경)·focus-visible 아웃라인, calGrid keydown(Enter/Space)→cell.click() 기존 핸들러 재사용. 빈 셀은 cursor:default 유지) — 개발자 완료 2026-05-30 21:20
 - [x] [버그수정] D-day KST off-by-one 해소 — release_date를 로컬 자정(`parseReleaseDate`=`new Date(str+'T00:00:00')`)으로 통일 파싱, today와 동일 기준. 오늘 출시 게임이 'D-DAY'로 정상 표시(캘린더 '오늘' 셀과 일치).
+- [x] **[버그수정] 날짜 패널 게임 행(.day-row) 마우스/터치 클릭 시 상세 모달 미동작 해소** (원인: `.day-row`의 openModal 처리가 `#games-list` 리스너에만 있어 `#day-detail-panel` 소속 .day-row에 미도달; dayPanel click 리스너는 `.game-card`만 매칭. 수정: dayPanel click 핸들러의 `e.target.closest('.game-card')`→`closest('.day-row, .game-card')` 확장. ☆ 위시 토글·× 닫기 분기는 기존 유지. 마우스/터치/키보드 모두 openModal 동작 통일) — 개발자 완료 2026-05-31 08:20
 
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-31 08:00 (기획자): 직전 1순위(D-day KST off-by-one)는 개발자 04:20 완료·QA·디자이너 04:50 라이브 ✅로 완료한 기능 이동 확인. 디자이너 04:50 점검에서 **[버그·높음] 날짜패널 .day-row 마우스 클릭 시 상세 모달 미동작**(키보드 Enter는 정상, 마우스/터치만 깨짐) 신규 발견 → 핵심 인터랙션 correctness 버그로 1순위 등재. 기존 잔여 4건은 2~5순위로 한 칸씩 밀림. 활성 사용자 요청 0. 큐 4→5개.
 
-1. **[버그·높음] 날짜 패널 게임 행(.day-row) 마우스 클릭 시 상세 모달 미동작** (디자이너 05-31 04:50 발견)
-   - 캘린더 날짜 클릭 패널의 `.day-row`를 마우스/터치로 눌러도 상세 모달이 안 열림(키보드 Enter는 dayPanel keydown 핸들러로 정상 → 마우스/터치만 깨짐).
-   - 원인: `.day-row`의 openModal 처리가 `#games-list`(gamesList) click 리스너에 있는데 `.day-row`는 `#day-detail-panel` 소속이라 그 리스너에 도달 못함. dayPanel click 리스너는 `.game-card`만 처리.
-   - 수정: dayPanel click 핸들러의 타겟 매칭을 `closest('.game-card')` → `closest('.day-row, .game-card')`로 확장(☆ 위시 토글은 기존대로 분기 유지). `.day-row`가 cursor:pointer+hover로 클릭을 광고하나 무반응이라 '고장' 인식 위험. script.js 소규모(핸들러 1곳).
-
-2. **[접근성] 카테고리 점 색+모양 이중 인코딩** (디자이너 05-30 '보통')
+1. **[접근성] 카테고리 점 색+모양 이중 인코딩** (디자이너 05-30 '보통')
    - 캘린더 셀 `.day-dot`·범례 `.legend-dot`가 4색(hue)만으로 카테고리 구분 → 색각이상 사용자 구분난(WCAG 1.4.1 소지).
    - 색 외 단서 추가: 모바일=원 / PC·콘솔=사각(`border-radius:1px`) / 글로벌=마름모(`rotate(45deg)`) / 신규서버=링(`border`만). 범례 dot도 동일 모양 적용해 셀↔범례 매칭.
    - dot에 카테고리명 `title`/`aria-label` 부여(스크린리더·호버 보조). 기존 4색 유지, 모양만 추가. styles.css 중심 + script.js 속성 부여 소규모.
 
-3. **[밀도] 날짜 클릭 패널 — 1건 날짜는 날짜를 행 안으로 흡수** (디자이너 05-30 '보통')
+2. **[밀도] 날짜 클릭 패널 — 1건 날짜는 날짜를 행 안으로 흡수** (디자이너 05-30 '보통')
    - "OO 이후 출시 N건" 패널에서 1건뿐인 날짜도 독립 날짜 헤더+행으로 세로 반복 과다(헤더/행/헤더/행).
    - renderDayRows에서 dateCounts 분기: 1건 날짜는 `MM.DD(요일) · ●게임명 · 플랫폼 · D-day · ☆` 한 줄로 날짜를 행에 인라인, 독립 날짜 헤더는 2건↑만 유지(리스트 뷰 single-game 패턴 재사용).
    - script.js renderDayRows 분기 + styles.css 행 내 날짜 라벨 톤. 신규 색 없음.
 
-4. **[스캔성] 출시 있는 셀에 옅은 면 강조** (디자이너 12:50/05-30 발견)
+3. **[스캔성] 출시 있는 셀에 옅은 면 강조** (디자이너 12:50/05-30 발견)
    - 이벤트(출시 게임) 있는 셀↔빈 셀 배경이 동일해 한눈에 '어디 콘텐츠 있는지' 스캔이 약함.
    - 출시 1건 이상인 `.day`에 옅은 배경 tint(`rgba(74,144,226,0.06)`) + 좌측 2px 카테고리색 악센트(or 중립 accent)로 '여기 콘텐츠 있음'을 면으로 강조. 점/라벨은 보조로 유지.
    - 오늘/임박(.day-soon)/선택(.day.selected) 강조와 색 충돌 없는지 확인(이들은 보더·채움+inset링이라 분리됨). styles.css 중심 소규모, 신규 색 없이 --accent 재사용.
 
-5. **[색일관] 캘린더 '오늘' 셀 라벨 색 amber→--accent(파랑) 통일** (디자이너 05-30 '낮음')
+4. **[색일관] 캘린더 '오늘' 셀 라벨 색 amber→--accent(파랑) 통일** (디자이너 05-30 '낮음')
    - '오늘' 셀이 today 파란 보더 + '오늘' 라벨 amber(임박색)로 색 이중인코딩 → amber 의미가 '임박(.day-soon)'과 충돌.
    - '오늘' 라벨(텍스트/배경)을 amber에서 `var(--accent)`(파랑)로 교체해 today 보더와 색 통일. `.day-soon`의 amber 강조는 그대로 유지(‘임박’ 전용으로 한정).
    - styles.css CSS-only 소규모(’오늘’ 라벨 규칙 1곳), 신규 색 없이 기존 토큰 재사용. node/brace 균형 확인.
@@ -104,7 +100,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 
 ## 알려진 버그 (BUGS)
-- [2026-05-31] 🔴 활성(코드) — 캘린더 날짜 클릭 패널의 게임 행(.day-row)을 **마우스/터치로 클릭해도 상세 모달이 안 열림**(키보드 Enter는 정상). 원인: .day-row openModal 처리가 #games-list 리스너에 있어 #day-detail-panel 소속 .day-row에 미도달; dayPanel click 리스너는 .game-card만 처리. 디자이너 04:50 Chrome 실측 발견. 권고 수정: dayPanel click 핸들러를 `closest('.day-row, .game-card')`로 확장. → TODO 1순위로 등재.
+- [2026-05-31] ✅ 해소(개발자 fix 2026-05-31 08:20) — 캘린더 날짜 클릭 패널의 게임 행(.day-row) 마우스/터치 클릭 시 상세 모달 미동작. dayPanel click 핸들러의 `e.target.closest('.game-card')`→`closest('.day-row, .game-card')`로 확장해 .day-row도 openModal 도달. ☆ 위시/× 닫기 분기 유지, node --check 통과. QA께 라이브에서 (1)마우스 클릭 (2)터치 (3)키보드 Enter 모두 모달 열림 실측 부탁. [이전 보고] 키보드 Enter는 정상이나 마우스/터치만 무반응이라 '고장' 인식 위험. 원인: .day-row openModal이 #games-list 리스너 소속이라 #day-detail-panel의 .day-row 미도달; dayPanel click 리스너는 .game-card만 처리. 디자이너 04:50 Chrome 실측 발견.
 - [2026-05-29] ✅ 해소(QA 22:40 라이브 확인) — 개발자 fix(2026-05-29 22:20): `const dayPanel` 선언을 모달 핸들부(L379, 첫 사용 L478 위)로 hoist + Stage4 중복 선언 제거 → TDZ 제거. QA Chrome 실측: gcalen.com 콘솔 ReferenceError 0건, 콘텐츠 정상 렌더 확인. [이전 보고] (배포 사이트 전체 미동작) script.js TDZ 에러: dayPanel을 L477(keydown 리스너)·L525(ESC)에서 참조하나 `const dayPanel`은 L652에 선언 → 모듈 로드 시 'Cannot access dayPanel before initialization' ReferenceError로 스크립트 중단. 결과: 캘린더 0셀, '불러오는 중...' 고착, 통계/리스트/모달 등 전 기능 미동작. 재현: gcalen.com 진입 후 DevTools 콘솔 확인(script.js:477). data/games.json은 29건/05-29T12:35로 정상(데이터 무관). 원인: 21:40 컴팩트행 커밋(8fbbba2)이 dayPanel 리스너를 선언부 위에 추가. node --check는 TDZ 미검출. 권고: `const dayPanel = document.getElementById('day-detail-panel');`를 첫 사용(L477) 위로 이동.
 - [2026-05-29] ✅ 해소 — (모바일 캘린더 가로 오버플로) 개발자 fix: grid-template-columns repeat(7,1fr)→repeat(7,minmax(0,1fr)) + .day-game-label min-width:0. 트랙이 최장 게임명 폭으로 확장되던 원인 제거(minmax 0 바닥 + flex/grid 자식 min-width:0). QA 모바일폭 재측정 권고. [이전 보고] 모바일폭에서 .calendar-grid가 컨테이너를 넘쳐 깨짐. 재현: Chrome에서 .calendar-view 폭 360px 제약 시 grid clientWidth 326px vs scrollWidth 727px. 원인: repeat(7,1fr) + 셀 .day-game-label white-space:nowrap → 1fr min-content가 최장 게임명 폭으로 확장(overflow:hidden/ellipsis는 트랙 사이징에 무효). 권고: repeat(7,minmax(0,1fr)) 또는 .day/.day-game-label min-width:0.
 - [2026-05-29] ✅ 해소 — (배포 지연) Chrome 실측 결과 배포본 gcalen.com 데이터 갱신 05-29 11:30·20건으로 최신화 확인. 직전 17건/05-28은 WebFetch 자체 캐시였음(실제 배포 정상). 빌드 파이프라인 이상 없음.
@@ -151,6 +147,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 08:20 [개발자] 1순위 완료: **[버그·높음] 날짜 패널 .day-row 마우스/터치 클릭 시 상세 모달 미동작** 수정. dayPanel click 핸들러의 `e.target.closest('.game-card')`→`closest('.day-row, .game-card')` 확장(L742). 원인=.day-row openModal이 #games-list 리스너에만 있어 #day-detail-panel 소속 .day-row 미도달. ☆ 위시 토글·× 닫기 분기 유지, 마우스/터치/키보드 동작 통일. script.js 1줄(+0/-0 치환), node --check 통과. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 08:00 [기획자] TODO 큐 4→5개. 디자이너 04:50 라이브 발견 **[버그·높음] 날짜패널 .day-row 마우스/터치 클릭 시 상세 모달 미동작**(키보드 Enter만 정상)을 핵심 인터랙션 correctness 버그로 1순위 등재(IDEAS→큐 승격) + BUGS 활성 등록. 원인=.day-row openModal이 #games-list 리스너 소속이라 #day-detail-panel의 .day-row 미도달, 권고=dayPanel click 핸들러 `closest('.day-row, .game-card')` 확장. 기존 잔여 4건(dot 색+모양 이중인코딩·1건날짜 흡수·셀 면강조·'오늘' 라벨 색통일) 2~5순위로 한 칸씩 밀림. 직전 1순위(D-day KST off-by-one) 개발자 04:20 완료·디자이너 04:50 라이브 ✅. 활성 사용자 요청 0. 코드 미수정(문서만). ※디자이너 a11y 3건(터치타겟<44px·위시별 --wish 토큰·.day-row/전역 focus-visible)은 IDEAS 유지.
 - 2026-05-31 04:20 [개발자] 1순위 완료: **[버그·높음] D-day KST off-by-one 수정**. release_date 파싱을 UTC자정(`new Date('YYYY-MM-DD')`)→로컬자정(`parseReleaseDate(str)`=`new Date(str+'T00:00:00')`)으로 통일해 로컬 기준 today와 일치시킴. script.js에 헬퍼 1개 추가 + 기존 `new Date(*.release_date)` 호출 15곳을 `parseReleaseDate(*.release_date)`로 치환(D-day diff/정렬/캘린더 배치 전부 동일 기준). 효과: 오늘 출시가 'D-1'→'D-DAY'로 교정, 캘린더 '오늘' 하이라이트와 모순 해소. 신규 색/기능 없음. node --check 통과. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 04:00 [기획자] TODO 큐 4→5개. 디자이너 00:50 발견 **[버그·높음] D-day KST off-by-one**(release_date UTC자정 파싱 vs today 로컬자정 → 전 항목 +1, 오늘 출시가 'D-DAY' 대신 'D-1'·캘린더 '오늘' 하이라이트와 모순)을 correctness 버그로 1순위 등재(IDEAS→큐 승격). 기존 잔여 4건(dot 색+모양 이중인코딩·1건날짜 흡수·셀 면강조·'오늘' 라벨 색통일) 2~5순위로 한 칸씩 밀림. 직전 1순위(셀 어포던스+키보드) 개발자 21:20 완료·QA 22:40 ✅ 확인(이미 완료한 기능 이동). 활성 사용자 요청 0. 코드 미수정(문서만). ※디자이너 a11y 2건(위시별 색 토큰화·전역 focus-visible)은 IDEAS 유지, PoE2 신규서버 오태깅은 리서처 도메인.
