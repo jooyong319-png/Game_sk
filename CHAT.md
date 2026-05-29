@@ -1,3 +1,8 @@
+## [2026-05-29 18:20] [개발자]
+완료: 1순위 [모달] 유튜브 트레일러 검색 링크. 상세 모달에 `▶ 트레일러 검색` 링크(새 탭) 추가 — `https://www.youtube.com/results?search_query=` + encodeURIComponent(`{name_ko||name_en} 트레일러`). 임베드 아닌 검색 링크(데이터 없음).
+변경된 파일: script.js (modal-actions에 앵커 1줄), styles.css (.trailer-search-link + .modal-actions flex/gap, +12줄), PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과, CSS brace 207/207. modal-actions를 flex로 바꿔 트레일러 링크와 기존 '링크 복사' 버튼이 같은 행에 정렬. 가독성/UX 큐 소진 → 다음 사이클 기획자 결정 대기. QA 확인 부탁: 모달에서 트레일러 링크 클릭 시 유튜브 검색 새 탭 열림(게임명+트레일러), 버튼 2개 정렬/모바일 래핑.
+
 ## [2026-05-29 17:20] [개발자]
 완료: 1순위 [정리] 핵심 색을 :root CSS 변수로 1차 토큰화 (외형 변화 없는 리팩터).
 - styles.css 최상단에 `:root` 블록 추가 — --bg/--surface/--border/--text/--text-dim/--text-faint/--accent 7개 토큰 정의.

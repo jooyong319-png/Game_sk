@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-29 17:20 (개발자 — 핵심 색 :root CSS 변수 1차 토큰화 완료)
+마지막 갱신: 2026-05-29 (개발자 — 모달 유튜브 트레일러 검색 링크 완료)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -45,16 +45,14 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[컨트롤 정리] 퀵칩을 필터 행 끝으로 이동 + 모바일 가로 스크롤** (`.quick-chips`를 `.controls-row` 안 필터 우측 끝으로 이동, 데스크탑 `margin-left:auto`, ≤480px `flex-wrap:nowrap;overflow-x:auto`·chip `flex:0 0 auto`) — 개발자 완료 2026-05-29
 
 - [x] **[정리] 핵심 색 :root CSS 변수 1차 토큰화** (`:root`에 --bg/--surface/--border/--text/--text-dim/--text-faint/--accent 정의, 최다 사용 5색 #0f1115/#1a1d24/#2a2e38/#e6e6e6/#4a90e2 → var() 치환, 외형 무변화 리팩터) — 개발자 완료 2026-05-29
+- [x] **[모달] 유튜브 트레일러 검색 링크** (상세 모달 modal-actions에 `▶ 트레일러 검색` 새 탭 링크, `youtube.com/results?search_query={name_ko} 트레일러`, 임베드 아님) — 개발자 완료 2026-05-29
 
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-29 (기획자): **사용자 직접 요청 — "전체적으로 보기 편하게" 가독성/UX 개선**(USER_REQUESTS 활성). 4개 테마를 개발자 1시간 단위로 쪼갬. 한 사이클 1개. CSS only 항목은 회귀 위험 낮음.
 
-### 1순위 — 상세 모달에 유튜브 트레일러 검색 링크
-모달 내 `▶ 트레일러 검색` 링크(새 탭): `https://www.youtube.com/results?search_query=` + encodeURIComponent(`{name_ko} 트레일러`).
-- 임베드 아님(데이터 없음), 검색 링크만. 예상 변경: index.html +1, script.js +5.
-
-### (큐 소진 후 후보) — 일간/주간 캘린더 뷰, 카카오 SDK 정식 공유(IDEAS)
+### 1순위 — (큐 비어있음, 기획자 결정 대기)
+직전 트레일러 검색 링크 완료로 가독성/UX 큐 소진. 후보(IDEAS): 일간/주간 캘린더 뷰, 카카오 SDK 정식 공유, 리스트 뷰 풀폭 행 카드(디자이너 제안).
 
 ## 알려진 버그 (BUGS)
 - [2026-05-29] ✅ 해소 — (배포 지연) Chrome 실측 결과 배포본 gcalen.com 데이터 갱신 05-29 11:30·20건으로 최신화 확인. 직전 17건/05-28은 WebFetch 자체 캐시였음(실제 배포 정상). 빌드 파이프라인 이상 없음.
@@ -71,6 +69,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 [개발자] 1순위 완료: [모달] 유튜브 트레일러 검색 링크. openModal 템플릿 modal-actions에 `▶ 트레일러 검색` 앵커 추가(새 탭, `https://www.youtube.com/results?search_query=`+encodeURIComponent(`{name_ko||name_en} 트레일러`)). 임베드 아닌 검색 링크. styles.css에 `.trailer-search-link`(copy-link-btn 톤 동일)+`.modal-actions` flex/gap. script.js 1줄, styles.css +12. node --check 통과, CSS brace 207/207.
 - 2026-05-29 17:20 [개발자] 1순위 완료: [정리] 핵심 색 :root CSS 변수 1차 토큰화. styles.css 상단에 `:root` 7개 토큰(--bg/--surface/--border/--text/--text-dim/--text-faint/--accent) 정의, 최다 사용 5색(#0f1115→--bg, #1a1d24→--surface, #2a2e38→--border, #e6e6e6→--text, #4a90e2→--accent)을 var()로 치환. 치환 49곳(border16/accent12/text9/surface7/bg5). --text-dim/--text-faint는 토큰만 선언(치환은 차기). 외형/동작 무변화 리팩터. CSS brace 205/205.
 - 2026-05-29 15:56 [개발자] 1순위 완료: [캘린더] 셀 키우고 대표 게임명 1건 텍스트 노출. renderCalendar에서 그날 첫 게임 name_ko를 `.day-game-label`(0.7rem, 1줄 ellipsis, title 툴팁)로 추가, 점(dot)은 보조 유지. `.calendar-grid .day` min-height 60→84(≤480px 44→60), 셀 flex-column 유지로 라벨은 날짜 아래·점은 하단. script.js +3, styles.css 3곳(min-height 2 + .day-game-label 규칙 신설). node --check 통과, CSS brace 204/204.
 - 2026-05-29 15:46 [개발자] 1순위 완료: [컨트롤 정리] 퀵칩을 필터 행 끝으로 이동 + 모바일 가로 스크롤. `.quick-chips` section을 `.controls-row` 안(필터 뒤)으로 이동, 데스크탑은 `margin-left:auto`로 우측 끝 정렬. ≤480px에서 `flex-wrap:nowrap;overflow-x:auto`+chip `flex:0 0 auto`로 줄바꿈 대신 가로 스크롤. 동작 로직 미변경(위치/스타일만). index.html(위치 이동), styles.css +6. CSS brace 201/201.

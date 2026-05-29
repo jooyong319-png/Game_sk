@@ -513,7 +513,7 @@ footer a:hover { color: var(--accent); }
 @media (max-width: 480px) { .search-count { display: block; margin-left: 0; margin-top: 0.3rem; } }
 
 /* Modal copy-link button + toast */
-.modal-actions { margin-top: 1rem; }
+.modal-actions { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .copy-link-btn {
   background: #2a2d3a;
   color: #e6e8ef;
@@ -525,6 +525,17 @@ footer a:hover { color: var(--accent); }
   transition: background 0.15s ease;
 }
 .copy-link-btn:hover { background: #343847; }
+.trailer-search-link {
+  background: #2a2d3a;
+  color: #e6e8ef;
+  border: 1px solid #3a3e4d;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.trailer-search-link:hover { background: #343847; }
 .toast {
   position: fixed;
   left: 50%;
