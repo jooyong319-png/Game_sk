@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-28T09:30:00+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-28T09:30:00+09:00 (cross-verified 3 sources)",
+  "last_updated": "2026-05-29T09:00:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-05-29T09:00:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -244,6 +244,27 @@
       ],
       "image_url": null,
       "source_url": "https://www.konami.com/games/prospi/2026/us/en-us/"
+    },
+    {
+      "id": "pro-yakyu-spirits-2026",
+      "name_ko": "프로야구 스피리츠 2026",
+      "name_en": "Pro Yakyuu Spirits 2026",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC",
+        "PS5"
+      ],
+      "developer": "코나미",
+      "publisher": "코나미",
+      "description": "코나미 야구 게임. 신규 eBaseball 엔진 탑재, 시리즈 최초 한국어 자막 지원. PS5·스팀 전 세계 동시 출시.",
+      "genres": [
+        "스포츠",
+        "야구"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316868"
     },
     {
       "id": "splatoon-raiders-2026",
