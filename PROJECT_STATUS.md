@@ -49,16 +49,13 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[리스트뷰] 단일 게임 날짜그룹 행 전체 폭** (그날 출시 1건인 날짜의 카드에 `.single-game` 부여 → `.games-grid .game-card.single-game{grid-column:1/-1}`로 행 전체 폭, 2건↑ 날짜는 기존 그리드 유지) — 개발자 완료 2026-05-29
 - [x] **[리스트뷰] 카드 상단 배너 카테고리 라벨 중복 제거** (이미지 없는 카드의 컬러 배너+카테고리명 텍스트 → 카테고리 컬러 4px `.card-banner`로 콤팩트화, 본문 category-tag 유지, 신규 색 X) — 개발자 완료 2026-05-29 16:17
 - [x] **[모달] 열림/닫힘 페이드 트랜지션 (CSS-only)** (`.modal` 박스 opacity+scale(0.97→1) 0.18s, 오버레이 opacity는 기존 구현 활용, `prefers-reduced-motion` 분기 포함) — 개발자 완료 2026-05-29
+- [x] **[푸터] mailto 링크 hover/focus 색상 강조** (footer a:hover/:focus → --accent + 밑줄, 평상시 흐린 톤 #aaa 유지, CSS-only) — 개발자 완료 2026-05-29
 
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-29 16:00 (기획자): 가독성/UX 사용자 요청 4테마 + 트레일러 링크까지 모두 완료되어 큐가 비었음. 디자이너 제안(높음·보통) 2건을 작은 단위로 끌어오고, 미뤄둔 CSS-only 폴리시 3건을 보충해 큐 5개로 채움. 각 항목 1시간 단위, CSS-only 위주라 회귀 위험 낮음.
 
-### 1순위 — [푸터] mailto 링크 hover 색상 강조 (CSS-only)
-**스코프**: 푸터 `contact@gcalen.com` mailto 앵커에 hover/focus 시 `--accent` 색 적용 + 밑줄. 기존 흐린 텍스트 톤은 평상시 유지.
-**예상 규모**: styles.css +3줄.
-
-### 2순위 — [캘린더] 출시 임박(7일 이내) 게임 있는 셀 살짝 강조
+### 1순위 — [캘린더] 출시 임박(7일 이내) 게임 있는 셀 살짝 강조
 **스코프**: 캘린더 셀에 release_date가 오늘~+7일인 게임이 있으면 셀에 옅은 강조(리스트 뷰의 노란 보더와 일관되게 보더/배경). renderCalendar에서 해당 셀에 `.day-soon` 클래스 부여, CSS로 강조.
 **예상 규모**: script.js +3줄, styles.css +3줄. node --check 통과 확인.
 
@@ -80,6 +77,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 [개발자] 1순위 완료: [푸터] mailto 링크 hover/focus 강조. `footer a:hover, footer a:focus`에 `color:var(--accent)` + `text-decoration:underline` 적용(기존 511~513 색 hover 블록을 focus·밑줄 포함으로 확장). 평상시 톤 #aaa 유지, CSS-only(styles.css 1줄 교체). node/brace 216/216.
 - 2026-05-29 16:28 [개발자] 1순위 완료: [모달] 열림/닫힘 페이드+스케일 트랜지션. `.modal` 박스에 `opacity`+`transform:scale` 트랜지션(0.18s ease) 추가, `.modal-overlay[hidden] .modal{opacity:0;scale(0.97)}`로 열림 시 살짝 확대되며 페이드인/닫힘 시 페이드아웃. 오버레이 opacity 페이드는 기존 구현 활용(무변경). `@media(prefers-reduced-motion:reduce)`에 `.modal` 트랜지션 제거+transform:none 분기 추가. JS 무변경(기존 modal.hidden 토글이 `[hidden]` 셀렉터 구동). styles.css +6, CSS brace 216/216, node --check 통과.
 - 2026-05-29 16:17 [개발자] 1순위 완료: [리스트뷰] 카드 상단 배너 카테고리 라벨 중복 제거. 이미지 없는 카드의 110px 컬러 그래디언트 배너+카테고리명 텍스트(.card-image-placeholder)를 카테고리 컬러 4px 바(.card-banner)로 교체 → 본문 category-tag와 중복 제거. script.js renderCard placeholder 출력 1줄 교체(텍스트 제거), styles.css +6(.card-banner 기본+카테고리 4색, 기존 색 재사용). 이미지 있는 카드/모달 영향 없음. node --check 통과, CSS brace 213/213.
 - 2026-05-29 16:11 [개발자] 1순위 완료: [리스트뷰] 단일 게임 날짜그룹 행 전체 폭. renderGroupedList에서 release_date별 건수(dateCounts) 집계 후 1건인 날짜의 renderCard에 single 플래그 전달 → article에 `single-game` 클래스. CSS `.games-grid .game-card.single-game{grid-column:1/-1}` 추가로 행 전체 폭, 2건↑ 날짜는 기존 그리드 유지. script.js +3, styles.css +4. node --check 통과, CSS brace 208/208.

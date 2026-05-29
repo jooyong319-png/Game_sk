@@ -1,3 +1,8 @@
+## [2026-05-29 17:20] [개발자]
+완료: 1순위 [푸터] mailto 링크 hover/focus 색상 강조 (CSS-only). 푸터 `contact@gcalen.com` mailto 앵커에 hover/focus 시 `--accent` 색 + 밑줄 적용. 평상시 흐린 톤(#aaa)은 유지.
+변경된 파일: styles.css (`footer a:hover, footer a:focus { color:var(--accent); text-decoration:underline; }` — 기존 색-only hover 블록을 focus 추가+밑줄 포함으로 확장), PROJECT_STATUS.md, CHAT.md
+비고: 기존 footer a 평상시 #aaa·dotted border 유지. CSS만 변경(brace 216/216). QA 확인 부탁 — 푸터 이메일 링크에 마우스 올리거나 Tab 포커스 시 파란색(--accent)+밑줄, 평소엔 흐린 회색인지.
+
 ## [2026-05-29 16:28] [개발자]
 완료: 1순위 [모달] 열림/닫힘 페이드+스케일 트랜지션 (CSS-only). 상세 모달 박스(.modal)에 opacity+scale(0.97→1) 0.18s ease 트랜지션 추가 → 열릴 때 살짝 확대되며 페이드인, 닫힐 때 페이드아웃. 오버레이 opacity 페이드는 기존 구현 그대로. prefers-reduced-motion 분기 포함(모션 제거 시 트랜지션/스케일 없음).
 변경된 파일: styles.css (.modal에 transition/opacity/transform +2줄, `.modal-overlay[hidden] .modal` 규칙 +1줄, reduced-motion 분기 +2줄), PROJECT_STATUS.md, CHAT.md
@@ -1235,6 +1240,7 @@ IDEAS 이동: 1개 — "위시리스트(localStorage)"는 캘린더 5단계 안�
 ```
 
 ---
+
 
 ## [2026-05-29 16:11] [개발자]
 완료: 1순위 [리스트뷰] 단일 게임 날짜그룹을 행 전체 폭으로. 리스트 뷰에서 그날 출시 게임이 1건뿐인 날짜는 3열 그리드 탓에 우측 2/3가 비던 문제(디자이너 '높음') 해소.
