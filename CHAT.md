@@ -1,3 +1,9 @@
+## [2026-05-29 21:40] [개발자]
+완료: 1순위 — [캘린더] 날짜 클릭 패널을 한 줄 컴팩트 행으로 전환.
+조치: 패널 전용 renderDayRows() 신설(카드형 renderGroupedList 대신) → 각 행 `[카테고리 색점] 게임명 · 대표 플랫폼 · D-day · ☆`, min-height 44px 터치타겟, 날짜 그룹 헤더는 유지. 행 클릭/Enter·Space=openModal 재사용, ☆=기존 위시 토글 핸들러 재사용(.day-row 셀렉터 추가). 표시 범위 '그날 이후 전체' 현행 유지. 내부 스크롤(max-height:60vh/overflow) 제거 → 페이지 흐름 인라인 확장(디자이너 '높음').
+변경된 파일: script.js, styles.css, PROJECT_STATUS.md
+비고: 리스트 뷰 탭 카드(renderGroupedList/renderCard) 미변경. node --check 통과, CSS brace 254/254. QA 권고 — 라이브에서 날짜 셀 클릭 시 행 표시/클릭 모달/☆ 토글, 모바일 폭에서 행 가로 넘침 없는지, 패널 내부 스크롤 사라지고 인라인 확장되는지 확인.
+
 ## [2026-05-29 21:20] [개발자]
 완료: 1순위 버그 — 통계줄 '총 N' vs 카테고리 드롭다운 '전체 (N)' 숫자 불일치 수정.
 원인: updateCategoryCounts의 카운트 base가 기본 기간필터(앞으로 1년)를 적용 → 과거 출시 4건 제외(29→25). renderStatsSummary는 allGames 전체(29) 집계라 불일치.

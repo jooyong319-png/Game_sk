@@ -573,7 +573,23 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* Day panel: '그날 이후 출시' grouped list — scrollable so long lists don't push page (TODO 1순위 2026-05-29) */
-.day-panel-list { max-height: 60vh; overflow-y: auto; margin-top: 0.6rem; }
+.day-panel-list { margin-top: 0.6rem; }
+/* 날짜 패널 컴팩트 행 (TODO 1순위 2026-05-29): 색점·게임명·플랫폼·D-day·☆, 행 높이 44px 터치타겟 */
+.day-row { display:flex; align-items:center; gap:0.55rem; min-height:44px; padding:0.3rem 0.5rem; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.15s; }
+.day-row:last-child { border-bottom:none; }
+.day-row:hover, .day-row:focus-visible { background:var(--surface); outline:none; }
+.day-row-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.day-row-dot.category-mobile_kr { background:#81c784; }
+.day-row-dot.category-pc_console_kr { background:#64b5f6; }
+.day-row-dot.category-global_aaa { background:#ba68c8; }
+.day-row-dot.category-new_server { background:#ff8a65; }
+.day-row-name { flex:1; min-width:0; font-size:0.88rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.day-row-plat { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); }
+.day-row-dday { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); font-weight:600; }
+.day-row-dday.today, .day-row-dday.soon { color:#f5a623; }
+.day-row-dday.past { color:var(--text-faint); font-weight:400; }
+.day-row .wishlist-btn { flex-shrink:0; background:transparent; border:none; cursor:pointer; font-size:1rem; line-height:1; padding:0 0.2rem; color:#888; }
+.day-row .wishlist-btn.active { color:#f5a623; }
 
 /* 게임 상세 페이지 (SEO 정적 페이지) */
 .game-detail {

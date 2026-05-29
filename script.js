@@ -190,6 +190,38 @@ function renderGroupedList(games) {
   return html;
 }
 
+// 날짜 패널 전용: 같은 출시일 게임을 날짜 헤더 아래로 묶되, 카드 대신 한 줄 컴팩트 행으로 렌더.
+// 행: [카테고리 색점] 게임명 · 대표 플랫폼 · D-day · ☆(위시). 클릭=openModal, ☆=위시 토글(기존 핸들러 재사용).
+function renderDayRows(games) {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let html = '';
+  let lastDate = null;
+  for (const g of games) {
+    if (g.release_date !== lastDate) {
+      lastDate = g.release_date;
+      const wd = getKoreanWeekday(g.release_date);
+      html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
+    }
+    const diff = Math.ceil((new Date(g.release_date) - today) / 86400000);
+    let dd, ddCls = '';
+    if (diff < 0) { dd = '출시됨'; ddCls = ' past'; }
+    else if (diff === 0) { dd = 'D-DAY'; ddCls = ' today'; }
+    else if (diff <= 7) { dd = 'D-' + diff; ddCls = ' soon'; }
+    else { dd = 'D-' + diff; }
+    const plat = (g.platforms || [])[0] || '';
+    const wished = wishlist.has(g.id);
+    const name = escapeHtml(g.name_ko || g.name_en || '');
+    html += `<div class="day-row" data-id="${escapeHtml(g.id)}" role="button" tabindex="0" title="${name}">`
+      + `<span class="day-row-dot category-${g.category}"></span>`
+      + `<span class="day-row-name">${name}</span>`
+      + (plat ? `<span class="day-row-plat">${escapeHtml(plat)}</span>` : '')
+      + `<span class="day-row-dday${ddCls}">${dd}</span>`
+      + `<button type="button" class="wishlist-btn${wished ? ' active' : ''}" data-id="${escapeHtml(g.id)}" aria-label="위시리스트 토글" aria-pressed="${wished ? 'true' : 'false'}">${wished ? '★' : '☆'}</button>`
+      + `</div>`;
+  }
+  return html;
+}
+
 function updateCategoryCounts() {
   if (!categoryFilter) return;
   const selectedPlatform = platformFilter.value.toLowerCase();
@@ -438,8 +470,14 @@ gamesList.addEventListener('click', e => {
     }
     return;
   }
-  const card = e.target.closest('.game-card');
-  if (card && card.dataset.id) openModal(card.dataset.id);
+  const row = e.target.closest('.day-row, .game-card');
+  if (row && row.dataset.id) openModal(row.dataset.id);
+});
+// 컴팩트 행 키보드 접근 (Enter/Space로 상세 모달)
+if (dayPanel) dayPanel.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const row = e.target.closest('.day-row');
+  if (row && row.dataset.id) { e.preventDefault(); openModal(row.dataset.id); }
 });
 modal.addEventListener('click', e => {
   const copyBtn = e.target.closest('.copy-link-btn');
@@ -641,7 +679,7 @@ function renderDayPanel(iso) {
   if (!list.length) {
     dayPanel.innerHTML = head + '<p class="day-empty">이 날짜 이후 출시 예정 게임이 없어요.</p>';
   } else {
-    dayPanel.innerHTML = head + '<div class="day-panel-list">' + renderGroupedList(list) + '</div>';
+    dayPanel.innerHTML = head + '<div class="day-panel-list">' + renderDayRows(list) + '</div>';
   }
   dayPanel.hidden = false;
 }
