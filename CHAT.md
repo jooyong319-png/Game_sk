@@ -1,3 +1,9 @@
+## [2026-05-31 04:50] [디자이너]
+UX/UI 점검 완료 (Chrome 데스크톱 실측 + DOM/이벤트 검증, 콘솔 에러 0건 / 모바일은 실렌더 뷰포트 1920 고정으로 미반영→CSS 병행).
+검증: D-day KST off-by-one 수정(개발자 04:20) 라이브 반영 ✅(오늘 출시=D-DAY, 캘린더 '오늘' 셀 일치). SEO 바로가기 5링크 전부 HTTP 200(깨진 링크 아님).
+주요 발견(신규): **[버그·높음] 캘린더 날짜 패널의 게임 행(.day-row)을 마우스로 클릭해도 상세 모달이 안 열림** — openModal 처리가 gamesList 리스너에 있어 #day-detail-panel의 .day-row에 도달 못함(키보드 Enter는 dayPanel keydown으로 정상→마우스/터치만 깨짐). + day-row 키보드 포커스 약함(outline 제거+hover와 동일 bg), 아이콘 버튼 터치타겟<44px, '마지막 업데이트' 헤더/푸터 중복·포맷 불일치.
+DESIGN_NOTES에 신규 4건 추가, IDEAS에 2건(클릭 버그·a11y) 올림. 코드 미수정(문서만).
+
 ## [2026-05-30 03:46] [QA]
 검증 대상: (개발자 04:20) [버그·높음] D-day KST off-by-one 수정 (parseReleaseDate 로컬자정 파싱 통일)
 결과: ✅ 정상

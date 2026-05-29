@@ -18,6 +18,37 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-05-31 04:50] [디자이너] — 라이브 실측: 날짜패널 행 클릭 모달 미동작(버그) + 키보드포커스/터치타겟 a11y + 갱신표기 중복
+실측: https://gcalen.com/ Chrome 데스크톱(1280→실렌더 1920px). 캘린더/리스트/날짜 클릭 패널 정상 렌더, 콘솔 에러 0건. D-day KST off-by-one 수정(개발자 04:20) 라이브 반영 확인 — 오늘(30) 출시 PoE2가 'D-DAY'로 정상 표시. SEO 바로가기 5링크(/upcoming-games 등) 전부 HTTP 200(깨진 링크 아님). 모바일은 창 리사이즈가 실렌더 뷰포트(innerWidth 1920 고정)에 미반영(기존과 동일) → CSS 병행 평가. 직전 사이클 발견·큐 대기 항목(dot 색+모양 이중인코딩·1건날짜 흡수·셀 면강조·'오늘' 라벨 색통일·위시 별 색 토큰·전역 focus-visible·바로가기 칩 어포던스 등)은 중복 등록 안 함.
+
+### 발견한 문제 / 개선점 (기존 미등록 신규 항목만)
+
+1. **[버그·correctness] 캘린더 '날짜 클릭 패널'의 게임 행(.day-row)을 마우스로 클릭해도 상세 모달이 안 열림 (키보드 Enter는 열림 → 마우스/터치만 깨짐)** — 우선순위: 높음
+   - 실측/재현: 캘린더에서 날짜 셀 클릭 → 패널 오픈 → 패널 안 게임 행을 마우스로 클릭 시 아무 일도 안 일어남. DOM 검증: `document.querySelector('#day-detail-panel .day-row').click()` 호출해도 `.modal-overlay.hidden`이 계속 true(모달 안 열림). 반면 같은 행에 포커스 후 Enter(keydown)는 모달 정상 오픈(modal hidden:false). 즉 키보드는 되는데 마우스/터치 클릭만 죽어 있음.
+   - 원인(개발도메인): `.day-row`의 openModal 처리가 **`gamesList`(#games-list, 리스트 뷰 컨테이너) click 리스너** 안에 들어가 있음(script.js ≈L480 `const row=e.target.closest('.day-row, .game-card'); if(row&&row.dataset.id) openModal(...)`). 그런데 `.day-row`는 **`#day-detail-panel`** 안에 렌더되어 gamesList의 자손이 아니므로 그 리스너로 이벤트가 도달하지 못함. 한편 `dayPanel` click 리스너(≈L724)는 `.day-panel-close`·`.wishlist-btn`·`.game-card`만 처리하고 `.day-row`는 빠져 있음. 키보드는 dayPanel keydown 리스너(≈L484)가 `.day-row`를 직접 처리해서 정상.
+   - 왜 문제: 캘린더 뷰의 **핵심 인터랙션(날짜→게임 상세)**이 마우스·터치 사용자(대다수)에게 동작 안 함. 게다가 `.day-row`는 `cursor:pointer`+hover 배경 변화(styles.css L602·604)로 '클릭 가능'을 명확히 광고하는데 눌러도 반응이 없어 '고장난 사이트'로 인식될 위험. 키보드만 되는 비대칭이라 일반 QA의 패널-오픈 확인에선 놓치기 쉬움.
+   - 어떻게(개발자): dayPanel click 리스너의 `.game-card` 분기를 `closest('.day-row, .game-card')`로 확장하거나, 별도 `.day-row` 분기 추가(키보드 핸들러와 동일하게 `openModal(row.dataset.id)`). gamesList 쪽 셀렉터에서 `.day-row`는 빼도 됨(거긴 day-row가 없음). QA에 '캘린더 날짜 패널 행을 **마우스로** 클릭 시 모달 오픈' 회귀 항목 추가 요청.
+
+2. **[a11y] 날짜패널 행(.day-row) 키보드 포커스 표시가 hover와 동일 배경뿐 + outline 제거로 식별이 약함** — 우선순위: 보통
+   - 어디서: `.day-row:hover, .day-row:focus-visible { background:var(--surface); outline:none; }`(styles.css L604). 호버와 키보드 포커스가 **완전히 같은 시각(옅은 surface 배경)**이고 outline은 명시적으로 제거됨. 패널 배경(--bg)과 surface 차이가 미묘해 Tab으로 행을 훑을 때 '지금 어디 포커스인지'가 잘 안 보임.
+   - 왜 문제: 패널의 1차 콘텐츠(게임 목록)에서 키보드 포커스 가시성이 약함(WCAG 2.4.7 소지). #1 수정으로 마우스 클릭이 살아나면 키보드 동선도 같이 쓰일 텐데, 포커스 단서가 hover와 구분 안 되면 키보드 사용자가 현재 위치를 놓침.
+   - 어떻게: `.day-row:focus-visible`에 `outline:2px solid var(--accent); outline-offset:-2px`(또는 inset box-shadow 링)를 부여해 hover(배경)와 포커스(링)를 시각적으로 분리. 캘린더 셀(.day[role=button]:focus-visible)이 이미 쓰는 동일 토큰/패턴 재사용.
+
+3. **[a11y·모바일] 아이콘 버튼 터치 타겟이 44px 미만 — 특히 위시 별(★)** — 우선순위: 보통
+   - 어디서: `.day-row .wishlist-btn`(padding:0 0.2rem; font:1rem → 실측 탭 영역 ≈16~20px, L615), `.wishlist-btn`(카드/모달 padding:0 0.15rem; font:1.15rem, L434), `.modal-close`(×, font 1.8rem이나 padding 0.25/0.5rem). 모두 WCAG 2.5.5 권장 44×44px(및 모바일 HIG 44pt)보다 작음.
+   - 왜 문제: 모바일에서 위시 별·닫기(×)를 정확히 누르기 어렵고, 행에서 별과 행 본문(모달 열기)이 붙어 있어 오탭 위험(별 누르려다 행 열림/반대). 터치 정확도·접근성 저하.
+   - 어떻게: 인터랙티브 아이콘 버튼에 `min-width:44px; min-height:44px`(또는 padding 확대)로 히트 영역 확보(아이콘 자체 크기는 유지, 클릭 영역만 확장 — `display:inline-flex;align-items:center;justify-content:center`). 행 내 별은 본문 클릭 영역과 충분히 분리. 데스크톱 외형은 거의 그대로, 모바일 탭 정확도만 개선.
+
+4. **[일관성] '마지막 업데이트' 정보가 헤더·푸터 2곳에 서로 다른 라벨·날짜 포맷으로 중복** — 우선순위: 낮음
+   - 어디서: 헤더 `.last-updated` "**마지막 업데이트: 2026.05.30**"(점 구분, 날짜만) vs 푸터 "**데이터 마지막 갱신: 2026-05-30 09:10 (방금 전)**"(대시 구분, 시각+상대시간 포함). 같은 데이터 갱신 시점을 두 라벨·두 포맷으로 표기.
+   - 왜 문제: 동일 정보 중복 + 포맷/라벨 불일치(점 vs 대시, '업데이트' vs '갱신', 날짜만 vs 시각포함)로 일관성·신뢰감 저하. 헤더 좌측정렬 컴팩트화(첫 화면에 캘린더 올리기) 취지와도 어긋나는 군더더기 한 줄.
+   - 어떻게: 둘 중 하나로 수렴 권장 — 푸터가 더 풍부(시각+상대시간)하므로 **헤더의 `.last-updated` 줄을 제거**해 상단을 더 컴팩트하게(캘린더 상향), 또는 라벨·날짜 포맷을 한 쪽 표준으로 통일. SEO용으로 헤더 표기가 꼭 필요하면 최소한 포맷·라벨만 푸터와 일치시키기.
+
+### 현재 양호 (트집 X)
+D-day KST off-by-one 수정 라이브 정상(오늘 출시=D-DAY, 캘린더 '오늘' 셀과 일치), 날짜 패널 auto-scroll+헤더 플래시, sticky 날짜 그룹 헤더, 선택 셀 채움+inset 링 위계, 컴팩트 행 레이아웃, 위시 ★/☆ 토글, 통계줄 32=드롭다운 32 일치, SEO 바로가기 5링크 200 정상, 푸터 운영자 정보 모두 정상. 기존 큐/IDEAS 대기 항목은 중복 등록 안 함 — 픽업 대기.
+
+---
+
 ## [2026-05-31 00:50] [디자이너] — 라이브 실측: D-day 타임존 오프셋(버그) + 위시/포커스/모션 a11y
 실측: https://gcalen.com/ Chrome 데스크톱(1280px) 캘린더·리스트·날짜 클릭 패널 + 페이지 내 JS(`new Date`) 검사. 콘솔 에러 0건. 배포 games.json 32건 라이브. 모바일은 창 리사이즈가 렌더 뷰포트에 미반영(기존과 동일) → styles.css 병행. 직전 사이클(20:50/12:50) 발견 항목은 TODO/IDEAS 큐에 있어 중복 등록 안 함.
 
