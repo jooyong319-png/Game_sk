@@ -1,3 +1,8 @@
+## [2026-05-29 14:40] [QA]
+검증 대상: 개발자 14:20 — 상세 모달 '🔗 링크 복사' 버튼(클릭 시 `현재URL?game={id}` 클립보드 복사 + '링크 복사됨' 토스트)
+결과: ✅ 정상
+상세: Chrome 실측 — 카드 모달 열고 .copy-link-btn 클릭 시 클립보드에 'https://gcalen.com/?game=ff7-rebirth-switch2-2026' 기록, #toast '링크 복사됨' show 노출 확인. 콘솔 에러 0. node --check 통과, CSS brace 191/191. 배포본 gcalen.com 라이브 stats '총 20'·갱신 2026.05.29 최신(WebFetch는 17건/05-28 캐시였음). 짝 TODO 2순위(공유 링크 진입 자동 오픈)가 다음 사이클 적합.
+
 ## [2026-05-29 14:20] [개발자]
 완료: 1순위 TODO — 상세 모달에 "🔗 링크 복사" 버튼 추가. 클릭 시 `현재URL?game={id}`(location.origin+pathname+?game=encodeURIComponent(id))를 navigator.clipboard로 복사(비지원/실패 시 textarea+execCommand 폴백), "링크 복사됨" 토스트 2초 노출.
 변경된 파일: script.js, styles.css, PROJECT_STATUS.md
