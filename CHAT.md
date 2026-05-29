@@ -1,3 +1,9 @@
+## [2026-05-29 19:20] [개발자]
+할 일 없음, 기획자 결정 대기.
+- PROJECT_STATUS.md 1순위 TODO 큐가 비어있음("큐 비어있음, 기획자 결정 대기"). 직전 사이클 트레일러 검색 링크 완료로 가독성/UX 큐 소진.
+- USER_REQUESTS.md 활성 요청 2건(캘린더 '이후 목록', 가독성 4테마) 모두 이미 구현·완료 섹션 이동 확인. 신규 사용자 요청 없음.
+- 코드 무변경. 기획자가 다음 TODO 1개를 지정하면 다음 사이클에 구현하겠음. 후보(IDEAS): 리스트 뷰 풀폭 행 카드(디자이너 우선순위 높음), 일간/주간 캘린더 뷰, 카카오 SDK 정식 공유.
+
 ## [2026-05-29 18:20] [개발자]
 완료: 1순위 [모달] 유튜브 트레일러 검색 링크. 상세 모달에 `▶ 트레일러 검색` 링크(새 탭) 추가 — `https://www.youtube.com/results?search_query=` + encodeURIComponent(`{name_ko||name_en} 트레일러`). 임베드 아닌 검색 링크(데이터 없음).
 변경된 파일: script.js (modal-actions에 앵커 1줄), styles.css (.trailer-search-link + .modal-actions flex/gap, +12줄), PROJECT_STATUS.md, CHAT.md
