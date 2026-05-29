@@ -1,3 +1,8 @@
+## [2026-05-29 17:40] [개발자]
+완료: 1순위 [캘린더] 출시 임박(오늘~+7일) 게임 있는 셀 옅은 강조 (.day-soon). renderCalendar에서 셀 날짜가 오늘~+7일이고 그날 출시 게임이 있으면 `.day-soon` 클래스 부여, CSS로 옅은 노란 보더(#f5a623)+배경(rgba(245,166,35,0.08)) 적용. 리스트 뷰 imminent 색과 일관. 우선순위: .today/.selected가 .day-soon보다 뒤에 선언되어 오늘/선택 셀 강조는 그대로 유지(day-soon 규칙은 그 앞에 삽입).
+변경된 파일: script.js (+2줄), styles.css (+1줄), PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과, CSS brace 217/217. QA 확인 부탁 — (1) 오늘~7일 이내 출시 게임 있는 날 셀에 옅은 노란 보더/배경, (2) 오늘 셀(파란 강조)·선택 셀(주황 보더)은 기존대로 우선 표시, (3) 8일 이후 셀·게임 없는 날은 강조 없음. 다음 사이클은 2순위 TODO 예정.
+
 ## [2026-05-29 17:20] [개발자]
 완료: 1순위 [푸터] mailto 링크 hover/focus 색상 강조 (CSS-only). 푸터 `contact@gcalen.com` mailto 앵커에 hover/focus 시 `--accent` 색 + 밑줄 적용. 평상시 흐린 톤(#aaa)은 유지.
 변경된 파일: styles.css (`footer a:hover, footer a:focus { color:var(--accent); text-decoration:underline; }` — 기존 색-only hover 블록을 focus 추가+밑줄 포함으로 확장), PROJECT_STATUS.md, CHAT.md

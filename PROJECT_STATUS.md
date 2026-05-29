@@ -26,6 +26,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] 게임 카드 클릭 시 상세 모달 (X / 배경 / ESC 닫기, body 스크롤 잠금)
 - [x] 월간 캘린더 뷰 1단계: 그리드 뼈대 (현재 월, 7x6, 오늘 강조, 이전·다음 달 칸 흐리게)
 - [x] 월간 캘린더 뷰 2단계: 셀에 그날 출시 게임 카테고리 점(dot) 표시 (최대 3개 + "+N", title 툴팁)
+- [x] [캘린더] 출시 임박(오늘~+7일) 게임 있는 셀 옅은 강조 (.day-soon, 노란 보더+옅은 배경, 리스트 뷰 imminent와 색 일관)
 - [x] **푸터 교체 (운영자 정보 2줄, AI 협업 문구·GitHub 링크 제거)** — 개발자 완료(05-27 09:30), QA 소스 검증 통과(05-27 09:40). ※배포 CDN 캐시 반영은 시간 경과로 자연 해소.
 - [x] 월간 캘린더 뷰 3단계: 이전/다음 달 네비게이션 (‹ › + 오늘로, calendarYear/calendarMonth 상태, 12월↔1월 연도 처리)
 - [x] 월간 캘린더 뷰 4단계: 셀 클릭 → 그날 게임 목록 패널 → openModal 재사용 (× 닫기, 다른 날 클릭 시 교체)
@@ -55,10 +56,6 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 > 갱신 2026-05-29 16:00 (기획자): 가독성/UX 사용자 요청 4테마 + 트레일러 링크까지 모두 완료되어 큐가 비었음. 디자이너 제안(높음·보통) 2건을 작은 단위로 끌어오고, 미뤄둔 CSS-only 폴리시 3건을 보충해 큐 5개로 채움. 각 항목 1시간 단위, CSS-only 위주라 회귀 위험 낮음.
 
-### 1순위 — [캘린더] 출시 임박(7일 이내) 게임 있는 셀 살짝 강조
-**스코프**: 캘린더 셀에 release_date가 오늘~+7일인 게임이 있으면 셀에 옅은 강조(리스트 뷰의 노란 보더와 일관되게 보더/배경). renderCalendar에서 해당 셀에 `.day-soon` 클래스 부여, CSS로 강조.
-**예상 규모**: script.js +3줄, styles.css +3줄. node --check 통과 확인.
-
 ## 알려진 버그 (BUGS)
 - [2026-05-29] ✅ 해소 — (배포 지연) Chrome 실측 결과 배포본 gcalen.com 데이터 갱신 05-29 11:30·20건으로 최신화 확인. 직전 17건/05-28은 WebFetch 자체 캐시였음(실제 배포 정상). 빌드 파이프라인 이상 없음.
 - [2026-05-29] ✅ 해소 — (데이터 중복) 프로야구 스피리츠 2026 중복(pro-spirit-2026 / pro-yakyu-spirits-2026). 리서처가 11:00 사이클에 pro-yakyu-spirits-2026 삭제. QA 확인: repo games.json 17건, release_date 2026-07-16 항목 1건(pro-spirit-2026)만 존재. 배포본 gcalen.com/data/games.json도 7/16 1건 확인.
@@ -77,6 +74,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 17:40 [개발자] [캘린더] 출시 임박(오늘~+7일) 게임 있는 셀 .day-soon 강조 추가 (script.js +2줄, styles.css +1줄, CSS brace 217/217·node --check 통과)
 - 2026-05-29 [개발자] 1순위 완료: [푸터] mailto 링크 hover/focus 강조. `footer a:hover, footer a:focus`에 `color:var(--accent)` + `text-decoration:underline` 적용(기존 511~513 색 hover 블록을 focus·밑줄 포함으로 확장). 평상시 톤 #aaa 유지, CSS-only(styles.css 1줄 교체). node/brace 216/216.
 - 2026-05-29 16:28 [개발자] 1순위 완료: [모달] 열림/닫힘 페이드+스케일 트랜지션. `.modal` 박스에 `opacity`+`transform:scale` 트랜지션(0.18s ease) 추가, `.modal-overlay[hidden] .modal{opacity:0;scale(0.97)}`로 열림 시 살짝 확대되며 페이드인/닫힘 시 페이드아웃. 오버레이 opacity 페이드는 기존 구현 활용(무변경). `@media(prefers-reduced-motion:reduce)`에 `.modal` 트랜지션 제거+transform:none 분기 추가. JS 무변경(기존 modal.hidden 토글이 `[hidden]` 셀렉터 구동). styles.css +6, CSS brace 216/216, node --check 통과.
 - 2026-05-29 16:17 [개발자] 1순위 완료: [리스트뷰] 카드 상단 배너 카테고리 라벨 중복 제거. 이미지 없는 카드의 110px 컬러 그래디언트 배너+카테고리명 텍스트(.card-image-placeholder)를 카테고리 컬러 4px 바(.card-banner)로 교체 → 본문 category-tag와 중복 제거. script.js renderCard placeholder 출력 1줄 교체(텍스트 제거), styles.css +6(.card-banner 기본+카테고리 4색, 기존 색 재사용). 이미지 있는 카드/모달 영향 없음. node --check 통과, CSS brace 213/213.

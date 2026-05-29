@@ -549,6 +549,8 @@ function renderCalendar() {
     let gameLabel = '';
     if (!isOther) {
       const list = dayMap[d.getDate()] || [];
+      const soonDiff = (d.getTime() - today.getTime()) / 86400000;
+      if (list.length && soonDiff >= 0 && soonDiff <= 7) cls.push('day-soon');
       if (list.length) {
         const shown = list.slice(0, 3);
         const overflow = list.length - 3;
