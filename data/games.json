@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-29T12:35:00+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-29T12:35:00+09:00",
+  "last_updated": "2026-05-30T09:10:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-05-30T09:10:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -626,6 +626,70 @@
       ],
       "image_url": null,
       "source_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=240585"
+    },
+    {
+      "id": "make-drama-mad-20260604",
+      "name_ko": "메이크 드라마: MAD",
+      "name_en": "Make Drama: MAD",
+      "release_date": "2026-06-04",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "위메이드커넥트",
+      "publisher": "위메이드커넥트",
+      "description": "미소녀 캐릭터를 수집·육성하는 서브컬처 RPG. 사전예약 50만 돌파, 청소년이용불가 등급으로 구글 플레이·원스토어 선출시(2026-06-04).",
+      "genres": [
+        "서브컬처",
+        "수집형RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316934"
+    },
+    {
+      "id": "lineage-m-server-kent-oren-20260318",
+      "name_ko": "리니지M: 리부트 신규 서버 '켄트'·'오렌' 오픈",
+      "name_en": null,
+      "release_date": "2026-03-18",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "리니지M",
+      "publisher": "엔씨소프트",
+      "description": "'ContiNew' 업데이트로 레거시 월드와 분리 운영되는 리부트 월드 신규 서버 2종. 특수 던전 '엘모어 군단 섬멸 작전', '신성검사' 클래스 리부트. 사전 생성 30분 만에 마감(2026-03-18 오픈).",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://sports.news.nate.com/view/20260228n02916"
+    },
+    {
+      "id": "nightcrows-server-philippus-20260423",
+      "name_ko": "나이트 크로우: 신규 서버 '필리푸스' 오픈",
+      "name_en": null,
+      "release_date": "2026-04-23",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "나이트 크로우",
+      "publisher": "위메이드",
+      "description": "서비스 3주년 대규모 업데이트로 기존 서버와 1년 이상 분리 운영되는 독립 서버. 신규 클래스 '권갑', 신규 지역 '탈라시온' 동시 추가. 가이드 미션 완료 시 최대 15만 미스틱 다이아 등 보상(2026-04-23 오픈).",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=315487"
     }
   ]
 }
