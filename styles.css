@@ -603,6 +603,7 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .day-row:last-child { border-bottom:none; }
 .day-row:hover, .day-row:focus-visible { background:var(--surface); outline:none; }
 .day-row-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.day-row-date { flex-shrink:0; font-size:0.78rem; color:var(--text-dim); font-variant-numeric:tabular-nums; min-width:5.5em; }
 .day-row-dot.category-mobile_kr { background:#81c784; }
 .day-row-dot.category-pc_console_kr { background:#64b5f6; }
 .day-row-dot.category-global_aaa { background:#ba68c8; }

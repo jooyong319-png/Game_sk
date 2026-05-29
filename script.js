@@ -194,10 +194,14 @@ function renderGroupedList(games) {
 // 행: [카테고리 색점] 게임명 · 대표 플랫폼 · D-day · ☆(위시). 클릭=openModal, ☆=위시 토글(기존 핸들러 재사용).
 function renderDayRows(games) {
   const today = new Date(); today.setHours(0, 0, 0, 0);
+  // 같은 날짜 출시 건수 집계: 1건 날짜는 날짜를 행 안으로 흡수(헤더 생략), 2건↑만 날짜 그룹 헤더 유지.
+  const dateCounts = {};
+  for (const g of games) dateCounts[g.release_date] = (dateCounts[g.release_date] || 0) + 1;
   let html = '';
   let lastDate = null;
   for (const g of games) {
-    if (g.release_date !== lastDate) {
+    const single = dateCounts[g.release_date] === 1;
+    if (!single && g.release_date !== lastDate) {
       lastDate = g.release_date;
       const wd = getKoreanWeekday(g.release_date);
       html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
@@ -211,7 +215,12 @@ function renderDayRows(games) {
     const plat = (g.platforms || [])[0] || '';
     const wished = wishlist.has(g.id);
     const name = escapeHtml(g.name_ko || g.name_en || '');
-    html += `<div class="day-row" data-id="${escapeHtml(g.id)}" role="button" tabindex="0" title="${name}">`
+    const wdInline = getKoreanWeekday(g.release_date);
+    const dateInline = single
+      ? `<span class="day-row-date">${formatDate(g.release_date)}${wdInline ? ' (' + wdInline + ')' : ''}</span>`
+      : '';
+    html += `<div class="day-row${single ? ' single-date' : ''}" data-id="${escapeHtml(g.id)}" role="button" tabindex="0" title="${name}">`
+      + dateInline
       + `<span class="day-row-dot category-${g.category}"></span>`
       + `<span class="day-row-name">${name}</span>`
       + (plat ? `<span class="day-row-plat">${escapeHtml(plat)}</span>` : '')
