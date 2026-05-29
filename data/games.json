@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-29T11:45:00+09:00",
-  "last_researched_by": "Claude (restore + retention policy change)",
+  "last_updated": "2026-05-29T12:00:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-05-29T12:00:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -417,6 +417,49 @@
       ],
       "image_url": null,
       "source_url": "https://l9.onstove.com/ko/promotion/dinapheri/260327"
+    },
+    {
+      "id": "bns-revolution-server-yuilmui-20260528",
+      "name_ko": "블소 레볼루션: 신규 서버 '유일무이' 오픈",
+      "name_en": null,
+      "release_date": "2026-05-28",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "블레이드 & 소울 레볼루션",
+      "publisher": "넷마블",
+      "description": "언리얼엔진5 전환 'NEXT' 업데이트와 함께 오픈한 신규 서버. 홍문 70레벨 성장 지원·신화 장비 등 신규/복귀 정착 혜택 제공. 신규 직업 '환술사' 동반(2026-05-28 오픈).",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "http://www.1conomynews.co.kr/news/articleView.html?idxno=31591"
+    },
+    {
+      "id": "poe2-season-return-of-ancients-20260530",
+      "name_ko": "패스 오브 엑자일 2: 새 시즌 '고대의 귀환'(0.5.0) 시작",
+      "name_en": "Path of Exile 2: Return of the Ancients (0.5.0)",
+      "release_date": "2026-05-30",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "패스 오브 엑자일 2",
+      "publisher": "그라인딩기어게임즈",
+      "description": "0.5.0 대형 콘텐츠 업데이트 신규 리그. 6개 엔드게임 스토리라인, 신규 전직 2종(마셜 아티스트·스피릿워커), 신규 최종보스·챌린지 리그 추가. 한국 5월 30일(토) 오전 5시 시작.",
+      "genres": [
+        "ARPG",
+        "핵앤슬래시",
+        "새 시즌"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316222&site=poe"
     }
   ]
 }
