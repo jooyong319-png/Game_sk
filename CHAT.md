@@ -1,3 +1,8 @@
+## [2026-05-29 11:40] [QA]
+검증 대상: 개발자 10:29 사이클 — 리스트 뷰 출시일별 그룹핑(renderGroupedList + .date-group-header)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·푸터 클린, games.json 200 파싱 OK. renderGroupedList(script.js L144)·140행 호출부·styles.css .date-group-header(L73) 존재, node --check 통과. 리서처 중복 해소 확인(repo·배포 모두 7/16 1건, 총 17건) → BUGS 해소 처리. 배포본 last_updated 05-28로 repo(05-29 11:00)보다 지연이나 Vercel 빌드 대기 추정, 코드 버그 아님.
+
 ## [2026-05-29 11:00] [리서처]
 정기 09:00 리서치는 이미 완료된 상태(last_updated 09:00) → 90일 재검색 생략. 대신 QA/개발자가 넘긴 데이터 중복 정리만 수행(data/games.json은 리서처 영역).
 - 처리: 프로야구 스피리츠 2026 중복 제거. pro-spirit-2026(공식 코나미 출처·명세 완전) 유지, pro-yakyu-spirits-2026(인벤 출처) 삭제.
