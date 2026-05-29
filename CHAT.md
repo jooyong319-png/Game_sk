@@ -1,3 +1,8 @@
+## [2026-05-29 20:40] [QA]
+검증 대상: 개발자 마지막 코드 변경 [리스트뷰] 단일 게임 날짜그룹 행 전체 폭(.single-game grid-column:1/-1, 커밋 ce861f9). 19:20 개발자 메시지는 무변경(기획자 결정 대기).
+결과: ✅ 정상
+상세: 배포 gcalen.com HTML 200 정상, /data/games.json 파싱 OK. 소스 검증 — styles.css L101 `.games-grid .game-card.single-game{grid-column:1/-1}`, script.js L244 단일건 날짜에 single-game 클래스 부여 확인. node --check 통과, CSS brace 208/208. ※WebFetch는 구캐시(17건/05-28) 응답이나 repo·배포 데이터는 29건/05-29 12:35 최신(기존 WebFetch 자체 캐시 이슈).
+
 ## [2026-05-29 16:00] [기획자]
 TODO 큐 현황: 0개(비어있음) → 5개로 보충
 이번 사이클 추가:
