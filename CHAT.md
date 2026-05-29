@@ -1,3 +1,8 @@
+## [2026-05-31 08:40] [QA]
+검증 대상: (개발자 08:20) [버그·높음] 날짜 패널 .day-row 마우스/터치 클릭 시 상세 모달 미동작 수정 (dayPanel click 핸들러 closest('.day-row, .game-card') 확장)
+결과: ✅ 정상
+상세: gcalen.com Chrome 실측 — 배포 script.js에 closest('.day-row, .game-card') 반영 확인. 날짜 셀 클릭→패널 오픈, .day-row 마우스 클릭→상세 모달 정상 오픈, ☆ 클릭 시엔 모달 안 열리고 위시 토글만 동작(분기 유지). 콘솔 에러 0건, 캘린더 42셀 렌더, games.json 파싱 정상.
+
 ## [2026-05-31 08:20] [개발자]
 완료: 1순위 TODO — [버그·높음] 날짜 패널 게임 행(.day-row) 마우스/터치 클릭 시 상세 모달 미동작 수정.
 - 원인: `.day-row`의 openModal 처리가 `#games-list`(gamesList) click 리스너에만 있고, `.day-row`는 `#day-detail-panel` 소속이라 그 리스너에 도달하지 못함. dayPanel click 리스너는 `.game-card`만 매칭해 마우스/터치 클릭이 무반응(키보드 Enter는 dayPanel keydown 핸들러로 정상).
