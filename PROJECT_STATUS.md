@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-29 22:00 (기획자 — 라이브 TDZ 다운 긴급 1순위 등재, 큐 3→5)
+마지막 갱신: 2026-05-29 22:20 (개발자 — 라이브 TDZ 다운 긴급 복구, 큐 5→4)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -58,30 +58,25 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[버그수정] 통계줄 '총 N' vs 카테고리 드롭다운 '전체 (N)' 숫자 불일치 해소** (updateCategoryCounts 카운트 base에서 기간(period) 날짜창 제외 → 통계 요약과 동일 모집단 allGames 사용. 기본 상태 29=29 일치. 플랫폼/검색/주/위시 필터는 카운트에 계속 반영, 기간 필터는 표시 목록 renderGames에만 적용. JS 소규모, 외형/문구 무변경) — 개발자 완료 2026-05-29 21:20
 
 - [x] **[캘린더] 날짜 클릭 패널 한 줄 컴팩트 행 전환** (패널 전용 renderDayRows: `색점·게임명·플랫폼·D-day·☆`, min-height 44px, 날짜그룹 헤더 유지, 클릭/Enter·Space=openModal·☆=위시 토글 재사용, 표시범위 '그날 이후 전체' 유지, 내부 스크롤 제거→인라인 확장) — 개발자 완료 2026-05-29 21:40
+- [x] **[긴급·버그] 라이브 전체 다운(script.js TDZ dayPanel ReferenceError) 복구** (`const dayPanel` 선언을 첫 사용 L477 위(모달 핸들부 L379)로 hoist, Stage4 중복 선언 제거. runtime DOM 스텁 로드로 top-level ReferenceError 0건 확인) — 개발자 완료 2026-05-29 22:20
 
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-29 (기획자): 큐 3→5개 보충. **라이브 전체 다운(TDZ) 긴급 복구를 1순위로 등재** — QA 21:47 보고 BUG. 디자이너 '에러 상태 fallback'(높음)을 2순위로 승격(크래시 재발 시 무한 로딩 방지). 기존 운영자/디자이너 요청 3건은 3~5순위로 한 칸씩 밀림. 모두 작고 명확.
 
-1. **[긴급·버그] script.js TDZ 'dayPanel' ReferenceError 복구 (라이브 전체 다운)** ⭐
-   - 증상: gcalen.com 진입 시 콘솔 `Cannot access 'dayPanel' before initialization`(script.js:477) → 스크립트 중단, 캘린더 0셀·'불러오는 중...' 고착, 전 기능 미동작. data/games.json은 정상(코드 회귀).
-   - 원인: `const dayPanel = document.getElementById('day-detail-panel');`이 L652에 선언되는데 L477(keydown 리스너)·L525(ESC 핸들러)가 그 위에서 참조 → TDZ. 21:40 컴팩트행 커밋(8fbbba2) 회귀.
-   - 조치: `const dayPanel` 선언을 첫 사용(L477) 위로 끌어올림(다른 top-level DOM 핸들 선언부 근처가 적절). 중복 선언 없도록 기존 L652 라인 제거.
-   - 검증: `node --check`는 TDZ 미검출이므로 **반드시 라이브/브라우저 콘솔에서 ReferenceError 0건 + 캘린더 셀 렌더 + 날짜 패널/ESC 동작** 확인.
-
-2. **[안정성] 로딩 실패·크래시 시 에러 상태 fallback** (디자이너 '높음')
+1. **[안정성] 로딩 실패·크래시 시 에러 상태 fallback** (디자이너 '높음')
    - main script와 **독립된 inline `<script>`**로 8~10초 타임아웃 가드: 그 시간까지 캘린더/게임 카드가 렌더되지 않으면 '데이터를 불러오지 못했어요' 안내 + '새로고침' 버튼을 본문에 노출(무한 '불러오는 중...' 방지).
    - 메인 스크립트가 죽어도 동작해야 하므로 의존성 없이 작성. 정상 로드 시에는 가드가 스스로 비활성(렌더 감지 시 타이머 클리어).
 
-3. **[헤더] 좌측정렬 + 컴팩트화로 캘린더를 첫 화면 위로** (운영자 요청)
+2. **[헤더] 좌측정렬 + 컴팩트화로 캘린더를 첫 화면 위로** (운영자 요청)
    - 헤더 상하 패딩 축소, 제목/부제 좌측정렬, stats-summary 한 줄 유지 → 상단 높이 절감(첫 화면에 캘린더가 더 올라오게).
    - CSS-only(레이아웃/정렬/패딩만), 텍스트·기능 변경 없음. 모바일에서도 정렬 깨지지 않게 ≤480px 확인.
 
-4. **[뷰] 진입 시 기본 뷰를 캘린더로 고정** (운영자 요청, 보통)
+3. **[뷰] 진입 시 기본 뷰를 캘린더로 고정** (운영자 요청, 보통)
    - `localStorage 'gcalen.view'`가 비어있을 때(최초 방문) 기본값을 `'calendar'`로. 이미 선택 기억 로직 있으니 기본값만 조정.
    - 기존 토글/기억 동작은 유지. JS 1~2줄.
 
-5. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통→승격')
+4. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통→승격')
    - 선택 셀 보더가 임박 셀(.day-soon) 보더와 색 충돌 → 선택은 보더 대신 옅은 배경 채움+inset 링으로 표현. 오늘=파랑/임박=amber 보더는 그대로 유지해 3상태(오늘/임박/선택) 위계 분리.
    - CSS-only(`.day.selected` 등 규칙만), 신규 색 추가 없이 기존 토큰 재사용.
 
@@ -90,7 +85,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 
 ## 알려진 버그 (BUGS)
-- [2026-05-29] ❌ 치명적/미해소 — (배포 사이트 전체 미동작) script.js TDZ 에러: dayPanel을 L477(keydown 리스너)·L525(ESC)에서 참조하나 `const dayPanel`은 L652에 선언 → 모듈 로드 시 'Cannot access dayPanel before initialization' ReferenceError로 스크립트 중단. 결과: 캘린더 0셀, '불러오는 중...' 고착, 통계/리스트/모달 등 전 기능 미동작. 재현: gcalen.com 진입 후 DevTools 콘솔 확인(script.js:477). data/games.json은 29건/05-29T12:35로 정상(데이터 무관). 원인: 21:40 컴팩트행 커밋(8fbbba2)이 dayPanel 리스너를 선언부 위에 추가. node --check는 TDZ 미검출. 권고: `const dayPanel = document.getElementById('day-detail-panel');`를 첫 사용(L477) 위로 이동.
+- [2026-05-29] ✅ 해소 — 개발자 fix(2026-05-29 22:20): `const dayPanel` 선언을 모달 핸들부(L379, 첫 사용 L477 위)로 hoist + Stage4 중복 선언 제거 → TDZ 제거. runtime DOM 스텁으로 top-level ReferenceError 0건 확인(node --check는 TDZ 미검출이므로 실행 검증 병행). QA 라이브 콘솔 재확인 권고. [이전 보고] (배포 사이트 전체 미동작) script.js TDZ 에러: dayPanel을 L477(keydown 리스너)·L525(ESC)에서 참조하나 `const dayPanel`은 L652에 선언 → 모듈 로드 시 'Cannot access dayPanel before initialization' ReferenceError로 스크립트 중단. 결과: 캘린더 0셀, '불러오는 중...' 고착, 통계/리스트/모달 등 전 기능 미동작. 재현: gcalen.com 진입 후 DevTools 콘솔 확인(script.js:477). data/games.json은 29건/05-29T12:35로 정상(데이터 무관). 원인: 21:40 컴팩트행 커밋(8fbbba2)이 dayPanel 리스너를 선언부 위에 추가. node --check는 TDZ 미검출. 권고: `const dayPanel = document.getElementById('day-detail-panel');`를 첫 사용(L477) 위로 이동.
 - [2026-05-29] ✅ 해소 — (모바일 캘린더 가로 오버플로) 개발자 fix: grid-template-columns repeat(7,1fr)→repeat(7,minmax(0,1fr)) + .day-game-label min-width:0. 트랙이 최장 게임명 폭으로 확장되던 원인 제거(minmax 0 바닥 + flex/grid 자식 min-width:0). QA 모바일폭 재측정 권고. [이전 보고] 모바일폭에서 .calendar-grid가 컨테이너를 넘쳐 깨짐. 재현: Chrome에서 .calendar-view 폭 360px 제약 시 grid clientWidth 326px vs scrollWidth 727px. 원인: repeat(7,1fr) + 셀 .day-game-label white-space:nowrap → 1fr min-content가 최장 게임명 폭으로 확장(overflow:hidden/ellipsis는 트랙 사이징에 무효). 권고: repeat(7,minmax(0,1fr)) 또는 .day/.day-game-label min-width:0.
 - [2026-05-29] ✅ 해소 — (배포 지연) Chrome 실측 결과 배포본 gcalen.com 데이터 갱신 05-29 11:30·20건으로 최신화 확인. 직전 17건/05-28은 WebFetch 자체 캐시였음(실제 배포 정상). 빌드 파이프라인 이상 없음.
 - [2026-05-29] ✅ 해소 — (데이터 중복) 프로야구 스피리츠 2026 중복(pro-spirit-2026 / pro-yakyu-spirits-2026). 리서처가 11:00 사이클에 pro-yakyu-spirits-2026 삭제. QA 확인: repo games.json 17건, release_date 2026-07-16 항목 1건(pro-spirit-2026)만 존재. 배포본 gcalen.com/data/games.json도 7/16 1건 확인.
@@ -117,6 +112,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 22:20 [개발자] 긴급 1순위 완료: 라이브 전체 다운(script.js TDZ dayPanel ReferenceError) 복구. `const dayPanel = document.getElementById('day-detail-panel');`를 모달 핸들 선언부(L379, 첫 사용 keydown L477·ESC L525 위)로 hoist하고 Stage4의 중복 선언(구 L652) 제거. node --check는 TDZ 미검출이라 runtime DOM 스텁으로 top-level 실행해 ReferenceError 0건 확인. script.js만 수정(+1/-1줄). QA에 라이브 콘솔 ReferenceError 0건+캘린더 셀 렌더+날짜 패널/ESC 동작 실측 요청.
 - 2026-05-29 22:00 [기획자] 라이브 전체 다운(script.js TDZ dayPanel ReferenceError, QA 21:47 보고)을 긴급 1순위 TODO로 등재. 디자이너 에러상태 fallback(높음)을 2순위 승격. 기존 운영자/디자이너 TODO 3건은 3~5순위로 밀림. 큐 3→5개. 코드 미수정(문서만).
 - 2026-05-29 21:40 [개발자] 1순위 완료: [캘린더] 날짜 패널 한 줄 컴팩트 행 전환. renderDayRows() 신설(카드형 대신), 행=색점·게임명·플랫폼·D-day·☆ min-height 44px, 날짜그룹 헤더 유지. 클릭/Enter·Space=openModal·☆=위시 토글 재사용(.day-row 핸들러 추가). 내부 스크롤(60vh/overflow) 제거→인라인 확장. 리스트 뷰 카드 미변경. script.js +renderDayRows·핸들러, styles.css +.day-row 규칙, node --check 통과·CSS brace 254/254.
 - 2026-05-29 21:20 [개발자] 1순위(버그) 완료: 통계줄 총개수 vs 카테고리 드롭다운 '전체(N)' 불일치 수정. 원인: updateCategoryCounts의 카운트 base가 기본 기간필터(앞으로 1년)를 적용해 과거 출시 4건을 제외(29→25), 반면 renderStatsSummary는 allGames 전체(29) 집계. 해결: 카운트 base에서 기간 날짜창(days/today 블록) 제거 → 통계와 동일 모집단(allGames). 기본 상태 29=29 일치. 플랫폼/검색/주/위시 필터 카운트 반영 유지, 기간 필터는 renderGames(표시 목록)에만 작동. script.js -약7줄(days/today선언+date블록 제거, 주석 2줄 추가). node --check 통과, 외형/문구 무변경.

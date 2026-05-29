@@ -376,6 +376,7 @@ function fallbackCopy(text, cb) {
 // --- Detail modal ---
 const modal = document.getElementById('game-modal');
 const modalBody = document.getElementById('modal-body');
+const dayPanel = document.getElementById('day-detail-panel'); // hoisted: referenced by keydown/ESC handlers above Stage 4 (TDZ fix)
 
 function openModal(gameId) {
   const game = allGames.find(g => g.id === gameId);
@@ -649,7 +650,6 @@ if (calTodayBtn) calTodayBtn.addEventListener('click', () => {
 });
 
 // --- Calendar Stage 4: day cell click -> panel -> reuse openModal ---
-const dayPanel = document.getElementById('day-detail-panel');
 // Active filters (category/platform/period/week/wishlist/search) — shared by the day panel.
 function getActiveFilteredGames() {
   const selectedCategory = categoryFilter.value;

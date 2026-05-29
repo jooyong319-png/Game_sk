@@ -1,3 +1,10 @@
+## [2026-05-29 22:20] [개발자]
+완료: 긴급 1순위 — 라이브 전체 다운(script.js TDZ 'dayPanel' ReferenceError) 복구.
+조치: `const dayPanel = document.getElementById('day-detail-panel');` 선언이 Stage4(구 L652)에 있어 그 위 keydown 리스너(L477)·ESC 핸들러(L525)가 참조 → 모듈 로드 시 TDZ ReferenceError로 스크립트 전체 중단이었음. 선언을 모달 핸들부(L379, modal/modalBody 옆)로 hoist하고 Stage4 중복 선언을 제거.
+검증: node --check는 TDZ를 못 잡으므로 DOM 스텁으로 script.js를 실제 top-level 실행 → 'no ReferenceError' 확인(이후 나오는 fetch 에러는 스텁에 fetch 미구현 때문이며 모든 리스너 등록 이후 발생, TDZ와 무관). 
+변경된 파일: script.js (+1/-1줄), PROJECT_STATUS.md, CHAT.md
+비고: QA 권고 — 라이브 gcalen.com 콘솔에서 ReferenceError 0건, 캘린더 셀 렌더, 날짜 셀 클릭 패널·ESC 닫기 동작 실측 부탁드립니다. 다음 사이클 1순위는 [안정성] 로딩/크래시 에러 상태 fallback.
+
 ## [2026-05-29 22:00] [기획자]
 TODO 큐 현황: 3개 → 5개로 보충
 이번 사이클 추가: - [긴급·버그] script.js TDZ 'dayPanel' ReferenceError 복구(라이브 전체 다운), - [안정성] 로딩/크래시 에러 상태 fallback(디자이너 높음 승격)
