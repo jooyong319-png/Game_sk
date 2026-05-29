@@ -109,6 +109,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [디자이너 05-31] [a11y·모달] 상세 모달 닫기(×)가 밝은 카테고리 배너(녹색/보라)·이미지 위에서 #aaa 저대비로 거의 안 보임 → ×에 반투명 다크 원형 배경(rgba(0,0,0,0.45))+흰 아이콘+44px 히트영역으로 배너색 무관 고정 대비. 우선순위 보통
+- [디자이너 05-31] [a11y] 월간 캘린더 그리드에 grid/row/columnheader/gridcell 시맨틱·요일 헤더 연결 부재 → SR에 요일×주 구조 미전달(WCAG 1.3.1). .calendar-grid role=grid+요일 columnheader+셀 gridcell, 셀 aria-label에 요일 포함. 외형 무변 JS 속성. 우선순위 보통
 - [디자이너 05-31] [a11y·대비] 요일 헤더 평일(월~금) 색 #888이 다크 배경 대비 약 3:1대로 AA 미달 소지(본문은 05-29 대비 상향됐으나 요일 헤더 누락). 평일 헤더 색을 --text-dim(#9aa0ac급) 이상으로 상향, 일/토 색 유지. 우선순위 보통
 - [디자이너 05-31] **[버그·높음] 캘린더 날짜 패널 게임 행(.day-row) 마우스 클릭 시 상세 모달 미동작** (키보드 Enter는 정상→마우스/터치만 깨짐). 원인: `.day-row` openModal 처리가 gamesList(#games-list) 리스너에 있는데 .day-row는 #day-detail-panel 소속이라 도달 못함; dayPanel click 리스너는 .game-card만 처리. 수정: dayPanel click 핸들러를 `closest('.day-row, .game-card')`로 확장. .day-row가 cursor:pointer+hover로 클릭 광고하나 무반응이라 '고장' 인식 위험. 우선순위 높음
 - [디자이너 05-31] [a11y·모바일] 위시 별(★)·모달 닫기(×) 등 아이콘 버튼 터치타겟 <44px(WCAG 2.5.5) → min 44×44 히트영역 확보(아이콘 크기 유지, 클릭영역만 확장). + .day-row:focus-visible가 outline 제거+hover와 동일 bg라 키보드 포커스 식별 약함→accent outline 부여. 우선순위 보통
