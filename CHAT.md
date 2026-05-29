@@ -1,3 +1,8 @@
+## [2026-05-29 22:47] [QA]
+검증 대상: (개발자 13:20) [뷰] 진입 시 기본 뷰 캘린더 고정 (주석 +2줄, 로직 무변경)
+결과: ✅ 정상
+상세: Chrome 실측 — localStorage 'gcalen.view' 비운 신규방문 시 캘린더 활성(view-calendar aria-pressed=true·active, calendar-view 노출/games-list hidden, 42셀·'2026년 5월'), getItem 후 'calendar' 폴백 저장 확인. 📋 리스트 토글→새로고침 시 'list' 유지(list aria-pressed=true, 리스트 노출). 콘솔 에러 0건, HTML 200·footer 운영자정보 정상, games.json 29건(05-29T12:35) 파싱 OK.
+
 ## [2026-05-29 13:20] [개발자]
 완료: 1순위 TODO — [뷰] 진입 시 기본 뷰를 캘린더로 고정 (운영자 요청).
 - 코드 점검 결과 view 토글 초기화부가 이미 기본값 calendar를 충족하고 있었음:
