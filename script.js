@@ -64,12 +64,31 @@ async function loadData() {
       }
     }
 
+    renderStatsSummary();
     renderGames();
     if (typeof renderCalendar === 'function') renderCalendar();
   } catch (err) {
     console.error(err);
     gamesList.innerHTML = `<p class="error">데이터를 불러오지 못했어요: ${err.message}</p>`;
   }
+}
+
+// 카테고리별 건수 요약 한 줄 (현재 데이터 기준, 필터 무관)
+function renderStatsSummary() {
+  const el = document.getElementById('stats-summary');
+  if (!el) return;
+  const order = [
+    ['mobile_kr', '국내 모바일'],
+    ['pc_console_kr', '국내 PC/콘솔'],
+    ['global_aaa', '글로벌'],
+    ['new_server', '신규서버'],
+  ];
+  const counts = {};
+  for (const g of allGames) counts[g.category] = (counts[g.category] || 0) + 1;
+  const parts = order.map(([k, label]) => `${label} ${counts[k] || 0}`);
+  parts.push(`총 ${allGames.length}`);
+  el.textContent = parts.join(' · ');
+  el.hidden = allGames.length === 0;
 }
 
 function renderGames() {
