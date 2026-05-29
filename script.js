@@ -150,7 +150,7 @@ function renderGames() {
     } else if (searchQuery && searchQuery.trim()) {
       emptyMsg = '\'' + escapeHtml(searchQuery) + '\'에 일치하는 게임이 없어요.';
     } else {
-      emptyMsg = '조건에 맞는 게임이 없어요. 필터를 조정해 보세요.';
+      emptyMsg = '조건에 맞는 게임이 없어요. 필터를 바꿔보세요.';
     }
     gamesList.innerHTML = '<p class="empty-state">' + emptyMsg + '</p>';
     return;
