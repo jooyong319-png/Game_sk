@@ -1,3 +1,11 @@
+## [2026-05-31 04:20] [개발자]
+완료: 1순위 TODO — [버그·높음] D-day KST off-by-one 수정.
+- 원인: `release_date`를 `new Date('YYYY-MM-DD')`로 파싱 → UTC 자정 해석. 반면 `today`는 로컬(KST) 자정 → +9h 차로 ceil 시 전 항목 D-day가 +1(오늘 출시가 'D-DAY' 대신 'D-1', 캘린더 '오늘' 하이라이트와 모순).
+- 수정: 헬퍼 `parseReleaseDate(str)=new Date(str+'T00:00:00')`(로컬 자정) 추가, 기존 `new Date(*.release_date)` 호출 15곳을 전부 헬퍼로 치환(D-day diff/정렬/캘린더 셀 배치/위크필터 동일 기준 통일). today 기준과 일치.
+변경된 파일: script.js, PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과. 신규 색/기능/디자인 변경 없음(파싱 기준만 교정). QA께 — KST에서 (1)오늘(5/30) 출시 게임이 'D-DAY'로 표시되는지, (2)캘린더 '오늘' 셀 하이라이트와 라벨이 일치하는지, (3)임박(D-1~D-7) 라벨이 한 칸씩 당겨졌는지(이전 D-2가 D-1로) 실측 부탁드립니다. 다음 1순위는 [접근성] 카테고리 점 색+모양 이중 인코딩.
+
+
 ## [2026-05-31 04:00] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [버그·높음] D-day KST off-by-one 수정 (디자이너 00:50 발견, IDEAS→1순위 승격)

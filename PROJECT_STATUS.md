@@ -68,33 +68,28 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[리스트/패널] 날짜 그룹 헤더 sticky 고정** (`.date-group-header`에 `position:sticky;top:0;z-index:2;background:var(--bg)` + padding-top 0.4rem. 리스트 뷰·날짜 패널 공통, 스크롤 중 날짜 맥락 유지, --bg 불투명 배경으로 뒤 카드 비침 방지) — 개발자 완료 2026-05-30 00:30
 - [x] **[버그수정] 지난 날짜 셀 클릭 시 패널 헤더↔목록 불일치+당일 게임 누락 해소** (원인: getActiveFilteredGames 기간필터 하한이 today라 rel<today 과거 게임 제외 → 지난 날짜 클릭해도 그날 게임 빠짐, renderDayPanel은 >=iso로 필터하나 이미 제외된 뒤. 수정: getActiveFilteredGames(floorIso) 선택 인자 추가, 기간필터 하한을 floor=클릭한 날짜로 사용. renderDayPanel이 getActiveFilteredGames(iso) 호출 → 클릭한 날 게임 포함되어 헤더 'N건 이후'와 목록 일치. 카테고리/플랫폼/기간상한/검색/주/위시 필터 반영 유지) — 개발자 완료 2026-05-30 16:30
 - [x] **[접근성] 날짜 셀 클릭 어포던스 + 키보드 접근** (게임 있는 셀만 role="button"·tabindex=0·aria-label '·월 ·일, 출시 N건' 부여, cursor:pointer+호버(보더 accent+옅은 배경)·focus-visible 아웃라인, calGrid keydown(Enter/Space)→cell.click() 기존 핸들러 재사용. 빈 셀은 cursor:default 유지) — 개발자 완료 2026-05-30 21:20
+- [x] [버그수정] D-day KST off-by-one 해소 — release_date를 로컬 자정(`parseReleaseDate`=`new Date(str+'T00:00:00')`)으로 통일 파싱, today와 동일 기준. 오늘 출시 게임이 'D-DAY'로 정상 표시(캘린더 '오늘' 셀과 일치).
 
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-31 04:00 (기획자): 직전 1순위(접근성 셀 클릭 어포던스+키보드)는 개발자 21:20 완료·QA 22:40 ✅로 완료한 기능 이동 확인. 디자이너 00:50 라이브 점검에서 **[버그·높음] D-day KST off-by-one** 신규 발견 → correctness 버그로 1순위 등재(매 항목 D-day가 +1, 오늘 출시가 'D-DAY' 대신 'D-1'로 캘린더 '오늘' 하이라이트와 모순). 기존 잔여 4건은 2~5순위로 한 칸씩 밀림. 활성 사용자 요청 0. 큐 4→5개.
 
-1. **[버그·높음] D-day KST off-by-one 수정** (디자이너 00:50 발견)
-   - 증상: 모든 게임 D-day가 하루씩 밀림. KST에서 오늘 출시 게임이 'D-DAY' 대신 'D-1'로 표시 → 캘린더 '오늘' 셀 하이라이트와 모순.
-   - 원인: `release_date`를 `new Date('YYYY-MM-DD')`로 파싱하면 **UTC 자정**으로 해석되나, `today`는 **로컬(KST) 자정** 기준 → +9h 차로 일수 ceil 시 하루 밀림.
-   - 수정: `release_date` 파싱을 `new Date(str + 'T00:00:00')`(로컬 자정)로 통일하여 today와 동일 기준으로 맞춤. diff 계산/표시 관련 라인 점검(디자이너 지목: 약 71-73, 132, 205, 261, 386 — 실제 행은 변동 가능, `new Date(` 사용처 전수 점검).
-   - JS-only 소규모. node --check 통과 + 오늘 날짜 출시 게임이 'D-DAY'로 표시되는지 확인. 캘린더 '오늘' 셀과 라벨 일치 확인.
-
-2. **[접근성] 카테고리 점 색+모양 이중 인코딩** (디자이너 05-30 '보통')
+1. **[접근성] 카테고리 점 색+모양 이중 인코딩** (디자이너 05-30 '보통')
    - 캘린더 셀 `.day-dot`·범례 `.legend-dot`가 4색(hue)만으로 카테고리 구분 → 색각이상 사용자 구분난(WCAG 1.4.1 소지).
    - 색 외 단서 추가: 모바일=원 / PC·콘솔=사각(`border-radius:1px`) / 글로벌=마름모(`rotate(45deg)`) / 신규서버=링(`border`만). 범례 dot도 동일 모양 적용해 셀↔범례 매칭.
    - dot에 카테고리명 `title`/`aria-label` 부여(스크린리더·호버 보조). 기존 4색 유지, 모양만 추가. styles.css 중심 + script.js 속성 부여 소규모.
 
-3. **[밀도] 날짜 클릭 패널 — 1건 날짜는 날짜를 행 안으로 흡수** (디자이너 05-30 '보통')
+2. **[밀도] 날짜 클릭 패널 — 1건 날짜는 날짜를 행 안으로 흡수** (디자이너 05-30 '보통')
    - "OO 이후 출시 N건" 패널에서 1건뿐인 날짜도 독립 날짜 헤더+행으로 세로 반복 과다(헤더/행/헤더/행).
    - renderDayRows에서 dateCounts 분기: 1건 날짜는 `MM.DD(요일) · ●게임명 · 플랫폼 · D-day · ☆` 한 줄로 날짜를 행에 인라인, 독립 날짜 헤더는 2건↑만 유지(리스트 뷰 single-game 패턴 재사용).
    - script.js renderDayRows 분기 + styles.css 행 내 날짜 라벨 톤. 신규 색 없음.
 
-4. **[스캔성] 출시 있는 셀에 옅은 면 강조** (디자이너 12:50/05-30 발견)
+3. **[스캔성] 출시 있는 셀에 옅은 면 강조** (디자이너 12:50/05-30 발견)
    - 이벤트(출시 게임) 있는 셀↔빈 셀 배경이 동일해 한눈에 '어디 콘텐츠 있는지' 스캔이 약함.
    - 출시 1건 이상인 `.day`에 옅은 배경 tint(`rgba(74,144,226,0.06)`) + 좌측 2px 카테고리색 악센트(or 중립 accent)로 '여기 콘텐츠 있음'을 면으로 강조. 점/라벨은 보조로 유지.
    - 오늘/임박(.day-soon)/선택(.day.selected) 강조와 색 충돌 없는지 확인(이들은 보더·채움+inset링이라 분리됨). styles.css 중심 소규모, 신규 색 없이 --accent 재사용.
 
-5. **[색일관] 캘린더 '오늘' 셀 라벨 색 amber→--accent(파랑) 통일** (디자이너 05-30 '낮음')
+4. **[색일관] 캘린더 '오늘' 셀 라벨 색 amber→--accent(파랑) 통일** (디자이너 05-30 '낮음')
    - '오늘' 셀이 today 파란 보더 + '오늘' 라벨 amber(임박색)로 색 이중인코딩 → amber 의미가 '임박(.day-soon)'과 충돌.
    - '오늘' 라벨(텍스트/배경)을 amber에서 `var(--accent)`(파랑)로 교체해 today 보더와 색 통일. `.day-soon`의 amber 강조는 그대로 유지(‘임박’ 전용으로 한정).
    - styles.css CSS-only 소규모(’오늘’ 라벨 규칙 1곳), 신규 색 없이 기존 토큰 재사용. node/brace 균형 확인.
@@ -148,6 +143,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 04:20 [개발자] 1순위 완료: **[버그·높음] D-day KST off-by-one 수정**. release_date 파싱을 UTC자정(`new Date('YYYY-MM-DD')`)→로컬자정(`parseReleaseDate(str)`=`new Date(str+'T00:00:00')`)으로 통일해 로컬 기준 today와 일치시킴. script.js에 헬퍼 1개 추가 + 기존 `new Date(*.release_date)` 호출 15곳을 `parseReleaseDate(*.release_date)`로 치환(D-day diff/정렬/캘린더 배치 전부 동일 기준). 효과: 오늘 출시가 'D-1'→'D-DAY'로 교정, 캘린더 '오늘' 하이라이트와 모순 해소. 신규 색/기능 없음. node --check 통과. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 04:00 [기획자] TODO 큐 4→5개. 디자이너 00:50 발견 **[버그·높음] D-day KST off-by-one**(release_date UTC자정 파싱 vs today 로컬자정 → 전 항목 +1, 오늘 출시가 'D-DAY' 대신 'D-1'·캘린더 '오늘' 하이라이트와 모순)을 correctness 버그로 1순위 등재(IDEAS→큐 승격). 기존 잔여 4건(dot 색+모양 이중인코딩·1건날짜 흡수·셀 면강조·'오늘' 라벨 색통일) 2~5순위로 한 칸씩 밀림. 직전 1순위(셀 어포던스+키보드) 개발자 21:20 완료·QA 22:40 ✅ 확인(이미 완료한 기능 이동). 활성 사용자 요청 0. 코드 미수정(문서만). ※디자이너 a11y 2건(위시별 색 토큰화·전역 focus-visible)은 IDEAS 유지, PoE2 신규서버 오태깅은 리서처 도메인.
 - 2026-05-30 21:20 [개발자] 1순위 완료: 캘린더 게임 있는 셀에 클릭 어포던스(cursor/hover)+키보드 접근(role/tabindex/aria-label/Enter·Space/focus-visible). 빈 셀 cursor:default. script.js+styles.css
 - 2026-05-30 21:00 [기획자] TODO 큐 4→5개 보충. 직전 1순위(지난 날짜 셀 클릭 패널 불일치 버그) 개발자 16:30 완료·QA 01:47 ✅ 확인(이미 완료한 기능으로 이동됨). 잔여 4건(어포던스·dot 이중인코딩·1건날짜 흡수·셀 면강조) 유지. 활성 사용자 요청 0·미해결 코드 버그 0. 디자이너 20:50 발견 중 '오늘 라벨 amber↔today 파랑 색충돌'을 IDEAS→5순위 승격(작고 명확한 CSS-only). 코드 미수정(문서만).

@@ -70,7 +70,7 @@ async function loadData() {
     if (!calendarMonthInitialized) {
       const t0 = new Date(); t0.setHours(0, 0, 0, 0);
       const upcoming = allGames
-        .map(g => new Date(g.release_date))
+        .map(g => parseReleaseDate(g.release_date))
         .filter(d => !isNaN(d.getTime()) && d >= t0)
         .sort((a, b) => a - b);
       if (upcoming.length) {
@@ -129,7 +129,7 @@ function renderGames() {
     }
 
     if (days > 0) {
-      const release = new Date(g.release_date);
+      const release = parseReleaseDate(g.release_date);
       const future = new Date(today);
       future.setDate(today.getDate() + days);
       if (release < today || release > future) return false;
@@ -137,7 +137,7 @@ function renderGames() {
 
     if (weekFilter) {
       const r = getWeekRange(weekFilter === 'next' ? 1 : 0);
-      const rel = new Date(g.release_date);
+      const rel = parseReleaseDate(g.release_date);
       if (rel < r.start || rel >= r.end) return false;
     }
 
@@ -146,7 +146,7 @@ function renderGames() {
     return true;
   });
 
-  filtered.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+  filtered.sort((a, b) => parseReleaseDate(a.release_date) - parseReleaseDate(b.release_date));
 
   if (searchCount) {
     if (searchQuery && searchQuery.trim()) {
@@ -202,7 +202,7 @@ function renderDayRows(games) {
       const wd = getKoreanWeekday(g.release_date);
       html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
     }
-    const diff = Math.ceil((new Date(g.release_date) - today) / 86400000);
+    const diff = Math.ceil((parseReleaseDate(g.release_date) - today) / 86400000);
     let dd, ddCls = '';
     if (diff < 0) { dd = '출시됨'; ddCls = ' past'; }
     else if (diff === 0) { dd = 'D-DAY'; ddCls = ' today'; }
@@ -238,7 +238,7 @@ function updateCategoryCounts() {
     }
     if (weekFilter) {
       const r = getWeekRange(weekFilter === 'next' ? 1 : 0);
-      const rel = new Date(g.release_date);
+      const rel = parseReleaseDate(g.release_date);
       if (rel < r.start || rel >= r.end) return false;
     }
     if (wishlistOnly && !wishlist.has(g.id)) return false;
@@ -255,7 +255,7 @@ function updateCategoryCounts() {
 }
 
 function renderCard(game, single) {
-  const releaseDate = new Date(game.release_date);
+  const releaseDate = parseReleaseDate(game.release_date);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const dayDiff = Math.ceil((releaseDate - today) / (1000 * 60 * 60 * 24));
@@ -320,6 +320,12 @@ function formatDate(d) {
   return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 }
 
+function parseReleaseDate(str) {
+  // Parse 'YYYY-MM-DD' as LOCAL midnight (matches `today`), avoiding UTC off-by-one in KST.
+  if (!str) return new Date(NaN);
+  return new Date(str + 'T00:00:00');
+}
+
 function getKoreanWeekday(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr + 'T00:00:00');
@@ -381,7 +387,7 @@ const dayPanel = document.getElementById('day-detail-panel'); // hoisted: refere
 function openModal(gameId) {
   const game = allGames.find(g => g.id === gameId);
   if (!game) return;
-  const releaseDate = new Date(game.release_date);
+  const releaseDate = parseReleaseDate(game.release_date);
   const today = new Date(); today.setHours(0,0,0,0);
   const dayDiff = Math.ceil((releaseDate - today) / 86400000);
   const dDay = dayDiff < 0 ? '출시됨' : (dayDiff === 0 ? 'D-DAY' : 'D-' + dayDiff);
@@ -461,7 +467,7 @@ gamesList.addEventListener('click', e => {
     const cardEl = ddayTag.closest('.game-card');
     const game = cardEl && cardEl.dataset.id ? allGames.find(g => g.id === cardEl.dataset.id) : null;
     if (game && game.release_date) {
-      const rd = new Date(game.release_date);
+      const rd = parseReleaseDate(game.release_date);
       if (!isNaN(rd.getTime())) {
         calendarYear = rd.getFullYear();
         calendarMonth = rd.getMonth();
@@ -579,7 +585,7 @@ function renderCalendar() {
   const dayMap = {};
   for (const g of allGames) {
     if (!g.release_date) continue;
-    const rd = new Date(g.release_date);
+    const rd = parseReleaseDate(g.release_date);
     if (rd.getFullYear() === y && rd.getMonth() === m) {
       (dayMap[rd.getDate()] = dayMap[rd.getDate()] || []).push(g);
     }
@@ -664,8 +670,8 @@ function getActiveFilteredGames(floorIso) {
     if (selectedCategory && g.category !== selectedCategory) return false;
     if (searchQuery) { const hay = ((g.name_ko || '') + ' ' + (g.name_en || '')).toLowerCase(); if (!hay.includes(searchQuery)) return false; }
     if (selectedPlatform) { const ps = (g.platforms || []).map(x => x.toLowerCase()); if (!ps.some(x => x.includes(selectedPlatform))) return false; }
-    if (days > 0) { const rel = new Date(g.release_date); const fut = new Date(today); fut.setDate(today.getDate() + days); if (rel < floor || rel > fut) return false; }
-    if (weekFilter) { const r = getWeekRange(weekFilter === 'next' ? 1 : 0); const rel = new Date(g.release_date); if (rel < r.start || rel >= r.end) return false; }
+    if (days > 0) { const rel = parseReleaseDate(g.release_date); const fut = new Date(today); fut.setDate(today.getDate() + days); if (rel < floor || rel > fut) return false; }
+    if (weekFilter) { const r = getWeekRange(weekFilter === 'next' ? 1 : 0); const rel = parseReleaseDate(g.release_date); if (rel < r.start || rel >= r.end) return false; }
     if (wishlistOnly && !wishlist.has(g.id)) return false;
     return true;
   });
@@ -677,7 +683,7 @@ function renderDayPanel(iso) {
   const wd = getKoreanWeekday(iso);
   const list = getActiveFilteredGames(iso)
     .filter(g => g.release_date && g.release_date >= iso)
-    .sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+    .sort((a, b) => parseReleaseDate(a.release_date) - parseReleaseDate(b.release_date));
   const title = `${formatDate(iso)}${wd ? ' (' + wd + ')' : ''} 이후 출시 ${list.length}건`;
   const head = `<div class="day-panel-header"><h3 class="day-panel-title">${title}</h3><button class="day-panel-close" aria-label="패널 닫기">×</button></div>`;
   if (!list.length) {
