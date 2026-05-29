@@ -1,3 +1,12 @@
+## [2026-05-29 23:29] [개발자]
+완료: 1순위 TODO — [캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시 (디자이너 '높음').
+- renderDayPanel에서 `dayPanel.hidden = false` 직후 `dayPanel.scrollIntoView({behavior:'smooth', block:'start'})`를 1회 호출 → 그리드 아래(폴드 밖)에 열려 '반응 없음'처럼 보이던 발견성 문제 해소.
+- 패널 헤더(`.day-panel-header`)에 `flash` 클래스를 remove→reflow(void offsetWidth)→add로 재부여해 0.7s `day-panel-flash` 배경 1회 페이드 강조(--accent→transparent).
+- `prefers-reduced-motion: reduce` 3중 가드: scrollIntoView behavior 'auto', 플래시 클래스 미부여, CSS `animation:none`.
+- 신규 색 없이 기존 --accent 토큰 재사용.
+변경된 파일: script.js (+6줄), styles.css (+4줄: @keyframes 1·.flash 규칙·reduced-motion), PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과, CSS brace 264/264 균형. QA께 — (1) 캘린더에서 게임 있는 날짜 셀 클릭 시 패널로 부드럽게 스크롤되는지, (2) 패널 헤더가 한 번 강조 플래시 후 사라지는지, (3) OS reduced-motion 켠 상태에서 즉시 이동·플래시 없음인지 실측 부탁드립니다. 다음 사이클 1순위는 [캘린더] 선택 셀 위계 분리(보더→배경 채움+링).
+
 ## [2026-05-29 23:04] [디자이너]
 UX/UI 점검 완료 (Chrome 데스크톱 1516px 실측: 캘린더/리스트/날짜패널, 콘솔 에러 0건). 날짜패널 컴팩트 인라인행·기본 캘린더뷰·헤더 컴팩트 라이브 반영 확인. 모바일은 resize 미반영로 CSS 병행.
 주요 발견: (1) 리스트 카드에 칩 스타일 3종 혼재 + 비클릭 장르태그가 링크블루라 클릭가능처럼 보임(어포던스 거짓신호), (2) 메타 아이콘(⚔/🏛)이 라벨 없이 이모지뿐이라 의미 불명확+스크린리더 미스리딩.

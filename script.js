@@ -682,6 +682,11 @@ function renderDayPanel(iso) {
     dayPanel.innerHTML = head + '<div class="day-panel-list">' + renderDayRows(list) + '</div>';
   }
   dayPanel.hidden = false;
+  // 발견성: 패널 렌더 직후 화면으로 스크롤 + 헤더 1회 강조 플래시 (reduced-motion 시 즉시 이동/플래시 생략)
+  const rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  dayPanel.scrollIntoView({ behavior: rm ? 'auto' : 'smooth', block: 'start' });
+  const _h = dayPanel.querySelector('.day-panel-header');
+  if (_h && !rm) { _h.classList.remove('flash'); void _h.offsetWidth; _h.classList.add('flash'); }
 }
 
 const calGrid = document.getElementById('calendar-grid');

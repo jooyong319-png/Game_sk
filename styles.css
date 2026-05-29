@@ -534,6 +534,10 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .day-panel-header { display: flex; justify-content: space-between; align-items: center; }
 .day-panel-close { background: transparent; border: none; color: #888; font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; line-height: 1; transition: color 0.15s ease; }
 .day-panel-close:hover { color: #ddd; }
+/* 날짜 패널 헤더 강조 플래시 — 셀 클릭 시 패널 발견성 (기존 토큰 재사용, 신규 색 없음) */
+@keyframes day-panel-flash { from { background: var(--accent); } to { background: transparent; } }
+.day-panel-header.flash { animation: day-panel-flash 0.7s ease-out; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { .day-panel-header.flash { animation: none; } }
 
 /* 검색 결과 건수 표시 - TODO 1순위 (2026-05-29) */
 .search-count { color: #888; font-size: 0.85rem; margin-left: 0.5rem; }

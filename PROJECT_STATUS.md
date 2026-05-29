@@ -63,24 +63,21 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [x] **[헤더] 좌측정렬 + 컴팩트화로 캘린더를 첫 화면 위로** (운영자 요청; CSS-only: `header` 패딩 2.5/1.5rem→1.25/1rem·`text-align` center→left, h1 2rem→1.7rem·margin-bottom 0.25rem 축소, 헤더 자식 max-width:1200px+1rem gutter로 `<main>`과 좌측 정렬(gradient bg는 full-bleed 유지), stats-summary text-align left 정렬. 상단 높이 절감→첫 화면에 캘린더 상향. 모바일 ≤480px 정렬 유지) — 개발자 완료 2026-05-29 12:30
 - [x] **[뷰] 진입 시 기본 뷰 캘린더 고정** (최초 방문 시 localStorage 'gcalen.view' 비어있으면 기본값 calendar. 코드상 `getItem(VIEW_KEY) || 'calendar'` + `let savedView='calendar'`로 이미 충족되어 있어 검증 후 의도 고정용 주석 2줄 추가. 사용자 토글 선택은 계속 기억) — 개발자 완료 2026-05-29 13:20
 
+- [x] **[캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시** (renderDayPanel 렌더 직후 `dayPanel.scrollIntoView({behavior:'smooth',block:'start'})` 1회 + `.day-panel-header.flash` 0.7s 배경 페이드 강조, `prefers-reduced-motion` 시 즉시 이동·플래시 생략. 신규 색 없이 --accent 재사용) — 개발자 완료 2026-05-29 23:29
+
 ## 다음 TODO (우선순위 순)
 
 > 갱신 2026-05-29 13:06 (기획자): 큐 2→5개 보충. 활성 사용자 요청 없음, 미해결 버그 없음 확인. 운영자 요청(기본 캘린더 뷰)을 1순위 유지하고, 디자이너 높음/보통 제안 중 작고 명확한 3건을 큐잉.
 
-1. **[캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시** (디자이너 '높음')
-   - 현재 날짜 셀 클릭 시 결과 패널이 그리드 아래(폴드 밖)에서 열려 '반응 없음'처럼 보임 → 핵심 인터랙션 발견성 저하.
-   - 패널 렌더 직후 `panel.scrollIntoView({behavior:'smooth', block:'start'})` 1회 호출 + 패널 제목/상단에 0.6~0.8s 강조 플래시(배경 1회 페이드, `prefers-reduced-motion` 시 즉시/플래시 생략).
-   - JS 1~2줄 + CSS 플래시 키프레임 1개. 신규 색 없이 기존 토큰 재사용.
-
-2. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통')
+1. **[캘린더] 선택 셀 위계 분리 (보더→배경 채움+링)** (디자이너 '보통')
    - 선택 셀 보더가 임박 셀(.day-soon) 보더와 색 충돌 → 선택은 보더 대신 옅은 배경 채움+inset 링으로 표현. 오늘=파랑/임박=amber 보더는 그대로 유지해 3상태(오늘/임박/선택) 위계 분리.
    - CSS-only(`.day.selected` 등 규칙만), 신규 색 추가 없이 기존 토큰 재사용.
 
-3. **[리스트/패널] 날짜 그룹 헤더 sticky 고정** (디자이너 '보통')
+2. **[리스트/패널] 날짜 그룹 헤더 sticky 고정** (디자이너 '보통')
    - 긴 리스트/날짜 패널 스크롤 시 `.date-group-header`가 사라져 날짜 맥락 상실 → `position:sticky; top:0` + 불투명 배경(스크롤 중 뒤 카드 비침 방지)으로 그룹 훑는 동안 날짜 고정.
    - 리스트 뷰·날짜 패널 공통 적용. CSS-only(헤더에 sticky/배경/z-index 1줄대), 신규 색 없이 `--bg`/`--surface` 재사용.
 
-4. **[접근성] 날짜 셀 클릭 어포던스 + 키보드 접근** (디자이너 '보통')
+3. **[접근성] 날짜 셀 클릭 어포던스 + 키보드 접근** (디자이너 '보통')
    - 게임 있는 날짜 셀에 `cursor:pointer` + 호버 배경/보더로 클릭 가능함을 시각화.
    - 키보드 접근: 게임 있는 셀에 `tabindex="0"`·`role="button"`·`aria-label`(예: "5월 27일, 출시 N건") 부여, `focus-visible` 링, Enter/Space로 클릭과 동일 동작(기존 셀 클릭 핸들러 재사용).
    - script.js(셀 생성 시 속성/키 핸들러) + styles.css(cursor/hover/focus-visible). 신규 색 없음.
@@ -125,6 +122,7 @@ D-day 배지 근접도 색 단계화(≤7 amber/≤30 중립/>30 흐린톤), 리
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-29 23:29 [개발자] 1순위 완료: [캘린더] 날짜 셀 클릭 패널 auto-scroll + 헤더 강조 플래시. renderDayPanel에서 `dayPanel.hidden=false` 직후 `scrollIntoView({behavior:'smooth',block:'start'})` 1회 호출(패널이 폴드 밖에 열려 '반응 없음'처럼 보이던 발견성 문제 해소) + `.day-panel-header`에 `flash` 클래스 재부여(remove→reflow→add)로 0.7s `day-panel-flash` 배경 페이드 강조. `prefers-reduced-motion:reduce` 시 behavior:'auto'·플래시 클래스 미부여·CSS animation:none 3중 가드. 신규 색 없이 --accent 재사용. script.js +6줄, styles.css +4줄(@keyframes 1·.flash·reduced-motion). node --check 통과, CSS brace 264/264.
 - 2026-05-29 13:20 [개발자] 1순위 완료: [뷰] 진입 시 기본 뷰 캘린더 고정. 코드 점검 결과 view 토글 초기화부가 이미 `let savedView='calendar'` + `localStorage.getItem(VIEW_KEY) || 'calendar'`로 최초 방문 시 캘린더 기본값을 충족(빈/null/'' 모두 calendar로 폴백, 'list' 저장값은 보존). 기능은 이미 동작하므로 동작 변경 없이 의도 고정용 주석 2줄만 추가(미래 사이클 회귀 방지). script.js 주석 +2, node --check 통과. QA: 시크릿창(localStorage 비움) 진입 시 캘린더 뷰 활성 + 리스트 토글 후 새로고침 시 리스트 유지 실측 권고.
 - 2026-05-29 13:06 [기획자] TODO 큐 2→5개 보충. 활성 사용자 요청 0·미해결 버그 0 확인 후 디자이너 높음/보통 제안 3건(날짜패널 auto-scroll·날짜그룹헤더 sticky·셀 키보드 접근)을 작고 명확한 TODO로 큐잉. 운영자 요청(기본 캘린더 뷰) 1순위 유지. 코드 미수정(문서만).
 - 2026-05-29 12:30 [개발자] 1순위 완료: [헤더] 좌측정렬+컴팩트화. styles.css만 수정(+14/-5) — `header` 패딩 `2.5rem 1rem 1.5rem`→`1.25rem 1rem 1rem`·`text-align center→left`, `header h1` 2rem→1.7rem·margin-bottom 0.5→0.25rem, 헤더 3개 자식(h1/.subtitle/.last-updated)에 `max-width:1200px;margin:auto;padding:0 1rem`로 `<main>`과 좌측 정렬(gradient는 full-bleed 유지), `.stats-summary` text-align center→left. 상단 수직 높이 절감으로 캘린더가 첫 화면 위로. CSS-only(텍스트/기능 무변경), brace 258/258.
