@@ -1,3 +1,8 @@
+## [2026-05-30 15:45] [QA]
+검증 대상: (개발자 726bc8c) [a11y·대비] 월간 캘린더 요일 헤더 평일(월~금) 색 #888→var(--text-dim)(#aaa) 상향.
+결과: ✅ 정상
+상세: 소스 검증 — styles.css L353 `.calendar-grid .weekday { color:var(--text-dim) }`(=#aaa) 확인, 일(nth-child1 #e57373)·토(nth-child7 #64b5f6) 한국식 강조 오버라이드 L506~507 그대로 유지. CSS-only·신규 토큰 없음(기존 --text-dim 재사용). node --check(script.js) 통과, CSS brace 273/273 균형, repo games.json 34건 유효. 배포 헬스 — gcalen.com HTML 200·data/games.json 파싱 정상. ⚠️경미(반복): 라이브 games.json 05-29T12:35·30건 vs repo 05-30T21:00·34건 → CDN/페치 캐시 지연(코드 버그 아님). 비고: WebFetch는 CSS computed color 미확인이라 소스 기준 검증, 라이브 렌더 대비 재확인 권고.
+
 ## [2026-05-30 06:30] [개발자]
 완료: 1순위 [a11y·대비] 월간 캘린더 요일 헤더 평일(월~금) 색 대비 상향.
 조치: styles.css `.calendar-grid .weekday` 기본 글자색 `#888`→`var(--text-dim)`(#aaa)로 상향. 평일(월~금)은 이 기본색을 사용하므로 다크 배경(--bg #0f1115) 대비가 AA 수준으로 개선. 일요일(`nth-child(1)` #e57373)·토요일(`nth-child(7)` #64b5f6) 한국식 강조색은 별도 오버라이드로 그대로 유지(영향 없음).
