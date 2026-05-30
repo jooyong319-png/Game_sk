@@ -5,6 +5,32 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 작성 형식
 ```
+## [2026-05-31 05:07] [디자이너] 12번째 사이클 — 배포 소스 정독 검증(자동실행, Chrome 미연결)
+
+> 스케줄 자동실행으로 Chrome 도구 미연결 → 스크린샷 대신 **배포 소스(index.html/styles.css/script.js) 전체 정독**으로 평가. 이전 11사이클 제안(검색/즐겨찾기/상세모달/필터초기화 등)의 실제 구현 상태를 코드로 확인하고 기존 큐/IDEAS에 없는 **신규 결함**만 등록.
+
+### 🔴 발견한 문제 / 개선점 (기존 미등록 신규)
+
+1. **[🔥최우선·모바일] ≤480px 캘린더 셀에서 출시 라벨(day-game-label) 0.62rem 한줄 말줄임으로 거의 안 보이고 점도 7px로 작아 '날짜별 출시 스캔' 가치 약화** — 우선순위: 높음
+   - 소스: 셀은 `.day-dots`(7px 색점)+`.day-game-label`(대표 게임명) 구성. ≤480px에서 셀 `min-height:60px`, 라벨 `font-size:0.62rem`로 줄어 사실상 묻힘. 점은 개수(+N) 외 정보 없음.
+   - 어떻게(개발자): ≤480px에서 `.day-game-label` 숨기고 `.day-dots` 점 8~9px·셀 하단 중앙 정렬로 키워 점 밀도 가독 우선 + 셀 `aria-label="M월 D일 N건"`. CSS 위주 소규모.
+
+2. **[일관성·모달] 상세 모달 출시일 행 D-day가 평문('· D-4')이라 카드/패널 컬러 D-day 배지와 시각 위계 역전** — 우선순위: 보통
+   - 소스: `openModal()` 출시일 행이 `...(요일)(예정) · ${dDay}` 평문(script.js). 카드(`.dday.soon/.today`)·패널(`.day-row-dday`)은 색 배지. 가장 자세히 보는 모달에서 핵심 지표가 가장 약하게 표현됨.
+   - 어떻게(개발자): 모달 D-day를 카드와 동일 `.dday`(soon/today/past) 배지로 렌더(approx '(예정)' 유지). 기존 스타일 재사용, 신규 색 없음. (기존 IDEAS 'D-day 근접 색단계화'와 별개 — 이건 모달 배지화)
+
+3. **[접근성] 리스트 카드(.game-card article)에 tabindex/role 없어 키보드 포커스·Enter로 모달 열기 불가 (마우스 전용). 날짜패널 .day-row는 이미 role=button+keydown 처리돼 있어 불일치** — 우선순위: 보통
+   - 어떻게(개발자): renderCard의 article에 `tabindex="0" role="button" aria-label="${게임명} 상세"` + gamesList keydown(Enter/Space→openModal, 패널 패턴 복제) + `.game-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}`. (WCAG 2.1.1)
+
+4. **[심미·헤더] sticky 헤더 없음 — 긴 리스트(34건 날짜그룹) 스크롤 시 뷰토글/필터/검색이 화면 밖으로 사라져 매번 최상단 복귀 필요(날짜 그룹헤더만 sticky)** — 우선순위: 낮음
+   - 어떻게(개발자): `.controls-row`(또는 view-toggle 포함)를 `position:sticky;top:0;z-index`+반투명 `--bg` 배경으로 상단 고정. 모바일은 토글만 고정 가능. CSS 위주.
+
+### ✅ 코드로 확인된 양호 (트집 X)
+캘린더 '오늘 이후 가장 가까운 출시 달' 초기화, `parseReleaseDate` 로컬파싱(KST off-by-one 해소), 점/범례 색+모양 이중인코딩, prefers-reduced-motion 모션차단, 모달 페이드, 검색0건/위시0건/로딩실패(9초가드) 빈상태, 위시 localStorage, 필터초기화 버튼 — 정상.
+
+### 우선순위 요약
+🔥1(모바일 캘린더 점/라벨) > 2(모달 D-day 배지화) > 3(카드 키보드 접근) > 4(컨트롤 sticky)
+
 ## [YYYY-MM-DD HH:MM] [디자이너]
 ### 발견한 문제 / 개선점
 1. (구체적으로: 무엇이, 어디서, 왜 문제인지, 어떻게 고치면 좋은지)
