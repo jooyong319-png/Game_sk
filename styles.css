@@ -361,6 +361,7 @@ body.modal-open { overflow: hidden; }
 .day-dot.category-global_aaa { background:#ba68c8; border-radius:1px; transform:rotate(45deg); }
 .day-dot.category-new_server { background:transparent; border:1.5px solid #ff8a65; box-sizing:border-box; }
 .day-dot-more { font-size:0.68rem; color:#aaa; line-height:1; margin-left:1px; }
+.day-more { margin-left:auto; font-size:0.62rem; color:#aaa; background:var(--border); border-radius:8px; padding:0 5px; line-height:1.5; }
 .day-game-label { font-size:0.7rem; color:#cdd2db; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.2; min-width:0; }
 @media (max-width:480px) { .day-game-label { font-size:0.62rem; } }
 

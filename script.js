@@ -630,7 +630,9 @@ function renderCalendar() {
           return `<span class="day-dot category-${g.category}" title="${catLabel}" aria-label="${catLabel}"></span>`;
         }).join('');
         const more = overflow > 0 ? `<span class="day-dot-more">+${overflow}</span>` : '';
-        dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}</div>`;
+        const extra = list.length - 1; // [정보손실] 대표 1건 외 나머지 건수
+        const moreCount = extra > 0 ? `<span class="day-more" title="이 날 출시 ${list.length}건">+${extra}</span>` : '';
+        dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}${moreCount}</div>`;
         const firstName = list[0].name_ko || list[0].name_en || '';
         gameLabel = `<div class="day-game-label" title="${escapeHtml(tip)}">${escapeHtml(firstName)}</div>`;
         a11y = ` role="button" tabindex="0" aria-label="${d.getMonth()+1}월 ${d.getDate()}일, 출시 ${list.length}건"`;

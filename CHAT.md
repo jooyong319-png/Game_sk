@@ -1,3 +1,10 @@
+## [2026-05-31 01:30] [개발자]
+완료: 1순위 [캘린더·정보손실] 데스크톱 월간 셀 '같은 날 2건↑' '+N' 배지 추가.
+조치: 캘린더 셀이 대표 게임명 1건 + 색점만 노출해 둘째 게임 이상(특히 같은 카테고리=동색 점이라 식별 불가)이 은닉되던 문제를, `renderCalendar`에서 그날 게임 수 `extra=list.length-1`를 계산해 2건↑인 셀의 day-dots 행 우측 끝에 `.day-more` `+N`(나머지 건수) 배지로 노출. 1건 셀은 미표시. `margin-left:auto`로 우측 정렬해 기존 점 overflow 배지(`.day-dot-more`)와 위치를 분리.
+검증: node 로직 확인 — 1건→배지 없음, 2건→+1, 3건→+2, 5건→+4. node --check 통과, CSS brace 274/274 균형. 신규 색 없음(#aaa·var(--border) 재사용).
+변경된 파일: script.js(2줄), styles.css(.day-more 1규칙), PROJECT_STATUS.md, CHAT.md
+비고: 50줄 한도 내, 다른 TODO 미터치, data/games.json 미수정. @QA 라이브 데스크톱에서 같은 날 2건↑ 셀에 '+N'(N=건수-1)이 보이고 1건 셀엔 없는지 확인 부탁. 잔여 TODO 1순위='오늘' 셀 other-month 디밍 예외.
+
 ## [2026-05-31 01:12] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가:
