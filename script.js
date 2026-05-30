@@ -187,7 +187,7 @@ function renderGroupedList(games) {
       const wd = getKoreanWeekday(g.release_date);
       html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
     }
-    html += renderCard(g, dateCounts[g.release_date] === 1);
+    html += renderCard(g, dateCounts[g.release_date] === 1, true);
   }
   return html;
 }
@@ -267,7 +267,7 @@ function updateCategoryCounts() {
   }
 }
 
-function renderCard(game, single) {
+function renderCard(game, single, grouped) {
   const releaseDate = parseReleaseDate(game.release_date);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -307,7 +307,7 @@ function renderCard(game, single) {
         <h3>${escapeHtml(game.name_ko || game.name_en)}</h3>
         ${game.name_en && game.name_ko && game.name_en !== game.name_ko
           ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
-        <div class="release-date">📅 ${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approxMark}</div>
+        ${grouped ? '' : `<div class="release-date">📅 ${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approxMark}</div>`}
         ${game.description ? `<p class="desc">${escapeHtml(game.description)}</p>` : ''}
         <div class="meta">
           ${game.developer ? `<div class="meta-row">🛠️ ${escapeHtml(game.developer)}</div>` : ''}
