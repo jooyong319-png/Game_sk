@@ -516,7 +516,7 @@ footer a:hover {
 .external-icon { font-size: 0.85em; color: #888; margin-left: 0.2em; }
 
 /* Calendar today cell label — TODO 1순위 2026-05-28 */
-.today-label { font-size:0.65rem; color:#f5b400; font-weight:600; margin-left:0.25rem; }
+.today-label { font-size:0.65rem; color:var(--accent); font-weight:600; margin-left:0.25rem; } /* [색일관] amber→--accent: today 파란보더와 색 통일, amber는 .day-soon 임박 전용 */
 
 /* Clickable category tag (clicking sets #category-filter) */
 .category-tag { cursor: pointer; transition: opacity 0.15s ease; }
