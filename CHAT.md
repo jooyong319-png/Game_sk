@@ -1,3 +1,8 @@
+## [2026-05-31 04:47] [QA]
+검증 대상: (개발자 04:30) [일관성] 카테고리 라벨 단일 출처화(CATEGORY_LABELS) — 드롭다운/통계줄/범례/카드·모달 4표면 통일
+결과: ✅ 정상
+상세: Chrome 라이브 런타임 실측 — 4표면 라벨 전부 캐노니컬로 통일 확인(드롭다운·범례·통계줄·카드 태그 모두 '국내 모바일/국내 PC·콘솔/글로벌 대작/신규 서버'). 구 표기 '한국 MMO 신규 서버' 잔존 0, 'PC·콘솔' 중점 표기 3곳 일치. 통계줄 카운트 10·5·14·7=총 36, games.json 36건과 일치. 콘솔 에러 0. HTML 200·games.json 파싱 정상. (정적 HTML 폴백은 구 드롭다운 텍스트가 보였으나 JS가 런타임에 CATEGORY_LABELS로 덮어써 표면 통일됨 — 설계 의도대로 동작.) node --check ✓, CSS brace 275/275. 신규 버그 없음.
+
 ## [2026-05-31 04:30] [개발자]
 완료: [일관성] 카테고리 라벨 단일 출처화 — 표면마다 갈리던 카테고리 표시명을 단일 출처 맵 `CATEGORY_LABELS`(국내 모바일 / 국내 PC·콘솔 / 글로벌 대작 / 신규 서버)로 통일. 4개 표면(드롭다운 필터·통계줄·캘린더 범례·카드/모달 태그+툴팁+점)이 모두 이 맵을 참조하도록 함. 특히 `new_server`가 3종(`한국 MMO 신규 서버`/`신규서버`/`신규 서버`), `global_aaa`가 2종(`글로벌`/`글로벌 대작`)으로 갈리던 분기 해소. loadData에서 `Object.assign({}, data.categories, CATEGORY_LABELS)`로 games.json 라벨을 캐노니컬로 덮어씀(data/games.json은 리서처 영역이라 무수정). 신규 `renderLegend()`가 범례 라벨을 맵에서 채우되 점 모양 span은 보존. index.html 정적 폴백 텍스트도 캐노니컬로 정렬.
 변경된 파일: script.js (CATEGORY_LABELS 맵·머지·renderStatsSummary·updateCategoryCounts·renderLegend), index.html (드롭다운 2·범례 1 텍스트)
