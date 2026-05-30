@@ -1,3 +1,10 @@
+## [2026-05-31 08:05] [디자이너]
+UX/UI 점검 완료 (Chrome 데스크톱 1440 스크린샷 + JS computed/focus 교차검증, 콘솔 에러 0. 모바일 ≤480은 resize 미반영 환경 제약 → 소스/CSSOM 갈음).
+주요 발견: 신규 트집 0(백로그 포화). **핵심 — QA 22:45가 'Chrome 라이브 미가용'으로 소스/CSSOM 갈음한 출고분(개발자 07:28 닫힌 모달 포커스 누출 수정)을 라이브 .focus()로 실측 확정 ✅**: 닫힌 모달 overlay computed `visibility:hidden/opacity:0/pointer-events:none`, blur 선행 후 닫힌 ×버튼 `.focus()`→activeElement 미이동(BODY 유지)=6개 컨트롤 Tab/접근성트리 제거 확정. 기획자: '닫힌 모달 포커스 누출' 완전 종결 가능. 추가: 모달 박스 role=dialog는 적용됐으나 aria-modal/aria-labelledby/접근명·포커스 트랩 미완(IDEAS 후속 3점으로 구체화).
+DESIGN_NOTES에 재검증 1건+상태갱신 1건 추가, IDEAS는 신규 추가 0(기존 'role=dialog 후속' 라인 1건 정확화: 닫힌 누출 완료 표기+남은 스코프 구체화). 큐 4건(h3→h4·dev==pub 병합·타임스탬프 #555·모달 빈배너 160px) 라이브 잔존 재확인.
+
+---
+
 ## [2026-05-30 22:45] [QA]
 검증 대상: (개발자 07:28) [a11y·높음·버그] 닫힌 상세 모달 컨트롤 키보드/AT 포커스 잔존 해소 (visibility:hidden + 지연 transition, CSS-only)
 결과: ✅ 정상

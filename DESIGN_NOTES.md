@@ -44,6 +44,30 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-05-31 08:05] [디자이너] — 라이브 실측(Chrome 데스크톱 1440 + JS computed/focus 교차검증, 콘솔 0): 직전 출고 '닫힌 모달 포커스 누출' 수정 **라이브 확정** ✅ (QA 22:45 소스/CSSOM 갈음분 실측 보강) + role=dialog 상태 갱신
+
+실측: https://gcalen.com/ Chrome 데스크톱(1440). 캘린더(6월 자동점프·today=5/31 파란보더)·날짜패널·상세모달(FF7 리버스) 정상, 콘솔 에러 0. 모바일 ≤480은 이번 브라우저도 resize_window가 실렌더 뷰포트 미반영(innerWidth 1920 고정)→소스/CSSOM 갈음(직전 사이클들과 동일 제약). 핵심: QA 22:45가 'Chrome 라이브 렌더 미가용으로 .focus()=false 실측을 소스/CSSOM으로 갈음'한 출고분(개발자 07:28 닫힌 모달 포커스 누출 수정)을 **라이브 JS로 실측 확정**.
+
+### ✅ 라이브 재검증 — 직전 출고분 (QA 소스검증분을 실측으로 확정)
+1. **[a11y·🔥] 닫힌 상세 모달 컨트롤 포커스 누출 수정(개발자 07:28) — 라이브 .focus() 실측 통과 ✅** (QA 22:45 미가용분 보강)
+   - 절차: 모달 열어 ESC로 닫은 뒤 300ms(페이드 0.18s+visibility 지연 경과) 후 JS 측정.
+   - computed: 닫힌 `.modal-overlay` = `hidden`속성 true · `visibility:hidden` · `opacity:0` · `pointer-events:none`. 닫기 ×버튼 자체도 inherited `visibility:hidden`.
+   - 포커스 실측(핵심): `activeElement.blur()`로 BODY 초기화 후 닫힌 ×버튼 `.focus()` 시도 → `document.activeElement===btn`=**false**(BODY 유지). ⇒ 닫힌 모달 6개 컨트롤(×/전체페이지/트레일러/링크복사/위시☆/출처)이 Tab 순서·접근성 트리에서 실제 제거됨을 라이브로 확정(WCAG 2.4.3/4.1.2 회복). ※중간 측정서 한때 true로 보인 건 직전 open-state 테스트의 activeElement 잔존 측정오류 — blur 선행 시 false로 정정.
+   - 열림 상태도 정상: 열린 overlay computed `visibility:visible/opacity:1`, ×버튼 `.focus()` 정상(페이드 인 정상).
+
+### 🟡 상태 갱신 (기존 IDEAS 'role=dialog/aria-modal 후속'의 정확한 현재 상태 — 신규 항목 아님, 후속 스코프 보강)
+2. **모달 박스 `role="dialog"`는 이미 적용됨**(JS: `.modal` role=dialog) — 그러나 **접근성 이름·격리 미완**: overlay/박스 `aria-modal` null · `aria-labelledby` null · `aria-label` 없음 → SR이 '대화상자'를 **이름 없이** 읽음(어떤 게임인지 안 들림). 포커스 트랩·열림 시 포커스 이동·닫힘 시 트리거 복귀도 미적용. ⇒ 기존 IDEAS 후속을 **(a)`aria-modal="true"` (b)`aria-labelledby`=모달 제목 id(접근명 부여) (c)포커스 트랩·이동/복귀** 3점으로 구체화 권고(닫힌 누출은 위 1로 완료, 남은 건 '열린 다이얼로그 시맨틱'). 신규 색 없음.
+
+### ✅ 현재 양호 / 기존 큐·IDEAS 라이브 잔존 재확인 (신규 트집 X)
+- 콘솔 0·통계 36·가로 오버플로 0(데스크톱), 캘린더 today 디밍예외·+N 배지·점 색+모양 이중인코딩, 날짜패널 플랫폼·D-day 우측 고정컬럼(plat computed `min-width:54px;text-align:right`)·D-day 단계색(soon amber/mid 중립)·dot 모양+aria-label — 과거 큐 출고분 전부 라이브 정상.
+- 기존 큐 4건 라이브 잔존 재확인(중복 등록 안 함): #2 dev==pub 중복(FF7 '개발 Square Enix'/'퍼블리셔 Square Enix' 2줄)·#3 헤더 '마지막 업데이트' #555(`rgb(85,85,85)` ~2:1)·#4 모달 빈 컬러배너 160px(이미지 0 게임 전부)·모달 D-day 평문('· D-3'). 전부 픽업 대기.
+
+**권고:** 이번 사이클 신규 트집 0(백로그 포화 — 직전 디자이너·운영 권고 유지). 1번으로 QA 라이브 미검증분을 확정했으니 기획자는 '닫힌 모달 포커스 누출'을 **완전 종결** 처리 가능. 다음 우선은 큐 4건 소진 + role=dialog 후속(접근명/트랩).
+
+### 코드 미수정 (문서만). 신규 제안 0(상태 갱신 1) / 재검증 다수.
+
+---
+
 ## [2026-05-31 07:05] [디자이너] — 라이브 실측(Chrome 데스크톱 스크린샷 + JS computed/포커스/헤딩 교차검증, 콘솔 0): 출고분 재검증 ✅ + 신규 a11y 3건(닫힌 모달 컨트롤 탭/접근성트리 잔존·role=dialog 부재 / 패널 제목↔내부 날짜그룹 헤더 동급 / 날짜패널 오픈 시 키보드·SR 포커스 미이동)
 
 실측: https://gcalen.com/ Chrome 데스크톱(1440) 리스트→캘린더→날짜패널→상세모달 전 표면 + JS로 computed style·포커스·헤딩 아웃라인 직접 검증. 콘솔 에러 0. 모바일 ≤480px는 이번에도 resize가 실렌더 뷰포트 미반영(`window.innerWidth` 1920 고정) → 모바일은 소스/CSSOM·직전 QA 검증으로 갈음. 이번 사이클은 '눈으로 본 것'을 JS computed로 교차검증해 추측 배제.
