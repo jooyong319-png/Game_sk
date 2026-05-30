@@ -322,7 +322,7 @@ function renderCard(game, single, grouped) {
         </div>
       </div>
       <div class="info">
-        <h3>${escapeHtml(game.name_ko || game.name_en)}</h3>
+        <h4>${escapeHtml(game.name_ko || game.name_en)}</h4>
         ${game.name_en && game.name_ko && game.name_en !== game.name_ko
           ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
         ${grouped ? '' : `<div class="release-date">📅 ${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approxMark}</div>`}
