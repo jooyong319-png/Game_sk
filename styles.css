@@ -350,7 +350,7 @@ body.modal-open { overflow: hidden; }
 .calendar-today-btn { font-size:0.82rem; padding:0.35rem 0.7rem; margin-left:0.25rem; }
 .calendar-nav-btn:hover, .calendar-today-btn:hover { background:#3a3e48; border-color:var(--accent); }
 .calendar-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; }
-.calendar-grid .weekday { text-align:center; font-size:0.78rem; color:#888; padding:0.3rem 0; }
+.calendar-grid .weekday { text-align:center; font-size:0.78rem; color:var(--text-dim); padding:0.3rem 0; } /* [a11y] 평일 요일 헤더 대비 상향 #888→--text-dim, Sun/Sat은 nth-child 오버라이드 유지 */
 .calendar-grid .day { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:0.5rem; min-height:84px; font-size:0.85rem; color:#ccc; }
 .calendar-grid .day.other-month { opacity:0.35; }
 .calendar-grid .day.day-soon { border-color:#f5a623; background:rgba(245,166,35,0.08); }
