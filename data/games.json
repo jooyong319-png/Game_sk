@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-30T09:10:00+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-30T09:10:00+09:00",
+  "last_updated": "2026-05-30T21:00:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-05-30T21:00:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -430,8 +430,8 @@
       "platforms": [
         "PC"
       ],
-      "developer": "패스 오브 엑자일 2",
-      "publisher": "그라인딩기어게임즈",
+      "developer": "그라인딩기어게임즈",
+      "publisher": "카카오게임즈",
       "description": "0.5.0 대형 콘텐츠 업데이트 신규 리그. 6개 엔드게임 스토리라인, 신규 전직 2종(마셜 아티스트·스피릿워커), 신규 최종보스·챌린지 리그 추가. 한국 5월 30일(토) 오전 5시 시작.",
       "genres": [
         "ARPG",
@@ -690,6 +690,49 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=315487"
+    },
+    {
+      "id": "mabinogi-mobile-server-molli-20260326",
+      "name_ko": "마비노기 모바일: 1주년 신규 서버 '몰리' 오픈",
+      "name_en": "Mabinogi Mobile: New Server 'Molli'",
+      "release_date": "2026-03-26",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Mobile"
+      ],
+      "developer": "넥슨(데브캣)",
+      "publisher": "넥슨",
+      "description": "마비노기 모바일 출시 1주년 기념 8번째 신규 서버. 신규 이용자 빠른 성장 지원 '몰리 버닝 챌린지'와 전체 서버 온타임 이벤트(3/26~4/22) 진행.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://mabinogimobile.nexon.com/News/Notice"
+    },
+    {
+      "id": "crimson-desert-2026",
+      "name_ko": "붉은사막",
+      "name_en": "Crimson Desert",
+      "release_date": "2026-03-20",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "펄어비스",
+      "publisher": "펄어비스",
+      "description": "펄어비스가 7년간 개발한 오픈월드 액션 어드벤처. 자체 블랙스페이스 엔진 기반 파이웰 대륙 배경. PC·PS5·Xbox 글로벌 동시 출시, 발매 4일 만에 300만 장 판매 돌파.",
+      "genres": [
+        "액션",
+        "오픈월드",
+        "어드벤처"
+      ],
+      "image_url": null,
+      "source_url": "https://biz.heraldcorp.com/article/10698973"
     }
   ]
 }
