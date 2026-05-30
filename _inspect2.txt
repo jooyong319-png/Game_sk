@@ -1,0 +1,111 @@
+########## renderGames (108-176) ##########
+   108	
+   109	function renderGames() {
+   110	  updateCategoryCounts();
+   111	  updateFilterReset();
+   112	  const selectedCategory = categoryFilter.value;
+   113	  const selectedPlatform = platformFilter.value.toLowerCase();
+   114	  const days = parseInt(periodFilter.value, 10);
+   115	
+   116	  const today = new Date();
+   117	  today.setHours(0, 0, 0, 0);
+   118	
+   119	  let filtered = allGames.filter(g => {
+   120	    if (selectedCategory && g.category !== selectedCategory) return false;
+   121	
+   122	    if (searchQuery) {
+   123	      const hay = ((g.name_ko || '') + ' ' + (g.name_en || '')).toLowerCase();
+   124	      if (!hay.includes(searchQuery)) return false;
+   125	    }
+   126	
+   127	    if (selectedPlatform) {
+   128	      const platforms = (g.platforms || []).map(p => p.toLowerCase());
+   129	      const hasMatch = platforms.some(p => p.includes(selectedPlatform));
+   130	      if (!hasMatch) return false;
+   131	    }
+   132	
+   133	    if (days > 0) {
+   134	      const release = parseReleaseDate(g.release_date);
+   135	      const future = new Date(today);
+   136	      future.setDate(today.getDate() + days);
+   137	      if (release < today || release > future) return false;
+   138	    }
+   139	
+   140	    if (weekFilter) {
+   141	      const r = getWeekRange(weekFilter === 'next' ? 1 : 0);
+   142	      const rel = parseReleaseDate(g.release_date);
+   143	      if (rel < r.start || rel >= r.end) return false;
+   144	    }
+   145	
+   146	    if (wishlistOnly && !wishlist.has(g.id)) return false;
+   147	
+   148	    return true;
+   149	  });
+   150	
+   151	  filtered.sort((a, b) => parseReleaseDate(a.release_date) - parseReleaseDate(b.release_date));
+   152	
+   153	  if (searchCount) {
+   154	    if (searchQuery && searchQuery.trim()) {
+   155	      searchCount.textContent = filtered.length + '건 일치';
+   156	      searchCount.hidden = false;
+   157	    } else {
+   158	      searchCount.hidden = true;
+   159	    }
+   160	  }
+   161	
+   162	  if (!filtered.length) {
+   163	    let emptyMsg;
+   164	    if (wishlistOnly && wishlist.size === 0) {
+   165	      emptyMsg = '아직 위시리스트가 비어있어요. 카드 우상단의 ☆를 눌러 추가해 보세요.';
+   166	    } else if (searchQuery && searchQuery.trim()) {
+   167	      emptyMsg = '\'' + escapeHtml(searchQuery) + '\'에 일치하는 게임이 없어요.';
+   168	    } else {
+   169	      emptyMsg = '조건에 맞는 게임이 없어요. 필터를 바꿔보세요.';
+   170	    }
+   171	    gamesList.innerHTML = '<p class="empty-state">' + emptyMsg + '</p>';
+   172	    return;
+   173	  }
+   174	
+   175	  gamesList.innerHTML = renderGroupedList(filtered);
+   176	}
+########## DOM refs (1,40) ##########
+     1	// 게임 출시 캘린더 - 프론트엔드 로직
+     2	// 데이터 소스: /data/games.json (리서처 Claude가 매일 9시에 갱신)
+     3	
+     4	const categoryFilter = document.getElementById('category-filter');
+     5	const platformFilter = document.getElementById('platform-filter');
+     6	const periodFilter = document.getElementById('period-filter');
+     7	const searchInput = document.getElementById('search-input');
+     8	const searchClear = document.getElementById('search-clear');
+     9	const searchCount = document.getElementById('search-count');
+    10	const filterReset = document.getElementById('filter-reset');
+    11	const gamesList = document.getElementById('games-list');
+    12	const lastUpdatedEl = document.getElementById('last-updated');
+    13	const footerUpdatedEl = document.getElementById('footer-updated-date');
+    14	const footerUpdatedWrap = footerUpdatedEl ? footerUpdatedEl.closest('.footer-updated') : null;
+    15	
+    16	let allGames = [];
+    17	let categories = {};
+    18	let selectedDay = null;
+    19	let searchQuery = '';
+    20	let weekFilter = null; // null | 'this' | 'next'
+    21	let wishlistOnly = false; // wishlist-only filter chip
+    22	
+    23	function getWeekRange(offset) {
+    24	  const t = new Date(); t.setHours(0,0,0,0);
+    25	  const dow = t.getDay();
+    26	  const toMon = dow === 0 ? -6 : -(dow - 1);
+    27	  const start = new Date(t); start.setDate(t.getDate() + toMon + offset * 7);
+    28	  const end = new Date(start); end.setDate(start.getDate() + 7);
+    29	  return { start, end };
+    30	}
+    31	
+    32	const WISHLIST_KEY = 'gcalen.wishlist';
+    33	let wishlist = new Set();
+    34	try { wishlist = new Set(JSON.parse(localStorage.getItem(WISHLIST_KEY) || '[]')); } catch (_) {}
+    35	function saveWishlist() {
+    36	  try { localStorage.setItem(WISHLIST_KEY, JSON.stringify([...wishlist])); } catch (_) {}
+    37	}
+    38	
+    39	async function loadData() {
+    40	  gamesList.innerHTML = '<p class="loading">불러오는 중...</p>';
