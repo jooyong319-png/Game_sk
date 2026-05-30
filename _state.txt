@@ -1,3 +1,0 @@
-html_reset=1
-js_reset=0
-css_braces 273 273

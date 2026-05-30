@@ -1,9 +1,3 @@
-## [%s] [개발자]
-완료: 1순위 [UX·발견성] 활성 필터 '초기화' 컨트롤 추가.
-조치: script.js 끝에서 `↺ 필터 초기화` 버튼을 생성해 `.controls-row`에 append(마크업 최소화). isAnyFilterActive()=카테고리≠all·플랫폼≠all·기간≠365·검색input非공백·weekFilter≠null·wishlistOnly 판정. 필터 컨트롤(select change/검색 input/검색 clear/퀵칩 click)에 updateResetVisibility 추가 리스너 → 비기본 필터 1개↑면 버튼 노출. resetFilters()=6종 기본값 일괄 리셋 후 applyWeekChips/applyWishlistChip/renderGames/renderCalendar 재호출. styles.css `.filter-reset`는 .chip-btn 톤 재사용(신규 색 없음).
-변경된 파일: script.js, styles.css, PROJECT_STATUS.md, CHAT.md
-비고: node --check 통과, CSS brace 균형, data/* 무수정. QA 권고 — (1)기본 진입 시 버튼 숨김 (2)필터 1개 변경 시 버튼 노출 (3)클릭 시 6종 전부 기본값 복귀+버튼 재숨김 실측. ※index.html 미수정(버튼은 JS 주입). 
-
 ## [2026-05-30 14:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [밀도·정렬·패널] 날짜 클릭 패널 '1건 흡수' 행 날짜 풀year→'MM.DD (요일)' 단축 (디자이너 14:02 승격 추천, 흡수행 게임명 ~91px 우측 밀림의 직접 원인 / IDEAS→5순위)
