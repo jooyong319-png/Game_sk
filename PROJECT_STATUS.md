@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[정렬·패널] 날짜 클릭 패널 행 우측 '플랫폼·D-day' 고정 컬럼 정렬** — `.day-row-plat`에 `min-width:4.5em; text-align:right` 부여로 플랫폼 컬럼을 고정폭+우측정렬 → 뒤따르는 D-day가 행마다 동일한 좌측 x에서 시작(세로 스캔성↑). CSS-only, 신규 색 없음 — 개발자 완료 2026-05-30 15:10
 - [x] **[UX·발견성] 활성 필터 '초기화' 컨트롤 추가** (카테고리/플랫폼/기간/검색/주칩/위시 6종 중 비기본값 1개↑ 활성 시에만 `#filter-reset` 버튼 노출(hasActiveFilters→updateFilterReset 토글, renderGames 진입 시 호출). 클릭 시 resetAllFilters로 6종 일괄 기본값 복귀(카테고리·플랫폼='', 기간=365, 검색 input·searchQuery 비움, weekFilter=null, wishlistOnly=false) 후 재렌더 — 0건 빈 상태 탈출구 겸함. const filterReset는 TDZ 회피 위해 상단 element 블록에 선언. CSS는 기존 톤(--text-faint→hover --accent) 재사용, 신규 색 없음) — 개발자 완료 2026-05-30 13:20
 - [x] **[정렬·모달] 상세 모달 메타 행 라벨 폭 정렬** — `.modal-row strong`에 `display:inline-block; min-width:5em; vertical-align:top` 부여, 라벨(출시일/플랫폼/장르/개발/퍼블리셔) 폭 통일로 값(value) 시작 컬럼 세로 정렬. CSS-only, 신규 색 없음 — 개발자 완료 2026-05-30 12:28
 - [x] 상세 모달 상단 컬러 배너(placeholder)의 중복 카테고리 텍스트 제거 — 카테고리는 본문 pill 1회만 노출(리스트 카드 dedup 패턴과 일관, 컬러만 유지)
@@ -87,27 +88,22 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 > 갱신 2026-05-30 14:11 (기획자): 직전 1순위 '활성 필터 초기화 컨트롤 추가'가 개발자 13:20 완료·QA 13:50 ✅(node --check·CSS brace 273/273·리셋 로직 8곳 확인)→완료한 기능으로 이동되어 큐 5→4. 활성 사용자 요청 0(SEO 보류 유지), 미해결 코드 버그 0(BUGS 전 항목 해소). 큐 4건이라 디자이너 14:02 승격 추천한 IDEAS '날짜 클릭 패널 1건 흡수 행 날짜 풀year→MM.DD 단축'(완료기능 스펙과 불일치 + 흡수행 게임명을 그룹행 대비 ~91px 우측으로 밀어 패널 게임명 좌측 정렬 어긋남의 직접 원인, script.js 1줄)을 작고 명확한 TODO로 5순위 승격(IDEAS→큐) → 4→5 복구. 기존 4건(날짜패널 우측 D-day 정렬·요일헤더 평일 대비·날짜패널 dot 색+모양·메타칩 중립톤)은 1~4순위로 한 칸씩 당김. 디자이너 데이터오류(PoE2)는 리서처 도메인이라 코드 TODO 미등재.
 
 
-1. **[정렬·패널] 날짜 클릭 패널 행 우측 '플랫폼·D-day' 고정 컬럼 정렬** (디자이너 05-30 10:05 '보통')
-   - 날짜 클릭 패널 행(.day-row) 우측의 플랫폼·D-day가 고정 컬럼이 아니라 플랫폼 폭(PC / Android / Switch 등)에 따라 D-day 시작 x가 행마다 흔들려 D-day(1차 지표) 세로 스캔 비용↑.
-   - `.day-row-plat`에 `min-width(~5em)+text-align:right` 부여하거나, 플랫폼+D-day를 고정폭 우측 그룹으로 묶어 D-day가 행마다 같은 좌측 컬럼에서 시작하도록 정렬. (패널 게임명 좌측 정렬·모달 메타 정렬과는 별개 표면)
-   - styles.css 중심 소규모(1~2줄). 신규 색 도입 없음. CSS brace 균형 확인, node --check 통과.
-
-2. **[a11y·대비] 월간 캘린더 요일 헤더 평일(월~금) 색 대비 상향** (디자이너 05-31 '보통')
+1. **[a11y·대비] 월간 캘린더 요일 헤더 평일(월~금) 색 대비 상향** (디자이너 05-31 '보통')
    - 캘린더 요일 헤더의 평일(월~금) 글자색 `#888`이 다크 배경 대비 약 3:1대로 WCAG AA(4.5:1) 미달 소지. 본문/메타는 05-29에 상향됐으나 요일 헤더만 누락된 상태.
    - 평일 요일 헤더 색을 기존 `--text-dim`(#9aa0ac급) 이상으로 상향. 일요일(빨강)·토요일(파랑) 강조색은 그대로 유지.
    - styles.css CSS-only 소규모(요일 헤더 규칙 1곳). 신규 색 토큰 도입 없이 기존 --text-dim 재사용. CSS brace 균형 확인.
 
-3. **[a11y] 날짜 클릭 패널 게임 행 카테고리 점(.day-row-dot) 색+모양 이중 인코딩** (디자이너 05-31 발견 '보통')
+2. **[a11y] 날짜 클릭 패널 게임 행 카테고리 점(.day-row-dot) 색+모양 이중 인코딩** (디자이너 05-31 발견 '보통')
    - 캘린더 셀 `.day-dot`·범례 `.legend-dot`은 05-30 작업으로 색 외 모양 단서(모바일=원/PC·콘솔=사각/글로벌=마름모/신규서버=링)가 추가됐으나, 날짜 클릭 패널 게임 행의 `.day-row-dot`(styles.css ~605~610)은 4색 모두 원형(색만)이라 게임명 읽는 패널에서 색각이상 사용자의 카테고리 구분 단서 소실(WCAG 1.4.1).
    - `.day-row-dot`에 `.day-dot`/`.legend-dot`과 동일한 per-category 모양 규칙(mobile_kr=원, pc_console_kr=사각 border-radius:1px, global_aaa=마름모 transform:rotate(45deg), new_server=링 background:transparent+border) 부여 + 점 span에 카테고리명 `title`/`aria-label` 노출(renderDayRows의 dot span).
    - styles.css per-category 4줄 + script.js dot span 속성 ~1줄. 신규 색 없이 기존 4색 유지. CSS brace 균형 확인, node --check 통과.
 
-4. **[일관성·어포던스] 리스트 카드 비인터랙티브 메타칩(플랫폼·장르) 중립톤 통일** (디자이너 발견 '보통')
+3. **[일관성·어포던스] 리스트 카드 비인터랙티브 메타칩(플랫폼·장르) 중립톤 통일** (디자이너 발견 '보통')
    - 리스트 카드의 칩이 카테고리=솔리드컬러 / 플랫폼=회색 / 장르=accent블루 3종으로 혼재. 클릭 불가한 장르 태그가 링크블루(--accent)라 클릭 가능처럼 보여 어포던스 오인.
    - 비인터랙티브 메타칩(장르 등)을 플랫폼칩과 동일한 중립 회색 톤으로 통일하고, accent블루는 실제 링크/날짜 등 인터랙티브 요소에만 한정. (카테고리 솔리드 컬러칩은 그대로 유지)
    - styles.css 중심 소규모(메타칩 규칙 1~2곳). 신규 색 도입 없이 기존 중립 회색 재사용. CSS brace 균형 확인, node --check 통과.
 
-5. **[밀도·정렬·패널] 날짜 클릭 패널 '1건 흡수' 행 날짜 풀year→'MM.DD (요일)' 단축** (디자이너 05-30 14:02 승격 추천 '보통')
+4. **[밀도·정렬·패널] 날짜 클릭 패널 '1건 흡수' 행 날짜 풀year→'MM.DD (요일)' 단축** (디자이너 05-30 14:02 승격 추천 '보통')
    - 날짜 클릭 패널의 1건 날짜 흡수 행(`.day-row-date`)이 완료기능 스펙(MM.DD)과 달리 풀year(`2026.05.30 (토)`)로 렌더됨. 패널 헤더가 이미 연도를 명시하고 전 항목이 2026이라 행마다 `2026.` 프리픽스가 잉여이며, 풀year 폭이 흡수행 게임명을 그룹헤더 행 대비 ~91px 우측으로 밀어 패널 내 게임명 좌측 시작점이 어긋남(라이브 실측: 흡수행 518px vs 그룹행 427px).
    - `renderDayRows`의 흡수행 날짜 포맷을 스펙대로 `'MM.DD (요일)'`로 단축(연도 생략). 그룹헤더 행 포맷은 기존 유지. (1순위 우측 D-day 컬럼 정렬과는 별개 표면 — 이건 좌측 게임명 시작점 정렬)
    - script.js 1줄 수준. 신규 색/CSS 도입 없음. node --check 통과.
@@ -175,6 +171,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-30 15:10 [개발자] 1순위 완료: **[정렬·패널] 날짜 패널 행 플랫폼·D-day 컬럼 정렬**. styles.css `.day-row-plat`에 `min-width:4.5em; text-align:right` 추가 → 플랫폼 폭(PC/Android/Switch 등)에 따라 흔들리던 D-day 시작 x를 고정폭 우측정렬로 통일, D-day 세로 스캔 비용↓. CSS-only 소규모, 신규 색 없음. node --check 통과, CSS brace 균형. TODO 큐 한 칸씩 당김. ※직전 자동화 오류로 잘못 푸시됐던 abaafaf는 8464312에서 정정 완료(임시파일 제거·TODO 복구).
 - 2026-05-30 14:11 [기획자] TODO 큐 4→5개. 직전 1순위 '활성 필터 초기화 컨트롤 추가' 개발자 13:20 완료·QA 13:50 ✅(node --check·CSS brace 273/273)→완료한 기능 이동(큐 5→4). 디자이너 14:02 승격 추천한 IDEAS '날짜 클릭 패널 1건 흡수 행 날짜 풀year→MM.DD 단축'(흡수행 게임명을 그룹행 대비 ~91px 우측으로 밀어 패널 좌측 정렬 어긋남의 직접 원인, script.js 1줄)을 5순위로 승격(IDEAS→큐, 중복 IDEA 제거). 잔여 4건(날짜패널 우측 D-day 정렬·요일헤더 평일 대비·날짜패널 dot 색+모양·메타칩 중립톤) 1~4순위로 당김. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0. 코드 미수정(문서만).
 - 2026-05-30 13:20 [개발자] 1순위 완료: **[UX·발견성] 활성 필터 '초기화' 컨트롤 추가**. index.html controls-row 끝에 `#filter-reset` 버튼(기본 hidden) 추가. script.js: hasActiveFilters()(6종 필터 비기본값 판정)·updateFilterReset()(renderGames 진입 시 호출, show/hide 토글)·resetAllFilters()(카테고리·플랫폼='', 기간=365, 검색 input·searchQuery 비움, weekFilter=null·wishlistOnly=false 후 applyWeekChips/applyWishlistChip+renderGames) 추가. const filterReset는 TDZ 회피 위해 상단 element 블록에 선언. styles.css `.filter-reset`(--text-faint→hover --accent, 밑줄, 모바일 좌정렬) — 기존 톤 재사용 신규 색 없음. 총 39줄(index 2/script 31/css 6, 50줄 한도 내). node --check 통과, CSS brace 273/273, DOM 스텁 단위테스트로 토글·리셋 동작 확인. 잔여 TODO 4→3건 한 칸씩 당김.
 - 2026-05-30 13:10 [기획자] TODO 큐 4→5개. 직전 1순위 '상세 모달 메타 행 라벨 폭 정렬' 개발자 12:28 완료·QA ✅12:45·디자이너 12:58 라이브 재검증(데스크톱/모바일 5행 정렬·잘림 0)→완료한 기능 이동(큐 5→4). IDEAS '리스트 카드 비인터랙티브 메타칩(장르) 중립톤 통일'(비클릭 장르태그 accent블루 오인)을 5순위로 승격(IDEAS→큐). 잔여 4건(필터 초기화·날짜패널 우측 D-day 정렬·요일헤더 평일 대비·날짜패널 dot 색+모양) 1~4순위 유지. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0. 코드 미수정(문서만).

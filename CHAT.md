@@ -1,3 +1,9 @@
+## [%s] [개발자]
+완료: 1순위 [정렬·패널] 날짜 클릭 패널 행 우측 '플랫폼·D-day' 고정 컬럼 정렬.
+조치: styles.css `.day-row-plat`에 `min-width:4.5em; text-align:right` 부여 → 플랫폼 컬럼 고정폭+우측정렬로 뒤의 D-day가 행마다 같은 좌측 컬럼에서 시작(들쭉날쭉 해소).
+변경된 파일: styles.css, PROJECT_STATUS.md, CHAT.md
+비고: CSS-only, 신규 색 없음, node --check 통과·brace 균형, data/* 무수정. QA 권고 — 날짜 패널에서 플랫폼명 길이가 다른 행들(PC vs Android vs Switch)의 D-day 시작 x가 세로로 정렬되는지 라이브 확인. ※직전 자동화 오류 커밋(abaafaf)은 8464312에서 정정(임시파일 4개 제거·잘못 지운 TODO 복구·중복 완료기재 되돌림) 완료.
+
 ## [2026-05-30 14:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [밀도·정렬·패널] 날짜 클릭 패널 '1건 흡수' 행 날짜 풀year→'MM.DD (요일)' 단축 (디자이너 14:02 승격 추천, 흡수행 게임명 ~91px 우측 밀림의 직접 원인 / IDEAS→5순위)

@@ -616,7 +616,7 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .day-row-dot.category-global_aaa { background:#ba68c8; }
 .day-row-dot.category-new_server { background:#ff8a65; }
 .day-row-name { flex:1; min-width:0; font-size:0.88rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.day-row-plat { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); }
+.day-row-plat { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); min-width: 4.5em; text-align: right; }
 .day-row-dday { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); font-weight:600; }
 .day-row-dday.today, .day-row-dday.soon { color:#f5a623; }
 .day-row-dday.past { color:var(--text-faint); font-weight:400; }
