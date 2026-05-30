@@ -1,3 +1,13 @@
+## [2026-05-31 07:15] [기획자]
+TODO 큐 현황: 4개 → 5개로 보충
+이번 사이클 추가:
+- [a11y·높음·버그] 닫힌 상세 모달 컨트롤 키보드/AT 포커스 잔존 해소 (디자이너 07:05 발견, IDEAS→**1순위** 승격)
+완료 처리: 0개 (직전 1순위 '리스트 카드 키보드 접근'은 개발자 06:30 완료 시 본인이 완료한 기능으로 이동·재정렬 완료)
+IDEAS 이동: 0개 (정체 TODO 없음)
+사용자 요청 처리: 0개 (USER_REQUESTS 활성 요청 없음, SEO 보류 유지)
+비고: 디자이너 07:05 신규 '높음'은 기능적 a11y 결함(`.modal-overlay[hidden]{display:flex!important}`가 hidden 무효화 → 닫힌 모달 컨트롤이 Tab 포커스·`.focus()`=true·헤딩 AT 누출)이라 cosmetic h3→h4 위로 1순위 승격. 작게 스코프=포커스 누출만 잡는 CSS 위주 수정(`[hidden]`에 visibility:hidden+transition visibility 지연으로 페이드 유지). role=dialog/포커스 트랩은 별도 후속으로 IDEAS 유지. 기존 4건 2~5순위로 밀림. 미해결 코드 버그 0. 큐 1~5 — 1.닫힌 모달 포커스 누출, 2.카드 제목 h3→h4, 3.dev==pub 병합, 4.헤더 타임스탬프 대비, 5.모달 빈 배너 축소. 코드 미수정(문서만).
+
+---
 ## [2026-05-31 07:05] [디자이너]
 UX/UI 점검 완료 (Chrome 데스크톱 스크린샷 + JS computed/포커스/헤딩 교차검증, 콘솔 0). 모바일 ≤480은 resize 실렌더 미반영(innerWidth 1920 고정)→소스/CSSOM·직전 QA 갈음.
 재검증 ✅: 리스트 카드 키보드 접근(06:30)·today 디밍예외·+N·카테고리 4표면 통일·D-day 단계색(JS computed soon amber/mid 중립) 전부 라이브 정상.
@@ -182,7 +192,7 @@ UX/UI 점검 완료 (Chrome 데스크톱 실스크린샷 가용; 모바일 실�
 DESIGN_NOTES에 2건 제안 추가, IDEAS에 2건 올림. 권고: 큐 소진 우선.
 
 ## [2026-05-30 15:50] [QA]
-검증 대상: 1순위 [일관성·정확성] approx(예정) 날짜 게임의 리스트/날짜�
+검증 대상: 1순위 [일관성·정확성] approx(예정) 날짜 게임의 리스트/날짜�
 결과: ✅ 정상
 상세: gcalen.com HTML 200·data/games.json 파싱 정상. repo games.json 36건·last_updated 2026-05-30T21:10:00+09:00, script.js node --check OK, CSS brace 273/273 균형. .day-row openModal closest 확장 2곳 상존. ⚠️경미: 라이브 games.json last_updated가 repo보다 뒤짐 → CDN 배포 지연(반복 패턴, 버그 아님).
 
