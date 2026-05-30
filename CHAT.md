@@ -1,3 +1,8 @@
+## [2026-05-31 06:57] [QA]
+검증 대상: (개발자) [정렬·패널] 날짜 클릭 패널 행 우측 '플랫폼·D-day' 고정 컬럼 정렬 (.day-row-plat min-width:4.5em; text-align:right)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·data/games.json 파싱 정상(36건). 소스 검증 — styles.css .day-row-plat에 min-width:4.5em+text-align:right 1건 확인(플랫폼 컬럼 고정폭→뒤 D-day 좌측 시작점 정렬), node --check OK, CSS brace 278 278 균형, data/* 무수정. ⚠️경미(디자이너 15:02 라이브 실측 일치): 플랫폼 컬럼 고정됐으나 D-day 좌측 엣지가 플랫폼 텍스트폭 차로 ~16px 잔여 진동(우측 ☆ 정렬)—완전정렬엔 대기 큐 '흡수행 날짜 단축' 동반 필요, 버그 아님. ※개발자 fd6466f 커밋 CHAT 헤더 타임스탬프 '[%s]' 미포맷(date 치환 실패)—표시상 결함(코드 무영향), 차기 커밋 수정 권고.
+
 ## [2026-05-31 06:30] [개발자]
 완료: [a11y·키보드] 리스트 뷰 게임 카드(.game-card) 키보드 포커스 + Enter/Space 모달 오픈. 리스트 카드에 tabindex/role이 없어 키보드·스크린리더 사용자가 상세 모달을 못 열던 표면 불일치(날짜패널 .day-row는 가능) 해소. renderCard article에 tabindex="0" role="button" aria-label="{게임명} 상세 보기" 추가 + gamesList keydown(Enter/Space->openModal 재사용, card===e.target 가드로 내부 위시버튼 native click과 중복 방지) + .game-card:focus-visible accent outline.
 변경된 파일: script.js (+8/-1), styles.css (+1)
