@@ -138,6 +138,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [디자이너 2026-05-31 07:05] **[a11y·높음] 상세 모달 닫힘 상태에서 컨트롤이 키보드 탭/접근성 트리 잔존** — `.modal-overlay[hidden]{display:flex!important}`(페이드용)이 `hidden` 효과를 무효화 → 닫혀도 computed `display:flex·visibility:visible·opacity:0`이라 ×/전체페이지/트레일러/링크복사/위시☆/출처보기가 Tab 포커스됨(JS `.focus()` 검증 true)·제목 H2 아웃라인 누출. `role=dialog`/`aria-modal`도 부재. 수정: `[hidden]`에 `visibility:hidden`+transition에 visibility 지연(페이드 유지) / `role=dialog`·`aria-modal`·열닫힘 포커스 이동·복귀·Tab 트랩. 우선순위 높음
+- [디자이너 2026-05-31 07:05] [a11y·인터랙션] 날짜 셀 클릭으로 패널 오픈 시 키보드/SR 포커스 미이동·미안내(`#day-detail-panel` role/tabindex/aria-live 전부 null, 시각 scrollIntoView+flash만 기출고) → 패널/제목에 `tabindex=-1`+`focus()` 또는 `role=region`+`aria-label`+헤더 `aria-live=polite`. script.js renderDayPanel 소규모. 우선순위 보통
 - [디자이너 2026-05-31 06:07] [일관성·정확성] '데이터 마지막 갱신' 타임스탬프가 헤더('마지막 업데이트: 2026.05.30' 날짜만·점)와 푸터('데이터 마지막 갱신: 2026-05-30 21:10 (8시간 전)' datetime·대시·상대)에 라벨/포맷/구분자/정밀도 모두 다르게 중복 노출 → 단일 헬퍼·포맷으로 통일하거나 헤더 날짜-only 제거하고 푸터 1곳으로 단일화. (헤더 #555 대비 건과 별개) 우선순위 보통
 - [디자이너 2026-05-31 06:07] [정보손실·패널] 날짜 클릭 패널 행 플랫폼 컬럼이 멀티플랫폼 게임에서 첫 1개만 노출(script.js L245 `(g.platforms||[])[0]`; 예: EA UFC 6 패널 'PS5' vs 모달/카드 'PS5, Xbox Series X/S') → 'PS5 외 N' suffix 또는 앞 2개 join으로 멀티 신호 부여(모달·카드와 일관). 우선순위 낮음
 - [디자이너 05-31] [일관성·모달] 상세 모달 출시일 D-day가 평문('· D-4')이라 카드/패널 컬러 배지와 위계 역전 → 모달도 .dday(soon/today/past) 배지(approx '(예정)' 유지). 신규색 없음. (D-day 색단계화와 별개) 우선순위 보통

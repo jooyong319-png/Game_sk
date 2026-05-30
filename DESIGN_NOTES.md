@@ -44,6 +44,39 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-05-31 07:05] [디자이너] — 라이브 실측(Chrome 데스크톱 스크린샷 + JS computed/포커스/헤딩 교차검증, 콘솔 0): 출고분 재검증 ✅ + 신규 a11y 3건(닫힌 모달 컨트롤 탭/접근성트리 잔존·role=dialog 부재 / 패널 제목↔내부 날짜그룹 헤더 동급 / 날짜패널 오픈 시 키보드·SR 포커스 미이동)
+
+실측: https://gcalen.com/ Chrome 데스크톱(1440) 리스트→캘린더→날짜패널→상세모달 전 표면 + JS로 computed style·포커스·헤딩 아웃라인 직접 검증. 콘솔 에러 0. 모바일 ≤480px는 이번에도 resize가 실렌더 뷰포트 미반영(`window.innerWidth` 1920 고정) → 모바일은 소스/CSSOM·직전 QA 검증으로 갈음. 이번 사이클은 '눈으로 본 것'을 JS computed로 교차검증해 추측 배제.
+
+### ✅ 재검증 (직전 출고분 — 라이브 정상)
+1. **[a11y·키보드] 리스트 카드 포커스+Enter/Space 모달(개발자 06:30)** — JS 실측: `.game-card` `tabindex="0"`·`role="button"`·`aria-label="…상세 보기"` 부여 확인. 양호.
+2. **[캘린더] today other-month 디밍 예외 / +N 배지 / 카테고리 라벨 4표면 통일** — 라이브 정상(5/31 파란보더 또렷, 6/4·18·30 '+1', 통계줄 '국내 모바일 10·국내 PC·콘솔 5·글로벌 대작 14·신규 서버 7·총 36' 캐노니컬).
+3. **[D-day 단계색] 날짜 패널** — JS computed 실측: D-4/D-5 soon=`rgb(245,166,35)` amber, D-15~D-19 mid=`rgb(230,230,230)` 중립. 단계 분기 정상(※스크린샷 줌상 amber로 보이던 건 JPEG 아티팩트 오인 — computed로 정상 확인, 트집 철회).
+
+### 🔴 발견한 문제 / 개선점 (기존 큐·IDEAS·DESIGN_NOTES 미등록 신규 — 3건, 전부 JS 실측 확인)
+
+1. **[🔥최우선·a11y] 상세 모달이 '닫힌' 상태에서도 모든 컨트롤이 키보드 Tab 순서·접근성 트리에 잔존 (hidden 속성이 무효화됨)** — 우선순위: 높음
+   - 실측(JS): `.modal-overlay[hidden]` 규칙이 페이드 전환을 위해 `display:flex !important`로 덮어써져 `hidden` 속성 본래 효과(접근성 트리/탭 순서 제거)가 무효. 닫힌 상태 computed = `display:flex / visibility:visible / opacity:0`이고, 첫 컨트롤(`.modal-close`)에 `.focus()` 시 `document.activeElement===btn`=**true**(닫혀 있어도 포커스됨). `pointer-events:none`은 마우스만 차단—키보드/SR엔 무효. 따라서 모달이 보이지 않는데도 ×·전체 페이지·트레일러 검색·링크 복사·위시 ☆·출처 보기 6개 컨트롤을 Tab으로 밟게 되고('사라진 버튼에 포커스'), 제목이 H2로 페이지 헤딩 아웃라인에 노출. 게다가 모달에 `role="dialog"`·`aria-modal` 부재(JS 확인 null) → 열렸을 때도 SR이 다이얼로그로 인지 못하고 배경이 inert가 아님.
+   - 왜 문제: 리스트 카드 키보드 접근(06:30)·뷰토글 aria 등 a11y를 쌓아온 사이트에서 가장 정보 밀도 높은 모달이 닫힌 채 탭 트랩 없이 유령 컨트롤을 노출하면 키보드/SR 경험이 크게 깨짐(WCAG 2.4.3 포커스 순서·4.1.2 역할/이름).
+   - 어떻게(개발자): (a) `[hidden]` 상태에 `visibility:hidden` 추가 + `transition: visibility 0s linear .18s, opacity .18s`로 페이드아웃은 유지하되 종료 후 접근성 트리/탭에서 제거(`display:flex !important` 유지 가능). (b) 모달 컨테이너에 `role="dialog" aria-modal="true" aria-labelledby="{제목 id}"` 부여, 열 때 모달(또는 ×)로 포커스 이동·닫을 때 직전 트리거로 포커스 복귀·Tab 트랩(기존 ESC L569/keydown L557 핸들 확장). CSS 2줄 + 속성/포커스 관리 소규모, 신규 색 없음.
+
+2. **[a11y·구조·헤딩] 날짜 클릭 패널의 '내부 날짜그룹 헤더(h3)'가 패널 제목(h3)과 동급 → 패널 내부 위계 평면화** — 우선순위: 보통
+   - 실측(JS 헤딩 트리): 캘린더+패널 상태 아웃라인이 `H1(타이틀) → H2(2026년 6월) → H3(패널 제목 '…이후 출시 N건') → H3(패널 내부 날짜그룹 2026.06.04…)`. 패널 제목과 그 안에 종속된 날짜그룹이 똑같이 `h3`라 '패널 ⊃ 날짜그룹' 위계가 평면화(WCAG 1.3.1). (모달 제목 H2 아웃라인 누출은 위 #1 role=dialog 격리로 완화되는 별개 건.)
+   - 어떻게(개발자): 패널 제목 `h3.day-panel-title` 유지 + 패널 내부 날짜그룹 헤더(`renderDayRows`의 `.date-group-header`)를 패널 맥락에서 `h4`로 한 단계 내림(현재 TODO #1 '리스트 카드 제목 h3→h4'와 같은 취지를 패널에도 일관 적용). 외형은 CSS 셀렉터로 무변경 유지. script.js renderDayRows 헤더 태그 1곳 + CSS 셀렉터.
+
+3. **[a11y·인터랙션] 날짜 셀 클릭으로 패널이 열려도 키보드/SR 포커스가 이동·안내되지 않음 (시각적 scrollIntoView+flash만 존재)** — 우선순위: 보통
+   - 실측(JS): `#day-detail-panel`에 `role`·`tabindex`·`aria-live` 전부 null. 패널은 6주 그리드 아래(폴드 밖)에서 열리고 시각 사용자는 scrollIntoView+헤더 flash(기출고)로 인지하지만, 셀을 Enter/Space로 연 키보드/SR 사용자는 포커스가 셀에 그대로 남아 '아무 일도 안 일어난 것'처럼 느낌(패널 출현 미안내).
+   - 어떻게(개발자): 패널 오픈 시 패널 컨테이너(또는 `h3.day-panel-title`)에 `tabindex="-1"` 부여 후 `.focus()`로 포커스 이동(시각 scrollIntoView와 병행), 또는 패널에 `role="region" aria-label="선택한 날짜 출시 목록"` + 헤더 `aria-live="polite"`로 변경 안내. script.js renderDayPanel 소규모.
+
+### ✅ 현재 양호 (트집 X) — 큐 소진 우선
+콘솔 0·통계 36·가로 오버플로 0, 캘린더 today 디밍예외/+N/점 색+모양 이중인코딩/soon 셀 강조, D-day 단계색(soon amber·mid 중립 computed 확인), 리스트 카드 키보드 접근(06:30 출고)·뷰토글/칩 aria-pressed·검색 aria-label, 모달 fixed+스크롤락+×44px+페이드, 패널 클릭/선택 위계·sticky 그룹헤더, 필터초기화·빈상태·위시 localStorage.
+**부수 재확인(기등록):** 헤더 '마지막 업데이트' 색 computed `rgb(85,85,85)`(#555, ~2:1) 여전(TODO #3 미출고)·`meta theme-color` 여전 NONE(기등록). 모달 빈 배너 160px·모달 D-day 평문·dev==pub 중복·패널 멀티플랫폼 첫1개·단일게임 카드 풀폭 빈공백 모두 라이브 잔존(전부 기존 큐/IDEAS).
+**권고:** 신규 3건 모두 a11y(특히 #1은 기능적 결함) — 개발자/기획자 큐에 #1 고우선 픽업 권고. 모바일 ≤480 실렌더는 환경 제약 지속 → 가능 시 별도 모바일 기기/DevTools 디바이스 모드 검증 권고.
+
+### 코드 미수정 (문서만). 신규 제안 3 / IDEAS 2 / 재검증 다수.
+
+---
+
 ## [2026-05-31 06:07] [디자이너] — 라이브 실측(Chrome 데스크톱 스크린샷·콘솔 0, ≤480 실렌더 불가→소스 병행): 출고분 라이브 재검증 ✅ + 신규 2건(헤더↔푸터 '마지막 갱신' 타임스탬프 2중·포맷 불일치 / 날짜 패널 행 플랫폼 컬럼 첫 1개만 노출) + 큐 #1(h3→h4) 스코프 보강 1
 
 실측: https://gcalen.com/ Chrome 데스크톱 스크린샷(리스트→캘린더→날짜패널→상세모달 전 표면). 통계줄 '국내 모바일 10 · 국내 PC·콘솔 5 · 글로벌 대작 14 · 신규 서버 7 · 총 36' = games.json 36건 일치, 가로 오버플로 0(JS 실측 docScrollW 1501 = clientW, scrollX 0 — 데스크톱 그리드 정상, 좁은 폭 클리핑은 스크린샷 스케일 착시였고 실제 오버플로 아님), 콘솔 에러 0. 모바일 ≤480px는 이번 브라우저도 resize_window가 실렌더 뷰포트에 미반영(1516 고정) → 모바일은 소스/CSSOM 병행(직전 개발자 05:28 ≤480 라벨숨김+점9px는 QA 05:46 CSSOM 검증 ✅). 이번 사이클: (a)직전 출고분 라이브 재검증 (b)기존 큐/IDEAS/DESIGN_NOTES 미등록 신규만 등재(중복 회피).

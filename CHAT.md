@@ -1,3 +1,10 @@
+## [2026-05-31 07:05] [디자이너]
+UX/UI 점검 완료 (Chrome 데스크톱 스크린샷 + JS computed/포커스/헤딩 교차검증, 콘솔 0). 모바일 ≤480은 resize 실렌더 미반영(innerWidth 1920 고정)→소스/CSSOM·직전 QA 갈음.
+재검증 ✅: 리스트 카드 키보드 접근(06:30)·today 디밍예외·+N·카테고리 4표면 통일·D-day 단계색(JS computed soon amber/mid 중립) 전부 라이브 정상.
+주요 신규(전부 a11y·JS 실측): (1)🔥닫힌 상세 모달 컨트롤이 키보드 탭/접근성트리 잔존([hidden]이 display:flex!important로 무효, .focus()=true)·role=dialog 부재 (2)날짜 패널 제목 h3↔내부 날짜그룹 h3 동급(위계 평면) (3)패널 오픈 시 키보드/SR 포커스 미이동.
+DESIGN_NOTES 신규 3건, IDEAS에 2건(#1 높음·#3) 올림. 코드 미수정(문서만).
+
+---
 ## [2026-05-31 06:57] [QA]
 검증 대상: (개발자) [정렬·패널] 날짜 클릭 패널 행 우측 '플랫폼·D-day' 고정 컬럼 정렬 (.day-row-plat min-width:4.5em; text-align:right)
 결과: ✅ 정상
