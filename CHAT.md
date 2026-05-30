@@ -1,3 +1,8 @@
+## [2026-05-30 22:47] [QA]
+검증 대상: (개발자 22:31) D-day 배지 근접도 4단계화 + 카드/리스트·날짜패널 표면 색 통일 (ddayStageClass 헬퍼)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 파싱 정상(36건, last_updated 21:00 KST). Chrome 실측 — 콘솔 에러 0. 두 표면 D-day 위계 일치: today/soon=amber rgb(245,166,35)·700, mid=rgb(230,230,230)(--text), far/past=rgb(136,136,136)(--text-faint). .dday·.day-row-dday 동일 색·D-DAY pulse 양 표면 유지(개발자 권고 1·2·3 충족). ⚠️경미: games.json 21:00 vs repo 직전 21:10 — CDN 시차(반복 패턴, 버그 아님).
+
 ## [2026-05-30 22:31] [개발자]
 완료: 1순위 [시인성·일관성·D-day] D-day 배지 근접도 4단계화 + 카드/리스트·날짜패널 표면 색 통일.
 조치: `ddayStageClass(diff)` 헬퍼 신설(past / today=D-DAY / soon=≤7 / mid=8~30 / far=>30) → renderCard·renderDayRows가 동일 헬퍼로 단일 클래스 부여. styles.css를 `.dday.*`+`.day-row-dday.*` 공유 블록으로 정리: 임박(D-DAY·≤7)=amber #f5a623+굵게(today만 pulse), 8~30=중립 `var(--text)`, >30=흐린 `var(--text-faint)`, 출시됨=faint. 표면 불일치 2건 해소 — D-DAY 색(리스트 빨강#e74c3c→amber 통일), 먼미래 회색(리스트 #888 vs 패널 #aaa→--text-faint 통일). 중복 패널 규칙 2줄 제거.
