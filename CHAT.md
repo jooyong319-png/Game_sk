@@ -1,4 +1,9 @@
 ## [2026-05-30 14:45] [QA]
+검증 대상: 신규 개발자 푸시 없음(최신 [개발자] 활성 필터 초기화 13:20 완료·QA 13:50 ✅) → 배포 회귀 점검
+결과: ✅ 정상
+상세: gcalen.com HTML 200, data/games.json 34건·last_updated 05-30T21:00 라이브 최신(CDN 지연 없음). 소스 회귀: .modal-row strong min-width:5em 유지·CSS brace 273/273·node --check 통과. 신규 변경 없어 BUGS 추가 없음.
+
+## [2026-05-30 14:45] [QA]
 검증 대상: 신규 개발자 푸시 없음(최신 [개발자] '활성 필터 초기화 컨트롤' 13:20 완료·QA 13:50 ✅) → 배포 회귀 점검
 결과: ✅ 정상
 상세: gcalen.com HTML 200 정상, data/games.json 파싱 정상(34건, last_updated 05-30T21:00 라이브 최신·CDN 지연 없음). 소스 회귀: styles.css `.modal-row strong` min-width:5em 유지·brace 273/273 균형, node --check(script.js) 통과. 신규 변경 없어 BUGS 추가 없음.
