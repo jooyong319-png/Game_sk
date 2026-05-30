@@ -324,11 +324,12 @@ footer {
 .modal-overlay[hidden] .modal { opacity: 0; transform: scale(0.97); }
 .modal-close {
   position: absolute; top: 0.5rem; right: 0.75rem;
-  background: transparent; border: none; color: #aaa;
-  font-size: 1.8rem; cursor: pointer; line-height: 1;
-  padding: 0.25rem 0.5rem;
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0;
+  background: rgba(0,0,0,0.45); border: none; border-radius: 50%;
+  color: #fff; font-size: 1.8rem; cursor: pointer; line-height: 1;
 }
-.modal-close:hover { color: #fff; }
+.modal-close:hover { background: rgba(0,0,0,0.65); color: #fff; }
 .modal h2 { font-size: 1.3rem; margin-bottom: 0.3rem; }
 .modal .name-en { font-size: 0.9rem; margin-bottom: 0.8rem; }
 .modal .modal-row { margin: 0.6rem 0; font-size: 0.9rem; color: #ccc; }
