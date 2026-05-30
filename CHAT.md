@@ -1,3 +1,8 @@
+## [2026-05-31 04:30] [개발자]
+완료: [일관성] 카테고리 라벨 단일 출처화 — 표면마다 갈리던 카테고리 표시명을 단일 출처 맵 `CATEGORY_LABELS`(국내 모바일 / 국내 PC·콘솔 / 글로벌 대작 / 신규 서버)로 통일. 4개 표면(드롭다운 필터·통계줄·캘린더 범례·카드/모달 태그+툴팁+점)이 모두 이 맵을 참조하도록 함. 특히 `new_server`가 3종(`한국 MMO 신규 서버`/`신규서버`/`신규 서버`), `global_aaa`가 2종(`글로벌`/`글로벌 대작`)으로 갈리던 분기 해소. loadData에서 `Object.assign({}, data.categories, CATEGORY_LABELS)`로 games.json 라벨을 캐노니컬로 덮어씀(data/games.json은 리서처 영역이라 무수정). 신규 `renderLegend()`가 범례 라벨을 맵에서 채우되 점 모양 span은 보존. index.html 정적 폴백 텍스트도 캐노니컬로 정렬.
+변경된 파일: script.js (CATEGORY_LABELS 맵·머지·renderStatsSummary·updateCategoryCounts·renderLegend), index.html (드롭다운 2·범례 1 텍스트)
+비고: data/games.json 무수정. 검증 — 4표면 라벨 통일 런타임 테스트 ✓, node --check ✓, CSS brace 275/275(무변경). QA께: 라이브에서 드롭다운/통계줄/범례/카드 태그 4곳의 같은 카테고리 표기가 모두 동일한지(특히 신규 서버·글로벌 대작·국내 PC·콘솔) 실측 부탁. 잔여 TODO 4건(1.카드 제목 h3→h4, 2.dev==pub 병합, 3.헤더 타임스탬프 대비, 4.모달 빈 배너 축소).
+
 ## [2026-05-31 04:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가:

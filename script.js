@@ -15,6 +15,16 @@ const footerUpdatedWrap = footerUpdatedEl ? footerUpdatedEl.closest('.footer-upd
 
 let allGames = [];
 let categories = {};
+
+// 카테고리 표시명 단일 출처(Single Source of Truth).
+// 드롭다운 필터 / 통계줄 / 캘린더 범례 / 카드·모달 태그 4개 표면이 모두 이 맵을 참조한다.
+// 문구는 메인 앱 기준으로 확정(글로벌 대작·신규 서버 등 표면별 표기 분기 제거).
+const CATEGORY_LABELS = {
+  mobile_kr: '국내 모바일',
+  pc_console_kr: '국내 PC·콘솔',
+  global_aaa: '글로벌 대작',
+  new_server: '신규 서버',
+};
 let selectedDay = null;
 let searchQuery = '';
 let weekFilter = null; // null | 'this' | 'next'
@@ -45,7 +55,7 @@ async function loadData() {
     const data = await res.json();
 
     allGames = data.games || [];
-    categories = data.categories || {};
+    categories = Object.assign({}, data.categories || {}, CATEGORY_LABELS);
 
     if (lastUpdatedEl && data.last_updated) {
       const d = new Date(data.last_updated);
@@ -66,6 +76,7 @@ async function loadData() {
     }
 
     renderStatsSummary();
+    renderLegend();
     renderGames();
     // 최초 1회: 캘린더를 '오늘 이후 가장 가까운 출시 달'로 초기화 (사용자 네비 후엔 건드리지 않음)
     if (!calendarMonthInitialized) {
@@ -92,18 +103,25 @@ async function loadData() {
 function renderStatsSummary() {
   const el = document.getElementById('stats-summary');
   if (!el) return;
-  const order = [
-    ['mobile_kr', '국내 모바일'],
-    ['pc_console_kr', '국내 PC/콘솔'],
-    ['global_aaa', '글로벌'],
-    ['new_server', '신규서버'],
-  ];
+  const order = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
   const counts = {};
   for (const g of allGames) counts[g.category] = (counts[g.category] || 0) + 1;
-  const parts = order.map(([k, label]) => `${label} ${counts[k] || 0}`);
+  const parts = order.map(k => `${CATEGORY_LABELS[k] || k} ${counts[k] || 0}`);
   parts.push(`총 ${allGames.length}`);
   el.textContent = parts.join(' · ');
   el.hidden = allGames.length === 0;
+}
+
+// 캘린더 범례 라벨도 단일 출처(CATEGORY_LABELS)를 참조하도록 채운다(점 모양 span은 보존).
+function renderLegend() {
+  const legend = document.getElementById('calendar-legend');
+  if (!legend) return;
+  for (const item of legend.querySelectorAll('.legend-item')) {
+    const dot = item.querySelector('.legend-dot');
+    if (!dot) continue;
+    const key = (Array.from(dot.classList).find(c => c.startsWith('category-')) || '').slice(9);
+    if (CATEGORY_LABELS[key]) item.lastChild.textContent = CATEGORY_LABELS[key];
+  }
 }
 
 function renderGames() {
@@ -269,7 +287,7 @@ function updateCategoryCounts() {
   const countByCat = {};
   for (const g of base) countByCat[g.category] = (countByCat[g.category] || 0) + 1;
   for (const opt of categoryFilter.options) {
-    if (!opt.dataset.baseLabel) opt.dataset.baseLabel = opt.textContent;
+    if (!opt.dataset.baseLabel) opt.dataset.baseLabel = CATEGORY_LABELS[opt.value] || opt.textContent;
     const c = opt.value === '' ? base.length : (countByCat[opt.value] || 0);
     opt.textContent = opt.dataset.baseLabel + ' (' + c + ')';
     opt.style.color = c === 0 ? '#666' : '';

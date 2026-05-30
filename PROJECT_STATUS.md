@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[일관성] 카테고리 라벨 단일 출처화 (드롭다운/통계줄/범례/카드·모달 태그 4표면 통일)** — 표시명이 표면마다 갈리던 문제 해소(특히 `new_server` 3종 분기 `한국 MMO 신규 서버`/`신규서버`/`신규 서버`, `global_aaa` 2종 `글로벌`/`글로벌 대작`). script.js에 단일 출처 맵 `CATEGORY_LABELS`(국내 모바일/국내 PC·콘솔/글로벌 대작/신규 서버) 신설 → loadData에서 `categories=Object.assign({},data.categories,CATEGORY_LABELS)`로 games.json 라벨을 덮어써 카드·모달 태그·툴팁·점이 맵 참조, renderStatsSummary는 `CATEGORY_LABELS[k]` 참조로 통계줄 통일, updateCategoryCounts baseLabel을 `CATEGORY_LABELS[opt.value]`에서 가져와 드롭다운 통일, 신규 `renderLegend()`가 범례 라벨도 맵에서 채움(점 모양 span 보존). index.html 정적 폴백도 캐노니컬로 정렬(드롭다운 2·범례 1). data/games.json 무수정(리서처 영역). 검증: 4표면 라벨 통일 런타임 테스트 통과, node --check 통과, CSS brace 275/275 무변경. — 개발자 완료 2026-05-31 04:30
 - [x] **[a11y·폼] 게임명 검색 입력(#search-input) 접근형 이름(aria-label) 부여** — 헤더 검색 input(`#search-input`)에 placeholder만 있고 label·aria-label이 없어 스크린리더가 용도를 안내 못하던 문제(WCAG 4.1.2/3.3.2) 해소. `aria-label="게임명 검색"` 1속성 추가, placeholder는 보조로 유지. select 3종은 이미 label 래핑으로 이름 보유 → 검색만 누락분 보완. 정적 마크업이라 index.html 1줄, script.js·CSS 무변경, 외형/신규 색 없음. — 개발자 완료 2026-05-31 03:28
 - [x] **[캘린더·시각위계] '오늘' 셀 other-month 디밍 예외(today 강조 소실 방지)** — 캘린더가 최근접 출시월로 자동 점프하므로 당월 출시 0건이면 '오늘'이 인접월 trailing 셀(`.other-month` opacity 0.35)로 렌더돼 today 파란 보더/tint가 거의 비가시던 문제 해소. styles.css에 `.calendar-grid .day.other-month.today { opacity:1; }` 1규칙 추가(today는 위치 무관 디밍 예외). CSS-only, 신규 색 없음, brace 275/275 균형, JS 무변경 — 개발자 완료 2026-05-31 02:28
 - [x] **[캘린더·정보손실] 데스크톱 월간 셀 '같은 날 2건↑' 시 '+N' 배지 추가** — 셀이 대표 1건 게임명+색점만 노출해 둘째 게임 이상(특히 동일 카테고리 동색 점)이 은닉되던 문제 해소. `renderCalendar` 출시일 셀에서 `extra=list.length-1` 계산 → 2건↑ 셀의 day-dots 행 우측 끝에 `.day-more`(`+N`, N=나머지 건수) 배지 노출, 1건 셀은 미표시. `margin-left:auto`로 우측 정렬해 기존 점 overflow(`.day-dot-more`)와 위치 분리. CSS 1규칙(중립톤 #aaa+var(--border), 신규 색 없음), script.js 2줄. 검증: 1건→배지 없음, 2건→'+1', 3건→'+2', 5건→'+4'. node --check 통과, CSS brace 274/274 — 개발자 완료 2026-05-31 01:30
@@ -104,26 +105,21 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 > 갱신 2026-05-31 04:11 (기획자): 큐 4→5 보충. 직전 1순위 '검색입력 #search-input aria-label'은 개발자 03:28 완료·QA 03:49 ✅로 완료한 기능 이동(큐 5→4). 디자이너 04:04 신규 발견 '상세 모달 빈 컬러 배너 축소'(이미지 없는 36건 전부 빈 블록·보통)를 IDEAS→5순위 승격해 5개 복원. 번호 1~5로 정리. 1/h 처리·4h 사이클 간 소진 대비. 정체 TODO 없음(전 항목 진행 중). 미해결 코드 버그 0·활성 사용자 요청 0.
 
 
-1. **[일관성] 카테고리 라벨 단일 출처화 (드롭다운/통계줄/범례/카드태그 표기 통일)** (디자이너 다회 발견 '보통')
-   - 카테고리 표시명이 표면마다 미세하게 달라(드롭다운 필터 옵션 / 통계줄 / 범례 / 카드 category-tag) 같은 카테고리가 다른 단어로 보임 → 일관성·신뢰 저하. 디자이너가 여러 사이클에 걸쳐 반복 지적.
-   - script.js에 카테고리→표시명 매핑 객체(단일 출처) 1개를 두고 4개 표면이 모두 그 맵을 참조하도록 통일. 문구는 메인 앱 기준(국내 모바일 / 국내 PC·콘솔 / 글로벌 대작 / 신규 서버)으로 확정. (SEO build.js 라벨은 별개 IDEAS 유지)
-   - script.js 소규모(맵 1개 + 참조 치환 몇 곳). 신규 색/CSS 없음. node --check 통과.
-
-2. **[a11y·구조] 리스트 뷰 게임 카드 제목 헤딩 레벨 h3→h4 (날짜 그룹헤더와 위계 분리)** (디자이너 02:05 발견 '보통')
+1. **[a11y·구조] 리스트 뷰 게임 카드 제목 헤딩 레벨 h3→h4 (날짜 그룹헤더와 위계 분리)** (디자이너 02:05 발견 '보통')
    - 리스트 뷰에서 날짜 그룹헤더(`.date-group-header`=h3)와 게임 카드 제목(`.info h3`)이 같은 h3 레벨이라 스크린리더 헤딩 탐색 시 '날짜(상위)⊃게임(하위)' 위계가 평면화됨(WCAG 1.3.1). 게임 제목을 한 단계 내려 날짜 헤더 하위로 만든다.
    - 게임 카드 제목 마크업을 `<h3>`→`<h4>`로 변경(`renderCard` 템플릿). CSS는 `.info h3` 규칙을 `.info h4`로 셀렉터 치환해 외형 무변경 유지(폰트크기/색 동일). 날짜 헤더 h3는 그대로.
    - script.js 제목 태그 1곳 + styles.css 셀렉터 치환. 신규 색 없음, node --check 통과·CSS brace 균형 확인. QA: 외형 동일·SR 헤딩 트리에서 날짜>게임 위계 확인.
 
-3. **[정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합** (디자이너 IDEAS '낮음')
+2. **[정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합** (디자이너 IDEAS '낮음')
    - 상세 모달·리스트 카드에서 developer와 publisher 값이 동일한 게임은 '개발 X'/'퍼블리셔 X' 두 줄이 같은 값으로 중복 노출됨. 같으면 '개발·퍼블리셔 X' 한 줄로 병합, 다르면 기존 2행 유지.
    - script.js의 모달 템플릿·renderCard 메타 출력에 동일성 분기 추가(문자열 trim 비교). 신규 색/CSS 없음, node --check 통과 확인. 작은 단위(~15줄).
 
-4. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
+3. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
    - 헤더의 '마지막 업데이트' 타임스탬프 색 `#555`(다크 배경 대비 ~2:1, 12.8px)가 페이지 최저 대비인데 데이터 신선도(신뢰) 정보라 가독 필요(WCAG AA 미달).
    - 해당 요소 색을 `#555`→`var(--text-faint)`(또는 `--text-dim`) 이상으로 상향. 신규 색 토큰 추가 없이 기존 토큰 재사용, 외형 위계는 여전히 흐린 보조 톤 유지.
    - styles.css 1규칙 치환. CSS brace 균형·node --check(무관) 확인. 신규 색 없음.
 
-5. **[심미·밀도·모달] 상세 모달 상단 컬러 배너 이미지 없을 때 축소 (160px→6~8px 컬러 바)** (디자이너 2026-05-31 04:04 발견 '보통')
+4. **[심미·밀도·모달] 상세 모달 상단 컬러 배너 이미지 없을 때 축소 (160px→6~8px 컬러 바)** (디자이너 2026-05-31 04:04 발견 '보통')
    - 상세 모달 상단 `.modal-image` 160px 컬러 배너가 이미지 없는 게임(현재 36건 전부)에서 정보 0의 빈 그라데이션 블록으로 자리만 차지 → 제목·출시일·D-day가 그만큼 아래로 밀리고, 배너의 유일 신호(카테고리 색)는 바로 아래 카테고리 pill과 중복. 리스트 카드는 이미 빈 배너를 4px 악센트로 콤팩트화했는데 모달만 160px라 표면 불일치.
    - image 없을 때 `.modal-image`에 `.no-image` 분기로 높이 160px→6~8px 컬러 바(또는 48~64px)로 축소, image 있으면 160px 유지. 축소 시 닫기(×) 버튼 우상단 위치 재확인. styles.css 1규칙(+선택 JS 1줄), 신규 색 없음, node --check 통과·CSS brace 균형 확인.
 
@@ -195,6 +191,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 04:30 [개발자] 1순위 완료: **[일관성] 카테고리 라벨 단일 출처화(4표면 통일)**. 단일 출처 맵 `CATEGORY_LABELS`(국내 모바일/국내 PC·콘솔/글로벌 대작/신규 서버) 신설 후 드롭다운·통계줄·범례·카드/모달 태그가 모두 참조. loadData 머지(`Object.assign({},data.categories,CATEGORY_LABELS)`)로 games.json 라벨 덮어쓰기, renderStatsSummary·updateCategoryCounts baseLabel 맵 참조, 신규 `renderLegend()`로 범례 라벨 채움(점 모양 보존). `new_server` 3종·`global_aaa` 2종 표기 분기 해소. index.html 정적 폴백도 캐노니컬 정렬. data/games.json 무수정. script.js 27+/9-, index.html 3±, 4표면 통일 테스트·node --check 통과·CSS brace 275/275. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 03:28 [개발자] 1순위 완료: **[a11y·폼] 게임명 검색 입력(#search-input) 접근형 이름(aria-label) 부여**. 검색 input에 label·aria-label이 없어 스크린리더가 용도를 못 읽던 문제(WCAG 4.1.2/3.3.2) 해소 → `aria-label="게임명 검색"` 1속성 추가, placeholder 보조 유지. index.html 1줄, script.js·CSS 무변경·외형/신규 색 없음. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 02:28 [개발자] 1순위 완료: **[캘린더·시각위계] '오늘' 셀 other-month 디밍 예외**. 캘린더 자동 점프로 당월 출시 0건이면 today가 인접월 trailing 셀(`.other-month` opacity 0.35)로 렌더돼 파란 보더/tint 강조가 거의 비가시던 문제 해소. styles.css `.calendar-grid .day.other-month.today { opacity:1; }` 1규칙 추가(line 353)로 today를 위치 무관 디밍 예외 처리. CSS-only, 신규 색 없음, brace 275/275, JS 무변경. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 01:30 [개발자] 1순위 완료: **[캘린더·정보손실] 데스크톱 월간 셀 '같은 날 2건↑' '+N' 배지**. 셀이 대표 1건 게임명+색점만 노출해 둘째 게임 이상(동일 카테고리 동색 점이면 식별 0)이 은닉되던 문제 해소. `renderCalendar`에 `extra=list.length-1` 계산 → 2건↑ 셀 day-dots 행 우측 끝 `.day-more`(`+N`) 배지, 1건 셀 미표시. CSS `.day-more` 1규칙(`margin-left:auto`로 우측 정렬→기존 `.day-dot-more` 점overflow와 위치 분리, 중립 #aaa+var(--border), 신규 색 없음), script.js 2줄. 검증: 1건→없음/2건→+1/3건→+2/5건→+4. node --check 통과, CSS brace 274/274. 잔여 TODO 3건 1~3순위로 당김.
