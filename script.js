@@ -312,7 +312,7 @@ function renderCard(game, single, grouped) {
     : `<div class="card-banner category-${game.category}"></div>`;
 
   return `
-    <article class="game-card${imminent}${single ? ' single-game' : ''}" data-id="${escapeHtml(game.id)}">
+    <article class="game-card${imminent}${single ? ' single-game' : ''}" data-id="${escapeHtml(game.id)}" tabindex="0" role="button" aria-label="${escapeHtml(game.name_ko || game.name_en)} 상세 보기">
       ${cardImage}
       <div class="card-header">
         <span class="category-tag category-${game.category}" data-category="${escapeHtml(game.category)}">${escapeHtml(categoryLabel)}</span>
@@ -511,6 +511,13 @@ gamesList.addEventListener('click', e => {
   }
   const row = e.target.closest('.day-row, .game-card');
   if (row && row.dataset.id) openModal(row.dataset.id);
+});
+// 리스트 카드 키보드 접근 (Enter/Space로 상세 모달, .day-row keydown 패턴 복제)
+gamesList.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const card = e.target.closest('.game-card');
+  // 카드 article(role=button) 자체에 포커스 있을 때만; 내부 위시 버튼 등은 각자 처리
+  if (card && card === e.target && card.dataset.id) { e.preventDefault(); openModal(card.dataset.id); }
 });
 // 컴팩트 행 키보드 접근 (Enter/Space로 상세 모달)
 if (dayPanel) dayPanel.addEventListener('keydown', e => {

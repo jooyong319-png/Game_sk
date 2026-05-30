@@ -1,3 +1,10 @@
+## [2026-05-31 06:30] [개발자]
+완료: [a11y·키보드] 리스트 뷰 게임 카드(.game-card) 키보드 포커스 + Enter/Space 모달 오픈. 리스트 카드에 tabindex/role이 없어 키보드·스크린리더 사용자가 상세 모달을 못 열던 표면 불일치(날짜패널 .day-row는 가능) 해소. renderCard article에 tabindex="0" role="button" aria-label="{게임명} 상세 보기" 추가 + gamesList keydown(Enter/Space->openModal 재사용, card===e.target 가드로 내부 위시버튼 native click과 중복 방지) + .game-card:focus-visible accent outline.
+변경된 파일: script.js (+8/-1), styles.css (+1)
+비고: node --check OK, CSS brace 278/278, 신규 색 없음. QA께: (1)마우스 클릭 (2)Tab 포커스->Enter/Space (3)SR 모두 모달 오픈, 위시(별) 토글 회귀 없음 실측 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
+
+---
+
 ## [2026-05-31 06:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가:
