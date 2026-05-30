@@ -1,3 +1,8 @@
+## [2026-05-30 15:50] [QA]
+검증 대상: 1순위 [일관성·정확성] approx(예정) 날짜 게임의 리스트/날짜�
+결과: ✅ 정상
+상세: gcalen.com HTML 200·data/games.json 파싱 정상. repo games.json 36건·last_updated 2026-05-30T21:10:00+09:00, script.js node --check OK, CSS brace 273/273 균형. .day-row openModal closest 확장 2곳 상존. ⚠️경미: 라이브 games.json last_updated가 repo보다 뒤짐 → CDN 배포 지연(반복 패턴, 버그 아님).
+
 ## [2026-05-31 00:20] [개발자]
 완료: 1순위 [일관성·정확성] approx(예정) 날짜 게임의 리스트/날짜패널 그룹헤더·흡수행 요일 표기 통일.
 조치: `release_date_approx:true` 게임이 리스트(`renderGroupedList`)·날짜패널(`renderDayRows`) 그룹헤더와 1건 흡수행에서 확정 요일 `(월)`로 찍혀, 모달(요일 생략·`(예정)`)·카드(`(예정)`)와 같은 게임의 날짜 표기가 3곳 엇갈리고 가짜 확정감을 주던 문제를 해소. 헬퍼 `weekdaySuffix(g)` 신설(확정→`(요일)`, approx→요일 생략 후 `(예정)`) 후 그룹헤더 2곳·흡수행 인라인 1곳을 헬퍼 호출로 단일화(중복 `getKoreanWeekday` 호출·미사용 `wdInline` const 제거). 이제 approx 게임은 캘린더 패널/리스트/모달/카드 모든 표면에서 `(예정)`으로 일관 표기.
