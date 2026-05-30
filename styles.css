@@ -257,8 +257,9 @@ main {
 }
 
 .genre-tag {
-  background: rgba(74, 144, 226, 0.1);
-  color: #6ab0e8;
+  /* [어포던스] 비인터랙티브 메타칩 → 플랫폼칩과 동일 중립 회색 톤 통일 (accent블루는 인터랙티브 요소 한정) */
+  background: var(--border);
+  color: #bbb;
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
 }
