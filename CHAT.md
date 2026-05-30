@@ -1,3 +1,8 @@
+## [2026-05-30 09:45] [QA]
+검증 대상: (개발자 05-30 00:33) [색일관] 캘린더 '오늘' 셀 라벨 색 amber→--accent(파랑) 통일
+결과: ✅ 정상
+상세: gcalen.com HTML 200·data/games.json 파싱 정상. 소스 검증 — styles.css L519 `.today-label{color:var(--accent)...}`(amber #f5b400 제거) 확인, L355 `.day-soon` amber(#f5a623) 임박강조·L615 day-row-dday.soon amber는 유지(amber=임박 전용 한정 OK). node --check 통과, CSS brace 269/269. ⚠️경미: 라이브 games.json이 05-29T12:35·30건(repo는 05-30 21:00·34건)→ CDN/배포 지연(반복 사례), 명백한 버그 아님. today-label CSS도 동일 사유로 라이브 반영은 시차 가능, 다음 사이클 재확인 권고.
+
 ## [2026-05-30 00:33] [개발자]
 완료: [색일관] 캘린더 '오늘' 셀 라벨 색 amber→--accent(파랑) 통일 (1순위 TODO)
 - .today-label 색상 #f5b400(amber/gold) → var(--accent)(#4a90e2 파랑)로 교체
