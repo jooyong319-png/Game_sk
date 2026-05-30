@@ -261,6 +261,31 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 ---
 
 
+## [2026-05-31 00:07] [디자이너] — 소스 점검(Chrome 브리지 불안정 fallback): 미사용 Google Fonts preconnect·캘린더 뷰 로딩 신호 부재·전역 a11y 구조(skip/h2/live)
+실측 메모: 라이브 https://gcalen.com/ 홈 fetch(200, 정상)·repo 소스(index.html/styles.css/script.js) 병행 점검. 이번 사이클은 Chrome 도구 브리지가 응답 지연/탭소실로 스크린샷 확보가 불안정 → 작업지침 fallback('Chrome 못 쓰면 최소 index.html/styles.css로 평가')에 따라 소스 기준 정적 점검. 라이브 홈 HTML 정상(메타/OG/canonical/JSON-LD/카테고리/바로가기/푸터 contact@gcalen.com). 기존 TODO 큐(approx 그룹헤더 요일·흡수행 게임명 좌측정렬·검색 aria-label·카테고리 라벨 단일출처) 및 대량 IDEAS는 중복 등록 안 함.
+
+### 발견한 문제 / 개선점 (기존 미등록 신규 항목만)
+
+1. **[성능·정리·프라이버시] 사용하지 않는 Google Fonts preconnect가 매 방문마다 제3자 사전연결을 일으킴** — 우선순위: 낮음
+   - 실측/소스: index.html `<head>`에 `<link rel="preconnect" href="https://fonts.googleapis.com">` 류 preconnect가 있으나, 실제로 로드되는 웹폰트(link rel=stylesheet …fonts… 또는 @font-face)가 전혀 없음. body는 시스템 폰트 스택(`-apple-system,…,"Noto Sans KR",sans-serif`, styles.css L18)만 사용.
+   - 왜 문제: 기능상 안 쓰는데도 모든 방문에서 fonts.googleapis.com으로 DNS+TLS 사전연결 발생 → 미세 성능 낭비 + 폰트를 안 쓰면서 제3자(Google)에 접속 신호를 보냄(불필요 의존·프라이버시). (※IDEAS 'Pretendard 등 커스텀 폰트 도입'은 폰트를 추가하는 건, 이 건은 '폰트 없이 떠 있는 미사용 preconnect 제거'로 별개.)
+   - 어떻게(개발자): 폰트 도입 계획 없으면 해당 preconnect 줄 삭제. 추후 도입 시엔 실제 stylesheet/@font-face와 짝지어 preconnect(googleapis+gstatic, crossorigin)로 정식 추가. index.html 1줄, 외형 무변.
+
+2. **[빈 상태·로딩] 기본(캘린더) 뷰로 진입할 때 데이터 fetch 동안 로딩 신호가 전혀 없음 — '불러오는 중…'이 숨겨진 리스트 뷰에만 들어감** — 우선순위: 보통
+   - 실측/소스: `loadData()`가 로딩 텍스트를 `#games-list`에만 주입(`gamesList.innerHTML='<p class="loading">불러오는 중...</p>'`, script.js L40). 그런데 기본 뷰는 캘린더 고정(리스트 컨테이너 숨김)이라 첫 화면(캘린더)에선 이 문구가 안 보이고 빈 `#calendar-grid`만 노출. 정상 로딩 중 피드백 0이고, 안내는 9초 뒤 `#load-fallback`(index.html 인라인 가드, 크래시/지연용)뿐.
+   - 왜 문제: 첫인상 화면(캘린더)에서 0~2초간 '빈 격자'만 보여 '데이터 없음/고장'으로 오인 가능(느린 네트워크일수록). (기등록 'calendar 0건 빈 상태'는 로드 후 그 달 출시 0건 안내, 'load-fallback'은 9초 크래시 안내 → 둘 다 '정상 로딩 중' 신호와는 별개.)
+   - 어떻게(개발자): loadData 시작 시 캘린더 컨테이너(또는 calendar-grid)에도 로딩 플레이스홀더(스켈레톤/'불러오는 중…')를 넣고 renderCalendar에서 교체. 또는 활성 뷰와 무관한 공통 상위 로딩 표시 1개로 통합. script.js 소규모, 신규 색 없음.
+
+3. **[a11y·구조] 페이지 전역에 콘텐츠 바로가기(skip link)·결과영역 라이브리전이 없음** — 우선순위: 낮음
+   - 소스: `<main>`·`<nav>` 랜드마크와 h1·h2(월 라벨)는 있으나(양호), 상단 컨트롤(뷰토글/검색/필터/퀵칩) 다수를 건너뛰는 skip-to-content 링크가 없고, 검색·필터로 건수가 바뀌는 결과 영역(#stats-summary/#games-list/#search-count)에 `aria-live`가 없음.
+   - 왜 문제: 키보드 사용자는 매번 헤더·컨트롤을 Tab으로 지나야 본문(캘린더/리스트) 도달(WCAG 2.4.1), 스크린리더는 필터/검색 결과 건수 변화가 안 읽힘(상태 변경 미고지). (기존 '캘린더 grid SR 시맨틱'은 그리드 내부 row/gridcell 건 → 이 건은 페이지 전역 skip-link/live-region으로 별개.)
+   - 어떻게(개발자): (a) body 첫머리 `.skip-link`(본문으로 점프, 평소 숨김·focus 시 노출) + main에 id, (b) #stats-summary/#search-count(또는 결과 컨테이너)에 `aria-live="polite"`. index.html+styles.css 소규모, 시각상 거의 무변.
+
+### 현재 양호 (트집 X)
+라이브 홈 HTML 200·메타/OG/canonical/twitter/JSON-LD 정상, `<main>`/`<nav aria-label>`/h1·h2/뷰토글 aria-pressed/네비 버튼 aria-label/필터 초기화 버튼 등 마크업 양호, 반응형 미디어쿼리(768/480/reduced-motion) 존재, load-fallback 가드·prefers-reduced-motion 분기 양호, 캘린더 셀 focus-visible·요일헤더 평일 대비 상향(--text-dim)·주말 색 반영 라이브 확인. 기존 대량 TODO/IDEAS는 중복 등록 안 함 — **큐 소진 우선 권고 유지**.
+
+---
+
 ## [2026-05-30 12:10] [디자이너] — 라이브 재점검: 리스트 '단일게임 풀폭' 카드 우측 절반 공백 미해소(과거 '해소됨' 판정 정정)
 실측: https://gcalen.com/ Chrome 데스크톱(실렌더 1920px, main 1200px). 캘린더(5월, 오늘=30)·리스트·상세모달·검색 0건 빈 상태 모두 정상 렌더, 콘솔 에러 0건, 배포 34건 라이브. 검색 0건 빈 상태("'zzzqqq'에 일치하는 게임이 없어요." + input 인라인 ×지우기 + 드롭다운 '전체(0)' 카운트 동기화)는 친절·정상이라 트집 X. 모바일은 창 리사이즈가 실렌더 뷰포트(1920 고정)에 미반영 → 소스 CSS/computed style 병행. **이번 사이클은 새 트집보다, 기존 대량 큐/IDEAS가 거의 모든 영역을 덮고 있어 신규 항목을 무리하게 만들지 않고 — 라이브 computed 실측으로 과거 "해소" 판정 1건의 정확성을 재검증함.**
 
