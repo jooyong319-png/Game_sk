@@ -175,6 +175,13 @@ function renderGames() {
   gamesList.innerHTML = renderGroupedList(filtered);
 }
 
+// 그룹헤더/흡수행 날짜 요일 접미사: 확정이면 '(요일)', approx(추정)면 요일 생략 후 '(예정)' — 모달·카드 규칙과 통일.
+function weekdaySuffix(g) {
+  if (g.release_date_approx) return ' (예정)';
+  const wd = getKoreanWeekday(g.release_date);
+  return wd ? ' (' + wd + ')' : '';
+}
+
 // 리스트 뷰: 같은 출시일 게임을 날짜 헤더 아래로 그룹핑 (filtered는 날짜순 정렬됨)
 function renderGroupedList(games) {
   let html = '';
@@ -184,8 +191,7 @@ function renderGroupedList(games) {
   for (const g of games) {
     if (g.release_date !== lastDate) {
       lastDate = g.release_date;
-      const wd = getKoreanWeekday(g.release_date);
-      html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
+      html += `<h3 class="date-group-header">${formatDate(g.release_date)}${weekdaySuffix(g)}</h3>`;
     }
     html += renderCard(g, dateCounts[g.release_date] === 1, true);
   }
@@ -213,8 +219,7 @@ function renderDayRows(games) {
     const single = dateCounts[g.release_date] === 1;
     if (!single && g.release_date !== lastDate) {
       lastDate = g.release_date;
-      const wd = getKoreanWeekday(g.release_date);
-      html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
+      html += `<h3 class="date-group-header">${formatDate(g.release_date)}${weekdaySuffix(g)}</h3>`;
     }
     const diff = Math.ceil((parseReleaseDate(g.release_date) - today) / 86400000);
     const ddCls = ddayStageClass(diff);
@@ -222,11 +227,10 @@ function renderDayRows(games) {
     const plat = (g.platforms || [])[0] || '';
     const wished = wishlist.has(g.id);
     const name = escapeHtml(g.name_ko || g.name_en || '');
-    const wdInline = getKoreanWeekday(g.release_date);
-    // 흡수행: 패널 헤더가 연도를 명시하므로 'MM.DD (요일)'로 단축(풀year 프리픽스 잉여 제거, 게임명 좌측 시작점 정렬).
+    // 흡수행: 패널 헤더가 연도를 명시하므로 'MM.DD (요일/예정)'로 단축(풀year 프리픽스 잉여 제거, 게임명 좌측 시작점 정렬).
     const mmdd = formatDate(g.release_date).slice(5);
     const dateInline = single
-      ? `<span class="day-row-date">${mmdd}${wdInline ? ' (' + wdInline + ')' : ''}</span>`
+      ? `<span class="day-row-date">${mmdd}${weekdaySuffix(g)}</span>`
       : '';
     html += `<div class="day-row${single ? ' single-date' : ''}" data-id="${escapeHtml(g.id)}" role="button" tabindex="0" title="${name}">`
       + dateInline
