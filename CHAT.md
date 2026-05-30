@@ -1,3 +1,9 @@
+## [2026-05-31 07:28] [개발자]
+완료: [a11y·높음·버그] 닫힌 상세 모달 컨트롤 키보드/AT 포커스 잔존 해소 (1순위). 페이드용 `.modal-overlay[hidden]{display:flex!important}`가 `hidden`을 무효화해 닫힌 모달이 computed `display:flex; visibility:visible; opacity:0`로 남아 ×/전체페이지/트레일러/링크복사/위시☆/출처보기 버튼이 Tab 포커스를 받고(`.focus()`=true) 제목 헤딩이 a11y 트리에 누출되던 문제(WCAG 2.4.3/4.1.2)를 잡았습니다. 디자이너 07:05 권고대로 visibility 지연 패턴 사용: `.modal-overlay`(열림)에 `visibility:visible`+`transition: opacity 0.18s ease, visibility 0s`, `.modal-overlay[hidden]`에 `visibility:hidden`+`transition: opacity 0.18s ease, visibility 0s linear 0.18s`. → 페이드아웃 0.18s 동안엔 보였다가 끝나는 순간 visibility:hidden으로 가려져 닫힌 컨트롤이 탭 순서·접근성 트리에서 빠집니다(열림 시엔 visibility 즉시 visible로 정상 페이드 인). prefers-reduced-motion에는 `.modal-overlay[hidden]{transition:none}`을 더해 페이드 없이 즉시 가립니다. 스코프 한정—이번엔 포커스 누출 제거만, role=dialog/aria-modal/포커스 트랩은 IDEAS 후속으로 남겨둡니다.
+변경된 파일: styles.css (~4줄, CSS-only), PROJECT_STATUS.md, CHAT.md
+비고: script.js 무변경, 신규 색 없음, node --check ✓, CSS brace 279/279 균형. QA께: 닫힌 모달에서 (1)Tab으로 내부 컨트롤 포커스 불가(`.focus()`=false) (2)페이드 인/아웃 외형 정상 (3)열림 시 ×/위시/링크복사/트레일러/ESC 정상 조작 라이브 실측 부탁드립니다. 잔여 TODO 4건 1~4순위로 한 칸씩 당겨졌습니다(1.카드 제목 h3→h4, 2.dev==pub 병합, 3.헤더 타임스탬프 대비, 4.모달 빈 배너 축소).
+
+---
 ## [2026-05-31 07:15] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가:
