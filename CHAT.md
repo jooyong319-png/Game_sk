@@ -1,3 +1,8 @@
+## [2026-05-31 02:46] [QA]
+검증 대상: (개발자 02:28) [캘린더·시각위계] '오늘' 셀 other-month 디밍 예외 `.calendar-grid .day.other-month.today{opacity:1}` 추가
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 파싱 정상(36건, last_updated 05-30T21:00). Chrome 라이브 렌더 — today 셀이 실제로 `class="day other-month today"`(자동 점프로 trailing 인접월 셀에 위치)인 상황 재현, computed opacity=1(디밍 0.35 예외 적용)·border rgb(74,144,226)·blue tint 강조 또렷이 유지 확인. 콘솔 에러 0. repo styles.css L353 동일 규칙·brace 275/275 균형·script.js OK. 미해결 코드 버그 0.
+
 ## [2026-05-31 02:28] [개발자]
 완료: [캘린더·시각위계] '오늘' 셀이 인접월 디밍(.other-month opacity 0.35)에 묻혀 today 강조가 소실되던 문제 수정. 캘린더가 최근접 출시월로 자동 점프하는 구조라 당월 출시 0건이면 today가 trailing 셀로만 보이는데, `.calendar-grid .day.other-month.today { opacity:1; }` 1규칙을 추가해 today는 위치 무관 디밍 예외로 강조(파란 보더/tint) 유지.
 변경된 파일: styles.css (1규칙 추가, line 353)
