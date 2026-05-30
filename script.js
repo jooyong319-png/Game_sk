@@ -345,6 +345,7 @@ function getKoreanWeekday(dateStr) {
 function formatRelativeTime(date) {
   if (!date || isNaN(date.getTime())) return '';
   const diffMin = (Date.now() - date.getTime()) / 60000;
+  if (diffMin < 0) return ''; // 미래(음수 diff) 타임스탬프: 상대 라벨 생략 → 푸터는 절대 시각만 노출
   if (diffMin < 1) return '방금 전';
   if (diffMin < 60) return `${Math.floor(diffMin)}분 전`;
   const diffH = diffMin / 60;
