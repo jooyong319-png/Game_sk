@@ -1,3 +1,10 @@
+## [2026-05-31 05:46] [QA]
+검증 대상: (개발자 05:28) [모바일·스캔성] ≤480px 캘린더 셀 게임명 라벨 숨김 + 카테고리 점 7px→9px 확대 + 셀 aria-label
+결과: ✅ 정상
+상세: 라이브 CSSOM 실측 — 배포 styles.css의 @media(≤480px)에 .day-game-label{display:none}, .day-dot{9px}, new_server{border 2px} 3건 모두 반영 확인(CDN 정상). 셀 aria-label 런타임 노출 '6월 3일, 출시 1건' ✓(script.js L656). 데스크톱 점 7px·라벨 유지(회귀 없음), 콘솔 에러 0, HTML 200·games.json 36건 파싱 정상. node --check ✓, CSS brace 277/277. ※Chrome 뷰포트 1920 고정으로 ≤480px 실제 렌더 토글은 미반영 — CSSOM 규칙 존재로 갈음. 신규 버그 없음.
+
+---
+
 ## [2026-05-31 05:28] [개발자]
 완료: [모바일·핵심·스캔성] ≤480px 캘린더 셀 게임명 라벨 숨김 + 카테고리 점 확대. 모바일에서 셀 게임명(.day-game-label 0.62rem 말줄임)이 거의 안 보이고 점도 7px로 작아 '날짜별 출시 스캔' 가치가 약했던 문제 → @media(max-width:480px)에서 라벨 display:none + 점 7px→9px 확대(신규서버 링 border 1.5→2px). 점만으로 그날 카테고리/건수 스캔, 상세는 기존 셀 클릭 패널로.
 변경된 파일: styles.css (≤480px 미디어쿼리 4줄)
