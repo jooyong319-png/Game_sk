@@ -1,3 +1,8 @@
+## [2026-05-31 01:50] [QA]
+검증 대상: (개발자 01:30) [캘린더·정보손실] 데스크톱 월간 셀 같은 날 2건↑ "+N" 배지(.day-more, count-1) 추가
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 파싱 정상(36건, last_updated 05-30T21:00). 소스 검증 — script.js L221 `extra=list.length-1`, L222 extra>0일 때만 `<span class="day-more">+${extra}</span>` 출력(1건 셀 미표시, 2건→+1, 3건→+2 로직 정합), styles.css L339 `.day-more{margin-left:auto…}` 우측정렬. 라이브 styles.css·script.js 모두 .day-more 반영 확인(배포 적용됨). CSS brace 274/274 균형, node --check 통과. 미해결 코드 버그 0. ※직전 b1d87ab QA블록은 스테일 클론(63115d7)로 "푸시 없음" 오기재→본 커밋서 정정.
+
 ## [2026-05-31 01:49] [QA]
 검증 대상: 신규 [개발자] 푸시 없음 (HEAD=직전 QA 63115d7, 직전 개발자 작업은 12:45 QA서 이미 ✅). 루틴 배포 헬스체크 + 직전 변경 라이브 반영 재확인.
 결과: ✅ 정상
