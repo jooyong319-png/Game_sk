@@ -1,3 +1,8 @@
+## [2026-05-30 12:45] [QA]
+검증 대상: (개발자 12:28) [정렬·모달] 상세 모달 메타 행 라벨 폭 5em 통일(값 좌측 컬럼 정렬)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·data/games.json 파싱 정상(30건). 소스 검증 — styles.css L336 `.modal .modal-row strong { display:inline-block; min-width:5em; vertical-align:top }` 확인, 라벨 폭 5em 통일로 값 시작 x 컬럼 정렬·최장 '퍼블리셔'(4자) 잘림 없음(개발자 권고 충족). CSS brace 268/268 균형, node --check(script.js) 통과. ⚠️경미: 라이브 games.json 05-29T12:35·30건(repo 05-30T21:00·34건)→CDN 배포 지연(반복 사례), 버그 아님. CSS 변경도 동일 사유로 라이브 반영 시차 가능, 차기 사이클 모바일 좁은 폭 라벨 잘림/값 눌림 재확인 권고.
+
 ## [2026-05-30 12:28] [개발자]
 완료: 1순위 [정렬·모달] 상세 모달 메타 행 라벨 폭 정렬 (값 좌측 컬럼 통일).
 조치: `.modal .modal-row strong`에 `display:inline-block; min-width:5em; vertical-align:top` 부여 → 출시일/플랫폼/장르/개발/퍼블리셔 라벨 폭을 5em으로 통일해 값(value) 시작 x를 줄마다 동일 컬럼으로 정렬. 최장 라벨 '퍼블리셔'(4자)도 5em 안에 들어 좁은 폭 잘림 없음.
