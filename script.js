@@ -7,6 +7,7 @@ const periodFilter = document.getElementById('period-filter');
 const searchInput = document.getElementById('search-input');
 const searchClear = document.getElementById('search-clear');
 const searchCount = document.getElementById('search-count');
+const filterReset = document.getElementById('filter-reset');
 const gamesList = document.getElementById('games-list');
 const lastUpdatedEl = document.getElementById('last-updated');
 const footerUpdatedEl = document.getElementById('footer-updated-date');
@@ -107,6 +108,7 @@ function renderStatsSummary() {
 
 function renderGames() {
   updateCategoryCounts();
+  updateFilterReset();
   const selectedCategory = categoryFilter.value;
   const selectedPlatform = platformFilter.value.toLowerCase();
   const days = parseInt(periodFilter.value, 10);
@@ -804,6 +806,35 @@ function applyWishlistChip() {
   chipWish.setAttribute('aria-pressed', wishlistOnly ? 'true' : 'false');
 }
 if (chipWish) chipWish.addEventListener('click', () => { wishlistOnly = !wishlistOnly; applyWishlistChip(); renderGames(); });
+
+// --- Filter reset control: show when any non-default filter is active, reset all 6 on click ---
+function hasActiveFilters() {
+  return !!(
+    (categoryFilter && categoryFilter.value) ||
+    (platformFilter && platformFilter.value) ||
+    (periodFilter && periodFilter.value !== '365') ||
+    searchQuery ||
+    weekFilter ||
+    wishlistOnly
+  );
+}
+function updateFilterReset() {
+  if (filterReset) filterReset.hidden = !hasActiveFilters();
+}
+function resetAllFilters() {
+  if (categoryFilter) categoryFilter.value = '';
+  if (platformFilter) platformFilter.value = '';
+  if (periodFilter) periodFilter.value = '365';
+  if (searchInput) searchInput.value = '';
+  searchQuery = '';
+  if (searchClear) searchClear.hidden = true;
+  weekFilter = null;
+  wishlistOnly = false;
+  applyWeekChips();
+  applyWishlistChip();
+  renderGames();
+}
+if (filterReset) filterReset.addEventListener('click', resetAllFilters);
 // Wishlist chip count badge: label becomes `위시리스트만 보기 (N)`; refresh on load + on every star toggle.
 function updateWishlistChipLabel() {
   if (!chipWish) return;

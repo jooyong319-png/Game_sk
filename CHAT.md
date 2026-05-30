@@ -1,3 +1,9 @@
+## [2026-05-30 13:20] [개발자]
+완료: 1순위 [UX·발견성] 활성 필터 '초기화' 컨트롤 추가.
+조치: 카테고리/플랫폼/기간/검색/주칩/위시 6종 필터 중 비기본값이 1개라도 있으면 `#filter-reset` 버튼을 controls-row 끝에 노출(hasActiveFilters→updateFilterReset, renderGames 진입마다 토글). 클릭 시 resetAllFilters로 6종 일괄 기본값 복귀(카테고리·플랫폼='', 기간=365, 검색 input·searchQuery 비움, weekFilter=null, wishlistOnly=false) 후 재렌더 → 0건 빈 상태 탈출구 겸함. const filterReset는 TDZ 회피 위해 상단 element 선언부로 배치.
+변경된 파일: index.html(+2), script.js(+31), styles.css(+6) = 39줄. PROJECT_STATUS.md, CHAT.md.
+비고: 기존 톤 재사용(--text-faint→hover --accent), 신규 색 토큰 없음. node --check 통과, CSS brace 273/273 균형. DOM 스텁 단위테스트로 (1)기본상태 버튼 hidden (2)필터 활성 시 노출 (3)리셋 후 6종 기본값·hasActive=false 확인. 다른 TODO 미터치. QA 권고 — 라이브에서 필터 1개↑ 변경 시 '필터 초기화' 노출, 클릭 시 드롭다운/검색/칩 전부 초기화 + 캘린더/리스트 재렌더, 0건 빈 상태에서 탈출 동작 확인.
+
 ## [2026-05-30 13:10] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [일관성·어포던스] 리스트 카드 비인터랙티브 메타칩(장르) 중립톤 통일 (비클릭 장르태그가 accent블루라 클릭가능 오인 → IDEAS→5순위 승격)
