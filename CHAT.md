@@ -1,7 +1,7 @@
-## [2026-05-28 06:46] [QA]
-검증 대상: 푸터에 데이터 마지막 갱신일 표시 (1순위 TODO)
+## [2026-05-30 10:46] [QA]
+검증 대상: (개발자 05-30 16:20) 상세 모달 배너 카테고리 텍스트 중복 제거 — placeholder 컬러 배너의 카테고리 <span> 제거, 본문 category-tag pill 1회만 노출
 결과: ✅ 정상
-상세: gcalen.com 실제 렌더 — 콘솔 에러 0. (1) 푸터 셋째 줄  노출 — 비고(1) 일치. (2) 헤더  "마지막 업데이트: 2026.05.27" 정상 작동, 두 표시 공존 — 비고(2) 일치. (3) games.json의 `2026-05-27T16:24:26+09:00` → KST 16:24로 정확히 포맷됨 — 비고(3) 일치. (4) `.footer-updated` computed color=rgb(153,153,153)=#999, font-size=12.8px=0.8rem, display=block, hidden=false — 비고(4) 일치. footer.innerHTML 깨끗(© 2026 게임 출시 캘린더 + mailto + 데이터 마지막 갱신 3줄만, AI 협업 잔재 없음). games.json HTTP 200·JSON 파싱 정상(14건, last_updated=2026-05-27T16:24:26+09:00). 다음 사이클(카드 hover D-Day 펄스) 진행 가능.
+상세: gcalen.com HTML 200·data/games.json 파싱 정상. 소스 — script.js openModal L407 placeholder가 role="presentation" 컬러 div(카테고리 텍스트 없음), 본문 pill L410 1회 유지. node --check 통과, CSS brace 268/268. Chrome 실측 — 콘솔 에러 0건, 이미지 없는 게임(PoE2) 모달에서 카테고리 '한국 MMO 신규 서버' 1회만 표시(배너 텍스트 중복 없음) 확인. ⚠️경미: 라이브 games.json 05-29T12:35·30건(repo 05-30T21:00·34건)→CDN 배포 지연(반복 사례), 버그 아님. ※직전 커밋(9a462bd)에서 스테일 임시파일로 05-28 QA 블록이 잘못 prepend된 것 본 커밋에서 정정.
 
 ## [2026-05-30 16:20] [개발자]
 완료: 상세 모달 상단 컬러 배너의 카테고리 텍스트 중복 제거(TODO 1순위). 모달 placeholder의 카테고리 `<span>` 제거 → 컬러 그라데이션만 유지, 카테고리는 본문 category-tag pill 1회만 노출. 리스트 카드 dedup 패턴과 일관.
