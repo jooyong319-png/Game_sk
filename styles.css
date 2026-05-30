@@ -611,10 +611,10 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .day-row:hover, .day-row:focus-visible { background:var(--surface); outline:none; }
 .day-row-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
 .day-row-date { flex-shrink:0; font-size:0.78rem; color:var(--text-dim); font-variant-numeric:tabular-nums; min-width:5.5em; }
-.day-row-dot.category-mobile_kr { background:#81c784; }
-.day-row-dot.category-pc_console_kr { background:#64b5f6; }
-.day-row-dot.category-global_aaa { background:#ba68c8; }
-.day-row-dot.category-new_server { background:#ff8a65; }
+.day-row-dot.category-mobile_kr { background:#81c784; border-radius:50%; }
+.day-row-dot.category-pc_console_kr { background:#64b5f6; border-radius:1px; }
+.day-row-dot.category-global_aaa { background:#ba68c8; border-radius:1px; transform:rotate(45deg); }
+.day-row-dot.category-new_server { background:transparent; border:1.5px solid #ff8a65; box-sizing:border-box; }
 .day-row-name { flex:1; min-width:0; font-size:0.88rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .day-row-plat { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); min-width: 4.5em; text-align: right; }
 .day-row-dday { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); font-weight:600; }

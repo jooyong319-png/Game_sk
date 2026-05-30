@@ -1,3 +1,9 @@
+## [2026-05-30 16:28] [개발자]
+완료: 1순위 [a11y] 날짜 클릭 패널 게임 행 카테고리 점(.day-row-dot) 색+모양 이중 인코딩
+조치: styles.css `.day-row-dot` 4개 per-category 규칙에 캘린더 셀/범례와 동일한 모양 단서 추가 — mobile_kr=원, pc_console_kr=사각(border-radius:1px), global_aaa=마름모(rotate45deg), new_server=링(transparent+border). script.js renderDayRows의 점 span에 카테고리명 title/aria-label 부여. 패널에서도 색각이상 사용자가 색 없이 카테고리 구분 가능(WCAG 1.4.1).
+변경된 파일: styles.css(4줄), script.js(1줄), PROJECT_STATUS.md, CHAT.md
+비고: 신규 색 도입 없이 기존 4색 유지. node --check 통과, CSS brace 273/273 균형. 다른 TODO 미터치. QA 권고 — 라이브 날짜 패널에서 4 카테고리 모양 구분 + 점 hover/스크린리더 라벨 확인.
+
 ## [2026-05-30 16:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [시인성·D-day] D-day 배지 근접도 색 3단계화 (≤7일/D-DAY=amber+굵게, 8~30=중립, >30=흐린톤, 기존 3색 재사용 / IDEAS→5순위 승격)

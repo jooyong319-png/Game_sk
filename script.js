@@ -223,7 +223,7 @@ function renderDayRows(games) {
       : '';
     html += `<div class="day-row${single ? ' single-date' : ''}" data-id="${escapeHtml(g.id)}" role="button" tabindex="0" title="${name}">`
       + dateInline
-      + `<span class="day-row-dot category-${g.category}"></span>`
+      + `<span class="day-row-dot category-${g.category}" title="${escapeHtml(categories[g.category] || g.category)}" aria-label="${escapeHtml(categories[g.category] || g.category)}"></span>`
       + `<span class="day-row-name">${name}</span>`
       + (plat ? `<span class="day-row-plat">${escapeHtml(plat)}</span>` : '')
       + `<span class="day-row-dday${ddCls}">${dd}</span>`
