@@ -364,7 +364,11 @@ body.modal-open { overflow: hidden; }
 .day-dot-more { font-size:0.68rem; color:#aaa; line-height:1; margin-left:1px; }
 .day-more { margin-left:auto; font-size:0.62rem; color:#aaa; background:var(--border); border-radius:8px; padding:0 5px; line-height:1.5; }
 .day-game-label { font-size:0.7rem; color:#cdd2db; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.2; min-width:0; }
-@media (max-width:480px) { .day-game-label { font-size:0.62rem; } }
+@media (max-width:480px) {
+  .day-game-label { display:none; } /* [모바일·스캔성] 셀 게임명 라벨 숨김 — 점만으로 그날 카테고리/건수 스캔, 상세는 셀 클릭 패널 */
+  .day-dot { width:9px; height:9px; } /* [모바일·스캔성] 점 7px→9px 확대(데스크톱 7px 유지) */
+  .day-dot.category-new_server { border-width:2px; } /* 링 점도 확대에 맞춰 보더 보강 */
+}
 
 footer a {
   color: #888;
