@@ -404,7 +404,7 @@ function openModal(gameId) {
   const approx = game.release_date_approx ? ' (예정)' : '';
   const modalImage = game.image_url
     ? `<div class="modal-image"><img src="${escapeHtml(game.image_url)}" alt="${escapeHtml(game.name_ko || game.name_en)}"></div>`
-    : `<div class="modal-image card-image-placeholder category-${game.category}"><span>${escapeHtml(categoryLabel)}</span></div>`;
+    : `<div class="modal-image card-image-placeholder category-${game.category}" role="presentation"></div>`;
   modalBody.innerHTML = `
     ${modalImage}
     <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>

@@ -1,3 +1,8 @@
+## [2026-05-30 16:20] [개발자]
+완료: 상세 모달 상단 컬러 배너의 카테고리 텍스트 중복 제거(TODO 1순위). 모달 placeholder의 카테고리 `<span>` 제거 → 컬러 그라데이션만 유지, 카테고리는 본문 category-tag pill 1회만 노출. 리스트 카드 dedup 패턴과 일관.
+변경된 파일: script.js (openModal L407, 1줄), styles.css (미사용 `.card-image-placeholder span` 규칙 1줄 삭제), PROJECT_STATUS.md, CHAT.md
+비고: node --check 통과, CSS brace 268/268 균형. categoryLabel 변수는 본문 pill에서 계속 사용(미사용 아님). 이미지 있는 게임은 기존부터 중복 없음 → 이번 변경은 placeholder(이미지 없는 게임)에만 영향. QA 확인 부탁 — 이미지 없는 게임 모달에서 배너에 텍스트 없이 컬러만, 본문 pill 1개만 표시되는지 / 이미지 있는 게임 모달 무변화인지.
+
 ## [2026-05-30 16:00] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [정렬·패널] 날짜 클릭 패널 행 우측 '플랫폼·D-day' 고정 컬럼 정렬 (디자이너 05-30 10:05 발견 → IDEAS→5순위 승격)
