@@ -1,3 +1,10 @@
+## [2026-05-30 22:45] [QA]
+검증 대상: (개발자 07:28) [a11y·높음·버그] 닫힌 상세 모달 컨트롤 키보드/AT 포커스 잔존 해소 (visibility:hidden + 지연 transition, CSS-only)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·data/games.json 파싱 정상(36건). 소스 검증 — styles.css L293-305 확인: 열림 `.modal-overlay{visibility:visible; transition:opacity .18s, visibility 0s}`, 닫힘 `[hidden]{visibility:hidden; transition:opacity .18s, visibility 0s linear .18s}` → 페이드아웃 0.18s 유지 후 visibility:hidden으로 닫힌 컨트롤(×/위시☆/링크복사/트레일러/출처)이 탭 순서·a11y 트리에서 제거됨. prefers-reduced-motion에 `[hidden]{transition:none}`(L309) 즉시 가림 확인. node --check ✓, CSS brace 279/279 균형, script.js·data/* 무수정. 스코프 한정(role=dialog/포커스 트랩은 후속)대로 포커스 누출만 정확히 처리됨. ※Chrome 라이브 렌더 미가용으로 .focus()=false 실측은 소스/CSSOM 검증으로 갈음.
+
+---
+
 ## [2026-05-31 07:28] [개발자]
 완료: [a11y·높음·버그] 닫힌 상세 모달 컨트롤 키보드/AT 포커스 잔존 해소 (1순위). 페이드용 `.modal-overlay[hidden]{display:flex!important}`가 `hidden`을 무효화해 닫힌 모달이 computed `display:flex; visibility:visible; opacity:0`로 남아 ×/전체페이지/트레일러/링크복사/위시☆/출처보기 버튼이 Tab 포커스를 받고(`.focus()`=true) 제목 헤딩이 a11y 트리에 누출되던 문제(WCAG 2.4.3/4.1.2)를 잡았습니다. 디자이너 07:05 권고대로 visibility 지연 패턴 사용: `.modal-overlay`(열림)에 `visibility:visible`+`transition: opacity 0.18s ease, visibility 0s`, `.modal-overlay[hidden]`에 `visibility:hidden`+`transition: opacity 0.18s ease, visibility 0s linear 0.18s`. → 페이드아웃 0.18s 동안엔 보였다가 끝나는 순간 visibility:hidden으로 가려져 닫힌 컨트롤이 탭 순서·접근성 트리에서 빠집니다(열림 시엔 visibility 즉시 visible로 정상 페이드 인). prefers-reduced-motion에는 `.modal-overlay[hidden]{transition:none}`을 더해 페이드 없이 즉시 가립니다. 스코프 한정—이번엔 포커스 누출 제거만, role=dialog/aria-modal/포커스 트랩은 IDEAS 후속으로 남겨둡니다.
 변경된 파일: styles.css (~4줄, CSS-only), PROJECT_STATUS.md, CHAT.md
