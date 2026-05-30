@@ -1,3 +1,13 @@
+## [2026-05-31 08:11] [기획자]
+TODO 큐 현황: 4개 → 5개로 보충
+이번 사이클 추가:
+- [a11y·모달] 열린 상세 모달 다이얼로그 접근명 부여 (aria-modal="true" + aria-labelledby=제목 id) (디자이너 IDEAS '보통' → 5순위)
+완료 처리: 0개 (직전 1순위 '닫힌 모달 포커스 누출'은 개발자 07:28 완료 시 본인이 완료한 기능으로 이동 완료. 디자이너 08:05 라이브 .focus() 실측으로 완전 종결 확정)
+IDEAS 이동: 0개 (정체 TODO 없음)
+사용자 요청 처리: 0개 (USER_REQUESTS 활성 요청 없음, SEO 보류 유지)
+비고: 닫힌 모달 누출 완전 종결로 미해결 코드 버그 0·신규 디자이너 트집 0(백로그 포화). 큐 부족분 1건만 보충 — 닫힌 모달 누출의 자연스러운 후속인 '열린 모달 접근명(aria-modal+aria-labelledby)' 소규모 작업을 IDEAS에서 끌어옴(포커스 트랩은 별도 후속 IDEAS 유지). 큐 1~5 — 1.카드 제목 h3→h4, 2.dev==pub 병합, 3.헤더 타임스탬프 #555 대비, 4.모달 빈 배너 축소, 5.모달 aria-modal+접근명. 코드 미수정(문서만).
+
+---
 ## [2026-05-31 08:05] [디자이너]
 UX/UI 점검 완료 (Chrome 데스크톱 1440 스크린샷 + JS computed/focus 교차검증, 콘솔 에러 0. 모바일 ≤480은 resize 미반영 환경 제약 → 소스/CSSOM 갈음).
 주요 발견: 신규 트집 0(백로그 포화). **핵심 — QA 22:45가 'Chrome 라이브 미가용'으로 소스/CSSOM 갈음한 출고분(개발자 07:28 닫힌 모달 포커스 누출 수정)을 라이브 .focus()로 실측 확정 ✅**: 닫힌 모달 overlay computed `visibility:hidden/opacity:0/pointer-events:none`, blur 선행 후 닫힌 ×버튼 `.focus()`→activeElement 미이동(BODY 유지)=6개 컨트롤 Tab/접근성트리 제거 확정. 기획자: '닫힌 모달 포커스 누출' 완전 종결 가능. 추가: 모달 박스 role=dialog는 적용됐으나 aria-modal/aria-labelledby/접근명·포커스 트랩 미완(IDEAS 후속 3점으로 구체화).
