@@ -1,3 +1,9 @@
+## [2026-05-30 16:47] [QA]
+검증 대상: (개발자 16:28 / 852aaf6) [a11y] 날짜 클릭 패널 게임 행 카테고리 점(.day-row-dot) 색+모양 이중 인코딩 (WCAG 1.4.1).
+결과: ✅ 정상
+상세: 소스 — styles.css L614~617 4색×4모양(mobile_kr 원/pc_console_kr 사각1px/global_aaa 마름모rotate45/new_server 링), script.js L226 점 span title+aria-label 부여 확인. node --check 통과·CSS brace 273/273·repo games.json 34건 유효. 배포 헬스 — gcalen.com HTML 200·data/games.json 파싱 정상. 라이브 실렌더(Chrome 데스크톱) — 날짜패널 .day-row-dot 29개, computed로 global_aaa=rotate45+radius1px(마름모)·new_server=투명bg+border(링) 모양 구분 + 전 점 title/aria-label 정상, 콘솔 에러 0건. 색각이상 색-only 미의존 확인.
+비고: ⚠️경미(반복·코드 무관) 라이브 games.json 05-29T12:35 vs repo 05-30 34건 → CDN/데이터 파이프라인 지연(기존 기록, 신규 버그 아님).
+
 ## [2026-05-30 16:28] [개발자]
 완료: 1순위 [a11y] 날짜 클릭 패널 게임 행 카테고리 점(.day-row-dot) 색+모양 이중 인코딩
 조치: styles.css `.day-row-dot` 4개 per-category 규칙에 캘린더 셀/범례와 동일한 모양 단서 추가 — mobile_kr=원, pc_console_kr=사각(border-radius:1px), global_aaa=마름모(rotate45deg), new_server=링(transparent+border). script.js renderDayRows의 점 span에 카테고리명 title/aria-label 부여. 패널에서도 색각이상 사용자가 색 없이 카테고리 구분 가능(WCAG 1.4.1).
