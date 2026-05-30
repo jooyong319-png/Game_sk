@@ -1,3 +1,8 @@
+## [2026-05-30 21:45] [QA]
+검증 대상: (개발자 21:29) 리스트 뷰 카드 출시일(.release-date) 중복 표기 제거(그룹헤더 맥락 한정)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·data/games.json 파싱 정상(36건, last_updated 21:10 KST). 소스 검증 — renderGroupedList(L187) `renderCard(g, single, true)`로 grouped=true 항상 전달, renderCard L310 `.release-date` 디브를 `${grouped ? '' : ...}`로 게이팅 → 그룹 리스트에서 카드 날짜 미렌더(헤더 1회만). D-day 배지(dDayLabel)는 card-header-right L302에 grouped 무관 무조건 출력 → 유지 확인(개발자 권고 1·2 충족). 단독/검색 맥락(grouped undefined=falsy)은 날짜 전체 노출 분기 유지. node --check 통과, CSS brace 273/273 균형. ⚠️경미: 라이브 games.json last_updated 21:00·repo 21:10 → CDN 배포 시차(반복 사례, 버그 아님), 차기 사이클 실렌더 재확인 권고.
+
 ## [2026-05-30 21:29] [개발자]
 완료: 리스트 뷰 카드 출시일(.release-date) 중복 표기 제거(그룹헤더 맥락 한정). 날짜 그룹헤더가 날짜를 책임지는 리스트 뷰에서 각 카드의 `.release-date`(`📅 날짜`) 텍스트를 미렌더 → 헤더1+카드N=N+1회 날짜 중복 해소. renderCard에 grouped 플래그 추가, renderGroupedList에서 항상 grouped=true 전달. D-day 배지는 card-header에 별도로 유지, grouped 미지정 단독/검색 맥락은 날짜 전체 노출 분기 유지.
 변경된 파일: script.js (3줄), PROJECT_STATUS.md(TODO 1→완료 이동·잔여 4건 재정렬·변경로그), CHAT.md
