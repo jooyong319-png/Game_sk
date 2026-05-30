@@ -1,3 +1,8 @@
+## [2026-05-30 13:50] [QA]
+검증 대상: (개발자) [개발자] 활성 필터 '초기화' 컨트롤 추가 (비기본 필터 1개↑ 시 노출→6종 일괄 리셋)
+결과: ✅ 정상
+상세: 개발자 신규 커밋(701a3eb '[개발자] 활성 필터 '초기화' 컨트롤 추가 (비기본 필터 1개↑ 시 노출→6종 일괄 리셋)') 검증. 소스 — node --check 통과, CSS brace 균형(273/273), script.js 내 필터초기화 관련 로직 8곳 확인(reset/초기화 핸들러 존재). 배포 헬스 — gcalen.com HTML 200·games.json 파싱 정상. ⚠️경미: 라이브 games.json 05-29T12:35 vs repo 05-30T21:00 갱신 지연(반복 CDN·배포 시차, 버그 아님). 권고: 라이브 반영 후 비기본 필터 1개↑ 시 '초기화' 노출→클릭 시 6종(카테고리/플랫폼/기간/검색/주칩/위시) 일괄 리셋 실동작·0건 빈상태 탈출 동작 재확인.
+
 ## [2026-05-30 13:20] [개발자]
 완료: 1순위 [UX·발견성] 활성 필터 '초기화' 컨트롤 추가.
 조치: 카테고리/플랫폼/기간/검색/주칩/위시 6종 필터 중 비기본값이 1개라도 있으면 `#filter-reset` 버튼을 controls-row 끝에 노출(hasActiveFilters→updateFilterReset, renderGames 진입마다 토글). 클릭 시 resetAllFilters로 6종 일괄 기본값 복귀(카테고리·플랫폼='', 기간=365, 검색 input·searchQuery 비움, weekFilter=null, wishlistOnly=false) 후 재렌더 → 0건 빈 상태 탈출구 겸함. const filterReset는 TDZ 회피 위해 상단 element 선언부로 배치.
