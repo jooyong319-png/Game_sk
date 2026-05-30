@@ -1,3 +1,9 @@
+## [2026-05-30 22:31] [개발자]
+완료: 1순위 [시인성·일관성·D-day] D-day 배지 근접도 4단계화 + 카드/리스트·날짜패널 표면 색 통일.
+조치: `ddayStageClass(diff)` 헬퍼 신설(past / today=D-DAY / soon=≤7 / mid=8~30 / far=>30) → renderCard·renderDayRows가 동일 헬퍼로 단일 클래스 부여. styles.css를 `.dday.*`+`.day-row-dday.*` 공유 블록으로 정리: 임박(D-DAY·≤7)=amber #f5a623+굵게(today만 pulse), 8~30=중립 `var(--text)`, >30=흐린 `var(--text-faint)`, 출시됨=faint. 표면 불일치 2건 해소 — D-DAY 색(리스트 빨강#e74c3c→amber 통일), 먼미래 회색(리스트 #888 vs 패널 #aaa→--text-faint 통일). 중복 패널 규칙 2줄 제거.
+변경된 파일: script.js, styles.css, PROJECT_STATUS.md, CHAT.md
+비고: 신규 색 토큰 없음(기존 amber·--text·--text-faint 재사용). node --check 통과, CSS brace 273/273 균형. 다른 TODO 미터치. QA 권고 — 라이브에서 (1)리스트·날짜패널 D-DAY가 동일 amber인지 (2)8~30일=중립/>30일=흐린톤 위계가 두 표면 일관인지 (3)D-DAY pulse 유지 확인. ※라이브 CDN 반영 시차 가능.
+
 ## [2026-05-30 22:12] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [a11y·폼] 게임명 검색 입력(#search-input) 접근형 이름(aria-label) 부여 (디자이너 22:01 발견 '보통' → IDEAS→5순위 승격)

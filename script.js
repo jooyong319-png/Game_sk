@@ -192,6 +192,14 @@ function renderGroupedList(games) {
   return html;
 }
 
+// D-day 근접도 단계 클래스(표면 공통): past/today/soon(≤7 임박)/mid(8~30)/far(>30). 선행 공백 포함.
+function ddayStageClass(diff) {
+  if (diff < 0) return ' past';
+  if (diff === 0) return ' today';
+  if (diff <= 7) return ' soon';
+  if (diff <= 30) return ' mid';
+  return ' far';
+}
 // 날짜 패널 전용: 같은 출시일 게임을 날짜 헤더 아래로 묶되, 카드 대신 한 줄 컴팩트 행으로 렌더.
 // 행: [카테고리 색점] 게임명 · 대표 플랫폼 · D-day · ☆(위시). 클릭=openModal, ☆=위시 토글(기존 핸들러 재사용).
 function renderDayRows(games) {
@@ -209,11 +217,8 @@ function renderDayRows(games) {
       html += `<h3 class="date-group-header">${formatDate(g.release_date)}${wd ? ' (' + wd + ')' : ''}</h3>`;
     }
     const diff = Math.ceil((parseReleaseDate(g.release_date) - today) / 86400000);
-    let dd, ddCls = '';
-    if (diff < 0) { dd = '출시됨'; ddCls = ' past'; }
-    else if (diff === 0) { dd = 'D-DAY'; ddCls = ' today'; }
-    else if (diff <= 7) { dd = 'D-' + diff; ddCls = ' soon'; }
-    else { dd = 'D-' + diff; }
+    const ddCls = ddayStageClass(diff);
+    const dd = diff < 0 ? '출시됨' : (diff === 0 ? 'D-DAY' : 'D-' + diff);
     const plat = (g.platforms || [])[0] || '';
     const wished = wishlist.has(g.id);
     const name = escapeHtml(g.name_ko || g.name_en || '');
@@ -273,19 +278,10 @@ function renderCard(game, single, grouped) {
   today.setHours(0, 0, 0, 0);
   const dayDiff = Math.ceil((releaseDate - today) / (1000 * 60 * 60 * 24));
 
-  let dDayLabel = '';
-  let imminent = '';
-  if (dayDiff < 0) {
-    dDayLabel = `<span class="dday past">출시됨</span>`;
-  } else if (dayDiff === 0) {
-    dDayLabel = `<span class="dday today">D-DAY</span>`;
-    imminent = ' imminent';
-  } else if (dayDiff <= 7) {
-    dDayLabel = `<span class="dday soon">D-${dayDiff}</span>`;
-    imminent = ' imminent';
-  } else {
-    dDayLabel = `<span class="dday">D-${dayDiff}</span>`;
-  }
+  const ddStage = ddayStageClass(dayDiff).trim();
+  const ddText = dayDiff < 0 ? '출시됨' : (dayDiff === 0 ? 'D-DAY' : 'D-' + dayDiff);
+  const dDayLabel = `<span class="dday ${ddStage}">${ddText}</span>`;
+  const imminent = (dayDiff >= 0 && dayDiff <= 7) ? ' imminent' : '';
 
   const categoryLabel = categories[game.category] || game.category;
   const approxMark = game.release_date_approx ? ' (예정)' : '';

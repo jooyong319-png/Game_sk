@@ -176,22 +176,16 @@ main {
 .dday {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #888;
+  color: var(--text-faint);
 }
 
-.dday.soon {
-  color: #f5a623;
-}
-
-.dday.today {
-  color: #e74c3c;
-  animation: pulse 1.5s infinite;
-}
-
-.dday.past {
-  color: #555;
-  font-weight: 500;
-}
+/* D-day 근접도 단계 — 카드/리스트(.dday)·날짜패널(.day-row-dday) 표면 공통: 임박 amber / 8~30 중립 / >30 흐린톤. 신규 색 없음(기존 amber·--text·--text-faint 재사용). */
+.dday.today, .dday.soon,
+.day-row-dday.today, .day-row-dday.soon { color:#f5a623; font-weight:700; }
+.dday.today, .day-row-dday.today { animation: pulse 1.5s infinite; }
+.dday.mid, .day-row-dday.mid { color:var(--text); }
+.dday.far, .day-row-dday.far { color:var(--text-faint); }
+.dday.past, .day-row-dday.past { color:var(--text-faint); font-weight:500; }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
@@ -619,8 +613,6 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .day-row-name { flex:1; min-width:0; font-size:0.88rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .day-row-plat { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); min-width: 4.5em; text-align: right; }
 .day-row-dday { flex-shrink:0; font-size:0.75rem; color:var(--text-dim); font-weight:600; }
-.day-row-dday.today, .day-row-dday.soon { color:#f5a623; }
-.day-row-dday.past { color:var(--text-faint); font-weight:400; }
 .day-row .wishlist-btn { flex-shrink:0; background:transparent; border:none; cursor:pointer; font-size:1rem; line-height:1; padding:0 0.2rem; color:#888; }
 .day-row .wishlist-btn.active { color:#f5a623; }
 
