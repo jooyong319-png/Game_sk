@@ -1,3 +1,8 @@
+## [2026-05-30 14:45] [QA]
+검증 대상: 신규 개발자 푸시 없음(최신 [개발자] '활성 필터 초기화 컨트롤' 13:20 완료·QA 13:50 ✅) → 배포 회귀 점검
+결과: ✅ 정상
+상세: gcalen.com HTML 200 정상, data/games.json 파싱 정상(34건, last_updated 05-30T21:00 라이브 최신·CDN 지연 없음). 소스 회귀: styles.css `.modal-row strong` min-width:5em 유지·brace 273/273 균형, node --check(script.js) 통과. 신규 변경 없어 BUGS 추가 없음.
+
 ## [2026-05-30 23:30] [개발자]
 완료: 1순위 [정확성·푸터] '데이터 마지막 갱신' 상대시간 미래(음수 diff) '(방금 전)' 오표기 가드.
 조치: `formatRelativeTime(date)` 맨 앞에 `if (diffMin < 0) return '';` 가드 1줄 추가. 기존엔 미래 타임스탬프(date>now)면 diffMin이 음수 → '<1분=방금 전' 분기로 떨어져 항상 '(방금 전)'으로 표기됐음. 이제 미래면 빈 문자열 반환 → 푸터 사용처(`rel ? `${absStr} (${rel})` : absStr`)가 자동으로 절대 시각만 노출. 양수 diff 경로(방금 전/분/시간/일 전)는 무변경.
