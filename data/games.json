@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-30T21:00:00+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-30T21:00:00+09:00",
+  "last_updated": "2026-05-30T21:10:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-05-30T21:10:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -733,6 +733,52 @@
       ],
       "image_url": null,
       "source_url": "https://biz.heraldcorp.com/article/10698973"
+    },
+    {
+      "id": "overgeared-hero-20260526",
+      "name_ko": "템빨용사",
+      "name_en": "Overgeared Hero",
+      "release_date": "2026-05-26",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "5민랩",
+      "publisher": "크래프톤",
+      "description": "아이템 배치·조합 전략에 따라 전투 결과가 달라지는 로그라이크 수집형 전략 RPG. 글로벌 사전예약 50만 돌파, 한국·미국·일본·대만 등 글로벌 정식 출시(2026-05-26).",
+      "genres": [
+        "수집형RPG",
+        "로그라이크",
+        "전략"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316298"
+    },
+    {
+      "id": "ratatan-2026",
+      "name_ko": "라타탄",
+      "name_en": "Ratatan",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "Xbox Series X/S",
+        "Switch 2",
+        "PC"
+      ],
+      "developer": "Ratata Arts",
+      "publisher": "Ratata Arts",
+      "description": "파타폰 개발진이 만든 리듬 로그라이트. 비트에 맞춰 커스텀 코분 군대를 이끌고 전투하는 액션 게임. 얼리액세스를 거쳐 정식 출시.",
+      "genres": [
+        "리듬",
+        "로그라이트",
+        "액션"
+      ],
+      "image_url": null,
+      "source_url": "https://www.gematsu.com/2026/03/ratatan-launches-july-16-for-ps5-xbox-series-switch-2-and-pc"
     }
   ]
 }
