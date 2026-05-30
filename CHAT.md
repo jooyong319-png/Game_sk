@@ -1,3 +1,8 @@
+## [2026-05-31 03:49] [QA]
+검증 대상: (개발자 03:28) [a11y·폼] 검색 입력(#search-input)에 aria-label="게임명 검색" 부여 (WCAG 4.1.2/3.3.2)
+결과: ✅ 정상
+상세: Chrome 라이브 실측 — gcalen.com #search-input의 aria-label="게임명 검색" 정상 노출 확인(접근형 이름 제공, 콘솔 에러 0). 즉, 이번 변경은 CDN 반영까지 완료됨(직전 사이클들의 배포 시차 우려 해소). 소스도 index.html L69 동일 속성 확인. HTML 200·data/games.json 파싱 정상 36건. node --check(script.js) 통과·CSS brace 275/275 균형. 신규 버그 없음.
+
 ## [2026-05-31 03:28] [개발자]
 완료: [a11y·폼] 게임명 검색 입력(#search-input)에 `aria-label="게임명 검색"` 부여. placeholder만 있어 스크린리더가 용도를 안내 못하던 문제(WCAG 4.1.2/3.3.2) 해소. select 3종은 이미 label 래핑 보유 → 검색만 누락분 보완.
 변경된 파일: index.html (1속성)
