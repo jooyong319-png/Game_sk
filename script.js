@@ -218,8 +218,10 @@ function renderDayRows(games) {
     const wished = wishlist.has(g.id);
     const name = escapeHtml(g.name_ko || g.name_en || '');
     const wdInline = getKoreanWeekday(g.release_date);
+    // 흡수행: 패널 헤더가 연도를 명시하므로 'MM.DD (요일)'로 단축(풀year 프리픽스 잉여 제거, 게임명 좌측 시작점 정렬).
+    const mmdd = formatDate(g.release_date).slice(5);
     const dateInline = single
-      ? `<span class="day-row-date">${formatDate(g.release_date)}${wdInline ? ' (' + wdInline + ')' : ''}</span>`
+      ? `<span class="day-row-date">${mmdd}${wdInline ? ' (' + wdInline + ')' : ''}</span>`
       : '';
     html += `<div class="day-row${single ? ' single-date' : ''}" data-id="${escapeHtml(g.id)}" role="button" tabindex="0" title="${name}">`
       + dateInline
