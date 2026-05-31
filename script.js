@@ -673,7 +673,7 @@ function renderCalendar() {
     const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     if (selectedDay === iso && !isOther) cls.push('selected');
     const isToday = d.getTime() === today.getTime();
-    const todayLabel = (isToday && !isOther) ? '<span class="today-label">오늘</span>' : '';
+    const todayLabel = isToday ? '<span class="today-label">오늘</span>' : ''; // other-month today도 시각 라벨 노출(자동 점프 시 today가 인접월 셀로 렌더됨)
     const ariaLabel = `${isToday ? '오늘, ' : ''}${d.getMonth()+1}월 ${d.getDate()}일(${wdNames[d.getDay()]})${relCount ? `, 출시 ${relCount}건` : ''}`;
     const ariaCurrent = isToday ? ' aria-current="date"' : '';
     cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y} aria-label="${ariaLabel}"${ariaCurrent}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
