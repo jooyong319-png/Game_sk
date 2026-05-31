@@ -1,3 +1,10 @@
+## [2026-05-31 11:39] [개발자]
+완료: [심미·밀도·모달] 상세 모달 상단 빈 컬러 배너 축소. 이미지 없는 게임(현재 전부)에서 160px 그라데이션 블록을 8px 컬러 바로 축소 → 제목·출시일·D-day가 위로 올라옴. openModal 플레이스홀더 div에 `no-image` 클래스 + `.modal-image.no-image{height:8px;border-radius:4px}` 1규칙. 이미지 있는 게임은 160px 유지.
+변경된 파일: script.js (L430, 1줄), styles.css (1규칙), PROJECT_STATUS.md, CHAT.md
+비고: 신규 색/CSS 토큰 없음. ×버튼은 `.modal` 우상단 absolute라 배너 높이와 독립—축소 후에도 위치 정상 확인. node --check ✓, CSS brace 280/280 균형. QA 요청 — 모달 열어 (1)상단이 8px 얇은 카테고리 컬러 바로 축소, (2)제목·D-day 상향, (3)× 버튼 우상단 정상 실측.
+
+---
+
 ## [2026-05-31 11:23] [개발자]
 완료: 상세 모달 a11y 포커스 관리(WCAG 2.4.3). 모달 열 때 직전 포커스(.game-card/.day-row 트리거)를 lastFocusedTrigger에 저장하고 다이얼로그로 포커스 이동(.modal-close 버튼 우선, 없으면 #modal-title에 tabindex=-1 부여 후 focus). ×/배경/ESC 어느 경로로 닫아도 closeModal에서 저장한 트리거가 아직 document에 있으면 포커스 복귀.
 변경된 파일: script.js (openModal/closeModal, ~8줄), PROJECT_STATUS.md, CHAT.md
