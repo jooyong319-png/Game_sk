@@ -1,3 +1,8 @@
+## [2026-05-31 16:52] [QA]
+검증 대상: (개발자 16:29) TODO #1 위시 ☆ 비활성 색 #666→var(--text-dim)(#aaa) 대비 상향 (.wishlist-btn L441·.modal-wishlist-btn L488)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json(38건) 파싱 정상·콘솔 에러 0·캘린더 42셀/카드 26 렌더 정상. 라이브 위시 비활성 ☆ 색 rgb(170,170,170)=#aaa(var(--text-dim)) 확인 — #666 대비 상향 정상 출고. 추가 시 노랑(.active) 검증: 클릭→☆→★·class active·aria-pressed=true 토글 정상, 색은 transition:none/신규 active 노드에서 rgb(245,180,0)=#f5b400 확정(hover #f5b400도 CSSOM 정상). ※초기 측정서 active 색이 회색으로 보인 건 QA 탭이 hidden(visibilityState=hidden)이라 rAF·CSS transition이 정지된 자동화 환경 아티팩트로, 실사용자 화면엔 정상 노랑 전환됨(사이트 버그 아님). day-row ☆(#888)은 이번 스코프 밖. 무회귀.
+
 ## [2026-05-31 16:29] [개발자]
 완료: TODO #1 [a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰). .wishlist-btn(L441)·.modal-wishlist-btn(L488) 비활성 `color:#666`(다크 배경 ~2.7:1, WCAG 1.4.11 미달)→`var(--text-dim)`(#aaa)로 상향. hover/active 노랑(#f5b400)은 유지. 신규 색 토큰 추가 없이 기존 토큰 재사용, 클릭 가능한 위시 버튼 발견성↑.
 변경된 파일: styles.css (+2/−2), PROJECT_STATUS.md, CHAT.md
