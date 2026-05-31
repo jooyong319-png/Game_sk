@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-31T09:30:00+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-31T09:30:00+09:00",
+  "last_updated": "2026-05-31T12:30:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-05-31T12:30:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -821,6 +821,68 @@
       ],
       "image_url": null,
       "source_url": "https://www.betanews.net/article/view/beta202605060040"
+    },
+    {
+      "id": "eos-black-server-sambaek-v-20260423",
+      "name_ko": "에오스 블랙 신규 서버 '삼백V' 오픈",
+      "name_en": null,
+      "release_date": "2026-04-23",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "블로믹스",
+      "publisher": "블루포션게임즈",
+      "description": "리부트 업데이트와 함께 개설된 월 300만원 과금 제한(결제 한도) 신규 서버. 초반 성장 지원 아이템·골드 지급, 신규 보스 던전 '셉투프의 무덤' 등 동시 추가(2026-04-23 오픈).",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://www.betanews.net/article/view/beta202604230056"
+    },
+    {
+      "id": "lineage-classic-server-haine-loengrin-20260311",
+      "name_ko": "리니지 클래식 신규 서버 '하이네'·'로엔그린' 오픈",
+      "name_en": null,
+      "release_date": "2026-03-11",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "엔씨소프트",
+      "publisher": "엔씨소프트",
+      "description": "신규 지역 '하이네' 업데이트와 함께 오픈한 신규 서버 2종(하이네·로엔그린). 2026년 2월 정식 서비스 시작 후 이용자 증가에 따른 추가 서버(2026-03-11 오픈, 공식 공지 확인).",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://about.ncsoft.com/news/article/lc_update_260115"
+    },
+    {
+      "id": "dk-mobile-reborn-server-prosperity-20251211",
+      "name_ko": "DK모바일 리본 신규 서버 '번영의 월드' 오픈",
+      "name_en": null,
+      "release_date": "2025-12-11",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "엔트런스",
+      "publisher": "엔트런스",
+      "description": "유료 재화 '다이아'를 전면 삭제하고 모든 경제를 '플린'으로 통합한 플레이 중심 신규 서버. 경험치·드롭률 상향 하이퍼 성장 상시 적용, 3주 간격 상위 콘텐츠 해금(2025-12-11 정식 오픈).",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://www.thisisgame.com/articles/409201"
     }
   ]
 }
