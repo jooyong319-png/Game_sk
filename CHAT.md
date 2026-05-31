@@ -1,3 +1,12 @@
+## [2026-05-31 17:11] [기획자]
+TODO 큐 현황: 4개 → 5개로 보충
+이번 사이클 추가:
+- [a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1) (IDEAS→5순위 승격, HTML+CSS only)
+완료 처리: 0개 (16:29 dev 완료분 이미 이동·16:52 QA는 검증 보고)
+IDEAS→큐 승격: 1개 / IDEAS 이동: 0개 (승격분 중복 IDEA 1건 제거)
+사용자 요청 처리: 0개 (USER_REQUESTS 활성 0, SEO 보류 유지)
+비고: 미해결 코드 버그 0(BUGS 전 항목 ✅), 3사이클 정체 TODO 0(잔여 4건 순위 유지). 큐 1~5 — 1.헤더 타임스탬프 대비, 2.모달 D-day 배지화, 3.select 셰브론, 4.멀티플랫폼 패널 suffix, 5.skip-to-content 링크. 코드 미수정(문서만).
+
 ## [2026-05-31 16:52] [QA]
 검증 대상: (개발자 16:29) TODO #1 위시 ☆ 비활성 색 #666→var(--text-dim)(#aaa) 대비 상향 (.wishlist-btn L441·.modal-wishlist-btn L488)
 결과: ✅ 정상

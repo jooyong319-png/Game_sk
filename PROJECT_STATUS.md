@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 16:29 KST (개발자 사이클 — 위시 ☆ 비활성 색 대비 상향, 큐 5→4)
+마지막 갱신: 2026-05-31 17:11 KST (기획자 사이클 — TODO 큐 4→5 보충, skip-to-content 링크 승격)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -114,7 +114,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-05-31 16:29 KST (개발자): TODO #1 '위시 ☆ 비활성 색 대비 상향(#666→토큰)' 구현 완료 → '완료한 기능' 이동·큐 재번호 5→4. `.wishlist-btn`/`.modal-wishlist-btn` 비활성 `#666`→`var(--text-dim)`. 기존 2~5순위가 한 칸씩 당겨져 1~4순위로. 큐 1~4 — 1.헤더 타임스탬프 대비, 2.모달 D-day 배지화, 3.select 셰브론, 4.멀티플랫폼 패널 suffix. 코드 1파일(styles.css)만 수정.
+> 갱신 2026-05-31 17:11 KST (기획자): 큐 4→5 보충. 사용자 활성요청 0·미해결 코드버그 0·신규 완료분 0(16:29 dev 완료분은 이미 이동, 16:52 QA는 검증). IDEAS에서 'skip-to-content 링크(WCAG 2.4.1)' 5순위 승격(작고 명확·HTML+CSS only). 기존 1~4 순서 유지. 큐 1~5 — 1.헤더 타임스탬프 대비, 2.모달 D-day 배지화, 3.select 셰브론, 4.멀티플랫폼 패널 suffix, 5.skip-to-content 링크. 코드 미수정(문서만).
 
 
 1. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
@@ -133,8 +133,12 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 날짜 클릭 패널 행 플랫폼 컬럼이 멀티플랫폼 게임에서 첫 1개만 노출(`(g.platforms||[])[0]`)해 모달/카드(`PS5, Xbox Series X/S`)와 신호 불일치 — 예: EA UFC 6 패널엔 'PS5'만 떠 멀티플랫폼임이 은닉됨.
    - renderDayRows 플랫폼 표기를 `platforms[0]` + (length>1이면 ` 외 N` suffix)로, 또는 앞 2개 join으로 변경해 모달·카드와 멀티 신호 일관. script.js renderDayRows 소규모(2~4줄), 신규 색/CSS 없음, node --check 통과 확인.
 
+5. **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)** (IDEAS→큐 승격)
+   - 키보드 사용자가 상단 컨트롤(검색/필터 3종/뷰토글/퀵칩) 다수를 매 진입마다 Tab으로 통과해야 본문(캘린더/리스트)에 도달 → 본문 바로가기 링크 부재(WCAG 2.4.1).
+   - `<body>` 최상단에 `<a class="skip-link" href="#main">본문 바로가기</a>` 추가 + `<main>`에 `id="main"`(없으면) 부여. styles.css `.skip-link`는 평상시 화면 밖(`position:absolute; left:-9999px` 또는 `clip`)으로 숨기고 `:focus` 시 좌상단 노출(기존 `--accent`/`--surface`/`--text` 토큰 재사용, z-index 상단). 신규 색 토큰 없음. index.html 2줄+styles.css 1~2규칙, node --check(무관)·CSS brace 균형 확인.
+
 ### (큐 소진 후 후보, IDEAS에서)
-캘린더 그리드 ARIA(role=grid/row/columnheader/gridcell — 단 현 CSS grid에 role=row 래퍼 부재라 DOM 보강 필요분 점검 후), 헤더↔푸터 '마지막 갱신' 타임스탬프 중복 통일(#2와 인접), skip-to-content 링크(WCAG 2.4.1) — 디자이너 재점검 후 끌어옴.
+캘린더 그리드 ARIA(role=grid/row/columnheader/gridcell — 단 현 CSS grid에 role=row 래퍼 부재라 DOM 보강 필요분 점검 후), 헤더↔푸터 '마지막 갱신' 타임스탬프 중복 통일(#1과 인접), 통계줄 클릭=카테고리 필터 — 디자이너 재점검 후 끌어옴.
 
 
 ## 알려진 버그 (BUGS)
@@ -158,7 +162,6 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [디자이너 2026-05-31 01:04] [캘린더·시각위계] '오늘' 셀이 other-month 디밍과 겹쳐 opacity 0.35로 렌더 → today 파란 보더/tint 거의 비가시. 캘린더가 최근접 출시월로 자동 점프하는 구조라 당월 출시 0건이면 today가 매 방문 인접월 흐릿한 trailing 셀로만 등장. `.day.other-month.today{opacity:1}`(today는 디밍 예외)로 위치 무관 today 강조 유지(+선택: 월네비 옆 '오늘 M/D' 힌트). styles.css 1규칙, 신규 색 없음. 우선순위 보통
 - [디자이너 2026-05-31 00:07] [빈 상태·로딩] 기본 캘린더 뷰 진입 시 로딩 신호 부재 — '불러오는 중…'이 숨겨진 리스트 뷰(#games-list)에만 주입돼 첫 화면(캘린더)에선 fetch 동안 빈 격자만(9초 load-fallback 전까지 피드백 0). 캘린더 컨테이너에도 로딩 플레이스홀더 또는 공통 로딩 표시. 우선순위 보통
 - [디자이너 2026-05-31 00:07] [성능·정리] 미사용 Google Fonts preconnect 제거 — head preconnect가 있으나 실제 로드 폰트 없음(시스템 폰트만). 폰트 미도입이면 1줄 삭제, 도입 시 stylesheet와 짝지어 정식 추가. 우선순위 낮음
-- [디자이너 05-30] [a11y·키보드] 본문 바로가기(skip-to-content) 링크 부재(WCAG 2.4.1) — 상단 컨트롤 다수를 매번 Tab 통과해야 본문 도달. body 최상단 .skip-link(href=#main, :focus 시 노출)+main에 id. 우선순위 낮음
 - [디자이너 2026-05-30 21:09] [정렬·패널·1순위 스코프 보강] 흡수행 `.day-row-date` 고정폭+우측정렬(개발자 20:20 a1d0ae2)은 날짜 자체만 정렬할 뿐 '게임명 좌측 정렬'(1순위 명시목표)은 미달 — 그룹헤더행 `.day-row`에 동일 6.5em 좌측 인셋이 없어 게임명이 컬럼폭(~96px)만큼 어긋난 채 유지(폭 5.5→6.5em 확대로 오히려 +확대). 수정: (a)`.day-row:not(.single-date)`에 동일 좌측 인셋, 또는 (b)날짜를 flex에서 빼 우측 메타로. 우선순위 보통(1순위 마무리)
 - [디자이너 05-30] [리스트·가로공간·정정] 리스트 단일게임 카드(.game-card.single-game)가 풀폭(1168px)으로 stretch되나 내용이 좌측 세로 스택→우측 ~50% 빈 공백. 과거 '단일게임 풀폭=가로낭비 해소'(DESIGN_NOTES line664) 판정이 라이브 실측과 불일치(멀티 카드는 379px라 폭 들쭉날쭉). 택1: (a).single-game 2열 가로(좌 제목/설명·우 메타+D-day) grid, 또는 (b)전열 span 제거+max-width 600px로 멀티카드와 폭 일관. styles.css 소규모. 우선순위 보통
 - [디자이너 05-30] [일관성·SEO] SEO 카테고리 목록 페이지(/upcoming-games 등)의 '신규 서버' 카테고리 라벨이 '한국 MMO 신규 서버'로 찍혀 메인 앱('신규 서버')과 불일치 → build.js 라벨을 메인 categories 라벨 맵 단일 출처에서 가져오도록 통일. (기존 '카테고리 명칭 4곳 통일'은 메인 앱 한정, SEO는 추가 표면) 우선순위 낮음
