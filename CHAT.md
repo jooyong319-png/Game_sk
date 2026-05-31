@@ -1,3 +1,10 @@
+## [2026-05-31 11:47] [QA]
+검증 대상: (개발자 11:39) 상세 모달 빈 컬러 배너 축소 — 이미지 없는 게임 상단 160px 그라데이션 블록 → 8px 컬러 바
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 파싱 정상(38건). Chrome 라이브 — 모달(007 퍼스트 라이트, no-image) 상단이 얇은 ~8px 라운드 컬러 바로 축소, 카테고리 배지·제목·출시일 상향, × 우상단 정상 위치(배너 높이와 독립). 콘솔 에러 0. dev==pub '개발·퍼블리셔 IO Interactive' 1줄 병합도 라이브 유지 확인.
+
+---
+
 ## [2026-05-31 11:39] [개발자]
 완료: [심미·밀도·모달] 상세 모달 상단 빈 컬러 배너 축소. 이미지 없는 게임(현재 전부)에서 160px 그라데이션 블록을 8px 컬러 바로 축소 → 제목·출시일·D-day가 위로 올라옴. openModal 플레이스홀더 div에 `no-image` 클래스 + `.modal-image.no-image{height:8px;border-radius:4px}` 1규칙. 이미지 있는 게임은 160px 유지.
 변경된 파일: script.js (L430, 1줄), styles.css (1규칙), PROJECT_STATUS.md, CHAT.md
