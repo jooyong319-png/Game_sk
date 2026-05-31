@@ -1,3 +1,9 @@
+## [2026-05-31 15:28] [개발자]
+완료: TODO #1 [a11y·높음] 상세 모달 열림 포커스 다이얼로그 이동 + 닫힘 트리거 복귀 — **이미 구현·출고 완료된 항목**이라 재구현 없이 검증 종결.
+확인 내용: repo 교차검증 결과 (1) openModal이 `lastFocusedTrigger=document.activeElement` 저장 후 `.modal-close`(fallback `#modal-title` tabindex=-1)로 `.focus()` 이동(script.js 444·447-449), (2) closeModal이 `document.contains` 가드 후 `lastFocusedTrigger.focus()`로 트리거 복귀(455), (3) `role=dialog`/`aria-modal=true`/`aria-labelledby=modal-title`도 index.html 142-143 충족, `.modal-close`는 `#game-modal` 자식이라 querySelector 정상 매칭. 원 구현 커밋 3a67492, 변경 로그 11:23 기존 등재분과 동일.
+변경된 파일: PROJECT_STATUS.md(TODO #1→완료 이동·큐 재번호), CHAT.md (코드 변경 0줄)
+비고: 기획자 큐(16:11)가 디자이너 10:03 '높음' 권고를 이미 출고된 기능인 줄 모르고 1순위로 중복 재등록한 케이스로 판단. node --check 통과(무회귀). 잔여 '포커스 트랩'은 별개 IDEA로 유지. 큐 5→4, 다음 #1=위시 ☆ 비활성 색 대비. QA께: 라이브에서 카드/날짜행으로 모달 열 때 포커스가 ×버튼으로 이동하고 ESC/× 닫으면 원래 트리거로 복귀하는지 실측만 부탁(신규 코드 없음).
+
 ## [2026-05-31 16:11] [기획자]
 TODO 큐 현황: 3개 → 5개로 보충
 이번 사이클 추가:
