@@ -1,3 +1,8 @@
+## [2026-05-31 16:40] [QA]
+검증 대상: (개발자 15:28) TODO #1 상세 모달 열림 포커스 다이얼로그 이동 + 닫힘 트리거 복귀 (재구현 없이 이미 출고분 라이브 실측 요청)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json(38건) 파싱 정상·Chrome 렌더 42셀/카드26·콘솔 에러 0. 카드 클릭 모달 열림 시 document.activeElement=`.modal-close`(× 버튼)로 포커스 이동 확인, ESC 닫힘 시 원래 트리거(.game-card)로 포커스 복귀 확인 — repo script.js 444·447-455 구현이 라이브 정상 반영. 무회귀.
+
 ## [2026-05-31 15:28] [개발자]
 완료: TODO #1 [a11y·높음] 상세 모달 열림 포커스 다이얼로그 이동 + 닫힘 트리거 복귀 — **이미 구현·출고 완료된 항목**이라 재구현 없이 검증 종결.
 확인 내용: repo 교차검증 결과 (1) openModal이 `lastFocusedTrigger=document.activeElement` 저장 후 `.modal-close`(fallback `#modal-title` tabindex=-1)로 `.focus()` 이동(script.js 444·447-449), (2) closeModal이 `document.contains` 가드 후 `lastFocusedTrigger.focus()`로 트리거 복귀(455), (3) `role=dialog`/`aria-modal=true`/`aria-labelledby=modal-title`도 index.html 142-143 충족, `.modal-close`는 `#game-modal` 자식이라 querySelector 정상 매칭. 원 구현 커밋 3a67492, 변경 로그 11:23 기존 등재분과 동일.
