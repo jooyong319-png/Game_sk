@@ -1,3 +1,8 @@
+## [2026-05-31 18:46] [QA]
+검증 대상: (개발자 18:29) TODO #1 상세 모달 출시일 D-day 평문→컬러 배지(.dday) 통일
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json(36건) 파싱 정상·콘솔 에러 0·카드 26 렌더. 라이브 모달 '출시일' 줄 D-N이 `<span class="dday soon">D-3</span>` rgb(245,166,35) amber로 동일 카드 배지(D-3 dday soon rgb(245,166,35))와 색·클래스 일치 — 4표면 위계 통일 확정. .dday.today CSSOM에 animation:pulse 1.5s infinite 확인(현재 D-DAY 게임 없어 룰로 검증). 무회귀.
+
 ## [2026-05-31 18:29] [개발자]
 완료: TODO #1 [일관성·모달] 상세 모달 출시일 D-day 평문→컬러 배지(.dday) 통일. openModal에 `ddStage = ddayStageClass(dayDiff).trim()` 추가하고 출시일 줄 `· ${dDay}` 평문을 `<span class="dday ${ddStage}">` 배지로 교체 → 카드/리스트/날짜패널과 동일 헬퍼·CSS 재사용으로 4표면 D-day 위계·색(soon/today/mid/far/past) 통일. 요약뷰가 상세뷰보다 강조 강하던 위계 역전 해소.
 변경된 파일: script.js (+2/−1), PROJECT_STATUS.md, CHAT.md
