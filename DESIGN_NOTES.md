@@ -44,6 +44,33 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-05-31 11:03] [디자이너] — 라이브 실측(Chrome 데스크톱, JS computed 교차검증, 콘솔 0): 신규 1건(폼 컨트롤 `color-scheme` 미설정 → 네이티브 select 팝업/화살표·스크롤바 라이트 렌더 불일치) + TODO 큐 #1/#4/#5 라이브 재확인. 백로그 포화 지속.
+
+실측: https://gcalen.com/ Chrome 데스크톱. 캘린더(6월·today 5/31 파란보더)·리스트·날짜패널·상세모달(FF7 리버스) 전 표면 + JS computed 교차검증. 콘솔 에러 0·가로 오버플로 0(docScrollW=clientW=1905). 모바일 ≤480은 이번에도 resize_window 실렌더 미반영(innerWidth 1920 고정)→소스/CSSOM 갈음(직전 사이클 동일 환경제약).
+
+### 🔴 발견한 문제 / 개선점 (기존 큐·IDEAS·DESIGN_NOTES 미등록 신규 — 1건)
+
+1. **[일관성·심미·저비용고효과] 폼 컨트롤에 `color-scheme: dark` 미설정 — 필터 select 3종이 네이티브 렌더(`appearance:auto`)라 펼친 옵션 팝업·드롭다운 화살표·페이지 스크롤바가 OS 기본(대개 라이트)으로 떠 다크 테마와 충돌** — 우선순위: 보통(저비용)
+   - 실측(JS computed): `#category-filter`/`#platform-filter`/`#period-filter` 모두 `appearance:auto`·`background-image:none`(커스텀 셰브론 없음), 닫힌 컨트롤만 CSS로 다크(bg `rgb(26,29,36)`)이고 펼친 옵션 리스트·화살표는 네이티브. `html`/`body`/`select` 전부 `color-scheme:normal`, `<meta name="color-scheme">` 없음 → 크롬이 select 팝업·스크롤바를 라이트 스킴으로 렌더(플랫폼별 흰 배경 팝업). 사이트의 나머지 컨트롤(뷰토글/칩/버튼)은 완전 커스텀 다크라 select 펼칠 때만 라이트로 튀어 일관성 깨짐.
+   - 왜 문제: 다크 테마 사이트에서 가장 흔한 인상 저하 포인트(드롭다운 펼치면 흰 팝업·라이트 스크롤바). 색/대비 '결함'은 아니나 '세련된 게임 사이트' 심미·일관성에 직접 영향.
+   - 어떻게(개발자): **1줄 퀵윈** — `:root`(또는 body)에 `color-scheme: dark;` 추가 → 네이티브 select 팝업·스크롤바·폼 컨트롤이 다크 스킴으로 렌더(브라우저 기본 처리, 신규 색 불요). 더 들어가려면 3 select에 `appearance:none`+커스텀 셰브론 `background-image`로 화살표까지 통일(선택). styles.css 1줄(+선택 셰브론), JS 무관, brace 균형 확인.
+
+### ✅ 라이브 재확인 — 기존 TODO 큐/IDEAS (중복 등록 안 함, 픽업 대기)
+- **[큐 #1·높음] 모달 열림 포커스 미이동 — 라이브 재확인 ✅(승격 타당)**: 날짜패널 행 클릭으로 모달 오픈 직후 `document.activeElement`=트리거 `.day-row single-date`(모달 내부 아님). aria-modal/labelledby(H2#modal-title)·overlay `rgba(0,0,0,0.7)`·닫기 ×44px(흰 아이콘/다크원형) 정상. 잔여=열림 포커스 이동+닫힘 트리거 복귀(현 1순위).
+- **[큐 #4] 위시 ☆ 비활성 #666**: 모달 위시버튼 computed `color:rgb(102,102,102)`·30×22px·aria '위시리스트 토글'(게임명 미포함) 라이브 재확인. (대비<3:1 + 터치타겟<44px + 비식별 접근명 — 전부 기존 큐/IDEAS.)
+- **[큐 #5] 헤더 타임스탬프 #555**: '마지막 업데이트: 2026.05.31' computed `color:rgb(85,85,85)`·12.8px 라이브 재확인.
+- **[IDEAS 빈 주 세로점유] 재확인**: 6월은 5주면 충분하나 그리드가 항상 6행 렌더 → 마지막 7/5~7/11 한 행이 통째로 other-month 빈 셀로 세로 점유(기등록 IDEAS, 신규 아님).
+
+### ✅ 코드로/라이브로 확인된 양호 (트집 X)
+콘솔 0·통계 38 일치·가로 오버플로 0, 캘린더 today 파란보더/임박 amber보더/+N 배지/점 색+모양 이중인코딩, dev==pub '개발·퍼블리셔 Square Enix' 1줄 병합, 모달 외부링크 `noopener noreferrer`(출처/트레일러), 뷰토글/칩 aria-pressed·검색 aria-label, 페이드/스크롤락.
+
+### 우선순위 요약
+🔵신규 1(color-scheme:dark 1줄 퀵윈, 보통) → 나머지는 기존 큐 #1>#4>#5 소진 권고.
+
+### 코드 미수정 (문서만). 신규 제안 1 / IDEAS 1 / 재검증 다수.
+
+---
+
 ## [2026-05-31 10:03] [디자이너] — 라이브 실측(Chrome 데스크톱 1440 + 배포소스/repo 교차검증, 콘솔 0): 직전 출고 'dev==pub 1줄 병합' 라이브 확정 ✅ + **큐 항목 1건 이미 완료 상태 정정**(모달 aria-modal+접근명) + 신규 a11y 2건(모달 열림 포커스 미이동·위시 ☆ 비활성 대비)
 
 실측: https://gcalen.com/ Chrome 데스크톱(1440), 캘린더(6월·today 5/31 파란보더 42셀)·리스트·상세모달 전 표면 + 배포 script.js/styles.css·repo index.html 교차 grep, 콘솔 에러 0·가로 오버플로 0(docScrollW=clientW=1905). 모바일 ≤480은 이번에도 resize_window 실렌더 미반영(innerWidth 1920 고정)→소스/CSSOM 갈음(직전 사이클 동일 제약).
