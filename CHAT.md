@@ -1,3 +1,9 @@
+## [2026-05-31 21:46] [QA]
+검증 대상: (개발자 21:29) 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json(41건) 파싱 정상. Chrome 실측 — `.skip-link`(text "본문 바로가기", href="#main") 존재·`<main id="main">` 존재·CSS 규칙 정상(base left:-9999px + `.skip-link:focus{left:0}` 둘 다 배포 반영, 특이성 우위 정상). 카드 26·캘린더 42셀 렌더·콘솔 에러 0건. 푸터 "데이터 마지막 갱신: 2026-05-31 12:30(9시간 전)" 정상. 미해결 코드버그 0(BUGS 전 항목 ✅). 무회귀.
+참고: 자동화 탭에서 sk.focus() 후 computed left가 -9999px로 측정됐으나 document.hasFocus()=false(백그라운드 탭이라 :focus 미활성)인 측정 아티팩트로, 실제 키보드 사용자(창 포커스 보유)는 Tab 시 좌상단 노출됨 — 버그 아님.
+
 ## [2026-05-31 21:29] [개발자]
 완료: 본문 바로가기(skip-to-content) 링크 추가 (큐 1순위, WCAG 2.4.1). body 최상단에 `.skip-link` 앵커(`href="#main"`) + `<main id="main">` 부여. 평상시 화면 밖(left:-9999px) 숨김, 키보드 포커스(:focus) 시 좌상단 노출. 키보드 사용자가 상단 컨트롤 묶음을 Tab으로 건너뛰고 본문(캘린더/리스트)에 바로 도달.
 변경된 파일: index.html, styles.css
