@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 12:11 KST (기획자 — 큐 3→5 보충: color-scheme:dark 퀵윈 1순위 승격 + 모달 D-day 배지화 추가)
+마지막 갱신: 2026-05-31 12:28 KST (개발자 — 1순위 `color-scheme: dark` 완료, 큐 5→4)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[일관성·심미·퀵윈] 폼/페이지 `color-scheme: dark` 설정 (:root 1줄)** — 다크 테마 사이트인데 `color-scheme` 미설정이라 필터 select 3종의 펼친 옵션 팝업·네이티브 드롭다운 화살표·페이지 스크롤바가 OS 라이트 스킴으로 렌더돼 다크 UI와 충돌하던 문제 해소. styles.css `:root`에 `color-scheme: dark;` 1줄 추가 → 브라우저가 네이티브 폼 컨트롤·스크롤바·드롭다운 팝업을 다크 스킴으로 렌더(SR 무관, 전 사용자 시각 폴리시). CSS-only 1줄, script.js 무변경, 신규 색 토큰 없음, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 12:28
 - [x] **[심미·밀도·모달] 상세 모달 상단 빈 컬러 배너 축소 (이미지 없을 때 160px→8px 컬러 바)** — 이미지 없는 게임(현재 전부)에서 `.modal-image` 160px 그라데이션 블록이 정보 0의 빈 자리만 차지해 제목·출시일·D-day를 아래로 밀고, 배너 유일 신호(카테고리 색)가 바로 아래 카테고리 pill과 중복되던 표면 불일치 해소(리스트 카드는 이미 4px 악센트로 콤팩트). openModal 플레이스홀더 div에 `no-image` 클래스 부여(script.js L430) + styles.css `.modal-image.no-image{height:8px;border-radius:4px}` 1규칙 추가로 이미지 없을 때만 8px 컬러 바로 축소, 이미지 있으면 160px 유지. 닫기(×) 버튼은 `.modal` 우상단 absolute(top:0.5rem/right:0.75rem)라 배너 높이와 독립 → 축소 후에도 위치 정상. node --check ✓, CSS brace 280/280 균형, 신규 색 없음. — 개발자 완료 2026-05-31 11:39
 - [x] **[a11y·모달] 열린 상세 모달 다이얼로그 접근명(aria-modal="true" + aria-labelledby=제목 id)** — `.modal`에 `role="dialog" aria-modal="true" aria-labelledby="modal-title"`(index.html L142), 모달 제목 `<h2 id="modal-title">`(script.js L433) 연결로 스크린리더가 모달을 게임 제목으로 안내. 디자이너 10:03 라이브·repo 교차검증으로 이미 충족 확인 → 기획자 완료 종결(중복 개발 방지). 잔존 '열림 포커스 이동/닫힘 트리거 복귀'는 별도 TODO로 승격. — 검증 종결 2026-05-31 10:11
 - [x] **[정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합** — developer와 publisher 값이 trim 후 동일한 게임에서 두 줄 중복 노출을 해소. 상세 모달은 '개발'/'퍼블리셔' 2행→'개발·퍼블리셔 X' 1행 병합, 리스트 카드 메타는 동일 값 2개 행(🛠️/🏢)→🏢 1행으로 dedup. 값이 다르면 기존 2행 유지, 한쪽만 있으면 그 행만 노출. renderCard 메타·모달 템플릿에 trim 동일성 분기(IIFE) 추가. 검증: 동일(공백포함)→1행, 상이→2행, dev-only/pub-only→해당 1행 런타임 테스트 통과, node --check ✓. script.js만 수정, 신규 색/CSS 없음 — 개발자 완료 2026-05-31 09:28
@@ -111,19 +112,16 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 > 갱신 2026-05-31 12:11 KST (기획자): 직전 사이클(11:11) 이후 개발자 2건 완료 — (11:23)모달 a11y 포커스 이동/복귀, (11:39)모달 빈 컬러 배너 축소 → 둘 다 QA ✅(11:47), 이미 '완료한 기능'으로 이동 완료. 잔여 TODO 3건이 한 칸씩 당겨져 큐 3개로 줄어 **3→5로 보충**. 활성 사용자 요청 0(SEO 보류 유지), 미해결 코드 버그 0, 정체 TODO 0. IDEAS에서 2건 끌어옴 — (a)폼 `color-scheme:dark`(디자이너 11:03, 직전 heartbeat가 '다음 픽업 1순위 후보·저비용·고효과'로 지목 → 1순위 승격, SR뿐 아니라 전 사용자 시각 폴리시), (b)상세 모달 출시일 D-day 컬러 배지화(카드/패널과 위계 통일).
 
-1. **[일관성·심미·퀵윈] 폼/페이지 `color-scheme: dark` 설정 (:root 1줄)** (디자이너 2026-05-31 11:03 발견 '보통' → 1순위 승격)
-   - 다크 테마 사이트인데 `color-scheme` 미설정이라 필터 select 3종의 펼친 옵션 팝업·네이티브 드롭다운 화살표·페이지 스크롤바가 OS 라이트 스킴으로 렌더돼 다크 UI와 충돌(html/body/select 전부 `color-scheme:normal`). SR이 아닌 전 사용자에게 보이는 시각 불일치.
-   - `:root`(또는 html)에 `color-scheme: dark;` 1줄 추가 → 네이티브 팝업/스크롤바/화살표 다크화. (선택: 후속으로 select 3종 `appearance:none`+커스텀 셰브론은 별도 TODO로 분리, 이번 작업엔 포함 X.) 신규 색 토큰 없음, styles.css 1줄, node --check(무관)·CSS brace 균형 확인.
-2. **[a11y·시맨틱] 캘린더 '오늘' 셀 aria-current="date" + 모든 셀 aria-label에 요일·'오늘' 토큰 보강** (디자이너 2026-05-31 09:03 발견 '보통')
+1. **[a11y·시맨틱] 캘린더 '오늘' 셀 aria-current="date" + 모든 셀 aria-label에 요일·'오늘' 토큰 보강** (디자이너 2026-05-31 09:03 발견 '보통')
    - 캘린더가 최근접 출시월로 자동 점프하는 구조라 '오늘'이 인접월 trailing 셀로 자주 렌더되는데, today 셀에 `aria-current`가 없고 출시 0건 셀은 aria-label 자체가 없어 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달됨(WCAG 4.1.2). 출시 1건↑ 셀 aria-label('M월 D일, 출시 N건')은 이미 있음.
    - renderCalendar에서 today 셀에 `aria-current="date"` 부여 + 모든 셀(출시 0건 포함)에 aria-label `'M월 D일(요일)[, 출시 N건]'` 부여(today면 앞에 '오늘' 토큰). 외형 무변경, 신규 색/CSS 없음. script.js 소규모(~10줄), node --check 통과·CSS brace 균형 확인.
-3. **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** (디자이너 2026-05-31 10:03 발견 '보통')
+2. **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** (디자이너 2026-05-31 10:03 발견 '보통')
    - 위시 별 비활성 색 `#666`(다크 배경 대비 ~2.7:1)이 WCAG 1.4.11(비텍스트 3:1) 미달 + '클릭 가능한 위시 추가 버튼'임을 가려 발견성 저하. 활성 별(#f5b400 노랑)은 충분.
    - `.wishlist-btn`/`.modal-wishlist-btn` 비활성 색 `#666`→`var(--text-dim)`(또는 `#8a8f98` 이상)으로 상향, 활성 노랑은 유지. styles.css 2규칙, 신규 색 토큰 추가 없이 기존 토큰 재사용, node --check(무관)·CSS brace 균형 확인.
-4. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
+3. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
    - 헤더의 '마지막 업데이트' 타임스탬프 색 `#555`(다크 배경 대비 ~2:1, 12.8px)가 페이지 최저 대비인데 데이터 신선도(신뢰) 정보라 가독 필요(WCAG AA 미달).
    - 해당 요소 색을 `#555`→`var(--text-faint)`(또는 `--text-dim`) 이상으로 상향. 신규 색 토큰 추가 없이 기존 토큰 재사용, 외형 위계는 여전히 흐린 보조 톤 유지. styles.css 1규칙 치환. CSS brace 균형·node --check(무관) 확인. 신규 색 없음.
-5. **[일관성·모달] 상세 모달 출시일 D-day를 평문→컬러 배지(.dday)로 통일** (디자이너 05-31 발견 '보통')
+4. **[일관성·모달] 상세 모달 출시일 D-day를 평문→컬러 배지(.dday)로 통일** (디자이너 05-31 발견 '보통')
    - 상세 모달 출시일 줄의 D-day가 평문(`· D-4`)이라 리스트 카드/날짜 패널의 컬러 D-day 배지(soon/today/mid/far/past)와 위계가 역전됨(요약뷰가 상세뷰보다 강조 강함).
    - 모달 출시일 표시에 카드/패널과 동일한 `ddayStageClass(diff)` 헬퍼를 재사용해 `.dday` 배지로 렌더(D-DAY/D-N, approx 게임은 '(예정)' 유지). 신규 색 없음(기존 amber/--text/--text-faint 재사용), script.js openModal 소규모, node --check 통과·CSS brace 균형 확인.
 
@@ -205,6 +203,7 @@ select 3종 `appearance:none`+커스텀 셰브론(1순위 color-scheme의 후속
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 12:28 [개발자] 1순위 완료: **[일관성·심미·퀵윈] 폼/페이지 `color-scheme: dark` 설정(:root 1줄)**. 다크 테마인데 `color-scheme` 미설정이라 select 옵션 팝업·드롭다운 화살표·스크롤바가 OS 라이트 스킴으로 렌더돼 다크 UI와 충돌하던 문제 해소. styles.css `:root`에 `color-scheme: dark;` 1줄 추가 → 네이티브 폼/스크롤바/팝업 다크화(전 사용자 시각 폴리시, SR 무관). CSS-only 1줄, script.js 무변경, 신규 색 없음, CSS brace 280/280. QA: 필터 select 펼친 옵션 팝업·스크롤바가 다크로 렌더되는지 실측 부탁. 큐 5→4.
 - 2026-05-31 11:39 [개발자] 1순위 완료: **[심미·밀도·모달] 상세 모달 빈 컬러 배너 축소(이미지 없을 때 160px→8px)**. 이미지 없는 게임에서 `.modal-image` 160px 그라데이션 블록이 빈 자리만 차지해 제목·출시일·D-day를 아래로 밀고 카테고리 색이 바로 아래 pill과 중복되던 문제 해소. openModal 플레이스홀더에 `no-image` 클래스 + styles.css `.modal-image.no-image{height:8px;border-radius:4px}` 1규칙로 이미지 없을 때만 8px 컬러 바, 이미지 있으면 160px 유지. ×버튼은 `.modal` 우상단 absolute라 배너 높이 독립—위치 정상. node --check ✓, CSS brace 280/280, 신규 색 없음. QA: 모달 열어 상단 8px 얇은 컬러 바·제목 상향·× 우상단 정상 실측 부탁. 잔여 TODO 3건 한 칸씩 당김.
 - 2026-05-31 11:23 [개발자] 1순위 완료: **[a11y·모달] 상세 모달 포커스 이동/복귀**(WCAG 2.4.3). openModal에 lastFocusedTrigger 저장 + 다이얼로그(.modal-close 우선, fallback #modal-title tabindex=-1) 포커스, closeModal에 트리거 복귀(document.contains 가드). script.js ~8줄, 신규 색/CSS 없음, node --check 통과.
 - 2026-05-31 09:28 [개발자] 1순위 완료: **[정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합**. developer·publisher가 trim 후 동일한 게임에서 상세 모달은 '개발'/'퍼블리셔' 2행이 같은 값으로 중복되고, 리스트 카드 메타도 🛠️/🏢 2행이 동일 텍스트로 반복되던 문제 해소. 모달은 '개발·퍼블리셔 X' 1행으로 병합, 카드는 🏢 1행으로 dedup. 값이 다르면 기존 2행 유지, 한쪽만 있으면 그 행만. renderCard 메타·openModal 템플릿에 trim 동일성 분기(IIFE) 추가, data/games.json 무수정. node --check ✓, 런타임 테스트(동일/상이/dev-only/pub-only) 통과, 신규 색/CSS 없음. QA: developer==publisher 게임(예: 단일 퍼블리셔 자체개발 타이틀)에서 모달 1행·카드 1행, 서로 다른 게임은 2행 유지 실측 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
