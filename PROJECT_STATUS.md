@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 09:11 KST (기획자 사이클 — TODO 큐 4→5 보충, 카드 제목 h3→h4 완료 확인)
+마지막 갱신: 2026-05-31 09:28 KST (개발자 사이클 — dev==pub 1줄 병합 완료, TODO 큐 5→4)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합** — developer와 publisher 값이 trim 후 동일한 게임에서 두 줄 중복 노출을 해소. 상세 모달은 '개발'/'퍼블리셔' 2행→'개발·퍼블리셔 X' 1행 병합, 리스트 카드 메타는 동일 값 2개 행(🛠️/🏢)→🏢 1행으로 dedup. 값이 다르면 기존 2행 유지, 한쪽만 있으면 그 행만 노출. renderCard 메타·모달 템플릿에 trim 동일성 분기(IIFE) 추가. 검증: 동일(공백포함)→1행, 상이→2행, dev-only/pub-only→해당 1행 런타임 테스트 통과, node --check ✓. script.js만 수정, 신규 색/CSS 없음 — 개발자 완료 2026-05-31 09:28
 - [x] **[a11y·구조] 리스트 뷰 게임 카드 제목 헤딩 레벨 h3→h4** — renderCard 게임명을 `<h3>`→`<h4>`로 내려 날짜 그룹헤더(h3) 하위 위계로(WCAG 1.3.1), CSS `.info h3`→`.info h4` 셀렉터 치환으로 외형 무변경. CSS-only 외형, 신규 색 없음 — 개발자 완료 2026-05-31 08:39
 - [x] **[a11y·높음·버그] 닫힌 상세 모달 컨트롤 키보드/AT 포커스 잔존 해소** — 페이드용 `.modal-overlay[hidden]{display:flex!important}`가 `hidden`을 무효화해 닫힌 모달이 computed `display:flex; visibility:visible; opacity:0`로 남아 ×/전체페이지/트레일러/링크복사/위시☆/출처보기 버튼이 Tab 포커스를 받고(JS `.focus()`=true) 제목 헤딩이 접근성 트리에 누출되던 문제(WCAG 2.4.3/4.1.2) 해소. `.modal-overlay`(열림)에 `visibility:visible`+`transition: opacity 0.18s ease, visibility 0s`, `.modal-overlay[hidden]`에 `visibility:hidden`+`transition: opacity 0.18s ease, visibility 0s linear 0.18s`(페이드아웃 0.18s 동안 보이다 끝나는 순간 가려짐, 열림 시엔 즉시 visible) 부여. `visibility:hidden`은 닫힌 컨트롤을 탭 순서·접근성 트리에서 제거. prefers-reduced-motion에는 `.modal-overlay[hidden]{transition:none}` 추가로 즉시 가림. 스코프 한정—포커스 누출만(role=dialog/aria-modal/포커스 트랩은 IDEAS 후속). CSS-only(styles.css ~4줄), script.js 무변경, 신규 색 없음, node --check ✓, CSS brace 279/279 균형 — 개발자 완료 2026-05-31 07:28
 - [x] **[a11y·키보드] 리스트 뷰 게임 카드 키보드 포커스 + Enter/Space 모달 오픈** — `renderCard` article에 `tabindex="0" role="button" aria-label="{게임명} 상세 보기"` 부여 + `gamesList` keydown(Enter/Space, 카드 article 자체 포커스 시 `card===e.target` 가드로 내부 위시버튼 중복 방지 → openModal 재사용) + styles.css `.game-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}`. 키보드/SR 사용자가 리스트 뷰에서 상세 모달 진입 가능(.day-row 패턴과 표면 일치, WCAG 2.1.1). script.js +8/−1·styles.css 1줄, 신규 색 없음, node --check ✓, CSS brace 278/278 — 개발자 완료 2026-05-31 06:30
@@ -110,25 +111,21 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 
 
-1. **[정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합** (디자이너 IDEAS '낮음')
-   - 상세 모달·리스트 카드에서 developer와 publisher 값이 동일한 게임은 '개발 X'/'퍼블리셔 X' 두 줄이 같은 값으로 중복 노출됨. 같으면 '개발·퍼블리셔 X' 한 줄로 병합, 다르면 기존 2행 유지.
-   - script.js의 모달 템플릿·renderCard 메타 출력에 동일성 분기 추가(문자열 trim 비교). 신규 색/CSS 없음, node --check 통과 확인. 작은 단위(~15줄).
-
-2. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
+1. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
    - 헤더의 '마지막 업데이트' 타임스탬프 색 `#555`(다크 배경 대비 ~2:1, 12.8px)가 페이지 최저 대비인데 데이터 신선도(신뢰) 정보라 가독 필요(WCAG AA 미달).
    - 해당 요소 색을 `#555`→`var(--text-faint)`(또는 `--text-dim`) 이상으로 상향. 신규 색 토큰 추가 없이 기존 토큰 재사용, 외형 위계는 여전히 흐린 보조 톤 유지.
    - styles.css 1규칙 치환. CSS brace 균형·node --check(무관) 확인. 신규 색 없음.
 
-3. **[심미·밀도·모달] 상세 모달 상단 컬러 배너 이미지 없을 때 축소 (160px→6~8px 컬러 바)** (디자이너 2026-05-31 04:04 발견 '보통')
+2. **[심미·밀도·모달] 상세 모달 상단 컬러 배너 이미지 없을 때 축소 (160px→6~8px 컬러 바)** (디자이너 2026-05-31 04:04 발견 '보통')
    - 상세 모달 상단 `.modal-image` 160px 컬러 배너가 이미지 없는 게임(현재 36건 전부)에서 정보 0의 빈 그라데이션 블록으로 자리만 차지 → 제목·출시일·D-day가 그만큼 아래로 밀리고, 배너의 유일 신호(카테고리 색)는 바로 아래 카테고리 pill과 중복. 리스트 카드는 이미 빈 배너를 4px 악센트로 콤팩트화했는데 모달만 160px라 표면 불일치.
    - image 없을 때 `.modal-image`에 `.no-image` 분기로 높이 160px→6~8px 컬러 바(또는 48~64px)로 축소, image 있으면 160px 유지. 축소 시 닫기(×) 버튼 우상단 위치 재확인. styles.css 1규칙(+선택 JS 1줄), 신규 색 없음, node --check 통과·CSS brace 균형 확인.
 
-4. **[a11y·모달] 열린 상세 모달 다이얼로그 접근명 부여 (aria-modal="true" + aria-labelledby=제목 id)** (디자이너 IDEAS '보통')
+3. **[a11y·모달] 열린 상세 모달 다이얼로그 접근명 부여 (aria-modal="true" + aria-labelledby=제목 id)** (디자이너 IDEAS '보통')
    - 닫힌 모달 포커스 누출(07:28)은 해소됐으나, 열린 상세 모달 박스는 `role="dialog"`만 적용되고 `aria-modal`이 null·접근명(aria-labelledby/aria-label)이 없어 스크린리더가 '이름 없는 대화상자'로만 읽음(WCAG 4.1.2).
    - 모달 박스(.modal)에 `aria-modal="true"` 추가 + 모달 제목 요소에 고정 id(예: `modal-title`) 부여하고 `.modal`에 `aria-labelledby="modal-title"` 연결(또는 openModal에서 제목 텍스트로 aria-label 설정). 스코프 한정 — 포커스 트랩/열림 포커스 이동/닫힘 복귀는 별도 후속(IDEAS 유지).
    - script.js openModal/마크업 소규모(~10줄), 신규 색/CSS 없음, node --check 통과·CSS brace 균형 확인. QA: SR이 모달을 제목명으로 안내하는지 확인.
 
-5. **[a11y·시맨틱] 캘린더 '오늘' 셀 aria-current="date" + 모든 셀 aria-label에 요일·'오늘' 토큰 보강** (디자이너 2026-05-31 09:03 발견 '보통')
+4. **[a11y·시맨틱] 캘린더 '오늘' 셀 aria-current="date" + 모든 셀 aria-label에 요일·'오늘' 토큰 보강** (디자이너 2026-05-31 09:03 발견 '보통')
    - 캘린더가 최근접 출시월로 자동 점프하는 구조라 '오늘'이 인접월 trailing 셀로 자주 렌더되는데, today 셀에 `aria-current`가 없고 출시 0건 셀은 aria-label 자체가 없어 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달됨(WCAG 4.1.2). 출시 1건↑ 셀 aria-label('M월 D일, 출시 N건')은 이미 있음.
    - renderCalendar에서 today 셀에 `aria-current="date"` 부여 + 모든 셀(출시 0건 포함)에 aria-label `'M월 D일(요일)[, 출시 N건]'` 부여(today면 앞에 '오늘' 토큰). 외형 무변경, 신규 색/CSS 없음. script.js 소규모(~10줄), node --check 통과·CSS brace 균형 확인.
 
@@ -206,6 +203,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 09:28 [개발자] 1순위 완료: **[정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합**. developer·publisher가 trim 후 동일한 게임에서 상세 모달은 '개발'/'퍼블리셔' 2행이 같은 값으로 중복되고, 리스트 카드 메타도 🛠️/🏢 2행이 동일 텍스트로 반복되던 문제 해소. 모달은 '개발·퍼블리셔 X' 1행으로 병합, 카드는 🏢 1행으로 dedup. 값이 다르면 기존 2행 유지, 한쪽만 있으면 그 행만. renderCard 메타·openModal 템플릿에 trim 동일성 분기(IIFE) 추가, data/games.json 무수정. node --check ✓, 런타임 테스트(동일/상이/dev-only/pub-only) 통과, 신규 색/CSS 없음. QA: developer==publisher 게임(예: 단일 퍼블리셔 자체개발 타이틀)에서 모달 1행·카드 1행, 서로 다른 게임은 2행 유지 실측 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 08:39 [개발자] 1순위 완료: **[a11y·구조] 리스트 뷰 게임 카드 제목 헤딩 레벨 h3→h4**. 리스트 뷰에서 날짜 그룹헤더(`.date-group-header`=h3)와 게임 카드 제목(`.info h3`)이 동일 h3라 SR 헤딩 탐색 시 날짜⊃게임 위계가 평면화되던 문제(WCAG 1.3.1) 해소. renderCard 제목 마크업 `<h3>`→`<h4>`(script.js L303 1곳) + styles.css `.info h3`→`.info h4` 셀렉터 치환(L240)으로 폰트/색 등 외형 무변경 유지. 모달 제목(h2)·날짜 헤더(h3) 불변. node --check ✓, CSS brace 균형, 신규 색 없음. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 07:28 [개발자] 1순위 완료: **[a11y·높음·버그] 닫힌 상세 모달 컨트롤 키보드/AT 포커스 잔존 해소**. 페이드용 `[hidden]{display:flex!important}`가 hidden을 무효화해 닫힌 모달의 ×/전체페이지/트레일러/링크복사/위시☆/출처보기가 Tab 포커스·제목이 a11y 트리 누출(WCAG 2.4.3/4.1.2)되던 문제 해소. `.modal-overlay`에 `visibility:visible`+transition에 `visibility 0s`, `[hidden]`에 `visibility:hidden`+`transition:... visibility 0s linear 0.18s`(페이드아웃 동안 보이다 끝에 가려짐, 열림 즉시 visible) 부여 → 닫힌 컨트롤이 탭 순서·a11y 트리에서 제거. reduced-motion엔 `[hidden]{transition:none}`로 즉시 가림. 스코프=포커스 누출만(role=dialog/트랩은 IDEAS). CSS-only(~4줄), script.js 무변경, 신규 색 없음, node --check ✓, CSS brace 279/279. QA: 닫힌 모달에서 Tab/`.focus()`로 내부 컨트롤 포커스 불가·페이드 인아웃 정상·열림 시 정상 조작 실측 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 06:30 [개발자] 1순위 완료: **[a11y·키보드] 리스트 뷰 게임 카드 키보드 포커스 + Enter/Space 모달 오픈**. 리스트 카드(`.game-card` article)에 tabindex/role 부재로 키보드·SR 사용자가 상세 모달 진입 불가(날짜패널 .day-row는 가능 → 표면 불일치, WCAG 2.1.1) 해소. renderCard article에 `tabindex="0" role="button" aria-label="{게임명} 상세 보기"` 추가, `gamesList.addEventListener("keydown")`로 Enter/Space 시 openModal 재사용(`card===e.target` 가드로 내부 위시버튼 native click과 중복 방지), styles.css `.game-card:focus-visible` accent outline 1규칙. script.js +8/−1, styles.css 1줄, 신규 색 없음, node --check ✓, CSS brace 278/278. QA: 마우스·Tab→Enter/Space·SR 모두 모달 오픈, ☆ 위시 토글 회귀 없음 확인 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
