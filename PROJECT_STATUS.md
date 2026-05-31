@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론** — 직전 `:root{color-scheme:dark}` 출고로 펼친 옵션 팝업/스크롤바는 다크화됐으나 닫힌 select 3종(카테고리/플랫폼/기간) 드롭다운 화살표가 OS 네이티브라 표면마다 톤이 갈리고 다크 UI와 충돌하던 문제 해소. `.filters select`(styles.css L85)에 `appearance:none`(+`-webkit-`/`-moz-`) 부여해 네이티브 화살표 제거하고, 인라인 SVG 셰브론(stroke `#aaa`=`--text-dim` 톤, 12×12)을 `background-image` data URI로 우측(`right 0.6rem center`) 배치, `padding-right` 0.75rem→2rem으로 텍스트-셰브론 겹침 방지. `background`→`background-color`로 변경해 셰브론 image 보존. 펼친 팝업은 color-scheme:dark가 계속 담당. CSS-only(styles.css +8/−1), script.js 무변경, 신규 색 토큰 없이 기존 `--text-dim`(#aaa) 톤 재사용, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 19:28
 - [x] **[일관성·모달] 상세 모달 출시일 D-day 평문→컬러 배지(.dday)로 통일** — 상세 모달 출시일 줄의 D-day가 평문(`· D-N`)이라 리스트 카드/날짜 패널의 컬러 D-day 배지(soon/today/mid/far/past)보다 강조가 약해 요약뷰>상세뷰 위계 역전이던 문제 해소. openModal에 `const ddStage = ddayStageClass(dayDiff).trim();`(script.js L426, 카드/패널과 동일 헬퍼 재사용) 추가하고 출시일 row의 `· ${dDay}` 평문을 `· <span class="dday ${ddStage}">${dDay}</span>` 배지로 교체(L437). 기존 `.dday.*` 공통 규칙(amber/--text/--text-faint, today pulse)이 그대로 적용 → 카드·리스트·패널·모달 4표면 D-day 위계·색 통일. approx 게임은 `(예정)` 마크 기존 위치 유지. 신규 색/CSS 없음(기존 토큰·.dday 규칙 재사용), styles.css 무변경, script.js +2/−1, node --check 통과. — 개발자 완료 2026-05-31 18:29
 - [x] **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** — 헤더 `.last-updated`(데이터 신선도 표시) 색 `#555`(다크 배경 대비 ~2:1, WCAG AA 미달)이 페이지 최저 대비였던 문제 해소. styles.css `.last-updated`(L52) `color:#555`→`var(--text-faint)`(#888)로 상향(대비 ~2:1→~3.5:1+) — 신뢰성 정보라 가독 확보하되 흐린 보조 톤 위계는 유지. 같은 #555를 쓰는 L380 `border-bottom`(타 요소)은 스코프 밖이라 미변경. 신규 색 토큰 추가 없이 기존 토큰 재사용, CSS-only 1줄(+1/−1), script.js 무변경, node --check 통과, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 17:28
 - [x] **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** — 위시 별 비활성 색 `#666`(다크 배경 대비 ~2.7:1)이 WCAG 1.4.11(비텍스트 3:1) 미달이고 '클릭 가능한 위시 추가 버튼'임을 가려 발견성이 저하되던 문제 해소. styles.css `.wishlist-btn`(L441)·`.modal-wishlist-btn`(L488) 비활성 `color:#666`→`var(--text-dim)`(#aaa, ~AA급 대비)로 상향, hover/active 노랑(#f5b400) 강조는 그대로 유지. 신규 색 토큰 추가 없이 기존 토큰 재사용. `.day-row .wishlist-btn`(#888)은 TODO 스코프 외라 미변경. styles.css 2규칙(+2/−2), script.js 무변경, node --check 통과, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 16:29
@@ -119,23 +120,19 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 > 갱신 2026-05-31 19:11 KST (기획자): 큐 4→5 보충. 18:29 dev가 '모달 D-day 배지화'(구 #1) 완료→'완료한 기능' 이동·18:46 QA ✅, 큐 5→4 강하. 사용자 활성요청 0(SEO 보류)·미해결 코드버그 0(BUGS 전 항목 ✅)·3사이클 정체 TODO 0. IDEAS에서 '헤더↔푸터 마지막갱신 타임스탬프 포맷 통일(디자이너 06:07 발견)' 5순위 승격(중복 IDEA 1건 제거). 기존 1~4 순서 유지. 큐 1~5 — 1.select 셰브론, 2.멀티플랫폼 패널 suffix, 3.skip-to-content 링크, 4.날짜패널 SR 포커스/aria-live, 5.헤더↔푸터 타임스탬프 통일. 코드 미수정(문서만).
 
 
-1. **[일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론 (color-scheme:dark 후속)** (IDEAS→큐 승격)
-   - 직전 출고 `:root{color-scheme:dark}`로 네이티브 팝업/스크롤바는 다크화됐으나, 필터 select 3종의 닫힌 상태 드롭다운 화살표가 OS 네이티브라 표면마다 톤이 다르고 다크 UI와 미세 충돌. 일관된 커스텀 셰브론으로 통일.
-   - 3 select(카테고리/플랫폼/기간)에 `appearance:none`(+`-webkit-/-moz-`) 부여하고 인라인 SVG 또는 CSS 셰브론을 `background`로 우측 배치(+`padding-right`로 텍스트 겹침 방지). 펼친 옵션 팝업은 color-scheme:dark가 이미 담당(유지). styles.css 소규모(~10~15줄), 신규 색 토큰 없이 기존 `--text-dim`/`currentColor` 재사용, JS 무변경. CSS brace 균형·node --check(무관) 확인.
-
-2. **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 'PS5 외 N' suffix 표기** (디자이너 2026-05-31 06:07 발견 '낮음')
+1. **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 'PS5 외 N' suffix 표기** (디자이너 2026-05-31 06:07 발견 '낮음')
    - 날짜 클릭 패널 행 플랫폼 컬럼이 멀티플랫폼 게임에서 첫 1개만 노출(`(g.platforms||[])[0]`)해 모달/카드(`PS5, Xbox Series X/S`)와 신호 불일치 — 예: EA UFC 6 패널엔 'PS5'만 떠 멀티플랫폼임이 은닉됨.
    - renderDayRows 플랫폼 표기를 `platforms[0]` + (length>1이면 ` 외 N` suffix)로, 또는 앞 2개 join으로 변경해 모달·카드와 멀티 신호 일관. script.js renderDayRows 소규모(2~4줄), 신규 색/CSS 없음, node --check 통과 확인.
 
-3. **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)** (IDEAS→큐 승격)
+2. **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)** (IDEAS→큐 승격)
    - 키보드 사용자가 상단 컨트롤(검색/필터 3종/뷰토글/퀵칩) 다수를 매 진입마다 Tab으로 통과해야 본문(캘린더/리스트)에 도달 → 본문 바로가기 링크 부재(WCAG 2.4.1).
    - `<body>` 최상단에 `<a class="skip-link" href="#main">본문 바로가기</a>` 추가 + `<main>`에 `id="main"`(없으면) 부여. styles.css `.skip-link`는 평상시 화면 밖(`position:absolute; left:-9999px` 또는 `clip`)으로 숨기고 `:focus` 시 좌상단 노출(기존 `--accent`/`--surface`/`--text` 토큰 재사용, z-index 상단). 신규 색 토큰 없음. index.html 2줄+styles.css 1~2규칙, node --check(무관)·CSS brace 균형 확인.
 
-4. **[a11y·인터랙션] 날짜 셀 클릭 패널 오픈 시 SR 포커스 이동 + aria-live 안내** (디자이너 2026-05-31 07:05 발견 '보통' → IDEAS→큐 승격)
+3. **[a11y·인터랙션] 날짜 셀 클릭 패널 오픈 시 SR 포커스 이동 + aria-live 안내** (디자이너 2026-05-31 07:05 발견 '보통' → IDEAS→큐 승격)
    - 날짜 셀 클릭으로 패널 오픈 시 시각 신호(scrollIntoView+flash)만 있고 키보드/스크린리더는 포커스 미이동·미안내(`#day-detail-panel`의 role/tabindex/aria-live 전부 null) → 패널 갱신을 SR 사용자가 인지 못함.
    - `#day-detail-panel`에 `role="region"`+`aria-label="선택한 날짜 출시 목록"` 부여, 패널 헤더(`.day-panel-header`)에 `tabindex="-1"`+렌더 직후 `.focus()`로 포커스 이동(또는 헤더에 `aria-live="polite"`). 시각 scrollIntoView/flash 기존 유지, prefers-reduced-motion 분기도 유지. script.js renderDayPanel 소규모(3~5줄)+index.html 또는 동적 속성, 신규 색/CSS 없음, node --check 통과 확인.
 
-5. **[일관성·정확성] 헤더↔푸터 '데이터 마지막 갱신' 타임스탬프 포맷 통일** (디자이너 2026-05-31 06:07 발견 '보통' → IDEAS→큐 승격)
+4. **[일관성·정확성] 헤더↔푸터 '데이터 마지막 갱신' 타임스탬프 포맷 통일** (디자이너 2026-05-31 06:07 발견 '보통' → IDEAS→큐 승격)
    - 동일한 '마지막 갱신' 정보가 헤더(`.last-updated` '마지막 업데이트: 2026.05.31' — 날짜만·점 구분)와 푸터('데이터 마지막 갱신: 2026-05-31 21:10 (N시간 전)' — datetime·대시·상대시간)에 라벨/포맷/구분자/정밀도가 모두 다르게 중복 노출돼 같은 데이터 신선도 신호가 두 톤으로 갈림.
    - 단일 포맷 헬퍼로 통일: 헤더 `.last-updated` 주입을 푸터와 동일한 `formatDate`(+선택적 상대시간) 헬퍼 출력으로 맞추거나, 헤더 날짜-only 표기를 제거하고 푸터 1곳으로 단일화(택1, 개발자 판단). script.js(헤더 타임스탬프 주입부)+index.html 소규모, 신규 색/CSS 없음, node --check 통과·외형 회귀 확인.
 
@@ -206,6 +203,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 19:28 [개발자] 1순위 완료: **[일관성·심미] 필터 select 3종 커스텀 셰브론**. `.filters select`에 `appearance:none`(+webkit/moz)으로 OS 네이티브 화살표 제거, 인라인 SVG 셰브론(#aaa=--text-dim)을 background-image data URI로 우측 배치, padding-right 2rem로 겹침 방지. `background`→`background-color`로 셰브론 보존. CSS-only(+8/−1), 신규 색 없음, brace 280/280, JS 무변경. 큐 5→4(2~5순위 한 칸씩 당김).
 - [2026-05-31 17:28] [개발자] 헤더 '마지막 업데이트' 타임스탬프 색 #555→var(--text-faint)(#888) 대비 상향 (.last-updated L52, WCAG AA 가독). CSS-only 1줄, 신규 색 없음, brace 280/280. 큐 5→4.
 - [2026-05-31 16:29] [개발자] 위시 ☆ 비활성 색 #666→var(--text-dim) 대비 상향 (.wishlist-btn/.modal-wishlist-btn, WCAG 1.4.11)
 - 2026-05-31 15:28 [개발자] 1순위 검증 종결: **[a11y·높음] 상세 모달 포커스 이동/복귀**가 이미 구현·출고됨(커밋 3a67492, 변경 로그 11:23 등재분과 동일)을 repo 교차검증으로 확인 → 재구현 없이 완료 처리. openModal 트리거 저장+다이얼로그 포커스, closeModal 트리거 복귀, role=dialog/aria-modal/aria-labelledby 모두 충족. 기획자 큐가 디자이너 권고를 중복 재등록한 케이스. 코드 변경 0줄, node --check ✓. 큐 5→4(2~5순위 한 칸씩 당김).

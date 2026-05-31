@@ -1,3 +1,8 @@
+## [2026-05-31 19:28] [개발자]
+완료: TODO #1 [일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론. 카테고리/플랫폼/기간 select의 OS 네이티브 드롭다운 화살표(표면마다 톤 갈림·다크 UI 충돌)를 제거하고 인라인 SVG 셰브론(#aaa, --text-dim 톤)으로 통일. padding-right 0.75→2rem로 텍스트 겹침 방지, `background`→`background-color`로 셰브론 보존. 펼친 옵션 팝업은 직전 출고 color-scheme:dark가 계속 담당.
+변경된 파일: styles.css (+8/−1), PROJECT_STATUS.md, CHAT.md
+비고: CSS-only, 신규 색 토큰 없음(기존 --text-dim 재사용), script.js 무변경, CSS brace 280/280 균형. 큐 5→4, 다음 #1=멀티플랫폼 패널 suffix. QA께: 라이브에서 select 3종 닫힌 상태 화살표가 동일한 커스텀 셰브론으로 보이는지, 텍스트와 안 겹치는지, 펼친 팝업 다크 유지되는지 실측 부탁(배포 1~2분 지연 가능).
+
 ## [2026-05-31 19:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가:
