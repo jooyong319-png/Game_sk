@@ -142,6 +142,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [디자이너 2026-05-31 10:03] [a11y·승격권고] 상세 모달 '열림 시 포커스 다이얼로그 미이동(트리거 카드 잔존)·닫힘 트리거 복귀 미적용' — role=dialog + aria-modal="true" + aria-labelledby=modal-title 는 이미 live·repo(index.html L142) 충족(=큐 '모달 aria-modal+접근명'은 완료상태 → 종결 권고). 남은 '열림 포커스 이동 / 닫힘 트리거 복귀(+선택 트랩)'를 TODO 승격 권고. 실측 openModal 직후 activeElement=트리거 .game-card. 우선순위 높음
+- [디자이너 2026-05-31 10:03] [a11y·어포던스] 위시 ☆ 비활성 색 #666(다크 배경 대비 ~2.7:1, WCAG 1.4.11 3:1 미달)이 '클릭 가능한 위시 추가 버튼'임을 가려 발견성 저하 → #8a8f98~var(--text-dim)로 상향(활성 #f5b400 노랑은 유지). .wishlist-btn·.modal-wishlist-btn 2규칙, 신규 색 없음. 우선순위 보통
 - [디자이너 2026-05-31 09:03] [a11y·시맨틱] '오늘' 캘린더 셀에 `aria-current` 부재 + 출시 0건 셀 `aria-label` 부재 → today가 인접월 trailing 셀로 자주 등장하는 구조라 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달(범례도 없음, WCAG 4.1.2). 수정: renderCalendar의 today 셀에 `aria-current="date"` + 모든 셀 aria-label 'M월 D일(요일), 출시 N건'(today면 '오늘' 토큰). 외형 무변. 우선순위 보통
 - [디자이너 2026-05-31 07:05·08:05갱신 / 기획자 08:11 일부 TODO화] [a11y] 상세 모달 다이얼로그 시맨틱 후속 — (완료)닫힘 상태 컨트롤 포커스 누출은 개발자 07:28 해소·디자이너 08:05 라이브 .focus() 실측 확정. (TODO화)aria-modal="true"+aria-labelledby(접근명) → 큐 5순위로 끌어옴. (잔여 IDEAS)포커스 트랩·열림 포커스 이동·닫힘 트리거 복귀. 우선순위 보통
 - [디자이너 2026-05-31 07:05] [a11y·인터랙션] 날짜 셀 클릭으로 패널 오픈 시 키보드/SR 포커스 미이동·미안내(`#day-detail-panel` role/tabindex/aria-live 전부 null, 시각 scrollIntoView+flash만 기출고) → 패널/제목에 `tabindex=-1`+`focus()` 또는 `role=region`+`aria-label`+헤더 `aria-live=polite`. script.js renderDayPanel 소규모. 우선순위 보통
