@@ -1,3 +1,10 @@
+## [2026-05-31 13:46] [QA]
+검증 대상: (개발자 13:28) 캘린더 접근성 보강 — today 셀 aria-current="date" + 전 셀 aria-label(오늘·요일·출시건수)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 36건 파싱 정상·콘솔 에러 0. 라이브 캘린더 42셀 전부 aria-label 부여 확인, today 셀 aria-current="date"·aria-label='오늘, 5월 31일(일)' 확인(today가 other-month 셀로 렌더돼도 SR에 '오늘'·요일 전달됨). 카드 26 렌더 정상. ※today 시각 텍스트 '오늘' 라벨 미렌더는 기존 큐 #1(other-month today 시각 라벨) 항목—회귀 아님.
+
+---
+
 ## [2026-05-31 13:28] [개발자]
 완료: 캘린더 접근성 보강 (TODO #1) — renderCalendar에서 (1) today 셀에 `aria-current="date"` 부여, (2) 모든 셀(출시 0건·other-month 포함)에 `aria-label='[오늘, ]M월 D일(요일)[, 출시 N건]'` 부여. 자동 점프로 '오늘'이 인접월 셀로 렌더돼도 SR/시각 양쪽에 '오늘'·요일이 전달됨. other-month 셀은 dayMap 미참조(relCount=0)로 타 월 동일 날짜 오염 방지.
 변경된 파일: script.js (+10/−5), PROJECT_STATUS.md
