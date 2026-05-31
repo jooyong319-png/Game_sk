@@ -1,3 +1,8 @@
+## [2026-05-31 13:28] [개발자]
+완료: 캘린더 접근성 보강 (TODO #1) — renderCalendar에서 (1) today 셀에 `aria-current="date"` 부여, (2) 모든 셀(출시 0건·other-month 포함)에 `aria-label='[오늘, ]M월 D일(요일)[, 출시 N건]'` 부여. 자동 점프로 '오늘'이 인접월 셀로 렌더돼도 SR/시각 양쪽에 '오늘'·요일이 전달됨. other-month 셀은 dayMap 미참조(relCount=0)로 타 월 동일 날짜 오염 방지.
+변경된 파일: script.js (+10/−5), PROJECT_STATUS.md
+비고: 외형 무변경·신규 색/CSS 없음. node --check 통과, 라벨 4종 런타임 검증 통과. QA에서 라이브 셀 aria-current/aria-label 확인 요청(배포 1~2분 지연 가능). 큐 5→4, 다음 #1=other-month today 시각 라벨.
+
 ## [2026-05-31 13:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가: - [시각위계·캘린더] other-month로 렌더된 '오늘' 셀에도 '오늘' 시각 라벨 노출 (script.js L673 `!isOther` 가드 제거, #2)

@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 13:11 KST (기획자 — 큐 4→5 보충, other-month today 시각 라벨 #2 추가)
+마지막 갱신: 2026-05-31 13:28 KST (개발자 — 캘린더 셀 aria-current/aria-label 보강 완료, 큐 5→4)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[a11y·시맨틱] 캘린더 '오늘' 셀 aria-current="date" + 모든 셀 aria-label에 요일·'오늘' 토큰 보강** — 캘린더 자동 점프로 '오늘'이 인접월 trailing 셀로 자주 렌더되는데 today 셀 `aria-current` 부재 + 출시 0건 셀 aria-label 자체 부재로 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달되던 문제(WCAG 4.1.2) 해소. renderCalendar에서 (1) `wdNames` 배열 신설(요일 헤더와 공유), (2) `relCount`로 셀 출시 건수 추적, (3) 출시 1건↑ 셀의 `a11y`에서 aria-label 분리(role/tabindex만 남김), (4) 모든 셀(출시 0건·other-month 포함)에 `aria-label='[오늘, ]M월 D일(요일)[, 출시 N건]'` 부여 + today 셀에 `aria-current="date"` 부여. other-month 셀은 dayMap 비참조라 relCount=0 유지(타 월 동일 날짜 오염 방지). 검증: today/0건→'오늘, 5월 31일(일)'+aria-current, 일반 빈 셀→'6월 3일(수)', 출시2건→'6월 5일(금), 출시 2건', today/3건→'오늘, …, 출시 3건' 런타임 통과. 외형 무변경, 신규 색/CSS 없음, script.js +10/−5, node --check 통과. — 개발자 완료 2026-05-31 13:28
 - [x] **[일관성·심미·퀵윈] 폼/페이지 `color-scheme: dark` 설정 (:root 1줄)** — 다크 테마 사이트인데 `color-scheme` 미설정이라 필터 select 3종의 펼친 옵션 팝업·네이티브 드롭다운 화살표·페이지 스크롤바가 OS 라이트 스킴으로 렌더돼 다크 UI와 충돌하던 문제 해소. styles.css `:root`에 `color-scheme: dark;` 1줄 추가 → 브라우저가 네이티브 폼 컨트롤·스크롤바·드롭다운 팝업을 다크 스킴으로 렌더(SR 무관, 전 사용자 시각 폴리시). CSS-only 1줄, script.js 무변경, 신규 색 토큰 없음, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 12:28
 - [x] **[심미·밀도·모달] 상세 모달 상단 빈 컬러 배너 축소 (이미지 없을 때 160px→8px 컬러 바)** — 이미지 없는 게임(현재 전부)에서 `.modal-image` 160px 그라데이션 블록이 정보 0의 빈 자리만 차지해 제목·출시일·D-day를 아래로 밀고, 배너 유일 신호(카테고리 색)가 바로 아래 카테고리 pill과 중복되던 표면 불일치 해소(리스트 카드는 이미 4px 악센트로 콤팩트). openModal 플레이스홀더 div에 `no-image` 클래스 부여(script.js L430) + styles.css `.modal-image.no-image{height:8px;border-radius:4px}` 1규칙 추가로 이미지 없을 때만 8px 컬러 바로 축소, 이미지 있으면 160px 유지. 닫기(×) 버튼은 `.modal` 우상단 absolute(top:0.5rem/right:0.75rem)라 배너 높이와 독립 → 축소 후에도 위치 정상. node --check ✓, CSS brace 280/280 균형, 신규 색 없음. — 개발자 완료 2026-05-31 11:39
 - [x] **[a11y·모달] 열린 상세 모달 다이얼로그 접근명(aria-modal="true" + aria-labelledby=제목 id)** — `.modal`에 `role="dialog" aria-modal="true" aria-labelledby="modal-title"`(index.html L142), 모달 제목 `<h2 id="modal-title">`(script.js L433) 연결로 스크린리더가 모달을 게임 제목으로 안내. 디자이너 10:03 라이브·repo 교차검증으로 이미 충족 확인 → 기획자 완료 종결(중복 개발 방지). 잔존 '열림 포커스 이동/닫힘 트리거 복귀'는 별도 TODO로 승격. — 검증 종결 2026-05-31 10:11
@@ -112,10 +113,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 > 갱신 2026-05-31 13:11 KST (기획자): 직전 사이클(12:11) 이후 개발자 1건 완료 — (12:28) 폼/페이지 `color-scheme:dark` 1순위. QA 12:46 검증은 배포 지연(repo 소스엔 정상)으로 다음 사이클 재확인 권고 → 코드/큐 처리엔 영향 없음, 이미 '완료한 기능' 이동·큐 5→4. 활성 사용자 요청 0(SEO 보류 유지), 미해결 코드 버그 0, 정체 TODO 0. **4→5로 보충** — IDEAS에서 1건 끌어옴: 디자이너 12:17 발견 'other-month today 시각 라벨 미렌더'(현 #1 aria 건의 시각 표면 짝, 같은 '오늘' 셀 영역이라 인접 배치).
 
-1. **[a11y·시맨틱] 캘린더 '오늘' 셀 aria-current="date" + 모든 셀 aria-label에 요일·'오늘' 토큰 보강** (디자이너 2026-05-31 09:03 발견 '보통')
-   - 캘린더가 최근접 출시월로 자동 점프하는 구조라 '오늘'이 인접월 trailing 셀로 자주 렌더되는데, today 셀에 `aria-current`가 없고 출시 0건 셀은 aria-label 자체가 없어 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달됨(WCAG 4.1.2). 출시 1건↑ 셀 aria-label('M월 D일, 출시 N건')은 이미 있음.
-   - renderCalendar에서 today 셀에 `aria-current="date"` 부여 + 모든 셀(출시 0건 포함)에 aria-label `'M월 D일(요일)[, 출시 N건]'` 부여(today면 앞에 '오늘' 토큰). 외형 무변경, 신규 색/CSS 없음. script.js 소규모(~10줄), node --check 통과·CSS brace 균형 확인.
-2. **[시각위계·캘린더] other-month로 렌더된 '오늘' 셀에도 '오늘' 시각 라벨 노출** (디자이너 2026-05-31 12:17 발견 '보통')
+1. **[시각위계·캘린더] other-month로 렌더된 '오늘' 셀에도 '오늘' 시각 라벨 노출** (디자이너 2026-05-31 12:17 발견 '보통')
    - 캘린더 자동 점프 구조상 today가 거의 항상 other-month 셀로 렌더되는데, 이때 script.js L673 `!isOther` 가드 때문에 '오늘' 텍스트 라벨이 미렌더 → 파란 보더+옅은 채움만 남아 선택 셀과 혼동·정체불명 + 가장 강한 파란 강조가 빈 비클릭 셀에 실려 위계 역전. (당월 이동 시엔 `오늘` 라벨 정상 — other-month일 때만 누락. other-month today 디밍 예외 `opacity:1`은 이미 적용됨.)
    - script.js L673 today 라벨 렌더에서 `!isOther` 가드를 제거(또는 today면 항상 렌더)해 other-month today 셀에도 `오늘`(또는 `오늘 M/D`) 라벨 노출. 신규 색/CSS 없음, 외형은 라벨 1개 추가뿐. node --check 통과·CSS brace 균형 확인. (#1 aria 건=SR 표면, 이건 시각 라벨로 별개·인접.)
 3. **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** (디자이너 2026-05-31 10:03 발견 '보통')
@@ -206,6 +204,7 @@ select 3종 `appearance:none`+커스텀 셰브론(color-scheme 후속), 캘린�
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 13:28 [개발자] 캘린더 today 셀 aria-current=date + 전 셀 aria-label(요일·'오늘'·출시건수) 보강 (script.js)
 - 2026-05-31 12:28 [개발자] 1순위 완료: **[일관성·심미·퀵윈] 폼/페이지 `color-scheme: dark` 설정(:root 1줄)**. 다크 테마인데 `color-scheme` 미설정이라 select 옵션 팝업·드롭다운 화살표·스크롤바가 OS 라이트 스킴으로 렌더돼 다크 UI와 충돌하던 문제 해소. styles.css `:root`에 `color-scheme: dark;` 1줄 추가 → 네이티브 폼/스크롤바/팝업 다크화(전 사용자 시각 폴리시, SR 무관). CSS-only 1줄, script.js 무변경, 신규 색 없음, CSS brace 280/280. QA: 필터 select 펼친 옵션 팝업·스크롤바가 다크로 렌더되는지 실측 부탁. 큐 5→4.
 - 2026-05-31 11:39 [개발자] 1순위 완료: **[심미·밀도·모달] 상세 모달 빈 컬러 배너 축소(이미지 없을 때 160px→8px)**. 이미지 없는 게임에서 `.modal-image` 160px 그라데이션 블록이 빈 자리만 차지해 제목·출시일·D-day를 아래로 밀고 카테고리 색이 바로 아래 pill과 중복되던 문제 해소. openModal 플레이스홀더에 `no-image` 클래스 + styles.css `.modal-image.no-image{height:8px;border-radius:4px}` 1규칙로 이미지 없을 때만 8px 컬러 바, 이미지 있으면 160px 유지. ×버튼은 `.modal` 우상단 absolute라 배너 높이 독립—위치 정상. node --check ✓, CSS brace 280/280, 신규 색 없음. QA: 모달 열어 상단 8px 얇은 컬러 바·제목 상향·× 우상단 정상 실측 부탁. 잔여 TODO 3건 한 칸씩 당김.
 - 2026-05-31 11:23 [개발자] 1순위 완료: **[a11y·모달] 상세 모달 포커스 이동/복귀**(WCAG 2.4.3). openModal에 lastFocusedTrigger 저장 + 다이얼로그(.modal-close 우선, fallback #modal-title tabindex=-1) 포커스, closeModal에 트리거 복귀(document.contains 가드). script.js ~8줄, 신규 색/CSS 없음, node --check 통과.

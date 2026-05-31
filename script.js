@@ -634,8 +634,8 @@ function renderCalendar() {
       (dayMap[rd.getDate()] = dayMap[rd.getDate()] || []).push(g);
     }
   }
-  const weekdays = ['일','월','화','수','목','금','토']
-    .map(d => `<div class="weekday">${d}</div>`).join('');
+  const wdNames = ['일','월','화','수','목','금','토'];
+  const weekdays = wdNames.map(d => `<div class="weekday">${d}</div>`).join('');
   let cells = '';
   for (let i = 0; i < 42; i++) {
     const d = new Date(start); d.setDate(start.getDate() + i);
@@ -646,8 +646,10 @@ function renderCalendar() {
     let dots = '';
     let gameLabel = '';
     let a11y = '';
+    let relCount = 0;
     if (!isOther) {
       const list = dayMap[d.getDate()] || [];
+      relCount = list.length;
       const soonDiff = (d.getTime() - today.getTime()) / 86400000;
       if (list.length && soonDiff >= 0 && soonDiff <= 7) cls.push('day-soon');
       if (list.length) cls.push('day-has'); // [스캔성] 출시 있는 셀 면 강조
@@ -665,13 +667,16 @@ function renderCalendar() {
         dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}${moreCount}</div>`;
         const firstName = list[0].name_ko || list[0].name_en || '';
         gameLabel = `<div class="day-game-label" title="${escapeHtml(tip)}">${escapeHtml(firstName)}</div>`;
-        a11y = ` role="button" tabindex="0" aria-label="${d.getMonth()+1}월 ${d.getDate()}일, 출시 ${list.length}건"`;
+        a11y = ` role="button" tabindex="0"`;
       }
     }
     const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     if (selectedDay === iso && !isOther) cls.push('selected');
-    const todayLabel = (d.getTime() === today.getTime() && !isOther) ? '<span class="today-label">오늘</span>' : '';
-    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
+    const isToday = d.getTime() === today.getTime();
+    const todayLabel = (isToday && !isOther) ? '<span class="today-label">오늘</span>' : '';
+    const ariaLabel = `${isToday ? '오늘, ' : ''}${d.getMonth()+1}월 ${d.getDate()}일(${wdNames[d.getDay()]})${relCount ? `, 출시 ${relCount}건` : ''}`;
+    const ariaCurrent = isToday ? ' aria-current="date"' : '';
+    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y} aria-label="${ariaLabel}"${ariaCurrent}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
   const emptyEl = document.getElementById('calendar-empty');
