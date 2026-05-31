@@ -242,7 +242,7 @@ function renderDayRows(games) {
     const diff = Math.ceil((parseReleaseDate(g.release_date) - today) / 86400000);
     const ddCls = ddayStageClass(diff);
     const dd = diff < 0 ? '출시됨' : (diff === 0 ? 'D-DAY' : 'D-' + diff);
-    const plat = (g.platforms || [])[0] || '';
+    const plat = ((g.platforms||[]).length>1?((g.platforms||[])[0]+' 외 '+((g.platforms||[]).length-1)):((g.platforms||[])[0]||'')) || '';
     const wished = wishlist.has(g.id);
     const name = escapeHtml(g.name_ko || g.name_en || '');
     // 흡수행: 패널 헤더가 연도를 명시하므로 'MM.DD (요일/예정)'로 단축(풀year 프리픽스 잉여 제거, 게임명 좌측 시작점 정렬).

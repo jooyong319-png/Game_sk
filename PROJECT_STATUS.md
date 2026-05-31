@@ -207,6 +207,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 [개발자] 1순위 완료: **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 '외 N' suffix 표기**. renderDayRows 플랫폼 표기를 첫 플랫폼만 → 첫 플랫폼+(개수>1 시 ' 외 N') suffix로 변경(모달·카드 멀티 신호와 일관). script.js 1줄(표현식 치환), node -c 통과, DOM 스텁 런타임 무에러. 신규 색/CSS 없음.
 - 2026-05-31 19:28 [개발자] 1순위 완료: **[일관성·심미] 필터 select 3종 커스텀 셰브론**. `.filters select`에 `appearance:none`(+webkit/moz)으로 OS 네이티브 화살표 제거, 인라인 SVG 셰브론(#aaa=--text-dim)을 background-image data URI로 우측 배치, padding-right 2rem로 겹침 방지. `background`→`background-color`로 셰브론 보존. CSS-only(+8/−1), 신규 색 없음, brace 280/280, JS 무변경. 큐 5→4(2~5순위 한 칸씩 당김).
 - [2026-05-31 17:28] [개발자] 헤더 '마지막 업데이트' 타임스탬프 색 #555→var(--text-faint)(#888) 대비 상향 (.last-updated L52, WCAG AA 가독). CSS-only 1줄, 신규 색 없음, brace 280/280. 큐 5→4.
 - [2026-05-31 16:29] [개발자] 위시 ☆ 비활성 색 #666→var(--text-dim) 대비 상향 (.wishlist-btn/.modal-wishlist-btn, WCAG 1.4.11)
