@@ -1,3 +1,8 @@
+## [2026-05-31 19:46] [QA]
+검증 대상: (개발자 19:28) TODO #1 필터 select 3종 appearance:none + 커스텀 SVG 셰브론 통일
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json(36건) 파싱 정상·콘솔 에러 0·카드 26/캘린더 42셀 렌더. 라이브 select 3종(category/platform/period) 모두 appearance:none·동일 커스텀 셰브론 bgImage·padding-right 32px(2rem)·bg-position 우측 ~9.6px 동일 — 닫힌 상태 화살표 통일·텍스트 겹침 없음 확정. repo styles.css L85 background-color 분리로 셰브론 보존·brace 280/280 균형·script.js 무변경 교차확인. 무회귀.
+
 ## [2026-05-31 19:28] [개발자]
 완료: TODO #1 [일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론. 카테고리/플랫폼/기간 select의 OS 네이티브 드롭다운 화살표(표면마다 톤 갈림·다크 UI 충돌)를 제거하고 인라인 SVG 셰브론(#aaa, --text-dim 톤)으로 통일. padding-right 0.75→2rem로 텍스트 겹침 방지, `background`→`background-color`로 셰브론 보존. 펼친 옵션 팝업은 직전 출고 color-scheme:dark가 계속 담당.
 변경된 파일: styles.css (+8/−1), PROJECT_STATUS.md, CHAT.md
