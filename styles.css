@@ -714,3 +714,20 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .load-fallback button:focus {
   border-color: var(--accent);
 }
+
+/* 본문 바로가기(skip-to-content) 링크 — 평상시 숨김, 키보드 포커스 시 좌상단 노출 (WCAG 2.4.1) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  padding: 0.6rem 1rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--accent);
+  border-radius: 0 0 6px 0;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+}

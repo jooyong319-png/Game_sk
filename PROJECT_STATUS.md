@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)** — 키보드 사용자가 상단 컨트롤(검색/필터3종/뷰토글/퀵칩) 다수를 매 진입 Tab으로 통과해야 본문에 도달하던 문제(WCAG 2.4.1) 해소. `<body>` 최상단에 `<a class="skip-link" href="#main">본문 바로가기</a>` 추가 + `<main>`에 `id="main"` 부여. styles.css `.skip-link`는 평상시 `position:absolute;left:-9999px`로 화면 밖 숨김, `:focus` 시 `left:0`로 좌상단 노출(기존 --surface/--text/--accent 토큰 재사용, z-index:1000). 신규 색 토큰 없음, index.html +2/−1·styles.css 2규칙(+17), script.js 무변경(node --check ✓), CSS brace 282/282 균형. — 개발자 완료 2026-05-31 21:29
 - [x] **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 'PS5 외 N' suffix 표기** — 날짜 패널 행 플랫폼 컬럼이 멀티플랫폼 게임에서 첫 1개만 노출(`platforms[0]`)해 모달/카드(`PS5, Xbox Series X/S`)와 신호 불일치하던 문제 해소. renderDayRows 플랫폼 표기를 첫 플랫폼 + (개수>1이면 ` 외 N`) suffix로 변경(인라인 삼항)해 모달·카드와 멀티 신호 일관. script.js만 수정, 신규 색/CSS 없음, node -c 통과·DOM 스텁 런타임 무에러. — 개발자 완료 2026-05-31 12:40(커밋 4d1044d), QA 20:46 정기 헬스체크 무회귀, 기획자 완료처리 2026-05-31 21:11
 - [x] **[일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론** — 직전 `:root{color-scheme:dark}` 출고로 펼친 옵션 팝업/스크롤바는 다크화됐으나 닫힌 select 3종(카테고리/플랫폼/기간) 드롭다운 화살표가 OS 네이티브라 표면마다 톤이 갈리고 다크 UI와 충돌하던 문제 해소. `.filters select`(styles.css L85)에 `appearance:none`(+`-webkit-`/`-moz-`) 부여해 네이티브 화살표 제거하고, 인라인 SVG 셰브론(stroke `#aaa`=`--text-dim` 톤, 12×12)을 `background-image` data URI로 우측(`right 0.6rem center`) 배치, `padding-right` 0.75rem→2rem으로 텍스트-셰브론 겹침 방지. `background`→`background-color`로 변경해 셰브론 image 보존. 펼친 팝업은 color-scheme:dark가 계속 담당. CSS-only(styles.css +8/−1), script.js 무변경, 신규 색 토큰 없이 기존 `--text-dim`(#aaa) 톤 재사용, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 19:28
 - [x] **[일관성·모달] 상세 모달 출시일 D-day 평문→컬러 배지(.dday)로 통일** — 상세 모달 출시일 줄의 D-day가 평문(`· D-N`)이라 리스트 카드/날짜 패널의 컬러 D-day 배지(soon/today/mid/far/past)보다 강조가 약해 요약뷰>상세뷰 위계 역전이던 문제 해소. openModal에 `const ddStage = ddayStageClass(dayDiff).trim();`(script.js L426, 카드/패널과 동일 헬퍼 재사용) 추가하고 출시일 row의 `· ${dDay}` 평문을 `· <span class="dday ${ddStage}">${dDay}</span>` 배지로 교체(L437). 기존 `.dday.*` 공통 규칙(amber/--text/--text-faint, today pulse)이 그대로 적용 → 카드·리스트·패널·모달 4표면 D-day 위계·색 통일. approx 게임은 `(예정)` 마크 기존 위치 유지. 신규 색/CSS 없음(기존 토큰·.dday 규칙 재사용), styles.css 무변경, script.js +2/−1, node --check 통과. — 개발자 완료 2026-05-31 18:29
@@ -121,23 +122,20 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 > 갱신 2026-05-31 21:11 KST (기획자): 큐 4→5 보충. 직전 #1 '멀티플랫폼 패널 suffix' 개발자 완료(12:40, 커밋 4d1044d)→'완료한 기능' 이동·QA 20:46 무회귀, 큐 5→4 강하. 사용자 활성요청 0(SEO 보류)·미해결 코드버그 0(BUGS 전 항목 ✅)·3사이클 정체 TODO 0. 잔여 4개(skip-to-content/날짜패널 SR 포커스/헤더↔푸터 타임스탬프/통계줄 클릭) 순서 유지, IDEAS에서 '아이콘 버튼 44px 터치타겟'(디자이너 05-31, WCAG 2.5.5) 5순위 승격. 코드 미수정(문서만).
 
 
-1. **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)** (IDEAS→큐 승격)
-   - 키보드 사용자가 상단 컨트롤(검색/필터 3종/뷰토글/퀵칩) 다수를 매 진입마다 Tab으로 통과해야 본문(캘린더/리스트)에 도달 → 본문 바로가기 링크 부재(WCAG 2.4.1).
-   - `<body>` 최상단에 `<a class="skip-link" href="#main">본문 바로가기</a>` 추가 + `<main>`에 `id="main"`(없으면) 부여. styles.css `.skip-link`는 평상시 화면 밖(`position:absolute; left:-9999px` 또는 `clip`)으로 숨기고 `:focus` 시 좌상단 노출(기존 `--accent`/`--surface`/`--text` 토큰 재사용, z-index 상단). 신규 색 토큰 없음. index.html 2줄+styles.css 1~2규칙, node --check(무관)·CSS brace 균형 확인.
 
-2. **[a11y·인터랙션] 날짜 셀 클릭 패널 오픈 시 SR 포커스 이동 + aria-live 안내** (디자이너 2026-05-31 07:05 발견 '보통' → IDEAS→큐 승격)
+1. **[a11y·인터랙션] 날짜 셀 클릭 패널 오픈 시 SR 포커스 이동 + aria-live 안내** (디자이너 2026-05-31 07:05 발견 '보통' → IDEAS→큐 승격)
    - 날짜 셀 클릭으로 패널 오픈 시 시각 신호(scrollIntoView+flash)만 있고 키보드/스크린리더는 포커스 미이동·미안내(`#day-detail-panel`의 role/tabindex/aria-live 전부 null) → 패널 갱신을 SR 사용자가 인지 못함.
    - `#day-detail-panel`에 `role="region"`+`aria-label="선택한 날짜 출시 목록"` 부여, 패널 헤더(`.day-panel-header`)에 `tabindex="-1"`+렌더 직후 `.focus()`로 포커스 이동(또는 헤더에 `aria-live="polite"`). 시각 scrollIntoView/flash 기존 유지, prefers-reduced-motion 분기도 유지. script.js renderDayPanel 소규모(3~5줄)+index.html 또는 동적 속성, 신규 색/CSS 없음, node --check 통과 확인.
 
-3. **[일관성·정확성] 헤더↔푸터 '데이터 마지막 갱신' 타임스탬프 포맷 통일** (디자이너 2026-05-31 06:07 발견 '보통' → IDEAS→큐 승격)
+2. **[일관성·정확성] 헤더↔푸터 '데이터 마지막 갱신' 타임스탬프 포맷 통일** (디자이너 2026-05-31 06:07 발견 '보통' → IDEAS→큐 승격)
    - 동일한 '마지막 갱신' 정보가 헤더(`.last-updated` '마지막 업데이트: 2026.05.31' — 날짜만·점 구분)와 푸터('데이터 마지막 갱신: 2026-05-31 21:10 (N시간 전)' — datetime·대시·상대시간)에 라벨/포맷/구분자/정밀도가 모두 다르게 중복 노출돼 같은 데이터 신선도 신호가 두 톤으로 갈림.
    - 단일 포맷 헬퍼로 통일: 헤더 `.last-updated` 주입을 푸터와 동일한 `formatDate`(+선택적 상대시간) 헬퍼 출력으로 맞추거나, 헤더 날짜-only 표기를 제거하고 푸터 1곳으로 단일화(택1, 개발자 판단). script.js(헤더 타임스탬프 주입부)+index.html 소규모, 신규 색/CSS 없음, node --check 통과·외형 회귀 확인.
 
-4. **[UX·발견성] 헤더 통계줄(#stats-summary) 세그먼트 클릭 = 해당 카테고리 필터 적용** (디자이너 2026-05-31 23:02 발견 '보통' → post-queue 후보 승격)
+3. **[UX·발견성] 헤더 통계줄(#stats-summary) 세그먼트 클릭 = 해당 카테고리 필터 적용** (디자이너 2026-05-31 23:02 발견 '보통' → post-queue 후보 승격)
    - 헤더 아래 통계 요약(`국내 모바일 N · 국내 PC/콘솔 N · 글로벌 N · 신규서버 N · 총 N`)이 현재 평문 텍스트라, 옆 카테고리 드롭다운과 정보가 겹치는데도 클릭 불가 — 한 번에 그 카테고리만 보고 싶을 때 드롭다운을 따로 조작해야 함.
    - 각 카테고리 세그먼트를 클릭 가능한 `<button>`(또는 role=button+tabindex)로 만들어, 클릭 시 해당 `category` 필터 적용 + 카테고리 select 값 동기화 + 재렌더. '총 N' 세그먼트 클릭 = 카테고리 필터 해제(전체). 활성 카테고리 세그먼트는 `aria-pressed="true"`+옅은 강조(기존 `--accent`/카테고리 색 재사용, 신규 색 없음). 라벨은 `CATEGORY_LABELS` 단일 출처 재사용. script.js renderStatsSummary에 클릭 핸들러·active 토글 추가(소규모, ~20줄 내) + styles.css 버튼 톤 1~2규칙, node --check·CSS brace 균형 확인.
 
-5. **[a11y·모바일] 아이콘 버튼 터치타겟 최소 44×44px 확보 (WCAG 2.5.5)** (디자이너 2026-05-31 발견 '보통' → IDEAS→큐 승격)
+4. **[a11y·모바일] 아이콘 버튼 터치타겟 최소 44×44px 확보 (WCAG 2.5.5)** (디자이너 2026-05-31 발견 '보통' → IDEAS→큐 승격)
    - 위시 별(★/☆)·모달 닫기(×)·네비(‹ ›) 등 아이콘 버튼의 클릭/터치 영역이 44×44px 미만이라 모바일 터치 정확도 저하(WCAG 2.5.5 Target Size). 아이콘 시각 크기는 유지하되 히트영역만 확장 필요.
    - `.wishlist-btn`/`.modal-wishlist-btn`/`.modal-close`/캘린더 네비 버튼에 `min-width:44px; min-height:44px` + 중앙정렬(`display:inline-flex; align-items:center; justify-content:center`) 부여, 아이콘 글리프 자체 폰트크기는 그대로. 모달 닫기(×)는 기존 44×44 히트영역 적용분 있으면 검증으로 갈음. styles.css 소규모(2~4규칙), 신규 색/CSS 토큰 없음, script.js 무변경, CSS brace 균형·node --check(무관) 확인.
 
@@ -208,6 +206,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 21:29 [개발자] 1순위 완료: **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가**. body 최상단 `<a class="skip-link" href="#main">본문 바로가기</a>` + `<main id="main">`. CSS `.skip-link` 평상시 left:-9999px 숨김→`:focus` 시 left:0 좌상단 노출(--surface/--text/--accent 재사용). 키보드 사용자 상단 컨트롤 다수 Tab 스킵→본문 바로 도달(WCAG 2.4.1). index.html +2/−1·styles.css +17, JS 무변경(node --check ✓), brace 282/282. 큐 5→4(2~5순위 한 칸씩 당김).
 - 2026-05-31 [개발자] 1순위 완료: **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 '외 N' suffix 표기**. renderDayRows 플랫폼 표기를 첫 플랫폼만 → 첫 플랫폼+(개수>1 시 ' 외 N') suffix로 변경(모달·카드 멀티 신호와 일관). script.js 1줄(표현식 치환), node -c 통과, DOM 스텁 런타임 무에러. 신규 색/CSS 없음.
 - 2026-05-31 19:28 [개발자] 1순위 완료: **[일관성·심미] 필터 select 3종 커스텀 셰브론**. `.filters select`에 `appearance:none`(+webkit/moz)으로 OS 네이티브 화살표 제거, 인라인 SVG 셰브론(#aaa=--text-dim)을 background-image data URI로 우측 배치, padding-right 2rem로 겹침 방지. `background`→`background-color`로 셰브론 보존. CSS-only(+8/−1), 신규 색 없음, brace 280/280, JS 무변경. 큐 5→4(2~5순위 한 칸씩 당김).
 - [2026-05-31 17:28] [개발자] 헤더 '마지막 업데이트' 타임스탬프 색 #555→var(--text-faint)(#888) 대비 상향 (.last-updated L52, WCAG AA 가독). CSS-only 1줄, 신규 색 없음, brace 280/280. 큐 5→4.
