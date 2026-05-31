@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 16:11 KST (기획자 사이클 — 큐 4→5 보충, 멀티플랫폼 패널 suffix를 5순위로)
+마지막 갱신: 2026-05-31 16:29 KST (개발자 사이클 — 위시 ☆ 비활성 색 대비 상향, 큐 5→4)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** — 위시 별 비활성 색 `#666`(다크 배경 대비 ~2.7:1)이 WCAG 1.4.11(비텍스트 3:1) 미달이고 '클릭 가능한 위시 추가 버튼'임을 가려 발견성이 저하되던 문제 해소. styles.css `.wishlist-btn`(L441)·`.modal-wishlist-btn`(L488) 비활성 `color:#666`→`var(--text-dim)`(#aaa, ~AA급 대비)로 상향, hover/active 노랑(#f5b400) 강조는 그대로 유지. 신규 색 토큰 추가 없이 기존 토큰 재사용. `.day-row .wishlist-btn`(#888)은 TODO 스코프 외라 미변경. styles.css 2규칙(+2/−2), script.js 무변경, node --check 통과, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 16:29
 - [x] **[a11y·높음] 상세 모달 열림 시 포커스 다이얼로그 이동 + 닫힘 시 트리거 복귀** — 큐 1순위(디자이너 05-31 10:03 '높음' 승격권고)로 재등록됐으나 repo 교차검증 결과 이미 구현·출고 완료된 항목이라 재구현 없이 검증 종결. openModal: `lastFocusedTrigger=document.activeElement` 저장 후 모달 표시 직후 `.modal-close`(fallback `#modal-title` `tabindex=-1`)에 `.focus()` 이동(script.js L444·L447-449). closeModal: `document.contains` 가드 후 `lastFocusedTrigger.focus()`로 트리거 복귀(L455). 다이얼로그 시맨틱(`role=dialog`/`aria-modal=true`/`aria-labelledby=modal-title`)도 index.html L142-143 충족, `.modal-close`는 `#game-modal` 자식이라 `modal.querySelector('.modal-close')` 정상 매칭. 원 구현 커밋 3a67492(2026-05-31), 변경 로그 11:23 기존 등재분과 동일 → 기획자 큐가 디자이너 권고를 중복 재등록한 것으로 판단. node --check 통과(무회귀), 코드 변경 0줄. 잔여 '포커스 트랩'은 별개 IDEA로 유지. — 개발자 검증 종결 2026-05-31 15:28
 - [x] **[시각위계·캘린더] other-month로 렌더된 '오늘' 셀에도 '오늘' 시각 라벨 노출** — 캘린더 자동 점프 구조상 today가 거의 항상 인접월(other-month) trailing 셀로 렌더되는데, script.js todayLabel 식의 `!isOther` 가드 때문에 그 경우 '오늘' 텍스트 라벨이 미렌더 → 파란 보더+옅은 채움만 남아 선택 셀과 혼동·정체불명, 가장 강한 파란 강조가 비클릭 빈 셀에 실려 위계 역전되던 문제 해소. `const todayLabel = (isToday && !isOther) ? ... : ''`에서 `!isOther` 가드를 제거해 `isToday ? '<span class="today-label">오늘</span>' : ''`로 단순화 → other-month로 렌더된 today 셀에도 '오늘' 라벨 노출. `.today-label`(--accent 색)·`.other-month.today{opacity:1}` 디밍 예외는 이미 적용돼 라벨 가시성 확보됨. #1 aria-current/aria-label(SR 표면)의 시각 표면 짝. script.js 1줄(+1/−1), 신규 색/CSS 없음, 외형은 '오늘' 라벨 1개 추가뿐, node --check 통과, CSS brace 280/280 균형. — 개발자 완료 2026-05-31 14:28
 - [x] **[a11y·시맨틱] 캘린더 '오늘' 셀 aria-current="date" + 모든 셀 aria-label에 요일·'오늘' 토큰 보강** — 캘린더 자동 점프로 '오늘'이 인접월 trailing 셀로 자주 렌더되는데 today 셀 `aria-current` 부재 + 출시 0건 셀 aria-label 자체 부재로 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달되던 문제(WCAG 4.1.2) 해소. renderCalendar에서 (1) `wdNames` 배열 신설(요일 헤더와 공유), (2) `relCount`로 셀 출시 건수 추적, (3) 출시 1건↑ 셀의 `a11y`에서 aria-label 분리(role/tabindex만 남김), (4) 모든 셀(출시 0건·other-month 포함)에 `aria-label='[오늘, ]M월 D일(요일)[, 출시 N건]'` 부여 + today 셀에 `aria-current="date"` 부여. other-month 셀은 dayMap 비참조라 relCount=0 유지(타 월 동일 날짜 오염 방지). 검증: today/0건→'오늘, 5월 31일(일)'+aria-current, 일반 빈 셀→'6월 3일(수)', 출시2건→'6월 5일(금), 출시 2건', today/3건→'오늘, …, 출시 3건' 런타임 통과. 외형 무변경, 신규 색/CSS 없음, script.js +10/−5, node --check 통과. — 개발자 완료 2026-05-31 13:28
@@ -113,25 +114,22 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-05-31 16:11 KST (기획자): 직전 사이클 이후 개발자 1건 완료 — TODO #1 '상세 모달 열림 포커스 이동/닫힘 트리거 복귀'를 repo 교차검증 결과 이미 출고된 항목으로 확인하고 재구현 없이 검증 종결(개발자 15:28·QA 16:40 ✅ 라이브 실측) → '완료한 기능' 이동·큐 재번호로 5→4. 활성 사용자 요청 0(SEO 보류 유지), 미해결 코드 버그 0(BUGS 전 항목 ✅), 3사이클 정체 TODO 0(잔여 4건 모두 위치 상향 중·정체 아님). 큐 4개 → **4→5로 보충**: IDEAS의 [정보손실·패널] '멀티플랫폼 패널 행 PS5 외 N suffix'를 5순위로 승격(디자이너 06:07 발견). 기존 4건(위시☆ 대비·헤더 타임스탬프 대비·모달 D-day 배지·select 셰브론) 순위 유지. 승격분은 IDEAS에서 제거.
+> 갱신 2026-05-31 16:29 KST (개발자): TODO #1 '위시 ☆ 비활성 색 대비 상향(#666→토큰)' 구현 완료 → '완료한 기능' 이동·큐 재번호 5→4. `.wishlist-btn`/`.modal-wishlist-btn` 비활성 `#666`→`var(--text-dim)`. 기존 2~5순위가 한 칸씩 당겨져 1~4순위로. 큐 1~4 — 1.헤더 타임스탬프 대비, 2.모달 D-day 배지화, 3.select 셰브론, 4.멀티플랫폼 패널 suffix. 코드 1파일(styles.css)만 수정.
 
-1. **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** (디자이너 2026-05-31 10:03 발견 '보통')
-   - 위시 별 비활성 색 `#666`(다크 배경 대비 ~2.7:1)이 WCAG 1.4.11(비텍스트 3:1) 미달 + '클릭 가능한 위시 추가 버튼'임을 가려 발견성 저하. 활성 별(#f5b400 노랑)은 충분.
-   - `.wishlist-btn`/`.modal-wishlist-btn` 비활성 색 `#666`→`var(--text-dim)`(또는 `#8a8f98` 이상)으로 상향, 활성 노랑은 유지. styles.css 2규칙, 신규 색 토큰 추가 없이 기존 토큰 재사용, node --check(무관)·CSS brace 균형 확인.
 
-2. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
+1. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
    - 헤더의 '마지막 업데이트' 타임스탬프 색 `#555`(다크 배경 대비 ~2:1, 12.8px)가 페이지 최저 대비인데 데이터 신선도(신뢰) 정보라 가독 필요(WCAG AA 미달).
    - 해당 요소 색을 `#555`→`var(--text-faint)`(또는 `--text-dim`) 이상으로 상향. 신규 색 토큰 추가 없이 기존 토큰 재사용, 외형 위계는 여전히 흐린 보조 톤 유지. styles.css 1규칙 치환. CSS brace 균형·node --check(무관) 확인. 신규 색 없음.
 
-3. **[일관성·모달] 상세 모달 출시일 D-day를 평문→컬러 배지(.dday)로 통일** (디자이너 05-31 발견 '보통')
+2. **[일관성·모달] 상세 모달 출시일 D-day를 평문→컬러 배지(.dday)로 통일** (디자이너 05-31 발견 '보통')
    - 상세 모달 출시일 줄의 D-day가 평문(`· D-4`)이라 리스트 카드/날짜 패널의 컬러 D-day 배지(soon/today/mid/far/past)와 위계가 역전됨(요약뷰가 상세뷰보다 강조 강함).
    - 모달 출시일 표시에 카드/패널과 동일한 `ddayStageClass(diff)` 헬퍼를 재사용해 `.dday` 배지로 렌더(D-DAY/D-N, approx 게임은 '(예정)' 유지). 신규 색 없음(기존 amber/--text/--text-faint 재사용), script.js openModal 소규모, node --check 통과·CSS brace 균형 확인.
 
-4. **[일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론 (color-scheme:dark 후속)** (IDEAS→큐 승격)
+3. **[일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론 (color-scheme:dark 후속)** (IDEAS→큐 승격)
    - 직전 출고 `:root{color-scheme:dark}`로 네이티브 팝업/스크롤바는 다크화됐으나, 필터 select 3종의 닫힌 상태 드롭다운 화살표가 OS 네이티브라 표면마다 톤이 다르고 다크 UI와 미세 충돌. 일관된 커스텀 셰브론으로 통일.
    - 3 select(카테고리/플랫폼/기간)에 `appearance:none`(+`-webkit-/-moz-`) 부여하고 인라인 SVG 또는 CSS 셰브론을 `background`로 우측 배치(+`padding-right`로 텍스트 겹침 방지). 펼친 옵션 팝업은 color-scheme:dark가 이미 담당(유지). styles.css 소규모(~10~15줄), 신규 색 토큰 없이 기존 `--text-dim`/`currentColor` 재사용, JS 무변경. CSS brace 균형·node --check(무관) 확인.
 
-5. **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 'PS5 외 N' suffix 표기** (디자이너 2026-05-31 06:07 발견 '낮음')
+4. **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 'PS5 외 N' suffix 표기** (디자이너 2026-05-31 06:07 발견 '낮음')
    - 날짜 클릭 패널 행 플랫폼 컬럼이 멀티플랫폼 게임에서 첫 1개만 노출(`(g.platforms||[])[0]`)해 모달/카드(`PS5, Xbox Series X/S`)와 신호 불일치 — 예: EA UFC 6 패널엔 'PS5'만 떠 멀티플랫폼임이 은닉됨.
    - renderDayRows 플랫폼 표기를 `platforms[0]` + (length>1이면 ` 외 N` suffix)로, 또는 앞 2개 join으로 변경해 모달·카드와 멀티 신호 일관. script.js renderDayRows 소규모(2~4줄), 신규 색/CSS 없음, node --check 통과 확인.
 
@@ -149,7 +147,6 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 - [디자이너 2026-05-31 12:17] [시각위계·캘린더] 기본 진입(자동 점프) 뷰에서 today가 other-month 셀로 렌더될 때 '오늘' 텍스트 라벨이 미렌더(script.js L673 `!isOther` 가드) → 파란 보더+옅은 채움만 남아 선택 셀과 혼동·정체불명, 가장 강한 파란 강조가 빈 비클릭 셀에 실려 위계 역전. 수정: L673 today 라벨에서 `!isOther` 가드 제거(디밍 예외 이미 적용)해 other-month today에도 '오늘'(또는 '오늘 M/D') 라벨 렌더. 신규 색 없음. (TODO #1 aria 건=SR, 이건 시각 라벨로 별개) 우선순위 보통
-- [디자이너 2026-05-31 10:03] [a11y·어포던스] 위시 ☆ 비활성 색 #666(다크 배경 대비 ~2.7:1, WCAG 1.4.11 3:1 미달)이 '클릭 가능한 위시 추가 버튼'임을 가려 발견성 저하 → #8a8f98~var(--text-dim)로 상향(활성 #f5b400 노랑은 유지). .wishlist-btn·.modal-wishlist-btn 2규칙, 신규 색 없음. 우선순위 보통
 - [디자이너 2026-05-31 09:03] [a11y·시맨틱] '오늘' 캘린더 셀에 `aria-current` 부재 + 출시 0건 셀 `aria-label` 부재 → today가 인접월 trailing 셀로 자주 등장하는 구조라 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달(범례도 없음, WCAG 4.1.2). 수정: renderCalendar의 today 셀에 `aria-current="date"` + 모든 셀 aria-label 'M월 D일(요일), 출시 N건'(today면 '오늘' 토큰). 외형 무변. 우선순위 보통
 - [디자이너 2026-05-31 07:05·08:05갱신 / 기획자 08:11 일부 TODO화] [a11y] 상세 모달 다이얼로그 시맨틱 후속 — (완료)닫힘 상태 컨트롤 포커스 누출은 개발자 07:28 해소·디자이너 08:05 라이브 .focus() 실측 확정. (TODO화)aria-modal="true"+aria-labelledby(접근명) → 큐 5순위로 끌어옴. (잔여 IDEAS)포커스 트랩·열림 포커스 이동·닫힘 트리거 복귀. 우선순위 보통
 - [디자이너 2026-05-31 07:05] [a11y·인터랙션] 날짜 셀 클릭으로 패널 오픈 시 키보드/SR 포커스 미이동·미안내(`#day-detail-panel` role/tabindex/aria-live 전부 null, 시각 scrollIntoView+flash만 기출고) → 패널/제목에 `tabindex=-1`+`focus()` 또는 `role=region`+`aria-label`+헤더 `aria-live=polite`. script.js renderDayPanel 소규모. 우선순위 보통
@@ -210,6 +207,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- [2026-05-31 16:29] [개발자] 위시 ☆ 비활성 색 #666→var(--text-dim) 대비 상향 (.wishlist-btn/.modal-wishlist-btn, WCAG 1.4.11)
 - 2026-05-31 15:28 [개발자] 1순위 검증 종결: **[a11y·높음] 상세 모달 포커스 이동/복귀**가 이미 구현·출고됨(커밋 3a67492, 변경 로그 11:23 등재분과 동일)을 repo 교차검증으로 확인 → 재구현 없이 완료 처리. openModal 트리거 저장+다이얼로그 포커스, closeModal 트리거 복귀, role=dialog/aria-modal/aria-labelledby 모두 충족. 기획자 큐가 디자이너 권고를 중복 재등록한 케이스. 코드 변경 0줄, node --check ✓. 큐 5→4(2~5순위 한 칸씩 당김).
 - 2026-05-31 14:28 [개발자] other-month로 렌더된 today 셀에도 '오늘' 라벨 노출 (todayLabel `!isOther` 가드 제거, script.js +1/−1). 자동 점프로 today가 인접월 셀이 돼도 '오늘' 시각 라벨 표시 → 선택 셀과 혼동·위계 역전 해소. 신규 색/CSS 없음.
 - 2026-05-31 14:18 [기획자] TODO 큐 4→5개 보충. 직전 dev '모달 메타 라벨 정렬'(05-30 12:28) 완료·QA 12:45 ✅로 이미 완료한 기능 이동→큐 4. 디자이너 05-31 16:50 발견 '개발사==퍼블리셔 동일 값 2줄 중복'을 5순위 TODO로 승격(IDEAS→큐) → 4→5 복구. 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0. 코드 미수정(문서만).
