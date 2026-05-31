@@ -8,8 +8,6 @@ const searchInput = document.getElementById('search-input');
 const searchClear = document.getElementById('search-clear');
 const searchCount = document.getElementById('search-count');
 const filterReset = document.getElementById('filter-reset');
-const DEFAULT_PERIOD = periodFilter ? periodFilter.value : '365';
-const filterReset = document.getElementById('filter-reset');
 const gamesList = document.getElementById('games-list');
 const lastUpdatedEl = document.getElementById('last-updated');
 const footerUpdatedEl = document.getElementById('footer-updated-date');
@@ -128,7 +126,6 @@ function renderLegend() {
 
 function renderGames() {
   updateCategoryCounts();
-  updateFilterResetVisibility();
   updateFilterReset();
   const selectedCategory = categoryFilter.value;
   const selectedPlatform = platformFilter.value.toLowerCase();
@@ -886,33 +883,3 @@ function updateWishlistChipLabel() {
   chipWish.textContent = chipWish.dataset.baseLabel + ' (' + wishlist.size + ')';
 }
 updateWishlistChipLabel();
-
-
-// --- Filter reset control: show when any of the 6 filters is non-default; reset all on click ---
-function isAnyFilterActive() {
-  return (categoryFilter && categoryFilter.value !== '')
-    || (platformFilter && platformFilter.value !== '')
-    || (periodFilter && periodFilter.value !== DEFAULT_PERIOD)
-    || (searchQuery && searchQuery.trim() !== '')
-    || weekFilter !== null
-    || wishlistOnly;
-}
-function updateFilterResetVisibility() {
-  if (filterReset) filterReset.hidden = !isAnyFilterActive();
-}
-function resetAllFilters() {
-  if (categoryFilter) categoryFilter.value = '';
-  if (platformFilter) platformFilter.value = '';
-  if (periodFilter) periodFilter.value = DEFAULT_PERIOD;
-  if (searchInput) searchInput.value = '';
-  searchQuery = '';
-  if (searchClear) searchClear.hidden = true;
-  if (searchCount) searchCount.hidden = true;
-  weekFilter = null;
-  wishlistOnly = false;
-  applyWeekChips();
-  applyWishlistChip();
-  renderGames();
-}
-if (filterReset) filterReset.addEventListener('click', resetAllFilters);
-updateFilterResetVisibility();

@@ -208,6 +208,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 23:40 [개발자] **긴급 복구**: df49c1a(필터 초기화 중복 추가→`filterReset` 재선언 SyntaxError로 사이트 다운)를 script.js·index.html 한정 정상 부모 5683171로 환원. 중복 제거로 복구, 기능은 정상 유지. node --check 통과.
 - 2026-05-31 13:38 [개발자] 1순위 완료: **[UX·발견성] 활성 필터 '초기화' 컨트롤**. 6종 필터 중 비기본값 1개↑ 활성 시에만 `#filter-reset` 버튼(.chip-btn 톤 재사용·신규 색 없음) 노출, 클릭 시 전부 기본값 일괄 리셋 후 재렌더(결과 0건 빈 상태 탈출구 겸). script.js: filterReset/DEFAULT_PERIOD const + isAnyFilterActive/updateFilterResetVisibility/resetAllFilters 함수 추가, renderGames에 가시성 토글 훅 1줄. index.html: quick-chips에 버튼 1개. node --check 통과, styles.css 미변경(brace 균형 유지). 잔여 TODO 3건 1~3순위로 당김.
 - 2026-05-31 22:16 [기획자] TODO 큐 4→5개. 직전 1순위 '상세 모달 메타 행 라벨 폭 정렬' 개발자 12:28 완료·QA 12:45 ✅→완료한 기능 이동(큐 5→4). 디자이너 05-31 발견 '[a11y] 위시 활성 별(★) 색 표면 불일치(#f5b400 카드/모달 vs #f5a623 패널)+패널 임박 amber와 색 충돌'을 작고 명확한 TODO로 5순위 승격(IDEAS→큐, --wish 토큰 통일). 잔여 4건(필터 초기화·날짜패널 우측 D-day 정렬·요일 헤더 평일 대비·.day-row-dot 색+모양) 1~4순위 유지. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0. 코드 미수정(문서만).
 - 2026-05-31 21:29 [개발자] 1순위 완료: **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가**. body 최상단 `<a class="skip-link" href="#main">본문 바로가기</a>` + `<main id="main">`. CSS `.skip-link` 평상시 left:-9999px 숨김→`:focus` 시 left:0 좌상단 노출(--surface/--text/--accent 재사용). 키보드 사용자 상단 컨트롤 다수 Tab 스킵→본문 바로 도달(WCAG 2.4.1). index.html +2/−1·styles.css +17, JS 무변경(node --check ✓), brace 282/282. 큐 5→4(2~5순위 한 칸씩 당김).
