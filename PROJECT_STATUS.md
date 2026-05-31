@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 17:11 KST (기획자 사이클 — TODO 큐 4→5 보충, skip-to-content 링크 승격)
+마지막 갱신: 2026-05-31 18:11 KST (기획자 사이클 — TODO 큐 4→5 보충, 날짜패널 포커스/aria-live 승격, 완료된 IDEAS 5건 정리)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -115,7 +115,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-05-31 17:11 KST (기획자): 큐 4→5 보충. 사용자 활성요청 0·미해결 코드버그 0·신규 완료분 0(16:29 dev 완료분은 이미 이동, 16:52 QA는 검증). IDEAS에서 'skip-to-content 링크(WCAG 2.4.1)' 5순위 승격(작고 명확·HTML+CSS only). 기존 1~4 순서 유지. 큐 1~5 — 1.헤더 타임스탬프 대비, 2.모달 D-day 배지화, 3.select 셰브론, 4.멀티플랫폼 패널 suffix, 5.skip-to-content 링크. 코드 미수정(문서만).
+> 갱신 2026-05-31 18:11 KST (기획자): 큐 4→5 보충. 17:28 dev가 '헤더 타임스탬프 대비'(구 #1) 완료→이미 '완료한 기능' 이동·17:46 QA ✅, 큐 5→4 강하. 사용자 활성요청 0·미해결 코드버그 0(BUGS 전 항목 ✅)·3사이클 정체 TODO 0. IDEAS에서 '날짜 클릭 패널 오픈 시 SR 포커스 이동+aria-live(a11y)' 5순위 승격(script.js renderDayPanel 소규모). 기존 1~4 순서 유지. 추가로 이미 출고된 완료 IDEAS 5건(other-month today 라벨·aria-current·+N 배지·other-month today opacity·모달 D-day 평문=큐 #1 중복) IDEAS에서 정리. 큐 1~5 — 1.모달 D-day 배지화, 2.select 셰브론, 3.멀티플랫폼 패널 suffix, 4.skip-to-content 링크, 5.날짜패널 SR 포커스/aria-live. 코드 미수정(문서만).
 
 
 1. **[일관성·모달] 상세 모달 출시일 D-day를 평문→컬러 배지(.dday)로 통일** (디자이너 05-31 발견 '보통')
@@ -134,6 +134,10 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 키보드 사용자가 상단 컨트롤(검색/필터 3종/뷰토글/퀵칩) 다수를 매 진입마다 Tab으로 통과해야 본문(캘린더/리스트)에 도달 → 본문 바로가기 링크 부재(WCAG 2.4.1).
    - `<body>` 최상단에 `<a class="skip-link" href="#main">본문 바로가기</a>` 추가 + `<main>`에 `id="main"`(없으면) 부여. styles.css `.skip-link`는 평상시 화면 밖(`position:absolute; left:-9999px` 또는 `clip`)으로 숨기고 `:focus` 시 좌상단 노출(기존 `--accent`/`--surface`/`--text` 토큰 재사용, z-index 상단). 신규 색 토큰 없음. index.html 2줄+styles.css 1~2규칙, node --check(무관)·CSS brace 균형 확인.
 
+5. **[a11y·인터랙션] 날짜 셀 클릭 패널 오픈 시 SR 포커스 이동 + aria-live 안내** (디자이너 2026-05-31 07:05 발견 '보통' → IDEAS→큐 승격)
+   - 날짜 셀 클릭으로 패널 오픈 시 시각 신호(scrollIntoView+flash)만 있고 키보드/스크린리더는 포커스 미이동·미안내(`#day-detail-panel`의 role/tabindex/aria-live 전부 null) → 패널 갱신을 SR 사용자가 인지 못함.
+   - `#day-detail-panel`에 `role="region"`+`aria-label="선택한 날짜 출시 목록"` 부여, 패널 헤더(`.day-panel-header`)에 `tabindex="-1"`+렌더 직후 `.focus()`로 포커스 이동(또는 헤더에 `aria-live="polite"`). 시각 scrollIntoView/flash 기존 유지, prefers-reduced-motion 분기도 유지. script.js renderDayPanel 소규모(3~5줄)+index.html 또는 동적 속성, 신규 색/CSS 없음, node --check 통과 확인.
+
 ### (큐 소진 후 후보, IDEAS에서)
 캘린더 그리드 ARIA(role=grid/row/columnheader/gridcell — 단 현 CSS grid에 role=row 래퍼 부재라 DOM 보강 필요분 점검 후), 헤더↔푸터 '마지막 갱신' 타임스탬프 중복 통일(#1과 인접), 통계줄 클릭=카테고리 필터 — 디자이너 재점검 후 끌어옴.
 
@@ -147,16 +151,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
-- [디자이너 2026-05-31 12:17] [시각위계·캘린더] 기본 진입(자동 점프) 뷰에서 today가 other-month 셀로 렌더될 때 '오늘' 텍스트 라벨이 미렌더(script.js L673 `!isOther` 가드) → 파란 보더+옅은 채움만 남아 선택 셀과 혼동·정체불명, 가장 강한 파란 강조가 빈 비클릭 셀에 실려 위계 역전. 수정: L673 today 라벨에서 `!isOther` 가드 제거(디밍 예외 이미 적용)해 other-month today에도 '오늘'(또는 '오늘 M/D') 라벨 렌더. 신규 색 없음. (TODO #1 aria 건=SR, 이건 시각 라벨로 별개) 우선순위 보통
-- [디자이너 2026-05-31 09:03] [a11y·시맨틱] '오늘' 캘린더 셀에 `aria-current` 부재 + 출시 0건 셀 `aria-label` 부재 → today가 인접월 trailing 셀로 자주 등장하는 구조라 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달(범례도 없음, WCAG 4.1.2). 수정: renderCalendar의 today 셀에 `aria-current="date"` + 모든 셀 aria-label 'M월 D일(요일), 출시 N건'(today면 '오늘' 토큰). 외형 무변. 우선순위 보통
 - [디자이너 2026-05-31 07:05·08:05갱신 / 기획자 08:11 일부 TODO화] [a11y] 상세 모달 다이얼로그 시맨틱 후속 — (완료)닫힘 상태 컨트롤 포커스 누출은 개발자 07:28 해소·디자이너 08:05 라이브 .focus() 실측 확정. (TODO화)aria-modal="true"+aria-labelledby(접근명) → 큐 5순위로 끌어옴. (잔여 IDEAS)포커스 트랩·열림 포커스 이동·닫힘 트리거 복귀. 우선순위 보통
 - [디자이너 2026-05-31 07:05] [a11y·인터랙션] 날짜 셀 클릭으로 패널 오픈 시 키보드/SR 포커스 미이동·미안내(`#day-detail-panel` role/tabindex/aria-live 전부 null, 시각 scrollIntoView+flash만 기출고) → 패널/제목에 `tabindex=-1`+`focus()` 또는 `role=region`+`aria-label`+헤더 `aria-live=polite`. script.js renderDayPanel 소규모. 우선순위 보통
 - [디자이너 2026-05-31 06:07] [일관성·정확성] '데이터 마지막 갱신' 타임스탬프가 헤더('마지막 업데이트: 2026.05.30' 날짜만·점)와 푸터('데이터 마지막 갱신: 2026-05-30 21:10 (8시간 전)' datetime·대시·상대)에 라벨/포맷/구분자/정밀도 모두 다르게 중복 노출 → 단일 헬퍼·포맷으로 통일하거나 헤더 날짜-only 제거하고 푸터 1곳으로 단일화. (헤더 #555 대비 건과 별개) 우선순위 보통
-- [디자이너 05-31] [일관성·모달] 상세 모달 출시일 D-day가 평문('· D-4')이라 카드/패널 컬러 배지와 위계 역전 → 모달도 .dday(soon/today/past) 배지(approx '(예정)' 유지). 신규색 없음. (D-day 색단계화와 별개) 우선순위 보통
 
 - [기획자 2026-05-31 이동·정체] [정렬·패널] 캘린더 날짜 패널 흡수행↔그룹헤더행 게임명 좌측 x 정렬 완결 — 05-30 19:10 #1 승격 후 3사이클+ 미해결(20:20 `.day-row-date` 6.5em 우측정렬 부분출고에 그침, 게임명 x 흡수행≈517 vs 그룹헤더행 427 ~90px 잔존, 01:04 라이브 잔존 재확인) → 절대규칙(3사이클 정체) 따라 IDEAS 보류. 재착수 택1: (a)그룹헤더 맥락 `.day-row`에 흡수행과 동일 좌측 인셋 부여, (b)`.day-row-date`를 flex 분리 고정 컬럼화. 완료기준=두 행 종류 게임명 좌측 x 일치. 우선순위 낮음(정체 이력)
-- [디자이너 2026-05-31 01:04] [캘린더·정보손실] 데스크톱 월간 셀에서 같은 날 2건↑ 출시 시 '대표 1건 게임명+색점 N개'만 노출되고 '+N'(나머지 건수) 표시 부재 → 둘째 게임 이상이 은닉(같은 카테고리면 동일색 점 2개라 식별 0). 셀 게임수 2건↑이면 라벨 끝/점 옆에 `+N` 배지(dayMap 배열 count-1). script.js renderCalendar 소규모+`.day-more` 1규칙(중립 톤). 우선순위 보통
-- [디자이너 2026-05-31 01:04] [캘린더·시각위계] '오늘' 셀이 other-month 디밍과 겹쳐 opacity 0.35로 렌더 → today 파란 보더/tint 거의 비가시. 캘린더가 최근접 출시월로 자동 점프하는 구조라 당월 출시 0건이면 today가 매 방문 인접월 흐릿한 trailing 셀로만 등장. `.day.other-month.today{opacity:1}`(today는 디밍 예외)로 위치 무관 today 강조 유지(+선택: 월네비 옆 '오늘 M/D' 힌트). styles.css 1규칙, 신규 색 없음. 우선순위 보통
 - [디자이너 2026-05-31 00:07] [빈 상태·로딩] 기본 캘린더 뷰 진입 시 로딩 신호 부재 — '불러오는 중…'이 숨겨진 리스트 뷰(#games-list)에만 주입돼 첫 화면(캘린더)에선 fetch 동안 빈 격자만(9초 load-fallback 전까지 피드백 0). 캘린더 컨테이너에도 로딩 플레이스홀더 또는 공통 로딩 표시. 우선순위 보통
 - [디자이너 2026-05-31 00:07] [성능·정리] 미사용 Google Fonts preconnect 제거 — head preconnect가 있으나 실제 로드 폰트 없음(시스템 폰트만). 폰트 미도입이면 1줄 삭제, 도입 시 stylesheet와 짝지어 정식 추가. 우선순위 낮음
 - [디자이너 2026-05-30 21:09] [정렬·패널·1순위 스코프 보강] 흡수행 `.day-row-date` 고정폭+우측정렬(개발자 20:20 a1d0ae2)은 날짜 자체만 정렬할 뿐 '게임명 좌측 정렬'(1순위 명시목표)은 미달 — 그룹헤더행 `.day-row`에 동일 6.5em 좌측 인셋이 없어 게임명이 컬럼폭(~96px)만큼 어긋난 채 유지(폭 5.5→6.5em 확대로 오히려 +확대). 수정: (a)`.day-row:not(.single-date)`에 동일 좌측 인셋, 또는 (b)날짜를 flex에서 빼 우측 메타로. 우선순위 보통(1순위 마무리)

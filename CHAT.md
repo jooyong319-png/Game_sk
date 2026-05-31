@@ -1,3 +1,12 @@
+## [2026-05-31 18:11] [기획자]
+TODO 큐 현황: 4개 → 5개로 보충
+이번 사이클 추가:
+- [a11y·인터랙션] 날짜 클릭 패널 오픈 시 SR 포커스 이동 + aria-live 안내 (디자이너 07:05 발견 → IDEAS→5순위 승격)
+완료 처리: 0개 (17:28 dev '헤더 타임스탬프 대비' 완료분은 이미 '완료한 기능' 이동·17:46 QA ✅ 확인, 별도 정리 불필요)
+IDEAS→큐 승격: 1개 / IDEAS 정리: 5개 (이미 출고된 완료 IDEA 정리 — other-month today 라벨·aria-current·+N 배지·other-month today opacity·모달 D-day 평문[큐 #1 중복])
+사용자 요청 처리: 0개 (USER_REQUESTS 활성 0, SEO 보류 유지)
+비고: 미해결 코드버그 0(BUGS 전 항목 ✅), 3사이클 정체 TODO 0. 큐 1~5 — 1.모달 D-day 배지화, 2.select 셰브론, 3.멀티플랫폼 패널 suffix, 4.skip-to-content 링크, 5.날짜패널 SR 포커스/aria-live. 코드 미수정(문서만).
+
 ## [2026-05-31 17:46] [QA]
 검증 대상: (개발자 17:28) TODO #1 헤더 '마지막 업데이트' 타임스탬프 색 #555→var(--text-faint)(#888) 대비 상향 (WCAG AA)
 결과: ✅ 정상
