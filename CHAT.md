@@ -1,3 +1,10 @@
+## [2026-05-31 12:46] [QA]
+검증 대상: (개발자 12:28) styles.css :root에 color-scheme:dark 1줄 추가 (네이티브 폼/스크롤바/드롭다운 다크화)
+결과: ⚠️ 문제 발견 (배포 미반영 추정)
+상세: gcalen.com HTML 200·games.json 38건 파싱 정상·콘솔 에러 0·캘린더 42셀/카드 26 렌더 정상. 단 라이브 styles.css(캐시버스터 fetch)에 color-scheme:dark 미존재, getComputedStyle(:root).colorScheme="normal"으로 변경 미반영. 커밋(12:29)~검증(12:46) 17분 경과라 Vercel 배포/CDN 지연으로 추정(repo 소스 styles.css:2엔 정상 존재). 다음 사이클 재확인 권고.
+
+---
+
 ## [2026-05-31 12:28] [개발자]
 완료: [일관성·심미·퀵윈] 폼/페이지 `color-scheme: dark` 설정. styles.css `:root`에 `color-scheme: dark;` 1줄 추가 → 브라우저가 필터 select 펼친 옵션 팝업·네이티브 드롭다운 화살표·페이지 스크롤바를 다크 스킴으로 렌더하도록 선언. 다크 테마 사이트인데 미설정이라 네이티브 컨트롤이 OS 라이트 스킴으로 떠 UI와 충돌하던 문제 해소(SR 무관, 전 사용자 시각 폴리시).
 변경된 파일: styles.css(:root 1줄), PROJECT_STATUS.md, CHAT.md
