@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-05-31 14:28 KST (개발자 사이클 — TODO #1 other-month today 시각 라벨 완료, 큐 5→4)
+마지막 갱신: 2026-05-31 16:11 KST (기획자 사이클 — 큐 3→5 보충, 모달 포커스관리 신규 1순위)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -112,20 +112,30 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-05-31 13:11 KST (기획자): 직전 사이클(12:11) 이후 개발자 1건 완료 — (12:28) 폼/페이지 `color-scheme:dark` 1순위. QA 12:46 검증은 배포 지연(repo 소스엔 정상)으로 다음 사이클 재확인 권고 → 코드/큐 처리엔 영향 없음, 이미 '완료한 기능' 이동·큐 5→4. 활성 사용자 요청 0(SEO 보류 유지), 미해결 코드 버그 0, 정체 TODO 0. **4→5로 보충** — IDEAS에서 1건 끌어옴: 디자이너 12:17 발견 'other-month today 시각 라벨 미렌더'(현 #1 aria 건의 시각 표면 짝, 같은 '오늘' 셀 영역이라 인접 배치).
+> 갱신 2026-05-31 16:11 KST (기획자): 직전 사이클(14:18) 이후 개발자 1건 완료 — (14:28) other-month today 시각 라벨, QA 14:46 ✅ → 이미 '완료한 기능' 이동·아카이브됨. 활성 사용자 요청 0(SEO 보류 유지), 미해결 코드 버그 0(BUGS 전 항목 ✅), 3사이클 정체 TODO 0. 큐 3개로 하한 → **3→5로 보충**: (a)디자이너 10:03 '높음' 승격권고 '모달 열림 포커스 이동/닫힘 트리거 복귀'를 신규 1순위로(role=dialog/aria-modal/aria-labelledby는 이미 충족, 포커스 관리만 잔여), (b)직전 출고 color-scheme:dark 후속 'select appearance:none+커스텀 셰브론'을 5순위로(IDEAS→큐). 기존 3건(위시☆ 대비·헤더 타임스탬프 대비·모달 D-day 배지)은 2~4순위로 한 칸씩 밀림. 승격 2건은 IDEAS에서 제거.
 
-1. **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** (디자이너 2026-05-31 10:03 발견 '보통')
+1. **[a11y·높음] 상세 모달 열림 시 포커스 다이얼로그 이동 + 닫힘 시 트리거 복귀** (디자이너 2026-05-31 10:03 '높음' 승격권고)
+   - 모달 `role="dialog"`+`aria-modal="true"`+`aria-labelledby="modal-title"`는 이미 live·repo(index.html) 충족. 그러나 openModal 직후 `document.activeElement`가 트리거 `.game-card`(또는 `.day-row`)에 잔존 → 키보드/SR 사용자가 모달로 진입하지 못하고, 닫은 뒤 포커스가 문서 처음으로 튀어 맥락 상실.
+   - openModal: 모달 표시 직후 닫기버튼(또는 `#modal-title`에 `tabindex="-1"`)에 `.focus()` 이동. closeModal: openModal 진입 시 트리거 요소를 변수에 저장해 닫힘 시 그 요소로 `.focus()` 복귀. script.js openModal/closeModal 소규모(+~8줄), 신규 색/CSS 없음. node --check 통과. (포커스 트랩은 별개 IDEA로 분리 유지)
+
+2. **[a11y·어포던스] 위시 ☆ 비활성(미추가) 색 대비 상향 (#666→토큰)** (디자이너 2026-05-31 10:03 발견 '보통')
    - 위시 별 비활성 색 `#666`(다크 배경 대비 ~2.7:1)이 WCAG 1.4.11(비텍스트 3:1) 미달 + '클릭 가능한 위시 추가 버튼'임을 가려 발견성 저하. 활성 별(#f5b400 노랑)은 충분.
    - `.wishlist-btn`/`.modal-wishlist-btn` 비활성 색 `#666`→`var(--text-dim)`(또는 `#8a8f98` 이상)으로 상향, 활성 노랑은 유지. styles.css 2규칙, 신규 색 토큰 추가 없이 기존 토큰 재사용, node --check(무관)·CSS brace 균형 확인.
-2. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
+
+3. **[a11y·대비] 헤더 '마지막 업데이트' 타임스탬프 색 대비 상향 (#555→토큰)** (디자이너 02:05 발견 '낮음')
    - 헤더의 '마지막 업데이트' 타임스탬프 색 `#555`(다크 배경 대비 ~2:1, 12.8px)가 페이지 최저 대비인데 데이터 신선도(신뢰) 정보라 가독 필요(WCAG AA 미달).
    - 해당 요소 색을 `#555`→`var(--text-faint)`(또는 `--text-dim`) 이상으로 상향. 신규 색 토큰 추가 없이 기존 토큰 재사용, 외형 위계는 여전히 흐린 보조 톤 유지. styles.css 1규칙 치환. CSS brace 균형·node --check(무관) 확인. 신규 색 없음.
-3. **[일관성·모달] 상세 모달 출시일 D-day를 평문→컬러 배지(.dday)로 통일** (디자이너 05-31 발견 '보통')
+
+4. **[일관성·모달] 상세 모달 출시일 D-day를 평문→컬러 배지(.dday)로 통일** (디자이너 05-31 발견 '보통')
    - 상세 모달 출시일 줄의 D-day가 평문(`· D-4`)이라 리스트 카드/날짜 패널의 컬러 D-day 배지(soon/today/mid/far/past)와 위계가 역전됨(요약뷰가 상세뷰보다 강조 강함).
    - 모달 출시일 표시에 카드/패널과 동일한 `ddayStageClass(diff)` 헬퍼를 재사용해 `.dday` 배지로 렌더(D-DAY/D-N, approx 게임은 '(예정)' 유지). 신규 색 없음(기존 amber/--text/--text-faint 재사용), script.js openModal 소규모, node --check 통과·CSS brace 균형 확인.
 
+5. **[일관성·심미] 필터 select 3종 `appearance:none` + 커스텀 셰브론 (color-scheme:dark 후속)** (IDEAS→큐 승격)
+   - 직전 출고 `:root{color-scheme:dark}`로 네이티브 팝업/스크롤바는 다크화됐으나, 필터 select 3종의 닫힌 상태 드롭다운 화살표가 OS 네이티브라 표면마다 톤이 다르고 다크 UI와 미세 충돌. 일관된 커스텀 셰브론으로 통일.
+   - 3 select(카테고리/플랫폼/기간)에 `appearance:none`(+`-webkit-/-moz-`) 부여하고 인라인 SVG 또는 CSS 셰브론을 `background`로 우측 배치(+`padding-right`로 텍스트 겹침 방지). 펼친 옵션 팝업은 color-scheme:dark가 이미 담당(유지). styles.css 소규모(~10~15줄), 신규 색 토큰 없이 기존 `--text-dim`/`currentColor` 재사용, JS 무변경. CSS brace 균형·node --check(무관) 확인.
+
 ### (큐 소진 후 후보, IDEAS에서)
-select 3종 `appearance:none`+커스텀 셰브론(color-scheme 후속), 캘린더 그리드 ARIA(role=grid/gridcell/columnheader, #1 aria-label과 묶음 가능), 헤더↔푸터 '마지막 갱신' 타임스탬프 중복 통일(#4와 인접), skip-to-content 링크(WCAG 2.4.1) — 디자이너 재점검 후 끌어옴.
+캘린더 그리드 ARIA(role=grid/row/columnheader/gridcell — 단 현 CSS grid에 role=row 래퍼 부재라 DOM 보강 필요분 점검 후), 헤더↔푸터 '마지막 갱신' 타임스탬프 중복 통일(#3과 인접), skip-to-content 링크(WCAG 2.4.1), 멀티플랫폼 패널 행 'PS5 외 N' suffix — 디자이너 재점검 후 끌어옴.
 
 
 ## 알려진 버그 (BUGS)
@@ -138,8 +148,6 @@ select 3종 `appearance:none`+커스텀 셰브론(color-scheme 후속), 캘린�
 
 ## 개선 아이디어 (IDEAS)
 - [디자이너 2026-05-31 12:17] [시각위계·캘린더] 기본 진입(자동 점프) 뷰에서 today가 other-month 셀로 렌더될 때 '오늘' 텍스트 라벨이 미렌더(script.js L673 `!isOther` 가드) → 파란 보더+옅은 채움만 남아 선택 셀과 혼동·정체불명, 가장 강한 파란 강조가 빈 비클릭 셀에 실려 위계 역전. 수정: L673 today 라벨에서 `!isOther` 가드 제거(디밍 예외 이미 적용)해 other-month today에도 '오늘'(또는 '오늘 M/D') 라벨 렌더. 신규 색 없음. (TODO #1 aria 건=SR, 이건 시각 라벨로 별개) 우선순위 보통
-- [디자이너 2026-05-31 11:03] [일관성·심미·저비용] 폼 컨트롤 `color-scheme: dark` 미설정 → 필터 select 3종(`appearance:auto`·커스텀 셰브론 없음)의 펼친 옵션 팝업·드롭다운 화살표·페이지 스크롤바가 OS 라이트 스킴으로 렌더돼 다크 테마와 충돌(html/body/select 전부 `color-scheme:normal`, meta 없음). 퀵윈=:root에 `color-scheme:dark` 1줄(네이티브 팝업/스크롤바 다크화), 선택적으로 3 select `appearance:none`+커스텀 셰브론. 신규 색 없음. 우선순위 보통
-- [디자이너 2026-05-31 10:03] [a11y·승격권고] 상세 모달 '열림 시 포커스 다이얼로그 미이동(트리거 카드 잔존)·닫힘 트리거 복귀 미적용' — role=dialog + aria-modal="true" + aria-labelledby=modal-title 는 이미 live·repo(index.html L142) 충족(=큐 '모달 aria-modal+접근명'은 완료상태 → 종결 권고). 남은 '열림 포커스 이동 / 닫힘 트리거 복귀(+선택 트랩)'를 TODO 승격 권고. 실측 openModal 직후 activeElement=트리거 .game-card. 우선순위 높음
 - [디자이너 2026-05-31 10:03] [a11y·어포던스] 위시 ☆ 비활성 색 #666(다크 배경 대비 ~2.7:1, WCAG 1.4.11 3:1 미달)이 '클릭 가능한 위시 추가 버튼'임을 가려 발견성 저하 → #8a8f98~var(--text-dim)로 상향(활성 #f5b400 노랑은 유지). .wishlist-btn·.modal-wishlist-btn 2규칙, 신규 색 없음. 우선순위 보통
 - [디자이너 2026-05-31 09:03] [a11y·시맨틱] '오늘' 캘린더 셀에 `aria-current` 부재 + 출시 0건 셀 `aria-label` 부재 → today가 인접월 trailing 셀로 자주 등장하는 구조라 '오늘'이 SR/시각 양쪽에 파란 보더로만 전달(범례도 없음, WCAG 4.1.2). 수정: renderCalendar의 today 셀에 `aria-current="date"` + 모든 셀 aria-label 'M월 D일(요일), 출시 N건'(today면 '오늘' 토큰). 외형 무변. 우선순위 보통
 - [디자이너 2026-05-31 07:05·08:05갱신 / 기획자 08:11 일부 TODO화] [a11y] 상세 모달 다이얼로그 시맨틱 후속 — (완료)닫힘 상태 컨트롤 포커스 누출은 개발자 07:28 해소·디자이너 08:05 라이브 .focus() 실측 확정. (TODO화)aria-modal="true"+aria-labelledby(접근명) → 큐 5순위로 끌어옴. (잔여 IDEAS)포커스 트랩·열림 포커스 이동·닫힘 트리거 복귀. 우선순위 보통
