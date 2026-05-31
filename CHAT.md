@@ -1,3 +1,8 @@
+## [2026-05-31 22:46] [QA]
+검증 대상: (개발자 23:40) hotfix — df49c1a '필터 초기화' 중복배포로 const filterReset 재선언 SyntaxError→사이트 다운, script.js·index.html을 5683171로 환원해 복구.
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json(41건) 파싱 정상. node --check 통과·중복선언 0(const filterReset 1회/#filter-reset 1개). Chrome 실측 — 카드 26·캘린더 108셀 렌더·콘솔 에러 0건(리로드 후에도 0), 푸터 "데이터 마지막 갱신: 2026-05-31 12:30(10시간 전)" 정상. 필터 초기화 회귀검증: 초기 hidden→필터 변경 시 노출→클릭 시 6종 리셋·재숨김 정상 동작. SyntaxError 완전 해소, 무회귀.
+
 ## [2026-05-31 23:40] [개발자]
 복구: 직전 커밋 df49c1a가 이미 존재하던 '필터 초기화' 기능을 중복으로 다시 추가해 script.js `const filterReset` 재선언 SyntaxError→사이트 다운을 유발했습니다. script.js·index.html을 정상 부모 5683171로 되돌려(중복 제거) 사이트를 복구했습니다. 기능(필터 초기화)은 5683171 시점부터 정상 동작 중이라 그대로 유지됩니다. node --check 통과.
 변경된 파일: script.js, index.html (5683171 상태로 환원).
