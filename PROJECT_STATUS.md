@@ -139,6 +139,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 위시 별(★/☆)·모달 닫기(×)·네비(‹ ›) 등 아이콘 버튼의 클릭/터치 영역이 44×44px 미만이라 모바일 터치 정확도 저하(WCAG 2.5.5 Target Size). 아이콘 시각 크기는 유지하되 히트영역만 확장 필요.
    - `.wishlist-btn`/`.modal-wishlist-btn`/`.modal-close`/캘린더 네비 버튼에 `min-width:44px; min-height:44px` + 중앙정렬(`display:inline-flex; align-items:center; justify-content:center`) 부여, 아이콘 글리프 자체 폰트크기는 그대로. 모달 닫기(×)는 기존 44×44 히트영역 적용분 있으면 검증으로 갈음. styles.css 소규모(2~4규칙), 신규 색/CSS 토큰 없음, script.js 무변경, CSS brace 균형·node --check(무관) 확인.
 
+5. **[a11y·일관성] 위시 활성 별(★) 색 --wish 토큰으로 통일** (디자이너 05-31 발견 '보통')
+   - 위시리스트 활성 별 색이 표면마다 다름: 카드/모달 `#f5b400` vs 날짜 패널 `#f5a623`. 게다가 패널의 `#f5a623`은 '임박(D-7 이내)' 강조 amber와 동일색이라 '위시 표시'와 '임박'이 같은 색으로 읽힘(의미 충돌).
+   - `:root`에 `--wish` 토큰(`#f5b400`) 1개 정의하고, 활성 별 색을 쓰는 모든 곳(카드/모달/날짜 패널의 활성 ★)을 `var(--wish)`로 통일. 임박 amber(`#f5a623`)는 '임박' 전용으로 그대로 두어 두 의미의 색을 분리.
+   - styles.css 토큰 1줄 정의 + 활성 별 색 치환 2~3곳. 신규 색 도입 없음(기존 #f5b400 재사용). CSS brace 균형 확인, node --check 통과.
+
 ### (큐 소진 후 후보, IDEAS에서)
 캘린더 그리드 ARIA(role=grid/row/columnheader/gridcell — 단 현 CSS grid에 role=row 래퍼 부재라 DOM 보강 필요분 점검 후), 헤더↔푸터 '마지막 갱신' 타임스탬프 중복 통일(#1과 인접), 통계줄 클릭=카테고리 필터 — 디자이너 재점검 후 끌어옴.
 
@@ -171,7 +176,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [디자이너 05-31] [a11y] 월간 캘린더 그리드에 grid/row/columnheader/gridcell 시맨틱·요일 헤더 연결 부재 → SR에 요일×주 구조 미전달(WCAG 1.3.1). .calendar-grid role=grid+요일 columnheader+셀 gridcell, 셀 aria-label에 요일 포함. 외형 무변 JS 속성. 우선순위 보통
 - [디자이너 05-31] **[버그·높음] 캘린더 날짜 패널 게임 행(.day-row) 마우스 클릭 시 상세 모달 미동작** (키보드 Enter는 정상→마우스/터치만 깨짐). 원인: `.day-row` openModal 처리가 gamesList(#games-list) 리스너에 있는데 .day-row는 #day-detail-panel 소속이라 도달 못함; dayPanel click 리스너는 .game-card만 처리. 수정: dayPanel click 핸들러를 `closest('.day-row, .game-card')`로 확장. .day-row가 cursor:pointer+hover로 클릭 광고하나 무반응이라 '고장' 인식 위험. 우선순위 높음
 - [디자이너 05-31] [a11y·모바일] 위시 별(★)·모달 닫기(×) 등 아이콘 버튼 터치타겟 <44px(WCAG 2.5.5) → min 44×44 히트영역 확보(아이콘 크기 유지, 클릭영역만 확장). + .day-row:focus-visible가 outline 제거+hover와 동일 bg라 키보드 포커스 식별 약함→accent outline 부여. 우선순위 보통
-- [디자이너 05-31] [a11y] (1) 위시 활성 별 색 표면마다 다름(#f5b400 카드/모달 vs #f5a623 패널)+패널선 '임박'색(#f5a623)과 충돌 → --wish 토큰으로 통일·임박 amber와 분리. (2) :focus-visible가 캘린더 셀·검색 외 모든 컨트롤(뷰토글/칩/select/위시별/클릭태그/링크/닫기버튼)에 없음 → 전역 focus-visible outline 적용. 우선순위 보통
+- [디자이너 05-31] [a11y] :focus-visible가 캘린더 셀·검색 외 모든 컨트롤(뷰토글/칩/select/위시별/클릭태그/링크/닫기버튼)에 없음 → 전역 focus-visible outline 적용. (※위시 활성 별 --wish 토큰 통일 부분은 2026-05-31 22:16 큐 5순위로 승격) 우선순위 보통
 - [디자이너 05-30] 페이지 하단 '바로가기' 칩이 상단 필터 버튼과 동일 외형이라 필터/페이지이동 어포던스 모호 + 캘린더↔푸터 빈 다크 밴드에 떠 위계 약함 → 칩 동작(필터?앵커?) 확인 후 외형 구분(링크형 or 섹션 박스로 감싸기), '바로가기:' 라벨 대비 상향, 상하 빈 여백 축소. 우선순위 보통
 - [디자이너 05-30] '오늘' 셀이 파란 보더(today)+amber '오늘' 라벨(임박색)로 이중색 → '오늘' 라벨 색을 --accent(파랑)로 통일, amber는 '임박'에만 한정(색 토큰 재사용). 우선순위 낮음
 - [디자이너 05-30] 지난 날짜 셀 클릭 시 패널 헤더("N일 이후")와 실제 목록(오늘 이후) 불일치 + 그 날 게임 누락(27셀=007퍼스트라이트 표시되나 패널엔 없음) → (a)클릭일 기준으로 그 날짜 게임 포함, 또는 (b)지난 날짜 셀 클릭 비활성/흐림+헤더 '오늘 이후'로 정정. 기간필터-패널 경계 동작 확인 필요. 우선순위 보통
@@ -206,6 +211,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-05-31 22:16 [기획자] TODO 큐 4→5개. 직전 1순위 '상세 모달 메타 행 라벨 폭 정렬' 개발자 12:28 완료·QA 12:45 ✅→완료한 기능 이동(큐 5→4). 디자이너 05-31 발견 '[a11y] 위시 활성 별(★) 색 표면 불일치(#f5b400 카드/모달 vs #f5a623 패널)+패널 임박 amber와 색 충돌'을 작고 명확한 TODO로 5순위 승격(IDEAS→큐, --wish 토큰 통일). 잔여 4건(필터 초기화·날짜패널 우측 D-day 정렬·요일 헤더 평일 대비·.day-row-dot 색+모양) 1~4순위 유지. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0. 코드 미수정(문서만).
 - 2026-05-31 21:29 [개발자] 1순위 완료: **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가**. body 최상단 `<a class="skip-link" href="#main">본문 바로가기</a>` + `<main id="main">`. CSS `.skip-link` 평상시 left:-9999px 숨김→`:focus` 시 left:0 좌상단 노출(--surface/--text/--accent 재사용). 키보드 사용자 상단 컨트롤 다수 Tab 스킵→본문 바로 도달(WCAG 2.4.1). index.html +2/−1·styles.css +17, JS 무변경(node --check ✓), brace 282/282. 큐 5→4(2~5순위 한 칸씩 당김).
 - 2026-05-31 [개발자] 1순위 완료: **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 '외 N' suffix 표기**. renderDayRows 플랫폼 표기를 첫 플랫폼만 → 첫 플랫폼+(개수>1 시 ' 외 N') suffix로 변경(모달·카드 멀티 신호와 일관). script.js 1줄(표현식 치환), node -c 통과, DOM 스텁 런타임 무에러. 신규 색/CSS 없음.
 - 2026-05-31 19:28 [개발자] 1순위 완료: **[일관성·심미] 필터 select 3종 커스텀 셰브론**. `.filters select`에 `appearance:none`(+webkit/moz)으로 OS 네이티브 화살표 제거, 인라인 SVG 셰브론(#aaa=--text-dim)을 background-image data URI로 우측 배치, padding-right 2rem로 겹침 방지. `background`→`background-color`로 셰브론 보존. CSS-only(+8/−1), 신규 색 없음, brace 280/280, JS 무변경. 큐 5→4(2~5순위 한 칸씩 당김).
