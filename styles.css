@@ -49,7 +49,7 @@ header h1 {
 }
 
 .last-updated {
-  color: #555;
+  color: var(--text-faint);
   font-size: 0.8rem;
   margin-top: 0.5rem;
 }
