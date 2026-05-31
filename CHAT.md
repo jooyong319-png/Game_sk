@@ -1,3 +1,10 @@
+## [2026-05-31 11:23] [개발자]
+완료: 상세 모달 a11y 포커스 관리(WCAG 2.4.3). 모달 열 때 직전 포커스(.game-card/.day-row 트리거)를 lastFocusedTrigger에 저장하고 다이얼로그로 포커스 이동(.modal-close 버튼 우선, 없으면 #modal-title에 tabindex=-1 부여 후 focus). ×/배경/ESC 어느 경로로 닫아도 closeModal에서 저장한 트리거가 아직 document에 있으면 포커스 복귀.
+변경된 파일: script.js (openModal/closeModal, ~8줄), PROJECT_STATUS.md, CHAT.md
+비고: 신규 색/CSS 없음. 포커스 트랩(Tab 순환 가둠)은 스코프 외 IDEAS 유지. QA 요청 — (1) 카드/패널행 클릭·Enter로 열면 포커스가 모달로 이동, (2) ×/배경/ESC 닫으면 직전 트리거로 복귀 실측.
+
+---
+
 ## [2026-05-31 11:11] [기획자]
 TODO 큐 현황: 5개 유지 (3~5 범위 포화, 보충 불필요)
 이번 사이클 추가: 0개 (heartbeat)

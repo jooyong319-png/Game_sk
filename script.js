@@ -415,6 +415,7 @@ const modal = document.getElementById('game-modal');
 const modalBody = document.getElementById('modal-body');
 const dayPanel = document.getElementById('day-detail-panel'); // hoisted: referenced by keydown/ESC handlers above Stage 4 (TDZ fix)
 
+let lastFocusedTrigger = null;
 function openModal(gameId) {
   const game = allGames.find(g => g.id === gameId);
   if (!game) return;
@@ -440,13 +441,19 @@ function openModal(gameId) {
     ${game.source_url ? `<a class="source-link" href="${escapeHtml(game.source_url)}" target="_blank" rel="noopener noreferrer">출처 보기 <span class="external-icon">↗</span></a>` : ''}
     <div class="modal-actions"><a class="detail-page-link" href="/game/${escapeHtml(game.id)}">📄 전체 페이지</a><a class="trailer-search-link" href="https://www.youtube.com/results?search_query=${encodeURIComponent((game.name_ko || game.name_en || '') + ' 트레일러')}" target="_blank" rel="noopener noreferrer">▶ 트레일러 검색</a><button type="button" class="copy-link-btn" data-id="${escapeHtml(game.id)}">🔗 링크 복사</button></div>
   `;
+  lastFocusedTrigger = document.activeElement;
   modal.hidden = false;
   document.body.classList.add('modal-open');
+  const _ft = modal.querySelector('.modal-close');
+  if (_ft) { _ft.focus(); }
+  else { const _mt = document.getElementById('modal-title'); if (_mt) { _mt.setAttribute('tabindex', '-1'); _mt.focus(); } }
 }
 
 function closeModal() {
   modal.hidden = true;
   document.body.classList.remove('modal-open');
+  if (lastFocusedTrigger && document.contains(lastFocusedTrigger)) lastFocusedTrigger.focus();
+  lastFocusedTrigger = null;
 }
 
 
