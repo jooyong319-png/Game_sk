@@ -44,6 +44,34 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-05-31 12:17] [디자이너] — 라이브 실측(Chrome 데스크톱, JS computed 교차검증, 콘솔 0): 신규 1건(기본 진입 뷰에서 today 셀의 '오늘' 텍스트 라벨 미렌더 — 시각 정체성/위계) + 기존 큐·IDEAS 라이브 재확인. 백로그 포화 지속.
+
+실측: https://gcalen.com/ Chrome 데스크톱. 진입 시 자동 점프된 캘린더(2026년 6월, today=5/31)·리스트·상세모달(FF7 리버스, 8px 컬러 바·개발·퍼블리셔 1줄 병합 라이브 확정)·footer/seo-nav 전 표면 + JS computed 교차검증. 콘솔 에러 0·가로 오버플로 0(docScrollW=clientW=1905). 모바일 ≤480은 이번에도 resize_window가 실렌더 뷰포트에 미반영(innerWidth 1920 고정)→소스/CSSOM 갈음(직전 사이클 동일 환경제약).
+
+### 🔴 발견한 문제 / 개선점 (기존 큐·IDEAS·DESIGN_NOTES 미등록 신규 — 1건)
+
+1. **[시각위계·정체성·캘린더] 기본 진입(자동 점프) 뷰에서 today 셀의 '오늘' 텍스트 라벨이 렌더되지 않음 — today가 other-month로 렌더되는 '대부분의 첫 화면'에서 파란 보더+옅은 채움만 남아 선택 셀과 혼동·정체불명** — 우선순위: 보통
+   - 실측(라이브+소스 교차): 캘린더는 '오늘 이후 가장 가까운 출시 달'로 자동 점프하므로(현재 today=5/31 → 6월로 점프) today가 거의 항상 **other-month 선행/후행 셀**로 렌더됨. 이 상태의 today 셀 innerHTML은 `31`뿐 — `.today-label`('오늘' span)이 없음. 반면 '오늘로'로 5월(당월)로 이동하면 같은 5/31 셀이 `31<span class="today-label">오늘</span>`으로 라벨이 붙음. 원인: `script.js` L673 `const todayLabel = (... === today.getTime() && !isOther) ? '<span ...>오늘</span>' : ''` — **`!isOther` 가드 때문에 other-month today에는 라벨을 일부러 빼고 있음**. (`.day.other-month.today{opacity:1}` 디밍 예외·라벨 색 `--accent` 통일은 기적용이라 보더는 보이나, 정작 '오늘'이라는 글자가 사라짐.)
+   - 왜 문제: (a) **정체성** — 자동 점프 구조상 사용자가 매번 처음 보는 화면의 today에 '오늘' 글자가 없어, 파란 보더 셀이 '오늘'인지 그냥 강조된 셀인지 알 수 없음. (b) **선택 셀과 혼동** — today(other-month) computed는 `border 1px var(--accent)` + `background rgba(74,144,226,0.15)`인데, 선택 셀(.selected)은 `background rgba(74,144,226,0.18)` + `inset 0 0 0 2px var(--accent)` 링. 둘 다 파란 채움이라 라벨 없이는 '오늘' vs '선택'을 즉시 구분하기 어려움(보더 vs inset 링 차이만으로는 약함). (c) **시각 위계 역전** — 첫 화면에서 가장 강한 파란 강조가 정작 출시 0건·비클릭(빈 other-month) 셀(좌상단 5/31)에 실려, 실제 콘텐츠 셀(6/3·6/4·6/5 amber 보더)에서 눈을 빼앗음. (TODO #1 'today aria-current + 셀 aria-label에 오늘 토큰'은 **스크린리더(비시각)** 건 → 이 건은 **시각 텍스트 라벨**로 표면이 다름. 01:04 IDEAS의 opacity 예외/색통일과도 별개 — 그건 라벨이 '있다'는 전제였음.)
+   - 어떻게(개발자): `script.js` L673의 today 라벨 조건에서 `!isOther` 가드를 제거하거나 완화해 **other-month today에도 '오늘' 라벨을 렌더**(디밍 예외는 이미 적용돼 가독 문제 없음). 더 명확히 하려면 other-month today 라벨을 '오늘(M/D)' 식으로 달 맥락까지 부여하는 것도 선택지. 신규 색/CSS 불요(기존 `.today-label` 재사용), node --check·brace 균형 확인. ※반영 시 디자이너 차기 사이클에서 라이브 재검증.
+
+### ✅ 라이브 재확인 — 기존 큐/IDEAS (중복 등록 안 함, 픽업 대기)
+- **[큐 #1·높음→완료 정황] 모달 열림 포커스 이동/닫힘 트리거 복귀**: CHAT 11:23 개발자 출고(lastFocusedTrigger 저장+다이얼로그 포커스, document.contains 가드)·11:47 QA ✅ 기록 확인 → 기획자 완료 동기화 권고(중복 개발 방지). 잔여=포커스 트랩(IDEAS).
+- **[큐 #2] 위시 ☆ 비활성 #666 / [큐 #3] 헤더 타임스탬프 #555**: 라이브 computed `color:rgb(85,85,85)`(헤더 '마지막 업데이트') 재확인. footer seo-nav-title `rgb(102,102,102)`·legend `rgb(170,170,170)`도 저대비(기등록).
+- **[IDEAS] 캘린더 6번째 주 행 빈 점유**: 6월 그리드 42셀 중 trailing other-month 11셀(7/5~7/11 한 행 통째)로 하단 세로 점유(기등록 IDEAS, 신규 아님).
+- **[IDEAS] 모달 D-day 평문('· D-3')**: FF7 모달 출시일 행 라이브 재확인(배지화 미적용, 기등록 IDEAS).
+- **[IDEAS] color-scheme:dark 미설정 / 리스트 단일게임 풀폭 우측공백 / 모달 메타 정렬**: 기등록, 변동 없음.
+
+### ✅ 코드로/라이브로 확인된 양호 (트집 X)
+콘솔 0·통계 38(11+5+14+8) 일치·가로 오버플로 0, 모달 8px 컬러 바 축소+제목 상향(11:39 출고 라이브 확정)·개발·퍼블리셔 'Square Enix' 1줄 병합, today 파란보더/임박 amber보더(6/3~5)/+N 배지(6/4·18·30)/day-has 옅은 면+좌측 악센트/점 색+모양 이중인코딩, 캘린더 ‹›에 aria-label('이전 달'/'다음 달')·뷰토글 aria-pressed·검색 aria-label, 모달 외부링크 noopener, 페이드/스크롤락.
+
+### 우선순위 요약
+🔵신규 1(other-month today '오늘' 라벨 렌더, 보통) → 나머지는 기존 큐 소진 권고(#2 #3 + 모달 D-day 배지화/color-scheme 등).
+
+### 코드 미수정 (문서만). 신규 제안 1 / IDEAS 1 / 재검증 다수.
+
+---
+
 ## [2026-05-31 11:03] [디자이너] — 라이브 실측(Chrome 데스크톱, JS computed 교차검증, 콘솔 0): 신규 1건(폼 컨트롤 `color-scheme` 미설정 → 네이티브 select 팝업/화살표·스크롤바 라이트 렌더 불일치) + TODO 큐 #1/#4/#5 라이브 재확인. 백로그 포화 지속.
 
 실측: https://gcalen.com/ Chrome 데스크톱. 캘린더(6월·today 5/31 파란보더)·리스트·날짜패널·상세모달(FF7 리버스) 전 표면 + JS computed 교차검증. 콘솔 에러 0·가로 오버플로 0(docScrollW=clientW=1905). 모바일 ≤480은 이번에도 resize_window 실렌더 미반영(innerWidth 1920 고정)→소스/CSSOM 갈음(직전 사이클 동일 환경제약).

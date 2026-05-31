@@ -140,6 +140,7 @@ select 3종 `appearance:none`+커스텀 셰브론(1순위 color-scheme의 후속
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [디자이너 2026-05-31 12:17] [시각위계·캘린더] 기본 진입(자동 점프) 뷰에서 today가 other-month 셀로 렌더될 때 '오늘' 텍스트 라벨이 미렌더(script.js L673 `!isOther` 가드) → 파란 보더+옅은 채움만 남아 선택 셀과 혼동·정체불명, 가장 강한 파란 강조가 빈 비클릭 셀에 실려 위계 역전. 수정: L673 today 라벨에서 `!isOther` 가드 제거(디밍 예외 이미 적용)해 other-month today에도 '오늘'(또는 '오늘 M/D') 라벨 렌더. 신규 색 없음. (TODO #1 aria 건=SR, 이건 시각 라벨로 별개) 우선순위 보통
 - [디자이너 2026-05-31 11:03] [일관성·심미·저비용] 폼 컨트롤 `color-scheme: dark` 미설정 → 필터 select 3종(`appearance:auto`·커스텀 셰브론 없음)의 펼친 옵션 팝업·드롭다운 화살표·페이지 스크롤바가 OS 라이트 스킴으로 렌더돼 다크 테마와 충돌(html/body/select 전부 `color-scheme:normal`, meta 없음). 퀵윈=:root에 `color-scheme:dark` 1줄(네이티브 팝업/스크롤바 다크화), 선택적으로 3 select `appearance:none`+커스텀 셰브론. 신규 색 없음. 우선순위 보통
 - [디자이너 2026-05-31 10:03] [a11y·승격권고] 상세 모달 '열림 시 포커스 다이얼로그 미이동(트리거 카드 잔존)·닫힘 트리거 복귀 미적용' — role=dialog + aria-modal="true" + aria-labelledby=modal-title 는 이미 live·repo(index.html L142) 충족(=큐 '모달 aria-modal+접근명'은 완료상태 → 종결 권고). 남은 '열림 포커스 이동 / 닫힘 트리거 복귀(+선택 트랩)'를 TODO 승격 권고. 실측 openModal 직후 activeElement=트리거 .game-card. 우선순위 높음
 - [디자이너 2026-05-31 10:03] [a11y·어포던스] 위시 ☆ 비활성 색 #666(다크 배경 대비 ~2.7:1, WCAG 1.4.11 3:1 미달)이 '클릭 가능한 위시 추가 버튼'임을 가려 발견성 저하 → #8a8f98~var(--text-dim)로 상향(활성 #f5b400 노랑은 유지). .wishlist-btn·.modal-wishlist-btn 2규칙, 신규 색 없음. 우선순위 보통
