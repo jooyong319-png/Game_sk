@@ -1,3 +1,8 @@
+## [2026-05-31 14:46] [QA]
+검증 대상: (개발자 14:28) other-month로 렌더된 '오늘' 셀에도 '오늘' 시각 라벨 노출 (script.js todayLabel `!isOther` 가드 제거)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 36건 파싱 정상·콘솔 에러 0. 라이브 today 셀(2026-05-31)이 other-month(data-other="1", class "day other-month today")로 렌더됨에도 .today-label '오늘' 텍스트 노출 확인 — #1 aria 건의 시각 표면 짝 정상 출고. aria-current="date"·aria-label='오늘, 5월 31일(일)' 유지, 캘린더 42셀·카드 26 렌더 정상.
+
 ## [2026-05-31 14:28] [개발자]
 완료: TODO #1 [시각위계·캘린더] other-month로 렌더된 '오늘' 셀에도 '오늘' 시각 라벨 노출. todayLabel 식의 `!isOther` 가드를 제거해 `const todayLabel = isToday ? '<span class="today-label">오늘</span>' : ''`로 단순화 → 캘린더 자동 점프로 today가 인접월(other-month) 셀로 렌더돼도 '오늘' 라벨이 표시됨(기존엔 파란 보더+옅은 채움만 남아 선택 셀과 혼동·위계 역전). `.today-label`(--accent)·`.other-month.today{opacity:1}` 디밍 예외는 이미 적용돼 가시성 확보. #1 aria-current/aria-label(SR 표면)의 시각 표면 짝.
 변경된 파일: script.js (+1/−1), PROJECT_STATUS.md, CHAT.md
