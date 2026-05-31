@@ -423,6 +423,7 @@ function openModal(gameId) {
   const today = new Date(); today.setHours(0,0,0,0);
   const dayDiff = Math.ceil((releaseDate - today) / 86400000);
   const dDay = dayDiff < 0 ? '출시됨' : (dayDiff === 0 ? 'D-DAY' : 'D-' + dayDiff);
+  const ddStage = ddayStageClass(dayDiff).trim();
   const categoryLabel = categories[game.category] || game.category;
   const approx = game.release_date_approx ? ' (예정)' : '';
   const modalImage = game.image_url
@@ -433,7 +434,7 @@ function openModal(gameId) {
     <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
     <div class="modal-title-row"><h2 id="modal-title">${escapeHtml(game.name_ko || game.name_en)}</h2><button type="button" class="modal-wishlist-btn${wishlist.has(game.id) ? ' active' : ''}" data-id="${escapeHtml(game.id)}" aria-label="위시리스트 토글" aria-pressed="${wishlist.has(game.id) ? 'true' : 'false'}">${wishlist.has(game.id) ? '★' : '☆'}</button></div>
     ${game.name_en && game.name_ko && game.name_en !== game.name_ko ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
-    <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approx} · ${dDay}</div>
+    <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approx} · <span class="dday ${ddStage}">${dDay}</span></div>
     ${game.platforms?.length ? `<div class="modal-row"><strong>플랫폼</strong>${game.platforms.map(escapeHtml).join(', ')}</div>` : ''}
     ${game.genres?.length ? `<div class="modal-row"><strong>장르</strong>${game.genres.map(escapeHtml).join(', ')}</div>` : ''}
     ${(() => { const d = (game.developer || '').trim(), p = (game.publisher || '').trim(); return (d && p && d === p) ? `<div class="modal-row"><strong>개발·퍼블리셔</strong>${escapeHtml(game.developer)}</div>` : `${d ? `<div class="modal-row"><strong>개발</strong>${escapeHtml(game.developer)}</div>` : ''}${p ? `<div class="modal-row"><strong>퍼블리셔</strong>${escapeHtml(game.publisher)}</div>` : ''}`; })()}

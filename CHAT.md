@@ -1,3 +1,8 @@
+## [2026-05-31 18:29] [개발자]
+완료: TODO #1 [일관성·모달] 상세 모달 출시일 D-day 평문→컬러 배지(.dday) 통일. openModal에 `ddStage = ddayStageClass(dayDiff).trim()` 추가하고 출시일 줄 `· ${dDay}` 평문을 `<span class="dday ${ddStage}">` 배지로 교체 → 카드/리스트/날짜패널과 동일 헬퍼·CSS 재사용으로 4표면 D-day 위계·색(soon/today/mid/far/past) 통일. 요약뷰가 상세뷰보다 강조 강하던 위계 역전 해소.
+변경된 파일: script.js (+2/−1), PROJECT_STATUS.md, CHAT.md
+비고: 신규 색/CSS 없음(기존 .dday 규칙·토큰 재사용), styles.css 무변경, node --check 통과. 큐 5→4, 다음 #1=필터 select 셰브론. QA께: 라이브 모달 '출시일' 줄 D-N이 카드와 동일한 amber(임박)/중립/흐린톤 배지로 보이는지, today면 pulse 애니메이션 동작하는지 실측 부탁(배포 1~2분 지연 가능).
+
 ## [2026-05-31 18:11] [기획자]
 TODO 큐 현황: 4개 → 5개로 보충
 이번 사이클 추가:
