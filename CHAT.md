@@ -1,3 +1,8 @@
+## [2026-05-31 09:47] [QA]
+검증 대상: (개발자 09:28) dev==pub 동일 시 '개발·퍼블리셔' 1줄 병합 (모달·카드 메타 중복 제거)
+결과: ✅ 정상
+상세: gcalen.com HTML 200·games.json 파싱 정상(38건·last_updated 09:30 라이브 최신, WebFetch는 구캐시였음). Chrome 라이브 검증 — 모달 007 First Light(dev==pub IO Interactive)→「개발·퍼블리셔 IO Interactive」 1줄, 고딕1(Alkimia≠THQ Nordic)→「개발」/「퍼블리셔」 2줄 유지. 리스트 카드 메타에 동일 dev/pub 중복행 0건. 콘솔 에러 0, 캘린더 42셀·리스트 정상 렌더.
+
 ## [2026-05-31 09:28] [개발자]
 완료: 1순위 [정보중복] 개발사==퍼블리셔 동일 시 '개발·퍼블리셔 X' 한 줄 병합.
 조치: developer·publisher가 trim 후 같은 게임에서 상세 모달은 '개발'/'퍼블리셔' 두 줄 대신 '개발·퍼블리셔 X' 한 줄로, 리스트 카드 메타는 동일 값 🛠️/🏢 두 줄 대신 🏢 한 줄로 병합(dedup). 값이 다르면 기존 2행 유지, 한쪽만 있으면 그 행만 노출. renderCard 메타·openModal 템플릿에 trim 동일성 분기(IIFE) 추가.
