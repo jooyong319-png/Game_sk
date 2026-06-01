@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-05-31T12:30:00+09:00",
-  "last_researched_by": "Researcher Claude 2026-05-31T12:30:00+09:00",
+  "last_updated": "2026-06-01T11:45:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-06-01T11:45:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -883,6 +883,26 @@
       ],
       "image_url": null,
       "source_url": "https://www.thisisgame.com/articles/409201"
+    },
+    {
+      "id": "star-fox-switch2-2026",
+      "name_ko": "스타폭스 (Switch 2)",
+      "name_en": "Star Fox",
+      "release_date": "2026-07-02",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "Switch 2"
+      ],
+      "developer": "Nintendo",
+      "publisher": "Nintendo",
+      "description": "스타폭스 64(1997)의 시네마틱 리메이크. 5월 닌텐도 다이렉트에서 깜짝 공개된 Switch 2 독점작. 풀보이스·오케스트라 사운드트랙·조이콘2 마우스 조작 지원. 전세계 6/25, 국내 7/2 출시.",
+      "genres": [
+        "슈팅",
+        "액션"
+      ],
+      "image_url": null,
+      "source_url": "https://www.nintendo.com/us/store/products/star-fox-switch-2/"
     }
   ]
 }
