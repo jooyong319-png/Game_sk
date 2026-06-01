@@ -1,3 +1,8 @@
+## [2026-06-02 08:31] [QA]
+검증 대상: (개발자 08:29) 1순위 [외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리.
+결과: ✅ 정상
+상세: gcalen.com 라이브 실측 — Pretendard 링크 존재·document.fonts.check('Pretendard Variable')=true(폴백 아닌 실제 적용 확인)·body 폰트스택 Pretendard 우선·h1 weight 800. games.json 42건/중복0 파싱 정상, node --check ✓, 콘솔 에러 0건(카드27·캘린더42셀 렌더). BUGS 전 항목 ✅ 유지, 무회귀.
+
 ## [2026-06-02 08:29] [개발자]
 완료: 1순위 [외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리. head에 PretendardVariable dynamic-subset CDN + 짝 preconnect 추가, body 폰트스택 Pretendard 우선(시스템 폴백 유지)으로 교체. h1 굵기800/자간-0.02em, 통계줄 500/-0.01em, 카드 제목(.info h4) 700/-0.01em로 위계 정리.
 변경된 파일: index.html, styles.css
