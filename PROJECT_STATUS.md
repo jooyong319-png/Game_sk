@@ -120,32 +120,30 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-01 00:00 (기획자): 활성 사용자 요청 0(SEO 보류 유지), 미해결 코드 버그 0(BUGS 전 항목 ✅), 3사이클 정체 TODO 0. 직전 사이클(22:18) 큐 번호가 1·2·3·5로 어긋나(누락된 4 = '날짜패널 SR 포커스·aria-live'가 prose엔 남았으나 번호 목록에서 누락) 정리. repo 교차검증: 날짜패널은 scrollIntoView+flash만 있고 `#day-detail-panel`에 aria-live/role/포커스 이동 전부 부재 → 실착수 미완 확인되어 2순위로 복원. 5건 모두 유효·소작업. (23:40 dev hotfix=중복 '필터 초기화' SyntaxError 복구로 기능변경 아님, QA 22:46 ✅ → 완료 이동분 없음)
+> 갱신 2026-06-02 (기획자): **모드 = 외형(시각 디자인) 집중** (사용자 지시 "당분간 외형 바꾸는데 집중하자"). 직전 큐 5건이 a11y/일관성/단일출처화 위주(타임스탬프 통일·날짜패널 aria-live·터치타겟44·위시별 토큰)라 외형 모드 규칙상 큐 부적합 → 4건은 IDEAS로 보류 이동, 외형 개선 4건으로 교체(통계줄 세그먼트 클릭만 UX 발견성으로 5순위 유지). 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0(BUGS 전 항목 ✅). a11y/리팩토링/색대비/패딩 트윅은 큐에 안 올리고 IDEAS 보관만.
 
+1. **[외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리** (디자이너 운영자요청 IDEAS→승격)
+   - 현재 시스템 폰트만 사용(head에 미사용 폰트 preconnect만 잔존). 모던 한글 가변폰트(Pretendard) 1개 교체로 세련도 체감 큼.
+   - index.html `<head>`에 Pretendard CDN(`cdn.jsdelivr.net/gh/orioncactus/pretendard` PretendardVariable 또는 dynamic-subset) `<link>` 추가, styles.css `body`(또는 `:root` 폰트 토큰) 스택을 `'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif`로. h1·통계줄·카드 제목 weight/letter-spacing 가볍게 정리. 미사용 preconnect는 폰트 link와 짝지어 정리. 신규 색 없음, node --check·CSS brace 균형 확인.
 
+2. **[외형·캘린더] 출시 있는 셀 면(面) 강조 — 옅은 배경 tint + 좌측 카테고리색 악센트** (디자이너 05-30 IDEAS→승격)
+   - 게임 있는 셀과 빈 셀 배경이 동일해 "여기 콘텐츠 있음"이 점/라벨로만 약하게 전달됨.
+   - 출시 있는 `.day`에 옅은 배경 tint(`rgba(74,144,226,0.06)`) + 좌측 2px 카테고리색 악센트 보더로 면 강조. '오늘'(파랑 보더)·'임박'(amber) 기존 셀 상태와 시각 충돌 없도록 우선순위 확인. styles.css 소규모(1~2규칙), 기존 색 재사용, CSS brace 균형.
 
-1. **[일관성·정확성] 헤더↔푸터 '데이터 마지막 갱신' 타임스탬프 포맷 통일** (디자이너 2026-05-31 06:07 발견 '보통')
-   - 동일한 '마지막 갱신' 정보가 헤더(`#last-updated` '마지막 업데이트: 2026.05.31' — 날짜만·점 구분)와 푸터(`#footer-updated-date` '2026-05-31 21:10 (N시간 전)' — datetime·대시·상대시간)에 라벨/포맷/구분자/정밀도가 모두 다르게 중복 노출돼 같은 신선도 신호가 두 톤으로 갈림.
-   - 단일 포맷 헬퍼로 통일: 헤더 `#last-updated` 주입을 푸터와 동일한 `formatDate`(+선택적 상대시간) 헬퍼 출력으로 맞추거나, 헤더 날짜-only 표기를 제거하고 푸터 1곳으로 단일화(택1, 개발자 판단). script.js(헤더 타임스탬프 주입부)+index.html 소규모, 신규 색/CSS 없음, node --check 통과·외형 회귀 확인.
+3. **[외형·카드] 게임 카드 호버 입체감 — 그림자 상승 + 살짝 떠오름 + 트랜지션** (외형 모드 신규)
+   - 리스트 카드(.game-card) 호버 피드백이 약해 클릭 어포던스/세련도 부족.
+   - `.game-card`에 `transition: box-shadow .15s ease, transform .15s ease` + `:hover`에 상승 `box-shadow`·`transform: translateY(-2px)`. `prefers-reduced-motion: reduce`에선 transform 제거. 기존 그림자/색 재사용(신규 색 없음). styles.css 소규모, CSS brace 균형.
 
-2. **[a11y·인터랙션] 날짜 셀 클릭 패널 오픈 시 SR 안내(aria-live) + 패널 포커스 이동** (디자이너 2026-05-31 07:05 발견 '보통' — 22:18 번호 목록에서 누락됐던 항목 복원)
-   - 날짜 셀 클릭 시 `#day-detail-panel` 내용이 갱신되나 `role`/`tabindex`/`aria-live` 전부 부재 → 시각 사용자는 scrollIntoView+flash(기출고)로 인지하지만 키보드/SR 사용자는 패널 오픈·내용 변경을 안내받지 못함(포커스도 격자에 잔류).
-   - 둘 중 하나로(개발자 판단): (a) `#day-detail-panel`(또는 `.day-panel-title`)에 `tabindex="-1"` 부여 후 renderDayPanel 렌더 직후 `.focus()`로 포커스 이동, 또는 (b) 패널에 `role="region"`+`aria-label`(또는 `aria-labelledby`=제목) + 헤더에 `aria-live="polite"`로 'N건 이후' 변경 안내. scrollIntoView/flash·× 닫기 기존 동작 유지. script.js renderDayPanel 소규모(+index.html 속성), 신규 색/CSS 없음, node --check 통과.
+4. **[외형·배지] D-DAY/임박 배지 시각 강조 — 그라데이션 + 강조 weight** (외형 모드 신규)
+   - D-DAY·D-1~D-7 임박 배지가 평면 단색이라 "출시 임박" 긴박감이 약함(원거리 배지와 위계 비슷).
+   - 임박 단계 배지에 그라데이션 배경(기존 amber/accent 색 재사용) + 굵은 weight 강조, 원거리(D-30+)는 차분한 톤 유지해 위계 분리. 기존 근접도 색 단계 위에 시각만 보강. styles.css 소규모(.d-day 류 클래스), 신규 색 최소, node --check·CSS brace 균형.
 
-3. **[UX·발견성] 헤더 통계줄(#stats-summary) 세그먼트 클릭 = 해당 카테고리 필터 적용** (디자이너 2026-05-31 23:02 발견 '보통')
-   - 헤더 아래 통계 요약(`국내 모바일 N · 국내 PC/콘솔 N · 글로벌 N · 신규서버 N · 총 N`)이 현재 평문 `<p>`라, 옆 카테고리 드롭다운과 정보가 겹치는데도 클릭 불가 — 한 번에 그 카테고리만 보고 싶을 때 드롭다운을 따로 조작해야 함.
-   - 각 카테고리 세그먼트를 클릭 가능한 `<button>`(또는 role=button+tabindex)로 만들어, 클릭 시 해당 `category` 필터 적용 + 카테고리 select 값 동기화 + 재렌더. '총 N' 세그먼트 클릭 = 카테고리 필터 해제(전체). 활성 세그먼트는 `aria-pressed="true"`+옅은 강조(기존 `--accent`/카테고리 색 재사용, 신규 색 없음). 라벨은 `CATEGORY_LABELS` 단일 출처 재사용. script.js renderStatsSummary에 클릭 핸들러·active 토글(~20줄 내) + styles.css 1~2규칙, node --check·CSS brace 균형 확인.
+5. **[UX·발견성] 헤더 통계줄(#stats-summary) 세그먼트 클릭 = 해당 카테고리 필터** (디자이너 05-31 — 5순위 유지)
+   - 통계 요약(`국내 모바일 N · … · 총 N`)이 평문이라 카테고리 드롭다운과 정보가 겹치는데 클릭 불가.
+   - 각 세그먼트를 클릭 가능 `<button>`(또는 role=button)로, 클릭 시 해당 `category` 필터 적용 + 카테고리 select 동기화 + 재렌더. '총 N' = 필터 해제(전체). 활성 세그먼트는 옅은 강조(기존 `--accent`/카테고리 색 재사용). 라벨은 `CATEGORY_LABELS` 단일 출처 재사용. script.js renderStatsSummary ~20줄 + styles.css 1~2규칙, node --check·CSS brace 균형.
 
-4. **[a11y·모바일] 아이콘 버튼 터치타겟 최소 44×44px 확보 (WCAG 2.5.5)** (디자이너 2026-05-31 발견 '보통')
-   - 위시 별(★/☆)·모달 닫기(×)·네비(‹ ›) 등 아이콘 버튼의 클릭/터치 영역이 44×44px 미만이라 모바일 터치 정확도 저하(WCAG 2.5.5). 아이콘 시각 크기는 유지하되 히트영역만 확장.
-   - `.wishlist-btn`/`.modal-wishlist-btn`/`.modal-close`/캘린더 네비 버튼에 `min-width:44px; min-height:44px` + 중앙정렬(`display:inline-flex; align-items:center; justify-content:center`). 아이콘 글리프 폰트크기는 그대로. 모달 닫기(×)는 기존 44×44 히트영역 적용분 있으면 검증으로 갈음. styles.css 소규모(2~4규칙), 신규 색/CSS 토큰 없음, script.js 무변경, CSS brace 균형 확인.
-
-5. **[a11y·일관성] 위시 활성 별(★) 색 --wish 토큰으로 통일** (디자이너 05-31 발견 '보통')
-   - 위시 활성 별 색이 표면마다 다름: 카드/모달 `#f5b400` vs 날짜 패널 `#f5a623`. 게다가 패널의 `#f5a623`은 '임박(D-7 이내)' amber와 동일색이라 '위시 표시'와 '임박'이 같은 색으로 읽힘(의미 충돌).
-   - `:root`에 `--wish` 토큰(`#f5b400`) 1개 정의하고, 활성 별 색을 쓰는 모든 곳(카드/모달/날짜 패널 활성 ★)을 `var(--wish)`로 통일. 임박 amber(`#f5a623`)는 '임박' 전용으로 유지해 두 의미의 색 분리. styles.css 토큰 1줄 + 활성 별 색 치환 2~3곳, 신규 색 도입 없음(기존 #f5b400 재사용), CSS brace 균형·node --check 통과.
-
-### (큐 소진 후 후보, IDEAS에서)
-캘린더 그리드 ARIA(role=grid/row/columnheader/gridcell — 현 CSS grid에 role=row 래퍼 부재라 DOM 보강분 점검 후), 기본 캘린더 뷰 첫 진입 로딩 플레이스홀더(현 '불러오는 중…'이 숨겨진 #games-list에만 주입), 전역 :focus-visible outline — 디자이너 재점검 후 끌어옴.
+### (보류 — 외형 모드 중 IDEAS 보관, 사용자가 "이제 a11y 정리하자" 지시 시 재승격)
+직전 큐에서 이동: 헤더↔푸터 '데이터 마지막 갱신' 타임스탬프 포맷 통일(일관성, 아래 IDEAS에 신규 보관), 날짜 셀 클릭 패널 aria-live+포커스 이동(a11y, IDEAS 기존), 아이콘 버튼 44×44px 터치타겟(a11y/WCAG 2.5.5, IDEAS 기존), 위시 활성 별 --wish 토큰 통일(일관성/색, IDEAS 기존). 외형 모드 동안 큐에 안 올림.
 
 
 ## 알려진 버그 (BUGS)
@@ -157,6 +155,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [기획자 2026-06-02 외형모드 보류] [일관성] 헤더(`#last-updated` '마지막 업데이트: 2026.05.31' 날짜만·점구분)↔푸터(`#footer-updated-date` 'YYYY-MM-DD HH:MM (N시간 전)' datetime·대시·상대시간) 동일 신선도 정보가 라벨/포맷/구분자/정밀도 모두 달라 두 톤으로 갈림 → 단일 formatDate 헬퍼로 통일하거나 헤더 날짜-only 제거하고 푸터 1곳 단일화. 우선순위 보통(외형 모드 중 보류)
 - [디자이너 2026-05-31 07:05·08:05갱신 / 기획자 08:11 일부 TODO화] [a11y] 상세 모달 다이얼로그 시맨틱 후속 — (완료)닫힘 상태 컨트롤 포커스 누출은 개발자 07:28 해소·디자이너 08:05 라이브 .focus() 실측 확정. (TODO화)aria-modal="true"+aria-labelledby(접근명) → 큐 5순위로 끌어옴. (잔여 IDEAS)포커스 트랩·열림 포커스 이동·닫힘 트리거 복귀. 우선순위 보통
 - [디자이너 2026-05-31 07:05] [a11y·인터랙션] 날짜 셀 클릭으로 패널 오픈 시 키보드/SR 포커스 미이동·미안내(`#day-detail-panel` role/tabindex/aria-live 전부 null, 시각 scrollIntoView+flash만 기출고) → 패널/제목에 `tabindex=-1`+`focus()` 또는 `role=region`+`aria-label`+헤더 `aria-live=polite`. script.js renderDayPanel 소규모. 우선순위 보통
 
