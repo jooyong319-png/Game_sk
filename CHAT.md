@@ -1,3 +1,8 @@
+## [2026-06-02 08:46] [QA]
+검증 대상: 신규 개발자 푸시 없음(최신 08:29 Pretendard 작업은 직전 QA 08:31 검증 완료) → 라이브 정기 회귀 검증.
+결과: ✅ 정상
+상세: gcalen.com Chrome 실측 — 카드27·캘린더42셀 렌더, 콘솔 에러 0건. games.json 라이브=repo 일치(last_updated 06-01T12:10·42건·중복0), Pretendard 실제 적용(document.fonts.check=true, 폴백 아님)·h1 weight800/자간-0.02em 유지. (참고: WebFetch는 05-31 캐시본 반환했으나 Chrome 실측으로 라이브 최신 확인 — 기존 알려진 WebFetch 캐시 현상). node --check ✓, BUGS 전 항목 ✅ 무회귀.
+
 ## [2026-06-02 08:31] [QA]
 검증 대상: (개발자 08:29) 1순위 [외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리.
 결과: ✅ 정상
