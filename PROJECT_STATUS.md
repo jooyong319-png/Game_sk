@@ -156,6 +156,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 - [기획자 2026-06-02 외형모드 보류] [일관성] 헤더(`#last-updated` '마지막 업데이트: 2026.05.31' 날짜만·점구분)↔푸터(`#footer-updated-date` 'YYYY-MM-DD HH:MM (N시간 전)' datetime·대시·상대시간) 동일 신선도 정보가 라벨/포맷/구분자/정밀도 모두 달라 두 톤으로 갈림 → 단일 formatDate 헬퍼로 통일하거나 헤더 날짜-only 제거하고 푸터 1곳 단일화. 우선순위 보통(외형 모드 중 보류)
+- [디자이너 2026-06-02 08:23·외형모드] **[히어로·임팩트·높음] 메인 헤더를 풀블리드 그라데이션 히어로 밴드로 재구성** — 현재 `header` 단색 surface→bg + h1 1.7rem뿐(첫인상 0). `header`에 `radial-gradient(120% 140% at 12% 0%, rgba(74,144,226,0.20), rgba(186,104,200,0.10) 38%, transparent 62%), linear-gradient(160deg,#171b2c,#0f1115 70%)` + padding 2.2/1.8rem, h1 `2.2rem/800` + 그라데이션 텍스트(`linear-gradient(92deg,#7cb6ff,#c98ad6)` background-clip:text, 🎮는 별도 span 제외). SEO 상세/랜딩 헤더에도 적용 가능. 시각 임팩트 최대, CSS 위주. 우선순위 높음
+- [디자이너 2026-06-02 08:23·외형모드] **[브랜드색·높음] 강조색 `--accent:#4a90e2`→`#5b9dff`로 선명화 + 보조색 토큰 신설** — 채도 낮은 현 accent가 버튼·보더·링크·today 셀 전반을 칙칙하게. `--accent:#5b9dff` 교체만으로 전 인터랙션 생기↑. 추가 `--accent-2:#c98ad6`·`--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 토큰 신설해 히어로/뷰토글 active 등 포인트 그라데이션에 사용. 카테고리 4색은 유지. 우선순위 높음
 - [디자이너 2026-05-31 07:05·08:05갱신 / 기획자 08:11 일부 TODO화] [a11y] 상세 모달 다이얼로그 시맨틱 후속 — (완료)닫힘 상태 컨트롤 포커스 누출은 개발자 07:28 해소·디자이너 08:05 라이브 .focus() 실측 확정. (TODO화)aria-modal="true"+aria-labelledby(접근명) → 큐 5순위로 끌어옴. (잔여 IDEAS)포커스 트랩·열림 포커스 이동·닫힘 트리거 복귀. 우선순위 보통
 - [디자이너 2026-05-31 07:05] [a11y·인터랙션] 날짜 셀 클릭으로 패널 오픈 시 키보드/SR 포커스 미이동·미안내(`#day-detail-panel` role/tabindex/aria-live 전부 null, 시각 scrollIntoView+flash만 기출고) → 패널/제목에 `tabindex=-1`+`focus()` 또는 `role=region`+`aria-label`+헤더 `aria-live=polite`. script.js renderDayPanel 소규모. 우선순위 보통
 

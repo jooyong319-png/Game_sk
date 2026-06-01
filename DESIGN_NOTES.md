@@ -44,6 +44,37 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-06-02 08:23] [디자이너] - 외형 모드
+실측: https://gcalen.com/ Chrome 데스크톱(실렌더 1516px) — 캘린더(2026년 6월, 오늘=2)·리스트·날짜패널(06.03 이후 27건)·SEO 상세페이지(/game/ff7-rebirth-switch2-2026) 직접 확인, 콘솔 에러 0건, 배포 42건 라이브. **모드 전환 반영: a11y/시맨틱/리팩토링/대비비/1px 트윅 전면 보류, 시각 임팩트·컬러·타이포·카드·히어로만 평가.** 현재 인상 한 줄: 기능은 완성도 높으나 **전 화면이 #0f1115~#1a1d24 단색 다크 + 얇은 회색 보더로만 구성돼 "회색 스프레드시트" 느낌** — 첫인상 임팩트(와우 요소)·브랜드색·타이포 위계가 거의 없음. 카테고리 4색(녹/청/보라/주황)은 7~8px 점·4px 배너로만 쓰여 색 자산이 낭비됨. SEO 상세페이지(/game/{id})는 넓은 검은 화면 한가운데 카드 하나만 떠 있어 빈 공간이 특히 큼.
+
+### 외형 개선 제안 (구체적 hex/크기 포함)
+
+1. **[히어로·최우선·임팩트] 메인 헤더가 `🎮 게임 출시 캘린더`(h1 1.7rem) 한 줄뿐 — 단색 surface→bg 그라데이션 위라 첫인상 0. 풀블리드 "히어로 밴드"로 재구성** — 우선순위: 높음
+   - 현재(styles.css `header`): `background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%)`, h1 `font-size:1.7rem`, 그 아래 subtitle #9aa0ac. 색 변화가 거의 안 보여 헤더가 사실상 빈 검은 띠.
+   - 바꿀 값(개발자): `header { background: radial-gradient(120% 140% at 12% 0%, rgba(74,144,226,0.20) 0%, rgba(186,104,200,0.10) 38%, transparent 62%), linear-gradient(160deg,#171b2c 0%,#0f1115 70%); padding:2.2rem 1rem 1.8rem; border-bottom:1px solid #232838; }` — 좌상단에서 번지는 블루→퍼플 글로우로 깊이감. h1은 `font-size:2.2rem; font-weight:800; letter-spacing:-0.01em;` + 그라데이션 텍스트 `background:linear-gradient(92deg,#7cb6ff 0%,#c98ad6 100%); -webkit-background-clip:text; background-clip:text; color:transparent;`(🎮 이모지는 별도 span으로 빼서 클립 제외). subtitle은 `#aab2c5`로. 임팩트 큰 "면" 변화라 와우 요소가 생김. SEO 상세/랜딩 페이지 헤더에도 동일 적용하면 빈 화면 인상도 개선.
+   - 참고 트렌드: SaaS 랜딩의 "aurora/mesh-gradient 히어로"(Linear, Vercel 대시보드 헤더 계열). Dribbble "dark dashboard hero gradient".
+
+2. **[브랜드색·팔레트] 강조색 `--accent:#4a90e2`가 채도 낮아 다크 위에서 칙칙 — 한 단계 밝고 선명하게 + 보조 강조색 토큰 신설** — 우선순위: 높음
+   - 현재: `--accent:#4a90e2`(살짝 흐린 블루). 버튼·보더·링크·today 셀 전부 이 색이라 전체 톤이 가라앉음.
+   - 바꿀 값: `--accent:#5b9dff;`(동일 계열, 명도/채도↑로 다크 대비 선명). 추가 `:root`에 `--accent-2:#c98ad6;`(퍼플 보조)·`--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6);` 토큰 신설 → 히어로 텍스트·뷰토글 active·퀵칩 active 등 "주요 인터랙션 한 곳"에 그라데이션 포인트로 사용. 카테고리 4색(#81c784/#64b5f6/#ba68c8/#ff8a65)은 유지(이미 좋은 팔레트). accent만 교체해도 today 셀·포커스링·링크가 일제히 생기 있어짐.
+
+3. **[D-DAY·임팩트] 출시 임박 지표가 `D-1`/`D-2` 평문 작은 글씨 — 이 사이트의 1차 가치인데 시각적으로 약함. 임박(D-7 이내)만 "알약 배지"로 강조** — 우선순위: 높음
+   - 현재(styles.css `.dday`): `font-size:0.8rem; font-weight:700; color`만 단계별(amber/중립/흐림). 배경 없는 텍스트라 카드/패널에서 눈에 안 띔.
+   - 바꿀 값: `.dday.today, .dday.soon { background:linear-gradient(135deg,#ff7a59,#f5a623); color:#1a1206; border-radius:999px; padding:2px 9px; font-weight:800; font-size:0.78rem; box-shadow:0 2px 8px rgba(245,166,35,0.35); }` — D-DAY/D-1~7만 따뜻한 알약 배지로 튀게(이미 `.dday.soon`/`.today` 분기 존재하니 색 규칙만 교체). 중립(mid)·먼(far)은 평문 유지해 대비. 캘린더 임박 셀(`.day.day-soon`)도 동일 톤 좌측바와 어울림.
+
+4. **[카드·깊이감] 게임 카드가 `--surface` 단색 면 + 1px 보더로 평평 — 카테고리색을 카드 정체성으로 끌어올려 입체감 부여** — 우선순위: 보통
+   - 현재: `.game-card{background:#1a1d24;border:1px solid #2a2e38;border-radius:10px}` + 상단 4px `.card-banner`(카테고리색). 색 띠가 너무 얇아 존재감 약함, hover 그림자(0 4px 12px rgba0,0,0,.35)는 있으나 무채색이라 밋밋.
+   - 바꿀 값: (a) `.card-banner` 높이 `4px→5px` 두고 카드 상단을 살짝 밝은 글래스 톤으로 — `.game-card{background:linear-gradient(180deg, rgba(255,255,255,0.025) 0%, #1a1d24 64px), #1a1d24;}`. (b) hover 그림자에 카테고리색 글로우 살짝: 글로벌=`box-shadow:0 8px 24px rgba(186,104,200,0.18)`, 모바일=`rgba(129,199,132,0.16)`, PC·콘솔=`rgba(100,181,246,0.16)`, 신규서버=`rgba(255,138,101,0.16)` 4종(`.game-card.category-*:hover`, 신규 색 없이 기존 4색 알파). 카드가 "떠오르는" 손맛 + 카테고리 정체성 강화.
+
+5. **[타이포·한글 폰트] 본문이 system-ui 폴백(`-apple-system…"Noto Sans KR"`)이라 OS마다 한글 렌더가 제각각·자간이 헐거움. Pretendard 웹폰트로 통일** — 우선순위: 보통
+   - 현재: `font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;` — 한글은 사실상 OS 기본(맑은 고딕/애플산돌)으로 떨어져 위계·자간 일관성 없음.
+   - 바꿀 값: `<head>`에 `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">` (또는 pretendard-dynamic-subset로 용량↓), `body{font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}`. 제목 가중치 위계도 함께: h1 800 / .date-group-header·카드 h4 700 / 본문 400. Pretendard는 한국 웹앱 표준급(토스·당근 계열)이라 즉시 "정돈된 프로덕트" 인상. ※외부 CDN 1개 추가 — 개발자가 성능/정책 확인 후 적용.
+
+### 현재 양호 (외형 관점, 트집 X)
+카테고리 4색 팔레트(#81c784/#64b5f6/#ba68c8/#ff8a65) 자체는 채도·구분 좋음 — 더 적극적으로 쓰기만 하면 됨. 카드 hover 리프트(translateY -2px)·모달 페이드/스케일·D-day 펄스 등 마이크로 인터랙션 토대는 이미 깔려 있어, 위 컬러/히어로 작업과 합쳐지면 시너지. 캘린더 today 파란 보더+'오늘' 라벨, 출시 셀 좌측 악센트바도 구조는 좋음(accent 색만 밝히면 강해짐).
+
+---
+
 ## [2026-05-31 12:17] [디자이너] — 라이브 실측(Chrome 데스크톱, JS computed 교차검증, 콘솔 0): 신규 1건(기본 진입 뷰에서 today 셀의 '오늘' 텍스트 라벨 미렌더 — 시각 정체성/위계) + 기존 큐·IDEAS 라이브 재확인. 백로그 포화 지속.
 
 실측: https://gcalen.com/ Chrome 데스크톱. 진입 시 자동 점프된 캘린더(2026년 6월, today=5/31)·리스트·상세모달(FF7 리버스, 8px 컬러 바·개발·퍼블리셔 1줄 병합 라이브 확정)·footer/seo-nav 전 표면 + JS computed 교차검증. 콘솔 에러 0·가로 오버플로 0(docScrollW=clientW=1905). 모바일 ≤480은 이번에도 resize_window가 실렌더 뷰포트에 미반영(innerWidth 1920 고정)→소스/CSSOM 갈음(직전 사이클 동일 환경제약).
