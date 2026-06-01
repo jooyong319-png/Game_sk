@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리** — 시스템 폰트만 쓰던 사이트에 모던 한글 가변폰트 Pretendard 1개 교체로 타이포 세련도/위계 확보. index.html `<head>`에 `cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9` PretendardVariable dynamic-subset `<link>` + 짝 preconnect 추가, styles.css `body` 폰트스택을 `"Pretendard Variable","Pretendard",-apple-system,...,system-ui,...`로 교체(시스템 폰트 폴백 유지). 제목/본문 위계 정리: h1 `font-weight:800`+`letter-spacing:-0.02em`, 통계줄(.stats-summary) `font-weight:500`+`-0.01em`, 카드 제목(.info h4) `font-weight:700`+`-0.01em`. 미사용 preconnect는 head에 잔존분 없어 신규 폰트 link와 짝 preconnect만 추가. 신규 색 토큰 없음, script.js 무변경(node --check ✓), CSS brace 282/282 균형. index.html +3·styles.css +7/−1. — 개발자 완료 2026-06-02 08:29
 - [x] **[UX·발견성] 활성 필터 '초기화' 컨트롤** — 6종 필터(카테고리/플랫폼/기간/검색/주칩/위시) 중 비기본값 1개↑ 활성 시에만 #filter-reset 버튼 노출, 클릭 시 전부 기본값 일괄 리셋(결과 0건 빈 상태 탈출구 겸). .chip-btn 톤 재사용·신규 색 없음 — 개발자 완료 2026-05-31 13:38
 - [x] **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)** — 키보드 사용자가 상단 컨트롤(검색/필터3종/뷰토글/퀵칩) 다수를 매 진입 Tab으로 통과해야 본문에 도달하던 문제(WCAG 2.4.1) 해소. `<body>` 최상단에 `<a class="skip-link" href="#main">본문 바로가기</a>` 추가 + `<main>`에 `id="main"` 부여. styles.css `.skip-link`는 평상시 `position:absolute;left:-9999px`로 화면 밖 숨김, `:focus` 시 `left:0`로 좌상단 노출(기존 --surface/--text/--accent 토큰 재사용, z-index:1000). 신규 색 토큰 없음, index.html +2/−1·styles.css 2규칙(+17), script.js 무변경(node --check ✓), CSS brace 282/282 균형. — 개발자 완료 2026-05-31 21:29
 - [x] **[정보손실·패널] 날짜 클릭 패널 행 멀티플랫폼 'PS5 외 N' suffix 표기** — 날짜 패널 행 플랫폼 컬럼이 멀티플랫폼 게임에서 첫 1개만 노출(`platforms[0]`)해 모달/카드(`PS5, Xbox Series X/S`)와 신호 불일치하던 문제 해소. renderDayRows 플랫폼 표기를 첫 플랫폼 + (개수>1이면 ` 외 N`) suffix로 변경(인라인 삼항)해 모달·카드와 멀티 신호 일관. script.js만 수정, 신규 색/CSS 없음, node -c 통과·DOM 스텁 런타임 무에러. — 개발자 완료 2026-05-31 12:40(커밋 4d1044d), QA 20:46 정기 헬스체크 무회귀, 기획자 완료처리 2026-05-31 21:11
@@ -122,23 +123,19 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 > 갱신 2026-06-02 (기획자): **모드 = 외형(시각 디자인) 집중** (사용자 지시 "당분간 외형 바꾸는데 집중하자"). 직전 큐 5건이 a11y/일관성/단일출처화 위주(타임스탬프 통일·날짜패널 aria-live·터치타겟44·위시별 토큰)라 외형 모드 규칙상 큐 부적합 → 4건은 IDEAS로 보류 이동, 외형 개선 4건으로 교체(통계줄 세그먼트 클릭만 UX 발견성으로 5순위 유지). 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0(BUGS 전 항목 ✅). a11y/리팩토링/색대비/패딩 트윅은 큐에 안 올리고 IDEAS 보관만.
 
-1. **[외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리** (디자이너 운영자요청 IDEAS→승격)
-   - 현재 시스템 폰트만 사용(head에 미사용 폰트 preconnect만 잔존). 모던 한글 가변폰트(Pretendard) 1개 교체로 세련도 체감 큼.
-   - index.html `<head>`에 Pretendard CDN(`cdn.jsdelivr.net/gh/orioncactus/pretendard` PretendardVariable 또는 dynamic-subset) `<link>` 추가, styles.css `body`(또는 `:root` 폰트 토큰) 스택을 `'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif`로. h1·통계줄·카드 제목 weight/letter-spacing 가볍게 정리. 미사용 preconnect는 폰트 link와 짝지어 정리. 신규 색 없음, node --check·CSS brace 균형 확인.
-
-2. **[외형·캘린더] 출시 있는 셀 면(面) 강조 — 옅은 배경 tint + 좌측 카테고리색 악센트** (디자이너 05-30 IDEAS→승격)
+1. **[외형·캘린더] 출시 있는 셀 면(面) 강조 — 옅은 배경 tint + 좌측 카테고리색 악센트** (디자이너 05-30 IDEAS→승격)
    - 게임 있는 셀과 빈 셀 배경이 동일해 "여기 콘텐츠 있음"이 점/라벨로만 약하게 전달됨.
    - 출시 있는 `.day`에 옅은 배경 tint(`rgba(74,144,226,0.06)`) + 좌측 2px 카테고리색 악센트 보더로 면 강조. '오늘'(파랑 보더)·'임박'(amber) 기존 셀 상태와 시각 충돌 없도록 우선순위 확인. styles.css 소규모(1~2규칙), 기존 색 재사용, CSS brace 균형.
 
-3. **[외형·카드] 게임 카드 호버 입체감 — 그림자 상승 + 살짝 떠오름 + 트랜지션** (외형 모드 신규)
+2. **[외형·카드] 게임 카드 호버 입체감 — 그림자 상승 + 살짝 떠오름 + 트랜지션** (외형 모드 신규)
    - 리스트 카드(.game-card) 호버 피드백이 약해 클릭 어포던스/세련도 부족.
    - `.game-card`에 `transition: box-shadow .15s ease, transform .15s ease` + `:hover`에 상승 `box-shadow`·`transform: translateY(-2px)`. `prefers-reduced-motion: reduce`에선 transform 제거. 기존 그림자/색 재사용(신규 색 없음). styles.css 소규모, CSS brace 균형.
 
-4. **[외형·배지] D-DAY/임박 배지 시각 강조 — 그라데이션 + 강조 weight** (외형 모드 신규)
+3. **[외형·배지] D-DAY/임박 배지 시각 강조 — 그라데이션 + 강조 weight** (외형 모드 신규)
    - D-DAY·D-1~D-7 임박 배지가 평면 단색이라 "출시 임박" 긴박감이 약함(원거리 배지와 위계 비슷).
    - 임박 단계 배지에 그라데이션 배경(기존 amber/accent 색 재사용) + 굵은 weight 강조, 원거리(D-30+)는 차분한 톤 유지해 위계 분리. 기존 근접도 색 단계 위에 시각만 보강. styles.css 소규모(.d-day 류 클래스), 신규 색 최소, node --check·CSS brace 균형.
 
-5. **[UX·발견성] 헤더 통계줄(#stats-summary) 세그먼트 클릭 = 해당 카테고리 필터** (디자이너 05-31 — 5순위 유지)
+4. **[UX·발견성] 헤더 통계줄(#stats-summary) 세그먼트 클릭 = 해당 카테고리 필터** (디자이너 05-31 — 5순위 유지)
    - 통계 요약(`국내 모바일 N · … · 총 N`)이 평문이라 카테고리 드롭다운과 정보가 겹치는데 클릭 불가.
    - 각 세그먼트를 클릭 가능 `<button>`(또는 role=button)로, 클릭 시 해당 `category` 필터 적용 + 카테고리 select 동기화 + 재렌더. '총 N' = 필터 해제(전체). 활성 세그먼트는 옅은 강조(기존 `--accent`/카테고리 색 재사용). 라벨은 `CATEGORY_LABELS` 단일 출처 재사용. script.js renderStatsSummary ~20줄 + styles.css 1~2규칙, node --check·CSS brace 균형.
 
@@ -212,6 +209,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-02 08:29 [개발자] 1순위 완료: **[외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리**. index.html head에 PretendardVariable dynamic-subset CDN(`jsdelivr@v1.3.9`) + 짝 preconnect 추가, styles.css body 폰트스택을 `"Pretendard Variable","Pretendard",...,system-ui,...`로 교체(시스템 폴백 유지). h1 w800/-0.02em, 통계줄 w500/-0.01em, 카드 제목(.info h4) w700/-0.01em로 위계 정리. 신규 색 없음, script.js 무변경(node --check ✓), CSS brace 282/282, index.html +3·styles.css +7/−1. QA: 라이브에서 한글 본문/제목이 Pretendard로 렌더되는지(폰트 fallback 아님)·헤더 h1 굵기/자간 실측 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 23:40 [개발자] **긴급 복구**: df49c1a(필터 초기화 중복 추가→`filterReset` 재선언 SyntaxError로 사이트 다운)를 script.js·index.html 한정 정상 부모 5683171로 환원. 중복 제거로 복구, 기능은 정상 유지. node --check 통과.
 - 2026-05-31 13:38 [개발자] 1순위 완료: **[UX·발견성] 활성 필터 '초기화' 컨트롤**. 6종 필터 중 비기본값 1개↑ 활성 시에만 `#filter-reset` 버튼(.chip-btn 톤 재사용·신규 색 없음) 노출, 클릭 시 전부 기본값 일괄 리셋 후 재렌더(결과 0건 빈 상태 탈출구 겸). script.js: filterReset/DEFAULT_PERIOD const + isAnyFilterActive/updateFilterResetVisibility/resetAllFilters 함수 추가, renderGames에 가시성 토글 훅 1줄. index.html: quick-chips에 버튼 1개. node --check 통과, styles.css 미변경(brace 균형 유지). 잔여 TODO 3건 1~3순위로 당김.
 - 2026-05-31 22:16 [기획자] TODO 큐 4→5개. 직전 1순위 '상세 모달 메타 행 라벨 폭 정렬' 개발자 12:28 완료·QA 12:45 ✅→완료한 기능 이동(큐 5→4). 디자이너 05-31 발견 '[a11y] 위시 활성 별(★) 색 표면 불일치(#f5b400 카드/모달 vs #f5a623 패널)+패널 임박 amber와 색 충돌'을 작고 명확한 TODO로 5순위 승격(IDEAS→큐, --wish 토큰 통일). 잔여 4건(필터 초기화·날짜패널 우측 D-day 정렬·요일 헤더 평일 대비·.day-row-dot 색+모양) 1~4순위 유지. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0. 코드 미수정(문서만).
