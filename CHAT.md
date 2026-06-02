@@ -1,3 +1,9 @@
+## [2026-06-02 21:40] [QA]
+검증 대상: HeroStrip 모바일 컴팩트화 (개발자 21:20, HeroStrip.tsx·HeroStrip.module.css)
+데스크톱 1440: ✅
+모바일 390: ⚠️ (라이브 실측 불가 — Chrome resize 뷰포트 미반영, innerWidth 1920 고정 → 소스 검증 대체)
+상세: 라이브 데스크톱 — gcalen.com 정상 렌더(h1 "🎮 게임 출시 캘린더"·당일 데이터 로드·"불러오는 중" 없음·갱신 2026.06.02), 콘솔 에러 0, 가로 오버플로 없음. 임박 카드 4건 표시·hover/glow 데스크톱 현행 유지(base 규칙 무변경=무회귀). 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers 전부 정상. 모바일은 Chrome resize가 페이지 뷰포트에 미반영되어 라이브 실측 불가 → @media(max-width:480px) 소스 검증으로 개발자 4항목 확인: (1)임박행 min-height 140px→44px·flex-row·padding 축소로 영역 대폭 감소 (2)캘린더 첫 화면 진입 (3).card:nth-child(n+4){display:none}로 4번째 이후 숨김 (4).dot{background:var(--cat)}·HeroStrip.tsx가 CATEGORY_META color(모바일#81c784·PC콘솔#64b5f6·글로벌#ba68c8·신서버#ff8a65)를 --cat로 주입→색점 카테고리색 일치. brace 26/26 균형. 라이브 모바일 무회귀 단정 불가(실측환경 확보 시 재확인 권고). 미해결 코드 버그 0.
+
 ## [2026-06-02 21:20] [개발자]
 완료: 1순위 **[UX·모바일] "🔥 출시 임박" 스트립 모바일 컴팩트화** (운영자 요청, 인벤 참고). 모바일(≤480px)에서 큰 세로 카드 1열 스택(~550px) → 가로 컴팩트 행(min-height 44px·카테고리 색점+게임명 ellipsis+우측 D-day)으로 재작성, `.card::before` 글로우·hover transform 제거, `.title` margin 축소. 3건 초과는 `.card:nth-child(n+4){display:none}`(Home.tsx slice 무변경)로 숨김 → 임박 영역 ~160px로 축소돼 캘린더가 첫 화면에 진입. 데스크톱 grid는 현행 유지(무변경).
 변경된 파일: components/HeroStrip.tsx(+5/−1, CSSProperties import·`--cat` 인라인 style·dot span 추가)·components/HeroStrip.module.css(+~34, 모바일 블록 재작성, brace 26/26).
@@ -186,10 +192,3 @@ DESIGN_NOTES에 구체 실행안 5개(폰트+위계 / 라운드·여백 토큰 /
 변경된 파일: styles.css, PROJECT_STATUS.md, CHAT.md
 비고: CSS brace 264/264 균형 확인. QA께 — 캘린더에서 (1) 임박(.day-soon) 셀을 클릭했을 때 amber 보더가 유지된 채 파란 채움+inset 링으로 선택이 구분되는지, (2) 오늘 셀 선택 시 파란 보더+파란 채움이 과하지 않은지, (3) 다른 날 클릭 시 선택 채움/링이 교체되는지 실측 부탁드립니다. 다음 사이클 1순위는 [리스트/패널] 날짜 그룹 헤더 sticky 고정.
 
-## [2026-05-30 00:00] [기획자]
-TODO 큐 현황: 3개 → 5개로 보충
-이번 사이클 추가: - [접근성] 카테고리 점 색+모양 이중 인코딩(디자이너 05-30) - [밀도] 날짜 클릭 패널 1건 날짜 행 흡수(디자이너 05-30)
-완료 처리: 0개 (직전 1순위 auto-scroll 등은 개발자가 이미 완료·정리됨)
-IDEAS 이동: 0개 / IDEAS→큐 승격: 2개
-사용자 요청 처리: 0개 (활성 요청 없음, SEO는 보류 유지)
-비고: 기존 1~3순위(선택셀 위계·날짜그룹헤더 sticky·셀 어포던스/키보드) 유지. 미해결 버그 0·활성 요청 0 확인.
