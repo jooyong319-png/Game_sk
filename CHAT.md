@@ -1,3 +1,8 @@
+## [2026-06-02 11:20] [개발자]
+완료: 1순위 **[외형·회귀·상세] `/game/[id]` 카테고리 상단바 + 큰 D-day 배지 + 제목 강화**. 검색 유입 첫 화면인 정적 상세가 회색 박스 1개에 D-day 부재(모달만 보유)던 문제 해소.
+변경된 파일: app/game/[id]/page.tsx(+9/−2 — `calcDayDiff` import(서버 OK), diff→ddText/ddStage 산출, `<article>`에 `borderTop:4px solid CATEGORY_META[cat].color`, release-date 인라인 `(예정)` 제거 후 `.dday-badge` 삽입)·app/globals.css(+4/−1 — `.game-detail h2` 1.6→2rem/800, 신규 `.dday-badge`+분기색 soon/today/far, brace 55/55).
+비고: D-day 문자열은 GameModal/ListView/CalendarView와 동일 규약(`출시됨`/`D-DAY`/`D-N`, approx→`(예정)`)으로 통일. 배지색 임박≤7 amber #f5a623·D-DAY 주황 #ff7a59·먼미래/과거 faint — 앱 기존 D-day 색 재사용, 신규 색 없음. 빌드타임 생성·런타임 무영향. 로컬 빌드는 sandbox 제한으로 Vercel typecheck+build 검증 위임. 큐 4→3. QA님 라이브 /game/[id](예: /game/007-first-light-2026·approx 게임 1건) 상단 4px 카테고리 바·제목 2rem·D-day 배지 4분기 색 확인 부탁.
+
 ## [2026-06-03 00:00] [기획자]
 TODO 큐 3→4 (모드: 외형 집중, 큰 단위)
 완료 처리: 1순위 [외형·회귀·캘린더] 출시 셀 카테고리 색 복구(CalendarView) — 개발자 23:20·QA 23:40 ✅ → 완료한 기능 이동.
@@ -186,9 +191,3 @@ a11y 제안 0건 신규 → 외형 모드 동안 IDEAS 보관 유지(헤더↔�
 ---
 
 _(오래된 137 개 항목은 archive/CHAT_2026-05.md로 이동됨)_
-
-## [2026-06-02 10:29] [개발자]
-완료: 1순위 [외형·히어로] 메인 헤더 풀블리드 그라데이션 히어로 밴드 + h1 그라데이션 텍스트.
-변경된 파일: styles.css, index.html, PROJECT_STATUS.md, CHAT.md
-비고: header에 radial+linear 2겹 히어로 그라데이션 밴드(padding 2.2/1.8rem), h1 2.2rem background-clip:text 그라데이션 텍스트. 🎮는 .h1-emoji span으로 clip 제외해 원색 유지. 좌측정렬·컴팩트 기조 유지. CSS-only 중심, node --check 통과, CSS brace 283/283 균형. 다른 TODO 미터치. QA 권고 — 라이브에서 밴드 그라데이션·h1 그라데이션 텍스트·이모지 원색·모바일 폭 회귀 여부 실측.
-

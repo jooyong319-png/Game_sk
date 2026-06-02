@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllGames, getGameById, formatKoreanDate, getKoreanWeekday } from '@/lib/games';
 import { CATEGORY_META } from '@/lib/types';
+import { calcDayDiff } from '@/lib/utils';
 import { AdSlot } from '@/components/AdSlot';
 import { GoogleCalendarButton } from '@/components/GoogleCalendarButton';
 
@@ -44,6 +45,13 @@ export default async function GamePage({ params }: Props) {
   const dateStr = formatKoreanDate(game.release_date);
   const weekday = game.release_date_approx ? '' : ` (${getKoreanWeekday(game.release_date)})`;
   const url = `https://gcalen.com/game/${game.id}`;
+  const diff = calcDayDiff(game.release_date);
+  const ddText = game.release_date_approx
+    ? '(예정)'
+    : diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
+  const ddStage = game.release_date_approx
+    ? 'far'
+    : diff === 0 ? 'today' : diff > 0 && diff <= 7 ? 'soon' : 'far';
 
   const jsonld = {
     '@context': 'https://schema.org',
@@ -65,7 +73,10 @@ export default async function GamePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }}
       />
       <AdSlot slot="detail-top" size="top" />
-      <article className="game-detail">
+      <article
+        className="game-detail"
+        style={{ borderTop: `4px solid ${CATEGORY_META[game.category].color}` }}
+      >
         <a href="/" className="back-link">← 전체 목록으로</a>
         <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
         <h2>{game.name_ko}</h2>
@@ -73,7 +84,8 @@ export default async function GamePage({ params }: Props) {
           <p className="name-en">{game.name_en}</p>
         )}
         <p className="release-date">
-          📅 출시일: {dateStr}{weekday}{game.release_date_approx ? ' (예정)' : ''}
+          📅 출시일: {dateStr}{weekday}
+          <span className={`dday-badge dday-${ddStage}`}>{ddText}</span>
         </p>
         {game.description && <p className="desc">{game.description}</p>}
         <ul className="detail-meta">

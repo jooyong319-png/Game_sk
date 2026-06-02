@@ -95,9 +95,13 @@ a:hover { text-decoration: underline; }
   border-radius: 12px;
   padding: 1.5rem 1.8rem 2rem;
 }
-.game-detail h2 { font-size: 1.6rem; margin: 0.6rem 0 0.3rem; }
+.game-detail h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0.6rem 0 0.3rem; }
 .game-detail .name-en { color: var(--text-faint); font-size: 0.9rem; margin-bottom: 0.5rem; }
 .game-detail .release-date { color: var(--accent); font-size: 1rem; font-weight: 600; margin: 0.5rem 0 1rem; }
+.game-detail .dday-badge { display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 1.15rem; font-weight: 800; margin-left: 0.5rem; vertical-align: middle; }
+.game-detail .dday-badge.dday-soon { color: #f5a623; background: rgba(245, 166, 35, 0.12); }
+.game-detail .dday-badge.dday-today { color: #ff7a59; background: rgba(255, 122, 89, 0.14); }
+.game-detail .dday-badge.dday-far { color: var(--text-faint); background: var(--border); }
 .game-detail .desc { color: #cfd6e0; margin-bottom: 1rem; line-height: 1.6; }
 .game-detail .detail-meta { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0; }
 .game-detail .detail-meta li { font-size: 0.95rem; color: #cfd6e0; }
