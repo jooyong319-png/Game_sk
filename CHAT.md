@@ -1,3 +1,12 @@
+## [2026-06-02 17:12] [기획자]
+TODO 큐 전면 재구성 (모드: 외형 집중, 큰 단위). **vanilla→Next.js 이관 외형 회귀 복구로 전환.**
+배경: 디자이너 16:50 발견(직전 "완료" 외형 자산이 이관 중 유실) 소스 재확인 → app/globals.css가 --accent:#4a90e2·시스템폰트·헤더 1.6rem 단색으로 회귀. 기존 큐 5건은 전부 죽은 vanilla 경로(script.js/styles.css/build.js/index.html) 참조라 라이브 Next 빌드에 안 닿음 → **폐기**.
+교체: 디자이너 16:50 회귀복구 5제안(현행 Next 경로)으로 큐 재작성.
+현재 큐 1~5: ①브랜드토큰+Pretendard+헤더그라데이션(globals.css·layout.tsx 묶음) ②캘린더 출시셀 카테고리색 복구(CalendarView.tsx·.module.css) ③상세 /game/[id] D-day배지+카테고리상단바+제목(page.tsx·globals.css) ④이모지→SVG 1단계 Next 재경로(layout/ViewToggle/HeroStrip/GameModal/ListView) ⑤임박 스트립 카테고리색 글로우 Next 재경로(HeroStrip).
+IDEAS 환원(Next 재경로 필요): 관련게임 미니카드 그리드·통계줄 컬러칩(옛 build.js/script.js 참조).
+개발자 주의: 외형 작업은 **app/·components/ 의 .tsx/.module.css/globals.css** 에서만. styles.css/script.js/build.js는 라이브 빌드 미반영(legacy). 검증은 `npm run typecheck` + `npm run build`.
+활성 사용자 요청 0(SEO 보류) · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y 제안 0건(IDEAS 보관). 코드 미수정(문서만).
+
 ## [2026-06-02 16:50] [디자이너]
 외형 점검 완료 (모드: 시각 디자인 집중, a11y 보류). 실측 gcalen.com 데스크톱 홈/리스트/상세 + 신규 Next.js 소스 교차.
 주요: **vanilla→Next.js 이관서 직전 출고 외형 자산 다수 유실 확인** — 라이브 Next 빌드에 Pretendard·#5b9dff accent·--accent-grad/--radius 토큰·캘린더 셀 카테고리 색띠·상세 D-day/백드롭이 모두 빠짐(변경로그엔 styles.css 기준 '완료'로 남음). 현행 Next 파일경로 기준으로 회귀 복구 제안 재작성.
@@ -182,13 +191,4 @@ DESIGN_NOTES에 신규 4개 추가(칩 일관성·메타아이콘 라벨·'오�
 검증 대상: (개발자 13:20) [뷰] 진입 시 기본 뷰 캘린더 고정 (주석 +2줄, 로직 무변경)
 결과: ✅ 정상
 상세: Chrome 실측 — localStorage 'gcalen.view' 비운 신규방문 시 캘린더 활성(view-calendar aria-pressed=true·active, calendar-view 노출/games-list hidden, 42셀·'2026년 5월'), getItem 후 'calendar' 폴백 저장 확인. 📋 리스트 토글→새로고침 시 'list' 유지(list aria-pressed=true, 리스트 노출). 콘솔 에러 0건, HTML 200·footer 운영자정보 정상, games.json 29건(05-29T12:35) 파싱 OK.
-
-## [2026-05-29 13:20] [개발자]
-완료: 1순위 TODO — [뷰] 진입 시 기본 뷰를 캘린더로 고정 (운영자 요청).
-- 코드 점검 결과 view 토글 초기화부가 이미 기본값 calendar를 충족하고 있었음:
-  `let savedView = 'calendar';` + `savedView = localStorage.getItem(VIEW_KEY) || 'calendar';`
-  → 최초 방문(키 없음/null/'') 시 모두 calendar로 폴백, 사용자가 토글로 'list' 선택 시 그 값 보존(applyView가 setItem).
-- 동작은 이미 정상이므로 로직 변경 없이, 의도가 명확하도록 초기화부에 주석 2줄만 추가(미래 사이클에서 기본값이 '실수로 보이는 코드'로 오인·회귀되지 않도록 고정).
-변경된 파일: script.js (주석 +2줄), PROJECT_STATUS.md, CHAT.md
-비고: QA께 — (1) 시크릿창/localStorage 비운 상태로 gcalen.com 진입 시 📅 캘린더 뷰가 활성(aria-pressed=true)인지, (2) 📋 리스트로 토글 후 새로고침 시 리스트가 유지되는지 실측 부탁드립니다. 다음 사이클 1순위는 [캘린더] 날짜 셀 클릭 패널 auto-scroll + 헤더 강조 플래시.
 
