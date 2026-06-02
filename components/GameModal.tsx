@@ -1,33 +1,27 @@
 'use client';
-import { useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
 import { buildGoogleCalendarUrl } from '@/lib/google-calendar';
-import { useWishlist } from './useWishlist';
 import styles from './GameModal.module.css';
 
-export function GameModal({ game }: { game: Game }) {
-  const router = useRouter();
-  const wishlist = useWishlist();
+interface Props {
+  game: Game;
+  onClose: () => void;
+  wishlist: { has: (id: string) => boolean; toggle: (id: string) => void };
+}
 
-  const close = useCallback(() => {
-    router.back();
-  }, [router]);
-
-  // ESC 닫기
+export function GameModal({ game, onClose, wishlist }: Props) {
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close();
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     return () => {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [close]);
+  }, [onClose]);
 
   const diff = calcDayDiff(game.release_date);
   const dd = diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
@@ -37,9 +31,9 @@ export function GameModal({ game }: { game: Game }) {
   const isWished = wishlist.has(game.id);
 
   return (
-    <div className={styles.overlay} onClick={close} role="presentation">
+    <div className={styles.overlay} onClick={onClose} role="presentation">
       <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={e => e.stopPropagation()}>
-        <button type="button" className={styles.close} onClick={close} aria-label="닫기">×</button>
+        <button type="button" className={styles.close} onClick={onClose} aria-label="닫기">×</button>
 
         <div className={`${styles.image} cat-bg-${game.category}`}>
           <span className={styles.imageEmoji}>{cat.emoji}</span>
@@ -68,12 +62,8 @@ export function GameModal({ game }: { game: Game }) {
           <strong>출시일</strong>
           {dateStr}{weekday}{game.release_date_approx ? ' (예정)' : ''} · <span className={styles.dday}>{dd}</span>
         </div>
-        {game.platforms.length > 0 && (
-          <div className={styles.row}><strong>플랫폼</strong>{game.platforms.join(', ')}</div>
-        )}
-        {game.genres.length > 0 && (
-          <div className={styles.row}><strong>장르</strong>{game.genres.join(', ')}</div>
-        )}
+        {game.platforms.length > 0 && <div className={styles.row}><strong>플랫폼</strong>{game.platforms.join(', ')}</div>}
+        {game.genres.length > 0 && <div className={styles.row}><strong>장르</strong>{game.genres.join(', ')}</div>}
         {game.developer && <div className={styles.row}><strong>개발</strong>{game.developer}</div>}
         {game.publisher && game.publisher !== game.developer && (
           <div className={styles.row}><strong>퍼블리셔</strong>{game.publisher}</div>

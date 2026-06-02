@@ -73,6 +73,8 @@
   border-radius: 50%;
   display: block;
   cursor: pointer;
+  border: none;
+  padding: 0;
 }
 .cellMore { font-size: 0.7rem; color: #aaa; margin-left: 0.2rem; }
 .cellName {

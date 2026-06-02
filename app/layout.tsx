@@ -30,17 +30,10 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.svg' },
 };
 
-export default function RootLayout({
-  children,
-  modal,
-}: {
-  children: React.ReactNode;
-  modal: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        {/* Google AdSense */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8522919475398338"
@@ -49,12 +42,9 @@ export default function RootLayout({
       </head>
       <body>
         <header className="site-header">
-          <h1>
-            <a href="/">🎮 게임 출시 캘린더</a>
-          </h1>
+          <h1><a href="/">🎮 게임 출시 캘린더</a></h1>
         </header>
         <main id="main">{children}</main>
-        {modal}
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
           <p>문의: <a href="mailto:contact@gcalen.com">contact@gcalen.com</a></p>

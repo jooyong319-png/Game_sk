@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate } from '@/lib/utils';
@@ -9,6 +9,7 @@ import { Filters, type FilterState } from './Filters';
 import { ViewToggle } from './ViewToggle';
 import { CalendarView } from './CalendarView';
 import { ListView } from './ListView';
+import { GameModal } from './GameModal';
 import { useWishlist } from './useWishlist';
 import styles from './Home.module.css';
 
@@ -31,8 +32,48 @@ export function Home({ initialGames, lastUpdated }: HomeProps) {
     now.setDate(1);
     return now;
   });
+  const [openGameId, setOpenGameId] = useState<string | null>(null);
 
   const wishlist = useWishlist();
+
+  // 모달 열기 + URL 변경 (인스타 스타일)
+  const openModal = useCallback((id: string) => {
+    setOpenGameId(id);
+    try {
+      const desiredPath = `/game/${id}`;
+      if (window.location.pathname !== desiredPath) {
+        window.history.pushState({ modal: id }, '', desiredPath);
+      }
+    } catch { /* no-op */ }
+  }, []);
+
+  // 모달 닫기 + URL 복귀
+  const closeModal = useCallback((skipHistory = false) => {
+    setOpenGameId(null);
+    if (!skipHistory) {
+      try {
+        if (window.history.state?.modal) {
+          window.history.back();
+        }
+      } catch { /* no-op */ }
+    }
+  }, []);
+
+  // popstate 처리 (뒤로/앞으로)
+  useEffect(() => {
+    const onPop = () => {
+      const m = window.location.pathname.match(/^\/game\/([^/]+)$/);
+      if (m && initialGames.some(g => g.id === m[1])) {
+        setOpenGameId(m[1]);
+      } else {
+        setOpenGameId(null);
+      }
+    };
+    window.addEventListener('popstate', onPop);
+    // 초기 URL이 /game/[id]면 모달 열기
+    onPop();
+    return () => window.removeEventListener('popstate', onPop);
+  }, [initialGames]);
 
   // 필터 적용
   const filteredGames = useMemo(() => {
@@ -64,7 +105,6 @@ export function Home({ initialGames, lastUpdated }: HomeProps) {
     });
   }, [initialGames, filters, wishlist.ids]);
 
-  // 출시 임박 (D-0~D-7)
   const imminent = useMemo(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -75,12 +115,14 @@ export function Home({ initialGames, lastUpdated }: HomeProps) {
       .slice(0, 5);
   }, [initialGames]);
 
+  const openGame = openGameId ? initialGames.find(g => g.id === openGameId) ?? null : null;
+
   return (
     <div className={styles.home}>
       <p className={styles.subtitle}>국내외 신규 출시 게임을 한눈에</p>
 
       {imminent.length > 0 && (
-        <HeroStrip items={imminent} />
+        <HeroStrip items={imminent} onPick={openModal} />
       )}
 
       <ViewToggle value={view} onChange={setView} />
@@ -115,14 +157,17 @@ export function Home({ initialGames, lastUpdated }: HomeProps) {
           onCursorChange={setCalendarCursor}
           games={filteredGames}
           wishlist={wishlist}
+          onPick={openModal}
         />
       ) : (
-        <ListView games={filteredGames} wishlist={wishlist} />
+        <ListView games={filteredGames} wishlist={wishlist} onPick={openModal} />
       )}
 
       <p className={styles.lastUpdated}>
         데이터 마지막 갱신: {formatShortDate(lastUpdated.slice(0, 10))}
       </p>
+
+      {openGame && <GameModal game={openGame} onClose={() => closeModal()} wishlist={wishlist} />}
     </div>
   );
 }
