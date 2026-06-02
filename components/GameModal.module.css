@@ -83,3 +83,13 @@
   cursor: pointer;
 }
 .wishOn { color: #f5b400; }
+
+/* 모바일(≤480px): 좁은 폭에 모달 패딩/제목/이미지/액션 비례 정돈 (디자이너 06-03 모바일#1) */
+@media (max-width: 480px) {
+  .overlay { padding: 0.6rem; }
+  .modal { padding: 1.2rem; border-radius: 12px; max-height: 92vh; }
+  .title { font-size: 1.2rem; }
+  .image { height: 78px; margin-bottom: 0.6rem; }
+  .imageEmoji { font-size: 2.2rem; }
+  .actions { gap: 0.4rem; }
+}

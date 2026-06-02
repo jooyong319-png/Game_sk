@@ -1,3 +1,10 @@
+## [2026-06-03 06:20] [개발자]
+완료: **[외형·모바일·높음] GameModal @media(≤480px) 모바일 블록 신설** (큐 1순위)
+GameModal만 유일하게 모바일 블록 0건(직전 Filters 모바일 블록과 동형 누락)이라 390px서 모달 패딩(1.6rem)·제목(1.4rem)·이미지(100px)·이모지(3rem)가 좁은 폭에 과대하던 문제 해소.
+구현: `GameModal.module.css` 말미에 `@media(max-width:480px){ .overlay{padding:0.6rem} .modal{padding:1.2rem;border-radius:12px;max-height:92vh} .title{font-size:1.2rem} .image{height:78px;margin-bottom:0.6rem} .imageEmoji{font-size:2.2rem} .actions{gap:0.4rem} }`. 6개 타깃 클래스 전부 GameModal.tsx 사용 중 확인.
+변경된 파일: components/GameModal.module.css (+11). 레이아웃만(신규 색 0)·데스크톱 무영향·tsx 무변경. CSS brace 27/27.
+비고: 로컬 빌드 sandbox 디스크 제한 → Vercel typecheck+build 위임. 큐 5→4(2~5순위 한 칸씩 당김). **QA님: 라이브 모바일 390px 모달 패딩/제목/이미지 비례 실측 부탁(Chrome resize 미반영 시 소스 갈음).**
+
 ## [2026-06-03 06:11] [기획자]
 TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 완료: 1순위 '하이드레이션 7건 재점검' — 개발자 05:31 kstDateOnly(lib/utils.ts) 서버UTC↔클라KST 단일기준 fix·QA 05:47 라이브 #418/#423/#425 0건 해소 확정(adsbygoogle no_div도 미관측) → 큐 5→4.
@@ -193,17 +200,3 @@ a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
 완료: 1순위 **[외형·미니멀·높음·운영자요청] 노출 이모지 → 인라인 SVG (1단계: 헤더/뷰토글/임박/위시)**. OS별 이모지 편차 제거·클린 미니멀. DESIGN_NOTES 13:10 Lucide 라인 스프라이트 스펙대로 구현.
 변경된 파일: app/layout.tsx(+8 — `<body>` 최상단에 `<svg width=0 height=0 position:absolute aria-hidden>` 스프라이트(symbol 5종 #ic-gamepad/#ic-calendar/#ic-list/#ic-flame/#ic-star, viewBox 0 0 24 24) + h1 로고 🎮을 `<svg class="ic ic-gamepad"><use href="#ic-gamepad"/></svg>`로 치환)·components/ViewToggle.tsx(+2/−2 — 📅→#ic-calendar·📋→#ic-list)·components/HeroStrip.tsx(+1/−1 — 🔥→#ic-flame)·components/GameModal.tsx(+1/−1 — 위시 ★/☆를 `<svg class="ic [ic-fill]"><use href="#ic-star"/>` class 토글로)·components/ListView.tsx(+1/−1 — 위시 ★/☆ 동일)·app/globals.css(+20 — `.ic`{1em·vertical-align -0.14·flex-shrink 0·fill none·stroke currentColor·width 1.75·round}·`.ic-fill`{fill currentColor·stroke none}·`.ic-gamepad`{color var(--accent)}, brace 58/58).
 비고: 색은 전부 currentColor 단색, 유일 컬러 포인트 헤더 🎮(.ic-gamepad=var(--accent))·🔥 단색 유지. 위시 별 토글은 textContent 교체 대신 ic-fill class 토글(활성 채움, 색은 버튼 .wishOn #f5b400을 currentColor로 상속). 2·3단계(카드/모달 메타·액션 🛠️🏢📄▶🔗·build.js SEO)는 후속 TODO — GameModal 📅캘린더추가·📄전체페이지·ListView 📅출시일은 의도적 미변경. 로컬 빌드는 sandbox 디스크 제한으로 Vercel typecheck+build 검증 위임. 큐 5→4. QA님 라이브에서 헤더 게임패드 아이콘(accent색)·뷰토글 캘린더/리스트 라인아이콘·임박 불꽃·위시 별 토글(빈/채움) 렌더·이모지 잔존 0 확인 부탁.
-
-## [2026-06-02 21:12] [리서처]
-리서치 완료 (4개 카테고리)
-- 모바일 3→0, PC/콘솔 2→0, 글로벌 3→0, 신규서버 9→0 (후보→통과)
-- 신규 0개 / 갱신 0개 (메타데이터만) / 정리(180일+) 0개
-- 총 등록 44개 (최오래 dk모바일 번영의월드 173일=보관)
-[검증 탈락]
-- 메이플 챌린저스 월드 시즌2(6/19?): 시즌제 임시서버(규칙10)+출처 hitpaw 블로그 비공식·시즌2/3 충돌 → 탈락
-- 에오스블랙 부스팅서버 루스캠프/마룬캠프: 인벤+ZDNet(06-02) 2출처지만 "운영종료 후 일반서버 이전"=임시서버(규칙10), 오픈일 미공지(사전예약 6/2~6/23만) → 탈락
-- 나이트크로우 에스텔라: 공지ID 469530(<5/21 738219)=과거 서버 → 탈락
-- 아키에이지워 이녹: "08/21(수)" 요일불일치(26년 8/21=금)=과거 공지 → 탈락
-- 프라시아 카렐: 2023년 공지 → 탈락
-- 로드나인 디나페리·레이븐2 ZERO/ZERO2: 이미 등록됨
-
