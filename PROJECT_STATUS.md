@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-03 (개발자 — 외형 모드. 1순위 [외형·버그·캘린더·높음] 요일 헤더(.dayHead) 주말 색 미적용 fix 완료(`.dayHead.sun/.sat` 2클래스 규칙 추가) → 완료한 기능 이동·BUG 해소. 큐 5→4(2~5순위 한 칸씩 당김). Vercel 검증 위임.)
+마지막 갱신: 2026-06-03 (개발자 — 외형 모드. 1순위 [외형·팔레트·높음] 구 accent #4a90e2·rgba(74,144,226) 리터럴 → 브랜드 var(--accent) #5b9dff/동톤 rgba 전 표면 통일 완료 → 완료한 기능 이동. 큐 5→4(2~5순위 한 칸씩 당김). Vercel 검증 위임.)
 
 
 ## 현재 단계
@@ -15,6 +15,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[외형·팔레트·높음] 구(舊) accent `#4a90e2`·`rgba(74,144,226,..)` 리터럴 잔존 → 브랜드 `var(--accent)` #5b9dff / 동톤 `rgba(91,157,255,..)`로 전 표면 통일** — 헤더·뷰토글·월탭·today는 갱신 블루 #5b9dff인데 리스트·모달·캘린더·월탭 일부 면이 마이그레이션 전 칙칙한 #4a90e2/rgba(74,144,226)로 남아 같은 브랜드 블루가 화면마다 두 톤으로 갈리던 문제 해소. 치환: `ListView.module.css` `.monthHeader` border(L16)·`.item:hover` border+box-shadow(L72-73)·`.date`(L143); `GameModal.module.css` `.source`(L59)·`.detail:hover` bg+border(L74); `CalendarView.module.css` `.navBtn:hover`(L20)·`.todayBtn` bg+border(L22-23)·`.todayBtn:hover`(L30)·`.dayRow:hover` bg+border(L222-223); `MonthTabs.module.css` `.tab:hover` bg+border(L25-26). 디자이너/기획자 enumerate가 든 ListView/GameModal/CalendarView todayBtn:hover 외에, 동일 두 톤 잔존면(navBtn·todayBtn·dayRow·MonthTabs)까지 함께 치환해 제목 목표 "전 표면 통일"을 한 사이클로 완결(개발자 판단). **유지(미변경): GameModal `.gcal:hover`의 `rgba(66,133,244,..)`(구글 브랜드 블루 의도)·CalendarView `.cell:focus-visible`/`.cellClickable:focus-visible`의 `#4a90e2` 2건(a11y 영역, 외형 모드 제외).** 신규 색 0(#5b9dff/rgb(91,157,255)는 기존 출고 accent색). CSS 값 치환만이라 brace 무변동(ListView 33/33·GameModal 20/20·MonthTabs 6/6·CalendarView 62/62 균형). grep 검증: 잔존 구 리터럴 = 의도한 2건(focus-visible)+gcal 구글블루뿐. 4파일 합 +0/−0 줄수(값만 치환), 총 ~14개 색 토큰 교체. 로컬 tsc/build는 sandbox 디스크 제한으로 Vercel(typecheck+build) 검증 위임. QA님 라이브 데스크톱 1440에서 리스트 `.date`·`.item:hover` 보더, 모달 출처 링크, 캘린더 오늘버튼/네비버튼 hover가 헤더 타이틀과 동일 선명 블루(#5b9dff) 톤인지 실측 부탁. — 개발자 완료 2026-06-03
 - [x] **[외형·버그·캘린더·높음] 캘린더 요일 헤더(.dayHead) 주말 색 미적용 수정** — 직전 출고한 "주말 색 구분"이 셀 날짜(`.cellDate.sun/.sat`, 2클래스)엔 적용되나 요일 헤더(`.dayHead`)엔 미적용이던 BUG(QA 06-02 23:48) 해소. 원인: `.dayHead{color:#888}`(module.css L62)가 `.sun`/`.sat`(L45-46)보다 소스 후행+동일 특이도(1클래스)라 일/토 헤더를 회색 #888로 override(셀 날짜는 `.cellDate.sun` 2클래스라 정상). 권장안(a) 채택: `.dayHead` 블록 직후에 **2클래스 규칙** `.dayHead.sun{color:#e57373}`·`.dayHead.sat{color:#7aa7ff}` 추가 → 특이도 2로 `.dayHead`(1) 이김. 셀 날짜 규칙과 패턴 일치, today/선택 셀은 헤더 비대상이라 무관. 신규 색 0(기존 주말 2색 재사용), CalendarView.module.css +3(주석1+규칙2), CSS brace 62/62 균형. tsx는 헤더 div가 이미 `${dayHead} ${sun|sat}` 부여라 무변경. 로컬 빌드는 sandbox 디스크 제한으로 Vercel(typecheck+build) 검증 위임. — 개발자 완료 2026-06-03
 - [x] **[외형·캘린더·높음·묶음] 캘린더 시각 강화 3종 (주말 색 구분 + today 채움 원형 + 모바일 출시셀 색 강화)** — 디자이너 20:50 데스크#1·#2·모바일#1을 `components/CalendarView.tsx`+`CalendarView.module.css` 한 묶음으로 동시 구현. (a) **주말 색 구분**: 요일 헤더 map에 `i===0?sun:i===6?sat`, 출시셀 날짜 div에 `cell.date.getDay()` 기반 동일 클래스 부여. module.css 신규 `.sun{color:#e57373}`·`.sat{color:#7aa7ff}`(다크 배경용 톤다운) + `.cellDate.sun/.sat` 동일색, `.cellSelected .cellDate{color:#fff}` 후행 override로 선택 셀 날짜는 흰색 유지. (b) **today 채움 원형(구글캘린더식)**: today 날짜 숫자를 `.cellTodayNum`(width/height 1.5em·border-radius 50%·background var(--accent)·color #fff·inline-flex 중앙정렬) 채움 원형으로, `.cellTodayBadge`("오늘" 칩) 마크업·CSS 제거해 셀 공간 절약, `.cellToday` 테두리 `#4a90e2`→`rgba(91,157,255,0.45)`·배경 `rgba(91,157,255,0.08)`로 약화(원형과 이중강조 과함 방지·하드코딩 #4a90e2→신 accent 톤 정렬). (c) **모바일(≤480px) 출시셀 강화**: `@media(max-width:480px)`에 `.cellHas{background:#1d2330 폴백 선행;background:color-mix(in srgb,var(--cat,#5b9dff) 16%,#14171d);box-shadow:inset 4px 0 0 var(--cat,#5b9dff)}`(tint 8→16%·띠 3→4px), `.cellDot` 6→7px. 데스크톱 `.cellHas`는 미디어쿼리 밖 현행 유지(무영향). 신규 색=주말 2색(#e57373·#7aa7ff)만, 카테고리 4색·accent 재사용. CSS brace 59/59 균형, CalendarView.tsx +5/−4·module.css +20/−10. 로컬 tsc/build는 sandbox 디스크 제한으로 Vercel(typecheck+build) 검증 위임. — 개발자 완료 2026-06-02 23:29
 - [x] **[외형·미니멀·운영자요청] 노출 이모지 → 인라인 SVG (2단계: 필터·모달·카드 액션/메타 잔존 전량 일괄)** — 1단계(헤더/뷰토글/임박/위시) 후 라이브 잔존 노출 이모지 전량 정리. layout 스프라이트에 `#ic-file`(M15 2H6…)·`#ic-arrow-ur`(M7 7h10v10M7 17 17 7) 2종 추가(DESIGN_NOTES 13:10 path 그대로·viewBox 0 0 24 24, #ic-calendar 기존 재사용). 치환: Filters L78 ★→#ic-star+.ic-fill / GameModal 출처보기 ↗→#ic-arrow-ur·📅 캘린더추가→#ic-calendar·📄 전체페이지 ↗→#ic-file+#ic-arrow-ur / ListView L110 출시일 📅→#ic-calendar / GoogleCalendarButton 📅→#ic-calendar / app/game/[id] 출시일 📅→#ic-calendar(서버 컴포넌트, layout 스프라이트 상속 OK). 전부 currentColor 단색(.ic 규칙 재사용, 신규 색 0). grep 검증: app·components 노출 이모지(📅📄★↗) 0건. 6파일 +9/−7. Vercel typecheck+build 검증 위임. — 개발자 완료 2026-06-02 23:28
@@ -136,28 +137,23 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-03 02:00 KST (기획자): **모드 = 외형(시각 디자인) 집중, 큰 단위.** 직전 1순위 [외형·버그·캘린더·높음] **요일 헤더(.dayHead) 주말 색 미적용 fix** 개발자 출고·QA 00:47 라이브 실측(일 rgb(229,115,115)·토 rgb(122,167,255)·평일 rgb(136,136,136)) → 완료한 기능 이동·BUG 해소(개발자 큐 5→4 반영). 디자이너 01:05 신규 외형 제안 2건(높음: 구 accent 통일·모바일 필터 블록) 큐 승격. QA 00:47 신규 **React 하이드레이션 에러 7건/로드** BUG 등록(SSR 폐기·SEO 손실 동작 문제) → 외형 모드 예외로 큐잉(priority 3 버그). 큐 4→5. 현재 큐 1~5(전부 Next.js app/·components/): 1순위=구 accent #4a90e2→#5b9dff 전 표면 통일·2순위=Filters 모바일 @media 블록 신설·3순위=하이드레이션 에러 해소(버그)·4순위=임박 스트립 글로우(데스크톱)·5순위=/game/[id] 관련 게임 미니카드 그리드. 활성 사용자 요청 0(SEO 보류)·3사이클 정체 0·a11y/리팩토링 트윅 0건(IDEAS 보관). 디스플레이스: 리스트 카드 배너 그라데·--accent-grad 칩은 다음 후보로 IDEAS 인접 보존.
+> 갱신 2026-06-03 02:00 KST (기획자) · 개발 2026-06-03 (개발자): 직전 1순위 **구 accent 전 표면 통일** 출고 완료(리스트/모달/캘린더/월탭 #4a90e2·rgba(74,144,226) → #5b9dff/rgba(91,157,255), focus-visible 2건·gcal 구글블루 유지) → 완료한 기능 이동, 큐 5→4(2~5순위 한 칸 당김). 현재 큐 1~4: 1순위=Filters 모바일 @media 블록 신설·2순위=하이드레이션 에러 해소(버그)·3순위=임박 스트립 글로우(데스크톱)·4순위=/game/[id] 관련 게임 미니카드 그리드. 외형(시각 디자인) 집중 모드 유지.
 
-1. **[외형·팔레트·높음] 구(舊) accent `#4a90e2`·`rgba(74,144,226,..)` 리터럴 잔존 → 브랜드 `var(--accent)` #5b9dff / 동톤 rgba로 전 표면 통일** (디자이너 01:05 데스크#1, `components/ListView.module.css` + `components/GameModal.module.css` + `components/CalendarView.module.css`)
-   - 헤더·뷰토글·월탭·today는 선명 블루 #5b9dff인데 리스트·모달·캘린더 일부 면은 마이그레이션 전 칙칙한 #4a90e2가 잔존 → **같은 브랜드 블루가 화면마다 두 톤으로 갈림**(리스트 날짜가 헤더 타이틀보다 탁함). 사용자 가시 색 차이라 단순 리팩토링 아닌 컬러 팔레트 정합.
-   - 치환: ListView `.date{color:#4a90e2}`(L143)→`var(--accent)`·`.item:hover{border-color:#4a90e2}`(L72)→`var(--accent)`·hover `box-shadow ...rgba(74,144,226,0.3)`(L73)→`rgba(91,157,255,0.3)`·`.monthHeader{border-bottom:2px solid rgba(74,144,226,0.3)}`(L16)→`rgba(91,157,255,0.3)`. GameModal `.source{color:#4a90e2}`(L59)→`var(--accent)`·`.detail:hover{background:rgba(74,144,226,0.15);border-color:rgba(74,144,226,0.5)}`(L74)→각 `rgba(91,157,255,..)`. CalendarView `.todayBtn:hover{background:rgba(74,144,226,0.22)}`(L30)→`rgba(91,157,255,0.22)`. **유지: GameModal `.gcal:hover`의 `rgba(66,133,244,..)`(구글 브랜드 블루 의도)·focus-visible #4a90e2 2건(a11y 영역, 외형 모드 제외).**
-   - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(#5b9dff 기존 출고색). 데스크톱 1440 리스트/모달 블루 톤 일치 실측.
-
-2. **[외형·모바일·높음] Filters 모바일 블록 신설 — 390px 검색+셀렉트3+위시 정돈된 2열** (디자이너 01:05 모바일#1, `components/Filters.module.css` `@media(max-width:480px)` **신설**)
+1. **[외형·모바일·높음] Filters 모바일 블록 신설 — 390px 검색+셀렉트3+위시 정돈된 2열** (디자이너 01:05 모바일#1, `components/Filters.module.css` `@media(max-width:480px)` **신설**)
    - 현재 `.filters{display:flex;flex-wrap:wrap;gap:0.6rem;align-items:flex-end}` 단일 규칙뿐, 모바일 블록 0건(타 컴포넌트엔 다 있음). 390px에서 `.search`가 거의 한 줄을 먹고 카테고리/플랫폼/기간 셀렉트 3개+위시 버튼이 불균등 줄바꿈 → 필터 행 정렬 흐트러짐.
    - 신설: `@media(max-width:480px){ .filters{gap:0.5rem} .search{flex:1 1 100%} .label{flex:1 1 calc(50% - 0.25rem)} .label select{width:100%} .wishBtn{flex:1 1 100%; text-align:center} }` → 검색=풀폭 1줄, 셀렉트=2×2 그리드형, 위시=풀폭 버튼.
    - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(레이아웃만). 모바일 ≤480px 소스검증(Chrome resize 미반영 한계).
 
-3. **[버그·SEO·동작] React 하이드레이션 에러 7건/로드 해소 (#418/#423/#425, 날짜 의존 SSR↔CSR 불일치)** (QA 00:47 발견 / BUGS [공통] 등록 — Next.js 날짜 렌더 노드)
+2. **[버그·SEO·동작] React 하이드레이션 에러 7건/로드 해소 (#418/#423/#425, 날짜 의존 SSR↔CSR 불일치)** (QA 00:47 발견 / BUGS [공통] 등록 — Next.js 날짜 렌더 노드)
    - 페이지 로드마다 #418(SSR 텍스트 불일치)·#423(하이드레이션 중 에러로 루트 전체 클라 재렌더)·#425(텍스트 콘텐츠 불일치) 7건 재현. 추정 원인: 정적 빌드(SSR) 시점의 '오늘'/D-day/요일(getDay) 등 **날짜 의존 렌더가 클라이언트 현재 날짜와 불일치**. #423로 서버 HTML 폐기 후 클라 전체 재렌더('불러오는 중' 플래시·SSR 콘텐츠 SEO 손실). 화면 자체는 정상이나 **SSR 폐기·SEO 측면 동작 문제**.
    - 수정 방향(개발자 판단): 날짜 의존 노드에 `suppressHydrationWarning`, 또는 mount 후(`useEffect`) 클라 렌더 가드, 또는 today/D-day를 클라이언트에서만 계산. 콘솔 0건 + SSR HTML 보존(플래시 제거)이 완료 기준.
    - 검증: `npm run build` 무에러 + gcalen.com DevTools 콘솔 #418/#423/#425 0건 + 초기 SSR HTML에 캘린더/D-day 노드 존재(view-source) 확인.
 
-4. **[외형·D-DAY강조·보통] "🔥 출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우 (데스크톱 한정)** (디자이너 13:01 #4, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
+3. **[외형·D-DAY강조·보통] "🔥 출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우 (데스크톱 한정)** (디자이너 13:01 #4, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
    - 현재 `.hero-card`는 카드별 차이가 D-day 숫자 색뿐이라 D-1과 D-7 임팩트 동일. HeroStrip이 이미 부여하는 `data-cat`/`--cat` 재사용 → D-3 이내 카드에 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경 미세 radial. D-DAY(diff 0)는 주황 #ff7a59 글로우 1.3배 + `transform:scale(1.02)`(`prefers-reduced-motion` 시 transform 생략).
    - **주의: 모바일은 컴팩트 행으로 바뀐 상태이므로 글로우는 데스크톱 그리드 한정.** 검증: `npm run typecheck`/`build` 무에러, 신규 색 없음.
 
-5. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안 Next 재경로 — `app/game/[id]/page.tsx` + `app/globals.css`)
+4. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안 Next 재경로 — `app/game/[id]/page.tsx` + `app/globals.css`)
    - 상세페이지가 게임 카드 1개뿐이라 하단 여백 큼·내부링크 동선 없음. page.tsx 빌드타임에 **같은 달 ±2주** 내 다른 게임을 자기 제외·가까운 출시일순 3~6개 추림 → `.game-detail` 아래 `<section>`(h3 "같은 시기 출시") + `<a href="/game/{id}">` 미니카드 그리드. 관련 0건이면 섹션 미렌더.
    - CSS: `grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px`, 미니카드 카테고리색 좌측 4px 바(`borderLeft:'4px solid '+CATEGORY_META[g.category].color`)·게임명 700·출시일·D-day. 메인 카드 톤 재사용·신규 색 없음.
    - 검증: `npm run typecheck` 통과, `npm run build`로 /game/[id] 정적 생성 무에러, 관련 0건 게임 섹션 숨김 확인.

@@ -1,3 +1,8 @@
+## [2026-06-03] [개발자]
+완료: 1순위 **[외형·팔레트·높음] 구 accent #4a90e2·rgba(74,144,226) 리터럴 → 브랜드 var(--accent) #5b9dff / rgba(91,157,255) 전 표면 통일** (디자이너 01:05 데스크#1). 헤더/뷰토글/월탭/today만 신톤이고 리스트·모달·캘린더·월탭 일부 면이 구톤이라 블루가 두 톤으로 갈리던 문제 해소. 치환: ListView .monthHeader·.item:hover·.date / GameModal .source·.detail:hover / CalendarView .navBtn:hover·.todayBtn(+hover)·.dayRow:hover / MonthTabs .tab:hover. enumerate에 없던 동일 두 톤 잔존면(navBtn·todayBtn·dayRow·MonthTabs)까지 함께 치환해 제목 "전 표면 통일"을 한 사이클로 완결.
+변경된 파일: components/ListView.module.css(~4값)·GameModal.module.css(~3값)·CalendarView.module.css(~6값)·MonthTabs.module.css(2값)
+비고: 유지(미변경) — GameModal .gcal:hover rgba(66,133,244)(구글 브랜드 블루)·CalendarView .cell/.cellClickable:focus-visible #4a90e2 2건(a11y, 외형 모드 제외). 신규 색 0(#5b9dff=기존 출고색), 값만 치환이라 brace 무변동(33/20/62/6 균형). grep 검증: 구 리터럴 잔존=의도한 focus-visible 2건+gcal뿐. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 검증 위임. QA님 라이브 1440에서 리스트 .date/.item:hover·모달 출처링크·캘린더 오늘/네비 버튼 hover가 헤더 타이틀과 동일 #5b9dff 톤인지 실측 부탁. 큐 5→4.
+
 ## [2026-06-03 02:00] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료 처리: 직전 1순위 [외형·버그·캘린더·높음] 요일 헤더(.dayHead) 주말 색 미적용 fix — 개발자 출고·QA 00:47 라이브 실측(일 #e57373·토 #7aa7ff·평일 #888) → 완료한 기능 이동·BUG 해소.
@@ -173,7 +178,3 @@ TODO 큐 전면 재구성 (모드: 외형 집중, 큰 단위). **vanilla→Next.
 IDEAS 환원(Next 재경로 필요): 관련게임 미니카드 그리드·통계줄 컬러칩(옛 build.js/script.js 참조).
 개발자 주의: 외형 작업은 **app/·components/ 의 .tsx/.module.css/globals.css** 에서만. styles.css/script.js/build.js는 라이브 빌드 미반영(legacy). 검증은 `npm run typecheck` + `npm run build`.
 활성 사용자 요청 0(SEO 보류) · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y 제안 0건(IDEAS 보관). 코드 미수정(문서만).
-## [2026-06-02 16:50] [디자이너]
-외형 점검 완료 (모드: 시각 디자인 집중, a11y 보류). 실측 gcalen.com 데스크톱 홈/리스트/상세 + 신규 Next.js 소스 교차.
-주요: **vanilla→Next.js 이관서 직전 출고 외형 자산 다수 유실 확인** — 라이브 Next 빌드에 Pretendard·#5b9dff accent·--accent-grad/--radius 토큰·캘린더 셀 카테고리 색띠·상세 D-day/백드롭이 모두 빠짐(변경로그엔 styles.css 기준 '완료'로 남음). 현행 Next 파일경로 기준으로 회귀 복구 제안 재작성.
-DESIGN_NOTES에 외형 제안 5개 추가(폰트회귀·브랜드토큰회귀·헤더그라데이션·캘린더 카테고리색·상세 D-day배지). 임팩트 큰 2개(토큰/폰트/헤더 묶음, 상세 D-day)는 PROJECT_STATUS IDEAS 상단 등록.

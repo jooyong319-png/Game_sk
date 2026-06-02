@@ -22,8 +22,8 @@
   white-space: nowrap;
 }
 .tab:hover {
-  background: rgba(74,144,226,0.12);
-  border-color: rgba(74,144,226,0.4);
+  background: rgba(91,157,255,0.12);
+  border-color: rgba(91,157,255,0.4);
   color: #fff;
 }
 .active {
