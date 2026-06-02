@@ -1,3 +1,9 @@
+## [2026-06-03 06:46] [QA]
+검증 대상: GameModal @media(≤480px) 모바일 블록 신설(개발자 06:20 — 모달 패딩/제목/이미지/이모지/액션 모바일 비례)
+데스크톱 1440(실측 1920): ✅ (h1 SVG·가로오버플로 0[scrollW 1905≤innerW]·캘린더 137셀·임박 4카드·'불러오는 중' 플래시 없음·카드 클릭→모달 정상 오픈)
+모바일 390: ✅ (Chrome resize 뷰포트 미반영 한계 동일[innerWidth 1920·mq480 false] → 배포 CSS 번들 실측으로 갈음. 프로덕션 4b077633…css에 @media(max-width:480px) GameModal 6클래스 전량 라이브 확정: overlay .6rem·modal{1.2rem/radius12/maxH92vh}·title 1.2rem·image{78px/.6rem}·imageEmoji 2.2rem·actions .4rem — 개발자 스펙 정확 일치)
+상세: 헬스 ✅ /·sitemap.xml(50 URL)·robots·/game/sol-enchant-20260618·/new-servers(12서버). 콘솔 클린(사이트 에러 0, MetaMask 확장 경고만)·하이드레이션 #418/#423/#425 0건 재확인. 신규 BUGS 0.
+
 ## [2026-06-03 06:20] [개발자]
 완료: **[외형·모바일·높음] GameModal @media(≤480px) 모바일 블록 신설** (큐 1순위)
 GameModal만 유일하게 모바일 블록 0건(직전 Filters 모바일 블록과 동형 누락)이라 390px서 모달 패딩(1.6rem)·제목(1.4rem)·이미지(100px)·이모지(3rem)가 좁은 폭에 과대하던 문제 해소.
@@ -196,7 +202,3 @@ a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
 모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정 → 소스검증 대체)
 상세: 라이브 Chrome 실측 — h1 텍스트 "게임 출시 캘린더"(🎮 잔존 0)·헤더 #ic-gamepad SVG(accent)·뷰토글 #ic-calendar/#ic-list·임박 #ic-flame SVG 렌더, 스프라이트 symbol 5종 정의. 리스트뷰 위시 별 #ic-star SVG 44개(ic-fill 토글) 정상. 콘솔 에러 0·가로 오버플로 0(scrollWidth=clientWidth). ※잔존 이모지 1건: 위시 필터 버튼 "★ 위시리스트"(Filters.tsx L78) — 1단계 스코프 외(개발자는 카드/모달 위시만 변환)·동작 정상이라 BUGS 아님 → IDEAS 등록. .ic 규칙 @media 밖·em 사이즈라 모바일 동일 렌더(뷰포트 비종속). globals.css brace 58/58. 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상(※WebFetch 홈은 CDN 캐시로 구 🎮 노출됐으나 라이브 Chrome 실측은 SVG 반영 확인). 미해결 코드 버그 0.
 
-## [2026-06-02 21:30] [개발자]
-완료: 1순위 **[외형·미니멀·높음·운영자요청] 노출 이모지 → 인라인 SVG (1단계: 헤더/뷰토글/임박/위시)**. OS별 이모지 편차 제거·클린 미니멀. DESIGN_NOTES 13:10 Lucide 라인 스프라이트 스펙대로 구현.
-변경된 파일: app/layout.tsx(+8 — `<body>` 최상단에 `<svg width=0 height=0 position:absolute aria-hidden>` 스프라이트(symbol 5종 #ic-gamepad/#ic-calendar/#ic-list/#ic-flame/#ic-star, viewBox 0 0 24 24) + h1 로고 🎮을 `<svg class="ic ic-gamepad"><use href="#ic-gamepad"/></svg>`로 치환)·components/ViewToggle.tsx(+2/−2 — 📅→#ic-calendar·📋→#ic-list)·components/HeroStrip.tsx(+1/−1 — 🔥→#ic-flame)·components/GameModal.tsx(+1/−1 — 위시 ★/☆를 `<svg class="ic [ic-fill]"><use href="#ic-star"/>` class 토글로)·components/ListView.tsx(+1/−1 — 위시 ★/☆ 동일)·app/globals.css(+20 — `.ic`{1em·vertical-align -0.14·flex-shrink 0·fill none·stroke currentColor·width 1.75·round}·`.ic-fill`{fill currentColor·stroke none}·`.ic-gamepad`{color var(--accent)}, brace 58/58).
-비고: 색은 전부 currentColor 단색, 유일 컬러 포인트 헤더 🎮(.ic-gamepad=var(--accent))·🔥 단색 유지. 위시 별 토글은 textContent 교체 대신 ic-fill class 토글(활성 채움, 색은 버튼 .wishOn #f5b400을 currentColor로 상속). 2·3단계(카드/모달 메타·액션 🛠️🏢📄▶🔗·build.js SEO)는 후속 TODO — GameModal 📅캘린더추가·📄전체페이지·ListView 📅출시일은 의도적 미변경. 로컬 빌드는 sandbox 디스크 제한으로 Vercel typecheck+build 검증 위임. 큐 5→4. QA님 라이브에서 헤더 게임패드 아이콘(accent색)·뷰토글 캘린더/리스트 라인아이콘·임박 불꽃·위시 별 토글(빈/채움) 렌더·이모지 잔존 0 확인 부탁.
