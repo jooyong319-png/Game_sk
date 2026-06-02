@@ -122,7 +122,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-02 09:12 (기획자): **모드 = 외형(시각 디자인) 집중**. 직전 1순위 Pretendard 폰트 도입 ✅완료(개발자 08:29·QA 08:31/08:46 무회귀) → 큐에서 제거. 디자이너가 08:23·09:01 외형 제안 다수 투하("회색 스프레드시트 인상, 첫인상 임팩트·브랜드색 부재") → 그중 **높음 외형 4건을 큐 1~4순위로 승격**. 기존 큐의 '셀 면강조'(완료된 accent버전과 근접중복)·'D-day 배지 그라데이션'(디자이너 신규 알약배지 제안과 중복)·'통계줄 세그먼트 클릭'(UX/발견성, 순수 외형 아님)은 IDEAS로 이동. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0(BUGS 전 항목 ✅).
+> 갱신 2026-06-02 10:11 (기획자): **모드 = 외형(시각 디자인) 집중**. 직전 1순위 [외형·브랜드색] accent #4a90e2→#5b9dff 선명화+토큰(--accent-2/--accent-grad) ✅완료(개발자 09:28·QA 09:46 라이브 무회귀) → 큐에서 제거, 잔여 4건 1~4순위로 당겨짐(히어로 밴드·임박 스트립·상세 백드롭·카드 호버). 큐 4건이라 디자이너 09:01 외형 제안 중 **[통계줄 컬러칩]을 작고 명확한 순수-외형 TODO로 5순위 승격**(IDEAS→큐, 클릭=필터는 제외하고 시각 스타일만). 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0(BUGS 전 항목 ✅). 3사이클 정체 TODO 0.
 
 1. **[외형·히어로] 메인 헤더를 풀블리드 그라데이션 히어로 밴드로 재구성 + h1 그라데이션 텍스트** (디자이너 06-02 08:23 — 높음, 1순위 토큰 의존)
    - 현 `header` 단색 surface→bg + h1 1.7rem뿐이라 첫인상 임팩트 0("회색 스프레드시트").
@@ -139,6 +139,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 4. **[외형·카드] 게임 카드 호버 입체감 — 그림자 상승 + translateY + 트랜지션** (외형 모드 신규)
    - 리스트 카드(.game-card) 호버 피드백이 약해 클릭 어포던스/세련도 부족.
    - `.game-card`에 `transition: box-shadow .15s ease, transform .15s ease` + `:hover`에 상승 `box-shadow`·`transform: translateY(-2px)`. `prefers-reduced-motion: reduce`에선 transform 제거. 기존 그림자/색 재사용(신규 색 없음). styles.css 소규모, CSS brace 균형.
+
+5. **[외형·통계줄] `#stats-summary` 평문(#888) → 카테고리 컬러 칩(pill) 카운터** (디자이너 06-02 09:01 — 보통, 시각만)
+   - 현재 `국내 모바일 N · 국내 PC·콘솔 N · 글로벌 N · 신규 서버 N · 총 N`이 전부 `#888` 단색 평문 가운뎃점 구분 → 카테고리 4색 자산이 통계줄에서 미사용, 회색 한 줄이라 존재감 약함.
+   - renderStatsSummary 각 카테고리 세그먼트를 칩으로: `.stat-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;font-size:0.82rem;font-weight:700;margin:0 6px 6px 0}` + 카테고리별 `background:rgba({색},0.10);color:{색}`(모바일 #81c784·PC/콘솔 #64b5f6·글로벌 #ba68c8·신규서버 #ff8a65), 앞에 6px 색 도트 span. '총 N'은 중립 칩(`background:var(--surface);color:#cfd4df;border:1px solid var(--border)`).
+   - **클릭=필터 동작은 이번 TODO 범위 아님(IDEAS 보관 유지) — 순수 시각 스타일만.** 신규 색은 기존 카테고리 4색 재사용. script.js renderStatsSummary 마크업 + CSS 1블록, node --check 통과·CSS brace 균형.
 
 ### (보류 — 외형 모드 중 IDEAS 보관, 사용자가 "이제 a11y 정리하자" 지시 시 재승격)
 이번 사이클 큐→IDEAS 이동: D-DAY/임박 배지 그라데이션 강조(디자이너 신규 'D-day 알약배지' 제안과 중복 → IDEAS 통합), 통계줄(#stats-summary) 세그먼트 클릭=카테고리 필터(UX/발견성, 순수 외형 아님 → IDEAS 보관), 출시 있는 셀 면강조(이미 출고된 accent버전과 근접중복, '좌측 카테고리색' 미세분만 잔여 → IDEAS 저순위). 이전 보류분(헤더↔푸터 타임스탬프 통일·날짜패널 aria-live+포커스·아이콘 44×44 터치타겟·위시별 --wish 토큰)은 외형 모드 동안 큐에 안 올림.
