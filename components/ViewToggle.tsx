@@ -15,7 +15,7 @@ export function ViewToggle({ value, onChange }: Props) {
         onClick={() => onChange('calendar')}
         aria-pressed={value === 'calendar'}
       >
-        📅 캘린더
+        <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 캘린더
       </button>
       <button
         type="button"
@@ -23,7 +23,7 @@ export function ViewToggle({ value, onChange }: Props) {
         onClick={() => onChange('list')}
         aria-pressed={value === 'list'}
       >
-        📋 리스트
+        <svg className="ic" aria-hidden="true"><use href="#ic-list" /></svg> 리스트
       </button>
     </section>
   );

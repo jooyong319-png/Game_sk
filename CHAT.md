@@ -1,3 +1,8 @@
+## [2026-06-02 21:30] [개발자]
+완료: 1순위 **[외형·미니멀·높음·운영자요청] 노출 이모지 → 인라인 SVG (1단계: 헤더/뷰토글/임박/위시)**. OS별 이모지 편차 제거·클린 미니멀. DESIGN_NOTES 13:10 Lucide 라인 스프라이트 스펙대로 구현.
+변경된 파일: app/layout.tsx(+8 — `<body>` 최상단에 `<svg width=0 height=0 position:absolute aria-hidden>` 스프라이트(symbol 5종 #ic-gamepad/#ic-calendar/#ic-list/#ic-flame/#ic-star, viewBox 0 0 24 24) + h1 로고 🎮을 `<svg class="ic ic-gamepad"><use href="#ic-gamepad"/></svg>`로 치환)·components/ViewToggle.tsx(+2/−2 — 📅→#ic-calendar·📋→#ic-list)·components/HeroStrip.tsx(+1/−1 — 🔥→#ic-flame)·components/GameModal.tsx(+1/−1 — 위시 ★/☆를 `<svg class="ic [ic-fill]"><use href="#ic-star"/>` class 토글로)·components/ListView.tsx(+1/−1 — 위시 ★/☆ 동일)·app/globals.css(+20 — `.ic`{1em·vertical-align -0.14·flex-shrink 0·fill none·stroke currentColor·width 1.75·round}·`.ic-fill`{fill currentColor·stroke none}·`.ic-gamepad`{color var(--accent)}, brace 58/58).
+비고: 색은 전부 currentColor 단색, 유일 컬러 포인트 헤더 🎮(.ic-gamepad=var(--accent))·🔥 단색 유지. 위시 별 토글은 textContent 교체 대신 ic-fill class 토글(활성 채움, 색은 버튼 .wishOn #f5b400을 currentColor로 상속). 2·3단계(카드/모달 메타·액션 🛠️🏢📄▶🔗·build.js SEO)는 후속 TODO — GameModal 📅캘린더추가·📄전체페이지·ListView 📅출시일은 의도적 미변경. 로컬 빌드는 sandbox 디스크 제한으로 Vercel typecheck+build 검증 위임. 큐 5→4. QA님 라이브에서 헤더 게임패드 아이콘(accent색)·뷰토글 캘린더/리스트 라인아이콘·임박 불꽃·위시 별 토글(빈/채움) 렌더·이모지 잔존 0 확인 부탁.
+
 ## [2026-06-02 21:12] [리서처]
 리서치 완료 (4개 카테고리)
 - 모바일 3→0, PC/콘솔 2→0, 글로벌 3→0, 신규서버 9→0 (후보→통과)
@@ -163,9 +168,3 @@ DESIGN_NOTES에 5개 외형 제안 추가(캘린더 빈셀 타일감·셀 카테
 완료: 1순위 **[외형·SEO상세] `/game/{id}` 상세페이지 카테고리색 라디얼 백드롭** 구현. 빌드타임 생성 상세페이지가 검정(#0f1115) 공백 한가운데 카드 1개로만 떠 화면 ~70%가 휑하던 문제 해소 — `<body>`에 카테고리색 라디얼 글로우(상단 중앙에서 퍼져 58%에서 페이드)를 깔아 빈 공간을 카테고리 색감으로 채움. 카테고리별 색(모바일=초록 #81c784 / PC·콘솔=파랑 #64b5f6 / 글로벌=보라 #ba68c8 / 신규서버=주황 #ff8a65, α≈13%)으로 페이지마다 분위기가 달라짐. 스크롤해도 글로우는 고정(background-attachment:fixed). 랜딩페이지(/upcoming-games 등)는 변화 없음.
 변경된 파일: build.js (pageShell +1 인자·body 1줄 / gamePage 색매핑+bodyAttr 3줄 / return 1줄 = +~5줄)
 비고: 빌드타임 생성이라 런타임 JS 무영향, 신규 색 토큰 없음(카테고리 4색 재사용). 생성물(game/*.html·sitemap)은 .gitignore라 Vercel 빌드에서 재생성 → 커밋은 build.js만. node --check ✓, `node build.js`로 게임 44개 재생성·global_aaa 게임 보라 백드롭·랜딩 `<body>` 평문 확인. QA: 라이브에서 상세페이지(예: /game/007-first-light-2026) 상단 카테고리색 라디얼 글로우·스크롤 시 고정·랜딩페이지 무변화 실측 부탁.
-## [2026-06-02 12:10] [기획자]
-TODO 큐 4→5 (모드: 외형 집중, 큰 단위 권장)
-완료 처리: 1순위 [외형·신규컴포넌트] 헤더 아래 "🔥 출시 임박" 가로 하이라이트 스트립 (개발자 12:29·QA 11:46 라이브 무회귀 ✅) → 완료한 기능 이동, 잔여 4건 1~4순위로 당김.
-추가: - [외형·로딩] 데이터 로드 스켈레톤 플레이스홀더 + 콘텐츠 페이드인 전환 (5순위, '로딩/전환 애니메이션' 카테고리, --surface 재사용·신규 색 없음·prefers-reduced-motion 분기).
-디자이너 신규 제안 0(최신 09:01분 전량 처리 완료). a11y 제안 0건 → IDEAS 보관 유지.
-활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0. 3사이클 정체 TODO 0. 코드 미수정(문서만).

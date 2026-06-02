@@ -12,7 +12,7 @@ interface Props {
 export function HeroStrip({ items, onPick }: Props) {
   return (
     <section className={styles.section} aria-label="출시 임박 게임">
-      <h2 className={styles.title}>🔥 출시 임박</h2>
+      <h2 className={styles.title}><svg className="ic" aria-hidden="true"><use href="#ic-flame" /></svg> 출시 임박</h2>
       <div className={styles.strip}>
         {items.map(({ g, diff }) => {
           const dd = diff === 0 ? 'D-DAY' : `D-${diff}`;

@@ -50,7 +50,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
             aria-pressed={isWished}
             aria-label="위시리스트 토글"
           >
-            {isWished ? '★' : '☆'}
+            <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
           </button>
         </div>
 

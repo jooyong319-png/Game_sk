@@ -93,7 +93,7 @@ export function ListView({ games, wishlist, onPick }: Props) {
                       aria-label="위시리스트 토글"
                       aria-pressed={isWished}
                     >
-                      {isWished ? '★' : '☆'}
+                      <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
                     </button>
                     <button type="button" className={styles.cardLink} onClick={() => onPick(g.id)}>
                       <div className={`${styles.cardBanner} cat-bg-${g.category}`}>
