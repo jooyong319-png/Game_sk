@@ -1,3 +1,11 @@
+## [2026-06-03 05:11] [기획자]
+TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
+**배포 블로커 해소 확정**: QA(04:47) 라이브 재검 — vercel.json 출고로 gcalen.com이 레거시 정적→신 Next 앱 전환(h1 SVG·임박 스트립·캘린더 주말색/today원형·상세 D-day배지 라이브). 직전 05:00 'f021717 미배포 추정'은 정정. → 직전 1순위 '배포 확인'을 완료 처리·재프레이밍.
+추가(높음): - GameModal @media(≤480px) 모바일 블록 신설(디자이너 05:05 모바일#1) / - 리스트 과거('출시됨') 카드 시각 약화(디자이너 05:05 데스크#1)
+큐 1~5: ①하이드레이션 7건 재점검(fix 불완전/애드센스 ad-div 원인 — 신 빌드에도 #425×3·#418×3·#423×1 매 로드 재현) ②GameModal 모바일 블록 ③과거 카드 약화 ④임박 스트립 글로우(데스크톱) ⑤/game/[id] "같은 시기 출시" 그리드
+IDEAS로 밀림: 리스트 배너 그라데+리본·범례 tint 칩(외형 보통, 다음 사이클 재승격 우선). 디자이너 05:05 보통 3건(상세 라디얼 백드롭·임박 행 좌띠·카테고리 필터 색칩) IDEAS 보관.
+사용자 요청 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0. a11y/리팩토링 제안 0건 큐잉(외형 모드).
+
 ## [2026-06-03 05:05] [디자이너]
 외형 점검 완료 (데스크 1440 라이브 + 모바일 390 소스검증 + 인벤 비교). **Next 앱 정상 배포 라이브 확인**(vercel.json 출고 반영: h1 SVG 그라데 타이틀·임박 4카드·캘린더 주말색/today원형/카테고리 tint·상세 D-day배지+상단바 전부 라이브).
 데스크 주요: 기간 기본 '전체'라 리스트 최상단=과거 '출시됨' 카드가 신작과 동일 비중 → 과거 카드 시각 약화 제안.
@@ -200,7 +208,3 @@ DESIGN_NOTES에 5개 제안 추가(데스크2·모바일1·인벤2). 코드 미�
 모바일 390: ⚠️ (라이브 실측 불가 — Chrome resize 뷰포트 미반영, innerWidth 1920 고정·matchMedia(max-width:480px)=false → 소스 검증 대체)
 상세: 라이브 데스크톱 DOM 실측(/game/sol-enchant-20260618) — .game-detail borderTop **4px solid #81c784**(모바일 카테고리색 일치)·h2 **32px(2rem)/800**·.dday-badge **"D-16" .dday-far**(color #888 faint·bg #2a2e38) 정상, 가로 오버플로 0. 홈 캘린더 렌더 정상(h1 🎮·"불러오는 중" 해소·day노드 137·콘솔 에러 0). 헬스체크 ✅: /·/sitemap.xml(application/xml)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상. 배지 4분기색 소스 검증: soon #f5a623·today #ff7a59·far faint(globals.css L102~104, brace 55/55). ※WebFetch 마크다운은 인라인 span 텍스트를 누락 → Chrome DOM 실측으로 배지 존재·값 확정(헛경보 회피). 모바일은 해당 요소 미디어쿼리 비종속(.game-detail h2/.dday-badge @media 밖)→동일 렌더·badge inline-block 줄바꿈으로 오버플로 위험 없음. 미해결 코드 버그 0.
 
-## [2026-06-02 11:20] [개발자]
-완료: 1순위 **[외형·회귀·상세] `/game/[id]` 카테고리 상단바 + 큰 D-day 배지 + 제목 강화**. 검색 유입 첫 화면인 정적 상세가 회색 박스 1개에 D-day 부재(모달만 보유)던 문제 해소.
-변경된 파일: app/game/[id]/page.tsx(+9/−2 — `calcDayDiff` import(서버 OK), diff→ddText/ddStage 산출, `<article>`에 `borderTop:4px solid CATEGORY_META[cat].color`, release-date 인라인 `(예정)` 제거 후 `.dday-badge` 삽입)·app/globals.css(+4/−1 — `.game-detail h2` 1.6→2rem/800, 신규 `.dday-badge`+분기색 soon/today/far, brace 55/55).
-비고: D-day 문자열은 GameModal/ListView/CalendarView와 동일 규약(`출시됨`/`D-DAY`/`D-N`, approx→`(예정)`)으로 통일. 배지색 임박≤7 amber #f5a623·D-DAY 주황 #ff7a59·먼미래/과거 faint — 앱 기존 D-day 색 재사용, 신규 색 없음. 빌드타임 생성·런타임 무영향. 로컬 빌드는 sandbox 제한으로 Vercel typecheck+build 검증 위임. 큐 4→3. QA님 라이브 /game/[id](예: /game/007-first-light-2026·approx 게임 1건) 상단 4px 카테고리 바·제목 2rem·D-day 배지 4분기 색 확인 부탁.

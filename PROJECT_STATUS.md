@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-03 05:00 (기획자 — 외형 집중 모드. 직전 1순위 [버그·SEO·동작] 하이드레이션 7건 해소(serverNow 단일기준, f021717) 개발자 출고 → 완료 이동. 단 QA 재검(HEAD 80ef2d9): 라이브 SSR raw HTML 구버전 잔존·콘솔 7건 여전 = f021717 미배포 추정(Vercel 빌드 지연/실패) → 배포 확인을 큐 1순위로 신설. 외형 큐 1칸씩 밀어 2~5순위 유지(큐 4→5).)
+마지막 갱신: 2026-06-03 05:11 (기획자 — 외형 집중 모드. QA(04:47) 재검: **배포 블로커 해소 확정** — vercel.json 출고로 라이브가 레거시 정적→신 Next 앱 전환(h1 SVG·임박 스트립·캘린더 주말색/today원형·상세 D-day배지 전부 라이브). 직전 사이클 'f021717 미배포 추정'은 정정됨. 단 하이드레이션 #425×3·#418×3·#423×1=7건이 신 빌드에서도 매 로드 재현 → fix 불완전/별도원인(애드센스 ad-div 주입 등) 의심 = 큐 1순위를 '배포 확인'→'하이드레이션 재점검'으로 재프레이밍. 디자이너 05:05 신규 높음 2건(GameModal 모바일 블록·과거 카드 약화) 큐 진입 → 외형 보통 2건(리스트 배너 그라데·범례 칩) IDEAS로 밀어 큐 5 유지.)
 
 
 ## 현재 단계
@@ -140,31 +140,30 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-03 05:00 KST (기획자): 직전 1순위 **[버그·SEO·동작] 하이드레이션 7건 해소**(serverNow 단일기준값 주입, f021717) 개발자 출고 → 완료한 기능 이동. **단 QA 재검(HEAD 80ef2d9): 라이브 SSR raw HTML이 구버전('불러오는 중'·기간 기본 '앞으로 1년') 잔존 + 콘솔 #425×3·#418×3·#423×1=7건 여전(2회·캐시버스트 동일) → f021717 미배포 추정(Vercel 빌드 지연/실패 가능).** → **배포 확인을 큐 1순위로 신설**(외형 출고도 전부 이 배포에 묶이는 잠재 블로커). 직전 외형 큐(글로우·관련게임·리스트배너·범례칩)는 1칸씩 밀어 2~5순위 유지. 활성 사용자 요청 0(SEO 보류 — 안 건드림)·신규 디자이너 제안 0(01:05 처리 완료)·3사이클 정체 0. 외형(시각 디자인) 집중 모드 유지.
+> 갱신 2026-06-03 05:11 KST (기획자): **배포 블로커 해소 확정** — QA(04:47) 라이브 재검 결과 vercel.json 출고로 gcalen.com이 레거시 정적 배포→신 Next 앱으로 전환됨(h1 SVG 게임패드·임박 스트립·캘린더 주말색/today원형/카테고리 tint·상세 D-day배지 전부 라이브, 개발자 (a) 검증항목 충족). 직전 05:00 사이클 'f021717 미배포 추정'은 **정정**(신 빌드 정상 배포). **단 하이드레이션 #425×3·#418×3·#423×1=7건이 이 신 빌드에서도 매 로드 재현 = serverNow fix(f021717) 반영됐는데도 미해소 → fix 불완전/별도원인** → 큐 1순위를 '배포 확인'→**'하이드레이션 재점검'**으로 재프레이밍. 디자이너 05:05 신규 높음 2건(GameModal 모바일 블록·리스트 과거카드 약화) 큐 진입(2·3순위). 직전 외형 보통 2건(리스트 배너 그라데+리본·범례 tint 칩)은 1칸씩 밀려 큐에서 빠지고 IDEAS 보관. 활성 사용자 요청 0(SEO 보류 — 안 건드림)·3사이클 정체 0. 외형 집중 모드 유지.
 
-1. ~~**[배포·블로커·최우선] f021717(하이드레이션 fix) 배포 확인 + Vercel 빌드/typecheck 점검**~~ **(개발자 06:20 처리완료 → 완료한 기능 이동: 로컬 `tsc`+`next build` 모두 green = 코드 무결 확인, 라이브=레거시 정적 배포로 판명, `vercel.json` 추가해 Next 빌드 강제. QA/운영자 배포 검증 대기)** (개발자 — 코드 신규작성 아닌 배포/빌드 상태 점검)
-   - QA(HEAD 80ef2d9) 라이브 재검: gcalen.com SSR raw HTML이 구버전('불러오는 중...' 플래시 + 기간 셀렉트 기본값 '앞으로 1년' = da3ab91 이전 상태)으로 잔존, 콘솔 하이드레이션 #425×3·#418×3·#423×1=7건 여전(2회·`?t=` 캐시버스트 동일) → 최신 커밋 **f021717이 라이브에 안 올라간 것으로 추정**.
-   - 할 일: Vercel 대시보드 배포 로그 확인 — (a) 빌드 **실패** 중이면 typecheck/build 에러 수정 후 재배포(그 자체가 모든 외형 출고의 블로커), (b) 단순 **지연/캐시**면 배포 완료 후 SSR HTML에 serverNow 반영('불러오는 중' 플래시 제거·기간 기본값 신버전)·콘솔 7건→0건 재확인. 완료 시 QA 하이드레이션 판정 종결.
+1. **[버그·SEO·동작·높음] React 하이드레이션 7건/로드 재점검 — fix 불완전/애드센스 ad-div 원인 특정** (개발자 — `components/Home.tsx`·`CalendarView.tsx`·`ListView.tsx` 및 `app/layout.tsx` 광고 컨테이너)
+   - QA(04:47) 재검: vercel.json 출고로 **신 Next 빌드 정상 배포 확인**(라이브=레거시→Next 전환). **그러나 serverNow 단일기준 fix(f021717)가 반영된 신 빌드(_next/chunks/fd9d1056*.js)에서도 콘솔 #425×3·#418×3·#423×1=7건이 매 로드 재현**(데스크톱 1440+모바일폭 동일) + adsbygoogle 'no_div' [ERROR] 1건 동반 → f021717 fix가 불완전하거나 별도 원인.
+   - 할 일: (a) 비최소화/dev 빌드(`next build` 후 소스맵 또는 dev 서버)로 #418/#425를 **발생시키는 정확한 노드** 특정(serverNow 스레딩이 안 닿은 잔여 날짜의존 렌더 of HeroStrip/GameModal/footer 등 가능성). (b) 애드센스 ad-div 주입이 hydration 직전 컨테이너를 변형하는지 점검 — `adsbygoogle` 스크립트/AdSlot 컨테이너를 `useEffect` mount 후 주입 or `suppressHydrationWarning`로 격리. (c) 잔여 날짜의존 노드엔 `suppressHydrationWarning`/mount 가드. 완료기준: gcalen.com DevTools 콘솔 #418/#423/#425 0건(adsense no_div는 별개 추적). 외형 모드지만 SSR 폐기·로딩 플래시(시각)·SEO 손실 동반이라 동작 버그로 유지.
 
-2. **[외형·D-DAY강조·보통] "🔥 출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우 (데스크톱 한정)** (디자이너 13:01 #4, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
+2. **[외형·모바일·높음] GameModal `@media(max-width:480px)` 모바일 블록 신설** (디자이너 05:05 모바일#1, `components/GameModal.module.css`)
+   - GameModal만 유일하게 모바일 블록 0건(타 전 컴포넌트엔 있음, 직전 완료한 'Filters 모바일 블록 부재'와 동형 누락). 390px서 `.overlay{padding:1rem}`+`.modal{padding:1.6rem}`·`.title{1.4rem}`·`.image{100px}`·`.imageEmoji{3rem}`이 좁은 폭에 과대·본문폭 부족.
+   - 구현: 파일 말미에 `@media(max-width:480px){ .overlay{padding:0.6rem} .modal{padding:1.2rem;border-radius:12px;max-height:92vh} .title{font-size:1.2rem} .image{height:78px;margin-bottom:0.6rem} .imageEmoji{font-size:2.2rem} .actions{gap:0.4rem} }` 신설. 레이아웃만(신규 색 0), 데스크톱 규칙은 미디어쿼리 밖이라 무영향. CSS brace 균형 확인.
+   - 검증: `npm run typecheck`/`build` 무에러, 모바일 390px 모달 패딩/제목/이미지 비례 정돈 확인(QA — Chrome resize 미반영 시 소스 갈음).
+
+3. **[외형·리스트·높음] 리스트 과거('출시됨') 카드 시각 약화 — 다가오는 신작이 먼저 눈에** (디자이너 05:05 데스크#1, `components/ListView.tsx` + `components/ListView.module.css`)
+   - 기간 기본 '전체(과거+미래)'라 리스트 최상단=2025/과거 '출시됨' 카드인데 미래 게임과 시각 비중 동일(`.imminent` amber만 강조·과거 약화 0, 라이브 데스크 실측 확인). 첫 스크롤에서 끝난 게임이 신작만큼 시선 점유.
+   - 구현: ListView.tsx 카드(이미 출시 여부 판정·'출시됨' 라벨 렌더 중)에서 과거 게임 `<li>`에 `styles.released` 부여. ListView.module.css 신규 `.released{opacity:0.62}` + `.released .cardBanner{filter:saturate(0.55)}` + 우상단 '출시됨'을 회색 미니칩 `.releasedTag{font-size:0.7rem;color:#888;background:rgba(255,255,255,0.05);padding:0.12rem 0.5rem;border-radius:999px}` + `.released:hover{opacity:1}`(탐색성 유지). CSS 위주·변경량 작음, 신규 색 없음.
+   - 검증: `npm run typecheck`/`build` 무에러, 과거 카드 약화·hover 복원·신작 또렷 확인.
+
+4. **[외형·D-DAY강조·보통] "🔥 출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우 (데스크톱 한정)** (디자이너 13:01 #4, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
    - 현재 `.hero-card`는 카드별 차이가 D-day 숫자 색뿐이라 D-1과 D-7 임팩트 동일. HeroStrip이 이미 부여하는 `data-cat`/`--cat` 재사용 → D-3 이내 카드에 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경 미세 radial. D-DAY(diff 0)는 주황 #ff7a59 글로우 1.3배 + `transform:scale(1.02)`(`prefers-reduced-motion` 시 transform 생략).
    - **주의: 모바일은 컴팩트 행으로 바뀐 상태이므로 글로우는 데스크톱 그리드 한정.** 검증: `npm run typecheck`/`build` 무에러, 신규 색 없음.
 
-3. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안 Next 재경로 — `app/game/[id]/page.tsx` + `app/globals.css`)
+5. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안 Next 재경로 — `app/game/[id]/page.tsx` + `app/globals.css`)
    - 상세페이지가 게임 카드 1개뿐이라 하단 여백 큼·내부링크 동선 없음. page.tsx 빌드타임에 **같은 달 ±2주** 내 다른 게임을 자기 제외·가까운 출시일순 3~6개 추림 → `.game-detail` 아래 `<section>`(h3 "같은 시기 출시") + `<a href="/game/{id}">` 미니카드 그리드. 관련 0건이면 섹션 미렌더.
-   - CSS: `grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px`, 미니카드 카테고리색 좌측 4px 바(`borderLeft:'4px solid '+CATEGORY_META[g.category].color`)·게임명 700·출시일·D-day. 메인 카드 톤 재사용·신규 색 없음.
+   - CSS: `grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px`, 미니카드 카테고리색 좌측 4px 바(`borderLeft:'4px solid '+CATEGORY_META[g.category].color`)·게임명 700·출시일·D-day. 메인 카드 톤 재사용·신규 색 없음. (디자이너 05:05 데스크#2 '상세 라디얼 백드롭'과 공존 가능 — 다음 큐 후보.)
    - 검증: `npm run typecheck` 통과, `npm run build`로 /game/[id] 정적 생성 무에러, 관련 0건 게임 섹션 숨김 확인.
-
-4. **[외형·리스트·보통] 리스트 카드 배너(.cardBanner) 카테고리 단색 → 카테고리색 세로 그라데이션 + D-DAY 카드 좌상단 리본** (디자이너 디스플레이스 IDEA Next 재경로, `components/ListView.module.css` + `components/ListView.tsx`)
-   - 현재 `.cardBanner`(L96, height 56px)는 `cat-bg-{category}` 단색 + 45° 옅은 해치 `::before`(L102)뿐이라 카드 상단이 평면적. 카테고리 4색(모바일 #81c784·PC콘솔 #64b5f6·글로벌 #ba68c8·신서버 #ff8a65)을 세로 그라데이션으로 입체화.
-   - 구현: ListView.tsx 카드 배너 div에 인라인 `style={{ '--cat': CATEGORY_META[g.category].color } as CSSProperties}` 주입(HeroStrip 패턴 동일), `.cardBanner` 배경을 `background:linear-gradient(160deg, color-mix(in srgb,var(--cat,#5b9dff) 34%, #14171d) 0%, #14171d 100%)`(미지원 폴백 `cat-bg-*` 선행 유지)로 교체, `::before` 해치는 opacity 낮춰 보조 유지.
-   - D-DAY(diff 0) 카드만 배너 좌상단에 `.cardRibbon`(`position:absolute;top:0;left:0;background:#ff7a59;color:#fff;font-weight:800;font-size:0.7rem;padding:2px 8px;border-bottom-right-radius:8px`) "D-DAY" 리본. ListView.tsx에서 diff===0 분기로만 렌더(임박/먼미래 카드는 미렌더).
-   - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(카테고리 4색·기존 주황 #ff7a59 재사용), color-mix 미지원 폴백 확인.
-
-5. **[외형·캘린더 범례·보통] 카테고리 범례 8px 점+회색 텍스트(#aaa) → 카테고리 tint 미니 칩** (디자이너 01:05 데스크#2 — `components/CalendarView.tsx` L104 legend / `CalendarView.module.css` `.legendItem`·`.legendDot` L41-42)
-   - 현재 `.legendItem{gap:0.3rem}`+`.legendDot{width:8px;height:8px}`+`.legend{color:#aaa;font-size:0.8rem}` — 작은 점 4개라 셀의 `color-mix 8%` tint·좌측 띠 색과 눈으로 매칭이 약함.
-   - 구현: tsx에서 각 legendItem에 인라인 `style={{ '--lc': CATEGORY_META[c].color } as CSSProperties}` 주입(HeroStrip/cardBanner 동일 패턴) → `.legendItem{ padding:2px 9px; border-radius:999px; background:color-mix(in srgb, var(--lc) 14%, #14171d); color:var(--lc); font-weight:600; }`(color-mix 미지원 시 기존 점 폴백 유지). 칩 배경이 셀 tint와 동일 색면이라 "이 색=이 카테고리"가 즉시 매칭. 카테고리 4색(모바일 #81c784·PC #64b5f6·글로벌 #ba68c8·신서버 #ff8a65) 재사용·신규 색 없음.
-   - 검증: `npm run typecheck` 통과, `npm run build` 무에러, 범례 4칩 카테고리색 tint 표시·color-mix 폴백(점 유지) 확인.
 
 ### (보류 — 외형 모드 중 IDEAS 보관, 사용자가 "이제 a11y 정리하자" 지시 시 재승격)
 큐 진입 보류: [신규컴포넌트] "⭐ 위시리스트 인기 TOP5" 가로 위젯(디자이너 20:50 인벤#1 — **데이터 선결**: 로컬스토리지 위시는 개인값이라 전역 인기 산출 불가 → 리서처가 games.json에 `popularity` 필드 추가 or '글로벌 대작+임박' 큐레이션 TOP5 결정 후 큐 후보), [외형·통계줄] `#stats-summary` 카테고리 컬러 칩(Next에서 해당 컴포넌트 확인 후 재경로). 그 외 이전 보류분(카드 호버 입체감·로딩 스켈레톤·통계줄 세그먼트 클릭필터·잔여 토큰 통일 등)·a11y 마이크로 트윅(aria/포커스/대비/시맨틱)은 외형 모드 동안 큐 진입 금지, IDEAS 보관만.
@@ -182,6 +181,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+
+- [기획자 2026-06-03 05:11·큐에서 밀림] **[외형·보통] 큐 4·5에서 밀린 2건 IDEAS 보관** — (a) 리스트 카드 배너(.cardBanner) 카테고리 단색→세로 그라데이션 + D-DAY 카드 좌상단 리본(`components/ListView.module.css`+`.tsx`, color-mix 34% 폴백 cat-bg-*), (b) 캘린더 범례 8px 점+회색→카테고리 tint 미니 칩(`CalendarView.tsx` L104·`.legendItem` color-mix 14% 폴백 점). 디자이너 05:05 신규 높음 2건(GameModal 모바일·과거카드 약화) 큐 진입에 밀린 것 — 다음 사이클 재승격 우선 후보. 우선순위 보통
+- [디자이너 2026-06-03 05:05·외형모드·보통 / 기획자 IDEAS] **[보통] /game/[id] 상세 카테고리색 라디얼 백드롭** (`app/game/[id]/page.tsx`) — 상세 카드(700px)가 평면 #0f1115 검정 공백 한가운데, 면 깊이 0. 컨테이너 인라인 `style={{background:'radial-gradient(80% 45% at 50% 0%, '+CATEGORY_META[game.category].color+'22, transparent 60%)'}}`(α≈hex+22). 큐 5순위 '같은 시기 출시 그리드'(공백→콘텐츠)와 **공존**(이건 색 깊이) → 그리드 출고 후 묶음 후보. 우선순위 보통
+- [디자이너 2026-06-03 05:05·외형모드·보통 / 기획자 IDEAS] **[보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화** (`components/HeroStrip.module.css` @media≤480px) — 모바일 카테고리 신호가 8px 점 1개뿐 → `.card`에 `border-left:3px solid var(--cat,#f5a623);padding-left:0.65rem`. 데스크 `.card::before` glow와 톤 일치. 우선순위 보통
+- [디자이너 2026-06-03 05:05·인벤#1·외형모드 / 기획자 IDEAS·상호작용 변경 동반] **[보통] 카테고리 `<select>`→카테고리색 칩 row(월탭 톤)** (`components/Filters.tsx`+`Filters.module.css`) — 인벤 필터칩 다크 재해석. `.catChips` flex-wrap + 칩 활성 `color-mix 18%` tint·border `var(--cat)`('전체'는 `--accent-grad`). 플랫폼/기간은 select 유지(미니멀). **select→칩은 상호작용 변경 동반 → 개발자 판단 필요**, 큐 진입 전 검토. 우선순위 보통
 
 - [디자이너 2026-06-03 05:05·외형모드·데스크#1] **[높음·리스트 위계] 리스트 과거('출시됨') 카드 시각 약화 — 다가오는 신작이 먼저 눈에** (`components/ListView.tsx`+`ListView.module.css`) — 기간 기본 '전체(과거+미래)'라 리스트 최상단이 2025/과거 출시됨 카드인데 미래 게임과 시각 비중 동일(`.imminent` amber만 강조·과거 약화 0). 라이브 데스크 실측 확인. 과거 게임 `<li>`에 `.released` 부여 → `.released{opacity:0.62}`+`.released .cardBanner{filter:saturate(0.55)}`+'출시됨'을 회색 미니칩(`.releasedTag` font 0.7rem·#888·rgba(255,255,255,0.05) 999px), `.released:hover{opacity:1}`로 탐색성 유지. CSS 위주·변경량 작음. 우선순위 높음
 - [디자이너 2026-06-03 05:05·외형모드·모바일#1] **[높음·모바일 필수] GameModal @media(max-width:480px) 블록 신설 — 유일하게 모바일 블록 부재** (`components/GameModal.module.css`) — 타 전 컴포넌트엔 모바일 블록 있으나 GameModal만 0건(직전 'Filters 모바일 블록 부재'와 동형). 390px서 `.modal{padding:1.6rem;max-width:520px}`·`.title{1.4rem}`·`.image{100px}`·`.imageEmoji{3rem}` 과대. 신설: `.overlay{padding:0.6rem}`·`.modal{padding:1.2rem;border-radius:12px;max-height:92vh}`·`.title{1.2rem}`·`.image{height:78px}`·`.imageEmoji{2.2rem}`·`.actions{gap:0.4rem}`. 우선순위 높음
