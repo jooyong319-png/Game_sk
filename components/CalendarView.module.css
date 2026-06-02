@@ -41,6 +41,14 @@
 .legendItem { display: flex; align-items: center; gap: 0.3rem; }
 .legendDot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
 
+/* ─── 주말 색 구분 (한국 달력 관습) ─── */
+.sun { color: #e57373; }
+.sat { color: #7aa7ff; }
+.cellDate.sun { color: #e57373; }
+.cellDate.sat { color: #7aa7ff; }
+/* 강조 셀 날짜는 흰색 유지 (소스 후행 override) */
+.cellSelected .cellDate { color: #fff; }
+
 /* ─── Calendar Grid ─── */
 .grid {
   display: grid;
@@ -92,8 +100,8 @@
   box-shadow: inset 3px 0 0 var(--cat, #5b9dff);
 }
 .cellToday {
-  background: rgba(74,144,226,0.08);
-  box-shadow: inset 0 0 0 2px #4a90e2;
+  background: rgba(91,157,255,0.08);
+  box-shadow: inset 0 0 0 2px rgba(91,157,255,0.45);
 }
 .cellSelected {
   background: rgba(245,166,35,0.12);
@@ -108,14 +116,16 @@
   align-items: center;
   gap: 0.3rem;
 }
-.cellTodayBadge {
-  font-size: 0.6rem;
-  background: #4a90e2;
+.cellTodayNum {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: var(--accent);
   color: #fff;
-  padding: 0.05rem 0.3rem;
-  border-radius: 3px;
   font-weight: 700;
-  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cellName {
@@ -238,6 +248,10 @@
   .cell { min-height: 64px; padding: 0.25rem 0.2rem; }
   .cellDate { font-size: 0.72rem; }
   .cellName { display: none; }
-  .cellTodayBadge { font-size: 0.55rem; padding: 0.02rem 0.2rem; }
-  .cellDot { width: 6px; height: 6px; }
+  .cellHas {
+    background: #1d2330; /* color-mix 미지원 폴백(선행) */
+    background: color-mix(in srgb, var(--cat, #5b9dff) 16%, #14171d);
+    box-shadow: inset 4px 0 0 var(--cat, #5b9dff);
+  }
+  .cellDot { width: 7px; height: 7px; }
 }

@@ -1,3 +1,8 @@
+## [2026-06-02 23:29] [개발자]
+완료: **[외형·캘린더·높음·묶음] 캘린더 시각 강화 3종** (1순위) — (a) 주말 색 구분: 요일 헤더·출시셀 날짜에 `getDay()` 기반 일/토 클래스(.sun #e57373·.sat #7aa7ff 톤다운), 선택 셀 날짜는 흰색 유지. (b) today 날짜 채움 원형(.cellTodayNum, var(--accent) 배경)으로 구글캘린더식 강조, "오늘" 텍스트 배지 제거·셀 테두리 약화(rgba(91,157,255,0.45)). (c) 모바일(≤480px) 출시셀 tint 8→16%·좌측 색띠 3→4px·점 6→7px로 점 신호 강화(데스크톱 현행 유지).
+변경된 파일: components/CalendarView.tsx (+5/−4), components/CalendarView.module.css (+20/−10)
+비고: 신규 색=주말 2색만, 카테고리/accent 토큰 재사용. CSS brace 59/59. 로컬 tsc/build는 sandbox 디스크 제한으로 Vercel(typecheck+build) 검증 위임. QA님 라이브 확인 부탁 — ①요일 헤더 일=빨강·토=파랑 + 셀 날짜 동일 ②today 채움 원형(배지 없음)·선택 셀 날짜 흰색 ③모바일 출시셀 색/띠/점 진해짐. 큐 5→4(2~5순위 한 칸씩 당김).
+
 ## [2026-06-02 23:12] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료 처리: 1순위 [외형·미니멀·운영자요청] 이모지→SVG **2단계**(잔존 전량: Filters ★·GameModal 📅📄↗·ListView 📅·GoogleCalendarButton 📅·상세 📅 + 스프라이트 #ic-file·#ic-arrow-ur) — 개발자 23:28·QA 22:47 ✅(데스크톱 실측·모바일 소스검증, 라이브 노출 이모지 0건·콘솔 0·가로오버플로 0) → 완료한 기능 이동. **운영자 "이모지 제거·SVG 미니멀" 요청 1·2단계 전량 출고 완료.**
@@ -164,8 +169,3 @@ IDEAS 이동: 디자이너 13:01 #4(임박 스트립 카테고리색 글로우)�
 검증 대상: 캘린더 빈 셀 타일감(--cell-bg)+컨테이너 패널 카드화(--cal-panel) (개발자 13:29, styles.css)
 결과: ✅ 정상
 상세: 라이브(gcalen.com) Chrome 실측 — 빈 셀 .day bg #161922(=--cell-bg)·hairline 보더 rgba(255,255,255,.05)로 body #0f1115와 분리돼 타일감 확인, .calendar-view bg #13151b·radius 14px·padding 14px 패널 카드 적용 확인. 셀 42개 정상 렌더·콘솔 에러 0. 홈 HTML 200·games.json 45건 파싱 정상.
-## [2026-06-02 13:29] [개발자]
-완료: 1순위 [외형·캘린더] 빈 셀 타일감 + 캘린더 컨테이너 패널 카드화.
-시각 변화: (1) 출시 없는 빈 셀이 그동안 body 배경(--bg #0f1115)과 같아 "검은 공백"으로 읽히던 것을 한 톤 올린 --cell-bg(#161922) 면 + hairline 보더(rgba(255,255,255,0.05))로 바꿔 격자가 타일처럼 보임. (2) 캘린더 컨테이너 .calendar-view를 --cal-panel(#13151b)·border-radius 10→14px·padding 1rem→14px 패널 카드로 묶어 격자를 하나의 면으로 감쌈. 모바일(≤480px)은 padding 9px·radius 12px로 축소. 기존 강조 셀(today 파란보더·임박 amber·선택 채움·.day-has 좌측악센트)은 후행 셀렉터로 우선순위 유지되어 무회귀.
-변경된 파일: styles.css(+6/-2줄: :root 토큰 3개 추가 + .calendar-view + .day base + 모바일 분기), PROJECT_STATUS.md, CHAT.md
-비고: CSS-only(script.js 무변경). CSS brace 309/309 균형, node --check 통과. 다른 TODO 미터치. QA 권고 — 라이브에서 (1) 빈 달(출시 0건 달로 ‹ › 이동) 격자가 검은 공백 아닌 타일 면으로 보이는지, (2) 데스크톱/모바일 패널 카드 외곽 라운드·padding, (3) 오늘/임박/선택/출시 셀 강조가 base 톤에 묻히지 않는지 확인 부탁.

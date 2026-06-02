@@ -111,7 +111,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
       </div>
 
       <div className={styles.grid}>
-        {['일','월','화','수','목','금','토'].map(d => (<div key={d} className={styles.dayHead}>{d}</div>))}
+        {['일','월','화','수','목','금','토'].map((d, i) => (<div key={d} className={`${styles.dayHead} ${i === 0 ? styles.sun : i === 6 ? styles.sat : ''}`.trim()}>{d}</div>))}
         {cells.map((cell, i) => {
           const has = cell.games.length > 0;
           const showName = has && cell.inMonth;
@@ -144,9 +144,10 @@ export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
               }}
               title={has ? cell.games.map(g => g.name_ko).join(', ') : undefined}
             >
-              <div className={styles.cellDate}>
-                {cell.date.getDate()}
-                {cell.isToday && <span className={styles.cellTodayBadge}>오늘</span>}
+              <div className={`${styles.cellDate} ${cell.date.getDay() === 0 ? styles.sun : cell.date.getDay() === 6 ? styles.sat : ''}`.trim()}>
+                {cell.isToday
+                  ? <span className={styles.cellTodayNum}>{cell.date.getDate()}</span>
+                  : cell.date.getDate()}
               </div>
 
               {showName && firstGame && (
