@@ -2,10 +2,10 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: #0f1115; color: #e6e6e6; line-height: 1.5; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+  font-family: var(--font-sans);
   min-height: 100vh;
 }
-a { color: #4a90e2; text-decoration: none; }
+a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* ─── 변수 ─── */
@@ -15,20 +15,48 @@ a:hover { text-decoration: underline; }
   --border: #2a2e38;
   --text: #e6e6e6;
   --text-faint: #888;
-  --accent: #4a90e2;
+  --accent: #5b9dff;
+  --accent-2: #c98ad6;
+  --accent-grad: linear-gradient(92deg, #5b9dff, #c98ad6);
   --accent-warm: #f5a623;
   --danger: #e74c3c;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
 }
 
 /* ─── 헤더 / 푸터 ─── */
 .site-header {
+  position: relative;
   text-align: center;
   padding: 2rem 1rem 1.2rem;
-  background: linear-gradient(180deg, #1a1d24 0%, #0f1115 100%);
+  background: linear-gradient(180deg, #171a22 0%, #0f1115 100%);
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
 }
-.site-header h1 { font-size: 1.6rem; }
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 120% at 50% 0%, rgba(91,157,255,0.10), transparent 70%);
+}
+.site-header h1 {
+  position: relative;
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
 .site-header a { color: inherit; }
 .site-header a:hover { text-decoration: none; }
+.site-header h1 a {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (max-width: 480px) {
+  .site-header h1 { font-size: 1.8rem; }
+}
 .site-footer {
   text-align: center;
   padding: 2rem 1rem;

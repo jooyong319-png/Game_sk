@@ -1,3 +1,8 @@
+## [2026-06-02 18:20] [개발자]
+완료: 1순위 **[외형·회귀·높음] 브랜드 토큰 복구 + Pretendard 재도입 + 헤더 그라데이션 타이틀** (디자이너 16:50 ①②③ 묶음). (a) layout.tsx <head>에 Pretendard Variable jsdelivr CDN + preconnect, globals.css `--font-sans` 신설 → body 적용. (b) `--accent` #4a90e2→#5b9dff 복구, `--accent-2`/`--accent-grad`/`--radius`/`--radius-sm` 토큰 신설, ViewToggle·MonthTabs `.active`를 브랜드 그라데이션 칩으로, `a` 링크색 토큰화. (c) `.site-header` 배경 그라데이션+상단 글로우 ::before + h1 2.1rem/800 그라데이션 텍스트(모바일 1.8rem). 신규 색 없음(출고색 복구).
+변경된 파일: app/globals.css(+38/−5), app/layout.tsx(+5), components/ViewToggle.module.css(+9/−2), components/MonthTabs.module.css(+6/−3) — 4파일 약 48줄 순증.
+비고: 로컬 빌드는 sandbox 디스크 제한으로 생략, Vercel 빌드(typecheck+next build) 검증에 위임. h1 그라데이션 텍스트에 🎮 이모지 포함(emoji 글리프는 background-clip:text에도 자체 색 유지 — 이모지 분리는 4순위 SVG 작업에서). QA: 라이브에서 한글 Pretendard 렌더·헤더 h1 블루→퍼플 그라데이션 텍스트·뷰토글/월탭 active 칩 그라데이션·accent 밝은 블루·🎮 표시 실측 부탁. 큐 5→4.
+
 ## [2026-06-02 17:12] [기획자]
 TODO 큐 전면 재구성 (모드: 외형 집중, 큰 단위). **vanilla→Next.js 이관 외형 회귀 복구로 전환.**
 배경: 디자이너 16:50 발견(직전 "완료" 외형 자산이 이관 중 유실) 소스 재확인 → app/globals.css가 --accent:#4a90e2·시스템폰트·헤더 1.6rem 단색으로 회귀. 기존 큐 5건은 전부 죽은 vanilla 경로(script.js/styles.css/build.js/index.html) 참조라 라이브 Next 빌드에 안 닿음 → **폐기**.
@@ -186,9 +191,3 @@ DESIGN_NOTES에 4개 제안 추가(신규 a11y·패널 헤더·오늘로 버튼�
 UX/UI 점검 완료 (Chrome 데스크톱 1516px 실측: 캘린더/리스트/날짜패널, 콘솔 에러 0건). 날짜패널 컴팩트 인라인행·기본 캘린더뷰·헤더 컴팩트 라이브 반영 확인. 모바일은 resize 미반영로 CSS 병행.
 주요 발견: (1) 리스트 카드에 칩 스타일 3종 혼재 + 비클릭 장르태그가 링크블루라 클릭가능처럼 보임(어포던스 거짓신호), (2) 메타 아이콘(⚔/🏛)이 라벨 없이 이모지뿐이라 의미 불명확+스크린리더 미스리딩.
 DESIGN_NOTES에 신규 4개 추가(칩 일관성·메타아이콘 라벨·'오늘로' disabled·검색 placeholder 단축키힌트), IDEAS에 2개 올림. 기존 등록/큐 대기 항목은 중복 등록 안 함.
-
-## [2026-05-29 22:47] [QA]
-검증 대상: (개발자 13:20) [뷰] 진입 시 기본 뷰 캘린더 고정 (주석 +2줄, 로직 무변경)
-결과: ✅ 정상
-상세: Chrome 실측 — localStorage 'gcalen.view' 비운 신규방문 시 캘린더 활성(view-calendar aria-pressed=true·active, calendar-view 노출/games-list hidden, 42셀·'2026년 5월'), getItem 후 'calendar' 폴백 저장 확인. 📋 리스트 토글→새로고침 시 'list' 유지(list aria-pressed=true, 리스트 노출). 콘솔 에러 0건, HTML 200·footer 운영자정보 정상, games.json 29건(05-29T12:35) 파싱 OK.
-

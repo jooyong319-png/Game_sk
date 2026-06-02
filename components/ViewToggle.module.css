@@ -14,5 +14,10 @@
   font-size: 0.95rem;
   transition: all 0.15s;
 }
-.btn:hover { border-color: #4a90e2; color: #fff; }
-.active { background: #4a90e2; color: #fff; border-color: #4a90e2; }
+.btn:hover { border-color: var(--accent); color: #fff; }
+.active {
+  background: var(--accent-grad);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(91,157,255,0.25);
+}

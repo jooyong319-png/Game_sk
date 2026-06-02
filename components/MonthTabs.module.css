@@ -27,10 +27,10 @@
   color: #fff;
 }
 .active {
-  background: #4a90e2;
+  background: var(--accent-grad);
   color: #fff;
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 2px rgba(74,144,226,0.25);
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(91,157,255,0.25);
 }
 @media (max-width: 480px) {
   .tab { padding: 0.4rem 0.7rem; font-size: 0.82rem; }
