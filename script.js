@@ -450,6 +450,36 @@ const modal = document.getElementById('game-modal');
 const modalBody = document.getElementById('modal-body');
 const dayPanel = document.getElementById('day-detail-panel'); // hoisted: referenced by keydown/ESC handlers above Stage 4 (TDZ fix)
 
+
+// Google Calendar 일정 추가 URL 생성
+function buildGoogleCalendarUrl(game) {
+  if (!game || !game.release_date) return '';
+  const dt = game.release_date.replace(/-/g, ''); // 2026-06-18 -> 20260618
+  const dt2 = (() => {
+    const d = new Date(game.release_date);
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().slice(0, 10).replace(/-/g, '');
+  })();
+  const title = (game.name_ko || game.name_en || '게임 출시');
+  const cat = (categories && categories[game.category]) || game.category;
+  const details = [
+    `[${cat}] ${title}${game.name_en && game.name_ko !== game.name_en ? ' (' + game.name_en + ')' : ''}`,
+    game.description || '',
+    game.developer ? '개발: ' + game.developer : '',
+    game.publisher ? '배급: ' + game.publisher : '',
+    game.platforms?.length ? '플랫폼: ' + game.platforms.join(', ') : '',
+    '',
+    '출처: https://gcalen.com/game/' + game.id
+  ].filter(Boolean).join('\n');
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: title + ' 출시',
+    dates: dt + '/' + dt2,
+    details
+  });
+  return 'https://calendar.google.com/calendar/render?' + params.toString();
+}
+
 let lastFocusedTrigger = null;
 function openModal(gameId) {
   const game = allGames.find(g => g.id === gameId);
@@ -475,7 +505,7 @@ function openModal(gameId) {
     ${(() => { const d = (game.developer || '').trim(), p = (game.publisher || '').trim(); return (d && p && d === p) ? `<div class="modal-row"><strong>개발·퍼블리셔</strong>${escapeHtml(game.developer)}</div>` : `${d ? `<div class="modal-row"><strong>개발</strong>${escapeHtml(game.developer)}</div>` : ''}${p ? `<div class="modal-row"><strong>퍼블리셔</strong>${escapeHtml(game.publisher)}</div>` : ''}`; })()}
     ${game.description ? `<p class="desc" style="margin-top:0.6rem">${escapeHtml(game.description)}</p>` : ''}
     ${game.source_url ? `<a class="source-link" href="${escapeHtml(game.source_url)}" target="_blank" rel="noopener noreferrer">출처 보기 <span class="external-icon">↗</span></a>` : ''}
-    <div class="modal-actions"><a class="detail-page-link" href="/game/${escapeHtml(game.id)}" target="_blank" rel="noopener">📄 전체 페이지 ↗</a><a class="trailer-search-link" href="https://www.youtube.com/results?search_query=${encodeURIComponent((game.name_ko || game.name_en || '') + ' 트레일러')}" target="_blank" rel="noopener noreferrer">▶ 트레일러 검색</a><button type="button" class="copy-link-btn" data-id="${escapeHtml(game.id)}">🔗 링크 복사</button></div>
+    <div class="modal-actions"><a class="gcal-link" href="${escapeHtml(buildGoogleCalendarUrl(game))}" target="_blank" rel="noopener">📅 캘린더 추가</a><a class="detail-page-link" href="/game/${escapeHtml(game.id)}" target="_blank" rel="noopener">📄 전체 페이지 ↗</a><a class="trailer-search-link" href="https://www.youtube.com/results?search_query=${encodeURIComponent((game.name_ko || game.name_en || '') + ' 트레일러')}" target="_blank" rel="noopener noreferrer">▶ 트레일러 검색</a><button type="button" class="copy-link-btn" data-id="${escapeHtml(game.id)}">🔗 링크 복사</button></div>
   `;
   lastFocusedTrigger = document.activeElement;
   modal.hidden = false;
@@ -971,3 +1001,77 @@ function updateWishlistChipLabel() {
   chipWish.textContent = chipWish.dataset.baseLabel + ' (' + wishlist.size + ')';
 }
 updateWishlistChipLabel();
+
+
+// === 월별 탭: 빠른 이동 ===
+(function setupMonthTabs() {
+  const tabs = document.querySelectorAll('.month-tab');
+  if (!tabs.length) return;
+
+  function jumpToMonth(monthVal) {
+    if (monthVal === 'approx') {
+      // 미정 탭: 필터를 조정해서 release_date_approx 게임만 보여주는 건 복잡하니까
+      // 일단 캘린더 뷰 닫고 리스트뷰로 전환 + 스크롤만
+      const listBtn = document.getElementById('view-list');
+      if (listBtn && !listBtn.classList.contains('active')) listBtn.click();
+      return;
+    }
+    const m = parseInt(monthVal, 10);
+    if (isNaN(m)) return;
+    // 캘린더 뷰면 calendarCursor를 그 달로 이동 후 재렌더
+    if (typeof calendarCursor !== 'undefined' && typeof renderCalendar === 'function') {
+      const year = calendarCursor.getFullYear();
+      // 현재 cursor가 미래 연도면 그 연도 유지, 아니면 가까운 미래/올해 사용
+      const today = new Date();
+      const useYear = (m < today.getMonth() + 1) ? today.getFullYear() + 1 : today.getFullYear();
+      // 단순화: 현재 cursor 연도 유지하되, 올해보다 과거면 올해로
+      calendarCursor.setFullYear(useYear, m - 1, 1);
+      renderCalendar();
+    }
+    // 리스트 뷰면 해당 월 헤더로 스크롤
+    const listGrouped = document.getElementById('games-list');
+    if (listGrouped) {
+      // YYYY.MM 형식 헤더 찾기
+      const year = (typeof calendarCursor !== 'undefined') ? calendarCursor.getFullYear() : new Date().getFullYear();
+      const headers = listGrouped.querySelectorAll('.month-group-header, [data-month]');
+      for (const h of headers) {
+        const txt = (h.textContent || '').trim();
+        if (txt.includes(year + '.' + String(m).padStart(2, '0')) || txt.includes(year + '년 ' + m + '월')) {
+          h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          break;
+        }
+      }
+    }
+  }
+
+  function updateActiveTab() {
+    let activeM = null;
+    if (typeof calendarCursor !== 'undefined') {
+      activeM = calendarCursor.getMonth() + 1;
+    } else {
+      activeM = new Date().getMonth() + 1;
+    }
+    tabs.forEach(t => {
+      const v = t.dataset.month;
+      t.classList.toggle('active', String(v) === String(activeM));
+    });
+  }
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      jumpToMonth(t.dataset.month);
+      // 약간 지연 후 active 갱신 (calendarCursor 갱신 반영)
+      setTimeout(updateActiveTab, 50);
+    });
+  });
+
+  // 초기 active 표시
+  setTimeout(updateActiveTab, 100);
+
+  // 캘린더 네비 클릭 시에도 active 갱신
+  ['calendar-prev','calendar-next','calendar-today'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.addEventListener('click', () => setTimeout(updateActiveTab, 50));
+  });
+})();
+
