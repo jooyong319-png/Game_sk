@@ -1,3 +1,9 @@
+## [2026-06-03 08:47] [QA]
+검증 대상: HeroStrip '출시 임박' 임박도별 글로우(개발자 09:20 — diff===0 glowDday·diff<=3 glowCat·데스크톱 한정)
+데스크톱 1440: ✅ (Chrome 라이브 실측. 스트립 4카드 D-DAY/D-1/D-1/D-2 — glowDday 1개 box-shadow rgba(255,122,89,.7)+transform scale(1.02) pop 확정, glowCat 3개 카테고리색 글로우[국내모바일 녹색·글로벌 보라] transform none 확정. 가로오버플로 0[scrollW 1905≤1920]·캘린더 125셀·'불러오는 중' 플래시 0. 헬스 ✅ /·robots·sitemap(XML 200)·/game/sol-enchant-20260618[h1 🎮]·/new-servers[12서버])
+모바일 390: ✅ (Chrome resize 뷰포트 미반영 한계 동일[innerWidth 1920·mq480 false] → 배포 CSS 번들 실측으로 갈음. 프로덕션 스타일시트에 @media(max-width:480px) `.glowCat,.glowDday{box-shadow:none;transform:none;border-color:rgba(255,255,255,.08)}` 라이브 확정 + `.card::before{display:none}`·`.card:nth-child(n+4){display:none}`[임박 3행 캡] 유지 → 모바일 컴팩트 행 글로우 무영향, 회귀 0)
+상세: 개발자 09:20 1순위(임박 글로우) 데스크 라이브 통과·모바일 무영향 CSS 번들 확정. 신규 BUGS 0.
+
 ## [2026-06-03 09:20] [개발자]
 완료: **[외형·D-DAY강조·보통] "출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우(데스크톱 한정)** (큐 1순위)
 HeroStrip 카드가 D-day 숫자색만 달라 D-1과 D-7 임팩트가 동일하던 문제 해소. tsx에서 `diff`별 글로우 클래스 분기(`diff===0→glowDday`·`diff<=3→glowCat`·그외 없음) → 카드 className 합성. module.css 데스크톱 그리드(미디어쿼리 밖)에 `.glowCat`(D-1~3) 카테고리색 외곽 글로우(box-shadow color-mix 55/22%·border 45%)+`::before` 카테고리 radial, `.glowDday`(D-DAY) 주황 #ff7a59 강글로우+`transform:scale(1.02)`+주황 radial. 가까운 출시일일수록 카드가 "튀어나옴".
@@ -197,9 +203,4 @@ a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
 데스크톱 1440: ⚠️ (요일 헤더 주말색 미적용 — 셀 날짜는 정상)
 모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정·matchMedia(480)=false → 소스검증 대체)
 상세: 라이브 Chrome 실측 — today 채움 원형 ✅(accent#5b9dff bg·border-radius 50%·흰자 "2"·"오늘" 텍스트배지 제거 확인), 선택 셀 날짜 흰색 ✅, 셀 날짜 주말색 ✅(.cellDate.sun 일=rgb(229,115,115)·.cellDate.sat 토=rgb(122,167,255), 각 6셀). **단 요일 헤더(.dayHead)는 회색 #888 잔존(일/토 동일 rgb(136,136,136))** → `.dayHead{color:#888}`(module.css L62)가 `.sun/.sat`(L45-46)보다 후행·동일 특이도라 override. 셀 날짜만 2클래스라 정상. → BUGS 등록. 모바일 출시셀 tint16%·좌띠4px·점7px는 소스확인 ✅(뷰포트 미반영으로 렌더실측 불가). 콘솔 에러 0·가로오버플로 0(scrollWidth≤innerWidth). 헬스체크 ✅: /(h1 게임 출시 캘린더·🎮 0)·/sitemap.xml(XML·50 URL)·/robots.txt·/game/sol-enchant-20260618(상세 정상)·/new-servers(서버 12개) 정상. 노출 이모지 0·svg.ic 5종 렌더.
-
-## [2026-06-02 23:29] [개발자]
-완료: **[외형·캘린더·높음·묶음] 캘린더 시각 강화 3종** (1순위) — (a) 주말 색 구분: 요일 헤더·출시셀 날짜에 `getDay()` 기반 일/토 클래스(.sun #e57373·.sat #7aa7ff 톤다운), 선택 셀 날짜는 흰색 유지. (b) today 날짜 채움 원형(.cellTodayNum, var(--accent) 배경)으로 구글캘린더식 강조, "오늘" 텍스트 배지 제거·셀 테두리 약화(rgba(91,157,255,0.45)). (c) 모바일(≤480px) 출시셀 tint 8→16%·좌측 색띠 3→4px·점 6→7px로 점 신호 강화(데스크톱 현행 유지).
-변경된 파일: components/CalendarView.tsx (+5/−4), components/CalendarView.module.css (+20/−10)
-비고: 신규 색=주말 2색만, 카테고리/accent 토큰 재사용. CSS brace 59/59. 로컬 tsc/build는 sandbox 디스크 제한으로 Vercel(typecheck+build) 검증 위임. QA님 라이브 확인 부탁 — ①요일 헤더 일=빨강·토=파랑 + 셀 날짜 동일 ②today 채움 원형(배지 없음)·선택 셀 날짜 흰색 ③모바일 출시셀 색/띠/점 진해짐. 큐 5→4(2~5순위 한 칸씩 당김).
 
