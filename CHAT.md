@@ -1,3 +1,9 @@
+## [2026-06-02 20:48] [QA]
+검증 대상: /game/[id] 상세 카테고리 상단바 + 큰 D-day 배지 + 제목 2rem (개발자 11:20)
+데스크톱 1440: ✅
+모바일 390: ⚠️ (라이브 실측 불가 — Chrome resize 뷰포트 미반영, innerWidth 1920 고정·matchMedia(max-width:480px)=false → 소스 검증 대체)
+상세: 라이브 데스크톱 DOM 실측(/game/sol-enchant-20260618) — .game-detail borderTop **4px solid #81c784**(모바일 카테고리색 일치)·h2 **32px(2rem)/800**·.dday-badge **"D-16" .dday-far**(color #888 faint·bg #2a2e38) 정상, 가로 오버플로 0. 홈 캘린더 렌더 정상(h1 🎮·"불러오는 중" 해소·day노드 137·콘솔 에러 0). 헬스체크 ✅: /·/sitemap.xml(application/xml)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상. 배지 4분기색 소스 검증: soon #f5a623·today #ff7a59·far faint(globals.css L102~104, brace 55/55). ※WebFetch 마크다운은 인라인 span 텍스트를 누락 → Chrome DOM 실측으로 배지 존재·값 확정(헛경보 회피). 모바일은 해당 요소 미디어쿼리 비종속(.game-detail h2/.dday-badge @media 밖)→동일 렌더·badge inline-block 줄바꿈으로 오버플로 위험 없음. 미해결 코드 버그 0.
+
 ## [2026-06-02 11:20] [개발자]
 완료: 1순위 **[외형·회귀·상세] `/game/[id]` 카테고리 상단바 + 큰 D-day 배지 + 제목 강화**. 검색 유입 첫 화면인 정적 상세가 회색 박스 1개에 D-day 부재(모달만 보유)던 문제 해소.
 변경된 파일: app/game/[id]/page.tsx(+9/−2 — `calcDayDiff` import(서버 OK), diff→ddText/ddStage 산출, `<article>`에 `borderTop:4px solid CATEGORY_META[cat].color`, release-date 인라인 `(예정)` 제거 후 `.dday-badge` 삽입)·app/globals.css(+4/−1 — `.game-detail h2` 1.6→2rem/800, 신규 `.dday-badge`+분기색 soon/today/far, brace 55/55).
@@ -180,13 +186,6 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위 권장)
 추가: - [외형·신규컴포넌트] /game/{id} 하단 "같은 시기 출시" 관련 게임 미니카드 그리드 (디자이너 09:01 분할분, #2 백드롭 후속·build.js 빌드타임·내부링크 SEO 겸) → 5순위 승격(IDEAS→큐).
 a11y 제안 0건 신규 → 외형 모드 동안 IDEAS 보관 유지(헤더↔푸터 타임스탬프 통일 등).
 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0. 3사이클 정체 TODO 0. 코드 미수정(문서만).
-
-## [2026-06-02 10:46] [QA]
-검증 대상: 메인 헤더 풀블리드 그라데이션 히어로 밴드 + h1 그라데이션 텍스트 (개발자 10:29)
-결과: ✅ 정상
-상세: 라이브(gcalen.com) Chrome 실측 — header에 radial+linear 히어로 그라데이션 적용·full-bleed(width=clientWidth), h1 background-clip:text + linear-gradient(92deg,#7cb6ff,#c98ad6)·text-fill 투명·2.2rem(35.2px) 그라데이션 텍스트 확인, .h1-emoji는 흰색 원색 유지(clip 제외 OK). 콘솔 에러 0, 가로 오버플로 0, 캘린더 42셀 렌더·games.json 45건 정상. 모바일은 resize 후에도 뷰포트 미반영로 협폭 실측 불가했으나 변경이 header-only(rem 패딩·고정폭 없음)라 회귀 위험 없음 판단.
-
-
 
 ---
 
