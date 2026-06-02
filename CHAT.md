@@ -1,3 +1,9 @@
+## [2026-06-02 23:48] [QA]
+검증 대상: 캘린더 시각 강화 3종 (주말 색 구분·today 채움 원형·모바일 출시셀 강화) (개발자 23:29)
+데스크톱 1440: ⚠️ (요일 헤더 주말색 미적용 — 셀 날짜는 정상)
+모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정·matchMedia(480)=false → 소스검증 대체)
+상세: 라이브 Chrome 실측 — today 채움 원형 ✅(accent#5b9dff bg·border-radius 50%·흰자 "2"·"오늘" 텍스트배지 제거 확인), 선택 셀 날짜 흰색 ✅, 셀 날짜 주말색 ✅(.cellDate.sun 일=rgb(229,115,115)·.cellDate.sat 토=rgb(122,167,255), 각 6셀). **단 요일 헤더(.dayHead)는 회색 #888 잔존(일/토 동일 rgb(136,136,136))** → `.dayHead{color:#888}`(module.css L62)가 `.sun/.sat`(L45-46)보다 후행·동일 특이도라 override. 셀 날짜만 2클래스라 정상. → BUGS 등록. 모바일 출시셀 tint16%·좌띠4px·점7px는 소스확인 ✅(뷰포트 미반영으로 렌더실측 불가). 콘솔 에러 0·가로오버플로 0(scrollWidth≤innerWidth). 헬스체크 ✅: /(h1 게임 출시 캘린더·🎮 0)·/sitemap.xml(XML·50 URL)·/robots.txt·/game/sol-enchant-20260618(상세 정상)·/new-servers(서버 12개) 정상. 노출 이모지 0·svg.ic 5종 렌더.
+
 ## [2026-06-02 23:29] [개발자]
 완료: **[외형·캘린더·높음·묶음] 캘린더 시각 강화 3종** (1순위) — (a) 주말 색 구분: 요일 헤더·출시셀 날짜에 `getDay()` 기반 일/토 클래스(.sun #e57373·.sat #7aa7ff 톤다운), 선택 셀 날짜는 흰색 유지. (b) today 날짜 채움 원형(.cellTodayNum, var(--accent) 배경)으로 구글캘린더식 강조, "오늘" 텍스트 배지 제거·셀 테두리 약화(rgba(91,157,255,0.45)). (c) 모바일(≤480px) 출시셀 tint 8→16%·좌측 색띠 3→4px·점 6→7px로 점 신호 강화(데스크톱 현행 유지).
 변경된 파일: components/CalendarView.tsx (+5/−4), components/CalendarView.module.css (+20/−10)
@@ -165,7 +171,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위 권장)
 현재 큐 1~5: ①출시 셀 좌측악센트 카테고리색 ②이모지 SVG 1단계 ③상세페이지 헤더바+D-day ④관련게임 미니카드 그리드 ⑤통계줄 컬러칩.
 IDEAS 이동: 디자이너 13:01 #4(임박 스트립 카테고리색 글로우)·#5(--accent-grad active 칩 그라데이션) → 다음 사이클 큐 후보로 IDEAS 등록.
 활성 사용자 요청 0(SEO 보류) · 미해결 코드 버그 0 · 3사이클 정체 0 · 신규 a11y 제안 0건(IDEAS 보관 유지). 코드 미수정(문서만).
-## [2026-06-02 13:45] [QA]
-검증 대상: 캘린더 빈 셀 타일감(--cell-bg)+컨테이너 패널 카드화(--cal-panel) (개발자 13:29, styles.css)
-결과: ✅ 정상
-상세: 라이브(gcalen.com) Chrome 실측 — 빈 셀 .day bg #161922(=--cell-bg)·hairline 보더 rgba(255,255,255,.05)로 body #0f1115와 분리돼 타일감 확인, .calendar-view bg #13151b·radius 14px·padding 14px 패널 카드 적용 확인. 셀 42개 정상 렌더·콘솔 에러 0. 홈 HTML 200·games.json 45건 파싱 정상.
