@@ -876,3 +876,149 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
   color: #fff;
   border-color: rgba(66,133,244,0.5);
 }
+
+/* === Hero Section 강화 (인벤 스타일 큰 배너) === */
+.hero-section {
+  max-width: 1100px;
+  margin: 1rem auto 1.5rem;
+  padding: 0 0.5rem;
+}
+.hero-strip-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.7rem;
+  color: #fff;
+}
+.hero-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+.hero-card {
+  position: relative;
+  background: linear-gradient(135deg, #1a1d24 0%, #0f1115 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 140px;
+  overflow: hidden;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(245,166,35,0.18), transparent 60%);
+  pointer-events: none;
+}
+.hero-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(245,166,35,0.5);
+  box-shadow: 0 12px 32px -8px rgba(245,166,35,0.25);
+}
+.hero-card-cat {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f5a623;
+  z-index: 1;
+}
+.hero-card-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+  z-index: 1;
+  flex: 1;
+}
+.hero-card-dday {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #f5a623;
+  z-index: 1;
+  align-self: flex-end;
+  text-shadow: 0 0 24px rgba(245,166,35,0.4);
+}
+.hero-card-dday.today {
+  color: #ff4d4d;
+  animation: pulse 1.4s infinite;
+  text-shadow: 0 0 24px rgba(255,77,77,0.5);
+}
+@media (max-width: 480px) {
+  .hero-strip { grid-template-columns: 1fr; gap: 0.6rem; }
+  .hero-card { min-height: 110px; padding: 1.1rem 1rem; }
+  .hero-card-name { font-size: 1.02rem; }
+  .hero-card-dday { font-size: 1.4rem; }
+}
+
+/* === 카드 이미지 영역 패턴 (이미지 없을 때) === */
+/* 기존 .card-banner 가 단색 그라데이션이라 카테고리별 SVG 패턴 + 큰 이모지 오버레이로 채움 */
+.card-banner {
+  position: relative;
+  height: 70px;
+  background: linear-gradient(135deg, #1f2632 0%, #161a22 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.card-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, transparent 0 14px, rgba(255,255,255,0.025) 14px 15px);
+  pointer-events: none;
+}
+.card-banner::after {
+  content: '';
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.card-banner.category-mobile_kr { background: linear-gradient(135deg, #1b2a1f 0%, #0f1115 100%); }
+.card-banner.category-mobile_kr::after { content: '📱'; }
+.card-banner.category-pc_console_kr { background: linear-gradient(135deg, #15233a 0%, #0f1115 100%); }
+.card-banner.category-pc_console_kr::after { content: '🎮'; }
+.card-banner.category-global_aaa { background: linear-gradient(135deg, #2b1a3a 0%, #0f1115 100%); }
+.card-banner.category-global_aaa::after { content: '🌍'; }
+.card-banner.category-new_server { background: linear-gradient(135deg, #3a2415 0%, #0f1115 100%); }
+.card-banner.category-new_server::after { content: '🆕'; }
+
+/* 모달 빈 배너에도 동일 적용 */
+.modal-image.no-image,
+.card-image-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+.modal-image.no-image::before,
+.card-image-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, transparent 0 18px, rgba(255,255,255,0.04) 18px 19px);
+  pointer-events: none;
+}
+.modal-image.no-image::after,
+.card-image-placeholder::after {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+  font-size: 3rem;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.modal-image.category-mobile_kr::after { content: '📱'; }
+.modal-image.category-pc_console_kr::after { content: '🎮'; }
+.modal-image.category-global_aaa::after { content: '🌍'; }
+.modal-image.category-new_server::after { content: '🆕'; }
