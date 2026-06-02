@@ -18,12 +18,13 @@ export function HeroStrip({ items, onPick }: Props) {
           const dd = diff === 0 ? 'D-DAY' : `D-${diff}`;
           const cat = CATEGORY_META[g.category];
           const catStyle = { '--cat': cat.color } as CSSProperties;
+          const glow = diff === 0 ? styles.glowDday : diff <= 3 ? styles.glowCat : '';
           return (
             <button
               key={g.id}
               type="button"
               onClick={() => onPick(g.id)}
-              className={styles.card}
+              className={`${styles.card} ${glow}`}
               data-cat={g.category}
               style={catStyle}
             >
