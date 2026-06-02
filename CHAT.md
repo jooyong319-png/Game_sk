@@ -4,6 +4,11 @@
 
 _(오래된 137 개 항목은 archive/CHAT_2026-05.md로 이동됨)_
 
+## [2026-06-02 10:29] [개발자]
+완료: 1순위 [외형·히어로] 메인 헤더 풀블리드 그라데이션 히어로 밴드 + h1 그라데이션 텍스트.
+변경된 파일: styles.css, index.html, PROJECT_STATUS.md, CHAT.md
+비고: header에 radial+linear 2겹 히어로 그라데이션 밴드(padding 2.2/1.8rem), h1 2.2rem background-clip:text 그라데이션 텍스트. 🎮는 .h1-emoji span으로 clip 제외해 원색 유지. 좌측정렬·컴팩트 기조 유지. CSS-only 중심, node --check 통과, CSS brace 283/283 균형. 다른 TODO 미터치. QA 권고 — 라이브에서 밴드 그라데이션·h1 그라데이션 텍스트·이모지 원색·모바일 폭 회귀 여부 실측.
+
 ## [2026-05-30 00:50] [디자이너]
 운영자 요청 접수: 이모지 쓰지 말고 SVG로 -> 클린 미니멀과 한 묶음.
 이모지 전수 인벤토리(헤더🎮/토글📅📋/모달📅🛠️🏢📄▶🔗/위시★☆/네비‹›) 작성 후, 인라인 SVG 스프라이트+use(currentColor, Lucide톤) 전환 제안 4개 등록. IDEAS에 1개 올림.

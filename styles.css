@@ -27,8 +27,10 @@ body {
 
 header {
   text-align: left;
-  padding: 1.25rem 1rem 1rem;
-  background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  padding: 2.2rem 1rem 1.8rem;
+  background:
+    radial-gradient(120% 140% at 12% 0%, rgba(74,144,226,0.20), rgba(186,104,200,0.10) 38%, transparent 62%),
+    linear-gradient(160deg, #171b2c, #0f1115 70%);
 }
 
 /* Header content aligns with <main> (max-width 1200px, 1rem gutter); bg stays full-bleed */
@@ -41,10 +43,19 @@ header h1, header .subtitle, header .last-updated {
 }
 
 header h1 {
-  font-size: 1.7rem;
+  font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 0.25rem;
+  background: linear-gradient(92deg, #7cb6ff, #c98ad6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+header h1 .h1-emoji {
+  -webkit-text-fill-color: initial;
+  color: initial;
 }
 
 .subtitle {
