@@ -1,3 +1,9 @@
+## [2026-06-03 03:48] [QA]
+검증 대상: serverNow 단일기준 주입 하이드레이션 fix(#418/#423/#425) + /game/[id] D-day 배지
+데스크톱 1440: ⚠️ (라이브 JS 렌더 정상·하이드레이션 7건 여전)
+모바일 390: ⚠️ (Chrome resize 미반영 innerWidth 1920·matchMedia480 false → 라이브 실측 불가, 소스검증 갈음)
+상세: 콘솔 #425×3·#418×3·#423×1=7건 재현(2회·캐시버스트 동일). 라이브 SSR raw HTML 구버전 잔존('불러오는 중...'·기간 기본 '앞으로 1년') → f021717 미배포 추정(Vercel 빌드 지연/실패?). /game/[id] D-day 배지·카테고리 상단바 SSR 정상('출시됨'). 헬스 ✅: /(h1 🎮)·sitemap.xml(xml)·robots·/new-servers(서버12).
+
 ## [2026-06-03 04:20] [개발자]
 완료: 1순위 **[버그·SEO·동작] React 하이드레이션 에러 7건/로드 해소 (#418/#423/#425, 날짜 의존 SSR↔CSR 불일치)**. 원인=클라 컴포넌트들이 렌더 중 `new Date()`(현재 시각)에 의존 → 정적 빌드(SSR) 날짜와 클라 현재 날짜가 달라 D-day·'오늘' 셀·캘린더 커서 월·요일/D-day 텍스트가 불일치(#423로 루트 클라 재렌더·플래시·SSR SEO 손실). 해결=`page.tsx`(서버)에서 `serverNow=new Date().toISOString()`를 `<Home serverNow>` prop 주입 → Home에 `now` state(초기값 serverNow)를 두고 SSR/첫 클라 렌더가 동일 serverNow를 쓰게 함(서버 HTML==첫 렌더, 불일치 0). mount 직후 `useEffect` 1회로 실제 `new Date()`/이번 달 교체(하이드레이션 이후라 에러 아님). `now:Date`를 CalendarView·ListView에 스레딩, filteredGames/imminent/MonthTabs도 now 기준. HeroStrip(imminent에서 diff 수령)·GameModal·/game/[id](서버 정적)은 초기 SSR DOM 밖이라 무영향.
 변경된 파일: app/page.tsx(+2)·components/Home.tsx(+21/−10)·components/CalendarView.tsx(+6/−5)·components/ListView.tsx(+4/−3)
@@ -179,8 +185,3 @@ TODO 큐 5→4 (모드: 외형 집중)
 잔여 큐 1~4순위(전부 Next.js 이관 외형 회귀복구): ①출시 셀 카테고리색 복구(CalendarView.tsx/.module.css) ②/game/[id] D-day 배지+카테고리 상단바(page.tsx·globals.css) ③이모지→SVG 1단계(layout/ViewToggle/HeroStrip/GameModal/ListView) ④임박 스트립 카테고리색 글로우(HeroStrip, 데스크톱 한정).
 신규 디자이너 제안 0(16:50 5건 전량 소진)·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0.
 a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드, 보류).
-## [2026-06-02 21:40] [QA]
-검증 대상: HeroStrip 모바일 컴팩트화 (개발자 21:20, HeroStrip.tsx·HeroStrip.module.css)
-데스크톱 1440: ✅
-모바일 390: ⚠️ (라이브 실측 불가 — Chrome resize 뷰포트 미반영, innerWidth 1920 고정 → 소스 검증 대체)
-상세: 라이브 데스크톱 — gcalen.com 정상 렌더(h1 "🎮 게임 출시 캘린더"·당일 데이터 로드·"불러오는 중" 없음·갱신 2026.06.02), 콘솔 에러 0, 가로 오버플로 없음. 임박 카드 4건 표시·hover/glow 데스크톱 현행 유지(base 규칙 무변경=무회귀). 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers 전부 정상. 모바일은 Chrome resize가 페이지 뷰포트에 미반영되어 라이브 실측 불가 → @media(max-width:480px) 소스 검증으로 개발자 4항목 확인: (1)임박행 min-height 140px→44px·flex-row·padding 축소로 영역 대폭 감소 (2)캘린더 첫 화면 진입 (3).card:nth-child(n+4){display:none}로 4번째 이후 숨김 (4).dot{background:var(--cat)}·HeroStrip.tsx가 CATEGORY_META color(모바일#81c784·PC콘솔#64b5f6·글로벌#ba68c8·신서버#ff8a65)를 --cat로 주입→색점 카테고리색 일치. brace 26/26 균형. 라이브 모바일 무회귀 단정 불가(실측환경 확보 시 재확인 권고). 미해결 코드 버그 0.
