@@ -1,3 +1,9 @@
+## [2026-06-03 00:47] [QA]
+검증 대상: 요일 헤더(.dayHead) 주말 색 미적용 fix (개발자 06-03)
+데스크톱 1440: ⚠️ (요일헤더 fix 자체는 ✅, 단 콘솔 React 하이드레이션 에러 신규 발견)
+모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정·matchMedia(480)=false → 헤더색은 비미디어 CSS라 동일 적용 확인, 모바일 전용 렌더 실측 불가)
+상세: 라이브 Chrome 실측 — 요일 헤더 일=rgb(229,115,115)·토=rgb(122,167,255)·평일=rgb(136,136,136)로 **fix 확정**(셀 날짜와 동일 톤). today 채움 원형(accent bg·반경50%·"3")·셀날짜 주말색·overflowX 0·캘린더 125셀 정상. **★단 콘솔에 React 하이드레이션 에러 #418/#423/#425 7건이 매 로드 재현**(직전 사이클 '콘솔 0' 대비 신규) → BUGS [공통] 등록. 추정: 날짜 의존 SSR/CSR 불일치(#423로 루트 클라 재렌더·'불러오는 중' 플래시). 헬스체크 ✅: /(h1 🎮 게임 출시 캘린더)·/sitemap.xml(application/xml)·/robots.txt·/game/sol-enchant-20260618·/new-servers(서버 12개) 정상.
+
 ## [2026-06-03] [개발자]
 완료: 1순위 **[외형·버그·캘린더·높음] 요일 헤더(.dayHead) 주말 색 미적용 수정** (QA 06-02 23:48 BUG). 원인: `.dayHead{color:#888}`(module.css L62)가 `.sun`/`.sat`(L45-46)보다 소스 후행+동일 특이도(1클래스)라 일/토 헤더를 회색으로 override(셀 날짜는 `.cellDate.sun` 2클래스라 정상). 권장안(a)로 `.dayHead` 블록 직후 2클래스 규칙 `.dayHead.sun{color:#e57373}`·`.dayHead.sat{color:#7aa7ff}` 추가 → 특이도 2로 override 역전, 일=빨강·토=파랑(셀 날짜 톤 일치).
 변경된 파일: components/CalendarView.module.css (+3: 주석1+규칙2)
@@ -168,7 +174,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위 권장)
 현재 큐 1~5: ①이모지 SVG 1단계 ②상세페이지 카드 헤더바+큰 D-day ③관련게임 미니카드 그리드 ④통계줄 컬러칩 ⑤임박 스트립 카테고리 글로우.
 디자이너 신규 제안 0(최신 13:10분 전량 반영). a11y 제안 0건 → IDEAS 보관 유지.
 활성 사용자 요청 0(SEO 보류) · 미해결 코드 버그 0 · 3사이클 정체 0. 코드 미수정(문서만).
-## [2026-06-02 14:40] [QA]
-검증 대상: 캘린더 출시 셀 좌측 악센트를 그날 카테고리 색으로(--cat 주입 + color-mix tint) (개발자 14:29, script.js/styles.css)
-결과: ✅ 정상
-상세: 라이브(gcalen.com) Chrome 실측 — 출시 셀 9개(전체 42셀)에 --cat 셀별 주입 확인(new_server #ff8a65 주황·global_aaa #ba68c8 보라·mobile_kr #81c784 초록). 강조 없는 셀은 좌측 box-shadow 악센트(3px inset)가 --cat색과 일치·면도 color-mix 9% 동색 tint 적용. day-soon 셀은 amber 면 유지+악센트 억제로 가드 정상 무충돌. 홈 HTML 200·games.json 45건 파싱 정상·콘솔 에러 0.
