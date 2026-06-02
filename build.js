@@ -78,6 +78,7 @@ function gamePage(g) {
   const body = `
   <article class="game-detail">
     <p><a href="/">← 전체 목록으로</a></p>
+    <div class="ad-slot ad-slot-top" data-ad-slot-name="detail-top"><span class="ad-slot-label">광고 자리 (상단)</span></div>
     <span class="category-tag category-${esc(g.category)}">${esc(catLabel)}</span>
     <h2>${esc(g.name_ko)}</h2>
     ${g.name_en ? `<p class="name-en">${esc(g.name_en)}</p>` : ''}
@@ -90,7 +91,8 @@ function gamePage(g) {
       ${genres ? `<li><strong>장르</strong>: ${esc(genres)}</li>` : ''}
     </ul>
     ${g.source_url ? `<p><a href="${esc(g.source_url)}" target="_blank" rel="noopener">공식 출처 →</a></p>` : ''}
-  </article>`;
+  </article>
+  <div class="ad-slot ad-slot-mid" data-ad-slot-name="detail-bottom"><span class="ad-slot-label">광고 자리 (페이지 하단)</span></div>`;
   return pageShell({ title, desc, canonical: url, bodyHtml: body, jsonld });
 }
 
@@ -143,10 +145,12 @@ function landingPage(cfg) {
   <section class="seo-landing">
     <h2>${esc(cfg.h1)}</h2>
     <p class="seo-intro">${cfg.intro}</p>
+    <div class="ad-slot ad-slot-top" data-ad-slot-name="landing-top"><span class="ad-slot-label">광고 자리 (상단)</span></div>
     <p class="seo-count">총 ${list.length}개 · 최근 업데이트 ${fmtDate(data.last_updated)}</p>
     <ul class="seo-list">
 ${rows || '      <li>현재 등록된 항목이 없습니다.</li>'}
     </ul>
+    <div class="ad-slot ad-slot-mid" data-ad-slot-name="landing-bottom"><span class="ad-slot-label">광고 자리 (페이지 하단)</span></div>
     <nav class="seo-nav">${landings.map(l => `<a href="/${l.slug}">${esc(l.h1)}</a>`).join(' · ')} · <a href="/">전체 캘린더</a></nav>
   </section>`;
   return pageShell({ title: cfg.title, desc: cfg.desc, canonical: url, bodyHtml: body, jsonld: itemList });

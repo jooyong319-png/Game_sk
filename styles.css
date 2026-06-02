@@ -750,3 +750,31 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .skip-link:focus {
   left: 0;
 }
+
+/* AdSense 광고 자리 placeholder (승인 후 ins.adsbygoogle로 교체 예정) */
+.ad-slot {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  min-height: 90px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ad-slot-top { min-height: 90px; }
+.ad-slot-mid { min-height: 250px; }
+.ad-slot-label {
+  color: #555;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  user-select: none;
+}
+@media (max-width: 480px) {
+  .ad-slot { margin: 1rem auto; }
+  .ad-slot-mid { min-height: 200px; }
+}

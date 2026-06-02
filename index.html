@@ -60,6 +60,10 @@
   </header>
 
   <main id="main">
+    <!-- 광고 자리: 메인 상단 (헤더 아래) -->
+    <div class="ad-slot ad-slot-top" data-ad-slot-name="main-top">
+      <span class="ad-slot-label">광고 자리 (상단)</span>
+    </div>
     <section class="view-toggle">
       <button id="view-calendar" class="view-toggle-btn" type="button" aria-pressed="true">📅 캘린더</button>
       <button id="view-list" class="view-toggle-btn" type="button" aria-pressed="false">📋 리스트</button>
@@ -141,6 +145,11 @@
     <section id="games-list" class="games-grid">
       <p class="loading">불러오는 중...</p>
     </section>
+
+    <!-- 광고 자리: 게임 리스트 아래 (중단) -->
+    <div class="ad-slot ad-slot-mid" data-ad-slot-name="main-mid">
+      <span class="ad-slot-label">광고 자리 (게임 목록 아래)</span>
+    </div>
 
     <div id="game-modal" class="modal-overlay" hidden>
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">

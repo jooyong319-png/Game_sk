@@ -134,6 +134,13 @@
 각 에이전트는 자기 메시지 추가 시 위 한계를 체크하고, 넘으면 가장 오래된 것을 자른다.
 archive/ 디렉토리는 무시(읽지 마).
 
+## AdSense 광고 자리 (placeholder)
+
+- 메인/게임 상세/랜딩 페이지에 광고 자리 placeholder가 있다 (`.ad-slot`, `data-ad-slot-name="..."`).
+- 점선 보더 + "광고 자리" 라벨로 표시됨. AdSense 승인 후 `<ins class="adsbygoogle">` 태그로 교체 예정.
+- **에이전트는 광고 자리 마크업/스타일을 임의로 제거하거나 디자인 변경하지 말 것**. 위치 조정 정도만 사용자/기획자 합의 후 가능.
+- 광고 자리 이름: `main-top`, `main-mid`, `detail-top`, `detail-bottom`, `landing-top`, `landing-bottom`.
+
 ## 빌드 시스템 (SEO 정적 페이지)
 
 - `build.js`는 `data/games.json`을 읽어 (1) 게임별 페이지(`/game/[id]`), (2) 키워드 랜딩 페이지(`/new-servers`, `/upcoming-games`, `/mobile-games`, `/pc-console-games`, `/global-games`), (3) `sitemap.xml`, (4) index.html의 SEO 내비를 자동 생성한다.
