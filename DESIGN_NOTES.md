@@ -10,6 +10,33 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-02 13:01] [디자이너] - 외형 모드
+실측: gcalen.com Chrome 데스크톱(홈 캘린더/임박 스트립/상세 /game/ff7-rebirth-switch2-2026) + styles.css·build.js 교차. 직전 출고(히어로 밴드·임박 스트립·상세 라디얼 백드롭·Pretendard·accent #5b9dff) 라이브 반영 양호. 아래는 큐(카드 호버·통계줄 칩·관련게임 그리드·로딩 스켈레톤)와 중복 없는 신규 외형 제안만.
+
+### 외형 개선 제안 (5개, 구체적 값 포함)
+
+1. **[높음·캘린더 임팩트] 캘린더 빈 셀이 페이지 배경(#0f1115)과 동일 색이라 격자가 "검은 공백"으로 보임 → 셀 면을 한 톤 띄워 타일감 부여**
+   - 어디서/현재: `styles.css:378 .calendar-grid .day { background:var(--bg)=#0f1115; border:1px solid var(--border)=#2a2e38 }`. 셀 배경 == body 배경이라 출시 없는 셀(6월처럼 빈 날 많은 달은 30칸 중 ~20칸)이 배경에 녹아 그리드가 텅 빈 검정 구역처럼 보임. 라이브에서 7~13행이 거의 빈 검정.
+   - 어떻게: 빈 셀 `background #0f1115 → #161922`(배경보다 +1톤 surface-lite), `border #2a2e38 → rgba(255,255,255,0.05)` hairline. 추가로 캘린더 컨테이너 `.calendar-view`(또는 `.calendar-grid` 래퍼)에 `background:#13151b; border:1px solid rgba(255,255,255,0.05); border-radius:14px; padding:14px`를 깔아 캘린더 전체를 하나의 패널 카드로 묶기. → 빈 달도 격자가 또렷이 면으로 읽힘.
+
+2. **[높음·카테고리 시각 차별화] 출시 있는 셀(.day-has) 좌측 악센트가 전부 파란색(브랜드 accent) → 그날 카테고리 색으로 차별화**
+   - 어디서/현재: `styles.css:383 .calendar-grid .day.day-has{ background:rgba(74,144,226,0.06); box-shadow:inset 2px 0 0 var(--accent) }`. 좌측 2px 바·옅은 면이 카테고리 무관 항상 파랑(#5b9dff)이라, 캘린더 4색 자산이 셀 강조에선 미사용 → 날짜별 카테고리를 점(7px)으로만 추측.
+   - 어떻게: 개발자가 renderCalendar의 day-has 셀에 그날 대표(첫) 게임 카테고리 색을 `style="--cat:#81c784"`(모바일)/`#64b5f6`(PC·콘솔)/`#ba68c8`(글로벌)/`#ff8a65`(신규서버)로 주입 → CSS를 `box-shadow:inset 3px 0 0 var(--cat,#5b9dff)` + `background:color-mix(in srgb, var(--cat,#5b9dff) 8%, transparent)`(미지원 폴백 `rgba(91,157,255,0.06)`)로. 색점은 보조 유지. → 한 화면에서 "이날은 모바일/저날은 글로벌"이 면 색으로 즉시 구분.
+
+3. **[높음·상세페이지 첫인상] /game/{id} 카드가 회색 박스 1개로 밋밋 + 핵심지표 D-day 부재 → 카테고리색 헤더 바 + 큰 D-day 배지**
+   - 어디서/현재: build.js `gamePage` 카드 `background:var(--surface)`, 상단에 작은 카테고리 pill만(라디얼 백드롭은 깔렸으나 카드 자체는 평범). 검색유입 첫 화면인데 앱 핵심지표(D-DAY/D-N)가 없음.
+   - 어떻게: (a) 카드에 카테고리색 상단 바 `border-top:5px solid {카테고리색}`(리스트 카드 card-banner 4px 패턴 확장), (b) 제목 `1.6rem → 2rem; font-weight:800`, (c) 출시일 줄 옆에 큰 D-day 배지 `display:inline-block; padding:4px 12px; border-radius:999px; font-size:1.3rem; font-weight:800` — 임박(≤7일) `color:#f5a623; background:rgba(245,166,35,0.12)`, D-DAY `color:#ff7a59; background:rgba(255,122,89,0.14)`, 먼 미래 `color:var(--text-dim); background:var(--border)`, approx면 `(예정)`. 빌드타임 생성이라 런타임 무영향.
+
+4. **[보통·D-DAY 강조] 임박 스트립 카드가 전부 같은 회색 그라데이션 → 임박할수록 카테고리색 글로우로 시각 위계**
+   - 어디서/현재: `.hero-card` 전부 `linear-gradient(150deg,#1c2030,#15171f)` + 좌측 4px 카테고리 바, 차이는 D-day 숫자 색(amber/주황)뿐 → D-1과 D-7 카드 임팩트가 동일.
+   - 어떻게: D-3 이내 카드에 카테고리색 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경에 카테고리색 미세 radial 겹침 `radial-gradient(120% 100% at 0% 0%, {색}1a, transparent 60%), linear-gradient(150deg,#1c2030,#15171f)`. D-DAY(diff 0)는 주황(#ff7a59) 글로우 1.3배 강하게 + `transform:scale(1.02)`(reduced-motion 시 생략). → 가까운 출시일수록 카드가 시각적으로 "튀어나옴".
+
+5. **[보통·브랜드 통일] 미사용 토큰 `--accent-grad` 소비 — 뷰토글·활성 칩을 브랜드 그라데이션으로 채워 포인트화**
+   - 어디서/현재: `:root`에 `--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 신설됐으나 아직 미참조. `.view-toggle-btn.active`/`.chip-btn.active`(styles.css:436·476)는 `background:rgba(74,144,226,0.15)` 옛 리터럴 옅은 파랑 면 + `border-color:var(--accent)`.
+   - 어떻게: active 상태를 `background:var(--accent-grad); color:#fff; border-color:transparent; box-shadow:0 2px 8px rgba(91,157,255,0.25)`로 교체. → 헤더 h1 블루→퍼플 그라데이션과 시각 통일되고, 선택 상태가 "옅은 파랑 면"에서 "선명한 브랜드 칩"으로 확실히 부각. 비활성은 기존 `var(--border)` 톤 유지.
+
+---
+
 ## [2026-05-30 00:30] [디자이너] — 운영자 요청: 클린 미니멀(Linear/Vercel 풍) 리프레시 방향
 운영자(쌀먹닷컴) 직접 요청 "더 트렌디하게" -> 방향 확정: **클린 미니멀**. 막연한 폴리시가 아니라 아래 구체 실행안으로 분해. 개발자는 한 사이클에 1~2개씩 픽업(전부 CSS 중심, 일부 폰트 로드/소규모 JS). 큰 색 변경 없이 '톤·여백·타이포·라운드'로 세련도를 올리는 게 핵심.
 
