@@ -1,3 +1,9 @@
+## [2026-06-02 21:48] [QA]
+검증 대상: 이모지→인라인 SVG 1단계 (헤더/뷰토글/임박/위시) (개발자 21:30)
+데스크톱 1440: ✅
+모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정 → 소스검증 대체)
+상세: 라이브 Chrome 실측 — h1 텍스트 "게임 출시 캘린더"(🎮 잔존 0)·헤더 #ic-gamepad SVG(accent)·뷰토글 #ic-calendar/#ic-list·임박 #ic-flame SVG 렌더, 스프라이트 symbol 5종 정의. 리스트뷰 위시 별 #ic-star SVG 44개(ic-fill 토글) 정상. 콘솔 에러 0·가로 오버플로 0(scrollWidth=clientWidth). ※잔존 이모지 1건: 위시 필터 버튼 "★ 위시리스트"(Filters.tsx L78) — 1단계 스코프 외(개발자는 카드/모달 위시만 변환)·동작 정상이라 BUGS 아님 → IDEAS 등록. .ic 규칙 @media 밖·em 사이즈라 모바일 동일 렌더(뷰포트 비종속). globals.css brace 58/58. 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상(※WebFetch 홈은 CDN 캐시로 구 🎮 노출됐으나 라이브 Chrome 실측은 SVG 반영 확인). 미해결 코드 버그 0.
+
 ## [2026-06-02 21:30] [개발자]
 완료: 1순위 **[외형·미니멀·높음·운영자요청] 노출 이모지 → 인라인 SVG (1단계: 헤더/뷰토글/임박/위시)**. OS별 이모지 편차 제거·클린 미니멀. DESIGN_NOTES 13:10 Lucide 라인 스프라이트 스펙대로 구현.
 변경된 파일: app/layout.tsx(+8 — `<body>` 최상단에 `<svg width=0 height=0 position:absolute aria-hidden>` 스프라이트(symbol 5종 #ic-gamepad/#ic-calendar/#ic-list/#ic-flame/#ic-star, viewBox 0 0 24 24) + h1 로고 🎮을 `<svg class="ic ic-gamepad"><use href="#ic-gamepad"/></svg>`로 치환)·components/ViewToggle.tsx(+2/−2 — 📅→#ic-calendar·📋→#ic-list)·components/HeroStrip.tsx(+1/−1 — 🔥→#ic-flame)·components/GameModal.tsx(+1/−1 — 위시 ★/☆를 `<svg class="ic [ic-fill]"><use href="#ic-star"/>` class 토글로)·components/ListView.tsx(+1/−1 — 위시 ★/☆ 동일)·app/globals.css(+20 — `.ic`{1em·vertical-align -0.14·flex-shrink 0·fill none·stroke currentColor·width 1.75·round}·`.ic-fill`{fill currentColor·stroke none}·`.ic-gamepad`{color var(--accent)}, brace 58/58).
@@ -164,7 +170,3 @@ DESIGN_NOTES에 5개 외형 제안 추가(캘린더 빈셀 타일감·셀 카테
 검증 대상: /game/{id} 상세페이지 카테고리색 라디얼 백드롭 (개발자 13:29, build.js)
 결과: ✅ 정상
 상세: 라이브(gcalen.com) Chrome 실측 — /game/007-first-light-2026(global_aaa) body 라디얼 글로우 rgba(186,104,200,.133)=#ba68c8 보라·background-attachment fixed(글로우 레이어 스크롤 고정) 확인, 콘솔 에러 0. 랜딩 /upcoming-games body backgroundImage:none(무변화) 확인. build.js catColor 4색 매핑·gamePage만 bodyAttr 주입·랜딩 pageShell 평문 소스 일치. 홈 HTML 200·games.json 45건 파싱 정상.
-## [2026-06-02 13:29] [개발자]
-완료: 1순위 **[외형·SEO상세] `/game/{id}` 상세페이지 카테고리색 라디얼 백드롭** 구현. 빌드타임 생성 상세페이지가 검정(#0f1115) 공백 한가운데 카드 1개로만 떠 화면 ~70%가 휑하던 문제 해소 — `<body>`에 카테고리색 라디얼 글로우(상단 중앙에서 퍼져 58%에서 페이드)를 깔아 빈 공간을 카테고리 색감으로 채움. 카테고리별 색(모바일=초록 #81c784 / PC·콘솔=파랑 #64b5f6 / 글로벌=보라 #ba68c8 / 신규서버=주황 #ff8a65, α≈13%)으로 페이지마다 분위기가 달라짐. 스크롤해도 글로우는 고정(background-attachment:fixed). 랜딩페이지(/upcoming-games 등)는 변화 없음.
-변경된 파일: build.js (pageShell +1 인자·body 1줄 / gamePage 색매핑+bodyAttr 3줄 / return 1줄 = +~5줄)
-비고: 빌드타임 생성이라 런타임 JS 무영향, 신규 색 토큰 없음(카테고리 4색 재사용). 생성물(game/*.html·sitemap)은 .gitignore라 Vercel 빌드에서 재생성 → 커밋은 build.js만. node --check ✓, `node build.js`로 게임 44개 재생성·global_aaa 게임 보라 백드롭·랜딩 `<body>` 평문 확인. QA: 라이브에서 상세페이지(예: /game/007-first-light-2026) 상단 카테고리색 라디얼 글로우·스크롤 시 고정·랜딩페이지 무변화 실측 부탁.
