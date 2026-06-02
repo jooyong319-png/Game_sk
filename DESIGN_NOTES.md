@@ -8,7 +8,46 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ---
 
-_(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
+_(오래된 36 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
+
+## [2026-06-03 01:05] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440(홈 캘린더 6월/임박 스트립 4카드/리스트 뷰 + /game/sol-enchant-20260618 상세 'D-16') + 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차. 신규 Next 소스 교차(components/CalendarView.module.css·ListView.module.css·GameModal.module.css·Filters.module.css·HeroStrip.module.css·app/globals.css). 직전 출고(주말 색 일=#e57373·토=#7aa7ff 헤더+셀 / today 채움 원형 .cellTodayNum / 출시셀 카테고리 tint·좌띠 / 상세 카테고리 상단바+D-day / 이모지→SVG / Pretendard·헤더 그라데 타이틀) 라이브 반영 양호 확인. **모바일(390)은 Chrome resize_window가 페이지 뷰포트에 미반영(렌더 폭 1568px·innerWidth 고정, QA·직전 디자이너와 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐(임박 글로우·관련게임 그리드·리스트 배너 그라데·--accent-grad 칩)/완료/IDEAS와 중복 없는 신규 외형 제안만. a11y/시맨틱/포커스/리팩토링 0건(외형 모드 — focus-visible #4a90e2 잔존 2건도 의도적 제외).
+
+### 데스크톱(1440) 점검
+1. **[높음·팔레트 일관성] 리스트/모달/캘린더에 구(舊) accent `#4a90e2`·`rgba(74,144,226,..)` 리터럴 잔존 → 브랜드 `var(--accent)` #5b9dff / 동톤 rgba로 통일** (여러 파일 색값 치환, 변경량 작음)
+   - 현재: 헤더·뷰토글·월탭·today는 갱신된 선명 블루 #5b9dff인데, 아래 면들은 마이그레이션 전 칙칙한 #4a90e2가 잔존해 **같은 '브랜드 블루'가 화면마다 두 톤으로 갈림**(리스트 날짜가 헤더 타이틀보다 탁함):
+     · `components/ListView.module.css` `.date{color:#4a90e2}`(L143)→`var(--accent)`; `.item:hover{border-color:#4a90e2}`(L72)→`var(--accent)`; 같은 hover `box-shadow:...rgba(74,144,226,0.3)`(L73)→`rgba(91,157,255,0.3)`; `.monthHeader{border-bottom:2px solid rgba(74,144,226,0.3)}`(L16)→`rgba(91,157,255,0.3)`.
+     · `components/GameModal.module.css` `.source{color:#4a90e2}`(L59)→`var(--accent)`; `.detail:hover{background:rgba(74,144,226,0.15);border-color:rgba(74,144,226,0.5)}`(L74)→각 `rgba(91,157,255,0.15)`·`rgba(91,157,255,0.5)`. (단 `.gcal:hover`의 `rgba(66,133,244,..)`(L73)는 구글 캘린더 브랜드 블루 의도 → **유지**.)
+     · `components/CalendarView.module.css` `.todayBtn:hover{background:rgba(74,144,226,0.22)}`(L30)→`rgba(91,157,255,0.22)`. (`.cell:focus-visible`/`.cellClickable:focus-visible`의 #4a90e2 2건은 포커스=a11y 영역 → 외형 모드 제외.)
+   - → 브랜드 강조색이 전 표면에서 한 톤(#5b9dff)으로 정렬, 리스트·모달의 탁한 블루 해소. 우선순위 **높음**(일관성 핵심·치환만).
+
+2. **[보통·캘린더 범례] 카테고리 범례가 8px 점+회색 텍스트(#aaa)로 약해 셀 색띠와 매칭이 더딤 → 카테고리 tint 미니 칩으로** (`components/CalendarView.tsx` L104 legend / `CalendarView.module.css` `.legendItem`·`.legendDot` L41-42)
+   - 현재: `.legendItem{gap:0.3rem}` + `.legendDot{width:8px;height:8px}` + `.legend{color:#aaa;font-size:0.8rem}` — 작은 점 4개라 셀의 `color-mix 8%` tint·좌측 띠 색과 눈으로 잇기 약함.
+   - 바꿀 값: tsx에서 각 item에 `style={{['--lc' as string]: CATEGORY_META[c].color}}` 주입 → `.legendItem{ padding:2px 9px; border-radius:999px; background:color-mix(in srgb, var(--lc) 14%, #14171d); color:var(--lc); font-weight:600; }`(미지원 폴백 기존 점 유지). 점(.legendDot)은 칩 내 유지 또는 제거. → 범례 칩 배경이 셀 tint와 동일 색면이라 "이 색=이 카테고리"가 즉시 읽힘. 우선순위 **보통**.
+
+3. **[보통·필터 폴리시] 검색창/셀렉트/위시 버튼이 구 border `#2a2e38`·radius 6px 플랫이라 카드(10~14px)·토글 톤과 안 맞음 → 토큰 정렬** (`components/Filters.module.css` `.search` L8·`.label select` L25·`.wishBtn` L33)
+   - 현재: 세 요소 모두 `border:1px solid #2a2e38; border-radius:6px`. globals의 `--border`·`--radius-sm:8px` 토큰과 불일치(6px만 각져 주변 라운드와 어긋남).
+   - 바꿀 값: 세 요소 `border-color:#2a2e38→var(--border)`, `border-radius:6px→var(--radius-sm)`(8px). 입력 hover `border-color:rgba(91,157,255,0.5)`로 살짝 반응(포커스 링은 a11y → 제외). → 필터 행이 카드/뷰토글의 보더·라운드 톤과 통일. 우선순위 **보통**.
+
+### 모바일(390) 점검 (소스 검증 — Chrome resize 미반영)
+1. **[높음·모바일 필수] Filters에 모바일 블록 자체가 없음 → 390px에서 검색+셀렉트3+위시 버튼이 불규칙 줄바꿈·셀렉트 폭 들쭉날쭉** (`components/Filters.module.css` — `@media(max-width:480px)` **신설**)
+   - 현재: `.filters{display:flex;flex-wrap:wrap;gap:0.6rem;align-items:flex-end}` 단일 규칙뿐, 모바일 블록 0건(다른 컴포넌트엔 다 있음 — CalendarView/HeroStrip/ListView/MonthTabs/globals). 390px에선 `.search{flex:1 1 200px;min-width:180px}`가 거의 한 줄을 먹고 카테고리/플랫폼/기간 셀렉트 3개+위시 버튼이 남는 폭에 불균등 줄바꿈 → 필터 행 정렬 흐트러짐.
+   - 바꿀 값: `@media(max-width:480px)` 신설 — `.filters{gap:0.5rem}` · `.search{flex:1 1 100%}` · `.label{flex:1 1 calc(50% - 0.25rem)}` · `.label select{width:100%}` · `.wishBtn{flex:1 1 100%; text-align:center}` → 검색=풀폭 1줄, 셀렉트=2×2 그리드형, 위시=풀폭 버튼. 좁은 화면에서 필터가 정돈된 2열로. 우선순위 **높음**(모바일 필수·신규 블록 1개).
+   - 덤: 위 데스크톱#2 범례 칩은 `.legend{flex-wrap:wrap}`이라 모바일에서도 자동 적용 → 좁은 폭 범례 가독성도 같이 개선.
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·핫카드] 인벤 우상단 '핫 카드'(임박 1건 대형 카드 + Days:Hours:Min:Sec 라이브 카운트다운 + 가격) → 우리 '🔥 출시 임박' 스트립의 최근접(D-0~D-1) 1건을 대형 핫카드로 승격 + 라이브 카운트다운** (`components/HeroStrip.tsx` + `HeroStrip.module.css`)
+   - 인벤: 단일 대형 카드에 실시간 카운트다운(07:22:58:34)으로 임박감 극대화 + 가격(79,000원). 우린 `.strip` 4등분 균일 카드 + 정적 D-DAY 텍스트뿐.
+   - 바꿀 값(다크 재해석): `.strip` 첫 카드를 `grid-column: span 2`로 넓힘(또는 스트립 위 별도 `.hotCard`) — 게임명 1.15rem→1.5rem, D-DAY(`.dday` 1.8rem) 아래 `HH:MM:SS` 카운트다운(1rem/700·`color:#f5a623`·1초 setInterval). 카테고리색 radial glow는 기존 `.card::before` 재사용. **데이터 무관**(출시일시만, 이미 보유). 큐의 '임박 스트립 글로우(데스크톱)'와는 별개 개념(글로우=균일 카드 강조 / 핫카드=최근접 1건 대형화)이라 묶을지·택1은 기획자 판단. 가격은 데이터 필드 없음 → 생략 or 리서처 `price` 선결. 우선순위 **보통**.
+2. **[보통·이벤트 타입 태그] 인벤은 출시/테스트/얼리액세스/업데이트/행사/쇼케이스를 색상 타입 배지로 구분(+🇰🇷 지역 플래그) → 우린 '출시' 단일** (데이터 선결 — 리서처 `eventType`/`region` 필드)
+   - 인벤 캘린더 본문: 각 행 좌측에 '행사'(빨강)·'업데이트'(빨강)·'얼리액세스' 타입 배지 + 🇰🇷 지역 + 태그칩 — 같은 '게임'이라도 출시/테스트/쇼케이스를 색으로 즉시 구분.
+   - 바꿀 값(다크 재해석): 리스트 카드 헤더(또는 캘린더 셀)에 `eventType` 마이크로 배지 1개 — 테스트=청록 #4dd0e1·얼리액세스=보라 #9575cd·쇼케이스/행사=앰버 #f5a623·업데이트=회청 #78909c(우리 카테고리 4색과 채도/색상 겹치지 않게 톤다운). 인벤처럼 빽빽이 말고 **1개 배지만**(미니멀 유지). **데이터 선결**: data/games.json에 `eventType` 필드(+선택 `region` KR/US/GL) → 리서처/기획자 결정. (산업 행사 SGF/GDC/NDC 포함도 같은 필드로 확장.) 우선순위 **보통**(데이터 선결).
+
+### 우선순위 종합
+높음: 데스크톱#1(구 accent #4a90e2→#5b9dff 통일·전 표면 브랜드색 일관)·모바일#1(Filters 모바일 블록 신설). 보통: 데스크톱#2(범례 칩, 모바일도 수혜)·#3(필터 토큰 정렬)·인벤#1(핫카드+카운트다운, 데이터 무관)·인벤#2(이벤트 타입 배지, 데이터 선결).
+
+---
+
 
 ## [2026-06-02 20:50] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440(홈 캘린더/임박 스트립/리스트 뷰 + /game/sol-enchant-20260618 상세) + 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차. 신규 Next 소스 교차(app/globals.css·components/CalendarView.tsx·CalendarView.module.css·ListView.module.css·Home.module.css). 직전 출고(Pretendard·accent #5b9dff·헤더 그라데이션 타이틀·뷰토글/월탭 그라데 칩·출시 셀 카테고리 색띠·상세 D-day 배지+카테고리 상단바) 라이브 반영 양호 확인. **모바일(390)은 Chrome resize_window가 페이지 뷰포트에 미반영(렌더 폭 1568px 고정, QA와 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐/완료/IDEAS와 중복 없는 신규 외형 제안만. a11y/시맨틱/리팩토링 0건(외형 모드).
@@ -416,25 +455,3 @@ _(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
 ### 비고
 - 이 항목은 16:24 #1(헤더 컴팩트화)의 상위호환 구체안. 개발자는 둘을 하나의 작업으로 묶어 처리하면 됨.
-
----
-
-
-## [2026-05-29 17:05] [디자이너] — 라이브 재점검 (검증 사이클)
-직전 디자이너 사이클(16:55) 직후 재확인. Chrome 데스크톱(1280px) 실측 — 캘린더·리스트 뷰 + 신규 로드 기본 뷰 확인. 모바일 뷰포트는 이번에도 리사이즈가 스크린샷에 반영되지 않아 보류.
-
-### 새 이슈: 없음 (억지 트집 회피)
-한 사이클 사이 코드 변경 없음(개발자 21:20 "TODO 큐 비어있음, 기획자 결정 대기"). 신규 발견 사항 없음 → 신규 제안 등록 안 함(중복 방지).
-
-### 검증 결과 — 기존 '높음'/운영자 요청 제안이 아직 라이브 미반영 (기획자 TODO 픽업 필요)
-- (16:55 #1·#2) 진입 기본 달이 출시 거의 없는 현재 달(5월)이라 첫인상이 빈 캘린더 / 출시 0건 달의 캘린더 빈 상태 안내 부재 → **라이브 그대로**. 여전히 최우선 개선 기회.
-- (16:24 #1, 운영자 요청) 헤더 좌측정렬·컴팩트화 → **미반영**. 라이브는 여전히 큰 가운데정렬 헤더가 상단을 점유, 캘린더가 화면 한참 아래에서 시작.
-- (16:24 #2, 운영자 요청) 진입 시 캘린더 고정 → **재현 확인, 미반영**. 뷰 선택을 localStorage로 기억함(직전에 리스트를 봤으면 새로고침 시 리스트로 복귀하는 것 실제 재현). "항상 캘린더로 시작" 아님.
-- (16:31, 운영자 요청) 날짜 클릭 패널 한 줄 컴팩트 행 전환 → **미반영**.
-
-→ 위 항목은 이미 DESIGN_NOTES/IDEAS에 있으므로 중복 등록하지 않음. 개발 TODO 큐가 비었으니, 기획자가 운영자 요청 3건 + 캘린더 첫인상 2건 중 우선순위를 정해 큐에 넣어주면 바로 진행 가능.
-
-### 현재 양호 (트집 X)
-다크 테마·카테고리 색 체계 일관, 리스트 풀폭 행, 출시 임박 셀(.day-soon) 강조, 모달 페이드, 푸터 hover/운영자 정보·SEO 바로가기 — 직전 사이클 반영 확인됨.
-
----
