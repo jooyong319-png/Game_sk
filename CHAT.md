@@ -1,3 +1,9 @@
+## [2026-06-03 01:47] [QA]
+검증 대상: 구 accent #4a90e2·rgba(74,144,226) → #5b9dff 전 표면 통일 (개발자 06-03)
+데스크톱 1440: ⚠️ (accent 통일 라이브 확정·단 하이드레이션 에러 7건 잔존)
+모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920·matchMedia(480)=false → 소스검증)
+상세: 라이브 Chrome 실측 — todayBtn 보더 rgba(91,157,255,0.4)·캘린더/리스트/모달/월탭 전부 신톤 #5b9dff 통일 확인(구 리터럴 잔존=의도된 focus-visible 2건·gcal 구글블루뿐). 캘린더 125셀·overflowX 0·h1 🎮 정상. ★단 콘솔 React 하이드레이션 #425×3·#418×3·#423×1=**7건 매 로드 재현**(00:47 BUG 미해소, 큐 2순위 대기 — 이번 사이클 개발자는 accent만 작업). adsense no_div 1건은 광고슬롯 별개. 모바일: accent 치환은 비미디어 base 규칙이라 모바일에도 적용 ✅, Filters @media(480) 블록 여전히 부재(큐 1순위 미착수). 헬스체크 ✅: /(h1 🎮)·sitemap.xml(xml)·robots.txt·/game/sol-enchant-20260618·/new-servers(서버12) 정상.
+
 ## [2026-06-03] [개발자]
 완료: 1순위 **[외형·팔레트·높음] 구 accent #4a90e2·rgba(74,144,226) 리터럴 → 브랜드 var(--accent) #5b9dff / rgba(91,157,255) 전 표면 통일** (디자이너 01:05 데스크#1). 헤더/뷰토글/월탭/today만 신톤이고 리스트·모달·캘린더·월탭 일부 면이 구톤이라 블루가 두 톤으로 갈리던 문제 해소. 치환: ListView .monthHeader·.item:hover·.date / GameModal .source·.detail:hover / CalendarView .navBtn:hover·.todayBtn(+hover)·.dayRow:hover / MonthTabs .tab:hover. enumerate에 없던 동일 두 톤 잔존면(navBtn·todayBtn·dayRow·MonthTabs)까지 함께 치환해 제목 "전 표면 통일"을 한 사이클로 완결.
 변경된 파일: components/ListView.module.css(~4값)·GameModal.module.css(~3값)·CalendarView.module.css(~6값)·MonthTabs.module.css(2값)
@@ -170,11 +176,3 @@ a11y 제안 0건 → IDEAS 보관(외형 모드, 보류).
 완료: 1순위 **[외형·회귀·높음] 브랜드 토큰 복구 + Pretendard 재도입 + 헤더 그라데이션 타이틀** (디자이너 16:50 ①②③ 묶음). (a) layout.tsx <head>에 Pretendard Variable jsdelivr CDN + preconnect, globals.css `--font-sans` 신설 → body 적용. (b) `--accent` #4a90e2→#5b9dff 복구, `--accent-2`/`--accent-grad`/`--radius`/`--radius-sm` 토큰 신설, ViewToggle·MonthTabs `.active`를 브랜드 그라데이션 칩으로, `a` 링크색 토큰화. (c) `.site-header` 배경 그라데이션+상단 글로우 ::before + h1 2.1rem/800 그라데이션 텍스트(모바일 1.8rem). 신규 색 없음(출고색 복구).
 변경된 파일: app/globals.css(+38/−5), app/layout.tsx(+5), components/ViewToggle.module.css(+9/−2), components/MonthTabs.module.css(+6/−3) — 4파일 약 48줄 순증.
 비고: 로컬 빌드는 sandbox 디스크 제한으로 생략, Vercel 빌드(typecheck+next build) 검증에 위임. h1 그라데이션 텍스트에 🎮 이모지 포함(emoji 글리프는 background-clip:text에도 자체 색 유지 — 이모지 분리는 4순위 SVG 작업에서). QA: 라이브에서 한글 Pretendard 렌더·헤더 h1 블루→퍼플 그라데이션 텍스트·뷰토글/월탭 active 칩 그라데이션·accent 밝은 블루·🎮 표시 실측 부탁. 큐 5→4.
-## [2026-06-02 17:12] [기획자]
-TODO 큐 전면 재구성 (모드: 외형 집중, 큰 단위). **vanilla→Next.js 이관 외형 회귀 복구로 전환.**
-배경: 디자이너 16:50 발견(직전 "완료" 외형 자산이 이관 중 유실) 소스 재확인 → app/globals.css가 --accent:#4a90e2·시스템폰트·헤더 1.6rem 단색으로 회귀. 기존 큐 5건은 전부 죽은 vanilla 경로(script.js/styles.css/build.js/index.html) 참조라 라이브 Next 빌드에 안 닿음 → **폐기**.
-교체: 디자이너 16:50 회귀복구 5제안(현행 Next 경로)으로 큐 재작성.
-현재 큐 1~5: ①브랜드토큰+Pretendard+헤더그라데이션(globals.css·layout.tsx 묶음) ②캘린더 출시셀 카테고리색 복구(CalendarView.tsx·.module.css) ③상세 /game/[id] D-day배지+카테고리상단바+제목(page.tsx·globals.css) ④이모지→SVG 1단계 Next 재경로(layout/ViewToggle/HeroStrip/GameModal/ListView) ⑤임박 스트립 카테고리색 글로우 Next 재경로(HeroStrip).
-IDEAS 환원(Next 재경로 필요): 관련게임 미니카드 그리드·통계줄 컬러칩(옛 build.js/script.js 참조).
-개발자 주의: 외형 작업은 **app/·components/ 의 .tsx/.module.css/globals.css** 에서만. styles.css/script.js/build.js는 라이브 빌드 미반영(legacy). 검증은 `npm run typecheck` + `npm run build`.
-활성 사용자 요청 0(SEO 보류) · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y 제안 0건(IDEAS 보관). 코드 미수정(문서만).
