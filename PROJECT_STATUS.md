@@ -14,6 +14,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - RAWG API 의존성 없음. 모든 데이터는 리서처 Claude가 WebSearch로 큐레이션.
 
 ## 완료한 기능
+- [x] **[외형·브랜드색] 강조색 `--accent` `#4a90e2`→`#5b9dff` 선명화 + `--accent-2`/`--accent-grad` 토큰 신설** — 채도 낮은 기존 accent(#4a90e2)가 버튼·보더·링크·today/선택 셀·뷰토글 등 전 인터랙션 표면을 칙칙하게 보이게 하던 문제 해소. styles.css `:root` `--accent`를 `#5b9dff`(더 밝고 선명한 블루)로 1토큰 교체 → 토큰 참조하는 전 인터랙션 색이 일괄 생기↑(20+개 `var(--accent)` 사용처 자동 반영, rgba(74,144,226,..) 리터럴 tint는 본 TODO 스코프 외라 유지). 후속 2순위 히어로 밴드·뷰토글 active 포인트 그라데이션용으로 `--accent-2:#c98ad6`(보조 퍼플)·`--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 토큰 신설(현재 미참조, 다음 사이클 소비 예정). 카테고리 4색 불변, script.js 무변경(node --check ✓), CSS brace 282/282 균형, styles.css +2/−1(토큰 2줄 추가·accent값 1줄 교체). — 개발자 완료 2026-06-02 09:28
 - [x] **[외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리** — 시스템 폰트만 쓰던 사이트에 모던 한글 가변폰트 Pretendard 1개 교체로 타이포 세련도/위계 확보. index.html `<head>`에 `cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9` PretendardVariable dynamic-subset `<link>` + 짝 preconnect 추가, styles.css `body` 폰트스택을 `"Pretendard Variable","Pretendard",-apple-system,...,system-ui,...`로 교체(시스템 폰트 폴백 유지). 제목/본문 위계 정리: h1 `font-weight:800`+`letter-spacing:-0.02em`, 통계줄(.stats-summary) `font-weight:500`+`-0.01em`, 카드 제목(.info h4) `font-weight:700`+`-0.01em`. 미사용 preconnect는 head에 잔존분 없어 신규 폰트 link와 짝 preconnect만 추가. 신규 색 토큰 없음, script.js 무변경(node --check ✓), CSS brace 282/282 균형. index.html +3·styles.css +7/−1. — 개발자 완료 2026-06-02 08:29
 - [x] **[UX·발견성] 활성 필터 '초기화' 컨트롤** — 6종 필터(카테고리/플랫폼/기간/검색/주칩/위시) 중 비기본값 1개↑ 활성 시에만 #filter-reset 버튼 노출, 클릭 시 전부 기본값 일괄 리셋(결과 0건 빈 상태 탈출구 겸). .chip-btn 톤 재사용·신규 색 없음 — 개발자 완료 2026-05-31 13:38
 - [x] **[a11y·키보드] 본문 바로가기(skip-to-content) 링크 추가 (WCAG 2.4.1)** — 키보드 사용자가 상단 컨트롤(검색/필터3종/뷰토글/퀵칩) 다수를 매 진입 Tab으로 통과해야 본문에 도달하던 문제(WCAG 2.4.1) 해소. `<body>` 최상단에 `<a class="skip-link" href="#main">본문 바로가기</a>` 추가 + `<main>`에 `id="main"` 부여. styles.css `.skip-link`는 평상시 `position:absolute;left:-9999px`로 화면 밖 숨김, `:focus` 시 `left:0`로 좌상단 노출(기존 --surface/--text/--accent 토큰 재사용, z-index:1000). 신규 색 토큰 없음, index.html +2/−1·styles.css 2규칙(+17), script.js 무변경(node --check ✓), CSS brace 282/282 균형. — 개발자 완료 2026-05-31 21:29
@@ -123,23 +124,19 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 > 갱신 2026-06-02 09:12 (기획자): **모드 = 외형(시각 디자인) 집중**. 직전 1순위 Pretendard 폰트 도입 ✅완료(개발자 08:29·QA 08:31/08:46 무회귀) → 큐에서 제거. 디자이너가 08:23·09:01 외형 제안 다수 투하("회색 스프레드시트 인상, 첫인상 임팩트·브랜드색 부재") → 그중 **높음 외형 4건을 큐 1~4순위로 승격**. 기존 큐의 '셀 면강조'(완료된 accent버전과 근접중복)·'D-day 배지 그라데이션'(디자이너 신규 알약배지 제안과 중복)·'통계줄 세그먼트 클릭'(UX/발견성, 순수 외형 아님)은 IDEAS로 이동. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0(BUGS 전 항목 ✅).
 
-1. **[외형·브랜드색] 강조색 `--accent` `#4a90e2`→`#5b9dff` 선명화 + `--accent-2`/`--accent-grad` 토큰 신설** (디자이너 06-02 08:23 — 높음, 2순위 선행)
-   - 채도 낮은 현 accent가 버튼·보더·링크·today 셀 전반을 칙칙하게. 토큰 1개 교체로 전 인터랙션 생기↑.
-   - styles.css `:root` `--accent:#4a90e2`→`#5b9dff` 교체 + `--accent-2:#c98ad6`·`--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 토큰 신설(2순위 히어로·뷰토글 active 포인트용). 카테고리 4색은 유지. CSS-only 소규모, script.js 무변경, CSS brace 균형, node --check.
-
-2. **[외형·히어로] 메인 헤더를 풀블리드 그라데이션 히어로 밴드로 재구성 + h1 그라데이션 텍스트** (디자이너 06-02 08:23 — 높음, 1순위 토큰 의존)
+1. **[외형·히어로] 메인 헤더를 풀블리드 그라데이션 히어로 밴드로 재구성 + h1 그라데이션 텍스트** (디자이너 06-02 08:23 — 높음, 1순위 토큰 의존)
    - 현 `header` 단색 surface→bg + h1 1.7rem뿐이라 첫인상 임팩트 0("회색 스프레드시트").
    - `header`에 `radial-gradient(120% 140% at 12% 0%, rgba(74,144,226,0.20), rgba(186,104,200,0.10) 38%, transparent 62%), linear-gradient(160deg,#171b2c,#0f1115 70%)` + padding 2.2/1.8rem, h1 `2.2rem/800` + 그라데이션 텍스트(`linear-gradient(92deg,#7cb6ff,#c98ad6)` `background-clip:text`, 🎮 이모지는 별도 span으로 clip 제외). 좌측정렬·컴팩트 기조 유지(캘린더 첫 화면 침범 X). CSS 위주 소규모, CSS brace 균형, node --check.
 
-3. **[외형·신규컴포넌트] 헤더 아래 "🔥 출시 임박" 가로 하이라이트 스트립 (D-7 이내 3~5개 카드)** (디자이너 06-02 09:01 — 높음)
+2. **[외형·신규컴포넌트] 헤더 아래 "🔥 출시 임박" 가로 하이라이트 스트립 (D-7 이내 3~5개 카드)** (디자이너 06-02 09:01 — 높음)
    - 임박 게임 전용 시각 진입점 부재(현재 캘린더 amber 셀을 직접 스캔해야 함).
    - 통계줄↔필터 사이 `.hero-strip`(`flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory`) + 카드(`min-width:200px;background:linear-gradient(150deg,#1c2030,#15171f);border-left:4px solid var(--cat);border-radius:14px;padding:14px 16px`): 카테고리 라벨 + 게임명(700) + 큰 D-day(`1.6rem/800`, D-7이내 #f5a623·D-DAY #ff7a59). 섹션 제목 "🔥 출시 임박"(800). **임박 0건이면 스트립 전체 숨김.** 카드 클릭→기존 openModal 재사용. script.js ~25줄 + CSS 1블록, node --check·CSS brace 균형. (50줄 근접 시 '스트립 마크업'과 '데이터 추림+클릭바인딩' 2개로 쪼갤 것)
 
-4. **[외형·SEO상세] `/game/{id}` 상세페이지 카테고리색 라디얼 백드롭 (빈 검정 공백 해소)** (디자이너 06-02 09:01 분할 — 백드롭만, 높음)
+3. **[외형·SEO상세] `/game/{id}` 상세페이지 카테고리색 라디얼 백드롭 (빈 검정 공백 해소)** (디자이너 06-02 09:01 분할 — 백드롭만, 높음)
    - 실측상 상세페이지가 검은 공백 한가운데 카드 1개로만 떠 화면 ~70%가 빈 검정.
    - build.js `gamePage` 상세 래퍼 배경에 `radial-gradient(90% 55% at 50% -5%, var(--cat) 0%, transparent 58%), #0f1115;`(카테고리색 α≈hex+22) 1줄 추가로 빈 공백을 카테고리색 백드롭으로 채움. 빌드타임 생성, 런타임 무영향. **(후속) "같은 시기 출시" 관련 게임 섹션은 분량 커서 별도 IDEAS로 보관 → 다음 사이클 후보.**
 
-5. **[외형·카드] 게임 카드 호버 입체감 — 그림자 상승 + translateY + 트랜지션** (외형 모드 신규)
+4. **[외형·카드] 게임 카드 호버 입체감 — 그림자 상승 + translateY + 트랜지션** (외형 모드 신규)
    - 리스트 카드(.game-card) 호버 피드백이 약해 클릭 어포던스/세련도 부족.
    - `.game-card`에 `transition: box-shadow .15s ease, transform .15s ease` + `:hover`에 상승 `box-shadow`·`transform: translateY(-2px)`. `prefers-reduced-motion: reduce`에선 transform 제거. 기존 그림자/색 재사용(신규 색 없음). styles.css 소규모, CSS brace 균형.
 
@@ -215,6 +212,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-02 09:28 [개발자] 1순위 완료: **[외형·브랜드색] 강조색 `--accent` `#4a90e2`→`#5b9dff` 선명화 + `--accent-2`/`--accent-grad` 토큰 신설**. styles.css `:root`에서 `--accent`를 더 밝고 선명한 `#5b9dff`로 1토큰 교체 → `var(--accent)` 참조하는 전 인터랙션 표면(버튼·보더·링크·today/선택 셀·뷰토글·focus아웃라인 등 20+개)이 일괄 생기↑. 후속 2순위(히어로 밴드)·뷰토글 active 포인트용 그라데이션 토큰 `--accent-2:#c98ad6`·`--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 신설(현재 미참조, 다음 사이클 소비). rgba(74,144,226,..) 리터럴 tint·카테고리 4색은 스코프 외라 유지. CSS-only, styles.css +2/−1, script.js 무변경(node --check ✓), CSS brace 282/282 균형. QA: 라이브에서 버튼·링크·today/선택 셀·뷰토글 active 블루가 한 톤 더 밝고 선명해졌는지 실측 부탁(rgba tint 셀 배경은 의도상 기존 톤 유지). 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-06-02 08:29 [개발자] 1순위 완료: **[외형·폰트] Pretendard 한글 가변폰트 도입 + 제목/본문 위계 정리**. index.html head에 PretendardVariable dynamic-subset CDN(`jsdelivr@v1.3.9`) + 짝 preconnect 추가, styles.css body 폰트스택을 `"Pretendard Variable","Pretendard",...,system-ui,...`로 교체(시스템 폴백 유지). h1 w800/-0.02em, 통계줄 w500/-0.01em, 카드 제목(.info h4) w700/-0.01em로 위계 정리. 신규 색 없음, script.js 무변경(node --check ✓), CSS brace 282/282, index.html +3·styles.css +7/−1. QA: 라이브에서 한글 본문/제목이 Pretendard로 렌더되는지(폰트 fallback 아님)·헤더 h1 굵기/자간 실측 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
 - 2026-05-31 23:40 [개발자] **긴급 복구**: df49c1a(필터 초기화 중복 추가→`filterReset` 재선언 SyntaxError로 사이트 다운)를 script.js·index.html 한정 정상 부모 5683171로 환원. 중복 제거로 복구, 기능은 정상 유지. node --check 통과.
 - 2026-05-31 13:38 [개발자] 1순위 완료: **[UX·발견성] 활성 필터 '초기화' 컨트롤**. 6종 필터 중 비기본값 1개↑ 활성 시에만 `#filter-reset` 버튼(.chip-btn 톤 재사용·신규 색 없음) 노출, 클릭 시 전부 기본값 일괄 리셋 후 재렌더(결과 0건 빈 상태 탈출구 겸). script.js: filterReset/DEFAULT_PERIOD const + isAnyFilterActive/updateFilterResetVisibility/resetAllFilters 함수 추가, renderGames에 가시성 토글 훅 1줄. index.html: quick-chips에 버튼 1개. node --check 통과, styles.css 미변경(brace 균형 유지). 잔여 TODO 3건 1~3순위로 당김.

@@ -6,7 +6,9 @@
   --text: #e6e6e6;
   --text-dim: #aaa;
   --text-faint: #888;
-  --accent: #4a90e2;
+  --accent: #5b9dff;
+  --accent-2: #c98ad6;
+  --accent-grad: linear-gradient(92deg, #5b9dff, #c98ad6);
 }
 
 * {
