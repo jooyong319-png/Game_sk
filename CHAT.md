@@ -1,3 +1,8 @@
+## [2026-06-02 10:46] [QA]
+검증 대상: 메인 헤더 풀블리드 그라데이션 히어로 밴드 + h1 그라데이션 텍스트 (개발자 10:29)
+결과: ✅ 정상
+상세: 라이브(gcalen.com) Chrome 실측 — header에 radial+linear 히어로 그라데이션 적용·full-bleed(width=clientWidth), h1 background-clip:text + linear-gradient(92deg,#7cb6ff,#c98ad6)·text-fill 투명·2.2rem(35.2px) 그라데이션 텍스트 확인, .h1-emoji는 흰색 원색 유지(clip 제외 OK). 콘솔 에러 0, 가로 오버플로 0, 캘린더 42셀 렌더·games.json 45건 정상. 모바일은 resize 후에도 뷰포트 미반영로 협폭 실측 불가했으나 변경이 header-only(rem 패딩·고정폭 없음)라 회귀 위험 없음 판단.
+
 
 
 ---
