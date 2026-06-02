@@ -778,3 +778,31 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
   .ad-slot { margin: 1rem auto; }
   .ad-slot-mid { min-height: 200px; }
 }
+
+/* 🔥 출시 임박 가로 하이라이트 스트립 (D-7 이내 최대 5건, 임박 0건이면 #hero-section[hidden]으로 전체 숨김). 카테고리 4색 재사용(신규 색 없음). */
+.hero-section { margin: 0 0 1.5rem; }
+.hero-strip-title { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 0.7rem; color: var(--text); }
+.hero-strip { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 4px; }
+.hero-card {
+  flex: 0 0 auto; min-width: 200px; max-width: 260px; scroll-snap-align: start;
+  display: flex; flex-direction: column; gap: 6px;
+  background: linear-gradient(150deg, #1c2030, #15171f);
+  border: 1px solid var(--border); border-left: 4px solid var(--cat, var(--accent));
+  border-radius: 14px; padding: 14px 16px;
+  text-align: left; cursor: pointer; font-family: inherit; color: var(--text);
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+.hero-card:hover { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); transform: translateY(-2px); }
+.hero-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hero-card[data-cat="mobile_kr"] { --cat: #81c784; }
+.hero-card[data-cat="pc_console_kr"] { --cat: #64b5f6; }
+.hero-card[data-cat="global_aaa"] { --cat: #ba68c8; }
+.hero-card[data-cat="new_server"] { --cat: #ff8a65; }
+.hero-card-cat { font-size: 0.78rem; font-weight: 600; color: var(--cat, var(--text-dim)); }
+.hero-card-name { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+.hero-card-dday { font-size: 1.6rem; font-weight: 800; color: #f5a623; }
+.hero-card-dday.today { color: #ff7a59; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-card { transition: none; }
+  .hero-card:hover { transform: none; }
+}

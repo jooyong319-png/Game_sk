@@ -76,6 +76,7 @@ async function loadData() {
     }
 
     renderStatsSummary();
+    renderHeroStrip();
     renderLegend();
     renderGames();
     // 최초 1회: 캘린더를 '오늘 이후 가장 가까운 출시 달'로 초기화 (사용자 네비 후엔 건드리지 않음)
@@ -122,6 +123,33 @@ function renderLegend() {
     const key = (Array.from(dot.classList).find(c => c.startsWith('category-')) || '').slice(9);
     if (CATEGORY_LABELS[key]) item.lastChild.textContent = CATEGORY_LABELS[key];
   }
+}
+
+// 🔥 출시 임박 가로 하이라이트 스트립: D-7 이내(D-DAY~D-7) 게임을 최대 5개, 가까운 순으로.
+// 임박 게임이 0건이면 섹션 전체를 숨긴다. 카드 클릭 → 기존 openModal 재사용.
+function renderHeroStrip() {
+  const section = document.getElementById('hero-section');
+  const strip = document.getElementById('hero-strip');
+  if (!section || !strip) return;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const imminent = allGames
+    .map(g => ({ g, diff: Math.ceil((parseReleaseDate(g.release_date) - today) / 86400000) }))
+    .filter(x => x.diff >= 0 && x.diff <= 7)
+    .sort((a, b) => a.diff - b.diff)
+    .slice(0, 5);
+  if (!imminent.length) { strip.innerHTML = ''; section.hidden = true; return; }
+  strip.innerHTML = imminent.map(({ g, diff }) => {
+    const ddCls = ddayStageClass(diff).trim();
+    const dd = diff === 0 ? 'D-DAY' : 'D-' + diff;
+    const label = escapeHtml(categories[g.category] || g.category);
+    const name = escapeHtml(g.name_ko || g.name_en || '');
+    return `<button type="button" class="hero-card" data-id="${escapeHtml(g.id)}" data-cat="${escapeHtml(g.category)}" aria-label="${name} 상세 보기">`
+      + `<span class="hero-card-cat">${label}</span>`
+      + `<span class="hero-card-name">${name}</span>`
+      + `<span class="hero-card-dday ${ddCls}">${dd}</span>`
+      + `</button>`;
+  }).join('');
+  section.hidden = false;
 }
 
 function renderGames() {
@@ -633,6 +661,11 @@ document.addEventListener('keydown', e => {
 });
 
 categoryFilter.addEventListener('change', renderGames);
+const heroStrip = document.getElementById('hero-strip');
+if (heroStrip) heroStrip.addEventListener('click', e => {
+  const card = e.target.closest('.hero-card');
+  if (card && card.dataset.id) openModal(card.dataset.id);
+});
 platformFilter.addEventListener('change', renderGames);
 periodFilter.addEventListener('change', renderGames);
 if (searchInput) {
