@@ -1,4 +1,5 @@
 .view { margin: 1rem 0; }
+
 .header {
   display: flex;
   align-items: center;
@@ -11,8 +12,7 @@
   background: #1a1d24;
   border: 1px solid #2a2e38;
   color: #e6e6e6;
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   border-radius: 50%;
   font-size: 1.2rem;
   cursor: pointer;
@@ -27,6 +27,8 @@
   font-size: 0.85rem;
   cursor: pointer;
 }
+.todayBtn:hover { background: rgba(74,144,226,0.22); color: #fff; }
+
 .legend {
   display: flex;
   flex-wrap: wrap;
@@ -38,6 +40,8 @@
 }
 .legendItem { display: flex; align-items: center; gap: 0.3rem; }
 .legendDot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+
+/* ─── Calendar Grid ─── */
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -55,39 +59,175 @@
   color: #888;
   font-weight: 600;
 }
+
+/* ─── Cell ─── */
 .cell {
   background: #14171d;
-  min-height: 76px;
+  min-height: 92px;
   padding: 0.35rem 0.4rem;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  position: relative;
+  outline: none;
+  transition: background 0.12s, border-color 0.12s;
 }
-.cellOther { opacity: 0.4; }
-.cellToday { border: 2px solid #4a90e2; background: rgba(74,144,226,0.06); }
-.cellDate { font-size: 0.78rem; color: #cfd6e0; font-weight: 600; }
-.cellDots { display: flex; gap: 0.2rem; flex-wrap: wrap; align-items: center; }
-.cellDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  display: block;
-  cursor: pointer;
-  border: none;
-  padding: 0;
+.cellOther { opacity: 0.35; }
+.cellOther.cellToday { opacity: 1; }
+.cellClickable { cursor: pointer; }
+.cellClickable:hover { background: #1a1f2a; }
+.cellClickable:focus-visible {
+  background: #1a1f2a;
+  box-shadow: inset 0 0 0 2px #4a90e2;
 }
-.cellMore { font-size: 0.7rem; color: #aaa; margin-left: 0.2rem; }
+.cellHas { background: #181d27; }
+.cellToday {
+  background: rgba(74,144,226,0.08);
+  box-shadow: inset 0 0 0 2px #4a90e2;
+}
+.cellSelected {
+  background: rgba(245,166,35,0.12);
+  box-shadow: inset 0 0 0 2px #f5a623;
+}
+
+.cellDate {
+  font-size: 0.78rem;
+  color: #cfd6e0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.cellTodayBadge {
+  font-size: 0.6rem;
+  background: #4a90e2;
+  color: #fff;
+  padding: 0.05rem 0.3rem;
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
 .cellName {
   font-size: 0.72rem;
-  color: #cfd6e0;
-  text-decoration: none;
+  color: #e6e6e6;
+  font-weight: 500;
+  line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  min-height: 1.7em;
 }
-.cellName:hover { color: #4a90e2; }
+.cellMore {
+  font-size: 0.65rem;
+  color: #f5a623;
+  margin-left: 0.2rem;
+  font-weight: 700;
+}
+
+.cellDots {
+  display: flex;
+  gap: 0.18rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: auto;
+}
+.cellDot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: block;
+}
+.cellDotMore {
+  font-size: 0.62rem;
+  color: #aaa;
+  margin-left: 0.1rem;
+}
+
 .empty { text-align: center; color: #888; padding: 1.5rem; }
+
+/* ─── Day Detail Panel (셀 클릭 시 하단 표시) ─── */
+.dayPanel {
+  margin-top: 1rem;
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
+  border-radius: 10px;
+  padding: 1rem;
+  animation: slideDown 0.25s ease-out;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dayPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.dayPanelTitle { font-size: 1rem; font-weight: 700; color: #fff; }
+.dayPanelClose {
+  background: rgba(255,255,255,0.05);
+  border: none;
+  color: #ccc;
+  font-size: 1.2rem;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+}
+.dayPanelClose:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.dayPanelList { display: flex; flex-direction: column; gap: 0.4rem; }
+.dayRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  color: #e6e6e6;
+  transition: background 0.12s, border-color 0.12s;
+}
+.dayRow:hover {
+  background: rgba(74,144,226,0.08);
+  border-color: rgba(74,144,226,0.3);
+}
+.dayRowDate {
+  color: #888;
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 3.5em;
+}
+.dayRowDot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dayRowName {
+  flex: 1;
+  font-size: 0.92rem;
+  color: #e6e6e6;
+}
+.dayRowDday {
+  font-size: 0.78rem;
+  color: #888;
+  font-weight: 600;
+}
+.dayRowDdaySoon { color: #f5a623; }
+.dayEmpty { color: #888; padding: 1rem; text-align: center; }
+
+/* ─── 모바일 ─── */
 @media (max-width: 480px) {
-  .cell { min-height: 60px; padding: 0.25rem; }
+  .cell { min-height: 64px; padding: 0.25rem 0.2rem; }
+  .cellDate { font-size: 0.72rem; }
   .cellName { display: none; }
+  .cellTodayBadge { font-size: 0.55rem; padding: 0.02rem 0.2rem; }
+  .cellDot { width: 6px; height: 6px; }
 }
