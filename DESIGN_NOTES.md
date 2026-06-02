@@ -10,6 +10,36 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-02 20:50] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440(홈 캘린더/임박 스트립/리스트 뷰 + /game/sol-enchant-20260618 상세) + 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차. 신규 Next 소스 교차(app/globals.css·components/CalendarView.tsx·CalendarView.module.css·ListView.module.css·Home.module.css). 직전 출고(Pretendard·accent #5b9dff·헤더 그라데이션 타이틀·뷰토글/월탭 그라데 칩·출시 셀 카테고리 색띠·상세 D-day 배지+카테고리 상단바) 라이브 반영 양호 확인. **모바일(390)은 Chrome resize_window가 페이지 뷰포트에 미반영(렌더 폭 1568px 고정, QA와 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐/완료/IDEAS와 중복 없는 신규 외형 제안만. a11y/시맨틱/리팩토링 0건(외형 모드).
+
+### 데스크톱(1440) 점검
+1. **[높음·캘린더·인벤정렬] 요일 헤더·날짜에 주말 색 구분 0 → 일=빨강/토=파랑 (한국 달력 관습)** (`components/CalendarView.tsx` L114 dayHead map + 셀 날짜 / `components/CalendarView.module.css`)
+   - 현재: `.dayHead{color:#888}`(L59) 7요일 전부 동일 회색, 셀 날짜 `.cellDate{color:#cfd6e0}`(L104) 전부 동일. 일/토 구분 신호 0 → 주 경계 스캔 어려움. 인벤은 일요일 빨강·토요일 파랑으로 즉시 구분(한국 달력 표준).
+   - 바꿀 값: CalendarView.tsx L114를 `{['일','월','화','수','목','금','토'].map((d,i)=>(<div key={d} className={`${styles.dayHead} ${i===0?styles.sun:i===6?styles.sat:''}`}>{d}</div>))}`. module.css 신규 `.sun{color:#e57373}` `.sat{color:#7aa7ff}`(다크 톤용 채도 down — danger #e74c3c·accent #5b9dff 원색은 다크 배경서 쨍함). 셀 날짜도 `date.getDay()` 기반 동일 클래스 → `.cellDate.sun{color:#e57373}` `.cellDate.sat{color:#7aa7ff}`(단 .cellToday/.cellSelected 강조 셀은 흰색 유지해 충돌 회피). → 라이트 인벤을 다크 톤다운으로 재해석, 주말 즉시 식별. 우선순위 **높음**.
+
+2. **[보통·캘린더·오늘 강조] today 셀이 옅은 테두리(inset 2px)+작은 '오늘' 칩뿐 → 날짜 숫자를 채움 원형으로(구글캘린더식)** (`components/CalendarView.module.css` .cellToday/.cellTodayBadge + CalendarView.tsx 날짜 span)
+   - 현재: `.cellToday{background:rgba(74,144,226,0.08);box-shadow:inset 0 0 0 2px #4a90e2}`(L94) + 별도 `.cellTodayBadge`(파란 작은 칩, L111). 실측(6/2 오늘 셀)에서 "오늘"이 비어 보이고 앵커가 약함. (덤: 모듈이 #4a90e2 하드코딩 — globals --accent #5b9dff와 불일치, var(--accent)로 통일 권고.)
+   - 바꿀 값: 오늘 셀 날짜 숫자 span에 채움 원형 — `width:1.5em;height:1.5em;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center`. 그러면 `.cellTodayBadge`("오늘" 텍스트) 제거 가능→셀 공간 절약. 셀 테두리는 약화(`#4a90e2`→`rgba(91,157,255,0.45)`)해 원형과 이중강조 과함 방지. → 친숙한 today 앵커, 첫 진입 시 "오늘"이 한눈에. 우선순위 **보통**.
+
+### 모바일(390) 점검 (소스 검증 — Chrome resize 미반영)
+1. **[높음·모바일 필수] 모바일 캘린더는 게임명 숨김(cellName display:none) 상태라 출시일=점만 → cellHas tint/색띠/점 강화로 색 가독성 확보** (`components/CalendarView.module.css` @media(max-width:480px) L237~243)
+   - 현재: 모바일 블록에 `.cellName{display:none}`(L240) — 64px 작은 셀에서 게임명 제거, 색점(`.cellDot` 6px)만 신호. 그런데 `.cellHas` tint는 데스크와 동일 `color-mix 8%`(L91)·띠 3px라 64px 셀에선 거의 안 읽힘 → 출시일이 빈 셀과 구분 약함(좌측 3px 띠에만 의존). 모바일은 이름이 없어 '색'이 유일 신호인데 그 색이 약함.
+   - 바꿀 값: @media(max-width:480px)에 `.cellHas{ background:#1d2330; background:color-mix(in srgb, var(--cat,#5b9dff) 16%, #14171d); box-shadow:inset 4px 0 0 var(--cat,#5b9dff); }`(tint 8%→16%·띠 3→4px, 폴백 #1d2330 선행) + `.cellDot{width:7px;height:7px}`(6→7). → 이름 없는 모바일 캘린더에서 출시일이 카테고리 색면으로 또렷이 떠오름. 우선순위 **높음**.
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·신규컴포넌트] 인벤 '주간 TOP 게임 순위'(우측 1~10위+등락 ▲▼NEW) → 우리식 '⭐ 위시리스트 인기 TOP 5' 다크 가로 위젯** (신규 `components/PopularWishlist.tsx` + .module.css, 히어로 스트립 아래)
+   - 인벤: 라이트 우측 사이드바에 빽빽한 순위표. 우린 단일 컬럼·다크라 사이드바 부적합 → '🔥 출시 임박' 스트립 아래 **가로 5카드** 섹션으로 재해석.
+   - 바꿀 값: 카드 = 순위 숫자(48px/800, `background:var(--accent-grad)`로 그라데 텍스트) + 게임명 + 카테고리 색점 + D-day. 컨테이너 `background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius)`. **데이터 의존**: 로컬스토리지 위시는 개인값이라 전역 인기 산출 불가 → 리서처가 games.json에 `popularity` 필드 추가 or '글로벌 대작+D-day 임박' 큐레이션 TOP5로 대체(기획자 판단). 인벤의 정보 빽빽 라이트 표를 미니멀 다크 5카드로 절제. 우선순위 **보통**(데이터 선결).
+2. **[보통·리스트 카드] 인벤은 실제 게임 썸네일로 배너 풍부 → 우린 이미지 없음, 카테고리 그라데이션+SVG 워터마크로 재해석** (`components/ListView.tsx` L99 배너 div + `components/ListView.module.css` .cardBanner L96~113)
+   - 현재: `.cardBanner{height:56px}` + `cat-bg-{category}`(플랫 15% 단색) + `::before` 45deg 줄무늬(rgba255 0.025, 실측상 거의 안 보임) + `.cardBannerEmoji`(1.9rem·opacity .25 우측). 실측: 배너가 밋밋한 단색 띠 — 카드 상단 인상 약함.
+   - 바꿀 값: ListView.tsx L99 배너 div에 `style={{['--cat' as string]: cat.color}}` 주입 → `.cardBanner{ background:linear-gradient(120deg, color-mix(in srgb,var(--cat) 26%, #14171d), color-mix(in srgb,var(--cat) 6%, #14171d)); }`(미지원 폴백 기존 cat-bg 클래스 유지)·높이 56→64px. 워터마크는 이모지→SVG 전환(큐) 후 `.cardBannerEmoji`를 대형 카테고리 SVG `width:60px;opacity:0.14;right:-4px`로. → 이미지 자산 없이도 카드 상단이 카테고리별로 또렷·깊이감. SVG 전환 묶음 권장. 우선순위 **보통**.
+
+### 우선순위 종합
+높음: 데스크톱#1(주말 색·인벤정렬)·모바일#1(cellHas 색 강화) — 둘 다 캘린더 가독성 핵심, 변경량 작음(tsx 1~2줄+CSS). 보통: 데스크톱#2(today 원형)·인벤#1(위시 TOP, 데이터 선결)·인벤#2(배너 그라데, SVG와 묶음).
+
+---
+
 ## [2026-06-02 16:50] [디자이너] - 외형 모드 (Next.js 마이그레이션 외형 회귀 복구 + 헤더)
 실측: gcalen.com Chrome 데스크톱(홈 캘린더/임박 스트립/리스트 뷰 + /game/ff7-rebirth-switch2-2026 상세) + 신규 Next.js 소스 교차(app/globals.css·layout.tsx·components/*.module.css·CalendarView.tsx·app/game/[id]/page.tsx). **핵심 발견: vanilla→Next.js 이관 과정에서 직전에 출고됐던 외형 자산 다수가 globals.css/module.css로 옮겨오며 유실됨**(PROJECT_STATUS 변경로그엔 styles.css/build.js 기준 "완료"로 남아 있으나 라이브 Next 빌드엔 미반영). 아래 제안은 옛 styles.css가 아니라 **현행 Next.js 파일 경로 기준**으로 재작성한 것. a11y/시맨틱/리팩토링 0건(외형 모드).
 
@@ -406,36 +436,5 @@ _(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
 ### 현재 양호 (트집 X)
 다크 테마·카테고리 색 체계 일관, 리스트 풀폭 행, 출시 임박 셀(.day-soon) 강조, 모달 페이드, 푸터 hover/운영자 정보·SEO 바로가기 — 직전 사이클 반영 확인됨.
-
----
-
-
-## [2026-05-29 16:55] [디자이너]
-실측: https://gcalen.com/ Chrome 스크린샷(데스크톱 1200~1516px, 캘린더·리스트 뷰 둘 다) + 퀵칩 활성 상태 확인.
-모바일은 OS 창은 420px로 줄였으나 렌더 뷰포트가 데스크톱 폭 유지(스크린샷 미반영) → 모바일 실측은 이번에도 보류, CSS 기준 평가.
-
-### 발견한 문제 / 개선점
-
-1. **진입 시 현재 달이 거의 텅 비어 보임 (첫인상 = 빈 캘린더)** — 우선순위: 높음
-   - 어디서: 캘린더 뷰 기본 화면. 항상 "오늘이 속한 달"(현재 2026년 5월)로 시작하는데, 5월은 출시가 27·28·30 단 3일뿐이고 위 4주(1~26일)가 전부 빈 칸. 첫 화면 거의 전체가 비어 "데이터 없는/고장난 사이트" 인상.
-   - 왜: 출시 게임은 대부분 다음 달 이후에 몰려 있는데, 정작 첫 화면은 출시가 가장 적은 현재 달을 보여줌. 사용자가 가치를 못 느끼고 이탈 위험.
-   - 개선: 진입 시 calendarMonth를 "오늘 이후 가장 가까운 출시(release_date>=today)가 있는 달"로 초기화(예: 5월에 임박 출시가 있으면 5월 유지, 없으면 다음 출시가 있는 달로 점프). 또는 현재 달 유지하되 월 네비게이션 옆에 "이 달 출시 N건 · 다음 달 N건" 카운트를 노출해 빈 칸이 "정상"임을 알려줌. 전자가 임팩트 큼.
-
-2. **출시 0건인 달의 캘린더 빈 상태(empty state) 안내 부재** — 우선순위: 높음
-   - 어디서: ‹ › 로 출시가 하나도 없는 달로 이동하면 날짜 숫자만 있는 빈 그리드만 표시(안내 문구 없음). 리스트 뷰엔 .empty-state가 있으나 캘린더 뷰엔 없음.
-   - 개선: 그날 출시가 0건인 달에는 그리드 위(또는 아래)에 옅은 안내 한 줄 — 예 "이 달은 예정된 출시가 없어요. ‹ › 로 다른 달을 둘러보세요." + 가능하면 "다음 출시(N월)로" 버튼. 리스트 뷰 빈 상태와 톤·문구 일관.
-
-3. **헤더 '마지막 업데이트: 2026.05.29' 텍스트 대비 부족(거의 안 보임)** — 우선순위: 보통
-   - 어디서: 헤더 부제 아래 업데이트 날짜. 다크 배경에 매우 흐린 회색이라 대비 4.5:1 미달로 보임(거의 비가시).
-   - 개선: 색을 한 단계 올리거나(현 톤→ #9aa0ac 수준), 푸터에 이미 "데이터 마지막 갱신: …(N시간 전)"이 더 정확히 있으므로 헤더의 이 줄은 제거하고 푸터로 일원화하는 것도 깔끔(헤더 컴팩트화 제안과도 시너지). 둘 중 하나 택1.
-
-4. **캘린더 셀 게임명 라벨 가독성(데스크톱 여백 활용 부족)** — 우선순위: 낮음
-   - 어디서: 캘린더 셀 .day-game-label(0.7rem, 흐린 톤). 데스크톱 셀은 폭 여유가 큰데도 라벨이 작고 흐려 스캔이 어렵고, 긴 제목(예 '패스 오브 엑자일 2: 새 시즌…(0.5.0) 시작')은 거의 셀 끝까지 참.
-   - 개선: 데스크톱(≥768px) 셀 한정 라벨 0.7→0.78rem, 색 한 단계 ↑. 그날 2건 이상이면 첫 게임 라벨 + "외 N건" 보조 텍스트로 점(dot) 정보와 통합. (모바일 셀은 현행 유지)
-
-### 현재 양호 (트집 X)
-- 리스트 뷰 단일게임 풀폭 행 + 4px 컬러 배너(중복 제거): 직전 사이클 반영 확인, 가로 낭비 해소됨. OK.
-- 퀵칩(이번 주/다음 주/위시리스트) 활성 상태: 파란 보더로 토글 피드백 명확. OK.
-- 오늘 셀(파란 강조)·선택 셀(주황 보더)·임박 셀(.day-soon) 색 위계, 푸터 운영자 정보·mailto hover: 양호.
 
 ---
