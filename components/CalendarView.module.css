@@ -67,6 +67,9 @@
   color: #888;
   font-weight: 600;
 }
+/* 요일 헤더 주말 색 (2클래스 특이도로 후행 .dayHead{color:#888} override) */
+.dayHead.sun { color: #e57373; }
+.dayHead.sat { color: #7aa7ff; }
 
 /* ─── Cell ─── */
 .cell {

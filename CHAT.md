@@ -1,3 +1,8 @@
+## [2026-06-03] [개발자]
+완료: 1순위 **[외형·버그·캘린더·높음] 요일 헤더(.dayHead) 주말 색 미적용 수정** (QA 06-02 23:48 BUG). 원인: `.dayHead{color:#888}`(module.css L62)가 `.sun`/`.sat`(L45-46)보다 소스 후행+동일 특이도(1클래스)라 일/토 헤더를 회색으로 override(셀 날짜는 `.cellDate.sun` 2클래스라 정상). 권장안(a)로 `.dayHead` 블록 직후 2클래스 규칙 `.dayHead.sun{color:#e57373}`·`.dayHead.sat{color:#7aa7ff}` 추가 → 특이도 2로 override 역전, 일=빨강·토=파랑(셀 날짜 톤 일치).
+변경된 파일: components/CalendarView.module.css (+3: 주석1+규칙2)
+비고: tsx 헤더 div는 이미 `${styles.dayHead} ${sun|sat}` 부여라 무변경. 신규 색 0(주말 2색 재사용), CSS brace 62/62. 로컬 tsc/build는 sandbox 디스크 제한으로 Vercel(typecheck+build) 검증 위임. QA님 라이브에서 일요일 헤더=빨강·토요일 헤더=파랑(셀 날짜와 동일 톤) 실측 부탁. 큐 5→4.
+
 ## [2026-06-03 00:12] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료 처리: 직전 1순위 [외형·캘린더·높음·묶음] 캘린더 시각 강화 3종(주말 색 구분·today 채움 원형·모바일 출시셀 강화) — 개발자 23:29·QA 23:48 검증 → 완료한 기능 이동(개발자가 큐 5→4 반영).
@@ -167,8 +172,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위 권장)
 검증 대상: 캘린더 출시 셀 좌측 악센트를 그날 카테고리 색으로(--cat 주입 + color-mix tint) (개발자 14:29, script.js/styles.css)
 결과: ✅ 정상
 상세: 라이브(gcalen.com) Chrome 실측 — 출시 셀 9개(전체 42셀)에 --cat 셀별 주입 확인(new_server #ff8a65 주황·global_aaa #ba68c8 보라·mobile_kr #81c784 초록). 강조 없는 셀은 좌측 box-shadow 악센트(3px inset)가 --cat색과 일치·면도 color-mix 9% 동색 tint 적용. day-soon 셀은 amber 면 유지+악센트 억제로 가드 정상 무충돌. 홈 HTML 200·games.json 45건 파싱 정상·콘솔 에러 0.
-## [2026-06-02 14:29] [개발자]
-완료: 1순위 [외형·캘린더] 출시 셀 좌측 악센트를 그날 카테고리 색으로.
-시각 변화: 출시 1건↑ 셀의 좌측 악센트 띠가 지금까지 카테고리 무관 전부 파랑이던 것을 → 그날 대표(첫) 게임의 카테고리 색으로 표시(모바일 #81c784 초록·PC콘솔 #64b5f6 파랑·글로벌 #ba68c8 보라·신규서버 #ff8a65 주황). 띠 두께 2→3px, 셀 면도 같은 카테고리색 옅은 tint(color-mix 9%)로 칠해 날짜별 카테고리가 한눈에 구분됨. today/임박/선택 강조 셀은 가드로 보존, color-mix 미지원 브라우저는 기존 블루 면으로 폴백.
-변경된 파일: script.js(+11, CATEGORY_COLORS 색맵 + renderCalendar --cat 주입), styles.css(.day-has 규칙 1줄 교체), PROJECT_STATUS.md, CHAT.md
-비고: node --check ✓, CSS brace 309/309 균형. 카테고리 4색 재사용(신규 색 없음). data/games.json 무변경. 큐 5→4. QA: 라이브에서 출시 셀 좌측 띠 카테고리색 구분·강조 셀 무충돌·미지원 폴백 실측 부탁.
