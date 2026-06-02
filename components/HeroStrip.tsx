@@ -1,4 +1,5 @@
 'use client';
+import type { CSSProperties } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import styles from './HeroStrip.module.css';
@@ -16,6 +17,7 @@ export function HeroStrip({ items, onPick }: Props) {
         {items.map(({ g, diff }) => {
           const dd = diff === 0 ? 'D-DAY' : `D-${diff}`;
           const cat = CATEGORY_META[g.category];
+          const catStyle = { '--cat': cat.color } as CSSProperties;
           return (
             <button
               key={g.id}
@@ -23,7 +25,9 @@ export function HeroStrip({ items, onPick }: Props) {
               onClick={() => onPick(g.id)}
               className={styles.card}
               data-cat={g.category}
+              style={catStyle}
             >
+              <span className={styles.dot} aria-hidden="true" />
               <span className={styles.cat}>{cat.short}</span>
               <span className={styles.name}>{g.name_ko}</span>
               <span className={`${styles.dday} ${diff === 0 ? styles.today : ''}`}>{dd}</span>
