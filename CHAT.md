@@ -1,3 +1,11 @@
+## [2026-06-03 05:00] [기획자]
+TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
+완료 처리: 직전 1순위 [버그·SEO·동작] 하이드레이션 7건 해소(serverNow 단일기준값, f021717) — 개발자 출고 → 완료한 기능 이동.
+**⚠️ 배포 블로커 신설(큐 1순위): QA(HEAD 80ef2d9) 재검 — 라이브 SSR raw HTML 구버전 잔존('불러오는 중'·기간 기본 '앞으로 1년')+콘솔 7건 여전(2회·캐시버스트 동일) → f021717 미배포 추정.** 개발자님: Vercel 배포 로그/typecheck 확인 요망 — 빌드 실패면 그 자체가 모든 외형 출고의 블로커, 단순 지연/캐시면 배포 후 콘솔 7건→0 재확인.
+잔여 큐 2~5(전부 Next app/·components/): ②임박 스트립 글로우(데스크톱 한정) ③/game/[id] "같은 시기 출시" 미니카드 그리드 ④리스트 카드 배너 그라데이션+D-DAY 리본 ⑤캘린더 범례 tint 칩
+사용자 요청 처리: 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0.
+IDEAS 보관: 디자이너 01:05 인벤#1(핫카드+카운트다운, 데이터 무관·글로우와 공존 가능)·인벤#2(eventType 배지, 데이터 선결)·데스크#3(필터 토큰 정렬, 리팩토링→큐X). a11y/리팩토링 제안 0건 큐잉(외형 모드).
+
 ## [2026-06-03 03:48] [QA]
 검증 대상: serverNow 단일기준 주입 하이드레이션 fix(#418/#423/#425) + /game/[id] D-day 배지
 데스크톱 1440: ⚠️ (라이브 JS 렌더 정상·하이드레이션 7건 여전)
@@ -178,10 +186,3 @@ a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드, 보류).
 완료: 1순위 **[외형·회귀·캘린더] 출시 셀 카테고리 색 복구**(CalendarView). 이관 회귀로 출시 셀 `.cellHas`가 단색 #181d27이라 빈 셀과 차이가 거의 없고 카테고리는 점으로만 구분되던 것을, 좌측 카테고리 색띠 + 옅은 동색 면 tint로 복구.
 변경된 파일: components/CalendarView.tsx(+2/−1 — `type CSSProperties` import·출시 셀 div에 `style={{ '--cat': CATEGORY_META[firstGame.category].color } as CSSProperties}` 주입, any 미사용)·components/CalendarView.module.css(+3/−1 — `.cellHas`를 color-mix 면 tint + `inset 3px 0 0 var(--cat)` 색띠로 교체, 미지원 폴백 #181d27 선행, brace 54/54).
 비고: `.cellToday`/`.cellSelected`가 소스 순서상 `.cellHas` 뒤라 today(파랑)/선택(amber) 셀은 풀링 강조 유지→색띠는 평범한 출시 셀 한정(충돌 회피). 색점 보조 유지, 카테고리 4색(CATEGORY_META) 재사용·신규 색 없음. 로컬 빌드는 sandbox 디스크 제한으로 Vercel typecheck+build 검증 위임. 큐 4→3. QA님 라이브에서 출시 셀 좌측 띠+옅은 면이 그날 카테고리 색(모바일 초록·PC콘솔 파랑·글로벌 보라·신서버 주황)으로 보이는지·today/선택 강조 셀 무충돌·color-mix 미지원 폴백 확인 부탁.
-## [2026-06-02 22:00] [기획자]
-TODO 큐 5→4 (모드: 외형 집중)
-완료 처리: 활성 운영자 요청 [UX·모바일] 임박 스트립 모바일 컴팩트화 — 개발자 21:20 완료·QA 21:40 ✅(데스크톱 실측, 모바일 ≤480px 소스검증) → USER_REQUESTS 아카이브 이동.
-추가: 없음 / 완료·IDEAS 이동: 위 1건 완료
-잔여 큐 1~4순위(전부 Next.js 이관 외형 회귀복구): ①출시 셀 카테고리색 복구(CalendarView.tsx/.module.css) ②/game/[id] D-day 배지+카테고리 상단바(page.tsx·globals.css) ③이모지→SVG 1단계(layout/ViewToggle/HeroStrip/GameModal/ListView) ④임박 스트립 카테고리색 글로우(HeroStrip, 데스크톱 한정).
-신규 디자이너 제안 0(16:50 5건 전량 소진)·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0.
-a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드, 보류).
