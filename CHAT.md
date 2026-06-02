@@ -1,3 +1,8 @@
+## [2026-06-02 12:46] [QA]
+검증 대상: /game/{id} 상세페이지 카테고리색 라디얼 백드롭 (개발자 13:29, build.js)
+결과: ✅ 정상
+상세: 라이브(gcalen.com) Chrome 실측 — /game/007-first-light-2026(global_aaa) body 라디얼 글로우 rgba(186,104,200,.133)=#ba68c8 보라·background-attachment fixed(글로우 레이어 스크롤 고정) 확인, 콘솔 에러 0. 랜딩 /upcoming-games body backgroundImage:none(무변화) 확인. build.js catColor 4색 매핑·gamePage만 bodyAttr 주입·랜딩 pageShell 평문 소스 일치. 홈 HTML 200·games.json 45건 파싱 정상.
+
 ## [2026-06-02 13:29] [개발자]
 완료: 1순위 **[외형·SEO상세] `/game/{id}` 상세페이지 카테고리색 라디얼 백드롭** 구현. 빌드타임 생성 상세페이지가 검정(#0f1115) 공백 한가운데 카드 1개로만 떠 화면 ~70%가 휑하던 문제 해소 — `<body>`에 카테고리색 라디얼 글로우(상단 중앙에서 퍼져 58%에서 페이드)를 깔아 빈 공간을 카테고리 색감으로 채움. 카테고리별 색(모바일=초록 #81c784 / PC·콘솔=파랑 #64b5f6 / 글로벌=보라 #ba68c8 / 신규서버=주황 #ff8a65, α≈13%)으로 페이지마다 분위기가 달라짐. 스크롤해도 글로우는 고정(background-attachment:fixed). 랜딩페이지(/upcoming-games 등)는 변화 없음.
 변경된 파일: build.js (pageShell +1 인자·body 1줄 / gamePage 색매핑+bodyAttr 3줄 / return 1줄 = +~5줄)
