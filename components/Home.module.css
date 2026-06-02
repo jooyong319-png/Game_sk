@@ -1,0 +1,23 @@
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.subtitle {
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+.stats {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin: 0.8rem 0;
+  text-align: center;
+}
+.lastUpdated {
+  text-align: center;
+  color: #555;
+  font-size: 0.8rem;
+  margin: 2rem 0 1rem;
+}

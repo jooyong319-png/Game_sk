@@ -1,0 +1,43 @@
+.list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.8rem; }
+.item {
+  position: relative;
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.item:hover { transform: translateY(-2px); border-color: #4a90e2; }
+.imminent { border-color: #f5a623; box-shadow: 0 0 0 1px rgba(245,166,35,0.3); }
+.cardLink { display: block; color: inherit; text-decoration: none; padding: 0; }
+.cardLink:hover { text-decoration: none; }
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid #2a2e38;
+}
+.cardBody { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.name { font-size: 1.05rem; font-weight: 600; }
+.nameEn { font-size: 0.8rem; color: #777; }
+.date { color: #4a90e2; font-size: 0.85rem; font-weight: 600; }
+.desc { color: #bbb; font-size: 0.85rem; line-height: 1.4; }
+.dday { font-size: 0.85rem; font-weight: 700; color: #888; }
+.ddaySoon { color: #f5a623; }
+.wish {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  font-size: 1.3rem;
+  color: #aaa;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+.wishOn { color: #f5b400; }
+.empty { text-align: center; padding: 3rem 1rem; color: #888; }

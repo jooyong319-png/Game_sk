@@ -1,0 +1,141 @@
+/* ─── Reset & Base ─── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #0f1115; color: #e6e6e6; line-height: 1.5; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+  min-height: 100vh;
+}
+a { color: #4a90e2; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ─── 변수 ─── */
+:root {
+  --bg: #0f1115;
+  --bg-elev: #1a1d24;
+  --border: #2a2e38;
+  --text: #e6e6e6;
+  --text-faint: #888;
+  --accent: #4a90e2;
+  --accent-warm: #f5a623;
+  --danger: #e74c3c;
+}
+
+/* ─── 헤더 / 푸터 ─── */
+.site-header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+  background: linear-gradient(180deg, #1a1d24 0%, #0f1115 100%);
+}
+.site-header h1 { font-size: 1.6rem; }
+.site-header a { color: inherit; }
+.site-header a:hover { text-decoration: none; }
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #666;
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+}
+
+/* ─── 카테고리 색 토큰 ─── */
+.cat-mobile_kr { color: #81c784; }
+.cat-pc_console_kr { color: #64b5f6; }
+.cat-global_aaa { color: #ba68c8; }
+.cat-new_server { color: #ff8a65; }
+.cat-bg-mobile_kr { background: rgba(76, 175, 80, 0.15); color: #81c784; }
+.cat-bg-pc_console_kr { background: rgba(33, 150, 243, 0.15); color: #64b5f6; }
+.cat-bg-global_aaa { background: rgba(156, 39, 176, 0.15); color: #ba68c8; }
+.cat-bg-new_server { background: rgba(255, 87, 34, 0.15); color: #ff8a65; }
+
+/* ─── 카테고리 태그 ─── */
+.category-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ─── 게임 상세 페이지 (정적) ─── */
+.game-detail {
+  max-width: 700px;
+  margin: 1rem auto;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem 1.8rem 2rem;
+}
+.game-detail h2 { font-size: 1.6rem; margin: 0.6rem 0 0.3rem; }
+.game-detail .name-en { color: var(--text-faint); font-size: 0.9rem; margin-bottom: 0.5rem; }
+.game-detail .release-date { color: var(--accent); font-size: 1rem; font-weight: 600; margin: 0.5rem 0 1rem; }
+.game-detail .desc { color: #cfd6e0; margin-bottom: 1rem; line-height: 1.6; }
+.game-detail .detail-meta { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0; }
+.game-detail .detail-meta li { font-size: 0.95rem; color: #cfd6e0; }
+.game-detail .detail-meta strong { color: var(--text-faint); margin-right: 0.4rem; }
+.game-detail .back-link { display: inline-block; margin-bottom: 1rem; color: var(--text-faint); }
+.game-detail .back-link:hover { color: var(--accent); }
+
+/* ─── 랜딩 페이지 (SEO 키워드) ─── */
+.seo-landing {
+  max-width: 760px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+.seo-landing h2 { font-size: 1.7rem; margin-bottom: 0.6rem; }
+.seo-intro { color: #cfd6e0; line-height: 1.6; margin-bottom: 0.5rem; }
+.seo-intro strong { color: var(--accent); font-weight: 700; }
+.seo-count { color: var(--text-faint); font-size: 0.85rem; margin-bottom: 1rem; }
+.seo-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.seo-list-item {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+.seo-list-item a { color: var(--text); }
+.seo-list-item a:hover { color: var(--accent); }
+.seo-date { color: var(--accent); font-size: 0.85rem; }
+.seo-dev { color: var(--text-faint); font-size: 0.8rem; }
+.seo-nav {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+.seo-nav a {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+}
+.seo-nav a:hover { color: var(--text); border-color: var(--accent); }
+
+/* ─── 광고 자리 ─── */
+.ad-slot {
+  width: 100%;
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  min-height: 90px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  display: flex; align-items: center; justify-content: center;
+}
+.ad-slot-mid { min-height: 250px; }
+.ad-slot-label {
+  color: #555;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}

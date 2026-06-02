@@ -1,0 +1,85 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+.modal {
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
+  border-radius: 14px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.6rem;
+  position: relative;
+}
+.close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: rgba(255,255,255,0.05);
+  border: none;
+  color: #ccc;
+  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+}
+.close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.image {
+  position: relative;
+  border-radius: 10px;
+  height: 100px;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+}
+.imageEmoji {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+  font-size: 3rem;
+  opacity: 0.3;
+}
+.titleRow { display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0 0.3rem; gap: 0.5rem; }
+.title { font-size: 1.4rem; flex: 1; }
+.nameEn { color: #777; font-size: 0.85rem; margin-bottom: 0.5rem; }
+.row { font-size: 0.92rem; color: #cfd6e0; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.row strong { color: #888; margin-right: 0.5rem; font-weight: 600; }
+.dday { color: #f5a623; font-weight: 700; }
+.desc { color: #bbb; line-height: 1.6; margin: 0.8rem 0; font-size: 0.92rem; }
+.source { color: #4a90e2; font-size: 0.9rem; display: inline-block; margin-top: 0.5rem; }
+.actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.gcal, .detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255,255,255,0.05);
+  color: #cfd6e0;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.gcal:hover { background: rgba(66,133,244,0.15); border-color: rgba(66,133,244,0.5); color: #fff; }
+.detail:hover { background: rgba(74,144,226,0.15); border-color: rgba(74,144,226,0.5); color: #fff; }
+.wish {
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: #aaa;
+  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.wishOn { color: #f5b400; }

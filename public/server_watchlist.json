@@ -1,0 +1,39 @@
+{
+  "description": "신규 서버 정보를 추적할 게임 목록. 리서처 Claude가 매일 이 목록의 게임들을 하나씩 검색해서 신규 서버 오픈 공지를 확인한다.",
+  "last_updated": "2026-05-27",
+  "note": "publisher는 힌트일 뿐이니 리서처가 검증 시 확인할 것. 사용자가 게임을 추가/삭제할 수 있다.",
+  "mobile": [
+    { "name": "아이온2", "publisher_hint": "엔씨소프트" },
+    { "name": "로드나인", "publisher_hint": "카카오게임즈" },
+    { "name": "리니지M", "publisher_hint": "엔씨소프트" },
+    { "name": "오딘: 발할라 라이징", "publisher_hint": "카카오게임즈" },
+    { "name": "메이플스토리M", "publisher_hint": "넥슨" },
+    { "name": "레이븐2", "publisher_hint": "넷마블" },
+    { "name": "나이트크로우", "publisher_hint": "위메이드" },
+    { "name": "RF 온라인 넥스트", "publisher_hint": "" },
+    { "name": "아키텍트", "publisher_hint": "" },
+    { "name": "프라시아 전기", "publisher_hint": "넥슨" },
+    { "name": "아키에이지 워", "publisher_hint": "카카오게임즈" },
+    { "name": "더 스타라이트", "publisher_hint": "" },
+    { "name": "에오스 블랙", "publisher_hint": "" },
+    { "name": "이미르", "publisher_hint": "" },
+    { "name": "어나더 던전", "publisher_hint": "" },
+    { "name": "달빛조각사", "publisher_hint": "카카오게임즈" },
+    { "name": "아스달 연대기", "publisher_hint": "" },
+    { "name": "뱀피르", "publisher_hint": "" },
+    { "name": "솔 인챈트", "publisher_hint": "넷마블" },
+    { "name": "마비노기 모바일", "publisher_hint": "넥슨" },
+    { "name": "판타테일", "publisher_hint": "" },
+    { "name": "DK모바일: 리본", "publisher_hint": "" },
+    { "name": "로한2", "publisher_hint": "플레이위드" },
+    { "name": "드래곤 베인", "publisher_hint": "" }
+  ],
+  "pc": [
+    { "name": "메이플스토리", "publisher_hint": "넥슨" },
+    { "name": "리니지 클래식", "publisher_hint": "엔씨소프트" },
+    { "name": "로스트아크", "publisher_hint": "스마일게이트" },
+    { "name": "던전앤파이터", "publisher_hint": "넥슨" },
+    { "name": "마비노기", "publisher_hint": "넥슨" },
+    { "name": "패스 오브 엑자일 2", "publisher_hint": "카카오게임즈" }
+  ]
+}

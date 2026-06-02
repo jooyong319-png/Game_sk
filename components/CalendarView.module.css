@@ -1,0 +1,91 @@
+.view { margin: 1rem 0; }
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
+.label { font-size: 1.2rem; font-weight: 700; }
+.navBtn {
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
+  color: #e6e6e6;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.navBtn:hover { border-color: #4a90e2; }
+.todayBtn {
+  background: rgba(74,144,226,0.12);
+  border: 1px solid rgba(74,144,226,0.4);
+  color: #cfd6e0;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+.legendItem { display: flex; align-items: center; gap: 0.3rem; }
+.legendDot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #2a2e38;
+  border: 1px solid #2a2e38;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.dayHead {
+  background: #181b22;
+  padding: 0.4rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #888;
+  font-weight: 600;
+}
+.cell {
+  background: #14171d;
+  min-height: 76px;
+  padding: 0.35rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.cellOther { opacity: 0.4; }
+.cellToday { border: 2px solid #4a90e2; background: rgba(74,144,226,0.06); }
+.cellDate { font-size: 0.78rem; color: #cfd6e0; font-weight: 600; }
+.cellDots { display: flex; gap: 0.2rem; flex-wrap: wrap; align-items: center; }
+.cellDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  cursor: pointer;
+}
+.cellMore { font-size: 0.7rem; color: #aaa; margin-left: 0.2rem; }
+.cellName {
+  font-size: 0.72rem;
+  color: #cfd6e0;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cellName:hover { color: #4a90e2; }
+.empty { text-align: center; color: #888; padding: 1.5rem; }
+@media (max-width: 480px) {
+  .cell { min-height: 60px; padding: 0.25rem; }
+  .cellName { display: none; }
+}
