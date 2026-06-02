@@ -468,7 +468,7 @@ function openModal(gameId) {
     ${(() => { const d = (game.developer || '').trim(), p = (game.publisher || '').trim(); return (d && p && d === p) ? `<div class="modal-row"><strong>개발·퍼블리셔</strong>${escapeHtml(game.developer)}</div>` : `${d ? `<div class="modal-row"><strong>개발</strong>${escapeHtml(game.developer)}</div>` : ''}${p ? `<div class="modal-row"><strong>퍼블리셔</strong>${escapeHtml(game.publisher)}</div>` : ''}`; })()}
     ${game.description ? `<p class="desc" style="margin-top:0.6rem">${escapeHtml(game.description)}</p>` : ''}
     ${game.source_url ? `<a class="source-link" href="${escapeHtml(game.source_url)}" target="_blank" rel="noopener noreferrer">출처 보기 <span class="external-icon">↗</span></a>` : ''}
-    <div class="modal-actions"><a class="detail-page-link" href="/game/${escapeHtml(game.id)}">📄 전체 페이지</a><a class="trailer-search-link" href="https://www.youtube.com/results?search_query=${encodeURIComponent((game.name_ko || game.name_en || '') + ' 트레일러')}" target="_blank" rel="noopener noreferrer">▶ 트레일러 검색</a><button type="button" class="copy-link-btn" data-id="${escapeHtml(game.id)}">🔗 링크 복사</button></div>
+    <div class="modal-actions"><a class="detail-page-link" href="/game/${escapeHtml(game.id)}" target="_blank" rel="noopener">📄 전체 페이지 ↗</a><a class="trailer-search-link" href="https://www.youtube.com/results?search_query=${encodeURIComponent((game.name_ko || game.name_en || '') + ' 트레일러')}" target="_blank" rel="noopener noreferrer">▶ 트레일러 검색</a><button type="button" class="copy-link-btn" data-id="${escapeHtml(game.id)}">🔗 링크 복사</button></div>
   `;
   lastFocusedTrigger = document.activeElement;
   modal.hidden = false;
