@@ -8,7 +8,38 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ---
 
-_(오래된 36 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
+_(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
+
+## [2026-06-03 05:05] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440 라이브 — **Next 앱 정상 배포 확인**(개발자 vercel.json 출고 반영: h1 SVG 게임패드 그라데 타이틀·'출시 임박' 4카드[FF7리버스 D-DAY·미르 D-1·메이크드라마 D-1·고딕 D-2]·캘린더 6월[주말색 일#e57373/토#7aa7ff·today 3일 채움원형·출시셀 카테고리 tint+좌띠]·리스트뷰[월섹션 배너카드]·/game/ff7-rebirth-switch2-2026 상세[카테고리 상단바+D-1 배지+메타행] 전부 라이브). 직전 큐 출고(주말색·today원형·모바일 cellHas·구accent #4a90e2→#5b9dff 통일·Filters 모바일블록) 반영 양호. 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차. **모바일(390)은 Chrome resize_window가 페이지 뷰포트 미반영(innerWidth 1920 고정·matchMedia(480) false, QA·직전 사이클 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐(임박글로우·관련게임그리드·리스트배너그라데+리본·범례칩)/IDEAS(핫카드+카운트다운·eventType배지·위시TOP·필터토큰)/완료와 중복 없는 신규 외형 제안만. a11y/시맨틱/포커스/리팩토링 0건(외형 모드).
+
+### 데스크톱(1440) 점검
+1. **[높음·리스트 위계] 기간 기본 '전체(과거+미래)'라 리스트 최상단이 2025/과거 '출시됨' 카드인데, 다가오는 게임과 시각 비중이 동일 → 과거(출시됨) 카드 시각 약화로 신작이 먼저 눈에** (`components/ListView.tsx` 카드 `<li>` + `components/ListView.module.css`)
+   - 현재: 라이브 리스트 진입 시 '2025년 12월'·'2026년 3월' 등 과거 섹션이 맨 위, 각 카드는 우상단 회색 '출시됨' 텍스트 외엔 배너 색·이름·설명이 미래 게임과 100% 동일 밝기 → 첫 스크롤에서 끝난 게임이 신작만큼 시선을 먹음(`.imminent`만 amber 보더로 강조, 과거 약화는 0).
+   - 바꿀 값: ListView.tsx 카드(이미 출시 여부 판정 보유 — '출시됨' 라벨 렌더 중)에서 과거 게임에 `styles.released` 부여 → CSS 신규 `.released{ opacity:0.62; }` + `.released .cardBanner{ filter:saturate(0.55); }` + 우상단 '출시됨'을 회색 미니칩 `.releasedTag{ font-size:0.7rem; color:#888; background:rgba(255,255,255,0.05); padding:0.12rem 0.5rem; border-radius:999px; }`. `.released:hover{ opacity:1; }`로 되살려 탐색성 유지. → 끝난 게임은 차분히 가라앉고 다가오는 신작이 또렷이 앞으로. 우선순위 **높음**(기본 뷰 첫인상·CSS 위주·변경량 작음).
+
+2. **[보통·상세 깊이] /game/[id] 상세 카드(700px)가 평면 #0f1115 검정 공백 한가운데 떠 페이지 ~60%가 빈 검정 → 카테고리색 라디얼 백드롭으로 깊이/브랜드색** (`app/game/[id]/page.tsx` 래퍼 + `app/globals.css .game-detail` 주변)
+   - 현재: 상세 배경은 전역 `body{background:#0f1115}` 평면, `.game-detail`(max-width 700px) 카드만 떠 좌우+하단이 텅 빈 검정(상·하단 광고 자리 사이 카드 1개). 카테고리 상단바(4px)·D-day 배지는 출고됐으나 **면(背) 깊이는 0**.
+   - 바꿀 값(다크 재해석): page.tsx에서 상세 컨테이너에 인라인 `style={{ background:'radial-gradient(80% 45% at 50% 0%, '+CATEGORY_META[game.category].color+'22, transparent 60%)' }}`(α≈hex+22, 카테고리 4색 #81c784/#64b5f6/#ba68c8/#ff8a65 재사용) — 카드 위쪽으로 카테고리색이 은은히 번지는 백드롭. 미지원 폴백=평면 유지(무해). → 검색 유입 첫 화면(SEO 랜딩 성격)이 카테고리색 분위기로 살아남. 큐 '같은 시기 출시 그리드'(공백을 콘텐츠로 채움)와 **공존**(이건 색 깊이) — 동시 적용 시 시너지. 우선순위 **보통**.
+
+### 모바일(390) 점검 (소스 검증 — Chrome resize 미반영)
+1. **[높음·모바일 필수] GameModal만 유일하게 @media(max-width:480px) 블록 부재 → 390px에서 모달 패딩/제목·이미지 과대·본문 여백 부족** (`components/GameModal.module.css` — `@media(max-width:480px)` **신설**)
+   - 현재: 타 전 컴포넌트(CalendarView/HeroStrip/ListView/MonthTabs/Filters/globals)엔 모바일 블록이 있는데 GameModal엔 0건. `.overlay{padding:1rem}` + `.modal{max-width:520px;width:100%;padding:1.6rem;border-radius:14px}` 고정 → 390px서 모달 실폭 ~358px인데 좌우 1.6rem(≈26px)씩 패딩이 본문폭을 더 깎고 `.title{font-size:1.4rem}`·`.image{height:100px}`·`.imageEmoji{font-size:3rem}`이 좁은 폭에 과대. (직전 'Filters 모바일 블록 부재'와 동형 누락.)
+   - 바꿀 값: `@media(max-width:480px)` 신설 — `.overlay{padding:0.6rem}`(본문폭 확보) · `.modal{padding:1.2rem;border-radius:12px;max-height:92vh}` · `.title{font-size:1.2rem}` · `.image{height:78px;margin-bottom:0.6rem}` · `.imageEmoji{font-size:2.2rem}` · `.actions{gap:0.4rem}`. → 좁은 화면에서 모달 본문폭 확보·제목/이미지 비례 정돈. 우선순위 **높음**(모바일 필수·신규 블록 1개, Filters 선례와 동일 성격).
+
+2. **[보통·모바일 임박] HeroStrip 모바일 컴팩트 행의 카테고리 신호가 8px 점 1개뿐 → 카테고리색 좌측 보더로 강화** (`components/HeroStrip.module.css` @media(max-width:480px))
+   - 현재: 모바일 블록에서 `.cat`(카테고리 텍스트) `display:none`, 대신 `.dot{width:8px;height:8px;background:var(--cat)}` 8px 점 1개만 카테고리 신호(`.card`는 44px 행). 모바일 첫 화면 훅인 '출시 임박' 행에서 8px 점은 약함 — 데스크톱은 `.cat` 텍스트로 카테고리 명시인데 모바일은 작은 점으로 후퇴.
+   - 바꿀 값: @media(max-width:480px) `.card`에 `border-left:3px solid var(--cat, #f5a623); padding-left:0.65rem;`(기존 `padding:0.55rem 0.8rem` 좌측만 조정). 점(.dot)은 유지하거나 보더로 대체. → 카테고리색이 행 좌측 띠로 즉시 읽혀 모바일 임박 스트립 카테고리 구분 강화(데스크 `.card::before` glow와 톤 일치). 우선순위 **보통**.
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·필터 칩] 인벤 필터는 아이콘+라벨 칩 row(전체/출시/테스트/얼리액세스/PC/MOBILE/PS/XBOX/SWITCH/행사)인데 우린 카테고리/플랫폼/기간이 전부 무채색 `<select>` 드롭다운 → 카테고리 필터를 카테고리색 칩 row로 재해석(월탭 톤)** (`components/Filters.tsx` 카테고리 select + `components/Filters.module.css`)
+   - 인벤: 필터를 한 줄 아이콘 칩으로 펼쳐 선택지가 한눈에·클릭 1회(우린 드롭다운 펼침 2단계). 단 인벤 라이트·아이콘 빽빽 → 우린 다크·미니멀로 절제.
+   - 바꿀 값(다크 재해석): 카테고리 `<select>`(전체/모바일/PC·콘솔/글로벌/신규서버)를 `MonthTabs`와 동일 칩 row로 — `.catChips{display:flex;flex-wrap:wrap;gap:0.4rem}` + 각 칩 `padding:0.4rem 0.85rem;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)`, 활성 칩은 카테고리색 tint `background:color-mix(in srgb,var(--cat) 18%,#14171d);border-color:var(--cat);color:var(--cat)`('전체'는 `--accent-grad`). 보유 카테고리 4색 토큰 재사용·신규 색 0. 플랫폼/기간은 사용빈도 낮아 select 유지(미니멀). → 가장 자주 쓰는 카테고리 필터가 색 칩으로 한눈에, 월탭·뷰토글 칩 톤과 통일. (select→칩 전환은 상호작용 변경 동반 → 기획자/개발자 판단.) 우선순위 **보통**.
+
+### 우선순위 종합
+높음: 데스크톱#1(과거 카드 약화·기본뷰 첫인상)·모바일#1(GameModal 모바일 블록 신설, Filters 선례 동형). 보통: 데스크톱#2(상세 라디얼 백드롭, 큐 관련게임그리드와 공존)·모바일#2(임박 행 카테고리 좌띠)·인벤#1(카테고리 필터 색칩 row).
+
+---
 
 ## [2026-06-03 01:05] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440(홈 캘린더 6월/임박 스트립 4카드/리스트 뷰 + /game/sol-enchant-20260618 상세 'D-16') + 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차. 신규 Next 소스 교차(components/CalendarView.module.css·ListView.module.css·GameModal.module.css·Filters.module.css·HeroStrip.module.css·app/globals.css). 직전 출고(주말 색 일=#e57373·토=#7aa7ff 헤더+셀 / today 채움 원형 .cellTodayNum / 출시셀 카테고리 tint·좌띠 / 상세 카테고리 상단바+D-day / 이모지→SVG / Pretendard·헤더 그라데 타이틀) 라이브 반영 양호 확인. **모바일(390)은 Chrome resize_window가 페이지 뷰포트에 미반영(렌더 폭 1568px·innerWidth 고정, QA·직전 디자이너와 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐(임박 글로우·관련게임 그리드·리스트 배너 그라데·--accent-grad 칩)/완료/IDEAS와 중복 없는 신규 외형 제안만. a11y/시맨틱/포커스/리팩토링 0건(외형 모드 — focus-visible #4a90e2 잔존 2건도 의도적 제외).
@@ -437,21 +468,3 @@ _(오래된 36 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
    - 비고: 16:31/IDEAS의 컴팩트 행 항목과 동일 작업 묶음. 개발자: (1) 컨테이너 고정높이/overflow 제거 + (2) 행 컴팩트화를 한 번에.
 
 ---
-
-
-## [2026-05-29 17:58] [디자이너] — 운영자 요청: 텍스트 제목 → 로고(홈 기능)
-운영자(쌀먹닷컴) 직접 요청. 채팅으로 제안받아 정식 등록. 기존 "헤더 좌측정렬·컴팩트화"(16:24 #1)를 이 방향으로 구체화함.
-
-### 개선점
-1. **상단 텍스트 제목 제거 → 로고로 교체, 로고를 '홈/리셋' 버튼으로** — 우선순위: 높음 (운영자 요청)
-   - 어디서: 페이지 상단 헤더(현재 🎮+"게임 출시 캘린더" 큰 가운데정렬 제목·부제·"마지막 업데이트" 줄이 상단 ~310px 점유, 캘린더가 화면 한참 아래 시작).
-   - 왜: 텍스트 헤더가 세로 공간을 크게 잡아 첫 화면에 달력이 다 안 들어옴. 로고화하면 공간 절감 + 브랜딩 + 홈 내비 일석삼조.
-   - 개선:
-     - 로고를 **좌측 상단에 작게**(높이 ~32–40px). 부제/"마지막 업데이트" 줄은 제거(업데이트 시각은 푸터에 이미 있음).
-     - 로고 클릭 = **홈/리셋**: 캘린더 뷰로 전환 + 현재 월로 이동 + 카테고리/플랫폼/기간/검색/위시리스트 필터 초기화. (단순 페이지 새로고침보다 상태 리셋이 깔끔.)
-     - 자산: 이미 있는 `favicon.svg`를 확장/재사용해 로고로(톤 일관). 가로형 워드마크가 필요하면 아이콘+작은 텍스트 조합.
-   - **SEO/접근성 주의(중요)**: 텍스트 제목을 화면에서 빼더라도 사이트명 h1은 유지할 것 — 로고 `<img alt="게임 출시 캘린더">` 또는 시각적으로 숨긴 `<h1>`(visually-hidden) 사용. 로고 링크에 `aria-label="홈"`, 키보드 포커스 가능하게(`<a>`/`<button>` 시맨틱 + focus-visible 링).
-   - 결과: 헤더가 1줄로 압축 → 캘린더 시작 위치 ~150–200px 상향(16:24 #1 목표와 동일).
-
-### 비고
-- 이 항목은 16:24 #1(헤더 컴팩트화)의 상위호환 구체안. 개발자는 둘을 하나의 작업으로 묶어 처리하면 됨.
