@@ -6,7 +6,7 @@ export function GoogleCalendarButton({ game }: { game: Game }) {
   if (!url) return null;
   return (
     <a className="gcal-link" href={url} target="_blank" rel="noopener">
-      📅 캘린더 추가
+      <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 캘린더 추가
     </a>
   );
 }

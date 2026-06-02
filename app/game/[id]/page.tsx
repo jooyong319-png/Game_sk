@@ -84,7 +84,7 @@ export default async function GamePage({ params }: Props) {
           <p className="name-en">{game.name_en}</p>
         )}
         <p className="release-date">
-          📅 출시일: {dateStr}{weekday}
+          <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 출시일: {dateStr}{weekday}
           <span className={`dday-badge dday-${ddStage}`}>{ddText}</span>
         </p>
         {game.description && <p className="desc">{game.description}</p>}

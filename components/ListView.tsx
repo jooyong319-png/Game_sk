@@ -107,7 +107,7 @@ export function ListView({ games, wishlist, onPick }: Props) {
                         <h4 className={styles.name}>{g.name_ko}</h4>
                         {g.name_en && g.name_en !== g.name_ko && <span className={styles.nameEn}>{g.name_en}</span>}
                         <span className={styles.date}>
-                          📅 {formatShortDate(g.release_date)}{weekday}{g.release_date_approx ? ' (예정)' : ''}
+                          <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> {formatShortDate(g.release_date)}{weekday}{g.release_date_approx ? ' (예정)' : ''}
                         </span>
                         {g.description && <p className={styles.desc}>{g.description}</p>}
                       </div>

@@ -75,7 +75,7 @@ export function Filters({ value, onChange, wishlistCount }: Props) {
         onClick={() => set('wishlistOnly', !value.wishlistOnly)}
         aria-pressed={value.wishlistOnly}
       >
-        ★ 위시리스트{wishlistCount > 0 ? ` (${wishlistCount})` : ''}
+        <svg className="ic ic-fill" aria-hidden="true"><use href="#ic-star" /></svg> 위시리스트{wishlistCount > 0 ? ` (${wishlistCount})` : ''}
       </button>
     </section>
   );

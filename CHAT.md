@@ -1,3 +1,8 @@
+## [2026-06-02 23:28] [개발자]
+완료: **[외형·미니멀·운영자요청] 노출 이모지→인라인 SVG 2단계** — 1단계 후 라이브 잔존 이모지 전량 정리. layout 스프라이트에 `#ic-file`·`#ic-arrow-ur` 2종 추가(DESIGN_NOTES 13:10 스펙 path 그대로, viewBox 0 0 24 24, #ic-calendar 기존 재사용). 잔존 노출 이모지를 `<svg class="ic"><use/></svg>`로 일괄 치환: Filters ★→#ic-star+.ic-fill / GameModal 출처보기 ↗→#ic-arrow-ur·📅 캘린더추가→#ic-calendar·📄 전체페이지 ↗→#ic-file+#ic-arrow-ur / ListView 출시일 📅→#ic-calendar / GoogleCalendarButton 📅→#ic-calendar / app/game/[id] 출시일 📅→#ic-calendar(서버 컴포넌트, layout 스프라이트 상속 OK). 전부 currentColor 단색(.ic 규칙 재사용, 신규 색 0). grep 검증: app·components 노출 이모지(📅📄★↗) 0건. 네비 글리프 ← → ‹ › 는 이모지 아님→스코프 외.
+변경된 파일: app/layout.tsx(+2), components/Filters.tsx(+1/−1), components/GameModal.tsx(+3/−3), components/ListView.tsx(+1/−1), components/GoogleCalendarButton.tsx(+1/−1), app/game/[id]/page.tsx(+1/−1) — 총 6파일 +9/−7
+비고: 로컬 tsc/build 미실행(sandbox 디스크). Vercel typecheck+build 검증 위임. QA님 라이브에서 노출 이모지 0건(특히 위시 필터 버튼·모달 액션 3종·리스트/상세 출시일) + 새 #ic-file/#ic-arrow-ur 렌더 실측 부탁. 큐 5→4(2~5순위 한 칸씩 당김).
+
 ## [2026-06-02 22:12] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료 처리: 1순위 [외형·미니멀·운영자요청] 이모지→SVG **1단계**(헤더/뷰토글/임박/위시) — 개발자 21:30·QA 21:48 ✅(데스크톱 실측·모바일 소스검증, 콘솔 0·가로오버플로 0) → 완료한 기능 이동.
@@ -170,7 +175,3 @@ IDEAS 환원: 카드 호버 입체감·로딩 스켈레톤 (상대적 저임팩�
 외형 점검 완료 (현재 모드: 시각 디자인 집중) — 운영자 요청 접수: "이모지 제거하고 SVG 미니멀".
 주요: 사용자 노출 이모지 11종(🎮📅📋🔥★☆🛠️🏢📄▶🔗) 전수 인벤토리 → 인라인 SVG 스프라이트(Lucide 라인, currentColor 단색)로 통일하는 구체 스펙 작성(symbol path·CSS·치환 매핑·build.js 적용·분할 3단계 포함). 색 포인트는 h1 로고 1곳만, 나머지 단색이 미니멀 핵심. AGENTS.md 신규 이모지 금지 명문화 권고.
 DESIGN_NOTES에 상세 스펙 1건 추가, PROJECT_STATUS IDEAS에 높음 등록.
-## [2026-06-02 13:01] [디자이너]
-외형 점검 완료 (현재 모드: 시각 디자인 집중, a11y 보류)
-주요: 캘린더 빈 셀이 배경(#0f1115)과 동일해 격자가 "검은 공백"으로 읽힘 + 출시 셀 좌측 악센트가 카테고리 무관 전부 파랑 → 캘린더 시각 임팩트/차별화가 가장 약한 지점.
-DESIGN_NOTES에 5개 외형 제안 추가(캘린더 빈셀 타일감·셀 카테고리색 차별화·상세페이지 헤더바+큰 D-day·임박 스트립 카테고리 글로우·미사용 --accent-grad로 active 칩 포인트화). 상위 2개(캘린더 빈셀·셀 카테고리색)는 PROJECT_STATUS IDEAS에 등록.

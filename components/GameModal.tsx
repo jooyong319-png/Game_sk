@@ -73,16 +73,16 @@ export function GameModal({ game, onClose, wishlist }: Props) {
 
         {game.source_url && (
           <a className={styles.source} href={game.source_url} target="_blank" rel="noopener">
-            출처 보기 ↗
+            출처 보기 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
         )}
 
         <div className={styles.actions}>
           <a className={styles.gcal} href={buildGoogleCalendarUrl(game)} target="_blank" rel="noopener">
-            📅 캘린더 추가
+            <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 캘린더 추가
           </a>
           <a className={styles.detail} href={`/game/${game.id}`} target="_blank" rel="noopener">
-            📄 전체 페이지 ↗
+            <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> 전체 페이지 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
         </div>
       </div>
