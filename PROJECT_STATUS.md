@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-03 03:00 (기획자 — 외형 집중 모드. 직전 1순위 [외형·팔레트] 구 accent #4a90e2·rgba(74,144,226)→브랜드 #5b9dff 전 표면 통일 개발자 출고·QA 01:47 라이브 확정 → 완료한 기능에 이미 반영(개발자 큐 5→4 처리 확인). 이번 사이클: 잔여 큐 재확인 + IDEAS의 [외형·리스트] 카드 배너 그라데이션을 5순위 보충 → 큐 4→5.)
+마지막 갱신: 2026-06-03 04:00 (기획자 — 외형 집중 모드. 직전 1순위 [외형·모바일] Filters @media(≤480px) 모바일 블록 신설(검색 풀폭+셀렉트 2×2+위시 풀폭) 개발자 03:20 출고·QA 03:44 소스검증 → 완료한 기능에 반영(개발자 큐 5→4). 이번 사이클: 큐 1칸씩 승격 + 디자이너 01:05 데스크#2 [외형·범례] 카테고리 tint 미니 칩을 5순위 보충 → 큐 4→5.)
 
 
 ## 현재 단계
@@ -138,7 +138,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-03 03:00 KST (기획자): 직전 1순위 **구 accent 전 표면 통일**(리스트/모달/캘린더/월탭 #4a90e2·rgba(74,144,226)→#5b9dff, focus-visible 2건·gcal 구글블루 유지) 개발자 출고·QA 01:47 라이브 확정 → 완료한 기능 이동(개발자 반영, 큐 5→4). 이번 사이클: IDEAS의 [외형·리스트] 카드 배너 그라데이션을 **5순위 보충**(큐 4→5). 현재 큐 1~5: 1=Filters 모바일 @media 블록·2=하이드레이션 에러 해소(버그)·3=임박 스트립 글로우(데스크톱)·4=/game/[id] 관련게임 미니카드 그리드·5=리스트 카드 배너 그라데이션. **QA 재확인: Filters @media(480) 부재·하이드레이션 7건/로드 미해소 → 1·2순위 계속 대기.** 활성 사용자 요청 0(SEO 보류)·신규 디자이너 제안 0(01:05 처리)·3사이클 정체 0. 외형(시각 디자인) 집중 모드 유지.
+> 갱신 2026-06-03 04:00 KST (기획자): 직전 1순위 **Filters @media(≤480px) 모바일 블록 신설**(검색 풀폭+셀렉트 2×2+위시 풀폭) 개발자 03:20 출고·QA 03:44 소스검증(Chrome resize 뷰포트 미반영→소스 갈음) → 완료한 기능 이동(개발자 큐 5→4). 이번 사이클: 큐 1칸씩 승격 + 디자이너 01:05 데스크#2 [외형·범례] 카테고리 tint 미니 칩을 **5순위 보충**(큐 4→5). 현재 큐 1~5: 1=하이드레이션 에러 해소(버그·SEO)·2=임박 스트립 글로우(데스크톱)·3=/game/[id] 관련게임 미니카드 그리드·4=리스트 카드 배너 그라데이션·5=캘린더 범례 tint 칩. **QA 03:44 재확인: 하이드레이션 #418/#423/#425 7건/로드 미해소 → 1순위 대기.** 활성 사용자 요청 0(SEO 보류)·신규 디자이너 제안 0(01:05 처리)·3사이클 정체 0. 외형(시각 디자인) 집중 모드 유지.
 
 1. **[버그·SEO·동작] React 하이드레이션 에러 7건/로드 해소 (#418/#423/#425, 날짜 의존 SSR↔CSR 불일치)** (QA 00:47 발견 / BUGS [공통] 등록 — Next.js 날짜 렌더 노드)
    - 페이지 로드마다 #418(SSR 텍스트 불일치)·#423(하이드레이션 중 에러로 루트 전체 클라 재렌더)·#425(텍스트 콘텐츠 불일치) 7건 재현. 추정 원인: 정적 빌드(SSR) 시점의 '오늘'/D-day/요일(getDay) 등 **날짜 의존 렌더가 클라이언트 현재 날짜와 불일치**. #423로 서버 HTML 폐기 후 클라 전체 재렌더('불러오는 중' 플래시·SSR 콘텐츠 SEO 손실). 화면 자체는 정상이나 **SSR 폐기·SEO 측면 동작 문제**.
@@ -160,6 +160,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - D-DAY(diff 0) 카드만 배너 좌상단에 `.cardRibbon`(`position:absolute;top:0;left:0;background:#ff7a59;color:#fff;font-weight:800;font-size:0.7rem;padding:2px 8px;border-bottom-right-radius:8px`) "D-DAY" 리본. ListView.tsx에서 diff===0 분기로만 렌더(임박/먼미래 카드는 미렌더).
    - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(카테고리 4색·기존 주황 #ff7a59 재사용), color-mix 미지원 폴백 확인.
 
+5. **[외형·캘린더 범례·보통] 카테고리 범례 8px 점+회색 텍스트(#aaa) → 카테고리 tint 미니 칩** (디자이너 01:05 데스크#2 — `components/CalendarView.tsx` L104 legend / `CalendarView.module.css` `.legendItem`·`.legendDot` L41-42)
+   - 현재 `.legendItem{gap:0.3rem}`+`.legendDot{width:8px;height:8px}`+`.legend{color:#aaa;font-size:0.8rem}` — 작은 점 4개라 셀의 `color-mix 8%` tint·좌측 띠 색과 눈으로 매칭이 약함.
+   - 구현: tsx에서 각 legendItem에 인라인 `style={{ '--lc': CATEGORY_META[c].color } as CSSProperties}` 주입(HeroStrip/cardBanner 동일 패턴) → `.legendItem{ padding:2px 9px; border-radius:999px; background:color-mix(in srgb, var(--lc) 14%, #14171d); color:var(--lc); font-weight:600; }`(color-mix 미지원 시 기존 점 폴백 유지). 칩 배경이 셀 tint와 동일 색면이라 "이 색=이 카테고리"가 즉시 매칭. 카테고리 4색(모바일 #81c784·PC #64b5f6·글로벌 #ba68c8·신서버 #ff8a65) 재사용·신규 색 없음.
+   - 검증: `npm run typecheck` 통과, `npm run build` 무에러, 범례 4칩 카테고리색 tint 표시·color-mix 폴백(점 유지) 확인.
+
 ### (보류 — 외형 모드 중 IDEAS 보관, 사용자가 "이제 a11y 정리하자" 지시 시 재승격)
 큐 진입 보류: [신규컴포넌트] "⭐ 위시리스트 인기 TOP5" 가로 위젯(디자이너 20:50 인벤#1 — **데이터 선결**: 로컬스토리지 위시는 개인값이라 전역 인기 산출 불가 → 리서처가 games.json에 `popularity` 필드 추가 or '글로벌 대작+임박' 큐레이션 TOP5 결정 후 큐 후보), [외형·통계줄] `#stats-summary` 카테고리 컬러 칩(Next에서 해당 컴포넌트 확인 후 재경로). 그 외 이전 보류분(카드 호버 입체감·로딩 스켈레톤·통계줄 세그먼트 클릭필터·잔여 토큰 통일 등)·a11y 마이크로 트윅(aria/포커스/대비/시맨틱)은 외형 모드 동안 큐 진입 금지, IDEAS 보관만.
 
@@ -175,8 +180,6 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 
-- [디자이너 2026-06-03 01:05·외형모드·인벤비교] **[높음·팔레트 일관성] 리스트/모달/캘린더 구 accent #4a90e2·rgba(74,144,226,..) 리터럴 → 브랜드 var(--accent) #5b9dff 통일** — 헤더/뷰토글/월탭/today는 갱신 #5b9dff인데 `ListView.module.css` `.date`(L143)·`.item:hover`border+box-shadow(L72-73)·`.monthHeader`border(L16), `GameModal.module.css` `.source`(L59)·`.detail:hover`(L74), `CalendarView.module.css` `.todayBtn:hover`(L30)가 마이그레이션 전 칙칙한 #4a90e2 잔존 → 같은 브랜드 블루가 면마다 두 톤. var(--accent)/rgba(91,157,255,..)로 치환(`.gcal:hover` rgba(66,133,244)=구글 블루 의도 유지, focus-visible #4a90e2 2건=a11y라 외형 모드 제외). 변경량 작음·여러 파일 색값 치환. DESIGN_NOTES 2026-06-03 01:05 데스크#1. 우선순위 높음
-- [디자이너 2026-06-03 01:05·외형모드·인벤비교] **[높음·모바일 필수] Filters에 @media(max-width:480px) 블록 부재 → 390px 필터 행 불규칙 줄바꿈** — `Filters.module.css`에 모바일 블록 0건(타 컴포넌트엔 다 있음). 390px에서 `.search`(flex 1 1 200px)+셀렉트3+위시 버튼이 남는 폭에 불균등 줄바꿈. 신설안: `.search{flex:1 1 100%}`·`.label{flex:1 1 calc(50% - 0.25rem)}`·`.label select{width:100%}`·`.wishBtn{flex:1 1 100%;text-align:center}` → 풀폭 검색+2×2 셀렉트+풀폭 위시. DESIGN_NOTES 2026-06-03 01:05 모바일#1. 우선순위 높음
 
 - [QA 2026-06-02 21:48·외형모드·SVG1단계 잔여 / 기획자 22:12 → **큐 1순위 [이모지→SVG 2단계]로 승격**(잔존 전량 묶음)] **[보통·SVG 잔여] 위시 필터 버튼 "★ 위시리스트" 이모지 → #ic-star SVG 미변환** — 이모지→SVG 1단계(개발자 21:30)가 헤더/뷰토글/임박/카드·모달 위시는 변환했으나 `Filters.tsx` L78 위시 필터 버튼 텍스트 `★ 위시리스트`는 미변환(라이브 Chrome 실측 잔존 확인, 페이지 유일 잔존 이모지). 운영자 "이모지 제거" 요청 범위 내 누락분. `★`를 `<svg className="ic ic-fill"><use href="#ic-star" /></svg>`로 교체(활성색 #f5b400 currentColor 상속). 동작 영향 0(순수 외형). 1단계 후속(2단계 카드/모달 메타·액션 묶음)에 포함 권고. 우선순위 보통
 - [QA 2026-06-02 18:40·잔여토큰] [낮음·브랜드일관] MonthTabs.module.css L25 비활성 탭 hover 배경이 옛 accent `rgba(74,144,226,0.12)`(#4a90e2)로 남아 신규 `--accent` #5b9dff와 불일치(active 그라데이션·링크색은 토큰 복구 완료). hover tint를 `color-mix(in srgb, var(--accent) 12%, transparent)` 또는 신 accent rgba로 통일 권고. 기능 영향 없음·외형 미세. 우선순위 낮음
