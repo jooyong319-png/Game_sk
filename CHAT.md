@@ -1,3 +1,10 @@
+## [2026-06-02 23:12] [기획자]
+TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
+완료 처리: 1순위 [외형·미니멀·운영자요청] 이모지→SVG **2단계**(잔존 전량: Filters ★·GameModal 📅📄↗·ListView 📅·GoogleCalendarButton 📅·상세 📅 + 스프라이트 #ic-file·#ic-arrow-ur) — 개발자 23:28·QA 22:47 ✅(데스크톱 실측·모바일 소스검증, 라이브 노출 이모지 0건·콘솔 0·가로오버플로 0) → 완료한 기능 이동. **운영자 "이모지 제거·SVG 미니멀" 요청 1·2단계 전량 출고 완료.**
+추가: - [외형·브랜드통일] `--accent-grad` 소비(뷰토글·MonthTabs·퀵칩 active 그라데이션 + MonthTabs hover 잔여토큰 정렬) → IDEAS에서 큐 **5순위** 승격
+잔여 큐 1~5(전부 Next app/·components/): ①캘린더 시각 강화 묶음 ②임박 스트립 글로우(데스크톱 한정) ③/game/[id] 미니카드 그리드 ④리스트 카드 배너 그라데 ⑤--accent-grad 그라데 칩
+활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·신규 디자이너 제안 0(20:50 처리 완료)
+a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
 ## [2026-06-02 22:47] [QA]
 검증 대상: 이모지→SVG 2단계 잔존 전량(Filters ★·GameModal 📅📄↗·ListView 📅·GoogleCalendarButton 📅·상세 📅) + 신규 스프라이트 #ic-file·#ic-arrow-ur (개발자 23:28)
 데스크톱 1440: ✅
@@ -7,7 +14,6 @@
 완료: **[외형·미니멀·운영자요청] 노출 이모지→인라인 SVG 2단계** — 1단계 후 라이브 잔존 이모지 전량 정리. layout 스프라이트에 `#ic-file`·`#ic-arrow-ur` 2종 추가(DESIGN_NOTES 13:10 스펙 path 그대로, viewBox 0 0 24 24, #ic-calendar 기존 재사용). 잔존 노출 이모지를 `<svg class="ic"><use/></svg>`로 일괄 치환: Filters ★→#ic-star+.ic-fill / GameModal 출처보기 ↗→#ic-arrow-ur·📅 캘린더추가→#ic-calendar·📄 전체페이지 ↗→#ic-file+#ic-arrow-ur / ListView 출시일 📅→#ic-calendar / GoogleCalendarButton 📅→#ic-calendar / app/game/[id] 출시일 📅→#ic-calendar(서버 컴포넌트, layout 스프라이트 상속 OK). 전부 currentColor 단색(.ic 규칙 재사용, 신규 색 0). grep 검증: app·components 노출 이모지(📅📄★↗) 0건. 네비 글리프 ← → ‹ › 는 이모지 아님→스코프 외.
 변경된 파일: app/layout.tsx(+2), components/Filters.tsx(+1/−1), components/GameModal.tsx(+3/−3), components/ListView.tsx(+1/−1), components/GoogleCalendarButton.tsx(+1/−1), app/game/[id]/page.tsx(+1/−1) — 총 6파일 +9/−7
 비고: 로컬 tsc/build 미실행(sandbox 디스크). Vercel typecheck+build 검증 위임. QA님 라이브에서 노출 이모지 0건(특히 위시 필터 버튼·모달 액션 3종·리스트/상세 출시일) + 새 #ic-file/#ic-arrow-ur 렌더 실측 부탁. 큐 5→4(2~5순위 한 칸씩 당김).
-
 ## [2026-06-02 22:12] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료 처리: 1순위 [외형·미니멀·운영자요청] 이모지→SVG **1단계**(헤더/뷰토글/임박/위시) — 개발자 21:30·QA 21:48 ✅(데스크톱 실측·모바일 소스검증, 콘솔 0·가로오버플로 0) → 완료한 기능 이동.
@@ -15,18 +21,15 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 잔여 큐 1~5(전부 Next app/·components/): ①이모지→SVG 2단계 ②캘린더 시각 강화 묶음 ③임박 스트립 글로우(데스크톱) ④/game/[id] 미니카드 그리드 ⑤리스트 카드 배너 그라데
 신규 디자이너 제안 0·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0
 a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
-
 ## [2026-06-02 21:48] [QA]
 검증 대상: 이모지→인라인 SVG 1단계 (헤더/뷰토글/임박/위시) (개발자 21:30)
 데스크톱 1440: ✅
 모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정 → 소스검증 대체)
 상세: 라이브 Chrome 실측 — h1 텍스트 "게임 출시 캘린더"(🎮 잔존 0)·헤더 #ic-gamepad SVG(accent)·뷰토글 #ic-calendar/#ic-list·임박 #ic-flame SVG 렌더, 스프라이트 symbol 5종 정의. 리스트뷰 위시 별 #ic-star SVG 44개(ic-fill 토글) 정상. 콘솔 에러 0·가로 오버플로 0(scrollWidth=clientWidth). ※잔존 이모지 1건: 위시 필터 버튼 "★ 위시리스트"(Filters.tsx L78) — 1단계 스코프 외(개발자는 카드/모달 위시만 변환)·동작 정상이라 BUGS 아님 → IDEAS 등록. .ic 규칙 @media 밖·em 사이즈라 모바일 동일 렌더(뷰포트 비종속). globals.css brace 58/58. 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상(※WebFetch 홈은 CDN 캐시로 구 🎮 노출됐으나 라이브 Chrome 실측은 SVG 반영 확인). 미해결 코드 버그 0.
-
 ## [2026-06-02 21:30] [개발자]
 완료: 1순위 **[외형·미니멀·높음·운영자요청] 노출 이모지 → 인라인 SVG (1단계: 헤더/뷰토글/임박/위시)**. OS별 이모지 편차 제거·클린 미니멀. DESIGN_NOTES 13:10 Lucide 라인 스프라이트 스펙대로 구현.
 변경된 파일: app/layout.tsx(+8 — `<body>` 최상단에 `<svg width=0 height=0 position:absolute aria-hidden>` 스프라이트(symbol 5종 #ic-gamepad/#ic-calendar/#ic-list/#ic-flame/#ic-star, viewBox 0 0 24 24) + h1 로고 🎮을 `<svg class="ic ic-gamepad"><use href="#ic-gamepad"/></svg>`로 치환)·components/ViewToggle.tsx(+2/−2 — 📅→#ic-calendar·📋→#ic-list)·components/HeroStrip.tsx(+1/−1 — 🔥→#ic-flame)·components/GameModal.tsx(+1/−1 — 위시 ★/☆를 `<svg class="ic [ic-fill]"><use href="#ic-star"/>` class 토글로)·components/ListView.tsx(+1/−1 — 위시 ★/☆ 동일)·app/globals.css(+20 — `.ic`{1em·vertical-align -0.14·flex-shrink 0·fill none·stroke currentColor·width 1.75·round}·`.ic-fill`{fill currentColor·stroke none}·`.ic-gamepad`{color var(--accent)}, brace 58/58).
 비고: 색은 전부 currentColor 단색, 유일 컬러 포인트 헤더 🎮(.ic-gamepad=var(--accent))·🔥 단색 유지. 위시 별 토글은 textContent 교체 대신 ic-fill class 토글(활성 채움, 색은 버튼 .wishOn #f5b400을 currentColor로 상속). 2·3단계(카드/모달 메타·액션 🛠️🏢📄▶🔗·build.js SEO)는 후속 TODO — GameModal 📅캘린더추가·📄전체페이지·ListView 📅출시일은 의도적 미변경. 로컬 빌드는 sandbox 디스크 제한으로 Vercel typecheck+build 검증 위임. 큐 5→4. QA님 라이브에서 헤더 게임패드 아이콘(accent색)·뷰토글 캘린더/리스트 라인아이콘·임박 불꽃·위시 별 토글(빈/채움) 렌더·이모지 잔존 0 확인 부탁.
-
 ## [2026-06-02 21:12] [리서처]
 리서치 완료 (4개 카테고리)
 - 모바일 3→0, PC/콘솔 2→0, 글로벌 3→0, 신규서버 9→0 (후보→통과)
@@ -166,13 +169,3 @@ IDEAS 이동: 디자이너 13:01 #4(임박 스트립 카테고리색 글로우)�
 시각 변화: (1) 출시 없는 빈 셀이 그동안 body 배경(--bg #0f1115)과 같아 "검은 공백"으로 읽히던 것을 한 톤 올린 --cell-bg(#161922) 면 + hairline 보더(rgba(255,255,255,0.05))로 바꿔 격자가 타일처럼 보임. (2) 캘린더 컨테이너 .calendar-view를 --cal-panel(#13151b)·border-radius 10→14px·padding 1rem→14px 패널 카드로 묶어 격자를 하나의 면으로 감쌈. 모바일(≤480px)은 padding 9px·radius 12px로 축소. 기존 강조 셀(today 파란보더·임박 amber·선택 채움·.day-has 좌측악센트)은 후행 셀렉터로 우선순위 유지되어 무회귀.
 변경된 파일: styles.css(+6/-2줄: :root 토큰 3개 추가 + .calendar-view + .day base + 모바일 분기), PROJECT_STATUS.md, CHAT.md
 비고: CSS-only(script.js 무변경). CSS brace 309/309 균형, node --check 통과. 다른 TODO 미터치. QA 권고 — 라이브에서 (1) 빈 달(출시 0건 달로 ‹ › 이동) 격자가 검은 공백 아닌 타일 면으로 보이는지, (2) 데스크톱/모바일 패널 카드 외곽 라운드·padding, (3) 오늘/임박/선택/출시 셀 강조가 base 톤에 묻히지 않는지 확인 부탁.
-## [2026-06-02 13:12] [기획자]
-TODO 큐 재구성 5건 유지 (모드: 외형 집중, 큰 단위 권장)
-완료 처리: 1순위 [외형·SEO상세] /game/{id} 카테고리색 라디얼 백드롭 (개발자 13:29·QA 12:46 ✅) → 완료한 기능 이동.
-승격(디자이너 13:01·13:10 신규 외형 제안): 
-- 1순위 [외형·캘린더] 빈 셀 타일감 + 컨테이너 패널 카드화 (핵심 뷰 "검은 공백" 해소, 최약점)
-- 2순위 [외형·캘린더] 출시 셀 좌측 악센트를 그날 카테고리 색으로 (1순위와 짝)
-- 3순위 [외형·미니멀] 이모지 11종→인라인 SVG 스프라이트 1단계 (운영자 요청)
-4·5순위 캐리오버: 통계줄 컬러칩·관련게임 미니카드 그리드.
-IDEAS 환원: 카드 호버 입체감·로딩 스켈레톤 (상대적 저임팩트, 보존).
-활성 사용자 요청 0(SEO 보류) · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y 제안 0건 신규(IDEAS 보관 유지). 코드 미수정(문서만).
