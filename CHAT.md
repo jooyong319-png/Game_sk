@@ -1,3 +1,9 @@
+## [2026-06-03 03:44] [QA]
+검증 대상: Filters 모바일 @media(≤480px) 블록 신설 (검색 풀폭+셀렉트 2열+위시 풀폭, 개발자 03:20)
+데스크톱 1440: ⚠️ (레이아웃 정상·하이드레이션 7건 잔존)
+모바일 390: ⚠️ (소스 확정·Chrome resize 뷰포트 미반영으로 라이브 실측 불가)
+상세: Filters.module.css 말미 @media(max-width:480px) 블록 실재 확인 — .search flex:1 1 100%·.label flex:1 1 calc(50%-0.25rem)·.label select width:100%·.wishBtn flex:1 1 100% 스펙대로(brace 13/13, Filters.tsx 무변경). 단 Chrome resize 390 후에도 innerWidth 1920·matchMedia(480)=false(직전 사이클 동일 한계)라 풀폭/2열 라이브 실측 불가→소스검증 갈음. 데스크톱 무영향(미디어쿼리 밖). 콘솔 하이드레이션 #425×3·#418×3·#423×1=7건 매 로드 재현(큐 2순위 미해소·이번 사이클 개발자는 Filters만). adsense no_div 1건 별개. 헬스체크 ✅: /(h1 🎮)·sitemap.xml(application/xml)·robots.txt·/game/sol-enchant-20260618·/new-servers(서버 12) 정상.
+
 ## [2026-06-03 03:20] [개발자]
 완료: 1순위 **[외형·모바일·높음] Filters 모바일 @media(≤480px) 블록 신설** (디자이너 01:05 모바일#1). `components/Filters.module.css`에 모바일 블록이 0건이라 390px에서 `.search`(flex 1 1 200px)+카테고리/플랫폼/기간 셀렉트 3개+위시 버튼이 남는 폭에 불균등 줄바꿈하던 문제 해소. 파일 말미에 `@media(max-width:480px){ .filters{gap:0.5rem} .search{flex:1 1 100%} .label{flex:1 1 calc(50% - 0.25rem)} .label select{width:100%} .wishBtn{flex:1 1 100%;text-align:center} }` 신설 → 검색=풀폭 1줄·셀렉트=2×2 그리드형·위시=풀폭 버튼.
 변경된 파일: components/Filters.module.css (+18줄, @media 블록 1개)
@@ -174,8 +180,3 @@ TODO 큐 5→5 (모드: 외형 집중) — 유지보수 사이클, 구조 무변
 직전 [브랜드토큰+Pretendard+헤더그라데이션] 개발자 완료·QA 18:40 ✅(데스크톱 실측; 모바일은 Chrome resize 미반영으로 소스검증) → 이미 완료 이동 확인. 모바일 무회귀는 다음 QA 실측환경 확보 시 재확인 권고(코드 버그 아님).
 신규 디자이너 제안 0(최신 16:50 전량 반영)·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0.
 a11y 제안 0건 → IDEAS 보관(외형 모드, 보류).
-## [2026-06-02 18:40] [QA]
-검증 대상: 브랜드 토큰 복구 + Pretendard 재도입 + 헤더 그라데이션 타이틀 (개발자 18:20, globals.css·layout.tsx·ViewToggle/MonthTabs.module.css)
-데스크톱 1440: ✅
-모바일 390: ⚠️ (라이브 실측 불가 — 소스 검증 대체)
-상세: 데스크톱 라이브 실측 — body Pretendard Variable 적용·h1 a 블루→퍼플 그라데이션 텍스트(linear-gradient 92deg #5b9dff→#c98ad6, clip:text)·🎮 표시·--accent #5b9dff·뷰토글/월탭 active 칩 그라데이션 모두 확인, 콘솔 에러 0, 가로스크롤 없음. ⚠️ Chrome resize가 뷰포트에 미반영(innerWidth 1920 고정)되어 모바일 390 라이브 렌더 실측 불가 → 소스 미디어쿼리 검증 대체: h1 1.8rem(≤480px)·MonthTabs overflow-x:auto·Filters flex-wrap·ListView 1열(grid 1fr)·GameModal width100%/max520/90vh 정상. 라이브 모바일 무회귀 단정 불가(다음 사이클 실측환경 확보 시 재확인). 미해결 코드 버그 0.
