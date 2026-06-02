@@ -1,3 +1,9 @@
+## [2026-06-02 23:40] [QA]
+검증 대상: 출시 셀 카테고리 색 복구 (개발자 23:20, CalendarView.tsx·CalendarView.module.css)
+데스크톱 1440: ✅
+모바일 390: ⚠️ (라이브 실측 불가 — Chrome resize 뷰포트 미반영, innerWidth 1920 고정·matchMedia(max-width:480px)=false → 소스 검증 대체. 단 변경분은 미디어쿼리 비종속이라 모바일 동일 렌더)
+상세: 라이브 데스크톱 실측 — 출시 셀 12개 전부 좌측 색띠(box-shadow inset 3px var(--cat)) + color-mix 면 tint 정상. --cat 인라인 주입 카테고리 일치(신서버 #ff8a65·글로벌 #ba68c8·모바일 #81c784, PC콘솔은 당월 출시 0건이라 미노출=정상). today 셀은 자체 파란 풀링(inset 2px #4a90e2) 유지·색띠 미적용 → 충돌 회피 확인. 콘솔 에러 0, 가로 오버플로 없음. 소스: .cellHas(L89, color-mix+#181d27 폴백·inset 3px 띠)가 @media(max-width:480px)(L237) 위라 뷰포트 비종속 → 모바일 동일. .cellToday/.cellSelected가 소스 순서상 .cellHas 뒤=우선. brace 54/54. 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상. 미해결 코드 버그 0.
+
 ## [2026-06-02 23:20] [개발자]
 완료: 1순위 **[외형·회귀·캘린더] 출시 셀 카테고리 색 복구**(CalendarView). 이관 회귀로 출시 셀 `.cellHas`가 단색 #181d27이라 빈 셀과 차이가 거의 없고 카테고리는 점으로만 구분되던 것을, 좌측 카테고리 색띠 + 옅은 동색 면 tint로 복구.
 변경된 파일: components/CalendarView.tsx(+2/−1 — `type CSSProperties` import·출시 셀 div에 `style={{ '--cat': CATEGORY_META[firstGame.category].color } as CSSProperties}` 주입, any 미사용)·components/CalendarView.module.css(+3/−1 — `.cellHas`를 color-mix 면 tint + `inset 3px 0 0 var(--cat)` 색띠로 교체, 미지원 폴백 #181d27 선행, brace 54/54).
@@ -182,7 +188,3 @@ _(오래된 137 개 항목은 archive/CHAT_2026-05.md로 이동됨)_
 이모지 전수 인벤토리(헤더🎮/토글📅📋/모달📅🛠️🏢📄▶🔗/위시★☆/네비‹›) 작성 후, 인라인 SVG 스프라이트+use(currentColor, Lucide톤) 전환 제안 4개 등록. IDEAS에 1개 올림.
 규칙화 권고: 새 이모지 추가 금지를 AGENTS.md에 명문화(디자이너는 권한상 직접 수정 안 함 -> 기획자/개발자에게 위임).
 
-## [2026-05-30 00:30] [디자이너]
-운영자 요청 접수: 디자인 '더 트렌디하게' -> 방향 **클린 미니멀(Linear/Vercel 풍)** 확정.
-DESIGN_NOTES에 구체 실행안 5개(폰트+위계 / 라운드·여백 토큰 / hairline+미세깊이 / 컨트롤 일관화·펄스제거 / 캘린더 색절제) 등록, IDEAS에 상위 2개(폰트·라운드) 올림.
-라이트/다크 토글도 운영자요청으로 IDEAS 등록(선행: 색 토큰화 완료, 후속 우선순위). 라운드·색 토큰화가 라이트모드 선행작업과 겹쳐 묶어 처리 권고.
