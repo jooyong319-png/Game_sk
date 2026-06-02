@@ -1,3 +1,14 @@
+## [2026-06-03 06:20] [개발자]
+완료: **1순위 배포 블로커 — 원인 규명 + vercel.json 추가(Next 빌드 강제)**
+- 라이브 gcalen.com = **마이그레이션 전 레거시 vanilla 사이트**였음. legacy/index.html과 1:1 일치(h1 🎮 이모지·"불러오는 중..." 플래시 = 06-02 SVG/팔레트 출고 이전 화면). 즉 Next 앱이 프로덕션에 **한 번도 배포된 적 없음**(Vercel이 마지막 정상 정적 배포를 계속 서빙).
+- **코드는 정상**: /sessions(8.6G 여유)에 클론·npm install 후 `tsc --noEmit` ✅(exit 0) + `next build` ✅(exit 0, 55페이지 생성: 게임 44·랜딩 5·sitemap·robots·홈). f021717 및 최근 커밋 전부 빌드 성공. data/games.json도 유효(44개).
+- 결론: 블로커는 **코드가 아니라 Vercel 파이프라인**(레거시 시절 정적/Other 프리셋·빌드설정 잔존으로 `next build` 미실행 정황).
+조치: 마이그레이션 때 삭제됐던 `vercel.json` 재신설(`framework:"nextjs"`·`buildCommand:"next build"`·`installCommand:"npm install"`). vercel.json은 대시보드 프로젝트 설정보다 **우선**하므로 스테일 정적 프리셋을 덮어써 강제로 Next 빌드를 돌림 + 이 푸시가 새 배포를 트리거.
+변경된 파일: vercel.json (신규, +6줄)
+비고:
+- **QA님**: 배포 1~3분 후 gcalen.com에서 (a) h1이 SVG 게임패드(🎮 이모지 아님)·"불러오는 중" 제거·기간 기본 '전체', (b) 콘솔 하이드레이션 #418/#423/#425 0건 재확인 부탁. 이게 떠야 직전 f021717 하이드레이션 fix도 같이 라이브 반영된 것.
+- **운영자님**: 그래도 라이브가 안 바뀌면 vercel.json로 못 고치는 영역 — Vercel 대시보드 직접 점검 필요: ①Settings→Git 연동(푸시가 배포 트리거하는지) ②Production Branch=main ③Root Directory ④Build 로그 실패 여부 ⑤도메인이 옛 배포에 핀 고정/자동프로모션 off 여부.
+
 ## [2026-06-03 05:00] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료 처리: 직전 1순위 [버그·SEO·동작] 하이드레이션 7건 해소(serverNow 단일기준값, f021717) — 개발자 출고 → 완료한 기능 이동.
@@ -182,7 +193,3 @@ a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드, 보류).
 데스크톱 1440: ✅
 모바일 390: ⚠️ (라이브 실측 불가 — Chrome resize 뷰포트 미반영, innerWidth 1920 고정·matchMedia(max-width:480px)=false → 소스 검증 대체. 단 변경분은 미디어쿼리 비종속이라 모바일 동일 렌더)
 상세: 라이브 데스크톱 실측 — 출시 셀 12개 전부 좌측 색띠(box-shadow inset 3px var(--cat)) + color-mix 면 tint 정상. --cat 인라인 주입 카테고리 일치(신서버 #ff8a65·글로벌 #ba68c8·모바일 #81c784, PC콘솔은 당월 출시 0건이라 미노출=정상). today 셀은 자체 파란 풀링(inset 2px #4a90e2) 유지·색띠 미적용 → 충돌 회피 확인. 콘솔 에러 0, 가로 오버플로 없음. 소스: .cellHas(L89, color-mix+#181d27 폴백·inset 3px 띠)가 @media(max-width:480px)(L237) 위라 뷰포트 비종속 → 모바일 동일. .cellToday/.cellSelected가 소스 순서상 .cellHas 뒤=우선. brace 54/54. 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상. 미해결 코드 버그 0.
-## [2026-06-02 23:20] [개발자]
-완료: 1순위 **[외형·회귀·캘린더] 출시 셀 카테고리 색 복구**(CalendarView). 이관 회귀로 출시 셀 `.cellHas`가 단색 #181d27이라 빈 셀과 차이가 거의 없고 카테고리는 점으로만 구분되던 것을, 좌측 카테고리 색띠 + 옅은 동색 면 tint로 복구.
-변경된 파일: components/CalendarView.tsx(+2/−1 — `type CSSProperties` import·출시 셀 div에 `style={{ '--cat': CATEGORY_META[firstGame.category].color } as CSSProperties}` 주입, any 미사용)·components/CalendarView.module.css(+3/−1 — `.cellHas`를 color-mix 면 tint + `inset 3px 0 0 var(--cat)` 색띠로 교체, 미지원 폴백 #181d27 선행, brace 54/54).
-비고: `.cellToday`/`.cellSelected`가 소스 순서상 `.cellHas` 뒤라 today(파랑)/선택(amber) 셀은 풀링 강조 유지→색띠는 평범한 출시 셀 한정(충돌 회피). 색점 보조 유지, 카테고리 4색(CATEGORY_META) 재사용·신규 색 없음. 로컬 빌드는 sandbox 디스크 제한으로 Vercel typecheck+build 검증 위임. 큐 4→3. QA님 라이브에서 출시 셀 좌측 띠+옅은 면이 그날 카테고리 색(모바일 초록·PC콘솔 파랑·글로벌 보라·신서버 주황)으로 보이는지·today/선택 강조 셀 무충돌·color-mix 미지원 폴백 확인 부탁.
