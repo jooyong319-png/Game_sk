@@ -2,7 +2,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
-import { calcDayDiff, formatShortDate } from '@/lib/games';
+import { calcDayDiff, formatShortDate } from '@/lib/utils';
 import { HeroStrip } from './HeroStrip';
 import { MonthTabs } from './MonthTabs';
 import { Filters, type FilterState } from './Filters';

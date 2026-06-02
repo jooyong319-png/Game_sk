@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
-import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/games';
+import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
 import styles from './ListView.module.css';
 
 interface Props {

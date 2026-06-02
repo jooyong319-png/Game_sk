@@ -1,5 +1,5 @@
 import { CATEGORY_META, type Game, type Category } from '@/lib/types';
-import { formatKoreanDate } from '@/lib/games';
+import { formatKoreanDate } from '@/lib/utils';
 import { AdSlot } from './AdSlot';
 
 interface SeoLandingProps {

@@ -3,7 +3,7 @@ import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
-import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/games';
+import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
 import { buildGoogleCalendarUrl } from '@/lib/google-calendar';
 import { useWishlist } from './useWishlist';
 import styles from './GameModal.module.css';
