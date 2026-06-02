@@ -22,7 +22,7 @@ export function Home({ initialGames, lastUpdated }: HomeProps) {
   const [filters, setFilters] = useState<FilterState>({
     category: null,
     platform: null,
-    days: 365,
+    days: 0,           // 0 = 전체 (과거+미래). 기본 '전체'로 과거 게임도 보이게.
     search: '',
     wishlistOnly: false,
   });
@@ -96,9 +96,10 @@ export function Home({ initialGames, lastUpdated }: HomeProps) {
         if (!platforms.some(p => p.includes(filters.platform!.toLowerCase()))) return false;
       }
 
+      // 기간 필터: 과거 게임은 항상 통과, days > 0이면 미래 상한만 적용
       if (filters.days > 0) {
         const r = new Date(g.release_date);
-        if (r < today || r > future) return false;
+        if (r > future) return false;
       }
 
       return true;
