@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-02 22:00 KST (기획자 — 외형 모드 사이클. **활성 운영자 요청 [UX·모바일] 임박 스트립 모바일 컴팩트화 완료 처리** — 개발자 21:20 완료·QA 21:40 검증(데스크톱 실측, 모바일 ≤480px 소스검증) → USER_REQUESTS 아카이브 이동. 큐 5→4 유지(전부 Next.js 이관 외형 회귀복구·현행 app/·components/ 경로): 1순위=캘린더 출시셀 카테고리색 복구(CalendarView)·2순위=/game/[id] D-day 배지+카테고리 상단바(page.tsx·globals.css)·3순위=이모지→SVG 1단계·4순위=임박 스트립 카테고리색 글로우(데스크톱 한정). 신규 디자이너 제안 0(16:50 5건 전량 큐/완료 소진)·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·a11y/리팩토링 0건(외형 모드 IDEAS 보관).)
+마지막 갱신: 2026-06-03 00:00 KST (기획자 — 외형 모드 사이클. **활성 운영자 요청 [UX·모바일] 임박 스트립 모바일 컴팩트화 완료 처리** — 개발자 21:20 완료·QA 21:40 검증(데스크톱 실측, 모바일 ≤480px 소스검증) → USER_REQUESTS 아카이브 이동. 큐 5→4 유지(전부 Next.js 이관 외형 회귀복구·현행 app/·components/ 경로): 1순위=캘린더 출시셀 카테고리색 복구(CalendarView)·2순위=/game/[id] D-day 배지+카테고리 상단바(page.tsx·globals.css)·3순위=이모지→SVG 1단계·4순위=임박 스트립 카테고리색 글로우(데스크톱 한정). 신규 디자이너 제안 0(16:50 5건 전량 큐/완료 소진)·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·a11y/리팩토링 0건(외형 모드 IDEAS 보관).)
 
 
 ## 현재 단계
@@ -131,7 +131,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-02 22:00 (기획자): **모드 = 외형(시각 디자인) 집중, 큰 단위.** 활성 운영자 요청(임박 스트립 모바일 컴팩트화) 개발자 21:20 완료·QA 21:40 ✅ → USER_REQUESTS 아카이브. 큐 5→4. **1순위 = [외형·회귀·캘린더] 출시 셀 카테고리 색 복구**(CalendarView). 2~4순위 = /game/[id] D-day 배지·이모지→SVG 1단계·임박 스트립 글로우. 4건 모두 Next.js 이관 외형 회귀복구(현행 app/·components/ 경로, 옛 styles.css/script.js/build.js는 라이브 미반영). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·신규 디자이너 제안 0·a11y/리팩토링 0건(IDEAS 보관).
+> 갱신 2026-06-03 00:00 (기획자): **모드 = 외형(시각 디자인) 집중, 큰 단위.** 직전 1순위 [외형·회귀·캘린더] 출시 셀 카테고리 색 복구(CalendarView) 개발자 23:20 완료·QA 23:40 ✅(데스크톱 실측·모바일 소스검증) → 완료한 기능 이동. 큐 3→4: 1순위=/game/[id] D-day 배지+카테고리 상단바(page.tsx·globals.css)·2순위=이모지→SVG 1단계(layout/ViewToggle/HeroStrip/GameModal/ListView)·3순위=임박 스트립 카테고리색 글로우(HeroStrip, 데스크톱 한정)·4순위=신규 [외형·신규컴포넌트] /game/[id] 하단 "같은 시기 출시" 관련 게임 미니카드 그리드(#1과 같은 상세페이지 표면 묶음, 디자이너 09:01안 Next 재경로). 4건 모두 Next.js 이관 외형 회귀복구/신규(현행 app/·components/ 경로, 옛 styles.css/script.js/build.js는 라이브 미반영). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·신규 디자이너 제안 0·a11y/리팩토링 0건(IDEAS 보관).
 
 1. **[외형·회귀·상세·높음] `/game/[id]` 상세 = 회색 박스 1개 + D-DAY 부재 → 카테고리 상단바 + 큰 D-day 배지 + 제목 강화** (디자이너 16:50 ⑤ — `app/game/[id]/page.tsx` + `app/globals.css .game-detail`)
    - 이관 회귀: 현 `.game-detail{background:var(--bg-elev)}` 회색 박스 1개, 카테고리 pill·제목·날짜·메타뿐. 검색 유입 첫 화면인데 **앱 핵심지표 D-day가 정적 상세엔 없음**(모달에만 존재), 라디얼 백드롭도 유실.
@@ -149,6 +149,12 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(카테고리 4색·기존 amber/주황 재사용). **(주의: 모바일은 1순위에서 컴팩트 행으로 바뀌므로 글로우는 데스크톱 그리드 한정 적용.)**
 
 
+4. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안의 Next.js 재경로 — `app/game/[id]/page.tsx` + 페이지 module/`app/globals.css`)
+   - 상세페이지가 게임 카드 1개뿐이라 하단 여백이 크고 내부링크/회유 동선이 없어 체류·SEO 손해. 1순위(D-day 배지·카테고리 상단바)로 카드 자체는 강화되나 카드 아래는 여전히 빈 공백.
+   - page.tsx: 빌드타임에 현재 게임과 **같은 달 ±2주**(release_date 기준) 내 출시되는 다른 게임을 자기 자신 제외·가까운 출시일 순으로 3~6개 추림 → `.game-detail` 카드 아래 `<section>`(h3 "같은 시기 출시") + `<a href="/game/{id}">` 미니카드 그리드. 관련 0건이면 섹션 자체 미렌더(빈 상태 처리).
+   - CSS: `grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px`, 미니카드 `background:var(--bg-elev);border-radius:var(--radius-sm);padding:12px 14px` + 카테고리색 좌측 4px 바(인라인 `borderLeft:'4px solid '+CATEGORY_META[g.category].color`), 게임명 700 + 출시일·D-day. 메인 카드 톤 재사용·신규 색 없음(CATEGORY_META 4색).
+   - 검증: `npm run typecheck` 통과, `npm run build`로 /game/[id] 정적 생성 무에러, 관련 0건 게임은 섹션 숨김 확인.
+
 ### (보류 — 외형 모드 중 IDEAS 보관, 사용자가 "이제 a11y 정리하자" 지시 시 재승격)
 이번 사이클 큐→IDEAS 환원(전부 **Next.js 경로 재작성 필요** — 옛 build.js/script.js 참조라 그대로는 사용 불가): [외형·신규컴포넌트] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드(이관 회귀 복구가 먼저 → 복구 완료 후 큐 후보), [외형·통계줄] `#stats-summary` 카테고리 컬러 칩(통계줄이 Next에서 어느 컴포넌트인지 개발자 확인 후 재경로). 그 외 이전 보류분(카드 호버 입체감·로딩 스켈레톤·D-day 알약배지 그라데이션·통계줄 세그먼트 클릭필터 등)·a11y 마이크로 트윅(aria/포커스/대비/시맨틱)은 외형 모드 동안 큐 진입 금지, IDEAS 보관만.
 
@@ -162,7 +168,6 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 - [QA 2026-06-02 18:40·잔여토큰] [낮음·브랜드일관] MonthTabs.module.css L25 비활성 탭 hover 배경이 옛 accent `rgba(74,144,226,0.12)`(#4a90e2)로 남아 신규 `--accent` #5b9dff와 불일치(active 그라데이션·링크색은 토큰 복구 완료). hover tint를 `color-mix(in srgb, var(--accent) 12%, transparent)` 또는 신 accent rgba로 통일 권고. 기능 영향 없음·외형 미세. 우선순위 낮음
-- [디자이너 2026-06-02 16:50·외형모드·**이관회귀**] **[높음·회귀] Next.js 이관서 유실된 폰트·브랜드토큰·헤더 외형 복구 묶음(globals.css/layout.tsx)** — 라이브 Next 빌드에 직전 출고분이 안 옮겨옴. ①Pretendard 유실 → layout.tsx <head>에 pretendard variable CDN + globals.css `--font-sans` 신설·`body`/제목 적용(`letter-spacing:-0.02em`). ②`--accent`가 옛 #4a90e2로 되돌아감 → #5b9dff 복구 + `--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)`·`--radius:12px` 토큰 신설, ViewToggle/MonthTabs `.active`를 그라데이션 칩(`box-shadow:0 2px 8px rgba(91,157,255,.25)`)으로. ③`.site-header h1` 1.6rem 단색 → 2.1rem/800 그라데이션 텍스트(background-clip:text)+헤더 배경 #171a22 깊이+상단 글로우. 세 항목 상호의존(②grad가 ③에 쓰임) → 한 사이클 동시 처리 권장. CSS 위주, 변경량 작음. DESIGN_NOTES 16:50 #1~3 상세. 우선순위 높음
 - [디자이너 2026-06-02 16:50·외형모드·**이관회귀**] **[높음·회귀] /game/[id] 상세 D-DAY 배지 + 카테고리 상단바(app/game/[id]/page.tsx·globals.css .game-detail)** — 검색 유입 첫 화면인데 앱 핵심지표 D-day가 정적 상세엔 없음(모달만 보유), 회색 박스 1개로 밋밋. page.tsx에서 출시일-오늘 diff 계산해 release-date 옆 `.dday-badge`(`padding:3px 11px;border-radius:999px;font-size:1.15rem;font-weight:800`, 임박≤7 amber #f5a623·D-DAY #ff7a59·먼미래 text-faint) 삽입 + `.game-detail` 인라인 `borderTop:4px solid {카테고리색}` + h2 2rem/800. 빌드타임 생성·런타임 무영향. (옛 styles.css/build.js IDEAS의 상세 백드롭과 동일 표면의 Next 경로 재구현.) DESIGN_NOTES 16:50 #5 상세. 우선순위 높음
 - [디자이너 2026-06-02 13:01·외형모드 / 기획자 06-02 15:10 → 큐 5순위 승격] **[보통·D-DAY 강조] (큐로 이동) 임박 스트립 카드 전부 동일 회색 그라데이션 → 임박할수록 카테고리색 글로우로 시각 위계** — `.hero-card` 차이가 D-day 숫자 색뿐이라 D-1과 D-7 임팩트 동일. D-3 이내 카드에 카테고리색 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경 카테고리색 미세 radial 겹침, D-DAY(diff 0)는 주황 #ff7a59 글로우 1.3배+`scale(1.02)`(reduced-motion 생략). 가까운 출시일일수록 카드가 "튀어나옴". 신규 색 없음(카테고리 4색·기존 amber/주황 재사용). 다음 사이클 큐 후보. 우선순위 보통
 - [디자이너 2026-06-02 13:01·외형모드 / 기획자 06-02 14:10 IDEAS 등록] **[보통·브랜드 통일] 미사용 토큰 `--accent-grad` 소비 — 뷰토글·활성 칩을 브랜드 그라데이션으로 포인트화** — `:root`에 `--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 신설됐으나 미참조. `.view-toggle-btn.active`/`.chip-btn.active`(옛 `rgba(74,144,226,0.15)` 옅은 파랑)를 `background:var(--accent-grad);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(91,157,255,0.25)`로 교체 → 헤더 h1 블루→퍼플 그라데이션과 통일·선택 상태 부각. 비활성은 `var(--border)` 유지. CSS 위주. 다음 사이클 큐 후보. 우선순위 보통
@@ -228,6 +233,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-03 00:00 [기획자] TODO 큐 3→4 (모드: 외형 집중, 큰 단위). 직전 1순위 **[외형·회귀·캘린더] 출시 셀 카테고리 색 복구**(CalendarView) 개발자 23:20 완료·QA 23:40 ✅(데스크톱 실측·모바일 소스검증, 콘솔 0·오버플로 없음) → 완료한 기능 이동. 큐 재정렬: 1순위=/game/[id] D-day 배지+카테고리 상단바·2순위=이모지→SVG 1단계·3순위=임박 스트립 글로우(데스크톱 한정). 보충 4순위 신규 **[외형·신규컴포넌트] /game/[id] 하단 "같은 시기 출시" 관련 게임 미니카드 그리드**(디자이너 09:01안 Next 재경로, #1과 같은 상세페이지 표면 묶음·체류/내부링크 보강). 완료된 디자이너 16:50 폰트/토큰/헤더 묶음 IDEA 1건 정리(개발자 18:20 출고). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·신규 디자이너 제안 0·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-02 23:20 [개발자] 1순위 완료: **[외형·회귀·캘린더] 출시 셀 카테고리 색 복구**(CalendarView). 이관 회귀로 출시 셀 `.cellHas`가 단색 #181d27이라 빈 셀과 차이 미미·카테고리는 점만이던 문제. CalendarView.tsx 셀 div(key 직후)에 출시 1건↑일 때만 `style={{ '--cat': CATEGORY_META[firstGame.category].color } as CSSProperties}` 주입(`type CSSProperties` import, any 미사용). CalendarView.module.css `.cellHas`를 `color-mix(in srgb, var(--cat,#5b9dff) 8%, #14171d)` 면 tint + `box-shadow:inset 3px 0 0 var(--cat,#5b9dff)` 좌측 색띠로 교체(미지원 폴백 #181d27 선행). `.cellToday`/`.cellSelected`가 소스 순서상 뒤에 와서 풀링 강조 우선→색띠는 평범한 출시 셀 한정(강조셀 충돌 회피). 색점 보조 유지, 카테고리 4색 재사용(신규 색 없음). CSS brace 54/54, CalendarView.tsx +2/−1·module.css +3/−1. Vercel typecheck+build 검증 위임. 큐 4→3(2~4순위 한 칸씩 당김). QA: 라이브에서 출시 셀 좌측 띠+옅은 면이 그날 카테고리 색(모바일 초록·PC콘솔 파랑·글로벌 보라·신서버 주황)으로 구분되는지·today(파랑)/선택(amber) 강조 셀은 풀링 유지로 무충돌·color-mix 미지원 폴백 실측 부탁.
 - 2026-06-02 22:00 [기획자] 외형 모드 사이클. **활성 운영자 요청 [UX·모바일] 임박 스트립 모바일 컴팩트화 완료 처리**(개발자 21:20·QA 21:40 ✅ 데스크톱 실측·모바일 ≤480px 소스검증) → USER_REQUESTS 아카이브 이동. 큐 5→4: 1순위=출시셀 카테고리색 복구(CalendarView)·2=/game/[id] D-day배지·3=이모지→SVG 1단계·4=임박 스트립 글로우(데스크톱 한정). 신규 디자이너 제안 0·신규 사용자 요청 0(SEO 보류)·미해결 코드버그 0·3사이클 정체 0·a11y 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-02 20:00 [기획자] 유지보수 사이클(외형 집중). 큐 5개 무변경 — 1순위 활성 운영자요청(임박 스트립 모바일 컴팩트화) 유지, 2~5순위 외형 회귀복구/SVG/글로우 유지. 직전 [브랜드토큰+Pretendard+헤더그라데이션] 개발자 완료·QA 18:40 ✅(데스크톱; 모바일 소스검증) 확인. 신규 디자이너 제안 0·신규 사용자요청 0(SEO 보류)·미해결 코드버그 0·3사이클 정체 0·a11y 0건(IDEAS 보관). 코드 미수정(문서만).
