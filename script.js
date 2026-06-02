@@ -445,26 +445,71 @@ function openModal(gameId) {
   lastFocusedTrigger = document.activeElement;
   modal.hidden = false;
   document.body.classList.add('modal-open');
+  // Shallow routing: URL을 /game/[id]로 변경 (인스타 스타일)
+  // 직접 진입(popstate)으로 열린 경우엔 history를 또 쌓지 않음
+  try {
+    const desiredPath = '/game/' + gameId;
+    if (location.pathname !== desiredPath) {
+      history.pushState({ modal: gameId }, '', desiredPath);
+    }
+  } catch (_) {}
   const _ft = modal.querySelector('.modal-close');
   if (_ft) { _ft.focus(); }
   else { const _mt = document.getElementById('modal-title'); if (_mt) { _mt.setAttribute('tabindex', '-1'); _mt.focus(); } }
 }
 
-function closeModal() {
+function closeModal({ skipHistory = false } = {}) {
   modal.hidden = true;
   document.body.classList.remove('modal-open');
   if (lastFocusedTrigger && document.contains(lastFocusedTrigger)) lastFocusedTrigger.focus();
   lastFocusedTrigger = null;
+  // Shallow routing 복귀: 모달이 history에 쌓아둔 entry를 pop
+  // popstate가 트리거한 closeModal에서는 다시 back 호출 안 함 (무한 루프 방지)
+  if (!skipHistory) {
+    try {
+      if (history.state && history.state.modal) {
+        history.back();
+      }
+    } catch (_) {}
+  }
 }
 
 
-// Auto-open detail modal when arriving via a shared ?game={id} link (called after data load).
+// 진입 시 URL에 따라 모달 자동 오픈
+// - 쿼리 ?game=id (이전 공유 링크 호환)
+// - /game/[id] 경로 (shallow routing 호환)
+// 단, /game/[id]는 build.js가 만든 정적 페이지가 따로 있으므로
+// 메인 페이지가 / 이외의 경로로 로드된 경우엔 모달을 열지 않는다 (정적 페이지가 응답)
 function openGameFromUrl() {
   try {
     const id = new URLSearchParams(location.search).get('game');
-    if (id && allGames.some(g => g.id === id)) openModal(id);
+    if (id && allGames.some(g => g.id === id)) {
+      openModal(id);
+      return;
+    }
+    // /game/[id]로 SPA 라우팅 진입한 경우 (history.pushState로 도착) - 이 케이스는 popstate에서 처리
   } catch (_) {}
 }
+
+// popstate: 뒤로가기/앞으로가기 처리
+window.addEventListener('popstate', (e) => {
+  const path = location.pathname;
+  const m = path.match(/^\/game\/([^\/]+)$/);
+  if (m && allGames.some(g => g.id === m[1])) {
+    // /game/[id]로 이동 - 모달 열기 (이미 열려있으면 갱신)
+    if (modal.hidden) {
+      openModal(m[1]);
+    } else {
+      // 다른 게임으로 갱신은 일단 단순 close+open 대신 그냥 갱신만
+      openModal(m[1]);
+    }
+  } else {
+    // / 또는 다른 경로 - 모달 닫기 (history 추가 조작 없이)
+    if (!modal.hidden) {
+      closeModal({ skipHistory: true });
+    }
+  }
+});
 
 gamesList.addEventListener('click', e => {
   const wishBtn = e.target.closest('.wishlist-btn');
