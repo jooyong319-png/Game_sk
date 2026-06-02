@@ -1,3 +1,9 @@
+## [2026-06-03 05:47] [QA]
+검증 대상: 하이드레이션 7건 kstDateOnly fix(개발자 05:31, UTC↔KST 시간대 불일치)
+데스크톱 1440: ✅ (h1 SVG·가로오버플로 0·137셀·임박4카드·로딩플래시 없음·콘솔 React에러 0)
+모바일 390: ⚠️ (Chrome resize 후에도 innerWidth 1920·matchMedia480 false → 실측 불가, 소스 갈음. 5개 컴포넌트 @media≤480 보유·캘린더 모바일 cellName 숨김으로 그리드 오버플로 무위험. GameModal 모바일블록 부재는 기존 IDEA)
+상세: **하이드레이션 #418/#423/#425=0건 해소 확정** — KST 05:47(00~09시 위험구간) 캐시버스트 2회 재로드 콘솔 클린. 헬스 ✅ /·sitemap.xml(50 URL)·robots·/game/007-first-light-2026·/new-servers. adsbygoogle no_div도 미관측. 신규 BUGS 0.
+
 ## [2026-06-03 05:31] [개발자]
 완료: **하이드레이션 7건(#418×3·#423×1·#425×3) 근본원인 규명·수정 — 서버(UTC)↔클라(KST) timezone 불일치**. f021717(serverNow)은 UTC instant를 주입했지만 모든 렌더가 `new Date(serverNow)` 후 **로컬 날짜필드**(getDate/getMonth/getDay/getFullYear)를 읽음 → Vercel은 UTC, 사용자는 KST(UTC+9)라 빌드 instant의 UTC일자≠KST일자인 시간대(KST 00~09시 빌드)마다 D-day·'오늘'셀·달 라벨·요일이 서버HTML↔클라 첫렌더에서 갈려 #418/#423/#425 발생. 그래서 fix가 '반영됐는데도 미해소'로 보였음(부분 fix였음).
 수정: `lib/utils.ts`에 TZ무관 `kstDateOnly(iso)` 신설(+9h 시프트→getUTC*로 KST 연/월/일→로컬자정 Date, 어느 환경서도 동일 날짜필드). `Home.tsx` now·calendarCursor 초기값 + mount 실시간 교체를 kstDateOnly 기반으로 전환(사용자 로컬TZ 무관, 항상 KST 기준=한국 타깃 의도와 일치).
@@ -202,9 +208,3 @@ TODO 큐 3→5 (모드: 외형 집중, 큰 단위)
 완료/IDEAS 이동: 없음(직전 완료분은 00:00 사이클서 정리)
 신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·a11y/리팩토링 0건(외형 모드 IDEAS 보관)
 
-## [2026-06-02 20:50] [디자이너]
-외형 점검 완료 (데스크 1440 + 모바일 390 소스검증 + 인벤 비교)
-데스크 주요: 캘린더 주말 요일 색 구분 0(일/토 동일 회색 #888) → 일=빨강 #e57373·토=파랑 #7aa7ff(인벤·한국달력 관습, 다크 톤다운) + today 셀 날짜 채움 원형(구글캘린더식).
-모바일 주요: cellName 숨김(@media 480 display:none)이라 출시일=점만 → .cellHas tint 8%→16%·색띠 3→4px·dot 6→7px로 색 가독성 강화(모바일 필수).
-인벤 참고: '주간 TOP 게임 순위' → 우리식 '위시리스트 인기 TOP 5' 다크 가로 위젯(데이터 선결) / 리스트 카드 배너 플랫 단색 → 카테고리 그라데이션+SVG 워터마크(인벤 썸네일 재해석).
-DESIGN_NOTES에 5개 제안 추가(데스크2·모바일1·인벤2). 코드 미수정(문서만). 미해결 코드 버그 0.
