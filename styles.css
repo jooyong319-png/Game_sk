@@ -383,7 +383,7 @@ body.modal-open { overflow: hidden; }
 .calendar-grid .day.day-soon { border-color:#f5a623; background:rgba(245,166,35,0.08); }
 .calendar-grid .day.today { border-color:var(--accent); background:rgba(74,144,226,0.15); color:#fff; font-weight:700; }
 .calendar-grid .day.other-month.today { opacity:1; } /* [시각위계] 자동 점프된 인접월 trailing 셀로 today가 렌더돼도 디밍 예외로 강조 유지 */
-.calendar-grid .day.day-has:not(.today):not(.day-soon):not(.selected) { background:rgba(74,144,226,0.06); box-shadow:inset 2px 0 0 var(--accent); } /* [스캔성] 출시 있는 셀 옅은 면+좌측 악센트 */
+.calendar-grid .day.day-has:not(.today):not(.day-soon):not(.selected) { background:rgba(74,144,226,0.06); background:color-mix(in srgb, var(--cat, var(--accent)) 9%, transparent); box-shadow:inset 3px 0 0 var(--cat, var(--accent)); } /* [스캔성] 출시 있는 셀: 그날 대표 카테고리색(--cat) 좌측 악센트 띠 + 옅은 동색 면 tint (color-mix 미지원 시 rgba 블루 폴백) */
 @media (max-width:480px) { .calendar-grid .day { min-height:60px; font-size:0.75rem; padding:0.3rem; } }
 @media (max-width:480px) { .calendar-view { padding:9px; border-radius:12px; } } /* [외형] 모바일 패널 패딩/라운드 축소 */
 /* Stage 2: per-day dots */

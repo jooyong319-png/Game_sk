@@ -25,6 +25,13 @@ const CATEGORY_LABELS = {
   global_aaa: '글로벌 대작',
   new_server: '신규 서버',
 };
+// 캘린더 출시 셀 좌측 악센트/면 tint용 카테고리 색(.day-dot/.category-* CSS와 단일 출처 정렬)
+const CATEGORY_COLORS = {
+  mobile_kr: '#81c784',
+  pc_console_kr: '#64b5f6',
+  global_aaa: '#ba68c8',
+  new_server: '#ff8a65',
+};
 let selectedDay = null;
 let searchQuery = '';
 let weekFilter = null; // null | 'this' | 'next'
@@ -725,6 +732,7 @@ function renderCalendar() {
     let dots = '';
     let gameLabel = '';
     let a11y = '';
+    let catStyle = '';
     let relCount = 0;
     if (!isOther) {
       const list = dayMap[d.getDate()] || [];
@@ -747,6 +755,8 @@ function renderCalendar() {
         const firstName = list[0].name_ko || list[0].name_en || '';
         gameLabel = `<div class="day-game-label" title="${escapeHtml(tip)}">${escapeHtml(firstName)}</div>`;
         a11y = ` role="button" tabindex="0"`;
+        const repCat = list[0].category;
+        if (CATEGORY_COLORS[repCat]) catStyle = ` style="--cat:${CATEGORY_COLORS[repCat]}"`;
       }
     }
     const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -755,7 +765,7 @@ function renderCalendar() {
     const todayLabel = isToday ? '<span class="today-label">오늘</span>' : ''; // other-month today도 시각 라벨 노출(자동 점프 시 today가 인접월 셀로 렌더됨)
     const ariaLabel = `${isToday ? '오늘, ' : ''}${d.getMonth()+1}월 ${d.getDate()}일(${wdNames[d.getDay()]})${relCount ? `, 출시 ${relCount}건` : ''}`;
     const ariaCurrent = isToday ? ' aria-current="date"' : '';
-    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y} aria-label="${ariaLabel}"${ariaCurrent}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
+    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y}${catStyle} aria-label="${ariaLabel}"${ariaCurrent}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
   const emptyEl = document.getElementById('calendar-empty');
