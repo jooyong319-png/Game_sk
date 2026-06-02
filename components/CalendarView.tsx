@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef, type CSSProperties } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
@@ -124,6 +124,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
           return (
             <div
               key={i}
+              style={has && firstGame ? ({ '--cat': CATEGORY_META[firstGame.category].color } as CSSProperties) : undefined}
               className={[
                 styles.cell,
                 !cell.inMonth ? styles.cellOther : '',

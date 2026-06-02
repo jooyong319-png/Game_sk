@@ -86,7 +86,11 @@
   background: #1a1f2a;
   box-shadow: inset 0 0 0 2px #4a90e2;
 }
-.cellHas { background: #181d27; }
+.cellHas {
+  background: #181d27; /* color-mix 미지원 폴백(선행) */
+  background: color-mix(in srgb, var(--cat, #5b9dff) 8%, #14171d);
+  box-shadow: inset 3px 0 0 var(--cat, #5b9dff);
+}
 .cellToday {
   background: rgba(74,144,226,0.08);
   box-shadow: inset 0 0 0 2px #4a90e2;

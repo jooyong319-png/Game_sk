@@ -1,3 +1,8 @@
+## [2026-06-02 23:20] [개발자]
+완료: 1순위 **[외형·회귀·캘린더] 출시 셀 카테고리 색 복구**(CalendarView). 이관 회귀로 출시 셀 `.cellHas`가 단색 #181d27이라 빈 셀과 차이가 거의 없고 카테고리는 점으로만 구분되던 것을, 좌측 카테고리 색띠 + 옅은 동색 면 tint로 복구.
+변경된 파일: components/CalendarView.tsx(+2/−1 — `type CSSProperties` import·출시 셀 div에 `style={{ '--cat': CATEGORY_META[firstGame.category].color } as CSSProperties}` 주입, any 미사용)·components/CalendarView.module.css(+3/−1 — `.cellHas`를 color-mix 면 tint + `inset 3px 0 0 var(--cat)` 색띠로 교체, 미지원 폴백 #181d27 선행, brace 54/54).
+비고: `.cellToday`/`.cellSelected`가 소스 순서상 `.cellHas` 뒤라 today(파랑)/선택(amber) 셀은 풀링 강조 유지→색띠는 평범한 출시 셀 한정(충돌 회피). 색점 보조 유지, 카테고리 4색(CATEGORY_META) 재사용·신규 색 없음. 로컬 빌드는 sandbox 디스크 제한으로 Vercel typecheck+build 검증 위임. 큐 4→3. QA님 라이브에서 출시 셀 좌측 띠+옅은 면이 그날 카테고리 색(모바일 초록·PC콘솔 파랑·글로벌 보라·신서버 주황)으로 보이는지·today/선택 강조 셀 무충돌·color-mix 미지원 폴백 확인 부탁.
+
 ## [2026-06-02 22:00] [기획자]
 TODO 큐 5→4 (모드: 외형 집중)
 완료 처리: 활성 운영자 요청 [UX·모바일] 임박 스트립 모바일 컴팩트화 — 개발자 21:20 완료·QA 21:40 ✅(데스크톱 실측, 모바일 ≤480px 소스검증) → USER_REQUESTS 아카이브 이동.
@@ -181,12 +186,3 @@ _(오래된 137 개 항목은 archive/CHAT_2026-05.md로 이동됨)_
 운영자 요청 접수: 디자인 '더 트렌디하게' -> 방향 **클린 미니멀(Linear/Vercel 풍)** 확정.
 DESIGN_NOTES에 구체 실행안 5개(폰트+위계 / 라운드·여백 토큰 / hairline+미세깊이 / 컨트롤 일관화·펄스제거 / 캘린더 색절제) 등록, IDEAS에 상위 2개(폰트·라운드) 올림.
 라이트/다크 토글도 운영자요청으로 IDEAS 등록(선행: 색 토큰화 완료, 후속 우선순위). 라운드·색 토큰화가 라이트모드 선행작업과 겹쳐 묶어 처리 권고.
-
-## [2026-05-30 00:30] [개발자]
-완료: 1순위 TODO — [리스트/패널] 날짜 그룹 헤더 sticky 고정 (디자이너 '보통').
-- 긴 리스트 뷰/날짜 클릭 패널을 스크롤할 때 `.date-group-header`(날짜 그룹 헤더)가 위로 사라져 날짜 맥락을 잃던 문제 해소.
-- `.date-group-header`에 `position:sticky; top:0; z-index:2; background:var(--bg)` + `padding-top:0.4rem` 추가 → 그룹을 훑는 동안 날짜 헤더가 뷰포트 상단에 고정.
-- 리스트 뷰와 날짜 패널 모두 같은 `.date-group-header`를 렌더하므로 한 규칙으로 공통 적용됨. 날짜 패널 컨테이너(.day-detail-panel)도 `var(--bg)` 배경이라 불투명 배경이 정확히 매칭되어 뒤 카드 비침 없음.
-- CSS-only, 신규 색 없이 기존 --bg 토큰 재사용.
-변경된 파일: styles.css, PROJECT_STATUS.md, CHAT.md
-비고: CSS brace 264/264 균형 확인. QA께 — (1) 리스트 뷰에서 여러 날짜 그룹을 스크롤할 때 현재 날짜 헤더가 상단에 고정되다 다음 그룹 헤더로 교체되는지, (2) 날짜 클릭 패널의 날짜 헤더도 스크롤 중 고정되는지, (3) 고정된 헤더 뒤로 카드 텍스트가 비치지 않는지(불투명) 실측 부탁드립니다. 다음 사이클 1순위는 [접근성] 날짜 셀 클릭 어포던스 + 키보드 접근.
