@@ -74,12 +74,12 @@ export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
 
   function onCellClick(cell: Cell) {
     if (!cell.inMonth) {
-      // 인접월 셀 클릭 시 그 달로 점프
+      // 인접월 셀: 그 달로 점프 + 그 날짜 선택
       onCursorChange(new Date(cell.date.getFullYear(), cell.date.getMonth(), 1));
-      setSelectedISO(null);
+      setSelectedISO(cell.iso);
       return;
     }
-    if (cell.games.length === 0) return; // 출시 없는 날은 클릭 무시
+    // 출시 유무와 관계없이 모든 셀 클릭 가능 → 그 날짜 이후 게임 패널 표시
     setSelectedISO(prev => prev === cell.iso ? null : cell.iso);
   }
 
@@ -119,7 +119,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
           const dots = cell.games.slice(0, 3);
           const overflow = cell.games.length - 3;
           const isSelected = selectedISO === cell.iso;
-          const isClickable = cell.inMonth && has;
+          const isClickable = true; // 모든 셀 클릭 가능 (출시 없는 날도 '이후 출시' 패널 표시)
 
           return (
             <div
@@ -133,10 +133,10 @@ export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
                 isClickable ? styles.cellClickable : '',
               ].filter(Boolean).join(' ')}
               onClick={() => onCellClick(cell)}
-              role={isClickable || !cell.inMonth ? 'button' : undefined}
-              tabIndex={isClickable ? 0 : -1}
+              role="button"
+              tabIndex={0}
               onKeyDown={(e) => {
-                if ((e.key === 'Enter' || e.key === ' ') && (isClickable || !cell.inMonth)) {
+                if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   onCellClick(cell);
                 }
