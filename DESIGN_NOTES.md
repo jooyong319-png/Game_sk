@@ -44,6 +44,42 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 ## 제안 이력 (최신이 위로)
 
+## [2026-06-02 09:01] [디자이너] - 외형 모드
+
+실측: https://gcalen.com/ Chrome 데스크톱(1516px) — 메인 캘린더(2026년 6월, today=2)·날짜패널(06.03 이후 27건)·**SEO 상세페이지(/game/ff7-rebirth-switch2-2026) 라이브 + build.js 소스** 직접 확인. 콘솔 0건, 42건 라이브. **모드: 외형(시각 임팩트/컬러/타이포/카드/히어로/신규컴포넌트)만, a11y·리팩토링·대비비·px 트윅 보류.** 직전 08:23 제안(히어로 그라데이션 헤더 / accent #5b9dff·퍼플 보조 / D-DAY 알약 / 카드 글래스+글로우 / Pretendard)·현 큐 4건(셀 tint·카드 호버·D-DAY 그라데이션·통계줄 클릭)과 **중복 0** 되도록 신규만 등록. 핵심 인상: 기능 화면은 다듬어졌으나 **(1) SEO 상세페이지가 광활한 검은 공백 한가운데 카드 1개로 떠 있어 빈 화면 인상 최악, (2) "출시 임박"이라는 1차 가치를 위한 전용 시각 진입점이 없음(캘린더에서 직접 스캔해야 함), (3) 카테고리 4색 자산이 여전히 7~9px 점으로만 소비됨.**
+
+### 외형 개선 제안 (3~5개, 구체적 hex/크기 포함)
+
+1. **[🔥최우선·신규컴포넌트·임팩트·SEO] /game/{id} 상세페이지 빈 화면 해소 — 카테고리색 라디얼 백드롭 + "같은 시기 출시" 관련 게임 섹션** — 우선순위: 높음
+   - 현재(build.js `gamePage`): `<article class="game-detail">` 카드 1개만 검은 `--bg` 중앙에 떠 있고 좌우·하단이 전부 빈 공백. 관련 게임/이미지/카운트다운 0 → 페이지 체류·내부링크·시각 임팩트 모두 약함(실측 스샷에서 화면 ~70%가 빈 검정).
+   - 바꿀 값(개발자): (a) 페이지에 카테고리색 라디얼 백드롭 — 상세 전용 래퍼에 `background: radial-gradient(90% 55% at 50% -5%, var(--cat) 0%, transparent 58%), #0f1115;` 형태로 카드 뒤 상단에서 카테고리색이 은은히 번지게(α는 hex+`22`≈13%, 예 글로벌=`#ba68c822`). (b) 카드 하단에 `<section class="detail-related">` 추가 — h3 "같은 시기 출시" + 같은 달±2주 게임 3~6개 미니카드 그리드(`display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px`), 각 카드는 메인 `.game-card` 톤(`background:#1a1d24;border:1px solid #2a2e38;border-radius:10px`+상단 4px 카테고리 배너) 재사용 + `<a href="/game/{id}">`. 빈 공백을 콘텐츠로 채우고 내부링크/SEO도 동반 상승. build.js 빌드타임 생성이라 런타임 무영향.
+   - 참고: Steam '이 게임과 비슷한', TMDB 추천 섹션 패턴.
+
+2. **[🔥신규컴포넌트·하이라이트·임팩트] 메인 헤더 아래 "출시 임박" 가로 하이라이트 스트립(D-7 이내 3~5개 카드)** — 우선순위: 높음
+   - 현재: 임박 게임을 보려면 캘린더에서 amber 셀을 눈으로 찾거나 리스트를 스크롤해야 함. 사이트 1차 가치(임박 출시)에 대한 전용 시각 진입점이 없음.
+   - 바꿀 값(개발자): 통계줄과 필터 사이에 `.hero-strip` 신설 — 가로 스크롤(`display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 0 10px`) 임박 카드. 각 카드(`min-width:200px;scroll-snap-align:start;background:linear-gradient(150deg,#1c2030,#15171f);border:1px solid #2a2e38;border-radius:14px;padding:14px 16px;border-left:4px solid var(--cat)`): 카테고리 라벨(작게)+게임명(`font-weight:700;font-size:1rem`)+큰 D-day(`font-size:1.6rem;font-weight:800;color:#f5a623`, D-DAY는 `#ff7a59`). 섹션 제목 "🔥 출시 임박"(`font-weight:800`). 임박 0건이면 섹션 숨김. script.js 렌더 ~25줄 + CSS 1블록. 첫 화면 임팩트 + 클릭→모달 연결.
+   - 참고: OTT/스토어 상단 "지금 뜨는" 가로 캐러셀(Netflix row, Steam 특집).
+
+3. **[통계줄·컬러·저비용] `#stats-summary` 평문(#888)을 카테고리 컬러 칩(pill) 카운터로** — 우선순위: 보통
+   - 현재(styles.css `.stats-summary` L59): `국내 모바일 11 · 국내 PC·콘솔 5 · 글로벌 15 · 신규 서버 11 · 총 42`가 전부 `#888` 단색 평문 가운뎃점 구분 → 카테고리 4색 자산이 여기서도 0. 회색 한 줄이라 존재감 없음.
+   - 바꿀 값(개발자): 각 세그먼트를 칩으로 — `.stat-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;font-size:0.82rem;font-weight:700;margin:0 6px 6px 0}` + 카테고리별 `background:rgba({색},0.10);color:{색}`(모바일 #81c784, PC·콘솔 #64b5f6, 글로벌 #ba68c8, 신규서버 #ff8a65). 앞에 6px 색 도트 span. '총 42'는 중립 칩(`background:#1a1d24;color:#cfd4df;border:1px solid #2a2e38`). 한 줄이 컬러풀해지고 색-코딩이 즉시 학습됨. ※큐 4번(세그먼트 클릭=필터)과 같은 요소라, 그 작업과 합쳐 칩에 클릭+이 시각 스타일을 한 번에 적용하면 효율적(시각만 먼저 적용도 무방). script.js renderStatsSummary 마크업 + CSS 1블록.
+
+4. **[카테고리 시각 차별화·아이콘] 카테고리를 색 점(7~9px)만으로 구분 → 색+아이콘 이중 인코딩(범례/카드/칩)** — 우선순위: 보통
+   - 현재: 카테고리 식별이 오로지 미세한 색 점(원/사각/마름모/링) 모양에만 의존 → 빠른 스캔에서 구분이 약하고 점만으로는 의미가 직관적이지 않음. 색 자산이 점으로만 소비됨.
+   - 바꿀 값(개발자): 카테고리별 대표 아이콘(이모지 즉시 적용: 📱 국내 모바일 / 🎮 국내 PC·콘솔 / 🌐 글로벌 대작 / 🆕 신규 서버, 또는 동일 실루엣 인라인 SVG 세트)을 범례·리스트 카드 메타·통계 칩(제안 3)에 색과 함께 배치. 예 범례 `<span class="legend-item"><span class="legend-icon">📱</span> 국내 모바일</span>`, 아이콘 `font-size:0.95em`. 색+모양+아이콘 삼중으로 카테고리 정체성 강화(시각 차별화 목적). 신규 색 없음, 마크업/소량 CSS.
+
+5. **[로딩 애니메이션·손맛] "불러오는 중..." 평문 → 스켈레톤 시머** — 우선순위: 낮음
+   - 현재(script.js L50 / index.html L142): 리스트 로드 시 `<p class="loading">불러오는 중...</p>` 정적 텍스트만 → 빈 화면+회색 글자라 "멈춘 듯한" 인상.
+   - 바꿀 값(개발자): 카드 형태 스켈레톤 3~5개를 시머로 — `.skeleton-card{height:84px;border-radius:10px;background:linear-gradient(100deg,#1a1d24 30%,#232838 50%,#1a1d24 70%);background-size:200% 100%;animation:shimmer 1.3s ease-in-out infinite}` + `@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}`. `prefers-reduced-motion:reduce`에선 애니메이션 제거. 로딩 체감 품질↑(스켈레톤이 텍스트보다 빠르게 느껴짐). CSS 1블록 + 로딩 마크업 교체.
+
+### 현재 양호 (외형 관점, 트집 X)
+큐 1번(셀 tint+좌측 악센트, styles.css L370)·Pretendard 폰트는 이미 라이브 적용돼 정돈도 상승 확인. 카테고리 4색 팔레트(#81c784/#64b5f6/#ba68c8/#ff8a65)는 채도·구분 좋음 — 제안 3·4처럼 점 밖으로 확장만 하면 됨. 모달 페이드·카드 hover 토대도 양호.
+
+### 우선순위 요약
+🔥1(상세페이지 백드롭+관련섹션) ≈ 2(임박 하이라이트 스트립) > 3(통계 컬러칩) > 4(카테고리 아이콘) > 5(스켈레톤 시머)
+
+---
+
 ## [2026-06-02 08:23] [디자이너] - 외형 모드
 실측: https://gcalen.com/ Chrome 데스크톱(실렌더 1516px) — 캘린더(2026년 6월, 오늘=2)·리스트·날짜패널(06.03 이후 27건)·SEO 상세페이지(/game/ff7-rebirth-switch2-2026) 직접 확인, 콘솔 에러 0건, 배포 42건 라이브. **모드 전환 반영: a11y/시맨틱/리팩토링/대비비/1px 트윅 전면 보류, 시각 임팩트·컬러·타이포·카드·히어로만 평가.** 현재 인상 한 줄: 기능은 완성도 높으나 **전 화면이 #0f1115~#1a1d24 단색 다크 + 얇은 회색 보더로만 구성돼 "회색 스프레드시트" 느낌** — 첫인상 임팩트(와우 요소)·브랜드색·타이포 위계가 거의 없음. 카테고리 4색(녹/청/보라/주황)은 7~8px 점·4px 배너로만 쓰여 색 자산이 낭비됨. SEO 상세페이지(/game/{id})는 넓은 검은 화면 한가운데 카드 하나만 떠 있어 빈 공간이 특히 큼.
 
