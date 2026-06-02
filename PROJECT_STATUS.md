@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-02 12:10 KST (기획자 사이클 — 외형 모드: 직전 1순위 "🔥 출시 임박" 가로 하이라이트 스트립 ✅완료(개발자 12:29·QA 11:46 라이브 무회귀) 큐에서 제거, 잔여 4건 1~4순위로 당김. 신규 외형 TODO [로딩 스켈레톤+페이드인]을 5순위 추가. 큐 4→5. 활성 사용자 요청 0(SEO 보류), 미해결 코드 버그 0, 디자이너 신규 제안 0, 3사이클 정체 0)
+마지막 갱신: 2026-06-02 13:12 KST (기획자 사이클 — 외형 모드: 직전 1순위 [외형·SEO상세] /game/{id} 라디얼 백드롭 ✅완료(개발자 13:29·QA 12:46 무회귀) 큐에서 제거. 디자이너 신규 외형 제안 3건(캘린더 빈셀 타일감·셀 카테고리색 악센트·운영자요청 이모지→SVG 1단계)을 1~3순위 승격, 기존 카드호버·로딩스켈레톤은 IDEAS 환원. 큐 5 유지. 활성 사용자 요청 0(SEO 보류), 미해결 코드 버그 0, 3사이클 정체 0)
 
 ## 현재 단계
 Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
@@ -125,27 +125,31 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-02 12:10 (기획자): **모드 = 외형(시각 디자인) 집중**. 직전 1순위 [외형·신규컴포넌트] 헤더 아래 "🔥 출시 임박" 가로 하이라이트 스트립 ✅완료(개발자 12:29·QA 11:46 라이브 무회귀 — 임박 4건 D-1/D-2/D-2/D-3 노출·카드 클릭→모달 정상) → 완료한 기능 이동, 잔여 4건(상세 백드롭·카드 호버·통계줄 칩·관련게임 섹션) 1~4순위로 당겨짐. 큐 4건이라 **신규 외형 TODO [로딩 스켈레톤 + 페이드인 전환]을 5순위 추가**(외형 모드 \'로딩/전환 애니메이션\' 카테고리, 빈 로딩 화면 체감 개선). 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0(BUGS 전 항목 ✅). 3사이클 정체 TODO 0. 디자이너 신규 제안 0(최신 09:01분 전량 처리 완료). a11y 제안 0건 신규 → IDEAS 보관 유지.
+> 갱신 2026-06-02 13:12 (기획자): **모드 = 외형(시각 디자인) 집중, 큰 단위 권장**. 직전 1순위 [외형·SEO상세] /game/{id} 상세페이지 카테고리색 라디얼 백드롭 ✅완료(개발자 13:29·QA 12:46 라이브 무회귀 — global_aaa 보라 글로우·attachment:fixed·랜딩 무변화) → 완료한 기능 이동. **디자이너 신규 외형 제안(13:01·13:10) 3건을 큐 1~3순위로 승격**: (1)캘린더 빈 셀 타일감+컨테이너 패널화, (2)출시 셀 좌측 악센트를 카테고리 색으로, (3)운영자요청 이모지→SVG 미니멀(1단계). 캘린더가 기본/핵심 뷰인데 빈 격자가 페이지 배경과 동일해 "검은 공백"으로 읽히는 게 현재 최약점이라 최우선. 기존 [카드 호버 입체감]·[로딩 스켈레톤]은 IDEAS로 환원(상대적 저임팩트, IDEAS 보존). 큐 4→5 유지. 활성 사용자 요청 0(SEO 보류). 미해결 코드 버그 0(BUGS 전 항목 ✅). 3사이클 정체 TODO 0. a11y 제안 0건 신규 → IDEAS 보관 유지.
 
-1. **[외형·카드] 게임 카드 호버 입체감 — 그림자 상승 + translateY + 트랜지션** (외형 모드 신규)
-   - 리스트 카드(.game-card) 호버 피드백이 약해 클릭 어포던스/세련도 부족.
-   - `.game-card`에 `transition: box-shadow .15s ease, transform .15s ease` + `:hover`에 상승 `box-shadow`·`transform: translateY(-2px)`. `prefers-reduced-motion: reduce`에선 transform 제거. 기존 그림자/색 재사용(신규 색 없음). styles.css 소규모, CSS brace 균형.
+1. **[외형·캘린더] 빈 셀 타일감 부여 + 캘린더 컨테이너 패널 카드화** (디자이너 06-02 13:01 — 높음, 핵심 뷰 최약점)
+   - `.calendar-grid .day{background:var(--bg)=#0f1115}`라 출시 없는 셀이 body 배경에 녹아 빈 달 격자가 텅 빈 검정 공백으로 읽힘(캘린더가 기본 뷰라 첫인상 직격).
+   - 빈 셀 `background`를 한 톤 올린 `#161922`로, 셀 보더를 `rgba(255,255,255,0.05)` hairline으로. 캘린더 컨테이너(`.calendar-view`/`.calendar-grid` 래퍼)에 `background:#13151b; border-radius:14px; padding:14px`로 패널 카드화해 격자를 면으로 묶기. 기존 강조 셀(today 파란보더·.day-soon amber·.selected 채움·.day-has 좌측악센트)은 우선순위가 위라 유지되도록 셀렉터 특정성 확인(빈 셀에만 base 톤 적용). 신규 색 토큰 1~2개(`--cell-bg`/`--cal-panel` 추가 권장), CSS 위주, script.js 무변경, CSS brace 균형. 모바일(≤480px) padding 축소 분기 포함.
 
-2. **[외형·통계줄] `#stats-summary` 평문(#888) → 카테고리 컬러 칩(pill) 카운터** (디자이너 06-02 09:01 — 보통, 시각만)
+2. **[외형·캘린더] 출시 셀(.day-has) 좌측 악센트를 그날 카테고리 색으로** (디자이너 06-02 13:01 — 높음, #1과 짝)
+   - 현재 `.day-has`의 `box-shadow: inset 2px 0 0 var(--accent)`가 카테고리 무관 전부 파랑(#5b9dff) → 날짜별 카테고리 구분이 면색으로 안 보임.
+   - renderCalendar에서 출시 1건↑ 셀에 그날 첫(또는 대표) 게임 카테고리 색을 `style="--cat:{색}"`으로 주입(모바일 #81c784·PC/콘솔 #64b5f6·글로벌 #ba68c8·신규서버 #ff8a65), CSS `.day-has`의 좌측 악센트를 `inset 3px 0 0 var(--cat)`로 + 옅은 면 tint(`background: color-mix 또는 rgba {--cat} 8%`, color-mix 미지원 폴백 고려). today/soon/selected 강조와 색 충돌 회피 위해 `:not(.today):not(.day-soon):not(.selected)` 가드 유지. 날짜별 카테고리가 좌측 색 띠로 즉시 구분. script.js 셀 style 주입 + CSS 1~2줄, node --check 통과·CSS brace 균형. (#1과 함께 처리하면 캘린더 외형 한 사이클에 완성.)
+
+3. **[외형·미니멀] 노출 이모지 11종 → 인라인 SVG 스프라이트 (1단계: 헤더/뷰토글/임박스트립/위시)** (디자이너 06-02 13:10 — 운영자 요청, 높음)
+   - 운영자 지시 "이모지 제거하고 SVG 미니멀". OS별 이모지 렌더 편차 제거 + 클린 라인 아이콘으로 세련도↑. 11종(🎮📅📋🔥★☆🛠️🏢📄▶🔗) 중 **1단계는 헤더 로고(🎮)·뷰토글(📅📋)·임박 스트립(🔥)·위시(★☆)**만.
+   - index.html에 `<svg style="display:none">` 인라인 `<symbol>` 스프라이트 정의(Lucide 라인 톤, viewBox 0 0 24 24, path만), 해당 이모지를 `<svg class="ic"><use href="#ic-..."/></svg>`로 치환. CSS `.ic{width:1em;height:1em;stroke:currentColor;stroke-width:1.75;fill:none;vertical-align:-0.125em}`, 위시 활성 별만 `.ic-fill{fill:currentColor;stroke:none}`. 색 포인트는 헤더 로고 1곳만(accent), 나머지 currentColor 단색. DESIGN_NOTES 13:10에 symbol path 상세. script.js가 동적 생성하는 위시 별 마크업도 같이 치환(렌더 함수 내 이모지 문자열→`<svg use>`). 2·3단계(카드/모달 메타·액션, build.js SEO)는 후속 TODO. node --check 통과·CSS brace 균형. AGENTS.md 신규 이모지 금지 명문화는 별도(개발자 재량).
+
+4. **[외형·통계줄] `#stats-summary` 평문(#888) → 카테고리 컬러 칩(pill) 카운터** (디자이너 06-02 09:01 — 보통, 시각만)
    - 현재 `국내 모바일 N · 국내 PC·콘솔 N · 글로벌 N · 신규 서버 N · 총 N`이 전부 `#888` 단색 평문 가운뎃점 구분 → 카테고리 4색 자산이 통계줄에서 미사용, 회색 한 줄이라 존재감 약함.
    - renderStatsSummary 각 카테고리 세그먼트를 칩으로: `.stat-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;font-size:0.82rem;font-weight:700;margin:0 6px 6px 0}` + 카테고리별 `background:rgba({색},0.10);color:{색}`(모바일 #81c784·PC/콘솔 #64b5f6·글로벌 #ba68c8·신규서버 #ff8a65), 앞에 6px 색 도트 span. '총 N'은 중립 칩(`background:var(--surface);color:#cfd4df;border:1px solid var(--border)`).
    - **클릭=필터 동작은 이번 TODO 범위 아님(IDEAS 보관 유지) — 순수 시각 스타일만.** 신규 색은 기존 카테고리 4색 재사용. script.js renderStatsSummary 마크업 + CSS 1블록, node --check 통과·CSS brace 균형.
 
-3. **[외형·신규컴포넌트·상세페이지] `/game/{id}` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01 분할 — #2 백드롭의 후속, 높음)
-   - #2 라디얼 백드롭으로 빈 검정 공백은 줄지만 상세페이지가 여전히 카드 1개만 떠 화면 하단이 비어 있음 + 내부 링크 0(SEO 약점).
+5. **[외형·신규컴포넌트·상세페이지] `/game/{id}` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01 분할 — 백드롭의 후속, 높음)
+   - 라디얼 백드롭(완료)으로 빈 검정 공백은 줄었지만 상세페이지가 여전히 카드 1개만 떠 화면 하단이 비어 있음 + 내부 링크 0(SEO 약점).
    - build.js `gamePage`에서 해당 게임 출시일 기준 같은 달 ±2주 범위의 다른 게임 3~6개를 추려 카드 하단에 `<section class="detail-related">` + h3 "같은 시기 출시" + 미니카드 그리드(`display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px`) 렌더. 각 미니카드는 메인 `.game-card` 톤 재사용(카테고리색 4px 좌측 악센트·게임명·D-day), `<a href="/game/{id}">`로 상세페이지 상호 링크. **관련 게임 0건이면 섹션 전체 숨김.** 빌드타임 생성, 런타임 무영향. build.js 위주 ~40줄 + CSS 1블록, node --check·CSS brace 균형. (자기 자신 제외, 날짜 가까운 순 정렬.)
 
-4. **[외형·로딩] 데이터 로드 스켈레톤 플레이스홀더 + 콘텐츠 페이드인 전환** (외형 모드 신규 — '로딩/전환 애니메이션')
-   - 현재 데이터 로드 중 '불러오는 중...' 평문만 노출 → 빈 화면 체감, 진입 인상이 휑함.
-   - script.js loadData 진입 시 캘린더 그리드/리스트 영역에 `.skeleton` 플레이스홀더(셀·카드 형태 회색 박스 N개 + shimmer 애니메이션) 렌더, 데이터 도착 후 실콘텐츠로 교체하며 컨테이너에 `opacity 0→1` 0.2s 페이드인. CSS `@keyframes gc-shimmer`(background-position -200%→200%, 1.2s linear infinite) + `.skeleton{background:linear-gradient(90deg,var(--surface) 25%,#23272f 50%,var(--surface) 75%);background-size:200% 100%;border-radius:8px}`. `prefers-reduced-motion: reduce`에선 shimmer/페이드 정지(정적 회색만). 기존 9초 로드 실패 fallback과 충돌 없게(렌더 감지 폴링은 실콘텐츠 기준 유지). 신규 색 토큰 없이 --surface 재사용. script.js ~30줄 + CSS 1블록, node --check 통과·CSS brace 균형.
-
 ### (보류 — 외형 모드 중 IDEAS 보관, 사용자가 "이제 a11y 정리하자" 지시 시 재승격)
-이번 사이클 큐→IDEAS 이동: D-DAY/임박 배지 그라데이션 강조(디자이너 신규 'D-day 알약배지' 제안과 중복 → IDEAS 통합), 통계줄(#stats-summary) 세그먼트 클릭=카테고리 필터(UX/발견성, 순수 외형 아님 → IDEAS 보관), 출시 있는 셀 면강조(이미 출고된 accent버전과 근접중복, '좌측 카테고리색' 미세분만 잔여 → IDEAS 저순위). 이전 보류분(헤더↔푸터 타임스탬프 통일·날짜패널 aria-live+포커스·아이콘 44×44 터치타겟·위시별 --wish 토큰)은 외형 모드 동안 큐에 안 올림.
+이번 사이클 큐→IDEAS 환원: [외형·카드] 게임 카드 호버 입체감(상대적 저임팩트, 캘린더 외형 우선 → IDEAS 보존), [외형·로딩] 로딩 스켈레톤+페이드인(체감 개선이나 캘린더 검은공백 해소가 더 급함 → IDEAS 보존). 이전 보류분(D-day 알약배지 그라데이션·통계줄 세그먼트 클릭필터·헤더↔푸터 타임스탬프 통일·날짜패널 aria-live+포커스·아이콘 44×44 터치타겟·위시별 --wish 토큰)은 외형 모드 동안 큐에 안 올림. a11y 마이크로 트윅(aria/포커스/대비/시맨틱)은 IDEAS 보관만, 큐 진입 금지.
 
 
 ## 알려진 버그 (BUGS)
@@ -219,6 +223,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-02 13:12 [기획자] TODO 큐 재구성(5건 유지, 외형 모드·큰 단위). 직전 1순위 [외형·SEO상세] /game/{id} 카테고리색 라디얼 백드롭 개발자 13:29·QA 12:46 ✅ → 완료한 기능 이동. 디자이너 신규 외형 제안 3건을 큐 1~3순위로 승격: (1)[외형·캘린더] 빈 셀 타일감+컨테이너 패널화(13:01 높음, 빈 격자가 배경과 동일해 "검은 공백"으로 읽히는 핵심 뷰 최약점), (2)[외형·캘린더] 출시 셀 좌측 악센트를 카테고리 색으로(13:01 높음, #1과 짝), (3)[외형·미니멀] 이모지 11종→인라인 SVG 스프라이트 1단계(13:10 운영자 요청, 헤더/토글/임박/위시). 4·5순위는 캐리오버([통계줄 컬러칩]·[관련게임 미니카드 그리드]). 기존 [카드 호버 입체감]·[로딩 스켈레톤]은 IDEAS로 환원(상대적 저임팩트, IDEAS 보존). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0. 코드 미수정(문서만).
 - 2026-06-02 13:29 [개발자] 1순위 완료: **[외형·SEO상세] `/game/{id}` 상세페이지 카테고리색 라디얼 백드롭(빈 검정 공백 해소)**. build.js `pageShell`에 선택 인자 `bodyAttr` 추가하고, `gamePage`가 카테고리→색 매핑(모바일 #81c784·PC/콘솔 #64b5f6·글로벌 #ba68c8·신규서버 #ff8a65, fallback --accent) 후 `<body>`에 인라인 `background: radial-gradient(90% 55% at 50% -5%, {색}22 0%, transparent 58%) no-repeat fixed, #0f1115;` 부여 → 카드 뒤 검정 공백을 카테고리색 글로우로 채움(attachment:fixed로 풀화면). 빌드타임 생성이라 런타임 무영향, 랜딩페이지는 bodyAttr 미전달로 평문 유지. 카테고리 4색 재사용(신규 색 없음), build.js만 변경(생성물 game/*.html·sitemap은 .gitignore→Vercel 빌드). node --check ✓, `node build.js` 재생성으로 global_aaa 게임 보라 백드롭·랜딩 `<body>` 평문 확인. QA: 라이브에서 상세페이지(예: /game/007-first-light-2026) 진입 시 상단 카테고리색 라디얼 글로우·스크롤 시 고정·랜딩페이지 변화 없음 실측 부탁. 큐 5→4(2~5순위 한 칸씩 당김).
 - 2026-06-02 12:29 [개발자] 1순위 완료: **[외형·신규컴포넌트] 헤더 아래 "🔥 출시 임박" 가로 하이라이트 스트립(D-7 이내 최대 5건)**. 통계줄↔컨트롤 행 사이 `<section id="hero-section">`(h2 "🔥 출시 임박" + `#hero-strip` flex 가로스크롤·scroll-snap) 신설. script.js `renderHeroStrip()`(loadData renderStatsSummary 직후 호출): D-0~D-7 게임 가까운 순 최대 5개를 `.hero-card`(`<button>`)로 렌더, 임박 0건이면 `#hero-section[hidden]` 전체 숨김. 카드=카테고리 라벨+게임명(700)+큰 D-day(1.6rem/800, soon #f5a623·D-DAY #ff7a59), `border-left:4px var(--cat)`(data-cat별 카테고리 4색 매핑·신규 색 없음), 다크 그라데이션 배경. `#hero-strip` click 위임→openModal 재사용(버튼이라 키보드 자동), 호버 상승+reduced-motion 가드. 실데이터 임박 4건(D-1·2·2·3) 렌더·빈 케이스 숨김 테스트 통과, node --check ✓, CSS brace 307/307. index.html+4·script.js+~30·styles.css+~28. QA: 라이브에서 헤더 아래 "🔥 출시 임박" 스트립에 임박 카드 노출·가로 스크롤·카드 클릭 모달·임박 0건 달 진입 시 스트립 숨김 실측 부탁. 잔여 TODO 4건 1~4순위로 당김.
 - 2026-06-02 10:29 [개발자] 1순위 완료: **[외형·히어로] 메인 헤더 풀블리드 그라데이션 히어로 밴드 + h1 그라데이션 텍스트**. styles.css `header` 배경을 radial(브랜드 블루→퍼플 페이드)+linear(160deg #171b2c→#0f1115) 2겹 히어로 밴드로 교체·padding 2.2/1.8rem 상향, h1 2.2rem/800 + `linear-gradient(92deg,#7cb6ff,#c98ad6)` background-clip:text 그라데이션 텍스트화. index.html h1의 🎮를 `<span class="h1-emoji">`로 분리하고 해당 span은 `-webkit-text-fill-color/color:initial`로 clip 제외→이모지 원색 유지. 좌측정렬·컴팩트(캘린더 첫 화면 비침범) 유지. CSS-only(+13/−2)·index.html(+0줄, h1 1줄 치환), script.js 무변경(node --check ✓), CSS brace 283/283. QA: 라이브에서 헤더 밴드 그라데이션·h1 블루→퍼플 그라데이션 텍스트 렌더·🎮 이모지 원색 유지·모바일 폭 회귀 없는지 실측 부탁. 잔여 TODO 4건 1~4순위로 한 칸씩 당김.
