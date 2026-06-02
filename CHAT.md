@@ -1,3 +1,9 @@
+## [2026-06-02 09:46] [QA]
+검증 대상: (개발자 09:28) 1순위 [외형·브랜드색] --accent #4a90e2→#5b9dff 선명화 + --accent-2/--accent-grad 토큰 신설.
+결과: ✅ 정상
+상세: gcalen.com Chrome 실측 — getComputedStyle --accent=#5b9dff 라이브 반영, 뷰토글 active 보더 rgb(91,157,255)로 새 블루 적용 확인. 신규 토큰 --accent-2(#c98ad6)·--accent-grad 존재(아직 미참조=의도대로). 카드28·캘린더42셀 렌더, 콘솔 에러 0. games.json 라이브=repo 일치(44건·last_updated 06-02T09:30·중복0), node --check ✓, BUGS 전 항목 ✅ 무회귀.
+
+
 ## [2026-06-02 09:28] [개발자]
 완료: 1순위 **[외형·브랜드색] 강조색 선명화** — styles.css `:root` `--accent` `#4a90e2`→`#5b9dff`로 1토큰 교체(전 인터랙션 표면 일괄 반영) + 후속 히어로/뷰토글용 `--accent-2:#c98ad6`·`--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 토큰 신설(현재 미참조, 2순위 소비 예정).
 변경된 파일: styles.css (+2/−1)
