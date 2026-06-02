@@ -242,7 +242,7 @@ function renderDayRows(games) {
     const diff = Math.ceil((parseReleaseDate(g.release_date) - today) / 86400000);
     const ddCls = ddayStageClass(diff);
     const dd = diff < 0 ? '출시됨' : (diff === 0 ? 'D-DAY' : 'D-' + diff);
-    const plat = (g.platforms || [])[0] || '';
+    const plat = ((g.platforms||[]).length>1?((g.platforms||[])[0]+' 외 '+((g.platforms||[]).length-1)):((g.platforms||[])[0]||'')) || '';
     const wished = wishlist.has(g.id);
     const name = escapeHtml(g.name_ko || g.name_en || '');
     // 흡수행: 패널 헤더가 연도를 명시하므로 'MM.DD (요일/예정)'로 단축(풀year 프리픽스 잉여 제거, 게임명 좌측 시작점 정렬).
@@ -415,6 +415,7 @@ const modal = document.getElementById('game-modal');
 const modalBody = document.getElementById('modal-body');
 const dayPanel = document.getElementById('day-detail-panel'); // hoisted: referenced by keydown/ESC handlers above Stage 4 (TDZ fix)
 
+let lastFocusedTrigger = null;
 function openModal(gameId) {
   const game = allGames.find(g => g.id === gameId);
   if (!game) return;
@@ -422,17 +423,18 @@ function openModal(gameId) {
   const today = new Date(); today.setHours(0,0,0,0);
   const dayDiff = Math.ceil((releaseDate - today) / 86400000);
   const dDay = dayDiff < 0 ? '출시됨' : (dayDiff === 0 ? 'D-DAY' : 'D-' + dayDiff);
+  const ddStage = ddayStageClass(dayDiff).trim();
   const categoryLabel = categories[game.category] || game.category;
   const approx = game.release_date_approx ? ' (예정)' : '';
   const modalImage = game.image_url
     ? `<div class="modal-image"><img src="${escapeHtml(game.image_url)}" alt="${escapeHtml(game.name_ko || game.name_en)}"></div>`
-    : `<div class="modal-image card-image-placeholder category-${game.category}" role="presentation"></div>`;
+    : `<div class="modal-image no-image card-image-placeholder category-${game.category}" role="presentation"></div>`;
   modalBody.innerHTML = `
     ${modalImage}
     <span class="category-tag category-${game.category}">${escapeHtml(categoryLabel)}</span>
     <div class="modal-title-row"><h2 id="modal-title">${escapeHtml(game.name_ko || game.name_en)}</h2><button type="button" class="modal-wishlist-btn${wishlist.has(game.id) ? ' active' : ''}" data-id="${escapeHtml(game.id)}" aria-label="위시리스트 토글" aria-pressed="${wishlist.has(game.id) ? 'true' : 'false'}">${wishlist.has(game.id) ? '★' : '☆'}</button></div>
     ${game.name_en && game.name_ko && game.name_en !== game.name_ko ? `<div class="name-en">${escapeHtml(game.name_en)}</div>` : ''}
-    <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approx} · ${dDay}</div>
+    <div class="modal-row"><strong>출시일</strong>${formatDate(releaseDate)}${game.release_date_approx ? '' : (getKoreanWeekday(game.release_date) ? ' (' + getKoreanWeekday(game.release_date) + ')' : '')}${approx} · <span class="dday ${ddStage}">${dDay}</span></div>
     ${game.platforms?.length ? `<div class="modal-row"><strong>플랫폼</strong>${game.platforms.map(escapeHtml).join(', ')}</div>` : ''}
     ${game.genres?.length ? `<div class="modal-row"><strong>장르</strong>${game.genres.map(escapeHtml).join(', ')}</div>` : ''}
     ${(() => { const d = (game.developer || '').trim(), p = (game.publisher || '').trim(); return (d && p && d === p) ? `<div class="modal-row"><strong>개발·퍼블리셔</strong>${escapeHtml(game.developer)}</div>` : `${d ? `<div class="modal-row"><strong>개발</strong>${escapeHtml(game.developer)}</div>` : ''}${p ? `<div class="modal-row"><strong>퍼블리셔</strong>${escapeHtml(game.publisher)}</div>` : ''}`; })()}
@@ -440,13 +442,19 @@ function openModal(gameId) {
     ${game.source_url ? `<a class="source-link" href="${escapeHtml(game.source_url)}" target="_blank" rel="noopener noreferrer">출처 보기 <span class="external-icon">↗</span></a>` : ''}
     <div class="modal-actions"><a class="detail-page-link" href="/game/${escapeHtml(game.id)}">📄 전체 페이지</a><a class="trailer-search-link" href="https://www.youtube.com/results?search_query=${encodeURIComponent((game.name_ko || game.name_en || '') + ' 트레일러')}" target="_blank" rel="noopener noreferrer">▶ 트레일러 검색</a><button type="button" class="copy-link-btn" data-id="${escapeHtml(game.id)}">🔗 링크 복사</button></div>
   `;
+  lastFocusedTrigger = document.activeElement;
   modal.hidden = false;
   document.body.classList.add('modal-open');
+  const _ft = modal.querySelector('.modal-close');
+  if (_ft) { _ft.focus(); }
+  else { const _mt = document.getElementById('modal-title'); if (_mt) { _mt.setAttribute('tabindex', '-1'); _mt.focus(); } }
 }
 
 function closeModal() {
   modal.hidden = true;
   document.body.classList.remove('modal-open');
+  if (lastFocusedTrigger && document.contains(lastFocusedTrigger)) lastFocusedTrigger.focus();
+  lastFocusedTrigger = null;
 }
 
 
@@ -627,8 +635,8 @@ function renderCalendar() {
       (dayMap[rd.getDate()] = dayMap[rd.getDate()] || []).push(g);
     }
   }
-  const weekdays = ['일','월','화','수','목','금','토']
-    .map(d => `<div class="weekday">${d}</div>`).join('');
+  const wdNames = ['일','월','화','수','목','금','토'];
+  const weekdays = wdNames.map(d => `<div class="weekday">${d}</div>`).join('');
   let cells = '';
   for (let i = 0; i < 42; i++) {
     const d = new Date(start); d.setDate(start.getDate() + i);
@@ -639,8 +647,10 @@ function renderCalendar() {
     let dots = '';
     let gameLabel = '';
     let a11y = '';
+    let relCount = 0;
     if (!isOther) {
       const list = dayMap[d.getDate()] || [];
+      relCount = list.length;
       const soonDiff = (d.getTime() - today.getTime()) / 86400000;
       if (list.length && soonDiff >= 0 && soonDiff <= 7) cls.push('day-soon');
       if (list.length) cls.push('day-has'); // [스캔성] 출시 있는 셀 면 강조
@@ -658,13 +668,16 @@ function renderCalendar() {
         dots = `<div class="day-dots" title="${escapeHtml(tip)}">${dotEls}${more}${moreCount}</div>`;
         const firstName = list[0].name_ko || list[0].name_en || '';
         gameLabel = `<div class="day-game-label" title="${escapeHtml(tip)}">${escapeHtml(firstName)}</div>`;
-        a11y = ` role="button" tabindex="0" aria-label="${d.getMonth()+1}월 ${d.getDate()}일, 출시 ${list.length}건"`;
+        a11y = ` role="button" tabindex="0"`;
       }
     }
     const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     if (selectedDay === iso && !isOther) cls.push('selected');
-    const todayLabel = (d.getTime() === today.getTime() && !isOther) ? '<span class="today-label">오늘</span>' : '';
-    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
+    const isToday = d.getTime() === today.getTime();
+    const todayLabel = isToday ? '<span class="today-label">오늘</span>' : ''; // other-month today도 시각 라벨 노출(자동 점프 시 today가 인접월 셀로 렌더됨)
+    const ariaLabel = `${isToday ? '오늘, ' : ''}${d.getMonth()+1}월 ${d.getDate()}일(${wdNames[d.getDay()]})${relCount ? `, 출시 ${relCount}건` : ''}`;
+    const ariaCurrent = isToday ? ' aria-current="date"' : '';
+    cells += `<div class="${cls.join(' ')}" data-date="${iso}" data-other="${isOther?'1':'0'}"${a11y} aria-label="${ariaLabel}"${ariaCurrent}>${d.getDate()}${todayLabel}${gameLabel}${dots}</div>`;
   }
   grid.innerHTML = weekdays + cells;
   const emptyEl = document.getElementById('calendar-empty');

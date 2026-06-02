@@ -1,11 +1,14 @@
 :root {
+  color-scheme: dark;
   --bg: #0f1115;
   --surface: #1a1d24;
   --border: #2a2e38;
   --text: #e6e6e6;
   --text-dim: #aaa;
   --text-faint: #888;
-  --accent: #4a90e2;
+  --accent: #5b9dff;
+  --accent-2: #c98ad6;
+  --accent-grad: linear-gradient(92deg, #5b9dff, #c98ad6);
 }
 
 * {
@@ -15,7 +18,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
@@ -39,6 +42,8 @@ header h1, header .subtitle, header .last-updated {
 
 header h1 {
   font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   margin-bottom: 0.25rem;
 }
 
@@ -48,7 +53,7 @@ header h1 {
 }
 
 .last-updated {
-  color: #555;
+  color: var(--text-faint);
   font-size: 0.8rem;
   margin-top: 0.5rem;
 }
@@ -56,6 +61,8 @@ header h1 {
 .stats-summary {
   color: #888;
   font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   text-align: left;
   margin: 0 0 1rem;
 }
@@ -82,12 +89,18 @@ main {
 }
 
 .filters select {
-  background: var(--surface);
+  background-color: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
   border-radius: 6px;
   font-size: 0.95rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
 }
 
 .games-grid {
@@ -202,6 +215,8 @@ main {
 
 .info h4 {
   font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .name-en {
@@ -437,7 +452,7 @@ footer a:hover {
 
 /* Wishlist Stage 1: star toggle button (UI + localStorage, no filtering yet) */
 .card-header-right { display:flex; align-items:center; gap:0.5rem; }
-.wishlist-btn { background:transparent; border:none; color:#666; font-size:1.15rem; line-height:1; cursor:pointer; padding:0 0.15rem; transition:color 0.15s, transform 0.1s; }
+.wishlist-btn { background:transparent; border:none; color:var(--text-dim); font-size:1.15rem; line-height:1; cursor:pointer; padding:0 0.15rem; transition:color 0.15s, transform 0.1s; }
 .wishlist-btn:hover { color:#f5b400; }
 .wishlist-btn:active { transform:scale(1.15); }
 .wishlist-btn.active { color:#f5b400; }
@@ -484,7 +499,7 @@ footer a:hover {
 /* Modal title row + wishlist button (reuse existing #f5b400 wishlist tone) */
 .modal-title-row { display:flex; align-items:center; justify-content:space-between; gap:0.5rem; }
 .modal-title-row h2 { margin-bottom:0; }
-.modal-wishlist-btn { background:transparent; border:none; color:#666; font-size:1.4rem; line-height:1; cursor:pointer; padding:0 0.25rem; transition:color 0.15s, transform 0.1s; }
+.modal-wishlist-btn { background:transparent; border:none; color:var(--text-dim); font-size:1.4rem; line-height:1; cursor:pointer; padding:0 0.25rem; transition:color 0.15s, transform 0.1s; }
 .modal-wishlist-btn:hover { color:#f5b400; }
 .modal-wishlist-btn:active { transform:scale(1.15); }
 .modal-wishlist-btn.active { color:#f5b400; }
@@ -504,6 +519,7 @@ footer a:hover {
 .card-banner.category-global_aaa { background:#82488c; }
 .card-banner.category-new_server { background:#b26146; }
 .modal-image { width:100%; height:160px; overflow:hidden; border-radius:8px; margin-bottom:0.8rem; }
+.modal-image.no-image { height:8px; border-radius:4px; }
 .modal-image img { width:100%; height:100%; object-fit:cover; display:block; }
 
 /* Calendar weekday header — Korean-style colors (Sun=red, Sat=blue) */
@@ -705,4 +721,21 @@ footer a:hover, footer a:focus { color: var(--accent); text-decoration: underlin
 .load-fallback button:hover,
 .load-fallback button:focus {
   border-color: var(--accent);
+}
+
+/* 본문 바로가기(skip-to-content) 링크 — 평상시 숨김, 키보드 포커스 시 좌상단 노출 (WCAG 2.4.1) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  padding: 0.6rem 1rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--accent);
+  border-radius: 0 0 6px 0;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
 }
