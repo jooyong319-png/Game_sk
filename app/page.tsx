@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const games = await getAllGames();
   const lastUpdated = await getLastUpdated();
+  // 빌드(SSR) 시점의 '현재 시각' 기준값. 클라 첫 렌더도 이 값을 써서 하이드레이션 불일치 제거.
+  const serverNow = new Date().toISOString();
 
   const websiteJsonLd = {
     '@context': 'https://schema.org',
@@ -30,7 +32,7 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       <AdSlot slot="main-top" size="top" />
-      <Home initialGames={games} lastUpdated={lastUpdated} />
+      <Home initialGames={games} lastUpdated={lastUpdated} serverNow={serverNow} />
       <AdSlot slot="main-mid" size="mid" />
       <nav className="seo-nav" aria-label="카테고리 바로가기">
         <a href="/upcoming-games">신규 게임 출시 예정 일정</a>

@@ -9,6 +9,7 @@ interface Props {
   games: Game[];
   wishlist: { has: (id: string) => boolean; toggle: (id: string) => void; ids: Set<string> };
   onPick: (id: string) => void;
+  now: Date;
 }
 
 interface MonthGroup {
@@ -48,14 +49,14 @@ function groupByMonth(games: Game[]): MonthGroup[] {
   return Array.from(map.values());
 }
 
-export function ListView({ games, wishlist, onPick }: Props) {
+export function ListView({ games, wishlist, onPick, now }: Props) {
   const groups = useMemo(() => groupByMonth(games), [games]);
 
   if (games.length === 0) {
     return <p className={styles.empty}>조건에 맞는 게임이 없어요. 필터를 바꿔보세요.</p>;
   }
 
-  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const today = new Date(now); today.setHours(0, 0, 0, 0);
   const currentYM = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
   return (
@@ -77,7 +78,7 @@ export function ListView({ games, wishlist, onPick }: Props) {
 
             <ul className={styles.grid}>
               {group.games.map(g => {
-                const diff = calcDayDiff(g.release_date);
+                const diff = calcDayDiff(g.release_date, now);
                 const dd = diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
                 const imminent = diff >= 0 && diff <= 7;
                 const cat = CATEGORY_META[g.category];

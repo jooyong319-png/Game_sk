@@ -11,6 +11,7 @@ interface Props {
   games: Game[];
   wishlist: { has: (id: string) => boolean };
   onPick: (id: string) => void;
+  now: Date;
 }
 
 interface Cell {
@@ -24,13 +25,13 @@ interface Cell {
 function pad(n: number): string { return String(n).padStart(2, '0'); }
 function toISO(d: Date): string { return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
 
-function buildCells(cursor: Date, games: Game[]): Cell[] {
+function buildCells(cursor: Date, games: Game[], now: Date): Cell[] {
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
   const firstOfMonth = new Date(year, month, 1);
   const startWeekday = firstOfMonth.getDay();
   const start = new Date(year, month, 1 - startWeekday);
-  const today = new Date(); today.setHours(0,0,0,0);
+  const today = new Date(now); today.setHours(0,0,0,0);
   const byDate = new Map<string, Game[]>();
   for (const g of games) {
     if (!byDate.has(g.release_date)) byDate.set(g.release_date, []);
@@ -52,8 +53,8 @@ function buildCells(cursor: Date, games: Game[]): Cell[] {
   return cells;
 }
 
-export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
-  const cells = useMemo(() => buildCells(cursor, games), [cursor, games]);
+export function CalendarView({ cursor, onCursorChange, games, onPick, now }: Props) {
+  const cells = useMemo(() => buildCells(cursor, games, now), [cursor, games, now]);
   const monthLabel = `${cursor.getFullYear()}년 ${cursor.getMonth() + 1}월`;
   const [selectedISO, setSelectedISO] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -197,7 +198,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick }: Props) {
             {panelGames.length === 0 ? (
               <p className={styles.dayEmpty}>이 날짜 이후 출시 예정 게임이 없어요.</p>
             ) : panelGames.map(g => {
-              const diff = calcDayDiff(g.release_date);
+              const diff = calcDayDiff(g.release_date, now);
               const dd = diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
               const cat = CATEGORY_META[g.category];
               const mmdd = g.release_date.slice(5).replace('-', '.');
