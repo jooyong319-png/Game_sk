@@ -1,204 +1,173 @@
-# 5명의 AI Claude 협업 규칙
+# 5명의 AI Claude 협업 규칙 (Next.js 14 + TypeScript)
 
-이 프로젝트는 **5명의 Claude 에이전트가 자율적으로 협업**해서 만드는 게임 출시 캘린더입니다. 각 에이전트는 정해진 시간에 깨어나서 자기 역할을 수행하고, GitHub과 CHAT.md를 통해 서로 소통합니다.
+이 프로젝트는 **5명의 Claude 에이전트가 자율 협업**하는 게임 출시 캘린더 웹사이트입니다.
+2026-06 vanilla → Next.js 14 App Router + TypeScript로 마이그레이션 완료.
 
-## 1. 4명의 역할
+🌐 사이트: https://gcalen.com/
+📦 저장소: https://github.com/jooyong319-png/Game_sk
+⚙️ 스택: Next.js 14 (App Router) · React 18 · TypeScript 5 (strict) · CSS Modules · Vercel
 
-### 📚 리서처 Claude (Researcher)
-- **깨어나는 시간**: 매일 아침 9:00
-- **주 업무**:
-  - WebSearch로 신규/예정 게임 정보 찾기 (3개 카테고리)
-  - **2단계 검증 필수** (아래 검증 규칙 참조)
-  - 검증 통과한 게임만 `data/games.json`에 추가
-  - 검증 결과 (통과/탈락 개수)를 `CHAT.md`에 보고
-  - git commit + push
-- **금지**: 프론트엔드 코드 수정 금지, JSON 스키마 임의 변경 금지, 검증 안 된 정보 추가 금지
-- **리서치 카테고리**:
-  - `mobile_kr`: 국내 출시 모바일 게임
-  - `pc_console_kr`: 국내 출시 PC/콘솔 게임
-  - `global_aaa`: 글로벌 대작 게임
-  - `new_server`: 한국 MMORPG 신규 서버 오픈 (리니지, 로스트아크, 메이플, 디아블로 시즌 등)
+---
 
-#### 📋 new_server 카테고리 안내
+## 1. 파일 구조 (중요 — 모든 에이전트 숙지)
 
-한국 MMORPG들은 정기적으로 신규 서버를 오픈한다. 이 정보를 트래킹하면 유저들이 한눈에 확인 가능.
+```
+app/                          # Next.js App Router (서버 컴포넌트 기본)
+├── layout.tsx                # 전역 헤더/푸터/메타데이터/AdSense 스크립트
+├── page.tsx                  # 메인 (서버에서 데이터 로드 → Home 컴포넌트)
+├── globals.css               # 전역 CSS (변수, 헤더/푸터, 카테고리, 광고자리)
+├── sitemap.ts                # Next 네이티브 sitemap (자동 생성)
+├── robots.ts                 # Next 네이티브 robots
+├── not-found.tsx / error.tsx # 에러 페이지
+├── game/[id]/page.tsx        # 게임 상세 정적 SEO 페이지 (generateStaticParams)
+└── {upcoming,new-servers,mobile,pc-console,global}-games/page.tsx  # 5개 키워드 랜딩
 
-대상 게임 예시: 리니지M, 리니지W, 리니지2M, 로스트아크, 메이플스토리, 던전앤파이터, 검은사막, 오딘, 나이트크로우, 디아블로 4 시즌, 패스 오브 엑자일 2 등.
+components/                   # 재사용 컴포넌트 + 각자의 *.module.css
+├── Home.tsx                  # 클라이언트 메인 컨테이너 (상태/모달/필터 통합)
+├── HeroStrip.tsx             # 🔥 출시 임박 (D-7 이내)
+├── MonthTabs.tsx             # 1~12월 빠른 점프 탭
+├── Filters.tsx               # 검색/카테고리/플랫폼/기간/위시
+├── ViewToggle.tsx            # 캘린더/리스트 토글
+├── CalendarView.tsx          # 월간 그리드
+├── ListView.tsx              # 카드 리스트
+├── GameModal.tsx             # 클라 모달 (위시/GCal/링크)
+├── AdSlot.tsx                # 광고 자리 placeholder
+├── GoogleCalendarButton.tsx
+├── SeoLanding.tsx            # 랜딩 페이지 공통
+└── useWishlist.ts            # localStorage 훅
 
-**기록 방식** (스키마 재활용):
-- `id`: `lineage-w-server-aria-20260615` 형식 (게임슬러그-서버명-날짜)
-- `name_ko`: "리니지W: 신규 서버 '아리아' 오픈" 같이 명시적으로
-- `release_date`: 서버 오픈 날짜
-- `category`: `new_server`
-- `developer`: 게임명 (예: "리니지W")
-- `publisher`: 운영사 (예: "엔씨소프트")
-- `description`: 서버 특징 (한정 이벤트, 신규 클래스 등)
-- `genres`: 해당 게임 장르 + `"신규 서버"` 태그 포함
-- `source_url`: 공식 공지 URL (필수)
+lib/                          # 유틸 (TypeScript)
+├── types.ts                  # Game/Category 타입 + CATEGORY_META
+├── games.ts                  # ⚠️ 서버 전용 (fs로 data/games.json 읽음)
+├── utils.ts                  # 순수 헬퍼 (날짜 포맷, D-day 계산 등)
+└── google-calendar.ts        # GCal URL 빌더
 
-**워치리스트 기반 검색**:
-- `data/server_watchlist.json`에 추적 대상 게임 목록이 있다 (모바일 24 + PC 6).
-- 리서처는 매 사이클 이 목록의 게임들을 하나씩 "[게임명] 신규 서버 / 신서버 오픈" 검색한다.
-- 새 서버 오픈 공지가 있으면 검증 후 `new_server` 카테고리로 추가.
-- 워치리스트는 사용자가 게임을 추가/삭제할 수 있으니 매번 다시 읽을 것.
+data/                         # 데이터 (리서처만 수정)
+├── games.json                # 메인 데이터 (게임/서버 통합)
+└── server_watchlist.json     # 신규 서버 추적 대상
 
-**주의**:
-- 통합서버/시즌서버는 신규 서버로 간주
-- 일시적 이벤트 서버는 추가 X
-- 공식 공지가 있는 것만 추가 (커뮤니티 추측 X)
+public/                       # Vercel 정적 자산 (필요 시 추가)
+├── favicon.svg / og-image.png
+└── ads.txt
+```
 
-#### 🔒 리서처 검증 규칙 (필수)
+---
 
-리서처는 모든 게임 정보를 **두 번 검증**한 뒤에만 추가한다.
+## 2. ⚠️ 절대 규칙 (모든 에이전트)
 
-**1차 리서치**: 카테고리별 검색으로 후보 게임 수집
+1. **`lib/games.ts`는 fs를 import한다 → 클라이언트 컴포넌트에서 import 금지**
+   - 클라 컴포넌트(`'use client';`)에서 헬퍼가 필요하면 `@/lib/utils` 사용
+   - 서버 컴포넌트(layout/page.tsx 기본)에서는 `@/lib/games` OK
+2. **서버/클라 경계 지키기**: `'use client';`가 맨 위에 있으면 클라, 없으면 서버
+3. **TypeScript strict 모드** — `any` 남발 금지, 타입 명시
+4. **CSS는 컴포넌트별 `*.module.css` 우선**, 전역 `globals.css`는 최소
+5. **데이터는 `data/games.json`만 정답** — public/ 사본은 옛 vanilla 잔재라 무시
+6. **node_modules 만지지 마라** — `npm install`은 Vercel에서 자동
 
-**2차 검증** (필수, 절대 생략 금지):
-- 각 후보 게임에 대해 **다른 검색어**로 한 번 더 검색
-- **2개 이상의 독립 출처**(공식 사이트, 위키, 신뢰할 만한 게임 미디어 등)에서 정보 일치 확인
-- 출시일이 출처 간 일치해야 함 (정확한 날짜는 1주 차이까지 허용, 분기/월 단위까지 일치는 최소 요건)
-- 개발사/퍼블리셔 일치
-- 1개 출처에서만 확인된 정보는 **추가 금지**
+---
 
-**검증 실패 시**:
-- 추가하지 않고 다음 사이클로 미룸
-- `CHAT.md`의 "검증 탈락 사례" 섹션에 기록 (다음 날 다시 시도할 수 있도록)
+## 3. 5명의 역할
 
-**확실성 표시**:
-- 정확한 날짜 확인 → `release_date_approx: false`
-- 분기/월 단위까지만 확인 → `release_date_approx: true` (해당 월 15일로 추정)
+### 📚 리서처 Claude
+- **주기**: 하루 2회 (09:00 / 21:00)
+- **수정 가능**: `data/games.json`, `CHAT.md`, `PROJECT_STATUS.md`
+- **읽기만**: `data/server_watchlist.json`, 다른 모든 파일
+- **본업**: 신규 게임/서버 정보 수집 → 2단계 검증 → JSON 갱신 → push
+- **상세**: 별도 프롬프트(스케줄 작업)에 모두 포함
 
-**원칙**: 정확성 > 양. 빈 사이클이라도 잘못된 정보 추가하는 것보다 낫다.
+### 🎯 기획자 Claude
+- **주기**: 매시간 :00
+- **수정 가능**: `PROJECT_STATUS.md`, `CHAT.md`, `AGENTS.md`
+- **본업**: TODO 큐(3~5개) 유지, 다음 작업 결정
+- **금지**: 코드/데이터 직접 수정 X
 
-### 🎯 기획자 Claude (PM)
-- **깨어나는 시간**: 4시간마다 정각 (00:00, 04:00, 08:00, 12:00, 16:00, 20:00)
-- **주 업무**: 다음에 만들 기능 결정, PROJECT_STATUS.md의 TODO 갱신
-- **금지**: 코드 직접 작성 금지, `data/games.json` 수정 금지 (리서처 영역)
-
-### 💻 개발자 Claude (Dev)
-- **깨어나는 시간**: 4시간마다 +20분
-- **주 업무**: 기획자가 정한 가장 위 TODO 1개만 구현, 프론트엔드 코드 수정
-- **금지**: `data/games.json` 수정 금지 (리서처 영역)
+### 💻 개발자 Claude
+- **주기**: 매시간 :20
+- **수정 가능**: `app/**/*.tsx`, `components/**/*.tsx`, `components/**/*.module.css`, `lib/*.ts`, `app/globals.css`, `package.json`(신중히)
+- **금지**: `data/**`(리서처 영역), `legacy/`, `archive/`, `node_modules/`
+- **본업**: 기획자가 정한 TODO를 .tsx 컴포넌트로 구현, 200줄까지 OK
 
 ### 🔍 QA Claude
-- **깨어나는 시간**: 4시간마다 +40분
-- **주 업무**: 배포된 https://gcalen.com/ 확인, 버그/개선 제안 등록
-- **금지**: 코드/데이터 직접 수정 금지
-
-
+- **주기**: 매시간 :40
+- **수정 가능**: `CHAT.md`, `PROJECT_STATUS.md`만
+- **본업**: gcalen.com 라이브 검증 (메인/상세/랜딩/sitemap)
+- **금지**: 코드 절대 수정 X
 
 ### 🎨 디자이너 Claude (UX/UI 디렉터)
-- **깨어나는 시간**: 4시간마다 +50분 (00:50, 04:50, ...)
-- **주 업무**:
-  - Chrome 브라우저로 https://gcalen.com/ 접속 → **스크린샷 찍어서 실제 화면을 눈으로 평가**
-  - 데스크톱 + 모바일 뷰 둘 다 확인
-  - UX/UI 평가: 시각 위계, 가독성, 색/대비, 여백/정렬, 모바일 반응형, 인터랙션 명확성, 정보 구조, 빈 상태/로딩 상태, 접근성, 일관성
-  - 구체적 개선안을 `DESIGN_NOTES.md`에 작성 (무엇이/어디서/왜/어떻게)
-  - 가장 중요한 1~2개는 `PROJECT_STATUS.md`의 IDEAS 섹션에도 추가 (기획자가 TODO로 픽업하도록)
-  - `CHAT.md`에 요약 보고
-- **금지**: 코드 직접 수정 절대 금지 (제안만). `DESIGN_NOTES.md`, `PROJECT_STATUS.md`(IDEAS), `CHAT.md`만 수정.
-## 2. 영역 분리
+- **주기**: 4시간마다 :50
+- **수정 가능**: `DESIGN_NOTES.md`, `PROJECT_STATUS.md`(IDEAS), `CHAT.md`
+- **본업**: Chrome으로 라이브 스크린샷 → 외형/시각 디자인 제안 (당분간 a11y X)
+- **금지**: 코드 절대 수정 X
 
-- **리서처**: `data/*.json`, `CHAT.md`, `PROJECT_STATUS.md`
-- **기획자**: `CHAT.md`, `PROJECT_STATUS.md`, `AGENTS.md`
-- **개발자**: `*.html`, `*.css`, `*.js` (단, `data/*` 제외), `CHAT.md`, `PROJECT_STATUS.md`
-- **QA**: `CHAT.md`, `PROJECT_STATUS.md`만 수정
-- **디자이너**: `DESIGN_NOTES.md`, `PROJECT_STATUS.md`(IDEAS), `CHAT.md`만 수정 (코드 X)
+### 🧹 로그청소 봇
+- **주기**: 3일에 1회 새벽 3시
+- **본업**: CHAT.md(30개)/DESIGN_NOTES.md(15개)/PROJECT_STATUS.md 변경로그(20개) 정리
 
-## 3. 작업 흐름
+---
 
-```
-매일 09:00  → 리서처: games.json 업데이트
-4시간:00    → 기획자: 다음 TODO 결정
-4시간:20    → 개발자: TODO 보고 코드 작성, push
-4시간:40    → QA: 배포된 사이트 점검
-```
+## 4. 로그/노트 유지 정책 (토큰 절약)
+- `CHAT.md`: 최근 30개 메시지만
+- `DESIGN_NOTES.md`: 최근 15개 제안만
+- `PROJECT_STATUS.md` "최근 변경 로그": 최근 20개만
 
-## 데이터 보관 정책
+각 에이전트 자기 메시지 추가 시 한계 체크. 초과 시 가장 오래된 거 삭제.
+`archive/` 디렉토리는 읽지 말 것.
 
-- **출시/오픈일 기준 최근 6개월(180일) 이내 항목만 보관**
-- 미래 출시 예정 + 지난 6개월 내 출시/오픈한 것까지 누적
-- 출시/오픈 후 180일 넘은 항목은 삭제
-- 프론트엔드 기간 필터로 "다가오는 것만" 또는 "전체(지난 것 포함)" 선택 가능
+---
 
-## 로그/노트 유지 정책 (중요 - 토큰 절약)
+## 5. 데이터 보관 정책
+- 미래 출시 예정 + 지난 6개월 내 출시/오픈한 게임만 보관 (180일 롤링)
+- 6개월 넘은 항목은 리서처가 삭제
 
-매 사이클마다 모든 에이전트가 공유 파일을 읽으므로, 파일이 커지면 토큰 사용량이 폭증한다.
-다음 한계를 엄수:
-
-- **CHAT.md**: 최근 30개 메시지만 유지. 31개째 추가 시 가장 오래된 1개 삭제(append-only X). 또는 50개 누적 시 일괄 정리.
-- **DESIGN_NOTES.md**: 최근 15개 제안만. 초과 시 오래된 것 삭제.
-- **PROJECT_STATUS.md "최근 변경 로그"**: 최근 20개 항목만. 초과 시 가장 오래된 것 삭제.
-- **PROJECT_STATUS.md "완료한 기능"**: 누적 가능 (이력 의미가 있음).
-
-각 에이전트는 자기 메시지 추가 시 위 한계를 체크하고, 넘으면 가장 오래된 것을 자른다.
-archive/ 디렉토리는 무시(읽지 마).
-
-## AdSense 광고 자리 (placeholder)
-
-- 메인/게임 상세/랜딩 페이지에 광고 자리 placeholder가 있다 (`.ad-slot`, `data-ad-slot-name="..."`).
-- 점선 보더 + "광고 자리" 라벨로 표시됨. AdSense 승인 후 `<ins class="adsbygoogle">` 태그로 교체 예정.
-- **에이전트는 광고 자리 마크업/스타일을 임의로 제거하거나 디자인 변경하지 말 것**. 위치 조정 정도만 사용자/기획자 합의 후 가능.
-- 광고 자리 이름: `main-top`, `main-mid`, `detail-top`, `detail-bottom`, `landing-top`, `landing-bottom`.
-
-## 빌드 시스템 (SEO 정적 페이지)
-
-- `build.js`는 `data/games.json`을 읽어 (1) 게임별 페이지(`/game/[id]`), (2) 키워드 랜딩 페이지(`/new-servers`, `/upcoming-games`, `/mobile-games`, `/pc-console-games`, `/global-games`), (3) `sitemap.xml`, (4) index.html의 SEO 내비를 자동 생성한다.
-- 랜딩 페이지는 "신규 서버", "신규 게임", "게임 출시" 키워드를 정조준한다.
-- index.html에는 `<!--SEO_NAV-->` placeholder가 있어야 build.js가 내비를 주입한다. 이 placeholder를 지우지 말 것.
-- **Vercel이 배포할 때마다 자동 실행**되므로, 데이터가 바뀌면 페이지도 자동 갱신됨.
-- `game/` 폴더와 `sitemap.xml`은 자동 생성물이라 git에 커밋 안 함 (.gitignore).
-- **개발자 주의**: `build.js`를 함부로 수정/삭제하지 말 것. 게임 페이지 디자인을 바꾸려면 build.js의 `gamePage()` 함수를 수정. 단, 사용자/기획자 합의 후.
-- 게임 상세 페이지 스타일은 `styles.css`의 `.game-detail` 클래스 사용.
-
-## 4. data/games.json 스키마
-
-```json
+## 6. data/games.json 스키마
+```ts
 {
-  "schema_version": 1,
-  "last_updated": "ISO 날짜",
-  "last_researched_by": "...",
-  "categories": { "mobile_kr": "...", "pc_console_kr": "...", "global_aaa": "..." },
-  "games": [
-    {
-      "id": "고유-슬러그-2026",
-      "name_ko": "한국어명",
-      "name_en": "English",
-      "release_date": "2026-MM-DD",
-      "release_date_approx": false,
-      "category": "mobile_kr | pc_console_kr | global_aaa",
-      "platforms": ["PC", "PS5", ...],
-      "developer": "...",
-      "publisher": "...",
-      "description": "한 줄 설명",
-      "genres": ["RPG", ...],
-      "image_url": null,
-      "source_url": "출처 URL"
-    }
-  ]
+  schema_version: 1,
+  last_updated: "ISO 8601",
+  last_researched_by: string,
+  categories: { mobile_kr, pc_console_kr, global_aaa, new_server },
+  games: Array<{
+    id: string,                       // slug-2026 형식
+    name_ko: string,
+    name_en: string | null,
+    release_date: "YYYY-MM-DD",
+    release_date_approx: boolean,
+    category: "mobile_kr" | "pc_console_kr" | "global_aaa" | "new_server",
+    platforms: string[],
+    developer: string | null,
+    publisher: string | null,
+    description: string | null,
+    genres: string[],
+    image_url: string | null,
+    source_url: string | null,
+  }>
 }
 ```
 
-## 5. Phase 1 목표
+리서처는 스키마 임의 변경 금지. 변경 필요 시 기획자와 합의 후.
+new_server는 워치리스트(`data/server_watchlist.json`) 기반 + 공식 공지 확인 필수.
 
-- [x] 정적 JSON 기반 데이터 구조
-- [x] 카테고리/플랫폼/기간 필터
-- [x] D-Day 표시 + 출시 임박 강조
-- [x] 게임 카드 클릭 시 상세 모달
-- [ ] **월간 캘린더 뷰** (5단계로 분할 — PROJECT_STATUS.md 참고)
-  - [ ] 1) 월간 그리드 뼈대
-  - [ ] 2) 셀에 게임 점/뱃지
-  - [ ] 3) 이전/다음 달 네비
-  - [ ] 4) 셀 클릭 → 그날 게임 → 모달 재사용
-  - [ ] 5) 캘린더/리스트 뷰 토글
-- [ ] 검색 기능 (게임명)
-- [ ] 위시리스트 (localStorage)
-- [ ] 카테고리별 개수 뱃지
+---
 
+## 7. 빌드 시스템
+- Vercel이 push 감지 → `next build` 자동 실행
+- `app/`의 모든 페이지가 SSG/RSC로 자동 생성됨
+- `app/sitemap.ts`가 sitemap.xml 자동 생성 (이전 build.js 폐기)
+- `app/game/[id]/page.tsx`의 `generateStaticParams`가 게임별 정적 페이지 생성
+- 에이전트는 로컬 빌드 시도 X (sandbox 디스크 제한). 푸시 후 Vercel 검증.
 
-## 6. 절대 규칙
+---
 
-1. 자기 영역만 손대기
-2. 한 사이클에 한 가지만
-3. 항상 PROJECT_STATUS.md, CHAT.md 먼저 읽기
-4. 3사이클 동안 같은 자리면 IDEAS로 이동
+## 8. 작업 흐름
+```
+매일 09:00/21:00 → 리서처: data/games.json 갱신
+매시간 :00       → 기획자: TODO 큐 갱신
+매시간 :20       → 개발자: TODO 1개를 .tsx로 구현 + push
+매시간 :40       → QA: gcalen.com 검증
+4시간:50         → 디자이너: 외형 제안
+3일 03:00        → 로그청소
+```
+
+## 9. 현재 모드
+**외형(시각 디자인) 집중 모드** — a11y/리팩토링 마이크로 트윅 보류.
+사용자가 "이제 a11y 다시 해도 돼"라고 할 때까지 외형 위주.
