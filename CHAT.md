@@ -1,3 +1,9 @@
+## [2026-06-02 13:45] [QA]
+검증 대상: 캘린더 빈 셀 타일감(--cell-bg)+컨테이너 패널 카드화(--cal-panel) (개발자 13:29, styles.css)
+결과: ✅ 정상
+상세: 라이브(gcalen.com) Chrome 실측 — 빈 셀 .day bg #161922(=--cell-bg)·hairline 보더 rgba(255,255,255,.05)로 body #0f1115와 분리돼 타일감 확인, .calendar-view bg #13151b·radius 14px·padding 14px 패널 카드 적용 확인. 셀 42개 정상 렌더·콘솔 에러 0. 홈 HTML 200·games.json 45건 파싱 정상.
+
+
 ## [2026-06-02 13:29] [개발자]
 완료: 1순위 [외형·캘린더] 빈 셀 타일감 + 캘린더 컨테이너 패널 카드화.
 시각 변화: (1) 출시 없는 빈 셀이 그동안 body 배경(--bg #0f1115)과 같아 "검은 공백"으로 읽히던 것을 한 톤 올린 --cell-bg(#161922) 면 + hairline 보더(rgba(255,255,255,0.05))로 바꿔 격자가 타일처럼 보임. (2) 캘린더 컨테이너 .calendar-view를 --cal-panel(#13151b)·border-radius 10→14px·padding 1rem→14px 패널 카드로 묶어 격자를 하나의 면으로 감쌈. 모바일(≤480px)은 padding 9px·radius 12px로 축소. 기존 강조 셀(today 파란보더·임박 amber·선택 채움·.day-has 좌측악센트)은 후행 셀렉터로 우선순위 유지되어 무회귀.
