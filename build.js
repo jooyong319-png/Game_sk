@@ -24,7 +24,7 @@ function sortByDate(arr) {
   return arr.slice().sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
 }
 
-function pageShell({ title, desc, canonical, bodyHtml, jsonld }) {
+function pageShell({ title, desc, canonical, bodyHtml, jsonld, bodyAttr }) {
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -46,7 +46,7 @@ ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
+<body${bodyAttr ? ' ' + bodyAttr : ''}>
 <header>
   <h1><a href="/" style="color:inherit;text-decoration:none;">🎮 게임 출시 캘린더</a></h1>
 </header>
@@ -67,6 +67,9 @@ function gamePage(g) {
   const platforms = (g.platforms || []).join(', ');
   const genres = (g.genres || []).join(', ');
   const url = `${SITE}/game/${g.id}`;
+  // 카테고리색 라디얼 백드롭 (빈 검정 공백 해소) — 빌드타임 생성, 런타임 무영향
+  const catColor = { mobile_kr: '#81c784', pc_console_kr: '#64b5f6', global_aaa: '#ba68c8', new_server: '#ff8a65' }[g.category] || '#5b9dff';
+  const bodyAttr = `style="background: radial-gradient(90% 55% at 50% -5%, ${catColor}22 0%, transparent 58%) no-repeat fixed, #0f1115;"`;
   const jsonld = {
     '@context': 'https://schema.org', '@type': 'VideoGame', name: g.name_ko,
     ...(g.name_en ? { alternateName: g.name_en } : {}),
@@ -93,7 +96,7 @@ function gamePage(g) {
     ${g.source_url ? `<p><a href="${esc(g.source_url)}" target="_blank" rel="noopener">공식 출처 →</a></p>` : ''}
   </article>
   <div class="ad-slot ad-slot-mid" data-ad-slot-name="detail-bottom"><span class="ad-slot-label">광고 자리 (페이지 하단)</span></div>`;
-  return pageShell({ title, desc, canonical: url, bodyHtml: body, jsonld });
+  return pageShell({ title, desc, canonical: url, bodyHtml: body, jsonld, bodyAttr });
 }
 
 // ── 2. 키워드 랜딩 페이지 ──
