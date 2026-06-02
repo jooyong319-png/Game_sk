@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-03 00:00 KST (기획자 — 외형 모드 사이클. **활성 운영자 요청 [UX·모바일] 임박 스트립 모바일 컴팩트화 완료 처리** — 개발자 21:20 완료·QA 21:40 검증(데스크톱 실측, 모바일 ≤480px 소스검증) → USER_REQUESTS 아카이브 이동. 큐 5→4 유지(전부 Next.js 이관 외형 회귀복구·현행 app/·components/ 경로): 1순위=캘린더 출시셀 카테고리색 복구(CalendarView)·2순위=/game/[id] D-day 배지+카테고리 상단바(page.tsx·globals.css)·3순위=이모지→SVG 1단계·4순위=임박 스트립 카테고리색 글로우(데스크톱 한정). 신규 디자이너 제안 0(16:50 5건 전량 큐/완료 소진)·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·a11y/리팩토링 0건(외형 모드 IDEAS 보관).)
+마지막 갱신: 2026-06-02 21:10 KST (기획자 — 외형 모드 사이클. 직전 사이클 이후 디자이너 20:50 "외형+인벤 비교" 제안 5건 유입(데스크2·모바일1·인벤2) 처리: 높음 캘린더 3건(주말 색·today 채움 원형·모바일 cellHas 강화)을 [캘린더 시각 강화 묶음] 1건으로 큐 승격, 인벤#2 리스트 카드 배너 그라데를 5순위 신규 추가, 인벤#1 위시 인기 TOP5는 데이터 선결이라 IDEAS 보류. 큐 3→5: 1=이모지→SVG 1단계(운영자요청)·2=캘린더 시각 강화 묶음(CalendarView)·3=임박 스트립 카테고리색 글로우(데스크톱 한정)·4=/game/[id] 미니카드 그리드·5=리스트 카드 배너 카테고리 그라데이션. 전부 Next.js 현행 경로(app/·components/). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·a11y/리팩토링 0건(IDEAS 보관).)
 
 
 ## 현재 단계
@@ -132,27 +132,37 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-03 00:00 (기획자): **모드 = 외형(시각 디자인) 집중, 큰 단위.** 직전 1순위 [외형·회귀·캘린더] 출시 셀 카테고리 색 복구(CalendarView) 개발자 23:20 완료·QA 23:40 ✅(데스크톱 실측·모바일 소스검증) → 완료한 기능 이동. 큐 3→4: 1순위=/game/[id] D-day 배지+카테고리 상단바(page.tsx·globals.css)·2순위=이모지→SVG 1단계(layout/ViewToggle/HeroStrip/GameModal/ListView)·3순위=임박 스트립 카테고리색 글로우(HeroStrip, 데스크톱 한정)·4순위=신규 [외형·신규컴포넌트] /game/[id] 하단 "같은 시기 출시" 관련 게임 미니카드 그리드(#1과 같은 상세페이지 표면 묶음, 디자이너 09:01안 Next 재경로). 4건 모두 Next.js 이관 외형 회귀복구/신규(현행 app/·components/ 경로, 옛 styles.css/script.js/build.js는 라이브 미반영). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·신규 디자이너 제안 0·a11y/리팩토링 0건(IDEAS 보관).
+> 갱신 2026-06-02 21:10 KST (기획자): **모드 = 외형(시각 디자인) 집중, 큰 단위.** 직전 사이클 이후 신규 유입: 디자이너 20:50 "외형+인벤 비교" 제안 5건(데스크2·모바일1·인벤2). 처리: 높음 3건(주말 색·today 원형·모바일 cellHas 강화)을 **[캘린더 시각 강화 묶음]** 1건으로 큐 승격(전부 CalendarView 동일 파일 → 큰 단위 동시 처리), 인벤#2(리스트 카드 배너 그라데)는 5순위 신규 추가, 인벤#1(위시 인기 TOP5)은 **데이터 선결**(games.json popularity 필드 등)이라 IDEAS 보류. 큐 3→5: 1순위=이모지→SVG 1단계(운영자요청)·2순위=캘린더 시각 강화 묶음·3순위=임박 스트립 카테고리색 글로우·4순위=/game/[id] "같은 시기 출시" 미니카드 그리드·5순위=리스트 카드 배너 카테고리 그라데이션. 전부 Next.js 현행 경로(app/·components/). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·a11y/리팩토링 0건(IDEAS 보관).
 
 1. **[외형·미니멀·높음] 노출 이모지 → 인라인 SVG (1단계: 헤더/뷰토글/임박/위시) — Next.js 재경로** (운영자 직접 요청, 디자이너 13:10안을 Next 컴포넌트 경로로 재작성)
    - 운영자 지시 "이모지 제거하고 SVG 미니멀". 1단계 대상: 헤더 로고 🎮(`app/layout.tsx`)·뷰토글 📅📋(`components/ViewToggle.tsx`)·임박 🔥(`components/HeroStrip.tsx`)·위시 ★☆(`components/GameModal.tsx`·`components/ListView.tsx`). (※옛 index.html/script.js 인벤토리는 폐기 — 위 Next 파일로 대체.)
    - 구현: 공용 인라인 SVG 스프라이트를 `app/layout.tsx` `<body>` 최상단에 `<svg width="0" height="0" style={{position:'absolute'}} aria-hidden>` + `<symbol>`(Lucide 라인 톤, viewBox 0 0 24 24) 정의 — 심볼 path는 DESIGN_NOTES 13:10에 전량 명시(#ic-gamepad/#ic-calendar/#ic-list/#ic-flame/#ic-star). 각 컴포넌트의 이모지 문자열을 `<svg className="ic"><use href="#ic-..."/></svg>`로 치환. globals.css 신규 `.ic{width:1em;height:1em;vertical-align:-0.14em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}` + `.ic-fill{fill:currentColor;stroke:none}`(위시 활성). 색은 전부 currentColor 단색, **유일한 컬러 포인트는 헤더 🎮 한 곳**(`.ic{color:var(--accent)}` 또는 그라데이션). 🔥는 단색 유지. 위시 별 토글은 textContent 교체 대신 class 토글.
    - 2·3단계(카드/모달 메타·액션 🛠️🏢📄▶🔗, 랜딩 SEO)는 후속 TODO. 검증: `npm run typecheck` 통과, `npm run build` 무에러. AGENTS.md 신규 이모지 금지 명문화는 별도(개발자 재량).
 
-2. **[외형·D-DAY강조·보통] "🔥 출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우 — Next.js 재경로** (디자이너 13:01 #4, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`로 재작성)
+2. **[외형·캘린더·높음·묶음] 캘린더 시각 강화 3종 (주말 색 구분 + today 채움 원형 + 모바일 출시셀 색 강화)** (디자이너 20:50 데스크#1·데스크#2·모바일#1 — `components/CalendarView.tsx` + `components/CalendarView.module.css` 동일 파일이라 한 묶음으로 동시 처리)
+   - (a) **주말 색 구분 (한국 달력 관습·인벤 정렬)**: 현재 `.dayHead{color:#888}`(module.css L59) 7요일 전부 회색·`.cellDate{color:#cfd6e0}`(L104) 전부 동일이라 주 경계 스캔 약함. CalendarView.tsx L114 요일 헤더 map을 `{['일','월','화','수','목','금','토'].map((d,i)=>(<div key={d} className={`${styles.dayHead} ${i===0?styles.sun:i===6?styles.sat:''}`}>{d}</div>))}`로, 출시셀 날짜에도 `date.getDay()` 기반 동일 클래스 부여. module.css 신규 `.sun{color:#e57373}`·`.sat{color:#7aa7ff}` + `.cellDate.sun{color:#e57373}`·`.cellDate.sat{color:#7aa7ff}`(다크 배경용 톤다운 채도 — danger/accent 원색은 쨍함). 단 `.cellToday`/`.cellSelected` 강조 셀 날짜는 흰색 유지(소스 순서 후행 또는 명시 override로 충돌 회피).
+   - (b) **today 셀 날짜 채움 원형 (구글캘린더식)**: 현재 `.cellToday{...box-shadow:inset 0 0 0 2px #4a90e2}`(L94) + 별도 `.cellTodayBadge`("오늘" 칩, L111)이라 앵커 약함. today 셀 날짜 숫자 span에 채움 원형 — `width:1.5em;height:1.5em;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center`. `.cellTodayBadge`("오늘" 텍스트) 제거해 셀 공간 절약, 셀 테두리는 `#4a90e2`→`rgba(91,157,255,0.45)`로 약화(원형과 이중강조 과함 방지). 본 작업에서 손대는 `#4a90e2` 하드코딩 줄은 `var(--accent)`(#5b9dff)로 정렬 권장.
+   - (c) **모바일(≤480px) 출시셀 색 강화**: 모바일은 `.cellName{display:none}`(L240)이라 출시일=점만 신호인데 `.cellHas` tint가 데스크 동일 color-mix 8%·띠 3px라 64px 셀서 거의 안 읽힘. `@media(max-width:480px)`에 `.cellHas{background:#1d2330;background:color-mix(in srgb, var(--cat,#5b9dff) 16%, #14171d);box-shadow:inset 4px 0 0 var(--cat,#5b9dff)}`(tint 8%→16%·띠 3→4px, 폴백 #1d2330 선행) + `.cellDot{width:7px;height:7px}`(6→7). 데스크톱 `.cellHas`는 현행 유지(미디어쿼리 내에서만 오버라이드).
+   - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색=주말 2색(#e57373·#7aa7ff)만, 카테고리/accent 색은 재사용. 데스크톱 1440 라이브 실측 + 모바일 ≤480px 소스검증(QA Chrome resize 뷰포트 미반영 한계 감안).
+
+3. **[외형·D-DAY강조·보통] "🔥 출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우 — Next.js 재경로** (디자이너 13:01 #4, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`로 재작성)
    - 현재 `.hero-card`는 카드별 차이가 D-day 숫자 색뿐이라 D-1과 D-7 임팩트 동일 → 가까운 출시일이 안 튐.
-   - HeroStrip.tsx가 이미 부여하는 `data-cat`/D-day(또는 --cat) 재사용 → D-3 이내 카드에 카테고리색 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경에 같은 색 미세 radial 겹침. D-DAY(diff 0) 카드는 주황 #ff7a59 글로우 1.3배 + `transform:scale(1.02)`(`prefers-reduced-motion` 시 transform 생략). script/tsx는 D-3/D-DAY 분기 클래스 1~2줄, CSS 1블록 위주.
-   - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(카테고리 4색·기존 amber/주황 재사용). **(주의: 모바일은 1순위에서 컴팩트 행으로 바뀌므로 글로우는 데스크톱 그리드 한정 적용.)**
+   - HeroStrip.tsx가 이미 부여하는 `data-cat`/`--cat` 재사용 → D-3 이내 카드에 카테고리색 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경에 같은 색 미세 radial 겹침. D-DAY(diff 0) 카드는 주황 #ff7a59 글로우 1.3배 + `transform:scale(1.02)`(`prefers-reduced-motion` 시 transform 생략). tsx는 D-3/D-DAY 분기 클래스 1~2줄, CSS 1블록 위주.
+   - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(카테고리 4색·기존 amber/주황 재사용). **(주의: 모바일은 컴팩트 행으로 바뀐 상태이므로 글로우는 데스크톱 그리드 한정 적용.)**
 
-
-3. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안의 Next.js 재경로 — `app/game/[id]/page.tsx` + 페이지 module/`app/globals.css`)
-   - 상세페이지가 게임 카드 1개뿐이라 하단 여백이 크고 내부링크/회유 동선이 없어 체류·SEO 손해. 1순위(D-day 배지·카테고리 상단바)로 카드 자체는 강화되나 카드 아래는 여전히 빈 공백.
+4. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안의 Next.js 재경로 — `app/game/[id]/page.tsx` + `app/globals.css`)
+   - 상세페이지가 게임 카드 1개뿐이라 하단 여백이 크고 내부링크/회유 동선이 없어 체류·SEO 손해. 카드 자체(D-day 배지·카테고리 상단바)는 강화됐으나 카드 아래는 여전히 빈 공백.
    - page.tsx: 빌드타임에 현재 게임과 **같은 달 ±2주**(release_date 기준) 내 출시되는 다른 게임을 자기 자신 제외·가까운 출시일 순으로 3~6개 추림 → `.game-detail` 카드 아래 `<section>`(h3 "같은 시기 출시") + `<a href="/game/{id}">` 미니카드 그리드. 관련 0건이면 섹션 자체 미렌더(빈 상태 처리).
    - CSS: `grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px`, 미니카드 `background:var(--bg-elev);border-radius:var(--radius-sm);padding:12px 14px` + 카테고리색 좌측 4px 바(인라인 `borderLeft:'4px solid '+CATEGORY_META[g.category].color`), 게임명 700 + 출시일·D-day. 메인 카드 톤 재사용·신규 색 없음(CATEGORY_META 4색).
    - 검증: `npm run typecheck` 통과, `npm run build`로 /game/[id] 정적 생성 무에러, 관련 0건 게임은 섹션 숨김 확인.
 
+5. **[외형·리스트카드·보통] 리스트 카드 배너 플랫 단색 → 카테고리 그라데이션** (디자이너 20:50 인벤#2 — `components/ListView.tsx` 배너 div + `components/ListView.module.css` `.cardBanner`)
+   - 현재 `.cardBanner{height:56px}` + `cat-bg-{category}` 플랫 15% 단색 + 거의 안 보이는 45deg 줄무늬 `::before`라 카드 상단 인상 약함(인벤은 실제 썸네일로 배너 풍부 — 우린 이미지 자산 없음).
+   - ListView.tsx 배너 div에 `style={{ ['--cat' as string]: CATEGORY_META[g.category].color }}` 주입 → `.cardBanner{background:linear-gradient(120deg, color-mix(in srgb,var(--cat) 26%, #14171d), color-mix(in srgb,var(--cat) 6%, #14171d))}`(미지원 폴백으로 기존 `cat-bg-*` 클래스 유지)·높이 56→64px. **SVG 워터마크(`.cardBannerEmoji`를 대형 카테고리 SVG로)는 1순위 이모지→SVG 전환 완료 후 후속** — 이번엔 그라데이션 배경+높이만.
+   - 검증: `npm run typecheck` 통과, `npm run build` 무에러. 신규 색 없음(카테고리 4색·#14171d 재사용).
+
 ### (보류 — 외형 모드 중 IDEAS 보관, 사용자가 "이제 a11y 정리하자" 지시 시 재승격)
-이번 사이클 큐→IDEAS 환원(전부 **Next.js 경로 재작성 필요** — 옛 build.js/script.js 참조라 그대로는 사용 불가): [외형·신규컴포넌트] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드(이관 회귀 복구가 먼저 → 복구 완료 후 큐 후보), [외형·통계줄] `#stats-summary` 카테고리 컬러 칩(통계줄이 Next에서 어느 컴포넌트인지 개발자 확인 후 재경로). 그 외 이전 보류분(카드 호버 입체감·로딩 스켈레톤·D-day 알약배지 그라데이션·통계줄 세그먼트 클릭필터 등)·a11y 마이크로 트윅(aria/포커스/대비/시맨틱)은 외형 모드 동안 큐 진입 금지, IDEAS 보관만.
+큐 진입 보류: [신규컴포넌트] "⭐ 위시리스트 인기 TOP5" 가로 위젯(디자이너 20:50 인벤#1 — **데이터 선결**: 로컬스토리지 위시는 개인값이라 전역 인기 산출 불가 → 리서처가 games.json에 `popularity` 필드 추가 or '글로벌 대작+임박' 큐레이션 TOP5 결정 후 큐 후보), [외형·통계줄] `#stats-summary` 카테고리 컬러 칩(Next에서 해당 컴포넌트 확인 후 재경로). 그 외 이전 보류분(카드 호버 입체감·로딩 스켈레톤·통계줄 세그먼트 클릭필터·잔여 토큰 통일 등)·a11y 마이크로 트윅(aria/포커스/대비/시맨틱)은 외형 모드 동안 큐 진입 금지, IDEAS 보관만.
 
 ## 알려진 버그 (BUGS)
 - [2026-05-31] ✅ 해소(개발자 fix 2026-05-31 08:20) — 캘린더 날짜 클릭 패널의 게임 행(.day-row) 마우스/터치 클릭 시 상세 모달 미동작. dayPanel click 핸들러의 `e.target.closest('.game-card')`→`closest('.day-row, .game-card')`로 확장해 .day-row도 openModal 도달. ☆ 위시/× 닫기 분기 유지, node --check 통과. QA께 라이브에서 (1)마우스 클릭 (2)터치 (3)키보드 Enter 모두 모달 열림 실측 부탁. [이전 보고] 키보드 Enter는 정상이나 마우스/터치만 무반응이라 '고장' 인식 위험. 원인: .day-row openModal이 #games-list 리스너 소속이라 #day-detail-panel의 .day-row 미도달; dayPanel click 리스너는 .game-card만 처리. 디자이너 04:50 Chrome 실측 발견.
@@ -163,8 +173,6 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
-- [디자이너 2026-06-02 20:50·외형모드·인벤비교] **[높음·캘린더] 요일 헤더·날짜 주말 색 구분(일=빨강 #e57373·토=파랑 #7aa7ff)** — `.dayHead`(CalendarView.module.css L59)·`.cellDate`(L104)가 7요일 전부 #888/#cfd6e0 동일 → 인벤·한국달력 관습대로 일요일 빨강·토요일 파랑(다크 배경용 톤다운). CalendarView.tsx L114 dayHead map에 인덱스 클래스 + 셀 날짜 date.getDay() 클래스, .cellToday/.cellSelected 강조 셀은 흰색 유지(충돌 회피). 변경량 작음(tsx 1~2줄+CSS). DESIGN_NOTES 20:50 데스크#1. 우선순위 높음
-- [디자이너 2026-06-02 20:50·외형모드] **[높음·모바일] 모바일 캘린더 출시일 색 가독성 강화** — 모바일(@media 480)은 `.cellName{display:none}`(L240)이라 출시일이 점만 신호인데 `.cellHas` tint가 데스크 동일 8%·띠 3px라 64px 셀서 거의 안 읽힘. @media 480에 `.cellHas` tint 8%→16%·inset 띠 3→4px·`.cellDot` 6→7px로 강화(폴백 #1d2330 선행). 이름 없는 모바일서 출시일이 카테고리 색면으로 또렷. DESIGN_NOTES 20:50 모바일#1. 우선순위 높음
 
 - [QA 2026-06-02 18:40·잔여토큰] [낮음·브랜드일관] MonthTabs.module.css L25 비활성 탭 hover 배경이 옛 accent `rgba(74,144,226,0.12)`(#4a90e2)로 남아 신규 `--accent` #5b9dff와 불일치(active 그라데이션·링크색은 토큰 복구 완료). hover tint를 `color-mix(in srgb, var(--accent) 12%, transparent)` 또는 신 accent rgba로 통일 권고. 기능 영향 없음·외형 미세. 우선순위 낮음
 - [디자이너 2026-06-02 16:50·외형모드·**이관회귀**] **[높음·회귀] /game/[id] 상세 D-DAY 배지 + 카테고리 상단바(app/game/[id]/page.tsx·globals.css .game-detail)** — 검색 유입 첫 화면인데 앱 핵심지표 D-day가 정적 상세엔 없음(모달만 보유), 회색 박스 1개로 밋밋. page.tsx에서 출시일-오늘 diff 계산해 release-date 옆 `.dday-badge`(`padding:3px 11px;border-radius:999px;font-size:1.15rem;font-weight:800`, 임박≤7 amber #f5a623·D-DAY #ff7a59·먼미래 text-faint) 삽입 + `.game-detail` 인라인 `borderTop:4px solid {카테고리색}` + h2 2rem/800. 빌드타임 생성·런타임 무영향. (옛 styles.css/build.js IDEAS의 상세 백드롭과 동일 표면의 Next 경로 재구현.) DESIGN_NOTES 16:50 #5 상세. 우선순위 높음
