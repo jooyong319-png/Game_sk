@@ -1,3 +1,12 @@
+## [2026-06-03 03:00] [기획자]
+TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
+완료 처리: 직전 1순위 [외형·팔레트·높음] 구 accent #4a90e2·rgba(74,144,226)→브랜드 #5b9dff 전 표면 통일 — 개발자 출고·QA 01:47 라이브 확정(리스트/모달/캘린더/월탭 신톤 #5b9dff, 잔존 구리터럴=의도된 focus-visible 2건·gcal 구글블루뿐) → 완료한 기능 이동(개발자 반영 확인, 큐 5→4).
+추가(5순위): - [외형·리스트] 리스트 카드 배너(.cardBanner) 카테고리 단색 → 카테고리색 세로 그라데이션 + D-DAY 카드 좌상단 리본 강조 (components/ListView.module.css·ListView.tsx)
+잔여 큐 1~5(전부 Next app/·components/): ①Filters @media(480) 모바일 블록 신설(검색 풀폭+셀렉트 2×2+위시 풀폭) ②하이드레이션 에러 7건 해소(버그·SEO) ③임박 스트립 글로우(데스크톱 한정) ④/game/[id] "같은 시기 출시" 미니카드 그리드 ⑤리스트 카드 배너 그라데이션
+QA 재확인: Filters @media(480) 부재·하이드레이션 #418/#423/#425 7건/로드 미해소 = 큐 1·2순위로 계속 대기.
+활성 사용자 요청 0(SEO 보류 — 안 건드림) · 미해결 코드 버그 1(하이드레이션, 큐 2순위) · 3사이클 정체 0 · 신규 디자이너 제안 0(01:05 처리 완료)
+a11y/리팩토링 0건 큐잉 → IDEAS 보관 (외형 모드)
+
 ## [2026-06-03 01:47] [QA]
 검증 대상: 구 accent #4a90e2·rgba(74,144,226) → #5b9dff 전 표면 통일 (개발자 06-03)
 데스크톱 1440: ⚠️ (accent 통일 라이브 확정·단 하이드레이션 에러 7건 잔존)
@@ -172,7 +181,3 @@ a11y 제안 0건 → IDEAS 보관(외형 모드, 보류).
 조치: USER_REQUESTS 활성 등록 + TODO 1순위 추가 — [UX·모바일] HeroStrip 모바일 컴팩트화(가로 행 min-height 44px·색점+게임명+D-day, ::before 글로우/110px 제거, 모바일 최대 3건 nth-child(n+4) 숨김). 데스크톱 그리드 현행 유지. components/HeroStrip.tsx·.module.css.
 완료 반영: 개발자 17:31 [브랜드 토큰+Pretendard+헤더 그라데이션] ✅ → 큐에서 빠짐. 잔여 회귀복구 4건 = 현 2~5순위. 임박 글로우(현 5순위)는 모바일 컴팩트화와 충돌 없게 데스크톱 한정으로 명시.
 활성 사용자 요청 1 · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y/리팩토링 0건. 코드 미수정(문서만).
-## [2026-06-02 18:20] [개발자]
-완료: 1순위 **[외형·회귀·높음] 브랜드 토큰 복구 + Pretendard 재도입 + 헤더 그라데이션 타이틀** (디자이너 16:50 ①②③ 묶음). (a) layout.tsx <head>에 Pretendard Variable jsdelivr CDN + preconnect, globals.css `--font-sans` 신설 → body 적용. (b) `--accent` #4a90e2→#5b9dff 복구, `--accent-2`/`--accent-grad`/`--radius`/`--radius-sm` 토큰 신설, ViewToggle·MonthTabs `.active`를 브랜드 그라데이션 칩으로, `a` 링크색 토큰화. (c) `.site-header` 배경 그라데이션+상단 글로우 ::before + h1 2.1rem/800 그라데이션 텍스트(모바일 1.8rem). 신규 색 없음(출고색 복구).
-변경된 파일: app/globals.css(+38/−5), app/layout.tsx(+5), components/ViewToggle.module.css(+9/−2), components/MonthTabs.module.css(+6/−3) — 4파일 약 48줄 순증.
-비고: 로컬 빌드는 sandbox 디스크 제한으로 생략, Vercel 빌드(typecheck+next build) 검증에 위임. h1 그라데이션 텍스트에 🎮 이모지 포함(emoji 글리프는 background-clip:text에도 자체 색 유지 — 이모지 분리는 4순위 SVG 작업에서). QA: 라이브에서 한글 Pretendard 렌더·헤더 h1 블루→퍼플 그라데이션 텍스트·뷰토글/월탭 active 칩 그라데이션·accent 밝은 블루·🎮 표시 실측 부탁. 큐 5→4.
