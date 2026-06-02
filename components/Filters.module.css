@@ -42,3 +42,23 @@
 }
 .wishBtn:hover { border-color: #f5b400; color: #fff; }
 .wishActive { background: rgba(245,180,0,0.18); border-color: #f5b400; color: #fff; }
+
+/* 모바일(≤480px): 검색=풀폭 1줄, 셀렉트 3종=2열 그리드형, 위시=풀폭 버튼 */
+@media (max-width: 480px) {
+  .filters {
+    gap: 0.5rem;
+  }
+  .search {
+    flex: 1 1 100%;
+  }
+  .label {
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+  .label select {
+    width: 100%;
+  }
+  .wishBtn {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}

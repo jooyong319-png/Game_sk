@@ -1,3 +1,8 @@
+## [2026-06-03 03:20] [개발자]
+완료: 1순위 **[외형·모바일·높음] Filters 모바일 @media(≤480px) 블록 신설** (디자이너 01:05 모바일#1). `components/Filters.module.css`에 모바일 블록이 0건이라 390px에서 `.search`(flex 1 1 200px)+카테고리/플랫폼/기간 셀렉트 3개+위시 버튼이 남는 폭에 불균등 줄바꿈하던 문제 해소. 파일 말미에 `@media(max-width:480px){ .filters{gap:0.5rem} .search{flex:1 1 100%} .label{flex:1 1 calc(50% - 0.25rem)} .label select{width:100%} .wishBtn{flex:1 1 100%;text-align:center} }` 신설 → 검색=풀폭 1줄·셀렉트=2×2 그리드형·위시=풀폭 버튼.
+변경된 파일: components/Filters.module.css (+18줄, @media 블록 1개)
+비고: 레이아웃만(신규 색 0). 데스크톱 단일 `.filters` 규칙은 미디어쿼리 밖이라 무영향. 위시 버튼 ★은 이미 SVG(#ic-star)라 Filters.tsx 무변경. CSS brace 13/13 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 검증 위임. QA님 라이브 모바일 390px에서 검색 풀폭·셀렉트 2열·위시 풀폭 정렬 실측 부탁(Chrome resize 뷰포트 미반영 시 소스검증). 큐 5→4(2~5순위 한 칸씩 당김).
+
 ## [2026-06-03 03:00] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료 처리: 직전 1순위 [외형·팔레트·높음] 구 accent #4a90e2·rgba(74,144,226)→브랜드 #5b9dff 전 표면 통일 — 개발자 출고·QA 01:47 라이브 확정(리스트/모달/캘린더/월탭 신톤 #5b9dff, 잔존 구리터럴=의도된 focus-visible 2건·gcal 구글블루뿐) → 완료한 기능 이동(개발자 반영 확인, 큐 5→4).
@@ -174,10 +179,3 @@ a11y 제안 0건 → IDEAS 보관(외형 모드, 보류).
 데스크톱 1440: ✅
 모바일 390: ⚠️ (라이브 실측 불가 — 소스 검증 대체)
 상세: 데스크톱 라이브 실측 — body Pretendard Variable 적용·h1 a 블루→퍼플 그라데이션 텍스트(linear-gradient 92deg #5b9dff→#c98ad6, clip:text)·🎮 표시·--accent #5b9dff·뷰토글/월탭 active 칩 그라데이션 모두 확인, 콘솔 에러 0, 가로스크롤 없음. ⚠️ Chrome resize가 뷰포트에 미반영(innerWidth 1920 고정)되어 모바일 390 라이브 렌더 실측 불가 → 소스 미디어쿼리 검증 대체: h1 1.8rem(≤480px)·MonthTabs overflow-x:auto·Filters flex-wrap·ListView 1열(grid 1fr)·GameModal width100%/max520/90vh 정상. 라이브 모바일 무회귀 단정 불가(다음 사이클 실측환경 확보 시 재확인). 미해결 코드 버그 0.
-## [2026-06-02 17:50] [기획자]
-운영자 직접 요청 1순위 신규 (모드: 외형 집중).
-요청: "출시 임박 배너 모바일에서 너무 불편함" + 참고 https://www.inven.co.kr/webzine/calendar/
-진단: HeroStrip이 모바일(≤480px)에서 1열 큰 카드 세로 스택(min-height 110px·최대 5건=~550px)이라 첫 화면을 다 잡아먹고 캘린더가 밀림. 인벤은 임박=단일 카운트다운 하이라이트+컴팩트 리스트(큰 카드 스택 없음).
-조치: USER_REQUESTS 활성 등록 + TODO 1순위 추가 — [UX·모바일] HeroStrip 모바일 컴팩트화(가로 행 min-height 44px·색점+게임명+D-day, ::before 글로우/110px 제거, 모바일 최대 3건 nth-child(n+4) 숨김). 데스크톱 그리드 현행 유지. components/HeroStrip.tsx·.module.css.
-완료 반영: 개발자 17:31 [브랜드 토큰+Pretendard+헤더 그라데이션] ✅ → 큐에서 빠짐. 잔여 회귀복구 4건 = 현 2~5순위. 임박 글로우(현 5순위)는 모바일 컴팩트화와 충돌 없게 데스크톱 한정으로 명시.
-활성 사용자 요청 1 · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y/리팩토링 0건. 코드 미수정(문서만).
