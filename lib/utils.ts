@@ -9,6 +9,16 @@ export function calcDayDiff(release_date: string, now: Date = new Date()): numbe
   return Math.ceil((r.getTime() - t.getTime()) / (1000 * 60 * 60 * 24));
 }
 
+// SSR(서버=UTC)와 클라(=KST, UTC+9)의 하이드레이션 불일치 방지용.
+// ISO instant를 KST 달력 날짜로 변환해, 실행 환경 timezone과 무관하게
+// 동일한 연/월/일의 '로컬 자정' Date를 반환한다. (getDate/getMonth/getDay 등
+// 로컬 필드가 서버·클라 양쪽에서 같은 값이 되도록 → 첫 렌더 HTML 일치)
+// KST는 DST가 없어 항상 +9 고정.
+export function kstDateOnly(iso: string): Date {
+  const shifted = new Date(new Date(iso).getTime() + 9 * 60 * 60 * 1000);
+  return new Date(shifted.getUTCFullYear(), shifted.getUTCMonth(), shifted.getUTCDate());
+}
+
 // 표시용 날짜 포맷 ('2026년 6월 18일')
 export function formatKoreanDate(release_date: string): string {
   const d = new Date(release_date);

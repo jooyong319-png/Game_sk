@@ -2,7 +2,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
-import { calcDayDiff, formatShortDate } from '@/lib/utils';
+import { calcDayDiff, formatShortDate, kstDateOnly } from '@/lib/utils';
 import { HeroStrip } from './HeroStrip';
 import { MonthTabs } from './MonthTabs';
 import { Filters, type FilterState } from './Filters';
@@ -29,20 +29,20 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
   });
   const [view, setView] = useState<'calendar' | 'list'>('calendar');
   const [calendarCursor, setCalendarCursor] = useState<Date>(() => {
-    const d = new Date(serverNow);
+    const d = kstDateOnly(serverNow);
     d.setDate(1);
     return d;
   });
   // 날짜 의존 렌더용 '현재 시각'. SSR/첫 렌더는 serverNow로 고정(하이드레이션 일치),
   // mount 후 실제 현재 시각으로 교체 → D-day·오늘 셀이 클라에서 정확.
-  const [now, setNow] = useState<Date>(() => new Date(serverNow));
+  const [now, setNow] = useState<Date>(() => kstDateOnly(serverNow));
   const [openGameId, setOpenGameId] = useState<string | null>(null);
 
   const wishlist = useWishlist();
 
   // mount 직후 1회: 실제 현재 시각/이번 달로 교체 (하이드레이션 이후라 에러 아님)
   useEffect(() => {
-    const real = new Date();
+    const real = kstDateOnly(new Date().toISOString());
     setNow(real);
     const m = new Date(real);
     m.setDate(1);

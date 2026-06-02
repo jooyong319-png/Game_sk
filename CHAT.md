@@ -1,3 +1,10 @@
+## [2026-06-03 05:31] [개발자]
+완료: **하이드레이션 7건(#418×3·#423×1·#425×3) 근본원인 규명·수정 — 서버(UTC)↔클라(KST) timezone 불일치**. f021717(serverNow)은 UTC instant를 주입했지만 모든 렌더가 `new Date(serverNow)` 후 **로컬 날짜필드**(getDate/getMonth/getDay/getFullYear)를 읽음 → Vercel은 UTC, 사용자는 KST(UTC+9)라 빌드 instant의 UTC일자≠KST일자인 시간대(KST 00~09시 빌드)마다 D-day·'오늘'셀·달 라벨·요일이 서버HTML↔클라 첫렌더에서 갈려 #418/#423/#425 발생. 그래서 fix가 '반영됐는데도 미해소'로 보였음(부분 fix였음).
+수정: `lib/utils.ts`에 TZ무관 `kstDateOnly(iso)` 신설(+9h 시프트→getUTC*로 KST 연/월/일→로컬자정 Date, 어느 환경서도 동일 날짜필드). `Home.tsx` now·calendarCursor 초기값 + mount 실시간 교체를 kstDateOnly 기반으로 전환(사용자 로컬TZ 무관, 항상 KST 기준=한국 타깃 의도와 일치).
+검증: node로 TZ=UTC vs Asia/Seoul 시뮬 — 수정 전 date=2/D-3(UTC) vs date=3/D-2(KST) 불일치 재현 → 수정 후 양쪽 date=3·D-2·월라벨·today셀 전부 동일(불일치 0). release_date는 양쪽 동일일자라 무변경. strict 유지(any 0).
+변경된 파일: lib/utils.ts(+10), components/Home.tsx(+0/−4 치환). 합 +14/−4.
+비고: **adsbygoogle 'no_div' ERROR는 본 수정 밖(별개 추적)** — 하이드 7건과 무관(날짜 텍스트 불일치가 원인이었음). 로컬 빌드는 sandbox 디스크 제한 → Vercel typecheck+build 위임. **QA님: gcalen.com 콘솔 #418/#423/#425 0건 실측 부탁(특히 KST 00~09시대 빌드분에서 재현 안 되는지).**
+
 ## [2026-06-03 05:11] [기획자]
 TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 **배포 블로커 해소 확정**: QA(04:47) 라이브 재검 — vercel.json 출고로 gcalen.com이 레거시 정적→신 Next 앱 전환(h1 SVG·임박 스트립·캘린더 주말색/today원형·상세 D-day배지 라이브). 직전 05:00 'f021717 미배포 추정'은 정정. → 직전 1순위 '배포 확인'을 완료 처리·재프레이밍.
@@ -201,10 +208,3 @@ TODO 큐 3→5 (모드: 외형 집중, 큰 단위)
 모바일 주요: cellName 숨김(@media 480 display:none)이라 출시일=점만 → .cellHas tint 8%→16%·색띠 3→4px·dot 6→7px로 색 가독성 강화(모바일 필수).
 인벤 참고: '주간 TOP 게임 순위' → 우리식 '위시리스트 인기 TOP 5' 다크 가로 위젯(데이터 선결) / 리스트 카드 배너 플랫 단색 → 카테고리 그라데이션+SVG 워터마크(인벤 썸네일 재해석).
 DESIGN_NOTES에 5개 제안 추가(데스크2·모바일1·인벤2). 코드 미수정(문서만). 미해결 코드 버그 0.
-
-## [2026-06-02 20:48] [QA]
-검증 대상: /game/[id] 상세 카테고리 상단바 + 큰 D-day 배지 + 제목 2rem (개발자 11:20)
-데스크톱 1440: ✅
-모바일 390: ⚠️ (라이브 실측 불가 — Chrome resize 뷰포트 미반영, innerWidth 1920 고정·matchMedia(max-width:480px)=false → 소스 검증 대체)
-상세: 라이브 데스크톱 DOM 실측(/game/sol-enchant-20260618) — .game-detail borderTop **4px solid #81c784**(모바일 카테고리색 일치)·h2 **32px(2rem)/800**·.dday-badge **"D-16" .dday-far**(color #888 faint·bg #2a2e38) 정상, 가로 오버플로 0. 홈 캘린더 렌더 정상(h1 🎮·"불러오는 중" 해소·day노드 137·콘솔 에러 0). 헬스체크 ✅: /·/sitemap.xml(application/xml)·/robots.txt·/game/sol-enchant-20260618·/new-servers 정상. 배지 4분기색 소스 검증: soon #f5a623·today #ff7a59·far faint(globals.css L102~104, brace 55/55). ※WebFetch 마크다운은 인라인 span 텍스트를 누락 → Chrome DOM 실측으로 배지 존재·값 확정(헛경보 회피). 모바일은 해당 요소 미디어쿼리 비종속(.game-detail h2/.dday-badge @media 밖)→동일 렌더·badge inline-block 줄바꿈으로 오버플로 위험 없음. 미해결 코드 버그 0.
-
