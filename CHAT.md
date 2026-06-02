@@ -1,3 +1,11 @@
+## [2026-06-02 17:50] [기획자]
+운영자 직접 요청 1순위 신규 (모드: 외형 집중).
+요청: "출시 임박 배너 모바일에서 너무 불편함" + 참고 https://www.inven.co.kr/webzine/calendar/
+진단: HeroStrip이 모바일(≤480px)에서 1열 큰 카드 세로 스택(min-height 110px·최대 5건=~550px)이라 첫 화면을 다 잡아먹고 캘린더가 밀림. 인벤은 임박=단일 카운트다운 하이라이트+컴팩트 리스트(큰 카드 스택 없음).
+조치: USER_REQUESTS 활성 등록 + TODO 1순위 추가 — [UX·모바일] HeroStrip 모바일 컴팩트화(가로 행 min-height 44px·색점+게임명+D-day, ::before 글로우/110px 제거, 모바일 최대 3건 nth-child(n+4) 숨김). 데스크톱 그리드 현행 유지. components/HeroStrip.tsx·.module.css.
+완료 반영: 개발자 17:31 [브랜드 토큰+Pretendard+헤더 그라데이션] ✅ → 큐에서 빠짐. 잔여 회귀복구 4건 = 현 2~5순위. 임박 글로우(현 5순위)는 모바일 컴팩트화와 충돌 없게 데스크톱 한정으로 명시.
+활성 사용자 요청 1 · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y/리팩토링 0건. 코드 미수정(문서만).
+
 ## [2026-06-02 18:20] [개발자]
 완료: 1순위 **[외형·회귀·높음] 브랜드 토큰 복구 + Pretendard 재도입 + 헤더 그라데이션 타이틀** (디자이너 16:50 ①②③ 묶음). (a) layout.tsx <head>에 Pretendard Variable jsdelivr CDN + preconnect, globals.css `--font-sans` 신설 → body 적용. (b) `--accent` #4a90e2→#5b9dff 복구, `--accent-2`/`--accent-grad`/`--radius`/`--radius-sm` 토큰 신설, ViewToggle·MonthTabs `.active`를 브랜드 그라데이션 칩으로, `a` 링크색 토큰화. (c) `.site-header` 배경 그라데이션+상단 글로우 ::before + h1 2.1rem/800 그라데이션 텍스트(모바일 1.8rem). 신규 색 없음(출고색 복구).
 변경된 파일: app/globals.css(+38/−5), app/layout.tsx(+5), components/ViewToggle.module.css(+9/−2), components/MonthTabs.module.css(+6/−3) — 4파일 약 48줄 순증.
@@ -187,7 +195,3 @@ DESIGN_NOTES에 4개 제안 추가(신규 a11y·패널 헤더·오늘로 버튼�
 변경된 파일: script.js (+6줄), styles.css (+4줄: @keyframes 1·.flash 규칙·reduced-motion), PROJECT_STATUS.md, CHAT.md
 비고: node --check 통과, CSS brace 264/264 균형. QA께 — (1) 캘린더에서 게임 있는 날짜 셀 클릭 시 패널로 부드럽게 스크롤되는지, (2) 패널 헤더가 한 번 강조 플래시 후 사라지는지, (3) OS reduced-motion 켠 상태에서 즉시 이동·플래시 없음인지 실측 부탁드립니다. 다음 사이클 1순위는 [캘린더] 선택 셀 위계 분리(보더→배경 채움+링).
 
-## [2026-05-29 23:04] [디자이너]
-UX/UI 점검 완료 (Chrome 데스크톱 1516px 실측: 캘린더/리스트/날짜패널, 콘솔 에러 0건). 날짜패널 컴팩트 인라인행·기본 캘린더뷰·헤더 컴팩트 라이브 반영 확인. 모바일은 resize 미반영로 CSS 병행.
-주요 발견: (1) 리스트 카드에 칩 스타일 3종 혼재 + 비클릭 장르태그가 링크블루라 클릭가능처럼 보임(어포던스 거짓신호), (2) 메타 아이콘(⚔/🏛)이 라벨 없이 이모지뿐이라 의미 불명확+스크린리더 미스리딩.
-DESIGN_NOTES에 신규 4개 추가(칩 일관성·메타아이콘 라벨·'오늘로' disabled·검색 placeholder 단축키힌트), IDEAS에 2개 올림. 기존 등록/큐 대기 항목은 중복 등록 안 함.
