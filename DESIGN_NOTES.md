@@ -10,6 +10,54 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-02 13:10] [디자이너] - 외형 모드 (운영자 요청: 이모지 → 미니멀 SVG)
+운영자 직접 요청: "이모지 형태 제거하고 SVG로 미니멀하게". 클린 미니멀(Linear/Vercel 풍) 방향과 한 묶음. 이모지는 OS/브라우저마다 컬러·디자인이 달라(특히 🛠️🏢는 플랫폼별 편차 큼) 다크 미니멀 톤을 깨뜨림 → 인라인 SVG 스프라이트 1벌로 통일.
+
+### 전수 인벤토리 (사용자 노출 이모지 11종)
+- index.html: `🎮`(h1 로고 L57) · `📅`(캘린더 토글 L68) · `📋`(리스트 토글 L69) · `🔥`(출시 임박 제목 L75)
+- script.js: `★`/`☆`(위시 토글, 카드·패널·모달 6곳) · `📅`(리스트 카드 출시일 L356) · `🛠️`(개발사 L359) · `🏢`(배급사 L359) · `📄`(전체 페이지 L471) · `▶`(트레일러 L471) · `🔗`(링크 복사 L471)
+- build.js(SEO 상세/랜딩): `🎮`(L51) · `📅`(L88)
+- (비노출) build.js `✅` 콘솔 로그(L195)는 빌드 로그라 제외.
+- 화살표 `↗ → ← ‹ ›`는 이모지 아님(타이포 글리프) — 같은 미니멀 톤이면 arrow SVG로 통일 가능하나 후순위.
+
+### 구체 실행안 — 인라인 SVG 스프라이트 (Lucide 라인 톤)
+1. **스프라이트 정의**: index.html `<body>` 최상단에 숨김 스프라이트 1개.
+   ```html
+   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+     <symbol id="ic-gamepad" viewBox="0 0 24 24"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01M17.32 5H6.68a4 4 0 0 0-3.978 3.59C2.6 9.4 2 14.46 2 16a3 3 0 0 0 5 2l1.41-1.41A2 2 0 0 1 9.83 16h4.34a2 2 0 0 1 1.42.59L17 18a3 3 0 0 0 5-2c0-1.54-.6-6.6-.7-7.41A4 4 0 0 0 17.32 5z"/></symbol>
+     <symbol id="ic-calendar" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></symbol>
+     <symbol id="ic-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+     <symbol id="ic-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+     <symbol id="ic-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></symbol>
+     <symbol id="ic-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+     <symbol id="ic-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+     <symbol id="ic-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8"/></symbol>
+     <symbol id="ic-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21"/></symbol>
+     <symbol id="ic-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+     <symbol id="ic-arrow-ur" viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7"/></symbol>
+   </symbol></svg>
+   ```
+2. **공통 CSS** (신규 토큰 없음, currentColor 상속이라 주변 글자색 그대로):
+   ```css
+   .ic { width:1em; height:1em; vertical-align:-0.14em; flex-shrink:0;
+         fill:none; stroke:currentColor; stroke-width:1.75;
+         stroke-linecap:round; stroke-linejoin:round; }
+   .ic-fill { fill:currentColor; stroke:none; }   /* ★ 채움(위시 활성)용 */
+   ```
+   - 별(위시): 비활성 `<svg class="ic"><use href="#ic-star"/></svg>`(라인), 활성 `class="ic ic-fill"`(채움) + `color` 노랑(#f5b400 기존 유지). 토글은 textContent 교체 대신 class 토글로.
+3. **치환 매핑** (이모지 → symbol):
+   `🎮→#ic-gamepad` / `📅→#ic-calendar` / `📋→#ic-list` / `🔥→#ic-flame` / `★☆→#ic-star(+.ic-fill)` / `🛠️→#ic-wrench` / `🏢→#ic-building` / `📄→#ic-file` / `▶→#ic-play` / `🔗→#ic-link` / `↗ →→#ic-arrow-ur`
+4. **색 처리(미니멀 핵심)**: 전부 currentColor 단색 → 메타 아이콘(🛠️🏢📅)은 `--text-dim`(#aaa) 톤, 버튼 아이콘은 버튼 글자색 상속. **유일한 컬러 포인트**는 h1 `🎮` 한 곳만 `.ic{color:var(--accent)}` 또는 그라데이션(h1 그라데이션과 조화)로 줘 로고성 강조. 🔥는 단색 유지(주황 칠하면 미니멀 깨짐) — 색 대신 형태로.
+5. **build.js**: 상세/랜딩도 같은 스프라이트 필요 → pageShell `<body>`에 동일 `<symbol>` 인라인(또는 공용 헤더 함수). `🎮`(헤더)·`📅`(출시일) 2종만 쓰므로 그 2개만 인라인해도 됨.
+
+### 규칙화 권고
+- 신규 이모지 추가 금지를 AGENTS.md에 명문화(디자이너 권한상 직접 수정 불가 → 기획자/개발자 위임). 새 아이콘은 스프라이트에 symbol 추가로만.
+
+### 우선순위
+높음(운영자 직접 요청·클린 미니멀의 핵심 표면). 분할 가능: ① index.html 헤더/토글/임박 4종(🎮📅📋🔥) + 위시 ★☆ → 1차, ② 카드/모달 메타·액션(🛠️🏢📄▶🔗) → 2차, ③ build.js SEO 페이지 → 3차.
+
+---
+
 ## [2026-06-02 13:01] [디자이너] - 외형 모드
 실측: gcalen.com Chrome 데스크톱(홈 캘린더/임박 스트립/상세 /game/ff7-rebirth-switch2-2026) + styles.css·build.js 교차. 직전 출고(히어로 밴드·임박 스트립·상세 라디얼 백드롭·Pretendard·accent #5b9dff) 라이브 반영 양호. 아래는 큐(카드 호버·통계줄 칩·관련게임 그리드·로딩 스켈레톤)와 중복 없는 신규 외형 제안만.
 
