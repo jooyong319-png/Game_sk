@@ -1,3 +1,11 @@
+## [2026-06-03 08:12] [기획자]
+TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
+완료: 1순위 '리스트 과거카드 약화' — 개발자 07:20·QA 07:46 라이브 ✅·신규 BUGS 0 → 큐 5→4.
+정리: ①직전 5순위 '/game/[id] D-DAY 배지+카테고리 상단바'는 **이미 06-02 11:20 출고됨**(page.tsx L78·L88, globals.css L101~104) → 중복 큐잉이라 제거·IDEAS 종결. ②직전 2순위 '캘린더 면 강화'도 셀 톤업·출시셀 카테고리 악센트 이미 출고 → 남은 '컨테이너 패널 카드화'로 스코프 축소.
+추가: - [외형·상세] /game/[id] 카테고리색 라디얼 백드롭 (IDEAS→4순위), - [외형·리스트] 카드 배너 카테고리 세로 그라데 + D-DAY 좌상단 리본 (IDEAS→5순위) → 큐 4→5 복구.
+큐 1~5: ①임박 스트립 글로우(데스크톱) ②캘린더 컨테이너 패널 카드화 ③/game/[id] 같은시기 그리드 ④/game/[id] 라디얼 백드롭 ⑤리스트 배너 그라데+리본.
+사용자 요청 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드).
+
 ## [2026-06-03 07:46] [QA]
 검증 대상: 리스트 과거('출시됨') 카드 시각 약화(개발자 07:20 — ListView diff<0 released 플래그·opacity 0.62·배너 saturate 0.55·hover 복원·회색 releasedTag)
 데스크톱 1440: ✅ (Chrome 라이브 실측 — 리스트뷰+기간'전체'서 released 카드 16개 전부 opacity 0.62·.cardBanner filter saturate(0.55)·D-day 회색칩 '출시됨' 확정, .released:hover{opacity:1} 규칙 라이브, 미래/임박 카드 opacity 1 또렷 유지. 헬스 ✅ /·robots·/game/sol-enchant-20260618·/new-servers(12서버)·h1 SVG·가로오버플로 0[scrollW 1905≤1920]·캘린더 125셀·임박 4카드·'불러오는 중' 없음. 콘솔 클린[사이트에러 0·하이드#418/#423/#425 0·no_div 0, MetaMask 확장 경고만])
@@ -196,8 +204,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·신규 디자이너 제안 0(20:50 처리 완료)
 a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
 
-## [2026-06-02 22:47] [QA]
-검증 대상: 이모지→SVG 2단계 잔존 전량(Filters ★·GameModal 📅📄↗·ListView 📅·GoogleCalendarButton 📅·상세 📅) + 신규 스프라이트 #ic-file·#ic-arrow-ur (개발자 23:28)
-데스크톱 1440: ✅
-모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정·matchMedia(480)=false → 소스검증 대체)
-상세: 라이브 Chrome 실측 — 홈 노출 이모지 0건(📅📄★↗🎮🔥📋☆ 등 12종 스캔 0), h1 #ic-gamepad SVG, svg.ic 5종 전부 비제로 사이즈. 카드 모달 오픈 실측: 잔존 0 + 신규 #ic-file·#ic-arrow-ur(×2)·#ic-calendar·#ic-star 전부 렌더(zero-size 0)·모달 뷰포트 내·가로오버플로 0. 콘솔 에러 0. 캘린더 137셀 정상('불러오는 중' 해소). 스프라이트 symbol 7종 전부 정의. 모바일: .ic 규칙 globals.css L176~191(@media L57 밖)·em 사이즈→뷰포트 비종속 동일 렌더, 소스 노출 이모지 grep 0건(app·components·globals·layout). globals.css brace 58/58. 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers(서버 12개) 정상. 미해결 코드 버그 0.
