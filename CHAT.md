@@ -1,3 +1,9 @@
+## [2026-06-02 18:40] [QA]
+검증 대상: 브랜드 토큰 복구 + Pretendard 재도입 + 헤더 그라데이션 타이틀 (개발자 18:20, globals.css·layout.tsx·ViewToggle/MonthTabs.module.css)
+데스크톱 1440: ✅
+모바일 390: ⚠️ (라이브 실측 불가 — 소스 검증 대체)
+상세: 데스크톱 라이브 실측 — body Pretendard Variable 적용·h1 a 블루→퍼플 그라데이션 텍스트(linear-gradient 92deg #5b9dff→#c98ad6, clip:text)·🎮 표시·--accent #5b9dff·뷰토글/월탭 active 칩 그라데이션 모두 확인, 콘솔 에러 0, 가로스크롤 없음. ⚠️ Chrome resize가 뷰포트에 미반영(innerWidth 1920 고정)되어 모바일 390 라이브 렌더 실측 불가 → 소스 미디어쿼리 검증 대체: h1 1.8rem(≤480px)·MonthTabs overflow-x:auto·Filters flex-wrap·ListView 1열(grid 1fr)·GameModal width100%/max520/90vh 정상. 라이브 모바일 무회귀 단정 불가(다음 사이클 실측환경 확보 시 재확인). 미해결 코드 버그 0.
+
 ## [2026-06-02 17:50] [기획자]
 운영자 직접 요청 1순위 신규 (모드: 외형 집중).
 요청: "출시 임박 배너 모바일에서 너무 불편함" + 참고 https://www.inven.co.kr/webzine/calendar/
@@ -185,13 +191,4 @@ DESIGN_NOTES에 4개 제안 추가(신규 a11y·패널 헤더·오늘로 버튼�
 검증 대상: (개발자 23:29) [캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시
 결과: ✅ 정상
 상세: Chrome 데스크톱(1516px) 실측 — 캘린더 뷰에서 5/30(토, 패스 오브 엑자일) 셀 클릭 시 결과 패널('2026.05.30 (토) 이후 출시 25건', 컴팩트 행 색점·게임명·플랫폼·D-day·☆)로 페이지 부드럽게 스크롤 이동(폴드 밖→상단) 후 정상 렌더. 콘솔 에러 0건. HTML 200·games.json 29건(05-29T12:35) 파싱 OK. 소스 검증: script.js L687 scrollIntoView(reduced-motion 가드)·L688-689 flash 재부여, styles.css 538-540 day-panel-flash @keyframes+.flash+reduced-motion 가드 확인, node --check 통과·CSS brace 264/264.
-
-## [2026-05-29 23:29] [개발자]
-완료: 1순위 TODO — [캘린더] 날짜 셀 클릭 시 결과 패널 auto-scroll + 헤더 강조 플래시 (디자이너 '높음').
-- renderDayPanel에서 `dayPanel.hidden = false` 직후 `dayPanel.scrollIntoView({behavior:'smooth', block:'start'})`를 1회 호출 → 그리드 아래(폴드 밖)에 열려 '반응 없음'처럼 보이던 발견성 문제 해소.
-- 패널 헤더(`.day-panel-header`)에 `flash` 클래스를 remove→reflow(void offsetWidth)→add로 재부여해 0.7s `day-panel-flash` 배경 1회 페이드 강조(--accent→transparent).
-- `prefers-reduced-motion: reduce` 3중 가드: scrollIntoView behavior 'auto', 플래시 클래스 미부여, CSS `animation:none`.
-- 신규 색 없이 기존 --accent 토큰 재사용.
-변경된 파일: script.js (+6줄), styles.css (+4줄: @keyframes 1·.flash 규칙·reduced-motion), PROJECT_STATUS.md, CHAT.md
-비고: node --check 통과, CSS brace 264/264 균형. QA께 — (1) 캘린더에서 게임 있는 날짜 셀 클릭 시 패널로 부드럽게 스크롤되는지, (2) 패널 헤더가 한 번 강조 플래시 후 사라지는지, (3) OS reduced-motion 켠 상태에서 즉시 이동·플래시 없음인지 실측 부탁드립니다. 다음 사이클 1순위는 [캘린더] 선택 셀 위계 분리(보더→배경 채움+링).
 
