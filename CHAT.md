@@ -1,3 +1,8 @@
+## [2026-06-02 22:47] [QA]
+검증 대상: 이모지→SVG 2단계 잔존 전량(Filters ★·GameModal 📅📄↗·ListView 📅·GoogleCalendarButton 📅·상세 📅) + 신규 스프라이트 #ic-file·#ic-arrow-ur (개발자 23:28)
+데스크톱 1440: ✅
+모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정·matchMedia(480)=false → 소스검증 대체)
+상세: 라이브 Chrome 실측 — 홈 노출 이모지 0건(📅📄★↗🎮🔥📋☆ 등 12종 스캔 0), h1 #ic-gamepad SVG, svg.ic 5종 전부 비제로 사이즈. 카드 모달 오픈 실측: 잔존 0 + 신규 #ic-file·#ic-arrow-ur(×2)·#ic-calendar·#ic-star 전부 렌더(zero-size 0)·모달 뷰포트 내·가로오버플로 0. 콘솔 에러 0. 캘린더 137셀 정상('불러오는 중' 해소). 스프라이트 symbol 7종 전부 정의. 모바일: .ic 규칙 globals.css L176~191(@media L57 밖)·em 사이즈→뷰포트 비종속 동일 렌더, 소스 노출 이모지 grep 0건(app·components·globals·layout). globals.css brace 58/58. 헬스체크 ✅: /·/sitemap.xml(XML)·/robots.txt·/game/sol-enchant-20260618·/new-servers(서버 12개) 정상. 미해결 코드 버그 0.
 ## [2026-06-02 23:28] [개발자]
 완료: **[외형·미니멀·운영자요청] 노출 이모지→인라인 SVG 2단계** — 1단계 후 라이브 잔존 이모지 전량 정리. layout 스프라이트에 `#ic-file`·`#ic-arrow-ur` 2종 추가(DESIGN_NOTES 13:10 스펙 path 그대로, viewBox 0 0 24 24, #ic-calendar 기존 재사용). 잔존 노출 이모지를 `<svg class="ic"><use/></svg>`로 일괄 치환: Filters ★→#ic-star+.ic-fill / GameModal 출처보기 ↗→#ic-arrow-ur·📅 캘린더추가→#ic-calendar·📄 전체페이지 ↗→#ic-file+#ic-arrow-ur / ListView 출시일 📅→#ic-calendar / GoogleCalendarButton 📅→#ic-calendar / app/game/[id] 출시일 📅→#ic-calendar(서버 컴포넌트, layout 스프라이트 상속 OK). 전부 currentColor 단색(.ic 규칙 재사용, 신규 색 0). grep 검증: app·components 노출 이모지(📅📄★↗) 0건. 네비 글리프 ← → ‹ › 는 이모지 아님→스코프 외.
 변경된 파일: app/layout.tsx(+2), components/Filters.tsx(+1/−1), components/GameModal.tsx(+3/−3), components/ListView.tsx(+1/−1), components/GoogleCalendarButton.tsx(+1/−1), app/game/[id]/page.tsx(+1/−1) — 총 6파일 +9/−7
@@ -171,7 +176,3 @@ TODO 큐 재구성 5건 유지 (모드: 외형 집중, 큰 단위 권장)
 4·5순위 캐리오버: 통계줄 컬러칩·관련게임 미니카드 그리드.
 IDEAS 환원: 카드 호버 입체감·로딩 스켈레톤 (상대적 저임팩트, 보존).
 활성 사용자 요청 0(SEO 보류) · 미해결 코드 버그 0 · 3사이클 정체 0 · a11y 제안 0건 신규(IDEAS 보관 유지). 코드 미수정(문서만).
-## [2026-06-02 13:10] [디자이너]
-외형 점검 완료 (현재 모드: 시각 디자인 집중) — 운영자 요청 접수: "이모지 제거하고 SVG 미니멀".
-주요: 사용자 노출 이모지 11종(🎮📅📋🔥★☆🛠️🏢📄▶🔗) 전수 인벤토리 → 인라인 SVG 스프라이트(Lucide 라인, currentColor 단색)로 통일하는 구체 스펙 작성(symbol path·CSS·치환 매핑·build.js 적용·분할 3단계 포함). 색 포인트는 h1 로고 1곳만, 나머지 단색이 미니멀 핵심. AGENTS.md 신규 이모지 금지 명문화 권고.
-DESIGN_NOTES에 상세 스펙 1건 추가, PROJECT_STATUS IDEAS에 높음 등록.
