@@ -10,6 +10,36 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-02 16:50] [디자이너] - 외형 모드 (Next.js 마이그레이션 외형 회귀 복구 + 헤더)
+실측: gcalen.com Chrome 데스크톱(홈 캘린더/임박 스트립/리스트 뷰 + /game/ff7-rebirth-switch2-2026 상세) + 신규 Next.js 소스 교차(app/globals.css·layout.tsx·components/*.module.css·CalendarView.tsx·app/game/[id]/page.tsx). **핵심 발견: vanilla→Next.js 이관 과정에서 직전에 출고됐던 외형 자산 다수가 globals.css/module.css로 옮겨오며 유실됨**(PROJECT_STATUS 변경로그엔 styles.css/build.js 기준 "완료"로 남아 있으나 라이브 Next 빌드엔 미반영). 아래 제안은 옛 styles.css가 아니라 **현행 Next.js 파일 경로 기준**으로 재작성한 것. a11y/시맨틱/리팩토링 0건(외형 모드).
+
+### 외형 개선 제안 (5개, hex/크기/파일경로 구체)
+
+1. **[높음·회귀] 본문 폰트 Pretendard 유실 → 재도입** (`app/layout.tsx` <head> + `app/globals.css`)
+   - 현재: 이관 후 `body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif}`(globals.css L5) — 직전 도입했던 Pretendard가 빠져 한글 인상이 다시 평범.
+   - 바꿀 값: layout.tsx <head>에 `<link rel="preconnect" href="https://cdn.jsdelivr.net">` + `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">`. globals.css `:root`에 `--font-sans:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;` 신설, `body{font-family:var(--font-sans)}`. 제목류(h1/h2/.monthTitle) `letter-spacing:-0.02em`. → 폰트 1개로 세련도 체감 큼.
+
+2. **[높음·회귀] 브랜드 토큰 유실 → accent #4a90e2→#5b9dff + --accent-grad + --radius 신설** (`app/globals.css :root` + ViewToggle/MonthTabs .module.css)
+   - 현재: 이관 후 `--accent:#4a90e2`(globals.css L17, 옛 칙칙한 파랑으로 되돌아감). `--accent-grad`/`--radius` 토큰 없음. ViewToggle `.active{background:#4a90e2}`·MonthTabs `.active{background:#4a90e2}` 단색 면.
+   - 바꿀 값: `:root`에 `--accent:#5b9dff;` 복구, `--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6); --radius:12px; --radius-sm:8px;` 추가. 활성 상태를 그라데이션 칩으로: ViewToggle.module.css·MonthTabs.module.css `.active{ background:var(--accent-grad); color:#fff; border-color:transparent; box-shadow:0 2px 8px rgba(91,157,255,0.25); }`. → 선택 상태가 "단색 파랑 면"→"선명한 브랜드 칩", 헤더 그라데이션 타이틀(제안3)과 통일.
+
+3. **[높음·헤더 임팩트] site-header가 단색 h1 1.6rem로 밋밋 → 그라데이션 타이틀 + 깊이** (`app/globals.css .site-header`/`.site-header h1` + `app/layout.tsx`)
+   - 현재: `.site-header{background:linear-gradient(180deg,#1a1d24,#0f1115)}`, `.site-header h1{font-size:1.6rem}` 단색·평범. 첫 화면 임팩트 부족.
+   - 바꿀 값: h1 `font-size:1.6rem→2.1rem; font-weight:800; letter-spacing:-0.02em; background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent;`(블루→퍼플 그라데이션 텍스트). 헤더 배경 `linear-gradient(180deg,#171a22 0%,#0f1115 100%)`로 한 톤 깊게 + 하단 헤어라인 `box-shadow:inset 0 -1px 0 rgba(255,255,255,0.05)` + 상단 미세 글로우 `radial-gradient(60% 120% at 50% 0%, rgba(91,157,255,0.10), transparent 70%)` 오버레이. 모바일(≤480) h1 1.8rem. → 로고성 강조 + 페이지 진입 인상 강화.
+
+4. **[높음·회귀·캘린더] 출시 셀 카테고리 색 미반영(이관서 유실) — 셀이 전부 동일 다크** (`components/CalendarView.tsx` 셀 div + `components/CalendarView.module.css .cellHas`)
+   - 현재: `.cellHas{background:#181d27}` 단색 — 빈 셀 `.cell{background:#14171d}`와 차이 미미해 출시 있는 날이 면으로 안 읽힘. 카테고리는 7px `.cellDot`만(CalendarView.tsx L159 cellDots)으로 점 표시. (옛 styles.css엔 카테고리 색 띠가 있었으나 Next 이관서 유실.)
+   - 바꿀 값: 개발자가 셀 div(CalendarView.tsx L126 className 블록)에 `style={{ ['--cat' as string]: CATEGORY_META[cell.games[0].category].color }}` 주입 → CSS `.cellHas{ box-shadow:inset 3px 0 0 var(--cat,#5b9dff); background:color-mix(in srgb, var(--cat,#5b9dff) 8%, #14171d); }`(color-mix 미지원 폴백 기존 #181d27 유지). 단, `.cellToday`/`.cellSelected`가 inset box-shadow 강조를 쓰므로 **선언 순서상 .cellHas 위에 오게 두거나 강조 셀에서 --cat 띠 생략**해 충돌 방지. → 빈 달도 "이날 모바일/저날 글로벌"이 면색으로 즉시 구분.
+
+5. **[높음·회귀·상세 첫인상] /game/[id] 상세 = 회색 박스 1개 + D-DAY 부재** (`app/game/[id]/page.tsx` + `app/globals.css .game-detail`)
+   - 현재: `.game-detail`이 `background:var(--bg-elev)` 회색 박스 1개. 카테고리 pill·제목·날짜(파랑)·메타 리스트뿐. 검색 유입 첫 화면인데 **앱 핵심지표 D-day가 정적 페이지엔 없음**(모달에만 존재). 라디얼 백드롭도 이관서 유실.
+   - 바꿀 값: (a) `.game-detail`에 카테고리색 상단 바 — page.tsx에서 인라인 `style={{ borderTop:'4px solid '+CATEGORY_META[game.category].color }}`, (b) `.game-detail h2{font-size:1.6rem→2rem; font-weight:800}`, (c) release-date 줄 옆에 D-day 배지 — page.tsx에서 출시일-오늘 diff 계산해 `<span className="dday-badge ...">D-N</span>` 삽입, globals.css 신규 `.dday-badge{display:inline-block;padding:3px 11px;border-radius:999px;font-size:1.15rem;font-weight:800;margin-left:.5rem}` + 임박(≤7일) `color:#f5a623;background:rgba(245,166,35,0.12)`, D-DAY(diff 0) `color:#ff7a59;background:rgba(255,122,89,0.14)`, 먼 미래 `color:var(--text-faint);background:var(--border)`, approx면 텍스트 `(예정)`. 빌드타임 생성·런타임 무영향.
+
+### 우선순위
+전부 높음. 묶음 제안: ①②③(globals.css/layout 토큰·폰트·헤더 = CSS 위주, 한 사이클 동시 처리 권장 — 서로 의존: ②의 --accent-grad가 ③ 타이틀에 쓰임) → 1차. ④(캘린더, tsx 1줄+CSS) → 2차. ⑤(상세, tsx D-day 계산+CSS) → 3차. 모두 "이관 외형 회귀 복구" 성격이라 임팩트 대비 변경량 작음.
+
+---
+
 ## [2026-06-02 13:10] [디자이너] - 외형 모드 (운영자 요청: 이모지 → 미니멀 SVG)
 운영자 직접 요청: "이모지 형태 제거하고 SVG로 미니멀하게". 클린 미니멀(Linear/Vercel 풍) 방향과 한 묶음. 이모지는 OS/브라우저마다 컬러·디자인이 달라(특히 🛠️🏢는 플랫폼별 편차 큼) 다크 미니멀 톤을 깨뜨림 → 인라인 SVG 스프라이트 1벌로 통일.
 
@@ -407,74 +437,5 @@ _(오래된 35 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 - 리스트 뷰 단일게임 풀폭 행 + 4px 컬러 배너(중복 제거): 직전 사이클 반영 확인, 가로 낭비 해소됨. OK.
 - 퀵칩(이번 주/다음 주/위시리스트) 활성 상태: 파란 보더로 토글 피드백 명확. OK.
 - 오늘 셀(파란 강조)·선택 셀(주황 보더)·임박 셀(.day-soon) 색 위계, 푸터 운영자 정보·mailto hover: 양호.
-
----
-
-
-## [2026-05-29 16:31] [디자이너]
-운영자 추가 결정: 날짜 클릭 패널을 **한 줄 컴팩트 행**으로 전환(표시 범위는 현행대로 클릭일 이후 전체 유지).
-
-### 개선점
-1. **날짜 클릭 패널 = 한 줄 컴팩트 행 리스트** — 우선순위: 높음 (운영자 요청)
-   - 어디서: 캘린더 날짜 클릭 시 아래 펼쳐지는 "OO 이후 출시 N건" 패널. 현재 각 항목이 설명·개발사·플랫폼·장르태그 전부 펼친 풀카드라, 25건이면 60vh 스크롤 박스가 매우 답답.
-   - 개선: 항목을 **한 줄 행**으로 축약 → `[카테고리 색점] 게임명(한) · 플랫폼 · D-day · ☆`. 영문명/설명/장르태그/개발사는 행에서 제거하고, 행 클릭 시 **기존 상세 모달(openModal) 재사용**으로 상세 노출.
-   - 행 높이 약 40~48px(터치 타겟 확보), 날짜 그룹 헤더(YYYY.MM.DD (요일))는 유지. 표시 범위(이후 전체)는 변경 없음 — 밀도만 낮춤.
-   - 비고: 리스트 탭 본문 카드는 현행 유지(상세 카드가 필요한 화면). 이 컴팩트 행은 '캘린더 날짜 클릭 패널'에만 적용.
-
----
-
-## [2026-05-29 16:24] [디자이너]
-운영자(쌀먹닷컴) 직접 요청 반영. Chrome 실측(데스크톱 1280px) 후 정리.
-
-### 발견한 문제 / 개선점
-
-1. **헤더 좌측 정렬 + 컴팩트화 → 캘린더 위로** — 우선순위: 높음 (운영자 요청)
-   - 어디서: 페이지 상단. 가운데 정렬된 제목/부제/"마지막 업데이트" + 뷰토글 + 통계줄 + 필터가 상단 약 310px를 차지해 캘린더가 한참 아래에서 시작(첫 화면에 한 달이 다 안 보임).
-   - 개선: 제목(🎮 게임 출시 캘린더)·부제·업데이트를 **좌측 정렬 1~2줄로 압축**(header padding 2.5rem→1~1.25rem, text-align:left), 뷰토글·필터를 그 옆/아래 한 줄로 붙임. 캘린더 시작 위치를 약 150~200px 위로 올려 첫 화면에 월 전체가 들어오게.
-
-2. **캘린더를 항상 기본 뷰로(선택 기억 정책 확정)** — 우선순위: 보통 (운영자 요청)
-   - 현황: 현재도 캘린더가 기본 뷰임(확인 완료).
-   - 개선: 마지막 선택을 localStorage로 기억하는 경우, 리스트를 본 뒤 새로고침하면 리스트로 복귀할 수 있음. 운영자 의향은 "항상 캘린더로 시작" → 진입 시 뷰를 무조건 캘린더로 초기화(또는 localStorage 미사용). 개발자는 현재 동작이 어느 쪽인지 확인 후 캘린더 고정으로 맞출 것.
-
-### 보류 / 운영자 결정 사항
-3. **날짜 클릭 패널** — 운영자 결정: 표시범위 현행 유지 + **카드→한 줄 컴팩트 행 전환은 진행(16:31 제안 참조)**.
-   - 참고 메모(즉시 구현 X): 패널의 답답함은 표시 "개수"보다 "카드 밀도" 문제. 내용을 다 두더라도, 추후 원하면 풀카드 대신 **한 줄 컴팩트 행**([카테고리 색점] 게임명 · 플랫폼 · D-day · ☆ → 클릭 시 상세 모달)으로 바꾸면 25건도 가볍게 훑힘. 지금은 미진행, 향후 선택지로만 보관.
-
----
-
-## [2026-05-29 15:51] [디자이너]
-실측: https://gcalen.com/ Chrome 스크린샷(데스크톱 1280px, 캘린더·리스트 뷰 둘 다) + computed style 점검.
-모바일은 브라우저 뷰포트가 리사이즈에 반영되지 않아 실측 스크린샷 대신 배포 CSS/getComputedStyle로 평가(다음 사이클 재시도 권장).
-
-### 발견한 문제 / 개선점
-
-1. **리스트 뷰 가로 공간 대량 낭비** — 우선순위: 높음
-   - 어디서: 리스트 뷰. 날짜별 그룹(.date-group)마다 카드 컨테이너가 3열 그리드(약 378px×3)인데 대부분 날짜에 게임이 1개뿐.
-   - 왜: 카드가 왼쪽 1열에만 박히고 우측 약 780px(2/3)가 빈 공간 → 데스크톱에서 매우 휑하고 스캔 비효율.
-   - 개선: 리스트 뷰를 **가로형 풀폭 행 카드**(컬러 배너/썸네일 좌측 ~120px + 정보 우측)로 전환. 또는 단일 게임 날짜는 단일 컬럼(max-width 560px), 한 날짜에 여러 게임일 때만 다열. 가장 임팩트 큰 항목.
-
-2. **카드 상단 그라데이션 배너가 카테고리 라벨을 중복 표시** — 우선순위: 보통
-   - 어디서: 게임 카드 상단 컬러 배너.
-   - 왜: 배너 안 텍스트("글로벌 대작"/"한국 MMO 신규 서버")가 바로 아래 카테고리 뱃지와 동일 정보 중복 + 세로 약 90px 낭비. 실제 게임 아트가 아닌 단색 그라데이션이라 정보 가치 낮음.
-   - 개선: 배너에 게임명/썸네일을 넣어 가치를 주거나, 배너 제거 후 카드 상단 4px 컬러 보더로 카테고리 표현해 콤팩트화.
-
-3. **터치 타겟 부족(모바일)** — 우선순위: 보통
-   - 어디서: 뷰 토글/필터 버튼 높이 37px, 위시리스트 별 ☆ 약 18px(실측 getBoundingClientRect).
-   - 왜: 모바일 권장 최소 44px 미만 → 특히 별 아이콘 오탭 유발.
-   - 개선: 버튼 min-height:44px, 별은 클릭 패딩으로 40px+ 히트영역 확보(아이콘 시각 크기는 유지 가능).
-
-4. **캘린더 셀 정보·접근성 보강** — 우선순위: 보통
-   - 어디서: 캘린더 뷰 날짜 셀(현재 카테고리 색 점 + title 툴팁까지 구현됨).
-   - 왜: 색 점만으로는 무슨 게임인지 클릭/호버해야만 확인 가능(스캔 불가). 카테고리를 색으로만 전달 → 색각 이상 사용자 구분 어려움(a11y).
-   - 개선: 공간 여유 있는 데스크톱 셀에는 게임명(말줄임) 1~2개 + "+N" 텍스트 노출. 점에 aria-label 부여, 색 외 형태/라벨 보조 단서 추가.
-
-5. **태블릿 구간 반응형 브레이크포인트 부재** — 우선순위: 낮음
-   - 어디서: 전역 CSS. 미디어쿼리가 max-width:480px 하나뿐.
-   - 왜: 481~768px(태블릿)용 중간 레이아웃이 없어 그 구간에서 필터 행 과밀 또는 그리드 빈 컬럼 발생 가능.
-   - 개선: max-width:768px 브레이크포인트 추가 — 필터 2행, 그리드 1~2열로 정리.
-
-### 현재 양호 (트집 X)
-- 본문/메타 텍스트 대비: 직전 개발자 사이클(#9aa0ac/#cdd2db 등 상향) 후 다크 배경에서 또렷함. OK.
-- 오늘 셀 강조(파란 보더 + "오늘" 라벨), 카테고리 색상 팔레트 일관성, 검색+필터 한 줄 정렬: 양호.
 
 ---
