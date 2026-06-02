@@ -1,3 +1,9 @@
+## [2026-06-03 07:20] [개발자]
+완료: **[외형·리스트·높음] 리스트 과거('출시됨') 카드 시각 약화** (큐 1순위)
+ListView 카드에서 `diff<0`(과거 출시) 게임에 `released` 플래그 → `<li>`에 `.released` 부여(opacity 0.62·배너 saturate 0.55·hover 시 opacity 1 복원), D-day 배지를 '출시됨'일 때 회색 미니칩 `.releasedTag`로 분기. 미래·임박 카드는 또렷 유지 → 다가오는 신작이 먼저 눈에.
+변경된 파일: components/ListView.tsx (+4/−3), components/ListView.module.css (+12). strict 유지(any 0)·신규 색 0·CSS brace 37/37.
+비고: 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 1순위 완료 → 기획자님 2~5를 1~4로 당겨주세요. QA님: 라이브 데스크 '전체' 기간 리스트 과거카드 흐림·hover 복원 실측 부탁.
+
 ## [2026-06-03 07:11] [기획자]
 TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 완료: 1순위 'GameModal @media(≤480px) 모바일 블록' — 개발자 06:20 GameModal.module.css 6클래스(overlay/modal/title/image/imageEmoji/actions) 모바일 비례 신설·QA 06:46 라이브 CSS 번들 실측 ✅·신규 BUGS 0 → 큐 5→4.
@@ -194,12 +200,4 @@ a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
 완료: **[외형·미니멀·운영자요청] 노출 이모지→인라인 SVG 2단계** — 1단계 후 라이브 잔존 이모지 전량 정리. layout 스프라이트에 `#ic-file`·`#ic-arrow-ur` 2종 추가(DESIGN_NOTES 13:10 스펙 path 그대로, viewBox 0 0 24 24, #ic-calendar 기존 재사용). 잔존 노출 이모지를 `<svg class="ic"><use/></svg>`로 일괄 치환: Filters ★→#ic-star+.ic-fill / GameModal 출처보기 ↗→#ic-arrow-ur·📅 캘린더추가→#ic-calendar·📄 전체페이지 ↗→#ic-file+#ic-arrow-ur / ListView 출시일 📅→#ic-calendar / GoogleCalendarButton 📅→#ic-calendar / app/game/[id] 출시일 📅→#ic-calendar(서버 컴포넌트, layout 스프라이트 상속 OK). 전부 currentColor 단색(.ic 규칙 재사용, 신규 색 0). grep 검증: app·components 노출 이모지(📅📄★↗) 0건. 네비 글리프 ← → ‹ › 는 이모지 아님→스코프 외.
 변경된 파일: app/layout.tsx(+2), components/Filters.tsx(+1/−1), components/GameModal.tsx(+3/−3), components/ListView.tsx(+1/−1), components/GoogleCalendarButton.tsx(+1/−1), app/game/[id]/page.tsx(+1/−1) — 총 6파일 +9/−7
 비고: 로컬 tsc/build 미실행(sandbox 디스크). Vercel typecheck+build 검증 위임. QA님 라이브에서 노출 이모지 0건(특히 위시 필터 버튼·모달 액션 3종·리스트/상세 출시일) + 새 #ic-file/#ic-arrow-ur 렌더 실측 부탁. 큐 5→4(2~5순위 한 칸씩 당김).
-
-## [2026-06-02 22:12] [기획자]
-TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
-완료 처리: 1순위 [외형·미니멀·운영자요청] 이모지→SVG **1단계**(헤더/뷰토글/임박/위시) — 개발자 21:30·QA 21:48 ✅(데스크톱 실측·모바일 소스검증, 콘솔 0·가로오버플로 0) → 완료한 기능 이동.
-추가: - [외형·미니멀·운영자요청] 이모지→SVG **2단계**(잔존 전량: Filters ★·GameModal 📅📄↗·ListView 📅·GoogleCalendarButton 📅·상세 📅, layout 스프라이트에 #ic-file·#ic-arrow-ur 추가) → 큐 **1순위** 승격. QA 21:48이 IDEAS로 올린 위시 필터 ★ 잔존을 흩어진 나머지와 묶어 운영자요청 마무리(큰 단위).
-잔여 큐 1~5(전부 Next app/·components/): ①이모지→SVG 2단계 ②캘린더 시각 강화 묶음 ③임박 스트립 글로우(데스크톱) ④/game/[id] 미니카드 그리드 ⑤리스트 카드 배너 그라데
-신규 디자이너 제안 0·신규 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0
-a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
 

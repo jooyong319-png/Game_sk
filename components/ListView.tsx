@@ -79,14 +79,15 @@ export function ListView({ games, wishlist, onPick, now }: Props) {
             <ul className={styles.grid}>
               {group.games.map(g => {
                 const diff = calcDayDiff(g.release_date, now);
-                const dd = diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
+                const released = diff < 0;
+                const dd = released ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
                 const imminent = diff >= 0 && diff <= 7;
                 const cat = CATEGORY_META[g.category];
                 const weekday = g.release_date_approx ? '' : ` (${getKoreanWeekday(g.release_date)})`;
                 const isWished = wishlist.has(g.id);
 
                 return (
-                  <li key={g.id} className={`${styles.item} ${imminent ? styles.imminent : ''}`}>
+                  <li key={g.id} className={`${styles.item} ${imminent ? styles.imminent : ''} ${released ? styles.released : ''}`}>
                     <button
                       type="button"
                       className={`${styles.wish} ${isWished ? styles.wishOn : ''}`}
@@ -102,7 +103,7 @@ export function ListView({ games, wishlist, onPick, now }: Props) {
                       </div>
                       <div className={styles.cardHeader}>
                         <span className={`category-tag cat-bg-${g.category}`}>{cat.short}</span>
-                        <span className={`${styles.dday} ${imminent ? styles.ddaySoon : ''}`}>{dd}</span>
+                        <span className={released ? styles.releasedTag : `${styles.dday} ${imminent ? styles.ddaySoon : ''}`}>{dd}</span>
                       </div>
                       <div className={styles.cardBody}>
                         <h4 className={styles.name}>{g.name_ko}</h4>
