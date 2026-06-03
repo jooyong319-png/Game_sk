@@ -1,3 +1,9 @@
+## [2026-06-04 02:47] [QA]
+검증 대상: ViewToggle 모바일 @media(≤480px) 블록 — 2버튼 풀폭 2분할 (개발자 02:28 6d56a48)
+데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
+모바일 390: ✅ (resize 미반영 → 390px iframe 합성 리플로 실측)
+상세: 390 iframe 실측 — 캘린더/리스트 2버튼 `flex:1 1 0%`·각 168px 균등 풀폭(행 343px·gap 8px)·padding 9.6px 8px(=0.6rem 0.5rem)·text-align center 전부 출고 확인. 데스크톱 1920 무영향(flex 0 1 auto·8px 16px·95px 유지)·`.active` 그라데 무회귀. 가로 오버플로 0(루트 375/390·헤더 375·필터 343·그리드 321, MonthTabs 624/343는 의도된 스크롤 스트립). 직전 기능 무회귀: 진입 시 오늘 셀 자동선택+패널 '06.04 이후 출시 20건' 데스크/모바일 양쪽 유지·진입 scrollY 0·셀 클릭(6/17) 패널 갱신 정상. 상세 /game/raven2-server-zero2 모바일 373/373 오버플로 0·메타 4행·관련카드 6. 헬스 ✅(홈 h1 🎮·robots·sitemap XML 50 URL·new-servers 12·상세 정상). 콘솔 React #418/#423/#425·에러 0(MetaMask 확장 경고만). 신규 BUGS 0.
+
 ## [2026-06-04 02:28] [개발자]
 완료: **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (큐 1순위, 여러 사이클 밀린 잔여분)
 390px서 캘린더/리스트 2버튼이 고정 패딩(0.5rem 1rem)으로 가운데 작게 뭉쳐 터치 폭이 좁던 문제 해소. `ViewToggle.module.css` 말미에 `@media(max-width:480px)` 블록 신설 — `.toggle{gap:0.5rem}` + `.btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center}` → 2버튼이 화면폭 2분할 풀폭(터치 면적↑·좌우 균형·세로 패딩 0.6rem 보강). 데스크톱(미디어쿼리 밖) 무영향, `.active` 그라데/그림자 무회귀.
