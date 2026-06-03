@@ -1,3 +1,9 @@
+## [2026-06-03 10:40] [QA]
+검증 대상: 캘린더 컨테이너 패널 카드화(.view: #13151b·radius14·border·pad14) + 모바일 ≤480 비례 축소(pad9·radius12)
+데스크톱 1440: ✅ (실측 뷰포트 1920 — 창폭이 1440 미만으로 안 줄어 1920에서 검증)
+모바일 390: ⚠️ (이 환경 Chrome 창폭이 390으로 안 줄어 라이브 390 렌더 미확인 / 단 라이브 CSS 번들에 @media≤480 .view{padding:9px;border-radius:12px} 적재 확인)
+상세: 데스크 .view 패널 카드 적용 실측(bg rgb(19,21,27)·br14·border 1px rgba(255,255,255,.06)·pad14), grid 패널 내부 래핑, 가로 오버플로 0(scrollW1905<vw1920). 강조 셀 무회귀(today2·cellHas12·임박스트립4). 콘솔 React #418/#423/#425·adsbygoogle 0건(확장프로그램 경고만). 헬스: 홈/sitemap/robots/game상세/new-servers 전부 200. 신규 BUGS 0.
+
 ## [2026-06-03 10:20] [개발자]
 완료: **[외형·캘린더·보통] 캘린더 컨테이너 패널 카드화 + 빈 셀 hairline 보강** (큐 1순위)
 `CalendarView.module.css` `.view`(CalendarView.tsx L97 section 루트)에 `background:#13151b; border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:14px` 패널 카드 부여(기존 `margin:1rem 0` 유지) → 격자가 페이지에 떠 있던 것을 면 카드로 감쌈. 모바일 ≤480px에 `.view{padding:9px; border-radius:12px}` 비례 축소. 빈 셀 hairline은 기존 그리드 gap 배경(`.grid` gap:1px·#2a2e38)이 셀 구분선으로 현행 유지. today/임박/선택·cellHas 카테고리 좌띠는 셀 단위라 무영향(무회귀).
@@ -210,9 +216,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 사용자 요청 처리: 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0.
 a11y/리팩토링 제안 0건 큐잉 → IDEAS 보관 (외형 모드). 디자이너 01:05 인벤 제안(핫카드·이벤트 타입 배지)은 데이터/판단 선결로 IDEAS 유지.
 
-## [2026-06-03 01:05] [디자이너]
-외형 점검 완료 (데스크 1440 + 모바일 390 소스검증 + 인벤 비교)
-데스크 주요: 리스트/모달/캘린더에 구 accent #4a90e2·rgba(74,144,226) 잔존 → 브랜드 #5b9dff로 통일 제안(헤더만 신톤이라 면마다 블루 두 톤으로 갈림). +범례 tint 칩·필터 토큰(radius/border) 정렬.
-모바일 주요: Filters에 @media(max-width:480px) 블록 부재 → 검색+셀렉트3+위시 불규칙 줄바꿈, 풀폭검색+2×2 셀렉트 블록 신설 제안. (Chrome resize 미반영 여전 → 소스검증)
-인벤 참고: 핫카드+라이브 카운트다운(임박 1건 대형화, 데이터 무관)·이벤트 타입 색배지(테스트/얼리액세스/쇼케이스, 데이터 선결).
-DESIGN_NOTES에 6개 제안 추가(데스크3+모바일1+인벤2), 임팩트 큰 2건(accent 통일·모바일 필터) PROJECT_STATUS IDEAS 등재. 코드 미수정(문서만).
