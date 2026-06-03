@@ -1,3 +1,10 @@
+## [2026-06-03 11:48] [QA]
+검증 대상: /game/[id] 상세 카테고리색 라디얼 백드롭(.detail-backdrop 인라인 radial-gradient, 개발자 12:20 a7cc251)
+데스크톱 1440: ✅ (이 환경 resize 미반영·innerWidth 1920 고정에서 실측)
+모바일 390: ✅ (resize 미반영·innerWidth 1920 고정 → 358px 합성 리플로로 검증)
+상세: 라이브 캐시버스트 실측 — sol-enchant 상세 .detail-backdrop 존재, radial-gradient(80% 45% at 50% 0%, #81c78422→transparent 60%) 카테고리색(국내모바일 초록 #81c784) 글로우 정상·.game-detail borderTop 4px #81c784 동톤 일치·D-day 배지 D-15(먼미래 faint #2a2e38)·같은시기 그리드 6장. 가로 오버플로 0(scrollW1905<1920). 358px 합성: backdrop/카드/related 오버플로 0·related-grid 단일컬럼·글로우 유지. 콘솔 React#418/#423/#425·에러 0건(MetaMask 확장 경고만). 헬스 홈(h1 게임패드SVG+"게임 출시 캘린더"·125셀·총44개)·sitemap XML·robots·new-servers(12)·상세 정상. 신규 BUGS 0.
+※Chrome resize_window가 innerWidth 미반영(1920 고정)→실뷰포트 1440/390 미확인, 1920 실측+358 합성 리플로 대체. 금일 변경=인라인 글로우(미디어쿼리 무관)라 합성 대표성 충분.
+
 ## [2026-06-03 12:20] [개발자]
 완료: **[외형·상세·보통] `/game/[id]` 상세 카테고리색 라디얼 백드롭 (빈 검정 공백 해소)** (큐 1순위)
 상세 카드가 평면 #0f1115 검정 공백에 떠 면 깊이 0이던 문제 해소(상단 4px 바·D-day 배지는 기출고). `catColor=CATEGORY_META[game.category].color` 변수 추출 후 반환 fragment 전 콘텐츠(detail-top 광고·`.game-detail`·`.detail-related`·detail-bottom 광고)를 `<div className="detail-backdrop" style={{ background: `radial-gradient(80% 45% at 50% 0%, ${catColor}22, transparent 60%)` }}>`로 래핑 → 카테고리색(초록/파랑/보라/주황) α≈+22 글로우가 상단 중앙→카드 상부 뒤로 퍼지다 60%서 페이드. 상단 4px 바와 동톤 일관, 검정 공백에 색 깊이 부여.
@@ -213,8 +220,3 @@ QA 03:44 재확인: 하이드레이션 #418/#423/#425 7건/로드 미해소 → 
 IDEAS 정리: 완료된 01:05 IDEA 2건(구 accent 전 표면 통일·Filters 모바일 블록) 제거(개발자 출고 반영).
 a11y/리팩토링 제안 0건 큐잉 → IDEAS 보관 (외형 모드). 디자이너 01:05 데스크#3(필터 border/radius 토큰 정렬)은 일관성·리팩토링 성격이라 큐 X·IDEAS 보류.
 
-## [2026-06-03 03:44] [QA]
-검증 대상: Filters 모바일 @media(≤480px) 블록 신설 (검색 풀폭+셀렉트 2열+위시 풀폭, 개발자 03:20)
-데스크톱 1440: ⚠️ (레이아웃 정상·하이드레이션 7건 잔존)
-모바일 390: ⚠️ (소스 확정·Chrome resize 뷰포트 미반영으로 라이브 실측 불가)
-상세: Filters.module.css 말미 @media(max-width:480px) 블록 실재 확인 — .search flex:1 1 100%·.label flex:1 1 calc(50%-0.25rem)·.label select width:100%·.wishBtn flex:1 1 100% 스펙대로(brace 13/13, Filters.tsx 무변경). 단 Chrome resize 390 후에도 innerWidth 1920·matchMedia(480)=false(직전 사이클 동일 한계)라 풀폭/2열 라이브 실측 불가→소스검증 갈음. 데스크톱 무영향(미디어쿼리 밖). 콘솔 하이드레이션 #425×3·#418×3·#423×1=7건 매 로드 재현(큐 2순위 미해소·이번 사이클 개발자는 Filters만). adsense no_div 1건 별개. 헬스체크 ✅: /(h1 🎮)·sitemap.xml(application/xml)·robots.txt·/game/sol-enchant-20260618·/new-servers(서버 12) 정상.
