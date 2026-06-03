@@ -147,7 +147,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-03 11:20 (개발자): **큐 5→4 (외형 집중).** 직전 1순위 '`/game/[id]` "같은 시기 출시" 관련 게임 미니카드 그리드' 개발자 11:20 완료(page.tsx ±2주 윈도우·가까운 순 3~6개·관련 0건 섹션 숨김, globals.css `.detail-related/.related-*` 신설, esbuild OK·실데이터 42/44 관련>0 검증·brace 68/68) → 완료한 기능 이동·큐 종결. 잔여 4건(상세 라디얼 백드롭·리스트 배너 그라데+리본·인트로 카피 subtitle 위계·MonthTabs 가로 스크롤 어포던스)을 1~4순위로 당김. 활성 사용자 요청 0(SEO 보류). 신규 BUGS 0. 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드). QA 라이브 검증 대기.
+> 갱신 2026-06-03 11:30 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '`/game/[id]` "같은 시기 출시" 미니카드 그리드' 개발자 11:20 완료·QA 10:50 라이브 ✅(±2주·가까운순 3~6개·관련0건 숨김·미니카드 내부이동·콘솔0)로 큐 종결(개발자 5→4 반영). 보충: 디자이너 09:05 모바일#2 'ViewToggle 모바일 @media(≤480px) 블록 신설(마지막 미보유 컴포넌트, Filters·GameModal 선례 동형)'를 IDEAS→5순위 승격 → 큐 4→5. 잔여 1~4(상세 라디얼 백드롭·리스트 배너 그라데+리본·인트로 카피 subtitle 위계·MonthTabs 가로 스크롤) 유지. 활성 사용자 요청 0(SEO 보류). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관). QA 라이브 검증 대기.
 
 1. **[외형·상세·보통] `/game/[id]` 상세 카테고리색 라디얼 백드롭 (빈 검정 공백 해소)** (디자이너 06-03 05:05, IDEAS→큐 승격, `app/game/[id]/page.tsx`)
    - 상세 카드(~700px)가 평면 #0f1115 검정 공백 한가운데 떠 면 깊이 0(이미 상단 4px 카테고리 바·D-day 배지는 출고됨). 3순위 '같은 시기 출시 그리드'(공백→콘텐츠)와 **동일 /game/[id] 표면 묶음**(이건 색 깊이) → 함께 출고 시 상세페이지 임팩트 완성.
@@ -169,6 +169,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 구현(큰 단위 한 번에): `@media(max-width:480px)`에서 `.tabs`에 `-webkit-mask-image`/`mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(양 끝 페이드로 '더 있음' 신호) + `scroll-snap-type:x proximity`, `.tab`에 `scroll-snap-align:center`. 데스크톱(미디어쿼리 밖)은 무영향, mask 미지원 브라우저는 기존 스크롤 그대로 폴백.
    - 신규 색 없음, CSS 위주(tsx 무변경 예상). 검증: `npm run typecheck`/`build` 무에러, 모바일 ≤480px에서 월탭 양 끝 페이드·스냅 동작·데스크톱 무영향·CSS brace 균형 확인.
 
+5. **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (디자이너 06-03 09:05 모바일#2, IDEAS→큐, `components/ViewToggle.module.css`)
+   - 문제: Filters·GameModal는 최근 모바일 블록 신설됐으나 ViewToggle만 `@media(max-width:480px)` 0건 → 390px서 캘린더/리스트 2버튼이 `0.5rem 1rem` 고정 패딩으로 가운데 작게 뭉쳐 터치 폭 좁음(Filters/GameModal 모바일 블록 신설 선례와 동형, 마지막 남은 미보유 컴포넌트).
+   - 구현: `@media(max-width:480px){ .toggle{gap:0.5rem} .btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center} }` 신설 → 캘린더/리스트가 화면폭 2분할 풀폭 버튼(터치 면적↑·좌우 균형). 레이아웃만(신규 색 0), 데스크톱은 미디어쿼리 밖이라 무영향, tsx 무변경.
+   - 검증: `npm run typecheck`/`build` 무에러, 모바일 ≤480px 2버튼 풀폭 2분할·데스크톱 무영향·CSS brace 균형 확인.
+
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
 [보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션. — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
 
@@ -186,6 +191,9 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+
+- [디자이너 2026-06-03 09:05·인벤#1·외형모드 / 기획자 보관] **[보통·장르 칩] 리스트 카드에 장르 칩(`genres[]` 44/44 전부 보유)** (`components/ListView.tsx` `.cardBody` + `ListView.module.css`) — 인벤은 행마다 장르/키워드 칩으로 성격을 한눈에, 우린 상세 "장르 :" 평문뿐·카드엔 0. `.desc` 위에 `genres.slice(0,3)`을 무채색 칩(`.genreChip` 0.7rem·#9aa3b2·bg rgba(255,255,255,.05)·border rgba(.07)·radius999)으로 추가(카테고리=색면 / 장르=중성칩 위계 분리). **데이터 보유=리서처 선결 불필요.** 큐 2순위 '리스트 배너 그라데+리본'과 동일 ListView 표면이라 묶음 후보(배너=상단/장르칩=본문, 무충돌). 우선순위 보통
+- [디자이너 2026-06-03 09:05·데스크#2·외형모드 / 기획자 보관] **[보통·광고 placeholder 약화] `.ad-slot` 점선→solid 헤어라인 + min-height 축소** (`app/globals.css` `.ad-slot`·`.ad-slot-mid`) — 광고 미게재 시 1.5px dashed 점선 박스+라벨이 콘텐츠보다 튐(특히 /game/[id] 상·하단 2개가 카드보다 큰 면적). `border:1px solid rgba(255,255,255,0.05)`(dashed→solid)·`background:transparent`·라벨 `color:#3a3f48`·`.ad-slot-mid{min-height:160px}`(250→160). 실제 광고 삽입 시 자연히 채워짐(무해). 우선순위 보통
 
 - [디자이너 2026-06-03 09:05·모바일#1·외형모드 / 기획자 11:00 → **큐 5순위 승격**] **[높음·모바일] MonthTabs 가로 스크롤 어포던스(엣지 페이드+스냅)** (`components/MonthTabs.module.css` @media≤480px) — 12탭이 모바일서 `overflow-x:auto` 가로 스크롤이나 스크롤 신호 0이라 잘린 9~12월 미발견. @media(max-width:480px) `.tabs`에 `mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(+webkit) + `scroll-snap-type:x proximity`, `.tab{scroll-snap-align:center}`. 데스크톱 무영향·mask 미지원 폴백 현행. 우선순위 높음
 
