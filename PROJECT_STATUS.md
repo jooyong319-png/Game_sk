@@ -148,7 +148,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-03 11:30 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '`/game/[id]` "같은 시기 출시" 미니카드 그리드' 개발자 11:20 완료·QA 10:50 라이브 ✅(±2주·가까운순 3~6개·관련0건 숨김·미니카드 내부이동·콘솔0)로 큐 종결(개발자 5→4 반영). 보충: 디자이너 09:05 모바일#2 'ViewToggle 모바일 @media(≤480px) 블록 신설(마지막 미보유 컴포넌트, Filters·GameModal 선례 동형)'를 IDEAS→5순위 승격 → 큐 4→5. 잔여 1~4(상세 라디얼 백드롭·리스트 배너 그라데+리본·인트로 카피 subtitle 위계·MonthTabs 가로 스크롤) 유지. 활성 사용자 요청 0(SEO 보류). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관). QA 라이브 검증 대기.
+> 갱신 2026-06-03 12:30 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '`/game/[id]` 상세 카테고리색 라디얼 백드롭' 개발자 12:20 완료(a7cc251)·QA 11:48 라이브 ✅(.detail-backdrop 인라인 radial-gradient·카테고리색 글로우·상단 4px 바 동톤·가로 오버플로 0·콘솔 #418/#423/#425 0건)로 큐 종결(개발자 5→4 반영). 보충: 디자이너 09:05 인벤#1 '리스트 카드 장르 칩(genres 44/44 전부 보유·리서처 선결 불필요)'을 IDEAS→5순위 승격 → 큐 4→5. 잔여 1~4(리스트 배너 그라데+D-DAY 리본·인트로 카피 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록) 유지. 활성 사용자 요청 0(SEO 보류). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관). QA 라이브 검증 대기.
 
 1. **[외형·리스트·보통] 리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 카드 좌상단 리본** (디자이너 IDEAS, 06-03 05:11, `components/ListView.module.css` + `components/ListView.tsx`)
    - 현재 카드 상단 `.cardBanner`가 카테고리 단색 4px 바라 밋밋. (a) `.cardBanner`를 카테고리색 세로 그라데이션(`linear-gradient(180deg, var(--cat), color-mix(in srgb,var(--cat) 34%, transparent))`, color-mix 미지원 폴백 `cat-bg-*` 선행)으로, (b) D-DAY(diff 0) 카드 좌상단에 작은 리본 배지(`position:absolute; 카테고리색 bg·#fff·0.65rem·radius 0 0 8px 0`).
@@ -172,6 +172,13 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 문제: Filters·GameModal는 최근 모바일 블록 신설됐으나 ViewToggle만 `@media(max-width:480px)` 0건 → 390px서 캘린더/리스트 2버튼이 `0.5rem 1rem` 고정 패딩으로 가운데 작게 뭉쳐 터치 폭 좁음(Filters/GameModal 모바일 블록 신설 선례와 동형, 마지막 남은 미보유 컴포넌트).
    - 구현: `@media(max-width:480px){ .toggle{gap:0.5rem} .btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center} }` 신설 → 캘린더/리스트가 화면폭 2분할 풀폭 버튼(터치 면적↑·좌우 균형). 레이아웃만(신규 색 0), 데스크톱은 미디어쿼리 밖이라 무영향, tsx 무변경.
    - 검증: `npm run typecheck`/`build` 무에러, 모바일 ≤480px 2버튼 풀폭 2분할·데스크톱 무영향·CSS brace 균형 확인.
+
+
+5. **[외형·리스트·보통] 리스트 카드 장르 칩 — `genres[]` 무채색 pill 최대 3개 추가** (디자이너 06-03 09:05 인벤#1, IDEAS→큐, `components/ListView.tsx` + `components/ListView.module.css`)
+   - 문제: 인벤은 행마다 장르/키워드 칩으로 게임 성격을 한눈에 보여주나, 우린 `genres[]`(44/44 전부 보유)를 상세 "장르 :" 평문으로만 쓰고 리스트 카드엔 0건. 카테고리(색면) 외에 게임 성격 신호가 없음.
+   - 구현(큰 단위 한 번에): `ListView.tsx` `.cardBody`의 `.desc` 위에 `{g.genres?.slice(0,3).map(t => <span key={t} className={styles.genreChip}>{t}</span>)}`를 `<div className={styles.genreChips}>`로 감싸 추가(genres 없으면 미렌더). `ListView.module.css`: `.genreChips{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.4rem}` + `.genreChip{font-size:0.7rem;color:#9aa3b2;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);padding:0.1rem 0.5rem;border-radius:999px}` 신설.
+   - **무채색 칩**으로 카테고리 4색면과 위계 분리(카테고리=색면 / 장르=중성칩). 데이터 보유=리서처 선결 불필요. 큐 1순위 '리스트 배너 그라데+리본'과 동일 ListView 표면(배너=상단/장르칩=본문)이라 무충돌·묶음 후보.
+   - 검증: `npm run typecheck`/`build` 무에러, 카드별 장르 칩 최대 3개·genres 없는 게임 미렌더·과거카드 약화(기출고)와 무충돌·CSS brace 균형 확인.
 
 
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
