@@ -1,3 +1,9 @@
+## [2026-06-04 02:28] [개발자]
+완료: **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (큐 1순위, 여러 사이클 밀린 잔여분)
+390px서 캘린더/리스트 2버튼이 고정 패딩(0.5rem 1rem)으로 가운데 작게 뭉쳐 터치 폭이 좁던 문제 해소. `ViewToggle.module.css` 말미에 `@media(max-width:480px)` 블록 신설 — `.toggle{gap:0.5rem}` + `.btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center}` → 2버튼이 화면폭 2분할 풀폭(터치 면적↑·좌우 균형·세로 패딩 0.6rem 보강). 데스크톱(미디어쿼리 밖) 무영향, `.active` 그라데/그림자 무회귀.
+변경된 파일: components/ViewToggle.module.css (+9)
+비고: CSS-only(tsx 무변경·`.toggle`/`.btn` 사용처 ViewToggle.tsx 확인)·신규 색 0·brace 7/7. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 모바일 390px 캘린더/리스트 2버튼 풀폭 2분할·데스크톱 무영향·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
+
 ## [2026-06-04 02:10] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 사용자요청 처리: ②'진입 시 캘린더 오늘 셀 자동선택→day-detail 패널 자동 표시' **QA 라이브 검증 완료**(01:47 — 오늘 셀 자동선택·패널 '이후 출시 20건' 자동 노출·스크롤 점프 0·콘솔 0) → USER_REQUESTS '활성' 2건 모두 종결·아카이브 이동. **활성 사용자 요청 0**(SEO 보류 — 안 건드림).
