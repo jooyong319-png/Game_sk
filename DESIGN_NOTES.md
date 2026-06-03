@@ -10,6 +10,37 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-03 09:05] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 그라데 타이틀·'출시 임박' 4카드[FF7 D-DAY 주황 글로우·미르 D-1·메이크드라마 D-1·고딕 D-2 카테고리 글로우]·캘린더 6월[주말 일#e57373/토#7aa7ff·today 3일 채움 원형·출시셀 카테고리 tint+좌띠]·리스트[월섹션·released 카드 opacity 0.62 약화]·/game/ff7-rebirth-switch2-2026 상세[글로벌 퍼플 상단바+D 배지]) 전부 라이브 반영 양호. 직전 출고(임박 글로우·GameModal 모바일 블록·과거카드 약화) 확인. 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차(핫카드 라이브 카운트다운·주간 TOP10·아이콘 칩 필터행·행마다 타입배지/지역기/태그칩/액션버튼). **모바일(390)은 Chrome resize_window가 페이지 뷰포트 미반영(렌더 1568px 고정·QA·직전 사이클 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐(캘린더 패널 카드화·같은시기 그리드·상세 라디얼 백드롭·리스트 배너 그라데+리본)/IDEAS(핫카드+카운트다운·eventType 배지·위시 TOP·카테고리 필터칩·범례 칩·헤더 히어로 밴드)/완료와 중복 없는 신규 외형 제안만. a11y/시맨틱/포커스/리팩토링 0건(외형 모드).
+
+### 데스크톱(1440) 점검
+1. **[높음·위계] 인트로 카피 `.subtitle` "국내외 신규 출시 게임을 한눈에"가 상단 광고 슬롯과 '🔥 출시 임박' 사이에 회색 #888·0.95rem 한 줄로 붕 떠 헤더~히어로 사이가 비고 위계 약함** (`components/Home.module.css .subtitle` L6)
+   - 현재: `.subtitle{ text-align:center; color:#888; font-size:0.95rem; margin-bottom:1rem }`. h1(2.1rem 블루→퍼플 그라데)과 임박 스트립 사이의 유일한 카피인데 페이지에서 가장 약한 회색·작은 글씨라 시선을 못 끌고 점선 광고 placeholder 아래에 외롭게 뜸.
+   - 바꿀 값: 1차(저비용) `.subtitle{ color:#cfd6e0; font-size:1.1rem; font-weight:500; letter-spacing:-0.01em; margin:0.2rem 0 1.4rem }`로 톤업. 임팩트 큰 안=헤더 통합 — Home.tsx의 subtitle 노드를 `app/globals.css .site-header` 안(h1 바로 아래)으로 이동해 "타이틀+태그라인" 한 덩어리로(헤더 radial glow 배경 공유, 광고 슬롯 위로 올라감). DOM 이동이 부담이면 톤업만으로도 위계↑. 우선순위 **높음**(첫 화면 카피·CSS 위주).
+
+2. **[보통·광고 placeholder] `.ad-slot` placeholder가 1.5px dashed 보더(rgba .18)라 광고 미게재 상태에서 빈 점선 박스가 콘텐츠보다 튐 — 특히 /game/[id] 상세는 상·하단 placeholder 2개가 카드보다 큰 면적을 먹어 첫인상이 '광고 2개+카드 1개'** (`app/globals.css .ad-slot` L157·`.ad-slot-mid` L167)
+   - 현재: `.ad-slot{ min-height:90px; border:1.5px dashed rgba(255,255,255,0.18); background:rgba(255,255,255,0.02) }` + `.ad-slot-mid{min-height:250px}` + 라벨 `color:#555` "광고 자리 (상단)". 점선 박스+라벨이 또렷해 빈 광고칸이 시선을 뺏음.
+   - 바꿀 값: placeholder를 차분히 — `border:1px solid rgba(255,255,255,0.05)`(dashed→solid 헤어라인)·`background:transparent`·라벨 `color:#3a3f48`(더 옅게)·`.ad-slot-mid{ min-height:160px }`(250→160 축소). 실제 광고 삽입 시 자연히 채워짐(무해). → 빈 광고칸이 가라앉고 콘텐츠가 앞으로. 우선순위 **보통**.
+
+### 모바일(390) 점검 (소스 검증 — Chrome resize 미반영)
+1. **[높음·모바일 필수] MonthTabs 12탭이 모바일서 가로 스크롤(`.tabs{ overflow-x:auto; flex-wrap:nowrap }`)인데 스크롤 가능 신호가 0 → 잘린 우측 탭(9~12월)이 안 보여 월 탐색 발견성 저하** (`components/MonthTabs.module.css .tabs` L1 + `@media(max-width:480px)`)
+   - 현재: `.tabs{ display:flex; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:thin }`, 모바일 블록은 `.tab` 패딩/폰트만 축소. 390px서 12개 알약탭이 한 줄 가로 스크롤되지만 엣지 페이드·스냅이 없어 "더 있다"는 시각 신호 부재.
+   - 바꿀 값: `@media(max-width:480px)`에 `.tabs{ scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; mask-image:linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); }` + `.tab{ scroll-snap-align:center }`. 우측 끝 페이드로 스크롤 암시·활성월 중앙 스냅. → 모바일 월 탐색 발견성↑(데스크톱 무영향, mask 미지원 시 폴백=현행 스크롤 유지). 우선순위 **높음**.
+
+2. **[보통·모바일 일관성] ViewToggle만 @media(max-width:480px) 블록 부재 → 캘린더/리스트 2버튼이 모바일서 `0.5rem 1rem` 패딩 그대로라 가운데 작게 모여 좁음, Filters·GameModal 모바일 블록 신설 흐름과 어긋남** (`components/ViewToggle.module.css` @media 신설)
+   - 현재: ViewToggle.module.css에 모바일 블록 0건(Filters·GameModal는 최근 신설). `.toggle{ justify-content:center }` + `.btn{ padding:0.5rem 1rem; font-size:0.95rem }` 고정 → 390px서 두 버튼이 중앙에 작게 뭉쳐 터치 폭 좁음.
+   - 바꿀 값: `@media(max-width:480px){ .toggle{ gap:0.5rem } .btn{ flex:1 1 0; padding:0.6rem 0.5rem; text-align:center } }` → 캘린더/리스트가 화면폭 2분할 풀폭 버튼(터치 면적↑·좌우 균형). 레이아웃만(신규 색 0). 우선순위 **보통**(Filters/GameModal 모바일 블록 신설 선례와 동형 — 마지막 남은 미보유 컴포넌트).
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·장르 칩] 인벤은 행마다 키워드/장르 태그 칩(메이플스토리·오프라인·쇼케이스 등 연한 색 pill)을 달아 성격을 한눈에 → 우린 `genres[]` 데이터(44/44 전부 보유)를 상세에서 "장르 : RPG, 액션" 평문으로만, 리스트 카드엔 0** (`components/ListView.tsx` `.cardBody` L108~ + `ListView.module.css` 신규 `.genreChips`/`.genreChip`)
+   - 인벤: 라이트·태그 빽빽. 우린 다크·미니멀 → 카드당 최대 2~3개만 절제.
+   - 바꿀 값(다크 재해석): ListView.tsx `.cardBody`의 `.desc` 위(또는 `.date` 아래)에 `{g.genres?.slice(0,3).map(t => (<span key={t} className={styles.genreChip}>{t}</span>))}`를 `<div className={styles.genreChips}>`로 감싸 추가 + CSS `.genreChips{ display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.4rem }` · `.genreChip{ font-size:0.7rem; color:#9aa3b2; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.07); padding:0.1rem 0.5rem; border-radius:999px }`. 카테고리 4색과 겹치지 않게 **무채색 칩**(카테고리=색면 / 장르=중성칩으로 위계 분리). **데이터 보유=리서처 선결 불필요.** 상세 `/game/[id]`의 "장르 :" 평문도 같은 칩으로 통일 가능. → 카드 성격을 색 없이도 즉시 파악·인벤 정보량을 미니멀 다크로 흡수. 우선순위 **보통**.
+
+### 우선순위 종합
+높음: 데스크#1(인트로 카피 위계·헤더 통합)·모바일#1(MonthTabs 가로 스크롤 어포던스). 보통: 데스크#2(광고 placeholder 약화)·모바일#2(ViewToggle 모바일 블록, 선례 동형)·인벤#1(장르 칩, 데이터 보유).
+
+---
+
 ## [2026-06-03 05:05] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440 라이브 — **Next 앱 정상 배포 확인**(개발자 vercel.json 출고 반영: h1 SVG 게임패드 그라데 타이틀·'출시 임박' 4카드[FF7리버스 D-DAY·미르 D-1·메이크드라마 D-1·고딕 D-2]·캘린더 6월[주말색 일#e57373/토#7aa7ff·today 3일 채움원형·출시셀 카테고리 tint+좌띠]·리스트뷰[월섹션 배너카드]·/game/ff7-rebirth-switch2-2026 상세[카테고리 상단바+D-1 배지+메타행] 전부 라이브). 직전 큐 출고(주말색·today원형·모바일 cellHas·구accent #4a90e2→#5b9dff 통일·Filters 모바일블록) 반영 양호. 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차. **모바일(390)은 Chrome resize_window가 페이지 뷰포트 미반영(innerWidth 1920 고정·matchMedia(480) false, QA·직전 사이클 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐(임박글로우·관련게임그리드·리스트배너그라데+리본·범례칩)/IDEAS(핫카드+카운트다운·eventType배지·위시TOP·필터토큰)/완료와 중복 없는 신규 외형 제안만. a11y/시맨틱/포커스/리팩토링 0건(외형 모드).
 
@@ -453,18 +484,3 @@ _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 ---
 
 
-## [2026-05-29 18:04] [디자이너] — 운영자 요청: 날짜 클릭 패널 내부 스크롤 제거
-운영자(쌀먹닷컴) 직접 요청. 라이브 실측으로 재현 확인.
-
-### 개선점
-1. **날짜 클릭 패널의 내부 스크롤(스크롤 속 스크롤) 제거 → 페이지 흐름으로 인라인 확장** — 우선순위: 높음 (운영자 요청)
-   - 어디서: 캘린더에서 날짜 클릭 시 아래 펼쳐지는 "OO 이후 출시 N건" 패널.
-   - 재현: 30일 클릭 → "2026.05.30 (토) 이후 출시 25건" 패널이 **고정 높이 박스 + 내부 overflow-y 스크롤**로 열림. 패널 오른쪽에 자체 스크롤바가 생겨, 페이지 스크롤과 별개로 패널 안에서 또 드래그해야 함(스크롤 트랩/스크롤 속 스크롤).
-   - 왜 불편: 마우스 휠이 패널 안에 갇히거나, 작은 내부 스크롤바를 따로 드래그해야 함. 모바일에선 더 심각(중첩 스크롤 = 터치 스크롤 충돌).
-   - 개선:
-     - 패널의 `max-height`(약 60vh 추정) + `overflow-y:auto/scroll` 제거 → 내용이 페이지에 그대로 펼쳐지고 **페이지 전체 스크롤 하나로 통일**. 내부 스크롤바 소멸.
-     - 이미 등록된 "한 줄 컴팩트 행"(색점·게임명·플랫폼·D-day·☆ → 클릭=상세 모달) 제안과 **묶어 처리** 권장. 컴팩트 행이면 25건도 세로가 짧아져, 인라인 확장해도 페이지가 과하게 길어지지 않음.
-     - 패널 열리면 해당 패널 상단으로 부드럽게 `scrollInto(view)` 한 번만(선택). 닫기(×)는 현행 유지.
-   - 비고: 16:31/IDEAS의 컴팩트 행 항목과 동일 작업 묶음. 개발자: (1) 컨테이너 고정높이/overflow 제거 + (2) 행 컴팩트화를 한 번에.
-
----

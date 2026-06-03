@@ -1,3 +1,10 @@
+## [2026-06-03 09:05] [디자이너]
+외형 점검 완료 (데스크 1440 Chrome 라이브 + 모바일 390 소스검증 + 인벤 비교)
+데스크 주요: 인트로 카피 `.subtitle`(#888·0.95rem)가 광고슬롯~임박 스트립 사이 붕 떠 위계 약함 → 톤업/헤더 통합(높음). 부수: `.ad-slot` 점선 placeholder가 특히 /game/[id] 상세서 콘텐츠보다 튐 → solid 헤어라인+min-height 축소(보통).
+모바일 주요: MonthTabs 12탭 가로 스크롤인데 스크롤 신호 0 → @media≤480 엣지 페이드 mask+scroll-snap(높음). ViewToggle만 모바일 블록 부재(Filters/GameModal 선례 동형) → @media≤480 풀폭 2분할(보통).
+인벤 참고: 행마다 장르/키워드 태그칩 → 우린 `genres[]` 44/44 보유하나 리스트 카드 미노출 → 무채색 다크 장르 칩(데이터 선결 불필요, 보통).
+DESIGN_NOTES에 5개 제안 추가(데스크2·모바일2·인벤1). 높음 2건(인트로 카피·MonthTabs 스크롤) PROJECT_STATUS IDEAS 등재. 큐/IDEAS/완료와 중복 0. a11y/리팩토링 0건(외형 모드). 코드 미수정(문서만).
+
 ## [2026-06-03 08:47] [QA]
 검증 대상: HeroStrip '출시 임박' 임박도별 글로우(개발자 09:20 — diff===0 glowDday·diff<=3 glowCat·데스크톱 한정)
 데스크톱 1440: ✅ (Chrome 라이브 실측. 스트립 4카드 D-DAY/D-1/D-1/D-2 — glowDday 1개 box-shadow rgba(255,122,89,.7)+transform scale(1.02) pop 확정, glowCat 3개 카테고리색 글로우[국내모바일 녹색·글로벌 보라] transform none 확정. 가로오버플로 0[scrollW 1905≤1920]·캘린더 125셀·'불러오는 중' 플래시 0. 헬스 ✅ /·robots·sitemap(XML 200)·/game/sol-enchant-20260618[h1 🎮]·/new-servers[12서버])
@@ -197,10 +204,4 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 잔여 큐 1~5(전부 Next app/·components/): ①요일 헤더 주말 색 fix ②임박 스트립 글로우(데스크톱 한정) ③/game/[id] 미니카드 그리드 ④리스트 카드 배너 그라데 ⑤--accent-grad 그라데 칩
 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0(요일헤더는 본 큐 1순위로 처리)·3사이클 정체 0·신규 디자이너 제안 0
 a11y/리팩토링 0건 → IDEAS 보관 (외형 모드)
-
-## [2026-06-02 23:48] [QA]
-검증 대상: 캘린더 시각 강화 3종 (주말 색 구분·today 채움 원형·모바일 출시셀 강화) (개발자 23:29)
-데스크톱 1440: ⚠️ (요일 헤더 주말색 미적용 — 셀 날짜는 정상)
-모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정·matchMedia(480)=false → 소스검증 대체)
-상세: 라이브 Chrome 실측 — today 채움 원형 ✅(accent#5b9dff bg·border-radius 50%·흰자 "2"·"오늘" 텍스트배지 제거 확인), 선택 셀 날짜 흰색 ✅, 셀 날짜 주말색 ✅(.cellDate.sun 일=rgb(229,115,115)·.cellDate.sat 토=rgb(122,167,255), 각 6셀). **단 요일 헤더(.dayHead)는 회색 #888 잔존(일/토 동일 rgb(136,136,136))** → `.dayHead{color:#888}`(module.css L62)가 `.sun/.sat`(L45-46)보다 후행·동일 특이도라 override. 셀 날짜만 2클래스라 정상. → BUGS 등록. 모바일 출시셀 tint16%·좌띠4px·점7px는 소스확인 ✅(뷰포트 미반영으로 렌더실측 불가). 콘솔 에러 0·가로오버플로 0(scrollWidth≤innerWidth). 헬스체크 ✅: /(h1 게임 출시 캘린더·🎮 0)·/sitemap.xml(XML·50 URL)·/robots.txt·/game/sol-enchant-20260618(상세 정상)·/new-servers(서버 12개) 정상. 노출 이모지 0·svg.ic 5종 렌더.
 
