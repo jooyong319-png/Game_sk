@@ -1,3 +1,9 @@
+## [2026-06-04 01:30] [개발자]
+완료: **[사용자요청·캘린더·높음] 진입 시 오늘 날짜 셀 디폴트 선택 → day-detail 패널('오늘 이후 출시') 자동 표시** (큐 1순위, 운영자 직접 요청)
+진입 직후 캘린더 아래 패널이 비어 "게임 리스트가 없음"던 문제 해소. mount 후 useEffect로 오늘(KST) ISO를 `selectedISO`에 자동 세팅 → 오늘 셀 선택+패널 '오늘 이후 출시' 자동 노출. 커서 해제 effect를 `prevYMRef`로 '실제 월 이동에만' 보정(첫 mount·이번 달 교체는 유지). `scrollOnSelect` ref로 초기 자동선택은 스크롤 점프 차단, 사용자 클릭에만 패널 스크롤. 오늘 ISO는 mount 후 계산(하이드레이션 안전).
+변경된 파일: components/CalendarView.tsx (+22/−5)
+비고: 신규 색 0·strict any 0·esbuild tsx 트랜스폼 OK·`{`/`}` 130/130. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 진입 시 오늘 셀 선택·패널 자동 표시·진입 스크롤 점프 없음·월 이동 시 해제·셀 클릭 스크롤·콘솔 #418/#423/#425 0건 실측 부탁.
+
 ## [2026-06-04 01:11] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 사용자요청 처리: ①'리스트 기간 기본 오늘 이후' **QA 라이브 검증 완료**(00:48 — 기본 27건·'전체(과거 포함)' 44 복원·캘린더 과거 달 무파손·콘솔 0) → USER_REQUESTS '활성' 종결. ②'진입 시 캘린더 오늘 셀 자동선택→day-detail 패널 자동 표시'만 활성 = **큐 1순위 유지**(사용자 최우선).
@@ -174,14 +180,3 @@ IDEAS 보관: 디자이너 09:05 잔여 2건 — 장르 칩(리스트 카드, ge
 빌드타임에 출시일 ±2주(14일) 윈도우 내 다른 게임을 자기 제외·가까운 순 3~6개 추려 `</article>` 직후 `<section.detail-related>`(h3 "같은 시기 출시" + `<a href>` 미니카드 그리드)로 렌더, 관련 0건이면 섹션 미렌더. 미니카드=카테고리색 좌측 4px 바·게임명(700)·formatShortDate 출시일·D-day. CSS `.related-grid`(auto-fill minmax(220px,1fr) gap12)·`.related-card`(hover accent border+translateY-2px) 신설, 메인 톤·CATEGORY_META 4색 재사용(신규 색 0).
 변경된 파일: app/game/[id]/page.tsx (+44/−1), app/globals.css (+11)
 비고: TypeScript strict 유지(any 0). esbuild로 tsx 트랜스폼 OK, games.json 44개 시뮬레이션 — 관련>0 42개·관련=0 2개(섹션 숨김 확인)·거리순 정렬 정상, CSS brace 68/68 균형. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 /game/[id] 상세 하단 '같은 시기 출시' 그리드 노출·카테고리 좌측 바·관련 0건 게임(상세 2개) 섹션 숨김·미니카드 클릭 내부이동 실측 부탁.
-## [2026-06-03 11:00] [기획자]
-TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
-완료: 1순위 '[외형·캘린더] 캘린더 컨테이너 패널 카드화' — 개발자 10:20 완료(.view #13151b·radius14·border·pad14, 모바일 ≤480 pad9·radius12, CSS-only brace 63/63)·QA 10:40 라이브 ✅(데스크 패널 카드 묶음·가로 오버플로 0·강조 셀 무회귀·콘솔 React#418/#423/#425 0건) → 완료한 기능 이동, 큐에서 종결.
-유지: /game/[id] 같은시기 그리드·/game/[id] 라디얼 백드롭·리스트 배너 그라데+D-DAY 리본·인트로 카피 .subtitle 위계강화 = 1~4순위.
-추가: - [외형·모바일·높음] MonthTabs 가로 스크롤 어포던스(엣지 페이드 mask + scroll-snap, 디자이너 09:05 모바일#1, IDEAS→5순위) → 4→5.
-사용자 요청 활성 0(SEO 보류 — 안 건드림). QA 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).
-## [2026-06-03 10:40] [QA]
-검증 대상: 캘린더 컨테이너 패널 카드화(.view: #13151b·radius14·border·pad14) + 모바일 ≤480 비례 축소(pad9·radius12)
-데스크톱 1440: ✅ (실측 뷰포트 1920 — 창폭이 1440 미만으로 안 줄어 1920에서 검증)
-모바일 390: ⚠️ (이 환경 Chrome 창폭이 390으로 안 줄어 라이브 390 렌더 미확인 / 단 라이브 CSS 번들에 @media≤480 .view{padding:9px;border-radius:12px} 적재 확인)
-상세: 데스크 .view 패널 카드 적용 실측(bg rgb(19,21,27)·br14·border 1px rgba(255,255,255,.06)·pad14), grid 패널 내부 래핑, 가로 오버플로 0(scrollW1905<vw1920). 강조 셀 무회귀(today2·cellHas12·임박스트립4). 콘솔 React #418/#423/#425·adsbygoogle 0건(확장프로그램 경고만). 헬스: 홈/sitemap/robots/game상세/new-servers 전부 200. 신규 BUGS 0.

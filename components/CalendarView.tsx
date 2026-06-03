@@ -2,7 +2,7 @@
 import { useMemo, useState, useEffect, useRef, type CSSProperties } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
-import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
+import { calcDayDiff, formatShortDate, getKoreanWeekday, kstDateOnly } from '@/lib/utils';
 import styles from './CalendarView.module.css';
 
 interface Props {
@@ -58,15 +58,31 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now }: Pro
   const monthLabel = `${cursor.getFullYear()}년 ${cursor.getMonth() + 1}월`;
   const [selectedISO, setSelectedISO] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
+  // 사용자 클릭 선택에만 패널로 스크롤(진입 자동선택은 점프 안 함)
+  const scrollOnSelect = useRef(false);
+  // 직전 커서 연-월. 첫 실행(mount)·동일 월 갱신은 선택 유지, 실제 월 이동에만 해제
+  const prevYMRef = useRef<string | null>(null);
 
-  // 달이 바뀌면 선택 해제
-  useEffect(() => { setSelectedISO(null); }, [cursor]);
-
-  // 패널 표시 시 스크롤
+  // 진입(mount) 후 1회: 오늘(KST) 셀을 디폴트 선택 → day-detail 패널 '오늘 이후 출시' 자동 노출.
+  // 오늘 ISO는 mount 후 계산해 SSR에 출력하지 않음(날짜의존 하이드레이션 회피).
   useEffect(() => {
-    if (selectedISO && panelRef.current) {
+    const t = kstDateOnly(new Date().toISOString());
+    setSelectedISO(toISO(t));
+  }, []);
+
+  // 달이 바뀌면 선택 해제 — 단 첫 실행과 '같은 월' 재갱신(Home mount의 이번 달 교체)은 유지
+  useEffect(() => {
+    const ym = `${cursor.getFullYear()}-${cursor.getMonth()}`;
+    if (prevYMRef.current === null) { prevYMRef.current = ym; return; }
+    if (prevYMRef.current !== ym) { prevYMRef.current = ym; setSelectedISO(null); }
+  }, [cursor]);
+
+  // 패널 표시 시 스크롤 — 사용자 클릭 선택에만(초기 자동선택 제외)
+  useEffect(() => {
+    if (selectedISO && scrollOnSelect.current && panelRef.current) {
       panelRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    scrollOnSelect.current = false;
   }, [selectedISO]);
 
   const prev = () => { const d = new Date(cursor); d.setMonth(d.getMonth() - 1); onCursorChange(d); };
@@ -74,6 +90,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now }: Pro
   const today = () => { const d = new Date(); d.setDate(1); onCursorChange(d); };
 
   function onCellClick(cell: Cell) {
+    scrollOnSelect.current = true; // 사용자 클릭 → 패널로 스크롤 허용
     if (!cell.inMonth) {
       // 인접월 셀: 그 달로 점프 + 그 날짜 선택
       onCursorChange(new Date(cell.date.getFullYear(), cell.date.getMonth(), 1));
