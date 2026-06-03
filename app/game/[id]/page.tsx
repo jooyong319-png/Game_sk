@@ -132,6 +132,7 @@ export default async function GamePage({ params }: Props) {
               const rdText = g.release_date_approx
                 ? '(예정)'
                 : rDiff < 0 ? '출시됨' : rDiff === 0 ? 'D-DAY' : `D-${rDiff}`;
+              const rdStage = rDiff === 0 ? 'today' : rDiff > 0 && rDiff <= 7 ? 'soon' : 'far';
               return (
                 <a
                   key={g.id}
@@ -141,7 +142,7 @@ export default async function GamePage({ params }: Props) {
                 >
                   <span className="related-name">{g.name_ko}</span>
                   <span className="related-date">{formatShortDate(g.release_date)}</span>
-                  <span className="related-dday">{rdText}</span>
+                  <span className={`related-dday dday-${rdStage}`}>{rdText}</span>
                 </a>
               );
             })}

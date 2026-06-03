@@ -128,7 +128,9 @@ a:hover { text-decoration: underline; }
 .related-card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
 .related-name { font-weight: 700; color: var(--text); font-size: 0.95rem; line-height: 1.35; }
 .related-date { font-size: 0.8rem; color: var(--text-faint); }
-.related-dday { font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+.related-dday { font-size: 0.85rem; font-weight: 700; color: var(--text-faint); }
+.related-dday.dday-today { color: #ff7a59; }
+.related-dday.dday-soon { color: #f5a623; }
 @media (prefers-reduced-motion: reduce) { .related-card:hover { transform: none; } }
 
 /* ─── 랜딩 페이지 (SEO 키워드) ─── */

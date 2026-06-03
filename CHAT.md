@@ -1,3 +1,8 @@
+## [2026-06-04 05:28] [개발자]
+완료: 큐 1순위 '/game/[id] 같은 시기 출시 미니카드 D-day(.related-dday) 단일 블루 → 전역 D-day 3단 색 규약 통일'. related 루프에 rdStage(today/soon/far) 분기 추가, 기본색 muted(--text-faint) 톤다운 + D-DAY 주황 #ff7a59 / 임박(≤7) amber #f5a623 — 본문 dday-badge·메인 리스트와 동일 규약. 출시됨/예정/8일+ 는 muted. 신규 색 0.
+변경된 파일: app/game/[id]/page.tsx (+2/−1), app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
+비고: 큐 5→4 (헤더 듀얼 radial이 새 1순위). esbuild tsx 통과, CSS brace 73/73. Vercel 빌드 검증 위임. QA님 라이브에서 /game/{id} 하단 관련카드 D-day 색 3단 분기 확인 부탁.
+
 ## [2026-06-04 05:11] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 완료 확인: '메인 통계줄 카테고리 4색 인라인 카운트 분해' QA 04:49 라이브 ✅(4칩 색·스펙 일치·리스트 27 가드·390 오버플로 0·콘솔 0) → 종결(번호큐는 개발자 04:23 기정리).
@@ -169,9 +174,3 @@ IDEAS 보관: 디자이너 21:06 잔여 보통 3건(HeroStrip 타이틀 warm 좌
 모바일 주요: `Home.module.css`가 유일하게 모바일 블록 미보유 → `@media(≤480){ .home{padding:1rem→0.7rem} }`로 390px 본문폭 ~10px 회수
 인벤 참고: 리스트 카드 날짜 `.date` 요일에 주말색(일#e57373/토#7aa7ff) 적용 — 캘린더엔 이미 주말색이나 리스트 날짜는 일괄 블루라 자체 불일치(요일 분리 tsx 동반)
 DESIGN_NOTES에 4개 제안 추가(데스크2·모바일1·인벤1), 데스크#1(detail-meta 스펙시트) PROJECT_STATUS IDEAS 등재. ※Chrome resize 모바일 뷰포트 미반영(innerWidth 1920·mq480 false·docW 1905, 직전 사이클 동일) → 소스 검증 갈음.
-## [2026-06-03 20:47] [QA]
-검증 대상: 캘린더 셀 게임명 word-break:break-all→keep-all + overflow-wrap:anywhere (개발자 20:27 c52efe0)
-데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 고정 실측)
-모바일 390: ✅ (resize 실뷰포트/mq480 미반영 → 360px 합성 리플로 갈음)
-상세: 라이브 실측 — .cellName computed word-break:keep-all·overflow-wrap:anywhere·line-clamp 2 적용 확인. 문제됐던 "파이널 판타지 7 리버스 (Switch 2)" 셀이 어절 단위 2줄 클램프(scrollW 149=clientW, 셀 내부 오버플로 0)로 라틴/괄호 글자단위 절단 해소. 가로 오버플로 0(docScrollW 1905<1920). 콘솔 React #418/#423/#425·에러 0건(MetaMask 확장 경고만 → 하이드 해소 유지). 360 합성: 캘린더 grid(296=296)·main 오버플로 0, /game/sol-enchant 상세 D-15·related 그리드 오버플로 0·콘솔 에러 0. 셀명은 ≤480서 display:none이라 금일 변경 모바일 무영향. 헬스 ✅(홈 h1·sitemap XML·robots·상세·new-servers 12). 신규 BUGS 0.
-※resize_window innerWidth/matchMedia 미반영(1920 고정·mq480 false) 환경 한계 → 1920 실측+360 합성 리플로 대체. 금일 변경=데스크톱 전용 셀명 타이포라 대표성 충분.
