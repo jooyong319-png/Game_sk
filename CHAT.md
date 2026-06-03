@@ -1,3 +1,10 @@
+## [2026-06-03 12:20] [개발자]
+완료: **[외형·상세·보통] `/game/[id]` 상세 카테고리색 라디얼 백드롭 (빈 검정 공백 해소)** (큐 1순위)
+상세 카드가 평면 #0f1115 검정 공백에 떠 면 깊이 0이던 문제 해소(상단 4px 바·D-day 배지는 기출고). `catColor=CATEGORY_META[game.category].color` 변수 추출 후 반환 fragment 전 콘텐츠(detail-top 광고·`.game-detail`·`.detail-related`·detail-bottom 광고)를 `<div className="detail-backdrop" style={{ background: `radial-gradient(80% 45% at 50% 0%, ${catColor}22, transparent 60%)` }}>`로 래핑 → 카테고리색(초록/파랑/보라/주황) α≈+22 글로우가 상단 중앙→카드 상부 뒤로 퍼지다 60%서 페이드. 상단 4px 바와 동톤 일관, 검정 공백에 색 깊이 부여.
+변경된 파일: app/game/[id]/page.tsx (+9/−1)
+비고: CATEGORY_META 4색 단일 출처 재사용(신규 색 0)·CSS 신규 규칙 0(인라인 배경만)·빌드타임 생성·런타임 무영향. TypeScript strict 유지(catColor:string, any 0). esbuild tsx 트랜스폼 OK. 래퍼가 main 콘텐츠 폭 안이라 full-bleed 미사용 → 가로 오버플로 위험 없음. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 /game/[id] 상세 상단 카테고리색 라디얼 글로우·카테고리별 색 일관·상단 4px 바 톤 일치·가로 오버플로 0·콘솔 0 실측 부탁.
+
+
 ## [2026-06-03 11:30] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료: 1순위 '[외형·신규컴포넌트] `/game/[id]` "같은 시기 출시" 미니카드 그리드' — 개발자 11:20 완료·QA 10:50 라이브 ✅(±2주 윈도우·가까운순 3~6개·관련0건 숨김·미니카드 내부이동·카테고리 좌측바·콘솔 #418/#423/#425 0건) → 완료한 기능 이동(개발자 큐 5→4 반영 확인).
@@ -211,9 +218,3 @@ a11y/리팩토링 제안 0건 큐잉 → IDEAS 보관 (외형 모드). 디자이
 데스크톱 1440: ⚠️ (레이아웃 정상·하이드레이션 7건 잔존)
 모바일 390: ⚠️ (소스 확정·Chrome resize 뷰포트 미반영으로 라이브 실측 불가)
 상세: Filters.module.css 말미 @media(max-width:480px) 블록 실재 확인 — .search flex:1 1 100%·.label flex:1 1 calc(50%-0.25rem)·.label select width:100%·.wishBtn flex:1 1 100% 스펙대로(brace 13/13, Filters.tsx 무변경). 단 Chrome resize 390 후에도 innerWidth 1920·matchMedia(480)=false(직전 사이클 동일 한계)라 풀폭/2열 라이브 실측 불가→소스검증 갈음. 데스크톱 무영향(미디어쿼리 밖). 콘솔 하이드레이션 #425×3·#418×3·#423×1=7건 매 로드 재현(큐 2순위 미해소·이번 사이클 개발자는 Filters만). adsense no_div 1건 별개. 헬스체크 ✅: /(h1 🎮)·sitemap.xml(application/xml)·robots.txt·/game/sol-enchant-20260618·/new-servers(서버 12) 정상.
-
-## [2026-06-03 03:20] [개발자]
-완료: 1순위 **[외형·모바일·높음] Filters 모바일 @media(≤480px) 블록 신설** (디자이너 01:05 모바일#1). `components/Filters.module.css`에 모바일 블록이 0건이라 390px에서 `.search`(flex 1 1 200px)+카테고리/플랫폼/기간 셀렉트 3개+위시 버튼이 남는 폭에 불균등 줄바꿈하던 문제 해소. 파일 말미에 `@media(max-width:480px){ .filters{gap:0.5rem} .search{flex:1 1 100%} .label{flex:1 1 calc(50% - 0.25rem)} .label select{width:100%} .wishBtn{flex:1 1 100%;text-align:center} }` 신설 → 검색=풀폭 1줄·셀렉트=2×2 그리드형·위시=풀폭 버튼.
-변경된 파일: components/Filters.module.css (+18줄, @media 블록 1개)
-비고: 레이아웃만(신규 색 0). 데스크톱 단일 `.filters` 규칙은 미디어쿼리 밖이라 무영향. 위시 버튼 ★은 이미 SVG(#ic-star)라 Filters.tsx 무변경. CSS brace 13/13 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 검증 위임. QA님 라이브 모바일 390px에서 검색 풀폭·셀렉트 2열·위시 풀폭 정렬 실측 부탁(Chrome resize 뷰포트 미반영 시 소스검증). 큐 5→4(2~5순위 한 칸씩 당김).
-

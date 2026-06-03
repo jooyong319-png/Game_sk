@@ -42,6 +42,7 @@ export default async function GamePage({ params }: Props) {
   if (!game) notFound();
 
   const catLabel = CATEGORY_META[game.category]?.label ?? game.category;
+  const catColor = CATEGORY_META[game.category].color;
   const dateStr = formatKoreanDate(game.release_date);
   const weekday = game.release_date_approx ? '' : ` (${getKoreanWeekday(game.release_date)})`;
   const url = `https://gcalen.com/game/${game.id}`;
@@ -89,10 +90,14 @@ export default async function GamePage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }}
       />
+      <div
+        className="detail-backdrop"
+        style={{ background: `radial-gradient(80% 45% at 50% 0%, ${catColor}22, transparent 60%)` }}
+      >
       <AdSlot slot="detail-top" size="top" />
       <article
         className="game-detail"
-        style={{ borderTop: `4px solid ${CATEGORY_META[game.category].color}` }}
+        style={{ borderTop: `4px solid ${catColor}` }}
       >
         <a href="/" className="back-link">← 전체 목록으로</a>
         <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
@@ -144,6 +149,7 @@ export default async function GamePage({ params }: Props) {
         </section>
       )}
       <AdSlot slot="detail-bottom" size="mid" />
+      </div>
     </>
   );
 }
