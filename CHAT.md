@@ -1,3 +1,11 @@
+## [2026-06-03 21:11] [기획자]
+TODO 큐 4→5 (모드: 외형 집중)
+추가: - [외형·상세·높음] `/game/[id]` 상세 `.detail-meta` 평문 4행→스펙시트화 (디자이너 21:06 데스크#1, CSS only, IDEAS→큐 1순위)
+유지: 인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩 → 2~5순위로 한 칸씩 밀림
+IDEAS 보관: 디자이너 21:06 잔여 보통 3건(HeroStrip 타이틀 warm 좌띠·Home.module.css 모바일 패딩·리스트 날짜 요일 주말색)
+사용자 요청 활성 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).
+
+
 ## [2026-06-03 21:10] [리서처]
 리서치 완료 (4개 카테고리)
 - 모바일 0→0, PC/콘솔 0→0, 글로벌 0→0, 신규서버 8→0 (후보→통과)
@@ -11,6 +19,7 @@
 - 로한2: 서버 통합·글로벌 확장만, 국내 신규서버 구체 날짜 X → 추가 X
 - 아이온2: 신규서버(포에타/이스할겐)=2025-11 과거건, 글로벌=2026 하반기(aion2-global 기등록) → 추가 X
 - 글로벌 AAA(Wild Blue Skies 8/13·Grave Seasons 8/14 등): AA/인디·국내 주목도 낮음 → 품질 기준 미충족, 추가 X
+
 
 ## [2026-06-03 21:06] [디자이너]
 외형 점검 완료 (데스크 1440 라이브 + 모바일 390 소스 + 인벤 비교)
@@ -218,15 +227,3 @@ TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 다음 후보: 상세 D-day배지+상단바(회귀)·이모지→SVG 2단계·헤더 히어로 밴드.
 사용자 요청 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드).
 
-## [2026-06-03 05:47] [QA]
-검증 대상: 하이드레이션 7건 kstDateOnly fix(개발자 05:31, UTC↔KST 시간대 불일치)
-데스크톱 1440: ✅ (h1 SVG·가로오버플로 0·137셀·임박4카드·로딩플래시 없음·콘솔 React에러 0)
-모바일 390: ⚠️ (Chrome resize 후에도 innerWidth 1920·matchMedia480 false → 실측 불가, 소스 갈음. 5개 컴포넌트 @media≤480 보유·캘린더 모바일 cellName 숨김으로 그리드 오버플로 무위험. GameModal 모바일블록 부재는 기존 IDEA)
-상세: **하이드레이션 #418/#423/#425=0건 해소 확정** — KST 05:47(00~09시 위험구간) 캐시버스트 2회 재로드 콘솔 클린. 헬스 ✅ /·sitemap.xml(50 URL)·robots·/game/007-first-light-2026·/new-servers. adsbygoogle no_div도 미관측. 신규 BUGS 0.
-
-## [2026-06-03 05:31] [개발자]
-완료: **하이드레이션 7건(#418×3·#423×1·#425×3) 근본원인 규명·수정 — 서버(UTC)↔클라(KST) timezone 불일치**. f021717(serverNow)은 UTC instant를 주입했지만 모든 렌더가 `new Date(serverNow)` 후 **로컬 날짜필드**(getDate/getMonth/getDay/getFullYear)를 읽음 → Vercel은 UTC, 사용자는 KST(UTC+9)라 빌드 instant의 UTC일자≠KST일자인 시간대(KST 00~09시 빌드)마다 D-day·'오늘'셀·달 라벨·요일이 서버HTML↔클라 첫렌더에서 갈려 #418/#423/#425 발생. 그래서 fix가 '반영됐는데도 미해소'로 보였음(부분 fix였음).
-수정: `lib/utils.ts`에 TZ무관 `kstDateOnly(iso)` 신설(+9h 시프트→getUTC*로 KST 연/월/일→로컬자정 Date, 어느 환경서도 동일 날짜필드). `Home.tsx` now·calendarCursor 초기값 + mount 실시간 교체를 kstDateOnly 기반으로 전환(사용자 로컬TZ 무관, 항상 KST 기준=한국 타깃 의도와 일치).
-검증: node로 TZ=UTC vs Asia/Seoul 시뮬 — 수정 전 date=2/D-3(UTC) vs date=3/D-2(KST) 불일치 재현 → 수정 후 양쪽 date=3·D-2·월라벨·today셀 전부 동일(불일치 0). release_date는 양쪽 동일일자라 무변경. strict 유지(any 0).
-변경된 파일: lib/utils.ts(+10), components/Home.tsx(+0/−4 치환). 합 +14/−4.
-비고: **adsbygoogle 'no_div' ERROR는 본 수정 밖(별개 추적)** — 하이드 7건과 무관(날짜 텍스트 불일치가 원인이었음). 로컬 빌드는 sandbox 디스크 제한 → Vercel typecheck+build 위임. **QA님: gcalen.com 콘솔 #418/#423/#425 0건 실측 부탁(특히 KST 00~09시대 빌드분에서 재현 안 되는지).**

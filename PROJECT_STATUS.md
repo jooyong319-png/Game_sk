@@ -150,31 +150,39 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-03 21:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 디자이너 21:06 데스크#1 '[높음] 상세 `.detail-meta` 평문 4행→스펙시트화(CSS only·SEO 첫화면 위계)'를 신규 **1순위**로 큐잉(IDEAS→큐 승격). 기존 1~4순위(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 한 칸씩 밀려 2~5순위 유지. 디자이너 21:06 잔여 보통 3건(HeroStrip 타이틀 warm 좌띠·Home.module.css 모바일 패딩·리스트 날짜 요일 주말색) → IDEAS 보관. 활성 사용자 요청 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만). QA 라이브 검증 대기.
+
 > 갱신 2026-06-03 20:27 (개발자): **큐 5→4.** 직전 1순위 '[외형·타이포] 캘린더 셀 게임명 `word-break:break-all`→`keep-all`+`overflow-wrap:anywhere`' 구현 완료(`CalendarView.module.css` `.cellName` 1줄 교체+1줄 추가·신규 색 0·brace 63/63) → 완료한 기능 이동. 기존 2~5순위(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 한 칸씩 당겨 1~4순위. 로컬 빌드 sandbox 제한 → Vercel 위임. QA 라이브 검증 대기.
 
 > 갱신 2026-06-03 13:40 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 좌상단 리본' 개발자 13:20 완료(a5e1a57)·QA 13:30 라이브 ✅(.cardBanner 세로 그라데·D-DAY 리본 글로벌 보라 #ba68c8·과거카드 무충돌·가로 오버플로 0·콘솔 #418/#423/#425 0건)로 큐 종결(개발자 5→4 반영). 보충: 디자이너 13:05 데스크#1 '캘린더 셀 게임명 `word-break:break-all`→`keep-all`(라이브 가시 타이포 결함·라틴/괄호 글자단위 절단)'을 신규 **1순위**로 큐잉(높음) → 큐 4→5. 기존 1~4(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 한 칸씩 밀려 2~5순위 유지. 디자이너 13:05 잔여 보통 4건(통계줄 카테고리 4색 분해·헤더 듀얼 브랜드 radial·리스트 배너 모바일 40px·image_url 배경이미지) → IDEAS 보관. 활성 사용자 요청 0(SEO 보류). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관). QA 라이브 검증 대기.
 
 
 
-1. **[외형·헤더·높음] 인트로 카피 `.subtitle` 위계 강화 + 헤더 통합** (디자이너 06-03 09:05 데스크#1, IDEAS→큐, `components/Home.module.css` + `app/globals.css`)
+1. **[외형·상세·높음] `/game/[id]` 상세 `.detail-meta` 평문 4행 → 스펙시트화** (디자이너 06-03 21:06 데스크#1, IDEAS→큐, `app/globals.css` `.game-detail .detail-meta`/`li`/`strong`)
+   - 문제: 검색 유입 첫 화면(SEO 랜딩)인 `/game/[id]` 상세의 최대 콘텐츠 블록 `.detail-meta`(개발사/배급사/플랫폼/장르 4행)가 라벨·값 같은 톤·행 구분선 0의 회색 평문 4줄(`li{font-size:0.95rem;color:#cfd6e0}`·`strong{color:#888;margin-right:0.4rem}`)이라 4개 항목이 한 덩어리로 읽혀 스캔이 더딤(라이브 /game/ff7… 상세 실측).
+   - 구현(CSS only·큰 단위 한 번에): `app/globals.css`에서 `.game-detail .detail-meta li{ display:flex; gap:0.7rem; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:0.92rem; color:#e6e6e6 }` + `.detail-meta li:last-child{ border-bottom:none }` + `.detail-meta strong{ flex:0 0 4.5em; color:#888; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; margin-right:0 }` → 라벨 고정폭·대문자 muted / 값 밝게(#e6e6e6) / 행 hairline 구분으로 '스펙시트' 인상, 상세 본문 위계↑.
+   - 신규 색 0(기존 토큰 재사용)·markup 무변경·CSS only. 큐 5순위 '장르 칩'(장르 *값* 자리만 칩화)과 공존(행 구조 유지). 검증: `npm run typecheck`/`build` 무에러, 라이브 /game/[id] 상세 메타 4행 hairline 구분·라벨 대문자 muted·값 밝게·가로 오버플로 0·CSS brace 균형.
+
+
+2. **[외형·헤더·높음] 인트로 카피 `.subtitle` 위계 강화 + 헤더 통합** (디자이너 06-03 09:05 데스크#1, IDEAS→큐, `components/Home.module.css` + `app/globals.css`)
    - 문제: 태그라인 "국내외 신규 출시 게임을 한눈에"가 광고 슬롯과 임박 스트립 사이에 회색 `#888`·0.95rem 한 줄로 떠 헤더(히어로 밴드는 06-02 출고)~본문 사이가 비고 위계가 약함. 히어로 밴드는 완성됐으나 태그라인만 고아처럼 남아 헤더 시각 스토리가 미완.
    - 구현(큰 단위 한 번에): (a) `Home.module.css .subtitle` 톤업 — `color:#cfd6e0; font-size:1.1rem; font-weight:500; letter-spacing:-0.01em; margin:0.2rem 0 1.4rem`. (b) **헤더 통합(임팩트안)** — `.subtitle`을 `app/globals.css .site-header` 안 h1 바로 아래로 이동해 타이틀+태그라인을 한 덩어리로 묶고, 히어로 밴드 radial glow 배경을 공유하도록(h1 그라데이션 텍스트와 톤 일관). 모바일 ≤480px에서 1.0rem로 비례 축소.
    - 신규 색 없음(기존 텍스트 톤 재사용), CSS 위주. 검증: `npm run typecheck`/`build` 무에러, 데스크·모바일에서 태그라인이 헤더와 한 덩어리로 묶여 위계가 살아나는지·가로 오버플로 0 확인. CSS brace 균형.
 
 
-2. **[외형·모바일·높음] MonthTabs 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap** (디자이너 06-03 09:05 모바일#1, IDEAS→큐, `components/MonthTabs.module.css`)
+3. **[외형·모바일·높음] MonthTabs 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap** (디자이너 06-03 09:05 모바일#1, IDEAS→큐, `components/MonthTabs.module.css`)
    - 문제: 12개 월탭이 모바일(≤480px)에서 `overflow-x:auto` 가로 스크롤이나 스크롤 가능 신호가 0이라 잘린 9~12월을 사용자가 발견 못 함(스크롤 어포던스 부재).
    - 구현(큰 단위 한 번에): `@media(max-width:480px)`에서 `.tabs`에 `-webkit-mask-image`/`mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(양 끝 페이드로 '더 있음' 신호) + `scroll-snap-type:x proximity`, `.tab`에 `scroll-snap-align:center`. 데스크톱(미디어쿼리 밖)은 무영향, mask 미지원 브라우저는 기존 스크롤 그대로 폴백.
    - 신규 색 없음, CSS 위주(tsx 무변경 예상). 검증: `npm run typecheck`/`build` 무에러, 모바일 ≤480px에서 월탭 양 끝 페이드·스냅 동작·데스크톱 무영향·CSS brace 균형 확인.
 
 
-3. **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (디자이너 06-03 09:05 모바일#2, IDEAS→큐, `components/ViewToggle.module.css`)
+4. **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (디자이너 06-03 09:05 모바일#2, IDEAS→큐, `components/ViewToggle.module.css`)
    - 문제: Filters·GameModal는 최근 모바일 블록 신설됐으나 ViewToggle만 `@media(max-width:480px)` 0건 → 390px서 캘린더/리스트 2버튼이 `0.5rem 1rem` 고정 패딩으로 가운데 작게 뭉쳐 터치 폭 좁음(Filters/GameModal 모바일 블록 신설 선례와 동형, 마지막 남은 미보유 컴포넌트).
    - 구현: `@media(max-width:480px){ .toggle{gap:0.5rem} .btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center} }` 신설 → 캘린더/리스트가 화면폭 2분할 풀폭 버튼(터치 면적↑·좌우 균형). 레이아웃만(신규 색 0), 데스크톱은 미디어쿼리 밖이라 무영향, tsx 무변경.
    - 검증: `npm run typecheck`/`build` 무에러, 모바일 ≤480px 2버튼 풀폭 2분할·데스크톱 무영향·CSS brace 균형 확인.
 
 
-4. **[외형·리스트·보통] 리스트 카드 장르 칩 — `genres[]` 무채색 pill 최대 3개 추가** (디자이너 06-03 09:05 인벤#1, IDEAS→큐, `components/ListView.tsx` + `components/ListView.module.css`)
+5. **[외형·리스트·보통] 리스트 카드 장르 칩 — `genres[]` 무채색 pill 최대 3개 추가** (디자이너 06-03 09:05 인벤#1, IDEAS→큐, `components/ListView.tsx` + `components/ListView.module.css`)
    - 문제: 인벤은 행마다 장르/키워드 칩으로 게임 성격을 한눈에 보여주나, 우린 `genres[]`(44/44 전부 보유)를 상세 "장르 :" 평문으로만 쓰고 리스트 카드엔 0건. 카테고리(색면) 외에 게임 성격 신호가 없음.
    - 구현(큰 단위 한 번에): `ListView.tsx` `.cardBody`의 `.desc` 위에 `{g.genres?.slice(0,3).map(t => <span key={t} className={styles.genreChip}>{t}</span>)}`를 `<div className={styles.genreChips}>`로 감싸 추가(genres 없으면 미렌더). `ListView.module.css`: `.genreChips{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.4rem}` + `.genreChip{font-size:0.7rem;color:#9aa3b2;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);padding:0.1rem 0.5rem;border-radius:999px}` 신설.
    - **무채색 칩**으로 카테고리 4색면과 위계 분리(카테고리=색면 / 장르=중성칩). 데이터 보유=리서처 선결 불필요. 큐 1순위 '리스트 배너 그라데+리본'과 동일 ListView 표면(배너=상단/장르칩=본문)이라 무충돌·묶음 후보.
@@ -198,8 +206,11 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [디자이너 2026-06-03 21:06·데스크#2·외형모드 / 기획자 보관] **[보통·섹션 헤더 위계] HeroStrip 섹션 타이틀 '🔥 출시 임박' `.title` warm 좌띠 강화** (`components/HeroStrip.module.css` `.title`) — `.title`(1.15rem/700 흰색)이 바로 아래 글로우 카드보다 비중 약함. `font-size:1.15→1.3rem`+`padding-left:0.6rem`+`border-left:3px solid var(--accent-warm)`(warm #f5a623, '임박=warm' 톤·카드 글로우색 계열 정합). 레이아웃 무변·신규 색 0. 우선순위 보통
+- [디자이너 2026-06-03 21:06·모바일#1·외형모드 / 기획자 보관] **[보통·모바일] `Home.module.css` `@media(≤480px)` 블록 신설 — 유일하게 모바일 블록 미보유** (`components/Home.module.css`) — `.home{padding:1rem}`(좌우 16px)가 390px서 본문폭 ~358px로 깎음. `@media(max-width:480px){ .home{padding:0.7rem} .subtitle{font-size:0.9rem;margin-bottom:0.7rem} }` → 본문폭 ~10px 회수. 데스크 무영향·신규 색 0. (큐 2순위 subtitle 위계 작업과 표면 인접 — 묶음 후보.) 우선순위 보통
+- [디자이너 2026-06-03 21:06·인벤#1·외형모드 / 기획자 보관·tsx 동반] **[보통·날짜 요일색 일관성] 리스트 카드 날짜 `.date` 요일에 주말색(일#e57373/토#7aa7ff) 적용 — 캘린더와 색 규약 일관** (`components/ListView.tsx` 날짜 노드 + `ListView.module.css` `.date` / `@/lib/utils`) — 캘린더엔 주말색 있으나 리스트 날짜는 일괄 `var(--accent)` 블루라 자체 불일치. `release_date.getDay()`로 일/토 요일 부분만 분기 색 span(평일 현행 블루). utils가 "YYYY.MM.DD (요일)" 합본이라 **요일 글자 분리(tsx) 동반** → 개발자 구현. 우선순위 보통
 
-- [디자이너 2026-06-03 21:06·데스크#1·외형모드 / **높음**] **[높음·상세 시각구조·CSS only] `/game/[id]` 상세 `.detail-meta`(개발사/배급사/플랫폼/장르 4행) 평문→스펙시트화** (`app/globals.css` `.game-detail .detail-meta`/`li`/`strong`) — 검색 유입 첫 화면(SEO 랜딩) 최대 콘텐츠 블록이 행 구분·라벨 위계 0인 회색 평문 4줄(라이브 실측). `li{display:flex;gap:0.7rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.92rem;color:#e6e6e6}`+`li:last-child{border-bottom:none}`+`strong{flex:0 0 4.5em;color:#888;font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.04em;margin-right:0}` → 라벨 고정폭·대문자 muted/값 밝게/행 hairline 스펙시트. CSS only·markup 무변경·신규 색 0. 큐 '장르 칩'과 공존(칩은 값 자리, 행 구조 유지). 우선순위 높음
+- [디자이너 2026-06-03 21:06·데스크#1·외형모드 / 기획자 21:11 → **큐 1순위 승격**] **[높음·상세 시각구조·CSS only] `/game/[id]` 상세 `.detail-meta`(개발사/배급사/플랫폼/장르 4행) 평문→스펙시트화** (`app/globals.css` `.game-detail .detail-meta`/`li`/`strong`) — 검색 유입 첫 화면(SEO 랜딩) 최대 콘텐츠 블록이 행 구분·라벨 위계 0인 회색 평문 4줄(라이브 실측). `li{display:flex;gap:0.7rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.92rem;color:#e6e6e6}`+`li:last-child{border-bottom:none}`+`strong{flex:0 0 4.5em;color:#888;font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.04em;margin-right:0}` → 라벨 고정폭·대문자 muted/값 밝게/행 hairline 스펙시트. CSS only·markup 무변경·신규 색 0. 큐 '장르 칩'과 공존(칩은 값 자리, 행 구조 유지). 우선순위 높음
 - [디자이너 2026-06-03 13:05·데스크#1·외형모드 / **높음**] **[높음·타이포·라이브버그] 캘린더 셀 게임명 `word-break:break-all`→`keep-all`+`overflow-wrap:anywhere`** (`components/CalendarView.module.css` `.cellName`) — 라이브 데스크 1440서 셀 게임명이 글자 단위로 절단("파이널 판타지 7 리버스 (Switch↵2)"·라틴/괄호 어색하게 잘림). `break-all`→`keep-all`(한글 어절 보존, 공백 줄바꿈)+`overflow-wrap:anywhere`(초장문 영문 안전망), 2줄 클램프·말줄임 유지. CSS 1줄 교체·신규 색 0. 우선순위 높음
 - [디자이너 2026-06-03 13:05·인벤#1·외형모드 / 보통] **[보통·배너이미지] 리스트/히어로 `.cardBanner` `image_url` 배경이미지 지원(다크 오버레이)+색배너 폴백** (`components/ListView.tsx`+`ListView.module.css`) — 인벤 지배 시각요소=게임 아트워크 이미지인데 우린 image_url 미사용(대부분 null·그라데+해치 대체). image_url 있을 때 `linear-gradient(180deg,rgba(15,17,21,.15),rgba(15,17,21,.85)),url()` cover 배경, 없으면 현행 색배너. 스키마 보유 필드·폴백 무해·리서처 이미지 채움만큼 점진 점등. 우선순위 보통
 
