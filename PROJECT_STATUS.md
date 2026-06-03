@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-04 00:20 (개발자 — 사용자요청 1순위 '리스트 기간 기본값 전체→오늘 이후' 구현 완료·완료한 기능 이동. 큐 5→4, 2~5순위 한 칸씩 당김. listGames 하한(리스트 전용)·캘린더 무하한 보존·기간 '전체(과거 포함)' 옵션 추가·신규 색 0. Vercel 검증 위임, QA 라이브 대기.)
+마지막 갱신: 2026-06-04 01:11 (기획자 — 사용자요청 ①'리스트 오늘 이후' QA 검증 완료(00:48)로 종결, ②'캘린더 오늘셀 자동선택'만 활성·큐 1순위 유지. 큐 4→5: 디자이너 01:05 신규 외형 4건 중 '상세 관련카드 D-day 색 규약 통일'을 5순위 추가, 나머지 3건 IDEAS 보관. 모드: 외형 집중.)
 
 
 ## 현재 단계
@@ -154,6 +154,9 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-04 01:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 사용자 활성 요청 ①'리스트 기간 기본 오늘 이후' **QA 라이브 검증 완료**(00:48 — 기본 27건·'전체(과거 포함)' 선택 시 44 복원·캘린더 과거 달 무파손·콘솔 0) → USER_REQUESTS.md 종결 처리. 남은 사용자 요청 ②'진입 시 캘린더 오늘 셀 자동선택→day-detail 패널 자동 표시'는 **큐 1순위 그대로 유지**(사용자 요청 최우선). 기존 큐 2~4(ViewToggle 모바일 블록·리스트 장르 칩·통계줄 4색 분해) 순서 유지. 신규 **5순위**: [외형·상세·보통] /game/[id] '같은 시기 출시' 미니카드 D-day(`.related-dday`)가 임박 불문 전부 블루 → 앱 전역 D-day 색 규약(D-DAY 주황/임박 amber/먼미래 muted)으로 통일(디자이너 01:05 데스크#1, IDEAS→큐, tsx 1줄+CSS 3규칙·신규 색 0). 디자이너 01:05 잔여 3건(상세 related-card 카테고리 tint wash·`.game-detail` 모바일 블록·상세 액션 outline pill) → IDEAS 보관(외형 모드·다음 큐 후보). 활성 사용자 요청 ②뿐(SEO 보류 — 안 건드림). 신규 BUGS 0(QA 00:48 신규 0·하이드레이션 7건 05:47 해소 유지). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만). 개발자 :20 1순위(캘린더 오늘셀) 착수 권장.
+
+
 > 갱신 2026-06-04 00:22 (기획자): **큐 5→5 + 사용자 활성 요청 2건 최우선 삽입.** 사용자(운영자)가 직접 요청: ①리스트뷰 기간 기본값 '전체(과거+미래)'→'오늘 이후'(과거는 기간 필터로 유지, 완전 제거 X — 사용자 확정), ②진입 시 캘린더 '오늘 날짜 셀'이 디폴트 선택돼 day-detail 패널('오늘 이후 출시')이 자동으로 떠 있게(현재 진입 직후 아래 리스트가 비어 보이는 문제). → USER_REQUESTS.md '활성'에 등재하고 **1·2순위로 등록**(사용자 요청 최우선 규칙). 기존 1~3(ViewToggle 모바일·리스트 장르 칩·통계줄 4색)은 3~5순위로 밀고, 직전 4·5순위(헤더 듀얼 radial·핫카드+카운트다운)는 '큐 소진 후 후보'로 보관(스펙 전량 보존). 양 작업 모두 **오늘(now) 하한은 mount 후 useEffect 계산으로 SSR 하이드레이션 안전**(7건 이력 회피) 명시. 리스트 하한은 캘린더 과거 달 탐색을 깨지 않게 '리스트 표시에만/기간 전체 선택 시 복원' 주의 표기. SEO 요청은 여전히 보류(안 건드림). 신규 BUGS 0. 개발자 :20 1순위(리스트 오늘이후) 착수 권장.
 
 
@@ -203,6 +206,12 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 통계줄 카테고리 4색 span·총합 회색·필터 변경 시 카운트 갱신·count 0 카테고리 처리·캘린더 범례와 색 정합 확인.
 
 
+5. **[외형·상세·보통] /game/[id] '같은 시기 출시' 미니카드 D-day(`.related-dday`) 단일 블루 → 앱 전역 D-day 색 규약(D-DAY 주황/임박 amber/먼미래 muted)으로 통일** (디자이너 01:05 데스크#1, IDEAS→큐, `app/game/[id]/page.tsx` related 루프 L130~134 + `app/globals.css` `.related-dday` L131)
+   - 문제: `.related-dday{color:var(--accent)}` 단일 블루라 관련카드 'D-1'이 같은 화면 위쪽 본문 D-DAY 배지(주황 #ff7a59)·임박(amber #f5a623)·메인 리스트 카드(`.ddaySoon` amber)와 색 규약 불일치(같은 'D-1'이 표면마다 다른 색).
+   - 구현(큰 단위 한 번에): `page.tsx` related 루프가 이미 `rDiff` 보유 → `rdStage`(`rDiff===0?'today':rDiff>0&&rDiff<=7?'soon':'far'`) 1줄 산출, `<span className={`related-dday dday-${rdStage}`}>`. `app/globals.css`: 기본 `.related-dday`를 far용 `color:var(--text-faint)`로 톤다운 + `.related-dday.dday-today{color:#ff7a59}`·`.related-dday.dday-soon{color:#f5a623}` 2규칙 신설(앱 기존 D-day 3색 재사용·**신규 색 0**). 본문 D-DAY 배지/메인 리스트와 동일 색 규약으로 통일.
+   - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 관련카드 D-DAY 주황·임박(≤7) amber·먼미래 muted·본문 배지/리스트와 색 정합·CSS brace 균형 확인.
+
+
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
 > 2026-06-04 00:22 사용자 요청 2건(리스트 오늘이후·캘린더 오늘셀 자동선택)을 1·2순위로 삽입 → 직전 4·5순위(헤더 듀얼 radial·핫카드+카운트다운)가 후보로 밀림. 외형 모드 유지·다음 큐 우선 후보. 전체 스펙 보존:
 
@@ -234,6 +243,9 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [디자이너 2026-06-04 01:05·데스크#2·외형모드 / 기획자 IDEAS] **[보통·상세 깊이] /game/[id] '같은 시기 출시' `.related-card` 평면 면 → 좌측 카테고리색 wash** (`app/globals.css` `.related-card` + `page.tsx` 인라인 style) — 카드 인라인 `--cat` 주입 후 `background:linear-gradient(90deg,color-mix(in srgb,var(--cat) 12%,var(--bg-elev)),var(--bg-elev) 42%)`(color-mix 미지원 폴백 `var(--bg-elev)` 선행)+`.related-card:hover{border-color:var(--cat)}`. 좌 4px 바와 면 tint 정합·본문 라디얼 백드롭과 톤 연결. 카테고리 4색 단일 출처·신규 색 0. 우선순위 보통
+- [디자이너 2026-06-04 01:05·모바일#1·외형모드 / 기획자 IDEAS] **[보통·모바일·상세] `app/globals.css` `@media(max-width:480px)` 블록(현재 헤더만)이 `.game-detail` 미보유 → 상세 모바일 오버라이드 0(유일 미보유 표면)** — L66 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`(좌우 1.8→1.1rem)·`.game-detail h2{font-size:1.5rem}`(2→1.5rem) 추가. SEO 유입 첫 화면 상세 본문폭 확보·제목 비례. 데스크 무영향·레이아웃만·신규 색 0. 우선순위 보통
+- [디자이너 2026-06-04 01:05·인벤#1·외형모드 / 기획자 IDEAS] **[보통·상세 액션] /game/[id] 상세 하단 액션(`.gcal-link` '캘린더 추가'·'공식 출처 →')이 CSS 규칙 0의 평문 링크 → 다크 미니멀 outline pill 버튼화** (`page.tsx` 액션 div L119~124 + `app/globals.css` 신규 `.detail-actions`/pill) — 래퍼 `className="detail-actions"`(인라인 style 제거)+'공식 출처' `.detail-link`, globals `.detail-actions{display:flex;gap:0.6rem;margin-top:1.2rem;flex-wrap:wrap}`+pill(`display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.95rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.03);color:var(--accent);font-size:0.88rem;font-weight:600`)+hover(`border-color:var(--accent);background:rgba(91,157,255,0.1)`). 평문→버튼 묶음·클릭 타깃↑(인벤 액션 버튼 다크 흡수). 신규 색 0. 우선순위 보통
 
 - [디자이너 2026-06-04 01:05·인벤#1·외형모드 / 임팩트 큰 후보] **[보통·상세 액션 버튼] `/game/[id]` 상세 하단 액션 평문 링크 → outline pill 버튼 묶음** (`app/game/[id]/page.tsx` 액션 div L119~124 + `app/globals.css` 신규 `.detail-actions`) — 인벤은 행마다 액션(일정/홈페이지/영상/찜)을 또렷한 버튼으로, 우린 `.gcal-link`('캘린더 추가', CSS 규칙 0·plain 텍스트)+'공식 출처 →'(class 없음·bare `<a>`)가 작은 파란 평문 링크. 래퍼 div `className="detail-actions"`(인라인 style 제거)+공식출처 `.detail-link`, globals `.detail-actions{display:flex;gap:0.6rem;margin-top:1.2rem;flex-wrap:wrap}` + `.detail-actions .gcal-link,.detail-actions .detail-link{display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.95rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.03);color:var(--accent);font-size:0.88rem;font-weight:600}` + hover `border-color:var(--accent);background:rgba(91,157,255,0.1)`. 다크 미니멀(채움 아닌 outline·2버튼만)·신규 색 0. 우선순위 보통
 - [디자이너 2026-06-04 01:05·데스크#1·외형모드 / 기획자 보관] **[보통·상세 D-DAY 일관성] '같은 시기 출시' 미니카드 `.related-dday`가 임박 불문 전부 블루 → 앱 D-day 색 규약(D-DAY #ff7a59·임박≤7 #f5a623·먼미래 muted) 통일** (`app/globals.css` `.related-dday` L131 + `page.tsx` related 루프) — 루프가 이미 보유한 `rDiff`로 `rdStage` 산출 → `dday-${rdStage}` 클래스, CSS `.related-dday.dday-today{color:#ff7a59}`·`.related-dday.dday-soon{color:#f5a623}`·기본 far `color:var(--text-faint)`. 본문 D-DAY 배지·메인 리스트와 색 규약 통일·신규 색 0(앱 3색 재사용). 우선순위 보통
@@ -332,6 +344,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 최근 변경 로그
 
+- 2026-06-04 01:11 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). 사용자요청 ①'리스트 오늘 이후' QA 검증 완료(00:48)로 USER_REQUESTS 종결, ②'캘린더 오늘셀 자동선택' 큐 1순위 유지(사용자 최우선). 기존 큐 2~4(ViewToggle 모바일·장르칩·통계줄 4색) 순서 유지. 디자이너 01:05 신규 외형 4건 중 ⑤'상세 관련카드 D-day 색 규약 통일(D-DAY 주황/임박 amber/먼미래 muted)'(데스크#1, tsx 1줄+CSS 3규칙·신규 색 0) 5순위 승격, 나머지 3건(related-card tint·game-detail 모바일·상세 액션 pill) IDEAS 보관. 활성 사용자 요청 ②뿐(SEO 보류)·미해결 코드 버그 0(QA 00:48 신규 0)·3사이클 정체 0·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-04 01:05 [디자이너] 외형 점검 사이클(데스크 1440 Chrome 라이브 + 모바일 390 소스검증[resize 미반영·스크린샷 1568px 데스크 레이아웃 확인] + 인벤 비교). 직전 사이클 메인/리스트 집중 → 이번엔 미점검 **/game/[id] 상세 표면** 집중. DESIGN_NOTES 4개 신규(데스크2: related-dday D-day 색 규약 통일[늘 블루→D-DAY 주황/임박 amber/먼미래 muted]·related-card 카테고리 tint wash / 모바일1: `.game-detail` 모바일 블록 신설[globals 유일 @media(≤480) 헤더만 다룸·상세 패딩1.8rem·h2 2rem 미축소, 유일 미보유 표면] / 인벤1: 상세 액션 `.gcal-link`/'공식 출처' 평문 링크→outline pill 버튼). 임팩트 큰 2건(상세 액션 pill·related-dday 색 규약) IDEAS 등재. 전부 보통·신규 색 0·상세 표면 집중. 큐/IDEAS/완료 중복 0. a11y/리팩토링 0건(외형 모드). 코드 미수정(문서만).
 - 2026-06-04 00:20 [개발자] 사용자요청 큐 1순위 '리스트 기간 기본값 전체→오늘 이후' 구현 완료 → 완료한 기능 이동, 큐 5→4. `Home.tsx`: `filters.days` 0 의미를 '오늘 이후'(하한 today)로 재정의·`-1`=전체(과거 포함) sentinel 신설, 캘린더 공유 `filteredGames`(무하한) 보존 + 리스트 전용 `listGames` useMemo(`days===-1`이면 무하한, 아니면 `release_date>=today` 하한) 신설해 ListView=listGames·CalendarView=filteredGames 분리 전달, 통계줄 뷰 정합. `Filters.tsx`: 기간 select 0 라벨 '오늘 이후'로·`value={-1}` '전체(과거 포함)' 추가. 신규 색 0·strict any 0·esbuild tsx OK·44개 시뮬(오늘이후 27/과거 17 복원/캘린더 44). 잔여 큐 1~4: 캘린더 오늘셀 자동선택·ViewToggle 모바일 블록·리스트 장르 칩·통계줄 4색. Vercel 위임. QA 라이브 검증 대기.
 - 2026-06-04 00:22 [기획자] **사용자 활성 요청 2건 최우선 등록(큐 1·2순위).** 운영자 직접 요청: ①리스트 기간 기본 '전체'→'오늘 이후'(과거는 기간 필터로 유지·완전 제거 X), ②진입 시 캘린더 오늘 날짜 셀 디폴트 선택→day-detail 패널('오늘 이후 출시') 자동 표시(진입 직후 아래 리스트 빈 문제 해소). USER_REQUESTS.md '활성' 등재. 기존 큐 1~3(ViewToggle·장르칩·통계줄 4색) 3~5순위로 밀고, 직전 4·5(헤더 듀얼 radial·핫카드)는 '큐 소진 후 후보'로 스펙 보존 이동. 양 작업 모두 오늘 하한은 useEffect(mount 후) 계산으로 하이드레이션 안전 명시·리스트 하한은 캘린더 과거 달 무파손 주의. SEO 보류 유지. 코드 미수정(문서만).
