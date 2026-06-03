@@ -23,7 +23,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
   const [filters, setFilters] = useState<FilterState>({
     category: null,
     platform: null,
-    days: 0,           // 0 = 전체 (과거+미래). 기본 '전체'로 과거 게임도 보이게.
+    days: 0,           // 0 = '오늘 이후'(리스트 기본 하한 today). -1 = 전체(과거 포함). 30/90/.. = 미래 N일 상한.
     search: '',
     wishlistOnly: false,
   });
@@ -119,6 +119,15 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
     });
   }, [initialGames, filters, wishlist.ids, now]);
 
+  // 리스트 전용: '오늘 이후' 하한 적용(캘린더 공유 filteredGames는 무하한 → 과거 달 탐색 보존).
+  // 기간 '전체 (과거 포함)'(-1) 선택 시에만 과거 복원. 하한은 now(KST, mount 후) 기준이라 SSR 안전.
+  const listGames = useMemo(() => {
+    if (filters.days === -1) return filteredGames;
+    const today = new Date(now);
+    today.setHours(0, 0, 0, 0);
+    return filteredGames.filter(g => new Date(g.release_date) >= today);
+  }, [filteredGames, filters.days, now]);
+
   const imminent = useMemo(() => {
     const today = new Date(now);
     today.setHours(0, 0, 0, 0);
@@ -159,7 +168,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
       />
 
       <p className={styles.stats}>
-        총 {filteredGames.length}개
+        총 {view === 'list' ? listGames.length : filteredGames.length}개
         {filters.category && ` · ${CATEGORY_META[filters.category].label}`}
       </p>
 
@@ -173,7 +182,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
           now={now}
         />
       ) : (
-        <ListView games={filteredGames} wishlist={wishlist} onPick={openModal} now={now} />
+        <ListView games={listGames} wishlist={wishlist} onPick={openModal} now={now} />
       )}
 
       <p className={styles.lastUpdated}>

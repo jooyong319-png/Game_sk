@@ -61,11 +61,12 @@ export function Filters({ value, onChange, wishlistCount }: Props) {
       <label className={styles.label}>
         기간
         <select value={value.days} onChange={e => set('days', parseInt(e.target.value, 10))}>
-          <option value={0}>전체 (과거+미래)</option>
+          <option value={0}>오늘 이후</option>
           <option value={30}>앞으로 30일</option>
           <option value={90}>앞으로 90일</option>
           <option value={180}>앞으로 6개월</option>
           <option value={365}>앞으로 1년</option>
+          <option value={-1}>전체 (과거 포함)</option>
         </select>
       </label>
 
