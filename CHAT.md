@@ -1,3 +1,9 @@
+## [2026-06-04 03:47] [QA]
+검증 대상: 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개 (개발자 03:28 c2d7535)
+데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
+모바일 390: ✅ (resize 미반영 → 390px iframe 합성 리플로 실측)
+상세: 데스크톱 1920 라이브 실측 — 리스트 27카드 전부 genreChips 렌더(칩 총 48·카드당 최대 3 가드 확인, 샘플 'MMORPG|무협'/'서브컬처|수집형RPG'/'RPG|액션'), 칩 스타일 스펙 일치(#9aa3b2=rgb(154,163,178)·11.2px·radius 999px·nowrap·rgba 화이트 5% 면). 390 iframe: 칩 그룹 27·390 초과 행 0·칩행 311px·루트 375/390 가로 오버플로 0·상세(raven2-zero2) 375 오버플로 0·관련카드 6. 무회귀: 캘린더 복귀 시 오늘 패널 '이후 출시 20건'·리스트 기본 총 27개 유지. 콘솔 #418/#423/#425·에러 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·robots·sitemap 50 URL·new-servers 12·데이터 06.03). 신규 BUGS 0.
+
 ## [2026-06-04 03:28] [개발자]
 완료: **[외형·리스트·보통] 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개 추가** (큐 1순위, 여러 사이클 밀린 잔여분)
 리스트 카드에 카테고리 색면 외 게임 성격 신호가 0이던 문제 해소. `ListView.tsx` `.cardBody`의 `.desc` 위에 `genreChips` div 추가 — `g.genres.slice(0,3)` 최대 3개 무채색 pill(key=장르명), genres 미보유/빈 배열 미렌더 가드. `ListView.module.css`에 `.genreChips`(flex·wrap·gap 0.3rem·margin-top 0.4rem)+`.genreChip`(0.7rem·#9aa3b2·rgba 면/보더·radius 999px·nowrap) 신설 — 디자이너 스펙 그대로, 카테고리=색면/장르=중성칩 위계 분리. 과거카드 약화(li opacity)와 무충돌, 정적 데이터라 하이드레이션 무관.
@@ -172,15 +178,3 @@ IDEAS 보관: 디자이너 13:05 잔여 보통 4건(통계줄 카테고리 4색 
 모바일 주요: 리스트 `.cardBanner` 모바일 오버라이드 0 → 1열 스택서 56px 빈 색배너 누적, @media(≤480) height 40px 제안. (Chrome resize 모바일 뷰포트 미반영=직전 사이클 동일 한계, 소스 갈음.)
 인벤 참고: 인벤 지배 시각요소=게임 아트워크 이미지(히어로/핫카드/007 카드) → 우리 `.cardBanner` image_url 미사용(대부분 null·색배너 대체) → image_url 있을 때 다크 오버레이 배경이미지 렌더+폴백 제안.
 DESIGN_NOTES에 5개 제안 추가(데스크3/모바일1/인벤1). 높음 1건(셀명 keep-all) → PROJECT_STATUS IDEAS 승격.
-## [2026-06-03 12:30] [기획자]
-TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
-완료: 1순위 '[외형·상세] `/game/[id]` 카테고리색 라디얼 백드롭' — 개발자 12:20 완료(a7cc251, .detail-backdrop 인라인 radial-gradient)·QA 11:48 라이브 ✅(카테고리색 글로우·상단 4px 바 동톤·가로 오버플로 0·콘솔 #418/#423/#425 0건) → 완료한 기능 이동(개발자 큐 5→4 반영 확인).
-유지: 리스트 배너 그라데+D-DAY 리본·인트로 카피 .subtitle 위계강화·MonthTabs 가로 스크롤·ViewToggle 모바일 블록 = 1~4순위.
-추가: - [외형·리스트·보통] 리스트 카드 장르 칩(genres[] 무채색 pill 3개, 디자이너 09:05 인벤#1, 데이터 44/44 보유·리서처 선결 불필요, IDEAS→5순위) → 4→5.
-사용자 요청 활성 0(SEO 보류 — 안 건드림). QA 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).
-## [2026-06-03 11:48] [QA]
-검증 대상: /game/[id] 상세 카테고리색 라디얼 백드롭(.detail-backdrop 인라인 radial-gradient, 개발자 12:20 a7cc251)
-데스크톱 1440: ✅ (이 환경 resize 미반영·innerWidth 1920 고정에서 실측)
-모바일 390: ✅ (resize 미반영·innerWidth 1920 고정 → 358px 합성 리플로로 검증)
-상세: 라이브 캐시버스트 실측 — sol-enchant 상세 .detail-backdrop 존재, radial-gradient(80% 45% at 50% 0%, #81c78422→transparent 60%) 카테고리색(국내모바일 초록 #81c784) 글로우 정상·.game-detail borderTop 4px #81c784 동톤 일치·D-day 배지 D-15(먼미래 faint #2a2e38)·같은시기 그리드 6장. 가로 오버플로 0(scrollW1905<1920). 358px 합성: backdrop/카드/related 오버플로 0·related-grid 단일컬럼·글로우 유지. 콘솔 React#418/#423/#425·에러 0건(MetaMask 확장 경고만). 헬스 홈(h1 게임패드SVG+"게임 출시 캘린더"·125셀·총44개)·sitemap XML·robots·new-servers(12)·상세 정상. 신규 BUGS 0.
-※Chrome resize_window가 innerWidth 미반영(1920 고정)→실뷰포트 1440/390 미확인, 1920 실측+358 합성 리플로 대체. 금일 변경=인라인 글로우(미디어쿼리 무관)라 합성 대표성 충분.
