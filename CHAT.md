@@ -1,3 +1,11 @@
+## [2026-06-03 13:40] [기획자]
+TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
+완료: 직전 1순위 '리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 좌상단 리본' 개발자 13:20·QA 13:30 라이브 ✅ → 완료한 기능 이동(개발자 5→4 반영 확인)
+추가: - [외형·타이포·높음] 캘린더 셀 게임명 `word-break:break-all`→`keep-all`+`overflow-wrap:anywhere` (디자이너 13:05 데스크#1, 라이브 가시 타이포 결함 → 신규 1순위)
+유지: 인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩 → 2~5순위로 한 칸씩 밀림
+IDEAS 보관: 디자이너 13:05 잔여 보통 4건(통계줄 카테고리 4색 분해·헤더 듀얼 브랜드 radial·리스트 배너 모바일 40px·image_url 배경이미지)
+사용자 요청 활성 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).
+
 ## [2026-06-03 13:30] [QA]
 검증 대상: 리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 좌상단 리본 (개발자 13:20 a5e1a57)
 데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 고정 실측)
@@ -209,13 +217,3 @@ DESIGN_NOTES에 5개 제안 추가(데스크2/모바일2/인벤1). Chrome resize
 모바일 390: ⚠️ (Chrome resize 후에도 innerWidth 1920·matchMedia480 false → 실측 불가, 데스크/소스 갈음. 데스크 가로오버플로 0)
 상세: **배포 블로커 해소** — vercel.json 출고로 라이브가 레거시 정적→신 Next 앱 전환: h1 SVG 게임패드(🎮 아님)·'불러오는 중' 플래시 제거·기간 기본 '전체(과거+미래)'·총 44개·임박 스트립(FF7리버스 D-DAY 등) 라이브 = 개발자 (a) 검증항목 전부 충족. **단 콘솔 React 하이드레이션 #425×3·#418×3·#423×1=7건이 신 빌드(_next/chunks/fd9d1056*.js)에서도 매 로드 재현(데스크+모바일폭 동일)** → f021717 fix가 배포됐는데도 미해소 = fix 불완전/별도원인(애드센스 ad-div 주입 등) 의심. adsbygoogle 'no_div' 1건 동반(별개). 헬스 ✅: /·sitemap.xml·robots·/new-servers(서버12)·/game/poe2.
 
-## [2026-06-03 06:20] [개발자]
-완료: **1순위 배포 블로커 — 원인 규명 + vercel.json 추가(Next 빌드 강제)**
-- 라이브 gcalen.com = **마이그레이션 전 레거시 vanilla 사이트**였음. legacy/index.html과 1:1 일치(h1 🎮 이모지·"불러오는 중..." 플래시 = 06-02 SVG/팔레트 출고 이전 화면). 즉 Next 앱이 프로덕션에 **한 번도 배포된 적 없음**(Vercel이 마지막 정상 정적 배포를 계속 서빙).
-- **코드는 정상**: /sessions(8.6G 여유)에 클론·npm install 후 `tsc --noEmit` ✅(exit 0) + `next build` ✅(exit 0, 55페이지 생성: 게임 44·랜딩 5·sitemap·robots·홈). f021717 및 최근 커밋 전부 빌드 성공. data/games.json도 유효(44개).
-- 결론: 블로커는 **코드가 아니라 Vercel 파이프라인**(레거시 시절 정적/Other 프리셋·빌드설정 잔존으로 `next build` 미실행 정황).
-조치: 마이그레이션 때 삭제됐던 `vercel.json` 재신설(`framework:"nextjs"`·`buildCommand:"next build"`·`installCommand:"npm install"`). vercel.json은 대시보드 프로젝트 설정보다 **우선**하므로 스테일 정적 프리셋을 덮어써 강제로 Next 빌드를 돌림 + 이 푸시가 새 배포를 트리거.
-변경된 파일: vercel.json (신규, +6줄)
-비고:
-- **QA님**: 배포 1~3분 후 gcalen.com에서 (a) h1이 SVG 게임패드(🎮 이모지 아님)·"불러오는 중" 제거·기간 기본 '전체', (b) 콘솔 하이드레이션 #418/#423/#425 0건 재확인 부탁. 이게 떠야 직전 f021717 하이드레이션 fix도 같이 라이브 반영된 것.
-- **운영자님**: 그래도 라이브가 안 바뀌면 vercel.json로 못 고치는 영역 — Vercel 대시보드 직접 점검 필요: ①Settings→Git 연동(푸시가 배포 트리거하는지) ②Production Branch=main ③Root Directory ④Build 로그 실패 여부 ⑤도메인이 옛 배포에 핀 고정/자동프로모션 off 여부.
