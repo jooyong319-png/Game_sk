@@ -160,6 +160,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-04 07:13 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '헤더 듀얼 브랜드 radial(블루+퍼플)'(개발자 06:29 8006b56) QA 06:47 라이브 ✅(::before radial 2개 — 좌상 블루 rgba(91,157,255,0.12)·우상 퍼플 rgba(201,138,214,0.10)·h1 그라데 정합·헤더 높이 무변·가로 오버플로 0·콘솔 0) → 종결 확인(번호큐는 개발자 06:29 기정리). 기존 큐 1~4(상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약·day패널 모바일 3규칙) 순서 그대로 — 1·2는 /game/[id] 표면 묶음, 3·4는 CalendarView 표면 묶음 구현 후보. ⑤로 후보 보관분 'HeroStrip 최근접 1건 대형 핫카드 + 라이브 카운트다운' 승격(02:10부터 후보 대기·외형 모드 대표 큰 단위·단일 시각 정점). 활성 사용자 요청 0(SEO 보류 유지)·신규 BUGS 0.
+
 > 갱신 2026-06-04 06:29 (개발자): **큐 5→4.** 직전 1순위 '[외형·헤더 임팩트·보통] `.site-header::before` 단일 블루 → 듀얼 브랜드 radial(블루+퍼플)' 구현 완료(`app/globals.css` ::before background 1선언 교체 — 좌상 블루 rgba(91,157,255,0.12)·우상 퍼플 rgba(201,138,214,0.10), 신규 색 0·CSS-only) → 완료한 기능 이동. 기존 2~5순위(상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약·dayPanel 모바일 3규칙) 한 칸씩 당겨 1~4순위. 로컬 빌드 sandbox 제한 → Vercel 위임. QA 라이브 검증 대기.
 
 > 갱신 2026-06-04 06:12 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '/game/[id] related-dday 단일 블루 → 전역 D-day 3단 색 규약 통일'(개발자 05:28 f250652) QA 05:48 라이브 ✅(D-DAY rgb(255,122,89)=#ff7a59·D-1/D-2 amber #f5a623·출시됨/8일+ muted #888 3단 분리·390 iframe 오버플로 0·콘솔 #418/#423/#425 0) → 종결 확인(번호큐는 개발자 05:28 기정리). 기존 큐 1~4(헤더 듀얼 radial·상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약) **순서 그대로 유지**. 신규 **5순위**: 디자이너 05:07 모바일#1 'day-detail 패널 모바일 @media(≤480px) 3규칙(.dayPanel padding 0.7rem·.dayRow gap/padding 축소·.dayRowDate 3em/0.72rem)'(IDEAS→큐 승격 — 모바일은 셀 게임명 숨김이라 **패널이 모바일 1차 콘텐츠 표면**·4순위 day패널 D-day 규약과 같은 CalendarView 표면이라 묶음 구현 후보·CSS-only·신규 색 0). 디자이너 05:07 잔여 2건(BackToTop 다크 글래스 플로팅·푸터 브랜드 그라데 hairline) → IDEAS 보관(외형 모드·다음 큐 후보). 활성 사용자 요청 0(SEO 보류 — 안 건드림). 신규 BUGS 0(QA 05:48 신규 0 — 패널 D-DAY amber 한 톤은 큐 ④ 미구현분으로 정상). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만). 개발자 :20 1순위(헤더 듀얼 radial) 착수 권장 — ④·⑤는 같은 CalendarView 표면이라 묶음 구현 가능.
@@ -233,14 +235,14 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck`/`build` 무에러, 390 패널 행 게임명 랩 감소·행 폭 ~305px 확보·데스크톱 패널 무영향·가로 오버플로 0·CSS brace 균형 확인.
 
 
-### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
-> 2026-06-04 02:10 갱신: 헤더 듀얼 radial은 큐 5순위로 재승격(사용자 요청 2건 모두 종결로 큐 여유 복원). 핫카드+카운트다운만 잔존 — 외형 모드 유지·다음 큐 우선 후보. 전체 스펙 보존:
-
-- **[외형·하이라이트·D-DAY강조·보통] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건 대형 핫카드 승격 + 라이브 카운트다운** (디자이너 06-03 01:05 인벤#1, IDEAS→큐, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
+5. **[외형·하이라이트·D-DAY강조·보통] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건 대형 핫카드 승격 + 라이브 카운트다운** (디자이너 06-03 01:05 인벤#1, 후보→큐 승격 07:13, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
    - 문제: 임박 스트립 카드가 카테고리/D-DAY 글로우(기출고)로 위계는 생겼으나 전부 동일 크기 균일 그리드 — 인벤 우상단 '핫카드'(최근접 1건 대형+라이브 카운트다운) 같은 단일 시각 정점이 없어 "가장 임박한 1건"이 한눈에 안 꽂힘.
-   - 구현(큰 단위 한 번에): 정렬상 첫 카드(최근접, diff 0~1)를 `.hotCard`로 `grid-column:span 2` 확대(게임명 1.5rem·`.dday` 1.8rem) + 그 아래 `HH:MM:SS` 라이브 카운트다운(1rem/700 `--accent-warm` #f5a623, 1초 `setInterval`). 카테고리색 radial glow는 기출고 `.card::before`/glow 클래스 재사용(**신규 색 0**). **HeroStrip를 `'use client'`로 전환하거나 카운트다운만 별도 클라 자식 컴포넌트로 분리**하고, 카운트다운은 **mount 후(useEffect)에만 렌더(SSR 미출력)**해 날짜의존 하이드레이션 미스매치(05-31~06-03 #418/#423/#425 7건 이력) 재발을 차단. 임박 0건 시 미렌더·D-DAY(diff 0)는 "출시!" 등 정적 라벨로 폴백. 데이터 무관(출시일시만 사용·리서처 선결 불필요).
+   - 구현(큰 단위 한 번에): 정렬상 첫 카드(최근접, diff 0~1)를 `.hotCard`로 `grid-column:span 2` 확대(게임명 1.5rem·`.dday` 1.8rem) + 그 아래 `HH:MM:SS` 라이브 카운트다운(1rem/700 `--accent-warm` #f5a623, 1초 `setInterval`). 카테고리색 radial glow는 기출고 `.card::before`/glow 클래스 재사용(**신규 색 0**). HeroStrip를 `'use client'`로 전환 — 카운트다운은 mount 후에만 렌더(하이드레이션 #418/#423/#425 가드 필수).
    - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 첫 카드 2칸 대형·HH:MM:SS 1초 갱신·SSR 콘솔 #418/#423/#425 0건(mount 가드)·모바일 ≤480px 컴팩트 행 레이아웃 무붕괴·reduced-motion 처리·임박 0건 미렌더 확인.
 
+
+### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
+> 2026-06-04 07:13 갱신: 핫카드+카운트다운은 큐 5순위로 승격(헤더 듀얼 radial 종결로 큐 여유). 잔여 후보(외형 모드 유지): 디자이너 06-04 05:07 잔여 2건 — [보통] BackToTop 다크 글래스 원형 플로팅(신규 `components/BackToTop`, scrollY>600 표시·mount 가드) / [보통] `.site-footer` 브랜드 그라데 hairline(::before linear-gradient 블루→퍼플, border-top 대체). 상세 스펙은 IDEAS·DESIGN_NOTES 06-04 05:07 참조.
 
 [보통] 디자이너 21:06 데스크#2 HeroStrip 섹션 타이틀 '🔥 출시 임박' warm 좌띠 강화(`.title` 1.3rem+border-left 3px warm), [보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션. — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
 
@@ -362,6 +364,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-04 07:13 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). '헤더 듀얼 브랜드 radial' QA 06:47 라이브 ✅ 종결 확인. 큐 1~4 순서 유지(1·2 상세 표면 묶음, 3·4 CalendarView 묶음). ⑤ HeroStrip 핫카드+라이브 카운트다운 후보→큐 승격. 활성 사용자 요청 0·신규 BUGS 0. 코드 미수정(문서만).
 - 2026-06-04 06:29 [개발자] 큐 1순위 '[외형·헤더] .site-header::before 단일 블루 → 듀얼 브랜드 radial(블루+퍼플)' 구현 완료 → 완료한 기능 이동, 큐 5→4. `app/globals.css` ::before background 1선언 교체(좌상 블루 0.12·우상 퍼플 0.10, 기획자 스펙 그대로). 신규 색 0·CSS-only·brace 73/73. 잔여 큐 1~4: 상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약·dayPanel 모바일 3규칙. Vercel 위임. QA 라이브 검증 대기.
 
 - 2026-06-04 06:12 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). 'related-dday 3단 색 규약 통일' QA 05:48 라이브 ✅ 종결. 큐 1~4 유지(헤더 듀얼 radial·상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약), 신규 ⑤ 'day-detail 패널 모바일 @media(≤480px) 3규칙'(디자이너 05:07 모바일#1 IDEAS→승격, ④와 같은 CalendarView 표면 묶음 후보). 디자이너 잔여 2건(BackToTop·푸터 hairline) IDEAS 보관. 활성 사용자 요청 0(SEO 보류)·신규 BUGS 0. 코드 미수정(문서만).
@@ -404,4 +407,3 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 - 2026-06-03 12:20 [개발자] **[외형·상세] `/game/[id]` 상세 카테고리색 라디얼 백드롭** (큐 1순위). page.tsx: `catColor=CATEGORY_META[game.category].color` 추출(borderTop도 재사용) → 반환 fragment 전 콘텐츠(광고·article·관련그리드)를 `<div.detail-backdrop style=radial-gradient(80% 45% at 50% 0%, ${catColor}22, transparent 60%)>`로 래핑 → 검정 공백에 카테고리색 상단 글로우 깊이. CATEGORY_META 4색 재사용(신규 색 0)·CSS 신규 규칙 0(인라인만)·빌드타임·런타임 무영향. strict 유지(any 0)·esbuild OK. page.tsx +9/−1. Vercel 검증 위임. 큐 5→4. QA: 라이브 상세 상단 카테고리색 글로우·상단 4px 바와 톤 일관·가로 오버플로 0 실측 부탁.
 
-- 2026-06-03 11:20 [개발자] **[외형·신규컴포넌트] `/game/[id]` 하단 "같은 시기 출시" 미니카드 그리드** (큐 1순위). page.tsx: getAllGames로 출시일 ±2주 윈도우·가까운 순 3~6개 추림 → `</article>` 직후 `<section.detail-related>`(h3+`<a>` 미니카드, 관련 0건 숨김). globals.css: `.detail-related`·`.related-grid`(auto-fill minmax 220)·`.related-card`(hover accent+translateY)·`.related-name/date/dday`+reduced-motion 신설. formatShortDate import 추가, CATEGORY_META 좌측 4px 바 재사용(신규 색 0). esbuild tsx OK·실데이터 42/44 관련>0·brace 68/68. 2파일 +55/−1. Vercel 검증 위임.
