@@ -1,3 +1,9 @@
+## [2026-06-04 01:47] [QA]
+검증 대상: 진입 시 오늘(KST) 셀 자동선택 → day-detail 패널('오늘 이후 출시') 자동 표시 (개발자 01:30 / CalendarView.tsx, prevYMRef·scrollOnSelect)
+데스크톱 1440: ✅
+모바일 390: ✅ (resize 미반영·innerWidth 1920 고정 → 합성 390 리플로 + 모바일 MQ 갈음)
+상세: gcalen.com Chrome 라이브 실측 — 진입 직후 오늘 셀(06.04 미르의전설:진) 자동선택, day-detail 패널 '2026.06.04 (목) 이후 출시 20건' 자동 노출 확정. 진입 scrollY=0(스크롤 점프 0). 콘솔 React #418/#423/#425·adsbygoogle no_div 0건(MetaMask 확장 경고만). 합성 390 리플로: 필터358/캘린더그리드326/리스트294 가로 오버플로 0, MonthTabs sw701>cw358은 의도된 가로 스크롤 스트립. 헬스 ✅(홈 h1 🎮·robots·sitemap XML·new-servers 12·/game/sol-enchant-20260618 상세 D-15 정상). 라이브 데이터 갱신 2026.06.03(WebFetch raw HTML은 06.02 CDN 캐시 잔존, Chrome 라이브는 신빌드 전파). 신규 BUGS 0.
+
 ## [2026-06-04 01:30] [개발자]
 완료: **[사용자요청·캘린더·높음] 진입 시 오늘 날짜 셀 디폴트 선택 → day-detail 패널('오늘 이후 출시') 자동 표시** (큐 1순위, 운영자 직접 요청)
 진입 직후 캘린더 아래 패널이 비어 "게임 리스트가 없음"던 문제 해소. mount 후 useEffect로 오늘(KST) ISO를 `selectedISO`에 자동 세팅 → 오늘 셀 선택+패널 '오늘 이후 출시' 자동 노출. 커서 해제 effect를 `prevYMRef`로 '실제 월 이동에만' 보정(첫 mount·이번 달 교체는 유지). `scrollOnSelect` ref로 초기 자동선택은 스크롤 점프 차단, 사용자 클릭에만 패널 스크롤. 오늘 ISO는 mount 후 계산(하이드레이션 안전).
@@ -175,8 +181,3 @@ IDEAS 보관: 디자이너 09:05 잔여 2건 — 장르 칩(리스트 카드, ge
 모바일 390: ✅ (창폭 390 미반영·innerWidth 1920 고정 → 컨테이너 358px 합성 리플로 테스트로 단일컬럼·그리드 오버플로 0 확인)
 상세: 라이브 캐시버스트 실측 — raven2-zero2(관련11) 그리드 6장 가까운순 정렬 정상(poe2 출시됨·ff7 D-DAY·미르진/메이크드라마 D-1·블소 출시됨·고딕 D-2), 카테고리 좌측 4px 바 색상 정상(글로벌 보라·신서버 주황·모바일 초록), 미니카드 클릭→/game/poe2 내부이동 OK(이동후 페이지도 그리드 6장). 관련0건 dk-mobile 섹션 미렌더 확인. 콘솔 React #418/#423/#425·에러 0건. 헬스 홈(h1 🎮·총44개)·sitemap(50 URL)·robots·상세·new-servers(서버12) 전부 정상. 가로 오버플로 0(scrollW1905<1920). 신규 BUGS 0.
 ※주의: 캐시버스트 미적용 WebFetch는 배포후 16분 시점에도 구 CDN 캐시(그리드 누락) 반환 → 라이브 검증은 ?t= 필수.
-## [2026-06-03 11:20] [개발자]
-완료: **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (큐 1순위)
-빌드타임에 출시일 ±2주(14일) 윈도우 내 다른 게임을 자기 제외·가까운 순 3~6개 추려 `</article>` 직후 `<section.detail-related>`(h3 "같은 시기 출시" + `<a href>` 미니카드 그리드)로 렌더, 관련 0건이면 섹션 미렌더. 미니카드=카테고리색 좌측 4px 바·게임명(700)·formatShortDate 출시일·D-day. CSS `.related-grid`(auto-fill minmax(220px,1fr) gap12)·`.related-card`(hover accent border+translateY-2px) 신설, 메인 톤·CATEGORY_META 4색 재사용(신규 색 0).
-변경된 파일: app/game/[id]/page.tsx (+44/−1), app/globals.css (+11)
-비고: TypeScript strict 유지(any 0). esbuild로 tsx 트랜스폼 OK, games.json 44개 시뮬레이션 — 관련>0 42개·관련=0 2개(섹션 숨김 확인)·거리순 정렬 정상, CSS brace 68/68 균형. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 /game/[id] 상세 하단 '같은 시기 출시' 그리드 노출·카테고리 좌측 바·관련 0건 게임(상세 2개) 섹션 숨김·미니카드 클릭 내부이동 실측 부탁.
