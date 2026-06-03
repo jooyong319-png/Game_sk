@@ -1,3 +1,10 @@
+## [2026-06-04 01:05] [디자이너]
+외형 점검 완료 (데스크 1440 라이브 + 모바일 390 소스검증 + 인벤 비교). 직전 사이클들이 메인/리스트 집중 → 이번엔 미점검 영역 **/game/[id] 상세 표면**에 집중.
+데스크 주요: 상세 '같은 시기 출시' 관련카드 D-day가 임박 불문 전부 블루(앱 D-DAY 주황/임박 amber 규약 어긋남) → 색 규약 통일 + 관련카드 카테고리 tint wash.
+모바일 주요: `app/globals.css` 유일 @media(≤480) 블록이 헤더만 다룸 → `.game-detail`(상세) 모바일 오버라이드 0(패딩 1.8rem·h2 2rem 미축소), 유일 미보유 표면.
+인벤 참고: 본문 행 액션 버튼(일정/홈페이지/영상/찜) → 우리 상세 액션 `.gcal-link`/'공식 출처'가 평문 링크(CSS 0) → outline pill 버튼화(다크 미니멀 재해석).
+DESIGN_NOTES에 4개 제안 추가(전부 보통·신규 색 0·상세 표면). a11y/리팩토링 0건(외형 모드).
+
 ## [2026-06-04 00:48] [QA]
 검증 대상: 리스트뷰 기간 기본값 '전체'→'오늘 이후' (개발자 00:20 5ba8af8 / listGames 하한·캘린더 무하한 보존·'전체(과거 포함)'-1 옵션)
 데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측, 라이브 렌더 JS 검증으로 갈음)
@@ -170,8 +177,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 데스크톱 1440: ✅ (실측 뷰포트 1920 — 창폭이 1440 미만으로 안 줄어 1920에서 검증)
 모바일 390: ⚠️ (이 환경 Chrome 창폭이 390으로 안 줄어 라이브 390 렌더 미확인 / 단 라이브 CSS 번들에 @media≤480 .view{padding:9px;border-radius:12px} 적재 확인)
 상세: 데스크 .view 패널 카드 적용 실측(bg rgb(19,21,27)·br14·border 1px rgba(255,255,255,.06)·pad14), grid 패널 내부 래핑, 가로 오버플로 0(scrollW1905<vw1920). 강조 셀 무회귀(today2·cellHas12·임박스트립4). 콘솔 React #418/#423/#425·adsbygoogle 0건(확장프로그램 경고만). 헬스: 홈/sitemap/robots/game상세/new-servers 전부 200. 신규 BUGS 0.
-## [2026-06-03 10:20] [개발자]
-완료: **[외형·캘린더·보통] 캘린더 컨테이너 패널 카드화 + 빈 셀 hairline 보강** (큐 1순위)
-`CalendarView.module.css` `.view`(CalendarView.tsx L97 section 루트)에 `background:#13151b; border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:14px` 패널 카드 부여(기존 `margin:1rem 0` 유지) → 격자가 페이지에 떠 있던 것을 면 카드로 감쌈. 모바일 ≤480px에 `.view{padding:9px; border-radius:12px}` 비례 축소. 빈 셀 hairline은 기존 그리드 gap 배경(`.grid` gap:1px·#2a2e38)이 셀 구분선으로 현행 유지. today/임박/선택·cellHas 카테고리 좌띠는 셀 단위라 무영향(무회귀).
-변경된 파일: components/CalendarView.module.css (+8/−1, CSS-only)
-비고: 신규 색 0(패널 톤 #13151b 재사용)·CSS brace 63/63 균형·tsx 무변경. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 데스크·모바일 캘린더 패널 카드 묶음·가로 오버플로 0·강조 셀 무회귀 실측 부탁.

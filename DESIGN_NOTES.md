@@ -10,6 +10,34 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-04 01:05] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 블루→퍼플 그라데 타이틀+태그라인 헤더 통합·상단 광고 점선 슬롯·'🔥 출시 임박' 3글로우카드[미르 D-DAY 주황·메이크드라마 D-DAY 주황·고딕 D-1]·캘린더/리스트 토글·월탭[6월 그라데 활성]·필터행[기간 기본 '오늘 이후']·통계 '총 44개'·캘린더 6월[주말 일#e57373/토#7aa7ff·today 4일 채움 원형·출시셀 카테고리 tint+좌띠·범례 4색 점]·리스트[총 27개·월섹션 sticky·카드 배너 카테고리 세로그라데+해치·D-DAY 좌상단 리본]·/game/ff7-rebirth-switch2-2026 상세[퍼플 라디얼 백드롭+상단 퍼플바+D-DAY 배지+detail-meta 스펙시트 hairline 4행+'같은 시기 출시' 좌띠 미니카드 그리드]) 전부 라이브 반영 양호. **모바일(390): Chrome resize_window가 페이지 뷰포트 미반영(스크린샷 1568px 데스크 레이아웃·히어로 3열 그리드 유지, QA·직전 사이클 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 교차 — 본문 각 행 우측에 액션 버튼(일정/홈페이지/영상/찜)을 또렷한 버튼 묶음으로. 아래는 큐(ViewToggle 모바일·장르칩·통계줄 4색·헤더 듀얼 radial)/IDEAS(Home 모바일패딩·legend칩·리스트 날짜 요일색·핫카드 등)/완료와 중복 없는 **/game/[id] 상세 표면 집중** 신규 외형 제안만(직전 사이클들이 메인/리스트에 집중해 상세는 detail-meta 외 미점검). a11y/시맨틱/리팩토링 0건(외형 모드).
+
+### 데스크톱(1440) 점검
+1. **[보통·상세 D-DAY 일관성] `/game/[id]` 하단 '같은 시기 출시' 미니카드의 D-day(`.related-dday`)가 임박도 불문 전부 블루 — 앱 전역 D-day 색 규약(D-DAY 주황·임박 amber)과 어긋남** (`app/globals.css` `.related-dday` L131 + `app/game/[id]/page.tsx` related 루프 L130~134)
+   - 현재: `.related-dday{ font-size:0.85rem; font-weight:700; color:var(--accent) }` 단일 블루. 라이브 상세에서 관련카드 '미르의 전설:진 D-1'·'메이크 드라마 D-1'이 블루로 떠, 같은 화면 위쪽 본문 D-DAY 배지(주황 #ff7a59)·임박(amber #f5a623)과 색 규약 불일치(같은 'D-1'이 표면마다 다른 색). 메인 리스트 카드(`.ddaySoon{color:#f5a623}`)·HeroStrip 글로우와도 어긋남.
+   - 바꿀 값: page.tsx related 루프가 이미 `rDiff`(L131) 보유 → `rdStage`(`rDiff===0?'today':rDiff>0&&rDiff<=7?'soon':'far'`) 1줄 추가, `<span className={`related-dday dday-${rdStage}`}>`. CSS: 기본 `.related-dday`는 far용 `color:var(--text-faint)`로 톤다운 + `.related-dday.dday-today{ color:#ff7a59 }`·`.related-dday.dday-soon{ color:#f5a623 }` 2규칙 신설(앱 기존 D-day 3색 재사용·신규 색 0). → 관련카드 D-day가 본문 배지·메인 리스트와 동일 색 규약(D-DAY 주황/임박 amber/먼미래 muted)으로 통일. 우선순위 **보통**(상세=모달=리스트 색 일관, tsx 1줄+CSS 3규칙).
+
+2. **[보통·상세 깊이] '같은 시기 출시' `.related-card`가 평면 `var(--bg-elev)` 면에 좌측 4px 카테고리 바만 — 3~6개 카드가 균일하게 밋밋, 본문 카드의 카테고리 라디얼 백드롭 대비 하단 그리드만 색 깊이 0** (`app/globals.css` `.related-card` L127 + `page.tsx` related 카드 인라인 style L140)
+   - 현재: `.related-card{ background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius-sm); padding:0.8rem 1rem }` + 인라인 `borderLeft:4px solid {카테고리색}`. 좌 4px 바 외엔 면이 전부 동일 `--bg-elev`라 라이브에서 카드 4개가 색 구분 약(좌측 얇은 바로만 카테고리 식별). hover는 `border-color:var(--accent)`로 변해 카테고리색 정체성도 사라짐.
+   - 바꿀 값(다크 재해석): page.tsx 카드 인라인 style에 `['--cat' as string]: CATEGORY_META[g.category].color` 주입(기존 borderLeft도 `var(--cat)`로 정리) → CSS `.related-card{ background:linear-gradient(90deg, color-mix(in srgb, var(--cat) 12%, var(--bg-elev)), var(--bg-elev) 42%) }`(좌측에서 카테고리색이 12%→0%로 번지는 미세 wash, color-mix 미지원 폴백 `background:var(--bg-elev)` 선행) + `.related-card:hover{ border-color:var(--cat) }`(hover도 카테고리색 유지). → 좌 4px 바와 면 tint가 정합돼 카드별 카테고리가 면색으로 즉시 읽힘(본문 라디얼 백드롭과 톤 연결). 카테고리 4색 단일 출처 재사용·신규 색 0. 우선순위 **보통**.
+
+### 모바일(390) 점검 (소스 검증 — Chrome resize 미반영)
+1. **[보통·모바일·상세] `app/globals.css`의 유일한 `@media(max-width:480px)` 블록(L66)이 `.site-header h1`/`.site-tagline`만 다룸 → `.game-detail`(상세 카드)은 모바일 오버라이드 0. SEO 유입 첫 화면인 상세가 좁은 폭에서 패딩 과대·제목 큼** (`app/globals.css` `.game-detail` L100~107·`.game-detail h2` L108 + `@media(≤480px)` L66 블록 확장)
+   - 현재: `.game-detail{ padding:1.5rem 1.8rem 2rem }`(좌우 1.8rem≈29px×2=58px) + `.game-detail h2{ font-size:2rem; letter-spacing:-0.02em }` 모바일 축소 전무. 390px서 좌우 패딩이 본문폭을 깎고 2rem(32px) 제목이 좁은 폭에 과대(라이브 미반영이나 소스상 유일 미보유 표면 — 메인/리스트/모달/필터엔 모바일 블록 존재).
+   - 바꿀 값: L66 `@media(≤480px)` 블록에 `.game-detail{ padding:1.2rem 1.1rem 1.6rem }`(좌우 1.8→1.1rem·본문폭 ~22px 회수)·`.game-detail h2{ font-size:1.5rem }`(2→1.5rem 비례 축소) 2규칙 추가. → 좁은 화면 상세 본문폭 확보·제목 비례 정돈(데스크 무영향·레이아웃만·신규 색 0). 우선순위 **보통**(상세=SEO 첫 화면·유일 모바일 미보유 표면).
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·액션 버튼] 인벤은 본문 각 행에 액션(일정/홈페이지/영상/찜)을 또렷한 버튼 묶음으로 제공 → 우린 상세 하단 액션이 `.gcal-link`('캘린더 추가', CSS 규칙 0건·plain 텍스트)+'공식 출처 →'(class 없음·bare `<a>`) 2개 평문 링크라 클릭 타깃·시각 비중 약함** (`app/game/[id]/page.tsx` 액션 div L119~124 + `app/globals.css` 신규 `.detail-actions`/pill)
+   - 인벤: 라이트·버튼 빽빽. 우린 다크·미니멀 → **채움 아닌 outline pill**로 절제(2버튼만).
+   - 현재: 액션 래퍼 `<div style={{display:'flex',gap:'0.6rem',marginTop:'1rem',flexWrap:'wrap'}}>` 안에 `.gcal-link`(globals에 규칙 없음 → `a{color:var(--accent)}` 평문 상속)·'공식 출처 →'(class 미부여 평문). 라이브 상세에서 둘 다 작은 파란 텍스트라 메타/관련카드 사이에서 눈에 안 띔.
+   - 바꿀 값(다크 재해석): page.tsx 래퍼 div를 `className="detail-actions"`로(인라인 style 제거)+'공식 출처' `<a className="detail-link">`. globals: `.detail-actions{ display:flex; gap:0.6rem; margin-top:1.2rem; flex-wrap:wrap }` + `.detail-actions .gcal-link, .detail-actions .detail-link{ display:inline-flex; align-items:center; gap:0.4rem; padding:0.5rem 0.95rem; border:1px solid var(--border); border-radius:var(--radius-sm); background:rgba(255,255,255,0.03); color:var(--accent); font-size:0.88rem; font-weight:600 }` + hover `border-color:var(--accent); background:rgba(91,157,255,0.1)`. → 평문 링크가 outline pill 버튼 묶음으로 승격돼 클릭 타깃·시각 비중↑(인벤 액션 버튼을 다크 미니멀로 흡수). 신규 색 0(기존 토큰·accent rgba 재사용). 우선순위 **보통**(상세 액션 발견성·인벤 직접 참고).
+
+### 우선순위 종합
+보통: 인벤#1(상세 액션 outline pill·인벤 직접 참고·평문→버튼)·데스크#1(related-dday D-day 색 규약 통일)·모바일#1(`.game-detail` 모바일 블록·유일 미보유 표면)·데스크#2(related-card 카테고리 tint wash). 전부 **/game/[id] 상세 표면 집중**(직전 사이클 미점검 영역)·신규 색 0·CSS 위주(일부 tsx 소폭 동반).
+
+---
+
 ## [2026-06-03 21:06] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 블루→퍼플 그라데 타이틀·상단 광고 점선 슬롯·subtitle "국내외 신규 출시 게임을 한눈에"·'🔥 출시 임박' 4글로우카드[FF7 D-DAY 주황·미르 D-1·메이크드라마 D-1·고딕 D-2]·캘린더/리스트 토글·월탭[6월 그라데 활성]·필터행·통계 '총 44개'·캘린더 6월[주말 일#e57373/토#7aa7ff·today 3일 채움 원형·출시셀 카테고리 tint+좌띠 inset3px·범례 4색 점]·리스트[월섹션 sticky·카드 배너 카테고리 세로그라데+해치·과거'출시됨' opacity0.62 약화·D-DAY 좌상단 리본]·/game/ff7-rebirth-switch2-2026 상세[퍼플 4px 상단바+은은한 퍼플 라디얼 백드롭+D-DAY 배지+개발사/배급사/플랫폼/장르 평문 메타+'같은 시기 출시' 좌띠 미니카드 그리드]) 전부 라이브 반영 양호. 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차 — 히어로 리뷰 배너(미나 더 할로워 아트워크)+핫카드(리밋제로 테스트배지·라이브 카운트다운 07:02:57)+007 카드(아트워크+79,000원)+주간 TOP10(▲▼NEW)+아이콘 필터행, 본문은 행마다 [날짜+요일색]·아트워크 썸네일·타입배지(행사/업데이트/얼리액세스 빨강)·🇰🇷지역기·제목·태그칩(메이플스토리/오프라인/쇼케이스)·액션버튼(일정/홈페이지/영상/찜). **모바일(390)은 Chrome resize_window가 페이지 뷰포트 미반영(JS 실측 innerWidth 1920·matchMedia(480) false·docW 1905, QA·직전 사이클 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 아래는 큐(subtitle 위계·MonthTabs 스크롤·ViewToggle 모바일·장르칩)/IDEAS(상세 라디얼·핫카드·eventType·범례칩·필터칩·image_url 배너·헤더 듀얼radial·통계 4색·리스트배너 모바일40)/완료와 중복 없는 신규 외형 제안만. a11y/시맨틱/포커스/리팩토링 0건(외형 모드).
 
@@ -459,31 +487,3 @@ _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 복구 후 리스트 풀폭 행·카테고리 색 체계·날짜 패널 컴팩트 인라인 확장·상세 모달(페이드/트레일러/링크)·푸터 운영자정보·로딩 fallback 가드 모두 정상. 통계 29 = 드롭다운 29 일치 확인. 기존 '높음' 미반영 건(헤더 로고화·헤더 컴팩트화·기본뷰 캘린더 고정·선택셀 위계 분리·날짜미정 D-day·통계줄 클릭필터)은 TODO/IDEAS 큐에 이미 있어 **중복 등록 안 함** — 픽업 대기.
 
 ---
-
-## [2026-05-29 23:02] [디자이너] — 라이브 실측: 사이트 복구 후 정상 점검 (날짜 패널·모달·D-day)
-실측: https://gcalen.com/ Chrome 데스크톱(1516px) — 캘린더/리스트/날짜클릭 패널/상세 모달 전부 정상 렌더, 콘솔 에러 0건. QA 22:40 TDZ 복구 라이브 확인됨. 직전 사이클(19:02 다운 상태) 이후 신규로 관찰 가능해진 항목 위주로 점검. (모바일 뷰포트는 이번에도 resize가 렌더에 미반영 → CSS 기준 병행, 신규 모바일 항목은 보류)
-복구 후 확인된 신규 반영: 날짜 클릭 패널 '한 줄 컴팩트 행 + 내부 스크롤 제거→인라인 확장'(운영자 요청) 라이브 정상 동작 / 통계줄 29 = 드롭다운 '전체(29)' 숫자 일치(직전 버그 해소) 확인.
-
-### 발견한 문제 / 개선점 (기존 미등록 신규 항목만)
-1. **'날짜 미정/유동적' 게임에 정확한 D-day(예 "D-217") 표시 → 가짜 정밀도** — 우선순위: 보통
-   - 어디서: 날짜 클릭 패널 + 리스트 뷰 하단. "이클립스: 더 어웨이크닝 (2026 예정·날짜 미정)", "미트5 (2026 연내 목표·일정 유동적)", "나이트크로우2 (2026 연내 목표·날짜 미정)" 등 5건이 전부 **2026.12.31 (목)** 그룹으로 묶여 똑같이 **"D-217"** 배지를 달고 있음.
-   - 왜 문제: 게임명에는 "날짜 미정/유동적"이라고 명시돼 있는데 옆 배지는 "D-217"이라는 확정 카운트다운을 보여줌 → 정보 모순. 사용자는 "12월 31일 확정 출시"로 오해하고, 캘린더에서도 12/31 셀에 몰려 표시될 위험.
-   - 개선: 데이터에 `date_tbd`(또는 release_date가 미정 플레이스홀더인지) 플래그를 두고, 그런 항목은 D-day 배지 대신 **"미정"/"2026 예정"** 같은 라벨로 대체. 패널/리스트에서도 12/31 그룹이 아니라 맨 끝 **"날짜 미정 · 2026 예정"** 별도 그룹으로 묶기(정렬은 확정일 그룹 다음). 캘린더 셀에는 미배치(또는 월 상단 "이 달 예정(날짜미정) N건" 보조 표기).
-   - 효과: 확정일 게임과 미정 게임의 신뢰도 구분 → "12/31 떼출시" 오인 제거.
-
-2. **상세 모달 상단 배너: 카테고리 라벨 중복 + 큰 빈 그라데이션 블록(세로 낭비)** — 우선순위: 낮음
-   - 어디서: 게임 카드 클릭 시 상세 모달. 상단에 약 140px 높이의 단색 그라데이션 배너가 있고 그 안에 카테고리명("한국 MMO 신규 서버")이 적혀 있는데, **바로 아래 줄에 동일한 카테고리 태그가 또 표시**됨. 배너는 이미지가 아니라 빈 색 블록이라 정보량 없이 세로만 크게 차지(제목/메타가 한참 아래로 밀림).
-   - 비고: 리스트 뷰 카드 배너 중복(204행)은 4px로 이미 정리됨 — 이건 **모달 전용 배너(.modal-image 류)**로 별개 미반영 건.
-   - 개선: (a) 배너 높이 140→약 64~80px로 축소하고 안의 카테고리 텍스트는 제거(아래 태그가 이미 전달) → 빈 블록 대신 얇은 카테고리 컬러 바 느낌. 또는 (b) 배너를 없애고 제목 좌측에 카테고리 컬러 점/바만. 첫 화면에 제목·출시일·CTA가 더 빨리 들어오게.
-
-3. **날짜 패널 컴팩트 행: 데스크톱에서 게임명 ↔ 플랫폼/D-day/☆ 사이 빈 공간 과다(스캔 동선 길어짐)** — 우선순위: 낮음
-   - 어디서: 날짜 클릭 패널의 한 줄 행. 데스크톱(1516px)에서 게임명은 좌측, 플랫폼·D-day·☆는 우측 끝(`justify-content:space-between` 추정)이라 그 사이에 약 600px 빈 공백. 시선이 이름→D-day로 멀리 이동해야 하고, 어떤 게임의 D-day인지 라인 추적이 필요.
-   - 개선: 행 내용 컨테이너에 `max-width`(예 760~880px) + 가운데 정렬을 주거나, 플랫폼·D-day를 게임명 **바로 뒤(좌측 묶음)**로 당기고 ☆만 우측 고정. 모바일은 현행(꽉 참) 유지라 영향 없음.
-
-4. **상단 통계줄(국내모바일 8 · … · 총 29)이 비클릭 텍스트 → 카테고리 진입 기회 손실** — 우선순위: 보통
-   - 어디서: 헤더 아래 통계 요약 한 줄. 각 카테고리 건수가 보이지만 클릭 불가라, 사용자는 같은 분류를 보려면 다시 아래 '카테고리' 드롭다운을 찾아 선택해야 함(동작 중복).
-   - 개선: 각 세그먼트("국내 모바일 8" 등)를 클릭 가능하게 → 클릭 시 해당 카테고리 필터 적용(드롭다운 값도 동기화), 현재 활성 카테고리는 굵게/밑줄로 표시. 키보드 접근(button 시맨틱 + focus-visible)·`aria-pressed`도 함께. "총 N"은 전체 해제.
-   - 효과: 통계줄이 '읽기 전용 숫자'에서 '원클릭 카테고리 탐색'으로 → 정보 구조와 인터랙션 일치.
-
-### 현재 양호 (트집 X)
-복구 후 캘린더 셀(오늘 파랑/임박 amber)·리스트 풀폭 행·날짜 패널 컴팩트 인라인 확장·상세 모달(출처/트레일러/링크복사)·푸터 운영자정보·SEO 바로가기 칩 모두 정상. 기존 '높음' 미반영 건(헤더 로고화·헤더 컴팩트화·기본뷰 캘린더 고정·선택셀 위계 분리·에러상태 fallback)은 TODO 큐에 이미 있어 **중복 등록 안 함** — 기획자/개발자 픽업 대기.
