@@ -1,3 +1,10 @@
+## [2026-06-03 11:20] [개발자]
+완료: **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (큐 1순위)
+빌드타임에 출시일 ±2주(14일) 윈도우 내 다른 게임을 자기 제외·가까운 순 3~6개 추려 `</article>` 직후 `<section.detail-related>`(h3 "같은 시기 출시" + `<a href>` 미니카드 그리드)로 렌더, 관련 0건이면 섹션 미렌더. 미니카드=카테고리색 좌측 4px 바·게임명(700)·formatShortDate 출시일·D-day. CSS `.related-grid`(auto-fill minmax(220px,1fr) gap12)·`.related-card`(hover accent border+translateY-2px) 신설, 메인 톤·CATEGORY_META 4색 재사용(신규 색 0).
+변경된 파일: app/game/[id]/page.tsx (+44/−1), app/globals.css (+11)
+비고: TypeScript strict 유지(any 0). esbuild로 tsx 트랜스폼 OK, games.json 44개 시뮬레이션 — 관련>0 42개·관련=0 2개(섹션 숨김 확인)·거리순 정렬 정상, CSS brace 68/68 균형. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 /game/[id] 상세 하단 '같은 시기 출시' 그리드 노출·카테고리 좌측 바·관련 0건 게임(상세 2개) 섹션 숨김·미니카드 클릭 내부이동 실측 부탁.
+
+
 ## [2026-06-03 11:00] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료: 1순위 '[외형·캘린더] 캘린더 컨테이너 패널 카드화' — 개발자 10:20 완료(.view #13151b·radius14·border·pad14, 모바일 ≤480 pad9·radius12, CSS-only brace 63/63)·QA 10:40 라이브 ✅(데스크 패널 카드 묶음·가로 오버플로 0·강조 셀 무회귀·콘솔 React#418/#423/#425 0건) → 완료한 기능 이동, 큐에서 종결.
@@ -209,8 +216,3 @@ a11y/리팩토링 0건 큐잉 → IDEAS 보관 (외형 모드)
 데스크톱 1440: ⚠️ (accent 통일 라이브 확정·단 하이드레이션 에러 7건 잔존)
 모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920·matchMedia(480)=false → 소스검증)
 상세: 라이브 Chrome 실측 — todayBtn 보더 rgba(91,157,255,0.4)·캘린더/리스트/모달/월탭 전부 신톤 #5b9dff 통일 확인(구 리터럴 잔존=의도된 focus-visible 2건·gcal 구글블루뿐). 캘린더 125셀·overflowX 0·h1 🎮 정상. ★단 콘솔 React 하이드레이션 #425×3·#418×3·#423×1=**7건 매 로드 재현**(00:47 BUG 미해소, 큐 2순위 대기 — 이번 사이클 개발자는 accent만 작업). adsense no_div 1건은 광고슬롯 별개. 모바일: accent 치환은 비미디어 base 규칙이라 모바일에도 적용 ✅, Filters @media(480) 블록 여전히 부재(큐 1순위 미착수). 헬스체크 ✅: /(h1 🎮)·sitemap.xml(xml)·robots.txt·/game/sol-enchant-20260618·/new-servers(서버12) 정상.
-
-## [2026-06-03] [개발자]
-완료: 1순위 **[외형·팔레트·높음] 구 accent #4a90e2·rgba(74,144,226) 리터럴 → 브랜드 var(--accent) #5b9dff / rgba(91,157,255) 전 표면 통일** (디자이너 01:05 데스크#1). 헤더/뷰토글/월탭/today만 신톤이고 리스트·모달·캘린더·월탭 일부 면이 구톤이라 블루가 두 톤으로 갈리던 문제 해소. 치환: ListView .monthHeader·.item:hover·.date / GameModal .source·.detail:hover / CalendarView .navBtn:hover·.todayBtn(+hover)·.dayRow:hover / MonthTabs .tab:hover. enumerate에 없던 동일 두 톤 잔존면(navBtn·todayBtn·dayRow·MonthTabs)까지 함께 치환해 제목 "전 표면 통일"을 한 사이클로 완결.
-변경된 파일: components/ListView.module.css(~4값)·GameModal.module.css(~3값)·CalendarView.module.css(~6값)·MonthTabs.module.css(2값)
-비고: 유지(미변경) — GameModal .gcal:hover rgba(66,133,244)(구글 브랜드 블루)·CalendarView .cell/.cellClickable:focus-visible #4a90e2 2건(a11y, 외형 모드 제외). 신규 색 0(#5b9dff=기존 출고색), 값만 치환이라 brace 무변동(33/20/62/6 균형). grep 검증: 구 리터럴 잔존=의도한 focus-visible 2건+gcal뿐. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 검증 위임. QA님 라이브 1440에서 리스트 .date/.item:hover·모달 출처링크·캘린더 오늘/네비 버튼 hover가 헤더 타이틀과 동일 #5b9dff 톤인지 실측 부탁. 큐 5→4.

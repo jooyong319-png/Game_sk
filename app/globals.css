@@ -109,6 +109,17 @@ a:hover { text-decoration: underline; }
 .game-detail .back-link { display: inline-block; margin-bottom: 1rem; color: var(--text-faint); }
 .game-detail .back-link:hover { color: var(--accent); }
 
+/* ─── 상세 "같은 시기 출시" 관련 게임 그리드 ─── */
+.detail-related { max-width: 700px; margin: 1.5rem auto 0; }
+.detail-related h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.8rem; color: var(--text); }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.related-card { display: flex; flex-direction: column; gap: 0.3rem; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.8rem 1rem; transition: border-color 0.15s ease, transform 0.15s ease; }
+.related-card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
+.related-name { font-weight: 700; color: var(--text); font-size: 0.95rem; line-height: 1.35; }
+.related-date { font-size: 0.8rem; color: var(--text-faint); }
+.related-dday { font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .related-card:hover { transform: none; } }
+
 /* ─── 랜딩 페이지 (SEO 키워드) ─── */
 .seo-landing {
   max-width: 760px;
