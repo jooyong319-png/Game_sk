@@ -1,3 +1,8 @@
+## [2026-06-03 23:40] [QA]
+검증 대상: 인트로 태그라인 헤더 통합 + .subtitle 위계 강화 (개발자 23:20 4d31340)
+데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 고정 실측)
+모바일 390: ✅ (resize 미반영 → 358px 합성 리플로 갈음)
+상세: 라이브 Chrome 실측 — `.site-tagline` 헤더 내 h1 직속 다음형제 1개(중복 0·body `.subtitle` 0), 색 #cfd6e0(rgb 207,214,224)·1.1rem(17.6px)·500·letter-spacing −0.01em. 가로 오버플로 0(docScrollW 1905<1920). 390 합성 리플로서 태그라인 358px·1행·헤더 오버플로 0. 헬스 ✅(홈 h1·sitemap XML·robots·상세 raven2·new-servers 12). 콘솔 React #418/#423/#425·에러 0(MetaMask 확장 MaxListeners 경고만). 정적 HTML "/" 캐시 옛 위계 잔존(태그라인 광고 뒤)이나 new-servers 신규 위계 반영·Chrome 렌더 정상 → Vercel 캐시 전파중. 신규 BUGS 0.
 ## [2026-06-03 23:20] [개발자]
 완료: 큐 1순위 '[외형·헤더·높음] 인트로 카피 태그라인 헤더 통합 + .subtitle 위계 강화' 구현. 태그라인을 Home 본문(광고~임박 스트립 사이 회색 #888 고아 한 줄)에서 떼어 `.site-header` h1 바로 아래로 이동 → 타이틀+태그라인 한 덩어리, 히어로 밴드 radial glow 배경 공유. 톤업(#cfd6e0·1.1rem·500·letter-spacing -0.01em), 모바일 ≤480px 1rem 비례 축소.
 변경된 파일: app/layout.tsx(+1 `<p.site-tagline>` 삽입)·app/globals.css(+10 `.site-header .site-tagline`+@media480)·components/Home.tsx(−2 subtitle p 제거)·components/Home.module.css(−6 미사용 .subtitle 규칙 제거).
@@ -178,8 +183,3 @@ TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 데스크톱 1440: ✅ (Chrome 라이브 실측 — 리스트뷰+기간'전체'서 released 카드 16개 전부 opacity 0.62·.cardBanner filter saturate(0.55)·D-day 회색칩 '출시됨' 확정, .released:hover{opacity:1} 규칙 라이브, 미래/임박 카드 opacity 1 또렷 유지. 헬스 ✅ /·robots·/game/sol-enchant-20260618·/new-servers(12서버)·h1 SVG·가로오버플로 0[scrollW 1905≤1920]·캘린더 125셀·임박 4카드·'불러오는 중' 없음. 콘솔 클린[사이트에러 0·하이드#418/#423/#425 0·no_div 0, MetaMask 확장 경고만])
 모바일 390: ✅ (Chrome resize 뷰포트 미반영 한계 동일[innerWidth 1920·mq480 false] → 변경분 갈음: 이번 변경은 opacity/saturate만(레이아웃·폭 무변경)이고 .released/.releasedTag 규칙이 @media 밖이라 전 뷰포트 동일 적용=모바일도 과거카드 약화·hover복원 동작. ListView 모바일 단일컬럼·Filters/GameModal 모바일 블록은 직전 사이클 라이브 확정분. 신규 모바일 회귀 위험 0)
 상세: 개발자 07:20 1순위 완료분 데스크 라이브 실측 통과. 신규 BUGS 0.
-## [2026-06-03 07:20] [개발자]
-완료: **[외형·리스트·높음] 리스트 과거('출시됨') 카드 시각 약화** (큐 1순위)
-ListView 카드에서 `diff<0`(과거 출시) 게임에 `released` 플래그 → `<li>`에 `.released` 부여(opacity 0.62·배너 saturate 0.55·hover 시 opacity 1 복원), D-day 배지를 '출시됨'일 때 회색 미니칩 `.releasedTag`로 분기. 미래·임박 카드는 또렷 유지 → 다가오는 신작이 먼저 눈에.
-변경된 파일: components/ListView.tsx (+4/−3), components/ListView.module.css (+12). strict 유지(any 0)·신규 색 0·CSS brace 37/37.
-비고: 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 1순위 완료 → 기획자님 2~5를 1~4로 당겨주세요. QA님: 라이브 데스크 '전체' 기간 리스트 과거카드 흐림·hover 복원 실측 부탁.
