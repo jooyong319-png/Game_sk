@@ -10,6 +10,34 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-04 05:07] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(통계줄 카테고리 4색 분해[모바일 11 #81c784·PC·콘솔 5 #64b5f6·글로벌 16 #ba68c8·신서버 12 #ff8a65] 신규 출고 확인·'🔥 출시 임박' 3글로우카드[미르 D-DAY·메이크드라마 D-DAY·고딕 D-1]·캘린더 6월 today 셀 자동선택→day-detail 패널 '이후 출시 20건' 자동 노출) 전부 양호. **모바일(390): resize_window 뷰포트 미반영(innerWidth 1920·mq480 false, 기존 한계 동일) → same-origin iframe 390px 합성으로 실측(mq true·innerW 386·docW 371 오버플로 0).** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차 — 히어로 리뷰 배너·핫카드 카운트다운(06:18:53:48)·주간 TOP10(▲▼NEW)·행별 타입배지/국기/태그칩/액션버튼에 더해 **우하단 플로팅 '맨 위로' 원형 버튼 상시 제공** 확인. 이번 사이클은 직전 사이클들이 미점검한 **day-detail 패널(캘린더 셀 클릭 하단 패널) + 푸터 + 플로팅 유틸** 표면 집중 — 큐(related-dday·헤더 듀얼 radial·상세 액션 pill·.game-detail 모바일)/IDEAS(핫카드·HeroStrip warm 좌띠·Home 모바일 패딩·리스트 날짜 요일색·image_url 배너 등)와 중복 없는 신규만. a11y/시맨틱/리팩토링 0건(외형 모드).
+
+### 데스크톱(1440) 점검
+1. **[높음·D-DAY 강조·색 규약] day-detail 패널 행 D-day(`.dayRowDday`)가 D-DAY(=오늘)와 D-1~7을 같은 amber(#f5a623) 한 톤으로 — 전역 규약(D-DAY 주황 #ff7a59 / 임박 amber)과 불일치** (`components/CalendarView.module.css` `.dayRowDdaySoon` L253 + `components/CalendarView.tsx` L232 D-day span)
+   - 현재: tsx가 `diff <= 7 && diff >= 0 ? styles.dayRowDdaySoon : ''` 단일 분기 → `.dayRowDdaySoon{color:#f5a623}`이 D-0~D-7 전부 커버. 라이브 실측 패널에서 '미르의 전설: 진 D-DAY'·'메이크 드라마 D-DAY'(둘 다 amber)가 'D-1 고딕'과 같은 색 — 같은 화면 위 HeroStrip 글로우카드 D-DAY(#ff7a59 주황)·리스트 카드 리본과 어긋남. 진입 시 오늘 셀 자동선택으로 **패널이 첫 화면 기본 노출 표면**이 된 지금(06-04 01:30 출고) 더 도드라짐.
+   - 바꿀 값: tsx 분기를 `diff === 0 ? styles.dayRowDdayToday : diff > 0 && diff <= 7 ? styles.dayRowDdaySoon : ''`로 교체(1줄), CSS에 `.dayRowDdayToday { color: #ff7a59; font-weight: 700; }` 1규칙 신설(기존 D-DAY 주황 재사용·신규 색 0). → 패널 D-day가 HeroStrip/리스트/상세 배지와 동일 3단 규약(D-DAY 주황/임박 amber/그 외 #888)으로 통일. 큐 1순위 related-dday(상세 표면)와 **같은 색 규약·다른 표면** — 묶음 구현 후보. 우선순위 **높음**(첫 화면 기본 노출 표면·tsx 1줄+CSS 1규칙).
+
+2. **[보통·푸터 마감] `.site-footer`가 회색 2줄+직선 `border-top` 뿐 — 헤더는 그라데 타이틀·라디얼 글로우로 브랜딩됐는데 페이지 마감(푸터)은 무브랜드 평면이라 수미 불일치** (`app/globals.css` `.site-footer` L70~77)
+   - 현재: `.site-footer{ text-align:center; padding:2rem 1rem; color:#666; font-size:0.85rem; border-top:1px solid var(--border); margin-top:3rem }`. 라이브에서 © 줄+문의 메일 2줄이 #666 한 톤, 구분선은 풀폭 직선 #2a2e38 — 첫 화면(블루→퍼플 그라데 h1)과 대비되게 끝 화면은 장식 0.
+   - 바꿀 값: `border-top` 제거 → `.site-footer{ position:relative }` + `.site-footer::before{ content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:min(640px,90%); height:1px; background:linear-gradient(90deg, transparent, rgba(91,157,255,0.4), rgba(201,138,214,0.4), transparent) }`(브랜드 블루→퍼플 그라데 hairline, 기존 `--accent`/`--accent-2`의 rgba — 신규 색 0). 문의 메일 a는 전역 `a{color:var(--accent)}` 현행 유지. → 헤더 그라데와 수미쌍관하는 은은한 마감 밴드(CSS only·높이 무변). 우선순위 **보통**.
+
+### 모바일(390) 점검 (iframe 390 합성 실측)
+1. **[보통·모바일·패널 밀도] `CalendarView.module.css`의 `@media(max-width:480px)` 블록(L257)이 `.view`/`.cell`/`.cellDate`/`.cellName`/`.cellHas`/`.cellDot`만 다루고 `.dayPanel`/`.dayRow`는 오버라이드 0 — 모바일은 셀 게임명 숨김(`.cellName{display:none}`)이라 **패널이 사실상 모바일 1차 콘텐츠 표면**인데 패딩 과대로 행 폭 손실** (`components/CalendarView.module.css` L257 모바일 블록 확장)
+   - 현재(iframe 390 실측): 패널 폭 319px·`padding:1rem`(16px)·row 콘텐츠 285px·row `padding:0.5rem 0.7rem`·`.dayRowDate{min-width:3.5em}` → '포켓몬 챔피언스 (모바일)'·'파이널 판타지 택틱스 - 이발리스 크로니클즈' 등 게임명이 2줄 랩, 20행 패널 세로가 늘어짐.
+   - 바꿀 값: L257 블록에 3규칙 추가 — `.dayPanel{ padding:0.7rem }` + `.dayRow{ gap:0.45rem; padding:0.45rem 0.55rem }` + `.dayRowDate{ min-width:3em; font-size:0.72rem }`(`.cellDate` 모바일 0.72rem과 동일 톤). → 행 콘텐츠 폭 ~+20px로 게임명 랩 감소·세로 리듬 타이트(데스크 무영향·레이아웃만·신규 색 0). 우선순위 **보통**(모바일 1차 표면).
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·플로팅 유틸] 인벤은 우하단에 '맨 위로' 원형 플로팅 버튼(+다크 토글)을 상시 제공 → 우리 메인은 캘린더+패널 20행+하단 광고로 세로가 길고 월탭/뷰토글이 상단에만 있어 하단에서 복귀 코스트 큼. 다크 글래스 원형 BackToTop 신설** (신규 `components/BackToTop.tsx` + `BackToTop.module.css`, `app/layout.tsx` body 말미 1줄)
+   - 인벤: 라이트 흰 원형 2버튼 → 우린 다크·미니멀: 1버튼만, 글래스 톤다운.
+   - 바꿀 값: client 컴포넌트 — `scrollY > 600`에서만 표시(scroll 리스너+state, mount 후 가드로 하이드레이션 안전), 클릭 시 `scrollTo({top:0, behavior:'smooth'})`. CSS: `.btn{ position:fixed; right:18px; bottom:18px; width:42px; height:42px; border-radius:50%; background:rgba(26,29,36,0.85); backdrop-filter:blur(8px); border:1px solid var(--border); color:#cfd6e0; font-size:1.1rem; opacity:0; pointer-events:none; transition:opacity 0.2s }` + `.visible{ opacity:1; pointer-events:auto }` + hover `border-color:var(--accent); color:#fff` + `@media(prefers-reduced-motion:reduce){ .btn{transition:none} }`(스크롤도 `behavior:auto`). 아이콘은 layout.tsx 기존 SVG 스프라이트 `#ic-arrow-ur` 재사용 또는 '↑' 텍스트. 신규 색 0(기존 토큰·bg-elev rgba). → 긴 페이지 하단↔상단 왕복 어포던스(인벤 패턴의 다크 글래스 재해석). 우선순위 **보통**.
+   - 참고: 인벤 '주간 TOP10 순위'는 인기 지표(집계 데이터) 부재로 이번에도 보류 — 위시리스트가 localStorage(개인별)뿐이라 대체 데이터도 없음.
+
+### 우선순위 종합
+높음: 데스크#1(dayRow D-DAY 주황 통일 — 첫 화면 기본 노출 표면·큐 related-dday와 같은 규약 묶음 후보·tsx 1줄+CSS 1규칙). 보통: 모바일#1(dayPanel 모바일 3규칙 — 모바일 1차 표면)·인벤#1(BackToTop 다크 글래스 플로팅)·데스크#2(푸터 브랜드 그라데 hairline). 전부 신규 색 0·기존 토큰 재사용.
+
+---
+
 ## [2026-06-04 01:05] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 블루→퍼플 그라데 타이틀+태그라인 헤더 통합·상단 광고 점선 슬롯·'🔥 출시 임박' 3글로우카드[미르 D-DAY 주황·메이크드라마 D-DAY 주황·고딕 D-1]·캘린더/리스트 토글·월탭[6월 그라데 활성]·필터행[기간 기본 '오늘 이후']·통계 '총 44개'·캘린더 6월[주말 일#e57373/토#7aa7ff·today 4일 채움 원형·출시셀 카테고리 tint+좌띠·범례 4색 점]·리스트[총 27개·월섹션 sticky·카드 배너 카테고리 세로그라데+해치·D-DAY 좌상단 리본]·/game/ff7-rebirth-switch2-2026 상세[퍼플 라디얼 백드롭+상단 퍼플바+D-DAY 배지+detail-meta 스펙시트 hairline 4행+'같은 시기 출시' 좌띠 미니카드 그리드]) 전부 라이브 반영 양호. **모바일(390): Chrome resize_window가 페이지 뷰포트 미반영(스크린샷 1568px 데스크 레이아웃·히어로 3열 그리드 유지, QA·직전 사이클 동일 한계)→ @media(max-width:480px) 소스 검증으로 대체.** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 교차 — 본문 각 행 우측에 액션 버튼(일정/홈페이지/영상/찜)을 또렷한 버튼 묶음으로. 아래는 큐(ViewToggle 모바일·장르칩·통계줄 4색·헤더 듀얼 radial)/IDEAS(Home 모바일패딩·legend칩·리스트 날짜 요일색·핫카드 등)/완료와 중복 없는 **/game/[id] 상세 표면 집중** 신규 외형 제안만(직전 사이클들이 메인/리스트에 집중해 상세는 detail-meta 외 미점검). a11y/시맨틱/리팩토링 0건(외형 모드).
 
@@ -459,31 +487,3 @@ _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
 ---
 
-## [2026-05-29 20:50] [디자이너] — 라이브 실측: 캘린더 진입 경험(스크롤/빈달/모바일/키보드)
-실측: https://gcalen.com/ Chrome 데스크톱(1516px) — 리스트(기본뷰)·캘린더·날짜 클릭 패널 정상 렌더, 콘솔 에러 0건. QA 22:40 TDZ 복구 + 개발자 fallback 가드 라이브 정상. 모바일 뷰포트는 이번에도 resize가 스크린샷 렌더에 미반영 → styles.css 기준 병행 평가. 직전 사이클(23:02) 이후 캘린더 '진입·클릭 경험' 관점에서 신규로 관찰된 항목만 등록(기존 등록 항목 중복 안 함).
-
-### 발견한 문제 / 개선점 (기존 미등록 신규 항목만)
-1. **날짜 셀 클릭 시 결과 패널이 시야 밖에서 열려 '아무 일도 안 일어난 듯' 보임 (auto-scroll 부재)** — 우선순위: 높음
-   - 어디서: 캘린더에서 날짜 셀 클릭 → `#day-detail-panel`이 **달력 그리드 전체 아래**에 펼쳐짐(script.js openDayPanel, scrollIntoView 호출 없음 확인). 데스크톱에서 하단 행(예 30일)을 클릭하면 패널이 폴드 아래라 화면이 그대로 → 클릭이 먹혔는지 알 수 없음(실측 시 클릭 후 화면 무변화).
-   - 왜 문제: 클릭→결과의 시각적 연결이 끊김. 사용자는 반응이 없다고 느껴 다른 날을 더 누르거나 이탈. 캘린더의 핵심 인터랙션이 '발견되지 않는' 상태.
-   - 개선: 패널 렌더 직후 `dayPanel.scrollIntoView({behavior:'smooth', block:'start'})`(prefers-reduced-motion 시 'auto'). 더하여 패널 헤더에 0.3~0.5s 옅은 강조(예 배경 플래시) 1회로 "여기 열렸어요" 신호. 모바일도 동일 이점.
-
-2. **빈 달 진입 시 거대한 수직 공백(첫 화면 대부분 빈 셀) → '데이터 없는 사이트' 인상** — 우선순위: 보통
-   - 어디서: 캘린더 자동 진입 달(현재 2026년 5월). 출시는 27·28·30일에만 몰려 있고 1~23일은 전부 빈 셀(약 4행 × min-height 84px ≈ 340px+ 빈 그리드)이라 첫 스크린에 콘텐츠가 거의 안 보임.
-   - 왜 문제: '가장 가까운 출시 달'로 자동 진입하지만 그 달이 희소하면 상단이 죽은 공간이 되어 첫인상이 휑함. 사용자가 "이 사이트 비었나?"로 오인.
-   - 개선: (a) 월 라벨 옆에 `이 달 출시 N건` 보조 카운트 배지 → 빈 그리드의 이유를 설명하고 ‹ › 탐색 유도. (b) 빈 달이면 기존 `#calendar-empty` 안내를 그리드 상단(달력 안)에도 노출. (c) 더 적극적으로는 자동 진입을 '가장 가까운 출시일'이 아니라 '향후 출시가 가장 많은(또는 첫 출시가 상단행에 걸리는) 달' 기준으로 두는 것도 검토. 최소 (a)만으로도 휑함 완화.
-
-3. **모바일(≤480px) 캘린더 셀 게임명 라벨 과도 truncation** — 우선순위: 보통
-   - 어디서: `.day-game-label` 모바일 0.62rem + `white-space:nowrap; text-overflow:ellipsis`. 7열 고정 그리드(390px 폭 기준 셀 ≈ 48px)에서 날짜 숫자 + 게임명 1줄을 한 셀에 넣으면 게임명이 3~4글자 수준으로 잘려 거의 판독 불가(예 "패스 오…"). 점(dots)과도 세로로 겹쳐 답답.
-   - 왜 문제: 모바일에서 라벨이 정보 전달을 못 하면서 셀만 빽빽 → 가독성/스캔성 저하. 좁은 화면 핵심 동선.
-   - 개선: ≤480px에서는 `.day-game-label`을 숨기고 **카테고리 점(dots)만** 남겨 셀을 깔끔히(상세는 셀 클릭 패널로). 또는 라벨 대신 `●×N` 건수 칩 하나만. 데스크톱(라벨 표시)은 현행 유지.
-
-4. **캘린더 날짜 셀 키보드/스크린리더 접근 불가 (role·tabindex 부재)** — 우선순위: 보통
-   - 어디서: 캘린더 셀 마크업(script.js cells = `<div class="day" data-date=...>`). cursor:pointer는 반영됐으나 day-row(role="button" tabindex="0")·위시 버튼과 달리 **셀에는 role/tabindex/aria 없음** → 키보드 Tab 포커스 불가, 엔터로 패널 열기 불가, 스크린리더가 클릭 가능 요소로 인지 못 함.
-   - 왜 문제: 마우스 외 사용자는 캘린더의 날짜 패널 기능에 아예 접근 불가(접근성 사각). 직전 hover/cursor 어포던스(반영됨)의 남은 절반.
-   - 개선: 게임 있는 셀에 `role="button" tabindex="0" aria-label="5월 30일, 출시 N건"` 부여 + Enter/Space 키 핸들러를 기존 셀 클릭 핸들러에 연결, `:focus-visible` 링 추가. (#1 auto-scroll과 함께 적용하면 키보드 동선까지 자연스러움.)
-
-### 현재 양호 (트집 X)
-복구 후 리스트 풀폭 행·카테고리 색 체계·날짜 패널 컴팩트 인라인 확장·상세 모달(페이드/트레일러/링크)·푸터 운영자정보·로딩 fallback 가드 모두 정상. 통계 29 = 드롭다운 29 일치 확인. 기존 '높음' 미반영 건(헤더 로고화·헤더 컴팩트화·기본뷰 캘린더 고정·선택셀 위계 분리·날짜미정 D-day·통계줄 클릭필터)은 TODO/IDEAS 큐에 이미 있어 **중복 등록 안 함** — 픽업 대기.
-
----
