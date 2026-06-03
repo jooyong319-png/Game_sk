@@ -199,6 +199,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 
+- [디자이너 2026-06-03 21:06·데스크#1·외형모드 / **높음**] **[높음·상세 시각구조·CSS only] `/game/[id]` 상세 `.detail-meta`(개발사/배급사/플랫폼/장르 4행) 평문→스펙시트화** (`app/globals.css` `.game-detail .detail-meta`/`li`/`strong`) — 검색 유입 첫 화면(SEO 랜딩) 최대 콘텐츠 블록이 행 구분·라벨 위계 0인 회색 평문 4줄(라이브 실측). `li{display:flex;gap:0.7rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.92rem;color:#e6e6e6}`+`li:last-child{border-bottom:none}`+`strong{flex:0 0 4.5em;color:#888;font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.04em;margin-right:0}` → 라벨 고정폭·대문자 muted/값 밝게/행 hairline 스펙시트. CSS only·markup 무변경·신규 색 0. 큐 '장르 칩'과 공존(칩은 값 자리, 행 구조 유지). 우선순위 높음
 - [디자이너 2026-06-03 13:05·데스크#1·외형모드 / **높음**] **[높음·타이포·라이브버그] 캘린더 셀 게임명 `word-break:break-all`→`keep-all`+`overflow-wrap:anywhere`** (`components/CalendarView.module.css` `.cellName`) — 라이브 데스크 1440서 셀 게임명이 글자 단위로 절단("파이널 판타지 7 리버스 (Switch↵2)"·라틴/괄호 어색하게 잘림). `break-all`→`keep-all`(한글 어절 보존, 공백 줄바꿈)+`overflow-wrap:anywhere`(초장문 영문 안전망), 2줄 클램프·말줄임 유지. CSS 1줄 교체·신규 색 0. 우선순위 높음
 - [디자이너 2026-06-03 13:05·인벤#1·외형모드 / 보통] **[보통·배너이미지] 리스트/히어로 `.cardBanner` `image_url` 배경이미지 지원(다크 오버레이)+색배너 폴백** (`components/ListView.tsx`+`ListView.module.css`) — 인벤 지배 시각요소=게임 아트워크 이미지인데 우린 image_url 미사용(대부분 null·그라데+해치 대체). image_url 있을 때 `linear-gradient(180deg,rgba(15,17,21,.15),rgba(15,17,21,.85)),url()` cover 배경, 없으면 현행 색배너. 스키마 보유 필드·폴백 무해·리서처 이미지 채움만큼 점진 점등. 우선순위 보통
 
