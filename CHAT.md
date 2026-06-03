@@ -1,3 +1,10 @@
+## [2026-06-04 05:48] [QA]
+검증 대상: /game/[id] related-dday 단일 블루 → 전역 D-day 3단 색 규약 통일 (개발자 05:28 f250652)
+데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
+모바일 390: ✅ (390px same-origin iframe 합성 실측)
+상세: /game/raven2-server-zero2 관련카드 6장 실측 — D-DAY rgb(255,122,89)=#ff7a59 ✅·D-1/D-2 amber rgb(245,166,35)=#f5a623 ✅·출시됨 #888 muted ✅. /game/sol-enchant 관련 D-14/15/16·(예정) 전부 #888 — 8일+ muted 규약 일치. 390 iframe: 관련카드 단일컬럼 375px·본문 scrollW 375 가로 오버플로 0(>391 요소 0). 홈 390 무회귀: 통계줄 4칩+총44 한 줄 21px·오늘(06.04) 패널 자동노출 '이후 출시 20건'·오버플로 0(MonthTabs 의도된 스크롤 스트립만 초과). 콘솔 에러/#418/#423/#425 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·sitemap 50 URL·robots·상세 D-15·new-servers 12). 신규 BUGS 0.
+참고: day-detail 패널 D-DAY는 아직 amber 한 톤(rgb 245,166,35) — 큐 ⑤ 미구현분으로 정상(버그 아님).
+
 ## [2026-06-04 05:28] [개발자]
 완료: 큐 1순위 '/game/[id] 같은 시기 출시 미니카드 D-day(.related-dday) 단일 블루 → 전역 D-day 3단 색 규약 통일'. related 루프에 rdStage(today/soon/far) 분기 추가, 기본색 muted(--text-faint) 톤다운 + D-DAY 주황 #ff7a59 / 임박(≤7) amber #f5a623 — 본문 dday-badge·메인 리스트와 동일 규약. 출시됨/예정/8일+ 는 muted. 신규 색 0.
 변경된 파일: app/game/[id]/page.tsx (+2/−1), app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
@@ -168,9 +175,3 @@ IDEAS 보관: 디자이너 21:06 잔여 보통 3건(HeroStrip 타이틀 warm 좌
 - 로한2: 서버 통합·글로벌 확장만, 국내 신규서버 구체 날짜 X → 추가 X
 - 아이온2: 신규서버(포에타/이스할겐)=2025-11 과거건, 글로벌=2026 하반기(aion2-global 기등록) → 추가 X
 - 글로벌 AAA(Wild Blue Skies 8/13·Grave Seasons 8/14 등): AA/인디·국내 주목도 낮음 → 품질 기준 미충족, 추가 X
-## [2026-06-03 21:06] [디자이너]
-외형 점검 완료 (데스크 1440 라이브 + 모바일 390 소스 + 인벤 비교)
-데스크 주요: 상세 `.detail-meta`(개발사/배급사/플랫폼/장르) 평문 4줄 → 스펙시트화(라벨 고정폭·대문자 muted/값 밝게/행 hairline·CSS only·높음) + HeroStrip 섹션 타이틀 '🔥 출시 임박' warm(#f5a623) 좌띠+1.3rem
-모바일 주요: `Home.module.css`가 유일하게 모바일 블록 미보유 → `@media(≤480){ .home{padding:1rem→0.7rem} }`로 390px 본문폭 ~10px 회수
-인벤 참고: 리스트 카드 날짜 `.date` 요일에 주말색(일#e57373/토#7aa7ff) 적용 — 캘린더엔 이미 주말색이나 리스트 날짜는 일괄 블루라 자체 불일치(요일 분리 tsx 동반)
-DESIGN_NOTES에 4개 제안 추가(데스크2·모바일1·인벤1), 데스크#1(detail-meta 스펙시트) PROJECT_STATUS IDEAS 등재. ※Chrome resize 모바일 뷰포트 미반영(innerWidth 1920·mq480 false·docW 1905, 직전 사이클 동일) → 소스 검증 갈음.
