@@ -1,3 +1,9 @@
+## [2026-06-04 00:11] [기획자]
+TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
+완료: 1순위 'MonthTabs 모바일 가로 스크롤 어포던스(엣지 페이드 mask+scroll-snap)' 개발자 23:28(1666b87)·QA 23:45 라이브 ✅ → 완료한 기능 이동(번호큐 이미 미반영)
+유지: 번호큐 1~4(ViewToggle 모바일 블록·리스트 장르 칩·통계줄 4색 분해·헤더 듀얼 radial) 순서 그대로(1순위 ViewToggle 보호 — 직전 여러 사이클 밀린 잔여라 신규는 5순위 말미만)
+추가: - ⑤[외형·하이라이트·D-DAY강조] "🔥 출시 임박" 최근접 1건 대형 핫카드 승격 + 라이브 HH:MM:SS 카운트다운(HeroStrip.tsx+module.css, 디자이너 06-03 01:05 인벤#1). 카운트다운은 useEffect mount 후에만 렌더(SSR 미출력)해 날짜의존 하이드레이션(7건 이력) 재발 방지.
+사용자 요청 활성 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0(ViewToggle 1순위 승격 첫 사이클). 디자이너 신규 제안 0(최신 21:06 기처리). a11y/리팩토링 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).
 ## [2026-06-03 23:45] [QA]
 검증 대상: MonthTabs 모바일 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap (개발자 23:28 1666b87)
 데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 실측)
@@ -177,8 +183,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 모바일 주요: MonthTabs 12탭 가로 스크롤인데 스크롤 신호 0 → @media≤480 엣지 페이드 mask+scroll-snap(높음). ViewToggle만 모바일 블록 부재(Filters/GameModal 선례 동형) → @media≤480 풀폭 2분할(보통).
 인벤 참고: 행마다 장르/키워드 태그칩 → 우린 `genres[]` 44/44 보유하나 리스트 카드 미노출 → 무채색 다크 장르 칩(데이터 선결 불필요, 보통).
 DESIGN_NOTES에 5개 제안 추가(데스크2·모바일2·인벤1). 높음 2건(인트로 카피·MonthTabs 스크롤) PROJECT_STATUS IDEAS 등재. 큐/IDEAS/완료와 중복 0. a11y/리팩토링 0건(외형 모드). 코드 미수정(문서만).
-## [2026-06-03 08:47] [QA]
-검증 대상: HeroStrip '출시 임박' 임박도별 글로우(개발자 09:20 — diff===0 glowDday·diff<=3 glowCat·데스크톱 한정)
-데스크톱 1440: ✅ (Chrome 라이브 실측. 스트립 4카드 D-DAY/D-1/D-1/D-2 — glowDday 1개 box-shadow rgba(255,122,89,.7)+transform scale(1.02) pop 확정, glowCat 3개 카테고리색 글로우[국내모바일 녹색·글로벌 보라] transform none 확정. 가로오버플로 0[scrollW 1905≤1920]·캘린더 125셀·'불러오는 중' 플래시 0. 헬스 ✅ /·robots·sitemap(XML 200)·/game/sol-enchant-20260618[h1 🎮]·/new-servers[12서버])
-모바일 390: ✅ (Chrome resize 뷰포트 미반영 한계 동일[innerWidth 1920·mq480 false] → 배포 CSS 번들 실측으로 갈음. 프로덕션 스타일시트에 @media(max-width:480px) `.glowCat,.glowDday{box-shadow:none;transform:none;border-color:rgba(255,255,255,.08)}` 라이브 확정 + `.card::before{display:none}`·`.card:nth-child(n+4){display:none}`[임박 3행 캡] 유지 → 모바일 컴팩트 행 글로우 무영향, 회귀 0)
-상세: 개발자 09:20 1순위(임박 글로우) 데스크 라이브 통과·모바일 무영향 CSS 번들 확정. 신규 BUGS 0.
