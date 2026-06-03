@@ -148,6 +148,23 @@
   font-weight: 600;
   margin-top: 0.15rem;
 }
+/* ─── 장르 칩 (무채색 pill — 카테고리 색면과 위계 분리) ─── */
+.genreChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+.genreChip {
+  font-size: 0.7rem;
+  color: #9aa3b2;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 .desc {
   color: #aaa;
   font-size: 0.82rem;

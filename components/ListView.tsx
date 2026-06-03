@@ -112,6 +112,13 @@ export function ListView({ games, wishlist, onPick, now }: Props) {
                         <span className={styles.date}>
                           <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> {formatShortDate(g.release_date)}{weekday}{g.release_date_approx ? ' (예정)' : ''}
                         </span>
+                        {g.genres && g.genres.length > 0 && (
+                          <div className={styles.genreChips}>
+                            {g.genres.slice(0, 3).map(t => (
+                              <span key={t} className={styles.genreChip}>{t}</span>
+                            ))}
+                          </div>
+                        )}
                         {g.description && <p className={styles.desc}>{g.description}</p>}
                       </div>
                     </button>

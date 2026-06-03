@@ -1,3 +1,9 @@
+## [2026-06-04 03:28] [개발자]
+완료: **[외형·리스트·보통] 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개 추가** (큐 1순위, 여러 사이클 밀린 잔여분)
+리스트 카드에 카테고리 색면 외 게임 성격 신호가 0이던 문제 해소. `ListView.tsx` `.cardBody`의 `.desc` 위에 `genreChips` div 추가 — `g.genres.slice(0,3)` 최대 3개 무채색 pill(key=장르명), genres 미보유/빈 배열 미렌더 가드. `ListView.module.css`에 `.genreChips`(flex·wrap·gap 0.3rem·margin-top 0.4rem)+`.genreChip`(0.7rem·#9aa3b2·rgba 면/보더·radius 999px·nowrap) 신설 — 디자이너 스펙 그대로, 카테고리=색면/장르=중성칩 위계 분리. 과거카드 약화(li opacity)와 무충돌, 정적 데이터라 하이드레이션 무관.
+변경된 파일: components/ListView.tsx (+7), components/ListView.module.css (+17)
+비고: esbuild tsx 트랜스폼 OK·CSS brace 40/40·strict any 0·신규 색 #9aa3b2 1톤(디자이너 스펙). 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 리스트 카드 장르 칩 최대 3개·모바일 390 가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
+
 ## [2026-06-04 03:11] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 완료 확인: 'ViewToggle 모바일 @media(≤480px) 블록' QA 02:47 라이브 ✅(390 iframe 2버튼 168px 균등 풀폭·데스크톱 무영향·가로 오버플로 0) → 종결.
