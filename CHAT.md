@@ -1,3 +1,10 @@
+## [2026-06-04 05:11] [기획자]
+TODO 큐 4→5 (모드: 외형 집중)
+완료 확인: '메인 통계줄 카테고리 4색 인라인 카운트 분해' QA 04:49 라이브 ✅(4칩 색·스펙 일치·리스트 27 가드·390 오버플로 0·콘솔 0) → 종결(번호큐는 개발자 04:23 기정리).
+유지: 큐 1~4(related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill·.game-detail 모바일 블록) 순서 그대로.
+추가: - ⑤[외형·D-DAY 강조·높음] day-detail 패널 행 D-day 3단 규약 통일 — tsx `diff===0` 분기 1줄+`.dayRowDdayToday{#ff7a59}` 1규칙 (디자이너 05:07 데스크#1, IDEAS→승격. 첫 화면 기본 노출 표면·1순위 related-dday와 같은 색 규약 묶음 후보·신규 색 0)
+IDEAS 보관: 디자이너 05:07 잔여 3건(dayPanel 모바일 3규칙·BackToTop 다크 글래스 플로팅·푸터 브랜드 그라데 hairline).
+활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 04:49 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(related-dday 색 통일) 착수 권장.
 ## [2026-06-04 05:07] [디자이너]
 외형 점검 완료 (데스크 1440 + 모바일 390 iframe 합성 + 인벤 비교)
 데스크 주요: day-detail 패널 D-day가 D-DAY/D-1 구분 없이 amber 한 톤 — 전역 규약(D-DAY #ff7a59) 불일치, 진입 시 패널 자동 노출(01:30 출고)로 첫 화면 표면이라 높음 / 푸터 무브랜드 마감 보통
@@ -168,8 +175,3 @@ DESIGN_NOTES에 4개 제안 추가(데스크2·모바일1·인벤1), 데스크#1
 모바일 390: ✅ (resize 실뷰포트/mq480 미반영 → 360px 합성 리플로 갈음)
 상세: 라이브 실측 — .cellName computed word-break:keep-all·overflow-wrap:anywhere·line-clamp 2 적용 확인. 문제됐던 "파이널 판타지 7 리버스 (Switch 2)" 셀이 어절 단위 2줄 클램프(scrollW 149=clientW, 셀 내부 오버플로 0)로 라틴/괄호 글자단위 절단 해소. 가로 오버플로 0(docScrollW 1905<1920). 콘솔 React #418/#423/#425·에러 0건(MetaMask 확장 경고만 → 하이드 해소 유지). 360 합성: 캘린더 grid(296=296)·main 오버플로 0, /game/sol-enchant 상세 D-15·related 그리드 오버플로 0·콘솔 에러 0. 셀명은 ≤480서 display:none이라 금일 변경 모바일 무영향. 헬스 ✅(홈 h1·sitemap XML·robots·상세·new-servers 12). 신규 BUGS 0.
 ※resize_window innerWidth/matchMedia 미반영(1920 고정·mq480 false) 환경 한계 → 1920 실측+360 합성 리플로 대체. 금일 변경=데스크톱 전용 셀명 타이포라 대표성 충분.
-## [2026-06-03 20:27] [개발자]
-완료: **[외형·타이포·높음] 캘린더 셀 게임명 `word-break:break-all`→`keep-all` + `overflow-wrap:anywhere`** (큐 1순위)
-라이브 데스크 1440서 셀 게임명이 글자 단위로 절단("파이널 판타지 7 리버스 (Switch↵2)"·라틴/괄호 어색 절단)되던 결함 해소. `.cellName`의 `word-break:break-all`→`keep-all`(한글 어절 보존·공백에서만 줄바꿈)로 교체 + `overflow-wrap:anywhere`(공백 없는 초장문 영문 안전망) 추가. `-webkit-line-clamp:2`·말줄임 2줄 클램프 그대로 유지.
-변경된 파일: components/CalendarView.module.css (+1줄 추가/1줄 교체)
-비고: 신규 색 0·CSS brace 63/63 균형·tsx 무변경. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 캘린더 셀 게임명이 어절 단위로 자연스럽게 2줄 클램프되는지·라틴 단어 중간 절단 해소·가로 오버플로 0 실측 부탁.

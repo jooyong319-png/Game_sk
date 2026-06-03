@@ -158,6 +158,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-04 05:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '메인 통계줄 카테고리 4색 인라인 카운트 분해'(개발자 04:23 d9c549f) QA 04:49 라이브 ✅(캘린더 뷰 4칩 색·0.9rem/500·가운뎃점 스펙 일치·리스트 27 신서버 0 미렌더 가드·390 iframe 오버플로 0·콘솔 0) → 종결 확인(번호큐는 개발자 04:23 기정리). 기존 큐 1~4(related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill·.game-detail 모바일 블록) **순서 그대로 유지**. 신규 **5순위**: 디자이너 05:07 데스크#1 '[높음] day-detail 패널 행 D-day amber 한 톤 → 전역 3단 규약(D-DAY 주황/임박 amber/그 외 #888) 통일'(IDEAS→큐 승격 — 진입 시 오늘 셀 자동선택으로 **패널이 첫 화면 기본 노출 표면**·1순위 related-dday와 같은 색 규약이라 묶음 구현 후보·tsx 1줄+CSS 1규칙·신규 색 0). 디자이너 05:07 잔여 3건(dayPanel 모바일 3규칙·BackToTop 다크 글래스 플로팅·푸터 브랜드 그라데 hairline) → IDEAS 보관(외형 모드·다음 큐 후보). 활성 사용자 요청 0(SEO 보류 — 안 건드림). 신규 BUGS 0(QA 04:49 신규 0). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만). 개발자 :20 1순위(related-dday) 착수 권장.
+
 > 갱신 2026-06-04 04:23 (개발자): **큐 5→4.** 직전 1순위 '[외형·카테고리 시각차별화·보통] 메인 통계줄 "총 N개" 단일 회색 → 카테고리 4색 인라인 카운트 분해' 구현 완료(`Home.tsx` categoryCounts useMemo+stats 노드 4색 span 재작성, `Home.module.css` .stats 0.9rem/500 상향+가운뎃점 구분자+.statsTotal 회색) → 완료한 기능 이동. 기존 2~5순위(related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill·game-detail 모바일 블록) 한 칸씩 당겨 1~4순위. 로컬 빌드 sandbox 제한 → Vercel 위임. QA 라이브 검증 대기.
 
 > 갱신 2026-06-04 04:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개'(개발자 03:28 c2d7535) QA 03:47 라이브 ✅(데스크 27카드 전부 칩 렌더·칩 총 48·카드당 최대 3 가드·스펙 #9aa3b2/11.2px/radius 999px 일치·390 iframe 가로 오버플로 0) → 종결 확인. 기존 큐 1~4(통계줄 4색 분해·related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill) 순서 유지. 신규 5순위: 디자이너 01:05 모바일#1 '`.game-detail` 모바일 @media(≤480px) 오버라이드 신설'(IDEAS→승격 — 2·4순위와 같은 상세 표면 묶음 후보·CSS-only·신규 색 0). 활성 사용자 요청 0(SEO 보류 유지)·신규 BUGS 0·3사이클 정체 0·a11y 0건(IDEAS 보관만).
@@ -223,6 +225,12 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck`/`build` 무에러, 390px 상세 본문폭 확보·제목 1.5rem 축소·데스크톱(>480px) 무영향·가로 오버플로 0·CSS brace 균형 확인.
 
 
+5. **[외형·D-DAY 강조·높음] 캘린더 day-detail 패널 행 D-day가 D-DAY(오늘)·D-1~7 전부 amber 한 톤 → 전역 3단 규약(D-DAY 주황 #ff7a59 / 임박 amber #f5a623 / 그 외 #888)으로 통일** (디자이너 06-04 05:07 데스크#1, IDEAS→큐 승격 05:11, `components/CalendarView.tsx` L232 D-day span 분기 + `components/CalendarView.module.css` `.dayRowDdaySoon` L253 인근)
+   - 문제: tsx가 `diff <= 7 && diff >= 0 ? styles.dayRowDdaySoon : ''` 단일 분기 → `.dayRowDdaySoon{color:#f5a623}`이 D-0~D-7 전부 커버. 라이브 패널 실측서 '미르의 전설: 진 D-DAY'·'메이크 드라마 D-DAY'가 'D-1 고딕'과 같은 amber — 같은 화면 HeroStrip 글로우카드 D-DAY(#ff7a59 주황)·리스트 카드 리본과 색 규약 불일치. 진입 시 오늘 셀 자동선택(06-04 01:30 출고)으로 **패널이 첫 화면 기본 노출 표면**이라 더 도드라짐.
+   - 구현(큰 단위 한 번에): tsx 분기를 `diff === 0 ? styles.dayRowDdayToday : diff > 0 && diff <= 7 ? styles.dayRowDdaySoon : ''`로 교체(1줄) + CSS `.dayRowDdayToday{ color:#ff7a59; font-weight:700 }` 1규칙 신설(기존 D-DAY 주황 재사용·**신규 색 0**). 1순위 related-dday(상세 표면)와 **같은 색 규약·다른 표면** — 개발자 판단으로 1순위와 묶음 구현 가능(둘 다 D-day 3단 규약 통일).
+   - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 진입 직후 패널에서 D-DAY 행 주황 700·D-1~7 amber·그 외 #888 3단 분리·HeroStrip/리스트/상세 배지와 색 정합·데스크/모바일 무회귀·CSS brace 균형 확인.
+
+
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
 > 2026-06-04 02:10 갱신: 헤더 듀얼 radial은 큐 5순위로 재승격(사용자 요청 2건 모두 종결로 큐 여유 복원). 핫카드+카운트다운만 잔존 — 외형 모드 유지·다음 큐 우선 후보. 전체 스펙 보존:
 
@@ -234,8 +242,6 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 [보통] 디자이너 21:06 데스크#2 HeroStrip 섹션 타이틀 '🔥 출시 임박' warm 좌띠 강화(`.title` 1.3rem+border-left 3px warm), [보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션. — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
 
-- [디자이너 2026-06-04 05:07 데스크#1·외형모드] **[높음·D-DAY 강조] day-detail 패널 행 D-day amber 한 톤 → 전역 3단 규약(D-DAY 주황 #ff7a59/임박 amber/그 외 #888) 통일** (`CalendarView.tsx` L232 분기 `diff===0 ? dayRowDdayToday : ...` 1줄 + `CalendarView.module.css` `.dayRowDdayToday{color:#ff7a59;font-weight:700}` 1규칙) — 진입 시 오늘 셀 자동선택으로 패널이 첫 화면 기본 노출 표면. 큐 related-dday(상세)와 같은 규약·다른 표면 — 묶음 구현 후보. 신규 색 0
-- [디자이너 2026-06-04 05:07 모바일#1·외형모드] **[보통·모바일] CalendarView `@media(≤480px)` 블록에 `.dayPanel{padding:0.7rem}`·`.dayRow{gap:0.45rem;padding:0.45rem 0.55rem}`·`.dayRowDate{min-width:3em;font-size:0.72rem}` 3규칙 추가** — 모바일은 셀 게임명 숨김이라 패널이 1차 콘텐츠 표면인데 행 콘텐츠 285px(iframe 390 실측)·게임명 2줄 랩. CSS-only·신규 색 0
 
 ## 알려진 버그 (BUGS)
 - [2026-06-03 05:47·QA] ✅ **해소 확정 — 하이드레이션 #418×3·#423×1·#425×3=7건 라이브 0건** (개발자 05:31 kstDateOnly fix). gcalen.com Chrome 실측: 캐시버스트 2회·**KST 05:47(개발자가 지목한 00~09시 빌드 위험구간)** 재로드 후 콘솔 React #418/#423/#425 **0건**, adsbygoogle 'no_div' ERROR도 미관측. 소스 확인: lib/utils.ts kstDateOnly 신설·Home.tsx 4곳 적용. 이전 04:47/03:48 '7건 잔존' 항목은 본 항목으로 해소.
@@ -251,6 +257,9 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
+- [디자이너 2026-06-04 05:07·모바일#1·외형모드 / 기획자 보관] **[보통·모바일·패널 밀도] CalendarView `@media(≤480px)` 블록(L257)에 `.dayPanel{padding:0.7rem}`·`.dayRow{gap:0.45rem;padding:0.45rem 0.55rem}`·`.dayRowDate{min-width:3em;font-size:0.72rem}` 3규칙 추가** — 모바일은 셀 게임명 숨김(`.cellName{display:none}`)이라 패널이 사실상 모바일 1차 콘텐츠 표면인데 행 콘텐츠 285px(iframe 390 실측)·게임명 2줄 랩. 행 폭 ~+20px 회수·세로 리듬 타이트·데스크 무영향·CSS-only·신규 색 0. 큐 5순위(패널 D-day 색)와 같은 표면 — 묶음 후보. 우선순위 보통
+- [디자이너 2026-06-04 05:07·인벤#1·외형모드 / 기획자 보관] **[보통·플로팅 유틸] 우하단 '맨 위로' 다크 글래스 원형 BackToTop 버튼 신설** (신규 `components/BackToTop.tsx`+`BackToTop.module.css`, `app/layout.tsx` body 말미 1줄) — 인벤은 플로팅 '맨 위로' 상시 제공·우린 캘린더+패널 20행+광고로 세로 긴데 상단 복귀 수단 0. client 컴포넌트 `scrollY>600`에서만 표시(scroll 리스너+state·mount 후 가드로 하이드레이션 안전), 클릭 시 `scrollTo({top:0,behavior:'smooth'})`. 42px 원형 `rgba(26,29,36,0.85)`+`backdrop-filter:blur(8px)`+`var(--border)`·hover accent·`opacity` 전환·reduced-motion 처리(transition none·behavior auto). 아이콘 기존 SVG 스프라이트 재사용. 신규 색 0. 우선순위 보통
+- [디자이너 2026-06-04 05:07·데스크#2·외형모드 / 기획자 보관] **[보통·푸터 마감] `.site-footer` 회색 2줄+직선 `border-top` → 브랜드 블루→퍼플 그라데 hairline 마감** (`app/globals.css` `.site-footer` L70~77) — 헤더는 그라데 타이틀·라디얼 글로우로 브랜딩됐는데 푸터는 무브랜드 평면(수미 불일치). border-top 제거 → `.site-footer{position:relative}`+`::before{width:min(640px,90%);height:1px;background:linear-gradient(90deg,transparent,rgba(91,157,255,0.4),rgba(201,138,214,0.4),transparent)}` 중앙 배치. 헤더 h1 그라데와 수미쌍관·CSS-only·높이 무변·신규 색 0. 우선순위 보통
 - [디자이너 2026-06-04 01:05·데스크#2·외형모드 / 기획자 IDEAS] **[보통·상세 깊이] /game/[id] '같은 시기 출시' `.related-card` 평면 면 → 좌측 카테고리색 wash** (`app/globals.css` `.related-card` + `page.tsx` 인라인 style) — 카드 인라인 `--cat` 주입 후 `background:linear-gradient(90deg,color-mix(in srgb,var(--cat) 12%,var(--bg-elev)),var(--bg-elev) 42%)`(color-mix 미지원 폴백 `var(--bg-elev)` 선행)+`.related-card:hover{border-color:var(--cat)}`. 좌 4px 바와 면 tint 정합·본문 라디얼 백드롭과 톤 연결. 카테고리 4색 단일 출처·신규 색 0. 우선순위 보통
 - [디자이너 2026-06-04 01:05·모바일#1·외형모드 / 기획자 04:11 → **큐 5순위 승격**] **[보통·모바일·상세] `app/globals.css` `@media(max-width:480px)` 블록(현재 헤더만)이 `.game-detail` 미보유 → 상세 모바일 오버라이드 0(유일 미보유 표면)** — L66 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`(좌우 1.8→1.1rem)·`.game-detail h2{font-size:1.5rem}`(2→1.5rem) 추가. SEO 유입 첫 화면 상세 본문폭 확보·제목 비례. 데스크 무영향·레이아웃만·신규 색 0. 우선순위 보통
 - [디자이너 2026-06-04 01:05·인벤#1·외형모드 / 기획자 03:11 큐 5순위 승격(중복 등재분·종결)] **[보통·상세 액션] /game/[id] 상세 하단 액션(`.gcal-link` '캘린더 추가'·'공식 출처 →')이 CSS 규칙 0의 평문 링크 → 다크 미니멀 outline pill 버튼화** (`page.tsx` 액션 div L119~124 + `app/globals.css` 신규 `.detail-actions`/pill) — 래퍼 `className="detail-actions"`(인라인 style 제거)+'공식 출처' `.detail-link`, globals `.detail-actions{display:flex;gap:0.6rem;margin-top:1.2rem;flex-wrap:wrap}`+pill(`display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.95rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.03);color:var(--accent);font-size:0.88rem;font-weight:600`)+hover(`border-color:var(--accent);background:rgba(91,157,255,0.1)`). 평문→버튼 묶음·클릭 타깃↑(인벤 액션 버튼 다크 흡수). 신규 색 0. 우선순위 보통
