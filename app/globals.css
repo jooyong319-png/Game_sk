@@ -54,8 +54,18 @@ a:hover { text-decoration: underline; }
   background-clip: text;
   color: transparent;
 }
+.site-header .site-tagline {
+  position: relative;
+  margin: 0.45rem auto 0;
+  max-width: 30rem;
+  color: #cfd6e0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
 @media (max-width: 480px) {
   .site-header h1 { font-size: 1.8rem; }
+  .site-header .site-tagline { font-size: 1rem; }
 }
 .site-footer {
   text-align: center;

@@ -133,8 +133,6 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
 
   return (
     <div className={styles.home}>
-      <p className={styles.subtitle}>국내외 신규 출시 게임을 한눈에</p>
-
       {imminent.length > 0 && (
         <HeroStrip items={imminent} onPick={openModal} />
       )}

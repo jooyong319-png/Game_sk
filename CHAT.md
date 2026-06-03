@@ -1,3 +1,7 @@
+## [2026-06-03 23:20] [개발자]
+완료: 큐 1순위 '[외형·헤더·높음] 인트로 카피 태그라인 헤더 통합 + .subtitle 위계 강화' 구현. 태그라인을 Home 본문(광고~임박 스트립 사이 회색 #888 고아 한 줄)에서 떼어 `.site-header` h1 바로 아래로 이동 → 타이틀+태그라인 한 덩어리, 히어로 밴드 radial glow 배경 공유. 톤업(#cfd6e0·1.1rem·500·letter-spacing -0.01em), 모바일 ≤480px 1rem 비례 축소.
+변경된 파일: app/layout.tsx(+1 `<p.site-tagline>` 삽입)·app/globals.css(+10 `.site-header .site-tagline`+@media480)·components/Home.tsx(−2 subtitle p 제거)·components/Home.module.css(−6 미사용 .subtitle 규칙 제거).
+비고: 디자이너 임팩트안(헤더 통합) 채택. 신규 색 0(#cfd6e0 기존 톤 계열). globals brace 71/71·Home.module 3/3·잔존 subtitle 참조 0건. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 4→3. QA님 라이브 데스크/모바일 태그라인 헤더 통합 위계·가로 오버플로 0 실측 부탁.
 ## [2026-06-03 22:00] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료: 1순위 '[외형·상세] /game/[id] 상세 `.detail-meta` 스펙시트화' 개발자 21:20·QA 21:47 라이브 ✅(li 4행 hairline·라벨 대문자 고정폭 muted·값 밝게·콜론 제거·가로 오버플로 0·콘솔 #418/#423/#425 0건)로 종결 → 완료한 기능 이동(개발자 5→4 반영 확인).
@@ -179,9 +183,3 @@ TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 ListView 카드에서 `diff<0`(과거 출시) 게임에 `released` 플래그 → `<li>`에 `.released` 부여(opacity 0.62·배너 saturate 0.55·hover 시 opacity 1 복원), D-day 배지를 '출시됨'일 때 회색 미니칩 `.releasedTag`로 분기. 미래·임박 카드는 또렷 유지 → 다가오는 신작이 먼저 눈에.
 변경된 파일: components/ListView.tsx (+4/−3), components/ListView.module.css (+12). strict 유지(any 0)·신규 색 0·CSS brace 37/37.
 비고: 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 1순위 완료 → 기획자님 2~5를 1~4로 당겨주세요. QA님: 라이브 데스크 '전체' 기간 리스트 과거카드 흐림·hover 복원 실측 부탁.
-## [2026-06-03 07:11] [기획자]
-TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
-완료: 1순위 'GameModal @media(≤480px) 모바일 블록' — 개발자 06:20 GameModal.module.css 6클래스(overlay/modal/title/image/imageEmoji/actions) 모바일 비례 신설·QA 06:46 라이브 CSS 번들 실측 ✅·신규 BUGS 0 → 큐 5→4.
-추가: - [외형·D-DAY강조·높음·회귀] /game/[id] 상세 D-DAY 배지 + 카테고리 상단바 (디자이너 06-02 16:50, IDEAS→5순위 승격) → 4→5 복구. 4순위 '같은 시기 출시 그리드'와 동일 /game/[id] 표면 묶음.
-큐 1~5: ①리스트 과거카드 약화 ②캘린더 면 강화 ③임박 스트립 글로우(데스크) ④/game/[id] 같은시기 그리드 ⑤/game/[id] D-DAY 배지+카테고리 상단바.
-사용자 요청 활성 0(SEO 보류 — 안 건드림). 신규 디자이너 제안 0(05:05 이후 없음). QA 신규 BUGS 0. 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드).

@@ -57,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </svg>
         <header className="site-header">
           <h1><a href="/"><svg className="ic ic-gamepad" aria-hidden="true"><use href="#ic-gamepad" /></svg> 게임 출시 캘린더</a></h1>
+          <p className="site-tagline">국내외 신규 출시 게임을 한눈에</p>
         </header>
         <main id="main">{children}</main>
         <footer className="site-footer">
