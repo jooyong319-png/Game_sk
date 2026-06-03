@@ -1,3 +1,7 @@
+## [2026-06-03 23:28] [개발자]
+완료: 큐 1순위 '[외형·모바일·높음] MonthTabs 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap' 구현. 12개 월탭이 모바일 가로 스크롤이나 스크롤 신호 0이라 잘린 9~12월 미발견이던 어포던스 부재 해소. 기존 `@media(≤480px)` 블록에 `.tabs` mask-image 양끝 16px 페이드('더 있음' 신호)+`scroll-snap-type:x proximity`, `.tab`에 `scroll-snap-align:center` 추가.
+변경된 파일: components/MonthTabs.module.css(+5, `.tabs` 블록 +4·`.tab` snap +1)
+비고: CSS-only(tsx 무변경, `.tabs`/`.tab` className은 MonthTabs.tsx L14·L19 사용 중 확인). 데스크톱 무영향(미디어쿼리 밖)·mask 미지원 폴백 현행 스크롤. 신규 색 0·brace 7/7. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 5→4. QA님 라이브 모바일 ≤480px 월탭 양끝 페이드·중앙 스냅·9~12월 발견성·데스크톱 무영향·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
 ## [2026-06-03 23:55] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위) + 중복 1건 제거
 완료: 1순위 '[외형·헤더] 인트로 태그라인 헤더 통합' 개발자 23:20·QA 23:40 라이브 ✅ → 완료한 기능 이동
@@ -179,10 +183,3 @@ HeroStrip 카드가 D-day 숫자색만 달라 D-1과 D-7 임팩트가 동일하�
 모바일(≤480px)은 컴팩트 행 유지 위해 `.glowCat,.glowDday` box-shadow/transform 리셋(무영향), `prefers-reduced-motion`서 scale 생략. color-mix 폴백 선행.
 변경된 파일: components/HeroStrip.tsx (+2), components/HeroStrip.module.css (+30). 신규 색 0(카테고리 4색·#ff7a59 재사용)·strict 유지(any 0)·esbuild OK·CSS brace 33/33.
 비고: 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 1순위 완료 → 기획자님 2~4를 1~3로 당겨주세요. QA님: 라이브 데스크 임박 스트립 D-1~D-3 카테고리색 글로우·D-DAY 주황 글로우+pop·모바일 무영향 실측 부탁.
-## [2026-06-03 08:12] [기획자]
-TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
-완료: 1순위 '리스트 과거카드 약화' — 개발자 07:20·QA 07:46 라이브 ✅·신규 BUGS 0 → 큐 5→4.
-정리: ①직전 5순위 '/game/[id] D-DAY 배지+카테고리 상단바'는 **이미 06-02 11:20 출고됨**(page.tsx L78·L88, globals.css L101~104) → 중복 큐잉이라 제거·IDEAS 종결. ②직전 2순위 '캘린더 면 강화'도 셀 톤업·출시셀 카테고리 악센트 이미 출고 → 남은 '컨테이너 패널 카드화'로 스코프 축소.
-추가: - [외형·상세] /game/[id] 카테고리색 라디얼 백드롭 (IDEAS→4순위), - [외형·리스트] 카드 배너 카테고리 세로 그라데 + D-DAY 좌상단 리본 (IDEAS→5순위) → 큐 4→5 복구.
-큐 1~5: ①임박 스트립 글로우(데스크톱) ②캘린더 컨테이너 패널 카드화 ③/game/[id] 같은시기 그리드 ④/game/[id] 라디얼 백드롭 ⑤리스트 배너 그라데+리본.
-사용자 요청 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드).
