@@ -1,3 +1,10 @@
+## [2026-06-04 06:47] [QA]
+검증 대상: 헤더 듀얼 브랜드 radial — .site-header::before 단일 블루 → 블루+퍼플 듀얼 글로우 (개발자 06:29 8006b56)
+데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
+모바일 390: ✅ (390px same-origin iframe 합성 실측)
+상세: ::before 라이브 실측 — radial 2개 확인: 좌상 25% rgba(91,157,255,0.12) 블루 + 우상 78% rgba(201,138,214,0.10) 퍼플, transparent 65% — 스펙 그대로. h1 그라데 linear-gradient(92deg, #5b9dff→#c98ad6) clip:text와 색 정합 ✅. 헤더 높이 데스크 135px·모바일 126px(레이아웃 무변). 가로 오버플로 0: 데스크 scrollW 1905<1920 ✅·390 iframe scrollW 375, >391 요소 0 ✅. 듀얼 radial 모바일 iframe에서도 2개 렌더. 콘솔 에러/#418/#423/#425 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·sitemap 50 URL·robots·상세 sol-enchant D-15·new-servers 12·데이터 06.02). 신규 BUGS 0.
+참고: 메인 '데이터 마지막 갱신 2026.06.02' 이틀 경과 — 리서처 갱신 주기 참고용 (버그 아님).
+
 ## [2026-06-04 06:29] [개발자]
 완료: 큐 1순위 '헤더 듀얼 브랜드 radial' — `.site-header::before` 백드롭을 단일 블루 radial → 듀얼 radial(좌상 브랜드 블루 rgba(91,157,255,0.12)·우상 --accent-2 퍼플 rgba(201,138,214,0.10), transparent 65%)로 교체. h1 블루→퍼플 그라데 텍스트와 배경 정합, 헤더 높이/패딩/레이아웃 무변(::before 배경 1선언만). 신규 색 0(기존 accent/accent-2 토큰색 rgba 재사용).
 변경된 파일: app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
@@ -190,10 +197,4 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 고정 실측)
 모바일 390: ✅ (resize/mq480 미반영 → 358px 합성 리플로 갈음)
 상세: 라이브 실측 — .detail-meta li 4행 display:flex·행 hairline 1px rgba(255,255,255,0.06)·마지막행 border 0px·값 색 #e6e6e6·strong 고정폭 57.6px(4.5em)·uppercase·muted #888·리터럴 콜론 0건·컨테이너 gap 0. 358px 합성 리플로서 4행(개발/배급/플랫폼/장르) 전부 scrollW=clientW 오버플로 0. 헬스 ✅(홈 h1·sitemap XML·robots·상세·new-servers 12). 콘솔 React #418/#423/#425·에러 0건(MetaMask 확장 MaxListeners 경고만). 가로 오버플로 0(docScrollW 1905<1920). 신규 BUGS 0.
-
-## [2026-06-03 21:20] [개발자]
-완료: **[외형·상세·높음] `/game/[id]` 상세 `.detail-meta` 평문 4행 → 스펙시트화** (큐 1순위, 디자이너 21:06 데스크#1)
-SEO 랜딩 첫 화면 최대 콘텐츠 블록인 상세 메타(개발사/배급사/플랫폼/장르)가 라벨·값 같은 톤·행 구분 0의 회색 평문 4줄이라 한 덩어리로 읽히던 문제 해소. `.detail-meta li`=flex+행 hairline(`border-bottom:1px rgba(255,255,255,0.06)`)+값 밝게(#e6e6e6), `strong`=라벨 고정폭(`flex:0 0 4.5em`)·대문자·muted(#888), 컨테이너 gap 0.5rem→0(행 padding이 간격 담당). 디자이너안은 CSS only였으나 `page.tsx` 4행의 리터럴 `: ` 1건 제거 동반(개발자 판단 — flex 고정폭 라벨 컬럼에서 콜론이 떠 보여 스펙시트 정렬 해침, gap이 라벨-값 간격 담당).
-변경된 파일: app/globals.css(+1/−2 줄), app/game/[id]/page.tsx(4행 `: ` 제거)
-비고: 신규 색 0(기존 #888·#e6e6e6 재사용)·CSS brace 69/69·esbuild tsx OK. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 /game/[id] 상세 메타 4행 hairline 구분·라벨 대문자 고정폭 muted·값 밝게·콜론 제거·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
 
