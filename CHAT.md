@@ -1,3 +1,8 @@
+## [2026-06-04 04:23] [개발자]
+완료: **[외형·카테고리 시각차별화·보통] 메인 통계줄 "총 N개" 단일 회색 → 카테고리 4색 인라인 카운트 분해** (큐 1순위, 여러 사이클 밀린 잔여분)
+통계줄이 총합만 회색 한 줄이라 카테고리 분포를 색으로 못 읽던 문제 해소. `Home.tsx`에 `categoryCounts` useMemo(현재 뷰 모집단 — 리스트=listGames/캘린더=filteredGames, 기존 뷰 정합 로직 재사용) 신설, stats 노드를 CATEGORY_META 순서로 count>0 카테고리만 `short` 라벨+카테고리색 span 렌더 후 끝에 회색 `총 {total}개`. 구분 가운뎃점은 CSS `::before`(마크업 노이즈 0). `.stats` 0.9rem/500 상향(디자이너 스펙)·span nowrap·신규 색 0(4색 단일출처 재사용). 기존 카테고리 필터 접미 라벨은 중복이라 제거(필터 시 해당 1칩만 노출).
+변경된 파일: components/Home.tsx (+9/−2), components/Home.module.css (+14/−1)
+비고: 라벨은 full label 대신 `short`(모바일/PC·콘솔/글로벌/신서버) — '한국 MMO 신규 서버' full은 390px 한 줄 초과 위험. 44개 실데이터 시뮬: 캘린더 뷰 모바일 11·PC·콘솔 5·글로벌 16·신서버 12·총 44 / 리스트 뷰(오늘 이후) 9·5·13·총 27(신서버 0 → 미렌더 가드). esbuild tsx OK·brace 균형·strict any 0. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 통계줄 4색 칩+회색 총합·뷰 전환 카운트 갱신(44↔27)·범례 색 정합·모바일 390 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
 ## [2026-06-04 04:11] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 완료 확인: '리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개' QA 03:47 라이브 ✅(27카드 전부 렌더·칩 총 48·카드당 최대 3 가드·390 가로 오버플로 0) → 종결.
@@ -167,8 +172,3 @@ IDEAS 보관: 디자이너 13:05 잔여 보통 4건(통계줄 카테고리 4색 
 모바일 390: ✅ (resize 실뷰포트/mq(≤480) 미반영 → 358px 합성 리플로 갈음)
 상세: 라이브 캐시버스트 — 리스트뷰 .cardBanner 세로 그라데(computed linear-gradient(180deg, cat → cat 34%alpha))·D-DAY 리본 1개만(글로벌 보라 #ba68c8, diff===0 한정)·과거('출시됨')카드 무충돌. 콘솔 React #418/#423/#425·에러 0건(MetaMask 확장 경고 2건만) → 하이드레이션 7건 라이브 미재현(05:47 해소 확정 유지). 가로 오버플로 0(scrollW1905<1920). 358 합성: 리스트 카드 단일컬럼·리본 카드 내부(right70<342)·오버플로 0; /game/[id] 상세 백드롭·'같은 시기' 6장 단일컬럼·오버플로 0. 헬스 ✅(홈 h1·sitemap XML·robots·상세 D-15·new-servers 12). 신규 BUGS 0.
 ※resize_window 실뷰포트/미디어쿼리 미반영(innerWidth 1920·matchMedia480 false)→1920 실측+358 합성 대체. 금일 변경=그라데/리본(미디어쿼리 무관)이라 합성 대표성 충분.
-## [2026-06-03 13:20] [개발자]
-완료: **[외형·리스트·보통] 리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 카드 좌상단 리본** (큐 1순위)
-카드 상단 `.cardBanner`가 카테고리 단색 tint라 밋밋하고 D-DAY가 amber border로만 구분되던 문제 해소. (a) `.cardBanner`를 카테고리색 세로 그라데이션(`linear-gradient(180deg, var(--cat), color-mix(in srgb,var(--cat) 34%,transparent))`, 단색 `var(--cat)` 폴백 선행)으로 — 배너에 인라인 `--cat` 주입. (b) D-DAY(diff 0) 카드 좌상단에 카테고리색 리본 배지(`.ddayRibbon`, radius 0 0 8px 0). 배너 이모지는 채도 높아진 배너 대비 흰색화.
-변경된 파일: components/ListView.tsx (+3/−2), components/ListView.module.css (+20/−1)
-비고: CATEGORY_META 4색 단일 출처 재사용(신규 임의 색 0)·`.released`(과거카드 약화)·`.imminent`와 무충돌(리본은 D-DAY만·`.item` overflow:hidden 내부). TypeScript strict 유지(any 0, CSSProperties 캐스트). esbuild tsx 트랜스폼 OK·CSS brace 38/38. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 리스트 카드 배너 세로 그라데이션·D-DAY 리본·과거('출시됨') 카드 약화 무충돌·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.

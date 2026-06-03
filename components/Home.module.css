@@ -5,9 +5,23 @@
 }
 .stats {
   color: #aaa;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   margin: 0.8rem 0;
   text-align: center;
+}
+.statsCat,
+.statsTotal {
+  white-space: nowrap;
+}
+.stats > span + span::before {
+  content: '·';
+  color: #666;
+  font-weight: 400;
+  margin: 0 0.5rem;
+}
+.statsTotal {
+  color: #aaa;
 }
 .lastUpdated {
   text-align: center;

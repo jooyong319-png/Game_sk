@@ -128,6 +128,14 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
     return filteredGames.filter(g => new Date(g.release_date) >= today);
   }, [filteredGames, filters.days, now]);
 
+  // 통계줄 카테고리 4색 분해용: 현재 뷰(리스트/캘린더)와 동일 모집단으로 카운트 (큐 1순위, 디자이너 데스크#2)
+  const visibleGames = view === 'list' ? listGames : filteredGames;
+  const categoryCounts = useMemo(() => {
+    const counts: Partial<Record<Category, number>> = {};
+    for (const g of visibleGames) counts[g.category] = (counts[g.category] ?? 0) + 1;
+    return counts;
+  }, [visibleGames]);
+
   const imminent = useMemo(() => {
     const today = new Date(now);
     today.setHours(0, 0, 0, 0);
@@ -168,8 +176,14 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
       />
 
       <p className={styles.stats}>
-        총 {view === 'list' ? listGames.length : filteredGames.length}개
-        {filters.category && ` · ${CATEGORY_META[filters.category].label}`}
+        {(Object.keys(CATEGORY_META) as Category[])
+          .filter(c => (categoryCounts[c] ?? 0) > 0)
+          .map(c => (
+            <span key={c} className={styles.statsCat} style={{ color: CATEGORY_META[c].color }}>
+              {CATEGORY_META[c].short} {categoryCounts[c]}
+            </span>
+          ))}
+        <span className={styles.statsTotal}>총 {visibleGames.length}개</span>
       </p>
 
       {view === 'calendar' ? (
