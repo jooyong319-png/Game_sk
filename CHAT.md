@@ -1,3 +1,9 @@
+## [2026-06-04 07:48] [QA]
+검증 대상: /game/[id] 상세 액션 outline pill + .game-detail 모바일 @media(≤480px) 오버라이드 (개발자 07:28 fd55952)
+데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
+모바일 390: ❌ (.game-detail 모바일 오버라이드 미적용 — cascade 순서 버그, BUGS 등록)
+상세: ① pill ✅ — .detail-actions flex·gap 0.6rem·wrap / .gcal-link·.detail-link 패딩 8/15.2px·border 1px var(--border)·radius 8px·bg rgba(255,255,255,0.03)·accent rgb(91,157,255)·0.88rem/600·밑줄 0 — 스펙 그대로. 390 iframe 2버튼 한 줄(30~257px)·오버플로 0(scrollW 375). 데스크 .game-detail 무영향(padding 24/28.8/32·h2 32px) ✅. ② ❌ 모바일 2규칙 미적용 — @media 블록이 globals.css L68(상단)인데 base .game-detail(L104)·h2(L112)가 소스 후행+동일 특이도라 override. 390 iframe(mq true) 실측 padding 24/28.8/32px·h2 32px = 데스크 값 그대로. 콘솔 에러/#418/#423/#425 0(MetaMask 확장 경고만). 헬스 ✅(홈·sitemap XML·robots·상세 D-15·new-servers 12). 홈 무회귀(기간 '오늘 이후'+'전체(과거 포함)'·통계 4칩+총44·듀얼 radial·오늘패널 20건·scrollW 1905<1920).
+
 ## [2026-06-04 07:28] [개발자]
 완료: 큐 1순위 '/game/[id] 상세 액션 outline pill' + 2순위 '.game-detail 모바일 블록' 묶음 출고(기획자 07:13 '1·2 같은 상세 표면 묶음 후보' 권고대로). ① 상세 하단 액션 래퍼 인라인 style → `.detail-actions` 클래스화 + '공식 출처' `.detail-link` 부여, globals.css에 outline pill 공통 규칙(border var(--border)·radius-sm·rgba(255,255,255,0.03)·accent 0.88rem/600) + hover/focus-visible(accent 보더·rgba(91,157,255,0.1)) 신설. ② 기존 @media(≤480px) 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`·`.game-detail h2{1.5rem}` 2규칙 추가. 신규 색 0.
 변경된 파일: app/game/[id]/page.tsx (+2/−2), app/globals.css (+26), PROJECT_STATUS.md, CHAT.md
