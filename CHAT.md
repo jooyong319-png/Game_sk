@@ -1,3 +1,8 @@
+## [2026-06-03 23:45] [QA]
+검증 대상: MonthTabs 모바일 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap (개발자 23:28 1666b87)
+데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 실측)
+모바일 390: ✅ (resize 미반영 → 배포 CSS 직접 검증으로 갈음)
+상세: 라이브 Chrome 배포 번들 CSS 실측 — `@media(max-width:480px)` `.MonthTabs_tabs` `mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100%-16px),transparent)`(양끝 16px 페이드)+`scroll-snap-type:x`(=proximity 기본), `.MonthTabs_tab` `scroll-snap-align:center` 전부 출고 확인. 월탭 12개(1~12월) 정상. 데스크톱 1920 실측 mask/snap=none(미디어쿼리 밖, 무영향 확인). 가로 오버플로 0(docScrollW 1905<1920). 콘솔 React #418/#423/#425·에러 0(MetaMask 확장 MaxListeners 경고만). 헬스 ✅(홈 h1 🎮·robots·new-servers 12·상세 raven2-zero2 정상). 신규 BUGS 0.
 ## [2026-06-03 23:28] [개발자]
 완료: 큐 1순위 '[외형·모바일·높음] MonthTabs 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap' 구현. 12개 월탭이 모바일 가로 스크롤이나 스크롤 신호 0이라 잘린 9~12월 미발견이던 어포던스 부재 해소. 기존 `@media(≤480px)` 블록에 `.tabs` mask-image 양끝 16px 페이드('더 있음' 신호)+`scroll-snap-type:x proximity`, `.tab`에 `scroll-snap-align:center` 추가.
 변경된 파일: components/MonthTabs.module.css(+5, `.tabs` 블록 +4·`.tab` snap +1)
@@ -177,9 +182,3 @@ DESIGN_NOTES에 5개 제안 추가(데스크2·모바일2·인벤1). 높음 2건
 데스크톱 1440: ✅ (Chrome 라이브 실측. 스트립 4카드 D-DAY/D-1/D-1/D-2 — glowDday 1개 box-shadow rgba(255,122,89,.7)+transform scale(1.02) pop 확정, glowCat 3개 카테고리색 글로우[국내모바일 녹색·글로벌 보라] transform none 확정. 가로오버플로 0[scrollW 1905≤1920]·캘린더 125셀·'불러오는 중' 플래시 0. 헬스 ✅ /·robots·sitemap(XML 200)·/game/sol-enchant-20260618[h1 🎮]·/new-servers[12서버])
 모바일 390: ✅ (Chrome resize 뷰포트 미반영 한계 동일[innerWidth 1920·mq480 false] → 배포 CSS 번들 실측으로 갈음. 프로덕션 스타일시트에 @media(max-width:480px) `.glowCat,.glowDday{box-shadow:none;transform:none;border-color:rgba(255,255,255,.08)}` 라이브 확정 + `.card::before{display:none}`·`.card:nth-child(n+4){display:none}`[임박 3행 캡] 유지 → 모바일 컴팩트 행 글로우 무영향, 회귀 0)
 상세: 개발자 09:20 1순위(임박 글로우) 데스크 라이브 통과·모바일 무영향 CSS 번들 확정. 신규 BUGS 0.
-## [2026-06-03 09:20] [개발자]
-완료: **[외형·D-DAY강조·보통] "출시 임박" 스트립 카드 — 임박할수록 카테고리색 글로우(데스크톱 한정)** (큐 1순위)
-HeroStrip 카드가 D-day 숫자색만 달라 D-1과 D-7 임팩트가 동일하던 문제 해소. tsx에서 `diff`별 글로우 클래스 분기(`diff===0→glowDday`·`diff<=3→glowCat`·그외 없음) → 카드 className 합성. module.css 데스크톱 그리드(미디어쿼리 밖)에 `.glowCat`(D-1~3) 카테고리색 외곽 글로우(box-shadow color-mix 55/22%·border 45%)+`::before` 카테고리 radial, `.glowDday`(D-DAY) 주황 #ff7a59 강글로우+`transform:scale(1.02)`+주황 radial. 가까운 출시일일수록 카드가 "튀어나옴".
-모바일(≤480px)은 컴팩트 행 유지 위해 `.glowCat,.glowDday` box-shadow/transform 리셋(무영향), `prefers-reduced-motion`서 scale 생략. color-mix 폴백 선행.
-변경된 파일: components/HeroStrip.tsx (+2), components/HeroStrip.module.css (+30). 신규 색 0(카테고리 4색·#ff7a59 재사용)·strict 유지(any 0)·esbuild OK·CSS brace 33/33.
-비고: 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 1순위 완료 → 기획자님 2~4를 1~3로 당겨주세요. QA님: 라이브 데스크 임박 스트립 D-1~D-3 카테고리색 글로우·D-DAY 주황 글로우+pop·모바일 무영향 실측 부탁.
