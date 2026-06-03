@@ -1,3 +1,10 @@
+## [2026-06-03 20:47] [QA]
+검증 대상: 캘린더 셀 게임명 word-break:break-all→keep-all + overflow-wrap:anywhere (개발자 20:27 c52efe0)
+데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 고정 실측)
+모바일 390: ✅ (resize 실뷰포트/mq480 미반영 → 360px 합성 리플로 갈음)
+상세: 라이브 실측 — .cellName computed word-break:keep-all·overflow-wrap:anywhere·line-clamp 2 적용 확인. 문제됐던 "파이널 판타지 7 리버스 (Switch 2)" 셀이 어절 단위 2줄 클램프(scrollW 149=clientW, 셀 내부 오버플로 0)로 라틴/괄호 글자단위 절단 해소. 가로 오버플로 0(docScrollW 1905<1920). 콘솔 React #418/#423/#425·에러 0건(MetaMask 확장 경고만 → 하이드 해소 유지). 360 합성: 캘린더 grid(296=296)·main 오버플로 0, /game/sol-enchant 상세 D-15·related 그리드 오버플로 0·콘솔 에러 0. 셀명은 ≤480서 display:none이라 금일 변경 모바일 무영향. 헬스 ✅(홈 h1·sitemap XML·robots·상세·new-servers 12). 신규 BUGS 0.
+※resize_window innerWidth/matchMedia 미반영(1920 고정·mq480 false) 환경 한계 → 1920 실측+360 합성 리플로 대체. 금일 변경=데스크톱 전용 셀명 타이포라 대표성 충분.
+
 ## [2026-06-03 20:27] [개발자]
 완료: **[외형·타이포·높음] 캘린더 셀 게임명 `word-break:break-all`→`keep-all` + `overflow-wrap:anywhere`** (큐 1순위)
 라이브 데스크 1440서 셀 게임명이 글자 단위로 절단("파이널 판타지 7 리버스 (Switch↵2)"·라틴/괄호 어색 절단)되던 결함 해소. `.cellName`의 `word-break:break-all`→`keep-all`(한글 어절 보존·공백에서만 줄바꿈)로 교체 + `overflow-wrap:anywhere`(공백 없는 초장문 영문 안전망) 추가. `-webkit-line-clamp:2`·말줄임 2줄 클램프 그대로 유지.
@@ -210,9 +217,3 @@ TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 IDEAS로 밀림: 리스트 배너 그라데+리본·범례 tint 칩(외형 보통, 다음 사이클 재승격 우선). 디자이너 05:05 보통 3건(상세 라디얼 백드롭·임박 행 좌띠·카테고리 필터 색칩) IDEAS 보관.
 사용자 요청 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0. a11y/리팩토링 제안 0건 큐잉(외형 모드).
 
-## [2026-06-03 05:05] [디자이너]
-외형 점검 완료 (데스크 1440 라이브 + 모바일 390 소스검증 + 인벤 비교). **Next 앱 정상 배포 라이브 확인**(vercel.json 출고 반영: h1 SVG 그라데 타이틀·임박 4카드·캘린더 주말색/today원형/카테고리 tint·상세 D-day배지+상단바 전부 라이브).
-데스크 주요: 기간 기본 '전체'라 리스트 최상단=과거 '출시됨' 카드가 신작과 동일 비중 → 과거 카드 시각 약화 제안.
-모바일 주요: GameModal만 유일하게 @media(≤480px) 블록 부재 → 모달 패딩/제목/이미지 모바일 블록 신설(Filters 선례 동형).
-인벤 참고: 필터가 아이콘 칩 row → 우리 카테고리 select를 카테고리색 칩 row로 재해석(월탭 톤).
-DESIGN_NOTES에 5개 제안 추가(데스크2/모바일2/인벤1). Chrome resize 모바일 뷰포트 미반영은 직전 사이클 동일 한계(소스 갈음).
