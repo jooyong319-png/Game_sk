@@ -1,3 +1,11 @@
+## [2026-06-03 23:55] [기획자]
+TODO 큐 4→5 (모드: 외형 집중, 큰 단위) + 중복 1건 제거
+완료: 1순위 '[외형·헤더] 인트로 태그라인 헤더 통합' 개발자 23:20·QA 23:40 라이브 ✅ → 완료한 기능 이동
+중복 제거: 직전 4순위 'HeroStrip 임박 카드 글로우' = repo 교차검증 결과 **이미 출고 완료**(glowDday/glowCat 분기·--cat 주입·color-mix 외곽 글로우·D-DAY #ff7a59 scale·@media≤480 리셋·reduced-motion 전부 존재, 디자이너 라이브 '4글로우카드' 확인) → 22:00 IDEAS→큐 재승격이 중복이었음. 큐 제거·IDEAS 종결.
+유지: 큐 1~3(MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 순서 그대로(1순위 MonthTabs 보호 — 신규는 4·5순위 말미만)
+추가: - ④[외형·카테고리 시각차별화] 통계줄 카테고리 4색 분해(Home.tsx 통계 노드+Home.module.css, 디자이너 13:05 데스크#2)
+      - ⑤[외형·헤더 임팩트] .site-header::before 듀얼 브랜드 radial(블루+퍼플, globals.css, 디자이너 13:05 데스크#3)
+사용자 요청 활성 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).
 ## [2026-06-03 23:40] [QA]
 검증 대상: 인트로 태그라인 헤더 통합 + .subtitle 위계 강화 (개발자 23:20 4d31340)
 데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 고정 실측)
@@ -178,8 +186,3 @@ TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
 추가: - [외형·상세] /game/[id] 카테고리색 라디얼 백드롭 (IDEAS→4순위), - [외형·리스트] 카드 배너 카테고리 세로 그라데 + D-DAY 좌상단 리본 (IDEAS→5순위) → 큐 4→5 복구.
 큐 1~5: ①임박 스트립 글로우(데스크톱) ②캘린더 컨테이너 패널 카드화 ③/game/[id] 같은시기 그리드 ④/game/[id] 라디얼 백드롭 ⑤리스트 배너 그라데+리본.
 사용자 요청 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드).
-## [2026-06-03 07:46] [QA]
-검증 대상: 리스트 과거('출시됨') 카드 시각 약화(개발자 07:20 — ListView diff<0 released 플래그·opacity 0.62·배너 saturate 0.55·hover 복원·회색 releasedTag)
-데스크톱 1440: ✅ (Chrome 라이브 실측 — 리스트뷰+기간'전체'서 released 카드 16개 전부 opacity 0.62·.cardBanner filter saturate(0.55)·D-day 회색칩 '출시됨' 확정, .released:hover{opacity:1} 규칙 라이브, 미래/임박 카드 opacity 1 또렷 유지. 헬스 ✅ /·robots·/game/sol-enchant-20260618·/new-servers(12서버)·h1 SVG·가로오버플로 0[scrollW 1905≤1920]·캘린더 125셀·임박 4카드·'불러오는 중' 없음. 콘솔 클린[사이트에러 0·하이드#418/#423/#425 0·no_div 0, MetaMask 확장 경고만])
-모바일 390: ✅ (Chrome resize 뷰포트 미반영 한계 동일[innerWidth 1920·mq480 false] → 변경분 갈음: 이번 변경은 opacity/saturate만(레이아웃·폭 무변경)이고 .released/.releasedTag 규칙이 @media 밖이라 전 뷰포트 동일 적용=모바일도 과거카드 약화·hover복원 동작. ListView 모바일 단일컬럼·Filters/GameModal 모바일 블록은 직전 사이클 라이브 확정분. 신규 모바일 회귀 위험 0)
-상세: 개발자 07:20 1순위 완료분 데스크 라이브 실측 통과. 신규 BUGS 0.
