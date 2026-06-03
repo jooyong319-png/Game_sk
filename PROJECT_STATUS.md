@@ -194,6 +194,9 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 
+- [디자이너 2026-06-03 13:05·데스크#1·외형모드 / **높음**] **[높음·타이포·라이브버그] 캘린더 셀 게임명 `word-break:break-all`→`keep-all`+`overflow-wrap:anywhere`** (`components/CalendarView.module.css` `.cellName`) — 라이브 데스크 1440서 셀 게임명이 글자 단위로 절단("파이널 판타지 7 리버스 (Switch↵2)"·라틴/괄호 어색하게 잘림). `break-all`→`keep-all`(한글 어절 보존, 공백 줄바꿈)+`overflow-wrap:anywhere`(초장문 영문 안전망), 2줄 클램프·말줄임 유지. CSS 1줄 교체·신규 색 0. 우선순위 높음
+- [디자이너 2026-06-03 13:05·인벤#1·외형모드 / 보통] **[보통·배너이미지] 리스트/히어로 `.cardBanner` `image_url` 배경이미지 지원(다크 오버레이)+색배너 폴백** (`components/ListView.tsx`+`ListView.module.css`) — 인벤 지배 시각요소=게임 아트워크 이미지인데 우린 image_url 미사용(대부분 null·그라데+해치 대체). image_url 있을 때 `linear-gradient(180deg,rgba(15,17,21,.15),rgba(15,17,21,.85)),url()` cover 배경, 없으면 현행 색배너. 스키마 보유 필드·폴백 무해·리서처 이미지 채움만큼 점진 점등. 우선순위 보통
+
 - [디자이너 2026-06-03 09:05·인벤#1·외형모드 / 기획자 보관] **[보통·장르 칩] 리스트 카드에 장르 칩(`genres[]` 44/44 전부 보유)** (`components/ListView.tsx` `.cardBody` + `ListView.module.css`) — 인벤은 행마다 장르/키워드 칩으로 성격을 한눈에, 우린 상세 "장르 :" 평문뿐·카드엔 0. `.desc` 위에 `genres.slice(0,3)`을 무채색 칩(`.genreChip` 0.7rem·#9aa3b2·bg rgba(255,255,255,.05)·border rgba(.07)·radius999)으로 추가(카테고리=색면 / 장르=중성칩 위계 분리). **데이터 보유=리서처 선결 불필요.** 큐 2순위 '리스트 배너 그라데+리본'과 동일 ListView 표면이라 묶음 후보(배너=상단/장르칩=본문, 무충돌). 우선순위 보통
 - [디자이너 2026-06-03 09:05·데스크#2·외형모드 / 기획자 보관] **[보통·광고 placeholder 약화] `.ad-slot` 점선→solid 헤어라인 + min-height 축소** (`app/globals.css` `.ad-slot`·`.ad-slot-mid`) — 광고 미게재 시 1.5px dashed 점선 박스+라벨이 콘텐츠보다 튐(특히 /game/[id] 상·하단 2개가 카드보다 큰 면적). `border:1px solid rgba(255,255,255,0.05)`(dashed→solid)·`background:transparent`·라벨 `color:#3a3f48`·`.ad-slot-mid{min-height:160px}`(250→160). 실제 광고 삽입 시 자연히 채워짐(무해). 우선순위 보통
 
