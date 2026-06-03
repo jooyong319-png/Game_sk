@@ -111,10 +111,10 @@ export default async function GamePage({ params }: Props) {
         </p>
         {game.description && <p className="desc">{game.description}</p>}
         <ul className="detail-meta">
-          {game.developer && <li><strong>개발사</strong>: {game.developer}</li>}
-          {game.publisher && <li><strong>배급사</strong>: {game.publisher}</li>}
-          {game.platforms.length > 0 && <li><strong>플랫폼</strong>: {game.platforms.join(', ')}</li>}
-          {game.genres.length > 0 && <li><strong>장르</strong>: {game.genres.join(', ')}</li>}
+          {game.developer && <li><strong>개발사</strong>{game.developer}</li>}
+          {game.publisher && <li><strong>배급사</strong>{game.publisher}</li>}
+          {game.platforms.length > 0 && <li><strong>플랫폼</strong>{game.platforms.join(', ')}</li>}
+          {game.genres.length > 0 && <li><strong>장르</strong>{game.genres.join(', ')}</li>}
         </ul>
         <div style={{ display: 'flex', gap: '0.6rem', marginTop: '1rem', flexWrap: 'wrap' }}>
           <GoogleCalendarButton game={game} />

@@ -1,3 +1,9 @@
+## [2026-06-03 21:20] [개발자]
+완료: **[외형·상세·높음] `/game/[id]` 상세 `.detail-meta` 평문 4행 → 스펙시트화** (큐 1순위, 디자이너 21:06 데스크#1)
+SEO 랜딩 첫 화면 최대 콘텐츠 블록인 상세 메타(개발사/배급사/플랫폼/장르)가 라벨·값 같은 톤·행 구분 0의 회색 평문 4줄이라 한 덩어리로 읽히던 문제 해소. `.detail-meta li`=flex+행 hairline(`border-bottom:1px rgba(255,255,255,0.06)`)+값 밝게(#e6e6e6), `strong`=라벨 고정폭(`flex:0 0 4.5em`)·대문자·muted(#888), 컨테이너 gap 0.5rem→0(행 padding이 간격 담당). 디자이너안은 CSS only였으나 `page.tsx` 4행의 리터럴 `: ` 1건 제거 동반(개발자 판단 — flex 고정폭 라벨 컬럼에서 콜론이 떠 보여 스펙시트 정렬 해침, gap이 라벨-값 간격 담당).
+변경된 파일: app/globals.css(+1/−2 줄), app/game/[id]/page.tsx(4행 `: ` 제거)
+비고: 신규 색 0(기존 #888·#e6e6e6 재사용)·CSS brace 69/69·esbuild tsx OK. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 /game/[id] 상세 메타 4행 hairline 구분·라벨 대문자 고정폭 muted·값 밝게·콜론 제거·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
+
 ## [2026-06-03 21:11] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 추가: - [외형·상세·높음] `/game/[id]` 상세 `.detail-meta` 평문 4행→스펙시트화 (디자이너 21:06 데스크#1, CSS only, IDEAS→큐 1순위)
@@ -218,12 +224,4 @@ GameModal만 유일하게 모바일 블록 0건(직전 Filters 모바일 블록�
 구현: `GameModal.module.css` 말미에 `@media(max-width:480px){ .overlay{padding:0.6rem} .modal{padding:1.2rem;border-radius:12px;max-height:92vh} .title{font-size:1.2rem} .image{height:78px;margin-bottom:0.6rem} .imageEmoji{font-size:2.2rem} .actions{gap:0.4rem} }`. 6개 타깃 클래스 전부 GameModal.tsx 사용 중 확인.
 변경된 파일: components/GameModal.module.css (+11). 레이아웃만(신규 색 0)·데스크톱 무영향·tsx 무변경. CSS brace 27/27.
 비고: 로컬 빌드 sandbox 디스크 제한 → Vercel typecheck+build 위임. 큐 5→4(2~5순위 한 칸씩 당김). **QA님: 라이브 모바일 390px 모달 패딩/제목/이미지 비례 실측 부탁(Chrome resize 미반영 시 소스 갈음).**
-
-## [2026-06-03 06:11] [기획자]
-TODO 큐 5→5 (모드: 외형 집중, 큰 단위)
-완료: 1순위 '하이드레이션 7건 재점검' — 개발자 05:31 kstDateOnly(lib/utils.ts) 서버UTC↔클라KST 단일기준 fix·QA 05:47 라이브 #418/#423/#425 0건 해소 확정(adsbygoogle no_div도 미관측) → 큐 5→4.
-추가: - [외형·캘린더 임팩트·높음] 캘린더 면 디자인 강화(빈 셀 톤업+컨테이너 패널 카드화+출시 셀 카테고리색 좌측 악센트) — IDEAS 13:01 #2·#3 묶어 3순위 승격 → 4→5 복구.
-큐 1~5: ①GameModal 모바일 블록 ②리스트 과거카드 약화 ③캘린더 면 강화 ④임박 스트립 글로우(데스크) ⑤/game/[id] 같은시기 그리드.
-다음 후보: 상세 D-day배지+상단바(회귀)·이모지→SVG 2단계·헤더 히어로 밴드.
-사용자 요청 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드).
 
