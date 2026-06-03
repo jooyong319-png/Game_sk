@@ -1,3 +1,10 @@
+## [2026-06-03 11:00] [기획자]
+TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
+완료: 1순위 '[외형·캘린더] 캘린더 컨테이너 패널 카드화' — 개발자 10:20 완료(.view #13151b·radius14·border·pad14, 모바일 ≤480 pad9·radius12, CSS-only brace 63/63)·QA 10:40 라이브 ✅(데스크 패널 카드 묶음·가로 오버플로 0·강조 셀 무회귀·콘솔 React#418/#423/#425 0건) → 완료한 기능 이동, 큐에서 종결.
+유지: /game/[id] 같은시기 그리드·/game/[id] 라디얼 백드롭·리스트 배너 그라데+D-DAY 리본·인트로 카피 .subtitle 위계강화 = 1~4순위.
+추가: - [외형·모바일·높음] MonthTabs 가로 스크롤 어포던스(엣지 페이드 mask + scroll-snap, 디자이너 09:05 모바일#1, IDEAS→5순위) → 4→5.
+사용자 요청 활성 0(SEO 보류 — 안 건드림). QA 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).
+
 ## [2026-06-03 10:40] [QA]
 검증 대상: 캘린더 컨테이너 패널 카드화(.view: #13151b·radius14·border·pad14) + 모바일 ≤480 비례 축소(pad9·radius12)
 데스크톱 1440: ✅ (실측 뷰포트 1920 — 창폭이 1440 미만으로 안 줄어 1920에서 검증)
@@ -207,12 +214,3 @@ a11y/리팩토링 0건 큐잉 → IDEAS 보관 (외형 모드)
 완료: 1순위 **[외형·팔레트·높음] 구 accent #4a90e2·rgba(74,144,226) 리터럴 → 브랜드 var(--accent) #5b9dff / rgba(91,157,255) 전 표면 통일** (디자이너 01:05 데스크#1). 헤더/뷰토글/월탭/today만 신톤이고 리스트·모달·캘린더·월탭 일부 면이 구톤이라 블루가 두 톤으로 갈리던 문제 해소. 치환: ListView .monthHeader·.item:hover·.date / GameModal .source·.detail:hover / CalendarView .navBtn:hover·.todayBtn(+hover)·.dayRow:hover / MonthTabs .tab:hover. enumerate에 없던 동일 두 톤 잔존면(navBtn·todayBtn·dayRow·MonthTabs)까지 함께 치환해 제목 "전 표면 통일"을 한 사이클로 완결.
 변경된 파일: components/ListView.module.css(~4값)·GameModal.module.css(~3값)·CalendarView.module.css(~6값)·MonthTabs.module.css(2값)
 비고: 유지(미변경) — GameModal .gcal:hover rgba(66,133,244)(구글 브랜드 블루)·CalendarView .cell/.cellClickable:focus-visible #4a90e2 2건(a11y, 외형 모드 제외). 신규 색 0(#5b9dff=기존 출고색), 값만 치환이라 brace 무변동(33/20/62/6 균형). grep 검증: 구 리터럴 잔존=의도한 focus-visible 2건+gcal뿐. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 검증 위임. QA님 라이브 1440에서 리스트 .date/.item:hover·모달 출처링크·캘린더 오늘/네비 버튼 hover가 헤더 타이틀과 동일 #5b9dff 톤인지 실측 부탁. 큐 5→4.
-
-## [2026-06-03 02:00] [기획자]
-TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
-완료 처리: 직전 1순위 [외형·버그·캘린더·높음] 요일 헤더(.dayHead) 주말 색 미적용 fix — 개발자 출고·QA 00:47 라이브 실측(일 #e57373·토 #7aa7ff·평일 #888) → 완료한 기능 이동·BUG 해소.
-추가: - [외형·팔레트·높음] 구 accent #4a90e2→#5b9dff 전 표면 통일(디자이너 01:05 데스크#1, 리스트/모달/캘린더 잔존 리터럴 치환) / - [외형·모바일·높음] Filters @media(480) 모바일 블록 신설(디자이너 01:05 모바일#1, 검색 풀폭+셀렉트 2×2+위시 풀폭) / - [버그·SEO] React 하이드레이션 에러 7건/로드 해소(QA 00:47, 날짜 의존 SSR↔CSR 불일치·#418/#423/#425 → suppressHydrationWarning/mount 가드)
-큐 1~5: ①구 accent 통일 ②Filters 모바일 블록 ③하이드레이션 에러(버그) ④임박 스트립 글로우(데스크톱) ⑤/game/[id] 관련게임 그리드. 디스플레이스(리스트 배너 그라데·--accent-grad 칩)는 다음 후보 IDEAS 인접 보존.
-사용자 요청 처리: 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0.
-a11y/리팩토링 제안 0건 큐잉 → IDEAS 보관 (외형 모드). 디자이너 01:05 인벤 제안(핫카드·이벤트 타입 배지)은 데이터/판단 선결로 IDEAS 유지.
-

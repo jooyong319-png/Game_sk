@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-03 09:16 (기획자 — 외형 집중. 직전 1순위 '임박 스트립 글로우(데스크)' 개발자 완료·QA ✅로 큐에서 종결 → 큐 4 유지. 디자이너 09:05 신규 높음 2건 중 '인트로 카피 .subtitle 위계 강화/헤더 통합'을 5순위로 승격(이미 출고된 히어로 밴드와 별개 표면=태그라인) → 큐 4→5. '헤더 풀블리드 히어로 밴드'는 06-02 10:29 이미 출고됨 확인 → 큐소진후보 목록에서 제거(중복 정리). MonthTabs 모바일 스크롤 어포던스는 IDEAS 보관(차기). 활성 사용자 요청 0(SEO 보류). a11y/리팩토링 0건 큐잉.)
+마지막 갱신: 2026-06-03 11:00 (기획자 — 외형 집중. 직전 1순위 '캘린더 컨테이너 패널 카드화' 개발자 10:20 완료·QA 10:40 라이브 ✅(데스크 패널 카드·가로 오버플로 0·강조 셀 무회귀·콘솔 0)로 큐에서 종결 → 큐 4. 큐 보충: 디자이너 09:05 모바일#1 'MonthTabs 가로 스크롤 어포던스(엣지 페이드 mask+scroll-snap)'를 IDEAS→5순위 승격(외형·높음·임팩트) → 큐 4→5. 활성 사용자 요청 0(SEO 보류, 안 건드림). QA 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드).)
 
 
 ## 현재 단계
@@ -146,7 +146,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-03 10:20 (개발자): **큐 5→4 (외형 집중).** 직전 1순위 '캘린더 컨테이너 패널 카드화'는 개발자 완료(`CalendarView.module.css` `.view` 패널 카드+모바일 축소, CSS-only, brace 63/63) → 완료한 기능 이동·큐에서 종결. 남은 4건(/game/[id] 같은시기 그리드·/game/[id] 라디얼 백드롭·리스트 배너 그라데+리본·인트로 카피 .subtitle)을 1~4순위로 당김. 활성 사용자 요청 0. QA 신규 BUGS 0. a11y/리팩토링 0건 큐잉(외형 모드). QA 라이브 검증 대기.
+> 갱신 2026-06-03 11:00 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '캘린더 컨테이너 패널 카드화' 개발자 10:20 완료·QA 10:40 라이브 ✅ → 완료한 기능 이동·큐 종결, 잔여 4건(같은시기 그리드·라디얼 백드롭·리스트 배너 그라데+리본·인트로 카피 subtitle)을 1~4순위 유지. 보충: 디자이너 09:05 모바일#1 'MonthTabs 가로 스크롤 어포던스'를 IDEAS→5순위 승격(외형·높음). 활성 사용자 요청 0(SEO 보류). QA 신규 BUGS 0. 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드). QA 라이브 검증 대기.
 
 1. **[외형·신규컴포넌트·보통] `/game/[id]` 하단 "같은 시기 출시" 관련 게임 미니카드 그리드** (디자이너 06-02 09:01안 Next 재경로 — `app/game/[id]/page.tsx` + `app/globals.css`)
    - 상세페이지가 게임 카드 1개뿐이라 하단 여백 큼·내부링크 동선 없음. page.tsx 빌드타임에 **같은 달 ±2주** 내 다른 게임을 자기 제외·가까운 출시일순 3~6개 추림 → `.game-detail` 아래 `<section>`(h3 "같은 시기 출시") + `<a href="/game/{id}">` 미니카드 그리드. 관련 0건이면 섹션 미렌더.
@@ -168,8 +168,13 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 구현(큰 단위 한 번에): (a) `Home.module.css .subtitle` 톤업 — `color:#cfd6e0; font-size:1.1rem; font-weight:500; letter-spacing:-0.01em; margin:0.2rem 0 1.4rem`. (b) **헤더 통합(임팩트안)** — `.subtitle`을 `app/globals.css .site-header` 안 h1 바로 아래로 이동해 타이틀+태그라인을 한 덩어리로 묶고, 히어로 밴드 radial glow 배경을 공유하도록(h1 그라데이션 텍스트와 톤 일관). 모바일 ≤480px에서 1.0rem로 비례 축소.
    - 신규 색 없음(기존 텍스트 톤 재사용), CSS 위주. 검증: `npm run typecheck`/`build` 무에러, 데스크·모바일에서 태그라인이 헤더와 한 덩어리로 묶여 위계가 살아나는지·가로 오버플로 0 확인. CSS brace 균형.
 
+5. **[외형·모바일·높음] MonthTabs 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap** (디자이너 06-03 09:05 모바일#1, IDEAS→큐, `components/MonthTabs.module.css`)
+   - 문제: 12개 월탭이 모바일(≤480px)에서 `overflow-x:auto` 가로 스크롤이나 스크롤 가능 신호가 0이라 잘린 9~12월을 사용자가 발견 못 함(스크롤 어포던스 부재).
+   - 구현(큰 단위 한 번에): `@media(max-width:480px)`에서 `.tabs`에 `-webkit-mask-image`/`mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(양 끝 페이드로 '더 있음' 신호) + `scroll-snap-type:x proximity`, `.tab`에 `scroll-snap-align:center`. 데스크톱(미디어쿼리 밖)은 무영향, mask 미지원 브라우저는 기존 스크롤 그대로 폴백.
+   - 신규 색 없음, CSS 위주(tsx 무변경 예상). 검증: `npm run typecheck`/`build` 무에러, 모바일 ≤480px에서 월탭 양 끝 페이드·스냅 동작·데스크톱 무영향·CSS brace 균형 확인.
+
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
-[보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션, [높음·임팩트] MonthTabs 모바일 가로 스크롤 어포던스(엣지 페이드+스냅, 디자이너 09:05). — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
+[보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션. — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
 
 ## 알려진 버그 (BUGS)
 - [2026-06-03 05:47·QA] ✅ **해소 확정 — 하이드레이션 #418×3·#423×1·#425×3=7건 라이브 0건** (개발자 05:31 kstDateOnly fix). gcalen.com Chrome 실측: 캐시버스트 2회·**KST 05:47(개발자가 지목한 00~09시 빌드 위험구간)** 재로드 후 콘솔 React #418/#423/#425 **0건**, adsbygoogle 'no_div' ERROR도 미관측. 소스 확인: lib/utils.ts kstDateOnly 신설·Home.tsx 4곳 적용. 이전 04:47/03:48 '7건 잔존' 항목은 본 항목으로 해소.
@@ -186,7 +191,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 
-- [디자이너 2026-06-03 09:05·모바일#1·외형모드] **[높음·모바일] MonthTabs 가로 스크롤 어포던스(엣지 페이드+스냅)** (`components/MonthTabs.module.css` @media≤480px) — 12탭이 모바일서 `overflow-x:auto` 가로 스크롤이나 스크롤 신호 0이라 잘린 9~12월 미발견. @media(max-width:480px) `.tabs`에 `mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(+webkit) + `scroll-snap-type:x proximity`, `.tab{scroll-snap-align:center}`. 데스크톱 무영향·mask 미지원 폴백 현행. 우선순위 높음
+- [디자이너 2026-06-03 09:05·모바일#1·외형모드 / 기획자 11:00 → **큐 5순위 승격**] **[높음·모바일] MonthTabs 가로 스크롤 어포던스(엣지 페이드+스냅)** (`components/MonthTabs.module.css` @media≤480px) — 12탭이 모바일서 `overflow-x:auto` 가로 스크롤이나 스크롤 신호 0이라 잘린 9~12월 미발견. @media(max-width:480px) `.tabs`에 `mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(+webkit) + `scroll-snap-type:x proximity`, `.tab{scroll-snap-align:center}`. 데스크톱 무영향·mask 미지원 폴백 현행. 우선순위 높음
 
 - [기획자 2026-06-03 05:11·큐에서 밀림 / 08:12 (a) **큐 5순위 승격**] **[외형·보통] 큐에서 밀린 2건 IDEAS 보관** — (a) 리스트 카드 배너(.cardBanner) 카테고리 단색→세로 그라데이션 + D-DAY 카드 좌상단 리본(`components/ListView.module.css`+`.tsx`, color-mix 34% 폴백 cat-bg-*), (b) 캘린더 범례 8px 점+회색→카테고리 tint 미니 칩(`CalendarView.tsx` L104·`.legendItem` color-mix 14% 폴백 점). 디자이너 05:05 신규 높음 2건(GameModal 모바일·과거카드 약화) 큐 진입에 밀린 것 — 다음 사이클 재승격 우선 후보. 우선순위 보통
 - [디자이너 2026-06-03 05:05·외형모드·보통 / 기획자 08:12 → **큐 4순위 승격**] **[보통] /game/[id] 상세 카테고리색 라디얼 백드롭** (`app/game/[id]/page.tsx`) — 상세 카드(700px)가 평면 #0f1115 검정 공백 한가운데, 면 깊이 0. 컨테이너 인라인 `style={{background:'radial-gradient(80% 45% at 50% 0%, '+CATEGORY_META[game.category].color+'22, transparent 60%)'}}`(α≈hex+22). 큐 5순위 '같은 시기 출시 그리드'(공백→콘텐츠)와 **공존**(이건 색 깊이) → 그리드 출고 후 묶음 후보. 우선순위 보통
