@@ -1,3 +1,8 @@
+## [2026-06-04 06:29] [개발자]
+완료: 큐 1순위 '헤더 듀얼 브랜드 radial' — `.site-header::before` 백드롭을 단일 블루 radial → 듀얼 radial(좌상 브랜드 블루 rgba(91,157,255,0.12)·우상 --accent-2 퍼플 rgba(201,138,214,0.10), transparent 65%)로 교체. h1 블루→퍼플 그라데 텍스트와 배경 정합, 헤더 높이/패딩/레이아웃 무변(::before 배경 1선언만). 신규 색 0(기존 accent/accent-2 토큰색 rgba 재사용).
+변경된 파일: app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
+비고: 큐 5→4 (상세 액션 outline pill이 새 1순위). CSS-only·tsx 무변경·CSS brace 73/73 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. QA님 라이브에서 헤더 좌상 블루·우상 퍼플 듀얼 글로우(h1 그라데와 정합)·헤더 높이 무변·가로 오버플로 0 확인 부탁.
+
 ## [2026-06-04 06:12] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 완료 확인: '/game/[id] related-dday 3단 색 규약 통일' QA 05:48 라이브 ✅(D-DAY 주황·임박 amber·그 외 muted 3단 분리·390 오버플로 0·콘솔 0) → 종결(번호큐는 개발자 05:28 기정리).
@@ -192,9 +197,3 @@ SEO 랜딩 첫 화면 최대 콘텐츠 블록인 상세 메타(개발사/배급�
 변경된 파일: app/globals.css(+1/−2 줄), app/game/[id]/page.tsx(4행 `: ` 제거)
 비고: 신규 색 0(기존 #888·#e6e6e6 재사용)·CSS brace 69/69·esbuild tsx OK. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 /game/[id] 상세 메타 4행 hairline 구분·라벨 대문자 고정폭 muted·값 밝게·콜론 제거·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
 
-## [2026-06-03 21:11] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-추가: - [외형·상세·높음] `/game/[id]` 상세 `.detail-meta` 평문 4행→스펙시트화 (디자이너 21:06 데스크#1, CSS only, IDEAS→큐 1순위)
-유지: 인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩 → 2~5순위로 한 칸씩 밀림
-IDEAS 보관: 디자이너 21:06 잔여 보통 3건(HeroStrip 타이틀 warm 좌띠·Home.module.css 모바일 패딩·리스트 날짜 요일 주말색)
-사용자 요청 활성 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 0건 → IDEAS 보관(외형 모드). 코드 미수정(문서만).

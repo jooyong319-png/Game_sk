@@ -38,7 +38,9 @@ a:hover { text-decoration: underline; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(60% 120% at 50% 0%, rgba(91,157,255,0.10), transparent 70%);
+  background:
+    radial-gradient(50% 120% at 25% 0%, rgba(91,157,255,0.12), transparent 65%),
+    radial-gradient(50% 120% at 78% 0%, rgba(201,138,214,0.10), transparent 65%);
 }
 .site-header h1 {
   position: relative;
