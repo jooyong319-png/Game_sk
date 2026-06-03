@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-04 03:11 (기획자 — ViewToggle 모바일 블록 QA 02:47 라이브 ✅ 종결 확인. 큐 4→5: 디자이너 01:05 인벤#1 '상세 액션 outline pill 버튼화' IDEAS→5순위 승격(3순위 related-dday와 같은 /game/[id] 상세 표면·묶음 구현 후보). 활성 사용자 요청 0·신규 BUGS 0. 모드: 외형 집중.)
+마지막 갱신: 2026-06-04 04:11 (기획자 — '리스트 카드 장르 칩' QA 03:47 라이브 ✅ 종결 확인. 큐 4→5: 디자이너 01:05 모바일#1 '.game-detail 모바일 @media(≤480px) 오버라이드' IDEAS→5순위 승격(2·4순위와 같은 /game/[id] 상세 표면 묶음 후보·CSS-only·신규 색 0). 활성 사용자 요청 0·신규 BUGS 0)
 
 
 ## 현재 단계
@@ -157,6 +157,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-04 04:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개'(개발자 03:28 c2d7535) QA 03:47 라이브 ✅(데스크 27카드 전부 칩 렌더·칩 총 48·카드당 최대 3 가드·스펙 #9aa3b2/11.2px/radius 999px 일치·390 iframe 가로 오버플로 0) → 종결 확인. 기존 큐 1~4(통계줄 4색 분해·related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill) 순서 유지. 신규 5순위: 디자이너 01:05 모바일#1 '`.game-detail` 모바일 @media(≤480px) 오버라이드 신설'(IDEAS→승격 — 2·4순위와 같은 상세 표면 묶음 후보·CSS-only·신규 색 0). 활성 사용자 요청 0(SEO 보류 유지)·신규 BUGS 0·3사이클 정체 0·a11y 0건(IDEAS 보관만).
+
 > 갱신 2026-06-04 03:28 (개발자): **큐 5→4.** 직전 1순위 '[외형·리스트·보통] 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개' 구현 완료(`ListView.tsx` .desc 위 genreChips div + `ListView.module.css` .genreChips/.genreChip 신설, 디자이너 스펙 그대로·미보유 가드·과거카드 약화 무충돌) → 완료한 기능 이동. 기존 2~5순위(통계줄 4색 분해·상세 related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill) 한 칸씩 당겨 1~4순위. 로컬 빌드 sandbox 제한 → Vercel 위임. QA 라이브 검증 대기.
 
 > 갱신 2026-06-04 03:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 'ViewToggle 모바일 @media(≤480px) 블록'(개발자 02:28 6d56a48) QA 02:47 라이브 ✅(390 iframe 실측 — 캘린더/리스트 2버튼 168px 균등 풀폭·padding 0.6rem 0.5rem·데스크톱 1920 무영향·가로 오버플로 0) → 종결 확인. 기존 큐 1~4(리스트 장르 칩·통계줄 4색 분해·related-dday 색 통일·헤더 듀얼 radial) 순서 유지 — 1순위 장르 칩(여러 사이클 밀린 잔여) 보호, 신규는 말미만. 디자이너 01:05 인벤#1 '상세 액션 outline pill 버튼화'를 IDEAS→**5순위 승격**(3순위 related-dday와 같은 /game/[id] 상세 표면이라 묶음 구현 후보·신규 색 0). 활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0. 3사이클 정체 0.
@@ -218,6 +220,12 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 상세 하단 2버튼 outline pill 렌더·hover 톤 정상·전역 `a` 색 상속과 무충돌·모바일 390 flex-wrap 줄바꿈 정상·CSS brace 균형 확인.
 
 
+5. **[외형·모바일·상세·보통] `/game/[id]` 상세 `.game-detail` 모바일 @media(≤480px) 오버라이드 신설 — 유일 미보유 표면** (디자이너 06-04 01:05 모바일#1, IDEAS→큐 승격 04:11, `app/globals.css` L66 기존 `@media(max-width:480px)` 블록)
+   - 문제: `globals.css`의 유일한 `@media(max-width:480px)` 블록(L66)이 `.site-header h1`/`.site-tagline`만 다뤄 `.game-detail`(상세 카드)은 모바일 오버라이드 0. 390px서 좌우 패딩 1.8rem(≈29px×2=58px)이 본문폭을 깎고 h2 2rem(32px)이 좁은 폭에 과대 — SEO 유입 첫 화면인데 모바일 비례 정돈 0.
+   - 구현(큰 단위 한 번에): L66 `@media(max-width:480px)` 블록에 2규칙 추가 — `.game-detail{ padding:1.2rem 1.1rem 1.6rem }`(좌우 1.8→1.1rem·본문폭 ~22px 회수) + `.game-detail h2{ font-size:1.5rem }`(2→1.5rem 비례 축소). CSS-only·신규 색 0. 2·4순위와 같은 /game/[id] 상세 표면 — 묶음 구현 후보.
+   - 검증: `npm run typecheck`/`build` 무에러, 390px 상세 본문폭 확보·제목 1.5rem 축소·데스크톱(>480px) 무영향·가로 오버플로 0·CSS brace 균형 확인.
+
+
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
 > 2026-06-04 02:10 갱신: 헤더 듀얼 radial은 큐 5순위로 재승격(사용자 요청 2건 모두 종결로 큐 여유 복원). 핫카드+카운트다운만 잔존 — 외형 모드 유지·다음 큐 우선 후보. 전체 스펙 보존:
 
@@ -244,7 +252,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 개선 아이디어 (IDEAS)
 - [디자이너 2026-06-04 01:05·데스크#2·외형모드 / 기획자 IDEAS] **[보통·상세 깊이] /game/[id] '같은 시기 출시' `.related-card` 평면 면 → 좌측 카테고리색 wash** (`app/globals.css` `.related-card` + `page.tsx` 인라인 style) — 카드 인라인 `--cat` 주입 후 `background:linear-gradient(90deg,color-mix(in srgb,var(--cat) 12%,var(--bg-elev)),var(--bg-elev) 42%)`(color-mix 미지원 폴백 `var(--bg-elev)` 선행)+`.related-card:hover{border-color:var(--cat)}`. 좌 4px 바와 면 tint 정합·본문 라디얼 백드롭과 톤 연결. 카테고리 4색 단일 출처·신규 색 0. 우선순위 보통
-- [디자이너 2026-06-04 01:05·모바일#1·외형모드 / 기획자 IDEAS] **[보통·모바일·상세] `app/globals.css` `@media(max-width:480px)` 블록(현재 헤더만)이 `.game-detail` 미보유 → 상세 모바일 오버라이드 0(유일 미보유 표면)** — L66 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`(좌우 1.8→1.1rem)·`.game-detail h2{font-size:1.5rem}`(2→1.5rem) 추가. SEO 유입 첫 화면 상세 본문폭 확보·제목 비례. 데스크 무영향·레이아웃만·신규 색 0. 우선순위 보통
+- [디자이너 2026-06-04 01:05·모바일#1·외형모드 / 기획자 04:11 → **큐 5순위 승격**] **[보통·모바일·상세] `app/globals.css` `@media(max-width:480px)` 블록(현재 헤더만)이 `.game-detail` 미보유 → 상세 모바일 오버라이드 0(유일 미보유 표면)** — L66 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`(좌우 1.8→1.1rem)·`.game-detail h2{font-size:1.5rem}`(2→1.5rem) 추가. SEO 유입 첫 화면 상세 본문폭 확보·제목 비례. 데스크 무영향·레이아웃만·신규 색 0. 우선순위 보통
 - [디자이너 2026-06-04 01:05·인벤#1·외형모드 / 기획자 03:11 큐 5순위 승격(중복 등재분·종결)] **[보통·상세 액션] /game/[id] 상세 하단 액션(`.gcal-link` '캘린더 추가'·'공식 출처 →')이 CSS 규칙 0의 평문 링크 → 다크 미니멀 outline pill 버튼화** (`page.tsx` 액션 div L119~124 + `app/globals.css` 신규 `.detail-actions`/pill) — 래퍼 `className="detail-actions"`(인라인 style 제거)+'공식 출처' `.detail-link`, globals `.detail-actions{display:flex;gap:0.6rem;margin-top:1.2rem;flex-wrap:wrap}`+pill(`display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.95rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.03);color:var(--accent);font-size:0.88rem;font-weight:600`)+hover(`border-color:var(--accent);background:rgba(91,157,255,0.1)`). 평문→버튼 묶음·클릭 타깃↑(인벤 액션 버튼 다크 흡수). 신규 색 0. 우선순위 보통
 
 - [디자이너 2026-06-04 01:05·인벤#1·외형모드 / 기획자 03:11 → **큐 5순위 승격**] **[보통·상세 액션 버튼] `/game/[id]` 상세 하단 액션 평문 링크 → outline pill 버튼 묶음** (`app/game/[id]/page.tsx` 액션 div L119~124 + `app/globals.css` 신규 `.detail-actions`) — 인벤은 행마다 액션(일정/홈페이지/영상/찜)을 또렷한 버튼으로, 우린 `.gcal-link`('캘린더 추가', CSS 규칙 0·plain 텍스트)+'공식 출처 →'(class 없음·bare `<a>`)가 작은 파란 평문 링크. 래퍼 div `className="detail-actions"`(인라인 style 제거)+공식출처 `.detail-link`, globals `.detail-actions{display:flex;gap:0.6rem;margin-top:1.2rem;flex-wrap:wrap}` + `.detail-actions .gcal-link,.detail-actions .detail-link{display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.95rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.03);color:var(--accent);font-size:0.88rem;font-weight:600}` + hover `border-color:var(--accent);background:rgba(91,157,255,0.1)`. 다크 미니멀(채움 아닌 outline·2버튼만)·신규 색 0. 우선순위 보통
@@ -343,6 +351,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+
+- 2026-06-04 04:11 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). '리스트 카드 장르 칩' QA 03:47 라이브 ✅ 종결. 큐 1~4 유지(통계줄 4색 분해·related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill), 신규 ⑤ '`.game-detail` 모바일 @media(≤480px) 오버라이드'(디자이너 01:05 모바일#1 IDEAS→승격, 2·4순위와 같은 상세 표면 묶음 후보). 활성 사용자 요청 0(SEO 보류 유지)·신규 BUGS 0. 코드 미수정(문서만).
 
 - 2026-06-04 03:28 [개발자] 큐 1순위 '[외형·리스트] 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개' 구현 완료 → 완료한 기능 이동, 큐 5→4. `ListView.tsx` .cardBody에 genreChips(slice 0~3·미보유 가드) + `ListView.module.css` .genreChips/.genreChip(무채색 pill·flex-wrap) 신설 — 카테고리 색면과 위계 분리. esbuild tsx OK·brace 40/40·strict any 0. 2파일 +24. 잔여 큐 1~4: 통계줄 4색 분해·상세 related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill. Vercel 위임. QA 라이브 검증 대기.
 - 2026-06-04 02:28 [개발자] 큐 1순위 '[외형·모바일] ViewToggle 모바일 @media(≤480px) 블록 신설(마지막 미보유 컴포넌트)' 구현 완료 → 완료한 기능 이동, 큐 5→4. `ViewToggle.module.css` 말미 모바일 블록 신설(`.toggle` gap 0.5rem·`.btn` flex:1 1 0/padding 0.6rem 0.5rem/text-align:center) → 모바일 2버튼 풀폭 2분할·터치 면적↑. CSS-only(tsx 무변경)·데스크톱 무영향·신규 색 0·brace 7/7. 1파일 +9. 잔여 큐 1~4: 리스트 장르 칩·통계줄 4색 분해·상세 related-dday 색 통일·헤더 듀얼 radial. Vercel 위임. QA 라이브 검증 대기.

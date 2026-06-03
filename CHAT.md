@@ -1,41 +1,41 @@
+## [2026-06-04 04:11] [기획자]
+TODO 큐 4→5 (모드: 외형 집중)
+완료 확인: '리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개' QA 03:47 라이브 ✅(27카드 전부 렌더·칩 총 48·카드당 최대 3 가드·390 가로 오버플로 0) → 종결.
+유지: 큐 1~4(통계줄 4색 분해·related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill) 순서 그대로 — 1순위 통계줄 4색(여러 사이클 밀린 잔여) 보호, 신규는 말미만.
+추가: - ⑤[외형·모바일·상세] /game/[id] `.game-detail` 모바일 @media(≤480px) 오버라이드 신설 — padding 1.8→1.1rem·h2 2→1.5rem (디자이너 01:05 모바일#1, IDEAS→승격. 2·4순위와 같은 상세 표면 묶음 후보·CSS-only·신규 색 0)
+활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 03:47 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(통계줄 4색 분해) 착수 권장.
 ## [2026-06-04 03:47] [QA]
 검증 대상: 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개 (개발자 03:28 c2d7535)
 데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
 모바일 390: ✅ (resize 미반영 → 390px iframe 합성 리플로 실측)
 상세: 데스크톱 1920 라이브 실측 — 리스트 27카드 전부 genreChips 렌더(칩 총 48·카드당 최대 3 가드 확인, 샘플 'MMORPG|무협'/'서브컬처|수집형RPG'/'RPG|액션'), 칩 스타일 스펙 일치(#9aa3b2=rgb(154,163,178)·11.2px·radius 999px·nowrap·rgba 화이트 5% 면). 390 iframe: 칩 그룹 27·390 초과 행 0·칩행 311px·루트 375/390 가로 오버플로 0·상세(raven2-zero2) 375 오버플로 0·관련카드 6. 무회귀: 캘린더 복귀 시 오늘 패널 '이후 출시 20건'·리스트 기본 총 27개 유지. 콘솔 #418/#423/#425·에러 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·robots·sitemap 50 URL·new-servers 12·데이터 06.03). 신규 BUGS 0.
-
 ## [2026-06-04 03:28] [개발자]
 완료: **[외형·리스트·보통] 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개 추가** (큐 1순위, 여러 사이클 밀린 잔여분)
 리스트 카드에 카테고리 색면 외 게임 성격 신호가 0이던 문제 해소. `ListView.tsx` `.cardBody`의 `.desc` 위에 `genreChips` div 추가 — `g.genres.slice(0,3)` 최대 3개 무채색 pill(key=장르명), genres 미보유/빈 배열 미렌더 가드. `ListView.module.css`에 `.genreChips`(flex·wrap·gap 0.3rem·margin-top 0.4rem)+`.genreChip`(0.7rem·#9aa3b2·rgba 면/보더·radius 999px·nowrap) 신설 — 디자이너 스펙 그대로, 카테고리=색면/장르=중성칩 위계 분리. 과거카드 약화(li opacity)와 무충돌, 정적 데이터라 하이드레이션 무관.
 변경된 파일: components/ListView.tsx (+7), components/ListView.module.css (+17)
 비고: esbuild tsx 트랜스폼 OK·CSS brace 40/40·strict any 0·신규 색 #9aa3b2 1톤(디자이너 스펙). 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 리스트 카드 장르 칩 최대 3개·모바일 390 가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
-
 ## [2026-06-04 03:11] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 완료 확인: 'ViewToggle 모바일 @media(≤480px) 블록' QA 02:47 라이브 ✅(390 iframe 2버튼 168px 균등 풀폭·데스크톱 무영향·가로 오버플로 0) → 종결.
 유지: 큐 1~4(리스트 장르 칩·통계줄 4색 분해·상세 related-dday 색 통일·헤더 듀얼 radial) 순서 그대로 — 1순위 장르 칩(여러 사이클 밀린 잔여) 보호, 신규는 말미만.
 추가: - ⑤[외형·상세 액션] /game/[id] 하단 액션 평문 링크 2개 → 다크 outline pill 버튼화 (디자이너 01:05 인벤#1, IDEAS→승격. 3순위 related-dday와 같은 상세 표면이라 묶음 구현 후보·신규 색 0)
 활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 02:47 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(리스트 장르 칩) 착수 권장.
-
 ## [2026-06-04 02:47] [QA]
 검증 대상: ViewToggle 모바일 @media(≤480px) 블록 — 2버튼 풀폭 2분할 (개발자 02:28 6d56a48)
 데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
 모바일 390: ✅ (resize 미반영 → 390px iframe 합성 리플로 실측)
 상세: 390 iframe 실측 — 캘린더/리스트 2버튼 `flex:1 1 0%`·각 168px 균등 풀폭(행 343px·gap 8px)·padding 9.6px 8px(=0.6rem 0.5rem)·text-align center 전부 출고 확인. 데스크톱 1920 무영향(flex 0 1 auto·8px 16px·95px 유지)·`.active` 그라데 무회귀. 가로 오버플로 0(루트 375/390·헤더 375·필터 343·그리드 321, MonthTabs 624/343는 의도된 스크롤 스트립). 직전 기능 무회귀: 진입 시 오늘 셀 자동선택+패널 '06.04 이후 출시 20건' 데스크/모바일 양쪽 유지·진입 scrollY 0·셀 클릭(6/17) 패널 갱신 정상. 상세 /game/raven2-server-zero2 모바일 373/373 오버플로 0·메타 4행·관련카드 6. 헬스 ✅(홈 h1 🎮·robots·sitemap XML 50 URL·new-servers 12·상세 정상). 콘솔 React #418/#423/#425·에러 0(MetaMask 확장 경고만). 신규 BUGS 0.
-
 ## [2026-06-04 02:28] [개발자]
 완료: **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (큐 1순위, 여러 사이클 밀린 잔여분)
 390px서 캘린더/리스트 2버튼이 고정 패딩(0.5rem 1rem)으로 가운데 작게 뭉쳐 터치 폭이 좁던 문제 해소. `ViewToggle.module.css` 말미에 `@media(max-width:480px)` 블록 신설 — `.toggle{gap:0.5rem}` + `.btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center}` → 2버튼이 화면폭 2분할 풀폭(터치 면적↑·좌우 균형·세로 패딩 0.6rem 보강). 데스크톱(미디어쿼리 밖) 무영향, `.active` 그라데/그림자 무회귀.
 변경된 파일: components/ViewToggle.module.css (+9)
 비고: CSS-only(tsx 무변경·`.toggle`/`.btn` 사용처 ViewToggle.tsx 확인)·신규 색 0·brace 7/7. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 모바일 390px 캘린더/리스트 2버튼 풀폭 2분할·데스크톱 무영향·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
-
 ## [2026-06-04 02:10] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 사용자요청 처리: ②'진입 시 캘린더 오늘 셀 자동선택→day-detail 패널 자동 표시' **QA 라이브 검증 완료**(01:47 — 오늘 셀 자동선택·패널 '이후 출시 20건' 자동 노출·스크롤 점프 0·콘솔 0) → USER_REQUESTS '활성' 2건 모두 종결·아카이브 이동. **활성 사용자 요청 0**(SEO 보류 — 안 건드림).
 유지: 큐 1~4(ViewToggle 모바일 블록·리스트 장르 칩·통계줄 4색 분해·상세 related-dday 색 통일) 순서 그대로 — 1순위 ViewToggle 보호(여러 사이클 밀린 잔여, 신규는 말미만).
 추가: - ⑤[외형·헤더 임팩트] `.site-header::before` 단일 블루 → 듀얼 브랜드 radial(블루+퍼플) — 00:22 사용자요청 삽입 때 후보로 밀렸던 것 재승격(디자이너 13:05 데스크#3, 신규 색 0). 후보 풀엔 핫카드+카운트다운 잔존.
 신규 BUGS 0(QA 01:47 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(ViewToggle) 착수 권장.
-
 ## [2026-06-04 01:30] [개발자]
 완료: **[사용자요청·캘린더·높음] 진입 시 오늘 날짜 셀 디폴트 선택 → day-detail 패널('오늘 이후 출시') 자동 표시** (큐 1순위, 운영자 직접 요청)
 진입 직후 캘린더 아래 패널이 비어 "게임 리스트가 없음"던 문제 해소. mount 후 useEffect로 오늘(KST) ISO를 `selectedISO`에 자동 세팅 → 오늘 셀 선택+패널 '오늘 이후 출시' 자동 노출. 커서 해제 effect를 `prevYMRef`로 '실제 월 이동에만' 보정(첫 mount·이번 달 교체는 유지). `scrollOnSelect` ref로 초기 자동선택은 스크롤 점프 차단, 사용자 클릭에만 패널 스크롤. 오늘 ISO는 mount 후 계산(하이드레이션 안전).
@@ -172,9 +172,3 @@ IDEAS 보관: 디자이너 13:05 잔여 보통 4건(통계줄 카테고리 4색 
 카드 상단 `.cardBanner`가 카테고리 단색 tint라 밋밋하고 D-DAY가 amber border로만 구분되던 문제 해소. (a) `.cardBanner`를 카테고리색 세로 그라데이션(`linear-gradient(180deg, var(--cat), color-mix(in srgb,var(--cat) 34%,transparent))`, 단색 `var(--cat)` 폴백 선행)으로 — 배너에 인라인 `--cat` 주입. (b) D-DAY(diff 0) 카드 좌상단에 카테고리색 리본 배지(`.ddayRibbon`, radius 0 0 8px 0). 배너 이모지는 채도 높아진 배너 대비 흰색화.
 변경된 파일: components/ListView.tsx (+3/−2), components/ListView.module.css (+20/−1)
 비고: CATEGORY_META 4색 단일 출처 재사용(신규 임의 색 0)·`.released`(과거카드 약화)·`.imminent`와 무충돌(리본은 D-DAY만·`.item` overflow:hidden 내부). TypeScript strict 유지(any 0, CSSProperties 캐스트). esbuild tsx 트랜스폼 OK·CSS brace 38/38. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 리스트 카드 배너 세로 그라데이션·D-DAY 리본·과거('출시됨') 카드 약화 무충돌·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
-## [2026-06-03 13:05] [디자이너]
-외형 점검 완료 (데스크 1440 + 모바일 390 소스 + 인벤 비교)
-데스크 주요: 캘린더 셀 게임명이 `word-break:break-all`로 단어 중간 절단(라이브 "(Switch↵2)" 확인) → keep-all+overflow-wrap:anywhere 제안(높음). 통계줄 "총 44개" 단색 → 카테고리 4색 분해, 헤더 글로우 블루 단일 → 듀얼 브랜드 radial.
-모바일 주요: 리스트 `.cardBanner` 모바일 오버라이드 0 → 1열 스택서 56px 빈 색배너 누적, @media(≤480) height 40px 제안. (Chrome resize 모바일 뷰포트 미반영=직전 사이클 동일 한계, 소스 갈음.)
-인벤 참고: 인벤 지배 시각요소=게임 아트워크 이미지(히어로/핫카드/007 카드) → 우리 `.cardBanner` image_url 미사용(대부분 null·색배너 대체) → image_url 있을 때 다크 오버레이 배경이미지 렌더+폴백 제안.
-DESIGN_NOTES에 5개 제안 추가(데스크3/모바일1/인벤1). 높음 1건(셀명 keep-all) → PROJECT_STATUS IDEAS 승격.
