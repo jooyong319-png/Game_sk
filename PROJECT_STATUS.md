@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-03 13:20 (개발자 — 외형 집중. 큐 1순위 '리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 좌상단 리본' 구현 완료 → 완료한 기능 이동, 큐 5→4. ListView.tsx: 배너에 인라인 `--cat` 주입·D-DAY(diff 0) 카드에 `.ddayRibbon` 좌상단 리본 마크업 추가. ListView.module.css: `.cardBanner` 카테고리색 세로 그라데이션(`linear-gradient(180deg,var(--cat),color-mix(var(--cat) 34%,transparent))`·단색 폴백 선행)·`.ddayRibbon`(radius 0 0 8px 0) 신설·배너 이모지 흰색화. esbuild OK·brace 38/38·신규 색 0. 잔여 큐 1~4: 인트로 카피 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩. QA 라이브 검증 대기.)
+마지막 갱신: 2026-06-03 22:00 (기획자 — 외형 집중. 큐 4→5. 직전 1순위 상세 detail-meta 스펙시트화 개발자 21:20 완료·QA 21:47 라이브 ✅로 종결(완료한 기능 반영). 기존 큐 1~4(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 순서 유지 — 1순위 인트로 subtitle은 신규 고우선 삽입에 반복 밀려 미착수라 이번엔 신규 항목을 5순위 말미에만 추가해 1순위 착수 보장. 신규 5순위: HeroStrip 임박 카드 카테고리색 글로우 D-DAY 위계(디자이너 06-02 13:01안, IDEAS→큐, D-DAY 강조 모드 정합). 활성 사용자 요청 0(SEO 보류). 신규 BUGS 0. a11y/리팩토링 0건 큐잉.)
 
 
 ## 현재 단계
@@ -151,6 +151,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-03 22:00 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '[외형·상세·높음] /game/[id] 상세 `.detail-meta` 스펙시트화' 개발자 21:20 완료·QA 21:47 라이브 ✅(li 4행 hairline·라벨 대문자 고정폭 muted·값 밝게·콜론 제거·가로 오버플로 0·콘솔 #418/#423/#425 0건)로 종결. 기존 큐 1~4(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) **순서 그대로 유지** — 1순위 '인트로 subtitle 위계'가 직전 여러 사이클간 신규 고우선 삽입(detail-meta·셀명 타이포)에 반복 밀려 미착수 상태라, 이번 사이클은 **신규 항목을 1순위 앞에 끼우지 않고 5순위 말미에만 추가**해 개발자 :20 1순위 착수를 보장. 신규 **5순위**: [외형·D-DAY강조] HeroStrip 임박 카드 카테고리색 글로우 시각 위계(디자이너 06-02 13:01안, IDEAS→큐 승격 — 현 외형 모드 'D-DAY 강조 디자인' 허용 범위 정합, 큰 단위). 디자이너 21:06 잔여 보통 3건(HeroStrip 타이틀 warm 좌띠·Home.module.css 모바일 패딩·리스트 날짜 요일 주말색)은 IDEAS 유지. 활성 사용자 요청 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만). 개발자 :20 착수 대기.
+
 > 갱신 2026-06-03 21:20 (개발자): **큐 5→4.** 직전 1순위 '[외형·상세·높음] /game/[id] 상세 `.detail-meta` 평문 4행→스펙시트화' 구현 완료(`app/globals.css` li/strong flex 스펙시트화·`page.tsx` li 4행 평문 `: ` 제거) → 완료한 기능 이동. 기존 2~5순위(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 한 칸씩 당겨 1~4순위. 로컬 빌드 sandbox 제한 → Vercel 위임. QA 라이브 검증 대기.
 
 > 갱신 2026-06-03 21:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 디자이너 21:06 데스크#1 '[높음] 상세 `.detail-meta` 평문 4행→스펙시트화(CSS only·SEO 첫화면 위계)'를 신규 **1순위**로 큐잉(IDEAS→큐 승격). 기존 1~4순위(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 한 칸씩 밀려 2~5순위 유지. 디자이너 21:06 잔여 보통 3건(HeroStrip 타이틀 warm 좌띠·Home.module.css 모바일 패딩·리스트 날짜 요일 주말색) → IDEAS 보관. 활성 사용자 요청 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만). QA 라이브 검증 대기.
@@ -186,8 +188,14 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck`/`build` 무에러, 카드별 장르 칩 최대 3개·genres 없는 게임 미렌더·과거카드 약화(기출고)와 무충돌·CSS brace 균형 확인.
 
 
+5. **[외형·D-DAY강조·보통] HeroStrip '🔥 출시 임박' 카드 카테고리색 글로우 시각 위계 — 가까운 출시일일수록 카드가 "튀어나옴"** (디자이너 06-02 13:01안, IDEAS→큐, `components/HeroStrip.module.css` + `components/HeroStrip.tsx`)
+   - 문제: '🔥 출시 임박' 스트립 카드(`.card`)들이 전부 동일 회색 그라데이션이라 D-1과 D-7의 임팩트 차이가 D-day 숫자 색뿐 — 긴급도가 카드 면 자체로 안 드러남. 앱 핵심 지표(D-DAY)를 시각 위계로 강조하는 외형 모드 핵심 후보.
+   - 구현(큰 단위 한 번에): (a) 카드별 인라인 `style={{ '--cat': CATEGORY_META[g.category].color } as CSSProperties}` 주입(`HeroStrip.tsx`, CATEGORY_META 4색 단일 출처 재사용·`CSSProperties` 캐스트). (b) `HeroStrip.module.css`: `.card` D-3 이내 변형 `.imminent3`(또는 diff 기반 클래스)에 카테고리색 외곽 글로우 `box-shadow:0 0 0 1px color-mix(in srgb,var(--cat) 55%,transparent), 0 6px 22px color-mix(in srgb,var(--cat) 22%,transparent)` + 배경에 카테고리색 미세 radial 겹침. (c) D-DAY(diff===0) `.imminent0`은 주황 `#ff7a59` 글로우 1.3배 + `transform:scale(1.02)`. `prefers-reduced-motion` 블록에서 scale 리셋. 데스크톱 그리드 카드 우선, 모바일 컴팩트 행(≤480px)과 무충돌 확인.
+   - 신규 색 0(카테고리 4색·기존 amber/주황 #ff7a59 재사용). 검증: `npm run typecheck`/`build` 무에러, D-3 이내·D-DAY 카드 글로우 위계가 D-7과 구분·reduced-motion scale 생략·데스크/모바일 무충돌·가로 오버플로 0·CSS brace 균형 확인.
+
+
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
-[보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션. — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
+[보통] 디자이너 21:06 데스크#2 HeroStrip 섹션 타이틀 '🔥 출시 임박' warm 좌띠 강화(`.title` 1.3rem+border-left 3px warm), [보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션. — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
 
 ## 알려진 버그 (BUGS)
 - [2026-06-03 05:47·QA] ✅ **해소 확정 — 하이드레이션 #418×3·#423×1·#425×3=7건 라이브 0건** (개발자 05:31 kstDateOnly fix). gcalen.com Chrome 실측: 캐시버스트 2회·**KST 05:47(개발자가 지목한 00~09시 빌드 위험구간)** 재로드 후 콘솔 React #418/#423/#425 **0건**, adsbygoogle 'no_div' ERROR도 미관측. 소스 확인: lib/utils.ts kstDateOnly 신설·Home.tsx 4곳 적용. 이전 04:47/03:48 '7건 잔존' 항목은 본 항목으로 해소.
@@ -232,7 +240,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [QA 2026-06-02 18:40·잔여토큰] [낮음·브랜드일관] MonthTabs.module.css L25 비활성 탭 hover 배경이 옛 accent `rgba(74,144,226,0.12)`(#4a90e2)로 남아 신규 `--accent` #5b9dff와 불일치(active 그라데이션·링크색은 토큰 복구 완료). hover tint를 `color-mix(in srgb, var(--accent) 12%, transparent)` 또는 신 accent rgba로 통일 권고. 기능 영향 없음·외형 미세. 우선순위 낮음
 - [기획자 2026-06-03 08:12 정정·종결] ~~[디자이너 06-02 16:50 /game/[id] D-DAY 배지+카테고리 상단바]~~ — **이미 06-02 11:20 출고 완료** 확인(page.tsx L78 borderTop·L88 .dday-badge, globals.css L101~104). 07:11 큐 5순위 승격은 중복 등록이었음 → 큐 제거·IDEAS 종결.
 - [참고·기존] [디자이너 2026-06-02 16:50·외형모드·이관회귀] [높음·회귀] /game/[id] 상세 D-DAY 배지 + 카테고리 상단바(app/game/[id]/page.tsx·globals.css .game-detail) — 검색 유입 첫 화면인데 앱 핵심지표 D-day가 정적 상세엔 없음(모달만 보유), 회색 박스 1개로 밋밋. page.tsx에서 출시일-오늘 diff 계산해 release-date 옆 `.dday-badge`(`padding:3px 11px;border-radius:999px;font-size:1.15rem;font-weight:800`, 임박≤7 amber #f5a623·D-DAY #ff7a59·먼미래 text-faint) 삽입 + `.game-detail` 인라인 `borderTop:4px solid {카테고리색}` + h2 2rem/800. 빌드타임 생성·런타임 무영향. (옛 styles.css/build.js IDEAS의 상세 백드롭과 동일 표면의 Next 경로 재구현.) DESIGN_NOTES 16:50 #5 상세. 우선순위 높음
-- [디자이너 2026-06-02 13:01·외형모드 / 기획자 06-02 15:10 → 큐 5순위 승격] **[보통·D-DAY 강조] (큐로 이동) 임박 스트립 카드 전부 동일 회색 그라데이션 → 임박할수록 카테고리색 글로우로 시각 위계** — `.hero-card` 차이가 D-day 숫자 색뿐이라 D-1과 D-7 임팩트 동일. D-3 이내 카드에 카테고리색 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경 카테고리색 미세 radial 겹침, D-DAY(diff 0)는 주황 #ff7a59 글로우 1.3배+`scale(1.02)`(reduced-motion 생략). 가까운 출시일일수록 카드가 "튀어나옴". 신규 색 없음(카테고리 4색·기존 amber/주황 재사용). 다음 사이클 큐 후보. 우선순위 보통
+- [디자이너 2026-06-02 13:01·외형모드 / 기획자 06-03 22:00 → **큐 5순위 재승격**] **[보통·D-DAY 강조] (큐로 이동) 임박 스트립 카드 전부 동일 회색 그라데이션 → 임박할수록 카테고리색 글로우로 시각 위계** — `.hero-card` 차이가 D-day 숫자 색뿐이라 D-1과 D-7 임팩트 동일. D-3 이내 카드에 카테고리색 외곽 글로우 `box-shadow:0 0 0 1px {색}55, 0 6px 22px {색}22` + 배경 카테고리색 미세 radial 겹침, D-DAY(diff 0)는 주황 #ff7a59 글로우 1.3배+`scale(1.02)`(reduced-motion 생략). 가까운 출시일일수록 카드가 "튀어나옴". 신규 색 없음(카테고리 4색·기존 amber/주황 재사용). 다음 사이클 큐 후보. 우선순위 보통
 - [디자이너 2026-06-02 13:01·외형모드 / 기획자 06-02 23:12 → **큐 5순위 승격**] **[보통·브랜드 통일] 미사용 토큰 `--accent-grad` 소비 — 뷰토글·활성 칩을 브랜드 그라데이션으로 포인트화** — `:root`에 `--accent-grad:linear-gradient(92deg,#5b9dff,#c98ad6)` 신설됐으나 미참조. `.view-toggle-btn.active`/`.chip-btn.active`(옛 `rgba(74,144,226,0.15)` 옅은 파랑)를 `background:var(--accent-grad);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(91,157,255,0.25)`로 교체 → 헤더 h1 블루→퍼플 그라데이션과 통일·선택 상태 부각. 비활성은 `var(--border)` 유지. CSS 위주. 다음 사이클 큐 후보. 우선순위 보통
 - [디자이너 2026-06-02 13:10·외형모드·운영자요청] **[높음·미니멀] 이모지 11종 → 인라인 SVG 스프라이트(Lucide 라인 톤, currentColor 단색)** — 운영자 "이모지 제거하고 SVG 미니멀" 요청. 노출 이모지 🎮📅📋🔥★☆🛠️🏢📄▶🔗를 `<symbol>` 스프라이트+`<use>`로 통일(`.ic{width:1em;stroke:currentColor;stroke-width:1.75;fill:none}`, ★활성만 `.ic-fill`). OS별 이모지 편차 제거·클린 미니멀 완성. 색 포인트는 h1 🎮 1곳(accent)만, 나머지 단색. AGENTS.md에 신규 이모지 금지 명문화 권고. 분할: ①헤더/토글/임박/위시 ②카드·모달 메타·액션 ③build.js SEO. DESIGN_NOTES 13:10 상세 스펙(symbol path 포함). 우선순위 높음
 - [디자이너 2026-06-02 13:01·외형모드 / 기획자 06-03 06:11 → **큐 3순위 승격**(#3 카테고리 악센트와 묶음)] **[높음·캘린더 임팩트] 캘린더 빈 셀이 페이지 배경(#0f1115)과 동일해 격자가 "검은 공백"으로 보임 → 셀 면 한 톤 띄우기** — `.calendar-grid .day{background:var(--bg)=#0f1115}`라 출시 없는 셀이 body 배경에 녹아 빈 달 격자가 텅 빈 검정. 빈 셀 `background→#161922`·`border→rgba(255,255,255,0.05)` hairline + 캘린더 컨테이너에 `background:#13151b;border-radius:14px;padding:14px` 패널 카드. CSS 위주, 신규 토큰 1~2개. 우선순위 높음
