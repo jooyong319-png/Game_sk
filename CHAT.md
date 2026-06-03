@@ -1,3 +1,10 @@
+## [2026-06-03 13:20] [개발자]
+완료: **[외형·리스트·보통] 리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 카드 좌상단 리본** (큐 1순위)
+카드 상단 `.cardBanner`가 카테고리 단색 tint라 밋밋하고 D-DAY가 amber border로만 구분되던 문제 해소. (a) `.cardBanner`를 카테고리색 세로 그라데이션(`linear-gradient(180deg, var(--cat), color-mix(in srgb,var(--cat) 34%,transparent))`, 단색 `var(--cat)` 폴백 선행)으로 — 배너에 인라인 `--cat` 주입. (b) D-DAY(diff 0) 카드 좌상단에 카테고리색 리본 배지(`.ddayRibbon`, radius 0 0 8px 0). 배너 이모지는 채도 높아진 배너 대비 흰색화.
+변경된 파일: components/ListView.tsx (+3/−2), components/ListView.module.css (+20/−1)
+비고: CATEGORY_META 4색 단일 출처 재사용(신규 임의 색 0)·`.released`(과거카드 약화)·`.imminent`와 무충돌(리본은 D-DAY만·`.item` overflow:hidden 내부). TypeScript strict 유지(any 0, CSSProperties 캐스트). esbuild tsx 트랜스폼 OK·CSS brace 38/38. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 리스트 카드 배너 세로 그라데이션·D-DAY 리본·과거('출시됨') 카드 약화 무충돌·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
+
+
 ## [2026-06-03 12:30] [기획자]
 TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
 완료: 1순위 '[외형·상세] `/game/[id]` 카테고리색 라디얼 백드롭' — 개발자 12:20 완료(a7cc251, .detail-backdrop 인라인 radial-gradient)·QA 11:48 라이브 ✅(카테고리색 글로우·상단 4px 바 동톤·가로 오버플로 0·콘솔 #418/#423/#425 0건) → 완료한 기능 이동(개발자 큐 5→4 반영 확인).
@@ -211,19 +218,3 @@ IDEAS 보관: 디자이너 01:05 인벤#1(핫카드+카운트다운, 데이터 �
 데스크톱 1440: ⚠️ (라이브 JS 렌더 정상·하이드레이션 7건 여전)
 모바일 390: ⚠️ (Chrome resize 미반영 innerWidth 1920·matchMedia480 false → 라이브 실측 불가, 소스검증 갈음)
 상세: 콘솔 #425×3·#418×3·#423×1=7건 재현(2회·캐시버스트 동일). 라이브 SSR raw HTML 구버전 잔존('불러오는 중...'·기간 기본 '앞으로 1년') → f021717 미배포 추정(Vercel 빌드 지연/실패?). /game/[id] D-day 배지·카테고리 상단바 SSR 정상('출시됨'). 헬스 ✅: /(h1 🎮)·sitemap.xml(xml)·robots·/new-servers(서버12).
-
-## [2026-06-03 04:20] [개발자]
-완료: 1순위 **[버그·SEO·동작] React 하이드레이션 에러 7건/로드 해소 (#418/#423/#425, 날짜 의존 SSR↔CSR 불일치)**. 원인=클라 컴포넌트들이 렌더 중 `new Date()`(현재 시각)에 의존 → 정적 빌드(SSR) 날짜와 클라 현재 날짜가 달라 D-day·'오늘' 셀·캘린더 커서 월·요일/D-day 텍스트가 불일치(#423로 루트 클라 재렌더·플래시·SSR SEO 손실). 해결=`page.tsx`(서버)에서 `serverNow=new Date().toISOString()`를 `<Home serverNow>` prop 주입 → Home에 `now` state(초기값 serverNow)를 두고 SSR/첫 클라 렌더가 동일 serverNow를 쓰게 함(서버 HTML==첫 렌더, 불일치 0). mount 직후 `useEffect` 1회로 실제 `new Date()`/이번 달 교체(하이드레이션 이후라 에러 아님). `now:Date`를 CalendarView·ListView에 스레딩, filteredGames/imminent/MonthTabs도 now 기준. HeroStrip(imminent에서 diff 수령)·GameModal·/game/[id](서버 정적)은 초기 SSR DOM 밖이라 무영향.
-변경된 파일: app/page.tsx(+2)·components/Home.tsx(+21/−10)·components/CalendarView.tsx(+6/−5)·components/ListView.tsx(+4/−3)
-비고: TypeScript strict 유지(any 0, serverNow:string·now:Date 명시). esbuild(tsx) 6파일 트랜스폼 OK. 로컬 빌드는 sandbox 디스크 제한 → Vercel typecheck+build 검증 위임. 큐 5→4(2~5순위 한 칸씩 당김). **QA님: gcalen.com DevTools 콘솔 #418/#423/#425 0건 + view-source 초기 SSR HTML에 캘린더 그리드/D-day 노드 존재(SEO 보존)·'불러오는 중' 플래시 제거 실측 부탁.**
-
-## [2026-06-03 04:00] [기획자]
-TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
-완료 처리: 직전 1순위 [외형·모바일·높음] Filters @media(≤480px) 모바일 블록 신설(검색 풀폭+셀렉트 2×2+위시 풀폭) — 개발자 03:20 출고·QA 03:44 소스검증(Chrome resize 뷰포트 미반영→소스 갈음) → 완료한 기능 이동(개발자 큐 5→4).
-추가(5순위): - [외형·캘린더 범례] 카테고리 범례 8px 점+회색 텍스트(#aaa) → 카테고리 tint 미니 칩 (디자이너 01:05 데스크#2, components/CalendarView.tsx·CalendarView.module.css)
-잔여 큐 1~5(전부 Next app/·components/): ①하이드레이션 에러 7건/로드 해소(버그·SEO·동작) ②임박 스트립 글로우(데스크톱 한정) ③/game/[id] "같은 시기 출시" 관련게임 미니카드 그리드 ④리스트 카드 배너 카테고리색 그라데이션+D-DAY 리본 ⑤캘린더 범례 tint 칩
-QA 03:44 재확인: 하이드레이션 #418/#423/#425 7건/로드 미해소 → 큐 1순위 대기.
-사용자 요청 처리: 활성 0(SEO 보류 — 안 건드림). 3사이클 정체 0.
-IDEAS 정리: 완료된 01:05 IDEA 2건(구 accent 전 표면 통일·Filters 모바일 블록) 제거(개발자 출고 반영).
-a11y/리팩토링 제안 0건 큐잉 → IDEAS 보관 (외형 모드). 디자이너 01:05 데스크#3(필터 border/radius 토큰 정렬)은 일관성·리팩토링 성격이라 큐 X·IDEAS 보류.
-

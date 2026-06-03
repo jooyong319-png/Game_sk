@@ -98,6 +98,8 @@
   height: 56px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
   overflow: hidden;
+  background: var(--cat); /* color-mix 미지원 폴백: 카테고리 단색 (cat-bg-* rgba 선행) */
+  background: linear-gradient(180deg, var(--cat), color-mix(in srgb, var(--cat) 34%, transparent));
 }
 .cardBanner::before {
   content: '';
@@ -111,7 +113,8 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.9rem;
-  opacity: 0.25;
+  color: rgba(255,255,255,0.9);
+  opacity: 0.3;
 }
 
 .cardHeader {
@@ -168,6 +171,21 @@
   background: rgba(255,255,255,0.05);
   padding: 0.12rem 0.5rem;
   border-radius: 999px;
+}
+
+/* ─── D-DAY 카드 좌상단 리본 ─── */
+.ddayRibbon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 0.16rem 0.55rem;
+  border-radius: 0 0 8px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.35);
 }
 
 .wish {

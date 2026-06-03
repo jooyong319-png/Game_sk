@@ -1,5 +1,5 @@
 'use client';
-import { useMemo } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
@@ -88,6 +88,7 @@ export function ListView({ games, wishlist, onPick, now }: Props) {
 
                 return (
                   <li key={g.id} className={`${styles.item} ${imminent ? styles.imminent : ''} ${released ? styles.released : ''}`}>
+                    {diff === 0 && <span className={styles.ddayRibbon} style={{ background: cat.color }}>D-DAY</span>}
                     <button
                       type="button"
                       className={`${styles.wish} ${isWished ? styles.wishOn : ''}`}
@@ -98,7 +99,7 @@ export function ListView({ games, wishlist, onPick, now }: Props) {
                       <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
                     </button>
                     <button type="button" className={styles.cardLink} onClick={() => onPick(g.id)}>
-                      <div className={`${styles.cardBanner} cat-bg-${g.category}`}>
+                      <div className={`${styles.cardBanner} cat-bg-${g.category}`} style={{ '--cat': cat.color } as CSSProperties}>
                         <span className={styles.cardBannerEmoji}>{cat.emoji}</span>
                       </div>
                       <div className={styles.cardHeader}>
