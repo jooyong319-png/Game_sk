@@ -68,6 +68,8 @@ a:hover { text-decoration: underline; }
 @media (max-width: 480px) {
   .site-header h1 { font-size: 1.8rem; }
   .site-header .site-tagline { font-size: 1rem; }
+  .game-detail { padding: 1.2rem 1.1rem 1.6rem; }
+  .game-detail h2 { font-size: 1.5rem; }
 }
 .site-footer {
   text-align: center;
@@ -121,6 +123,30 @@ a:hover { text-decoration: underline; }
 .game-detail .detail-meta strong { flex: 0 0 4.5em; color: #888; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0; }
 .game-detail .back-link { display: inline-block; margin-bottom: 1rem; color: var(--text-faint); }
 .game-detail .back-link:hover { color: var(--accent); }
+
+/* 상세 하단 액션 — 다크 outline pill (캘린더 추가 · 공식 출처) */
+.detail-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.detail-actions .gcal-link,
+.detail-actions .detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.detail-actions .gcal-link:hover,
+.detail-actions .detail-link:hover,
+.detail-actions .gcal-link:focus-visible,
+.detail-actions .detail-link:focus-visible {
+  border-color: var(--accent);
+  background: rgba(91, 157, 255, 0.1);
+}
 
 /* ─── 상세 "같은 시기 출시" 관련 게임 그리드 ─── */
 .detail-related { max-width: 700px; margin: 1.5rem auto 0; }

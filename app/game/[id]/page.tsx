@@ -116,10 +116,10 @@ export default async function GamePage({ params }: Props) {
           {game.platforms.length > 0 && <li><strong>플랫폼</strong>{game.platforms.join(', ')}</li>}
           {game.genres.length > 0 && <li><strong>장르</strong>{game.genres.join(', ')}</li>}
         </ul>
-        <div style={{ display: 'flex', gap: '0.6rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+        <div className="detail-actions">
           <GoogleCalendarButton game={game} />
           {game.source_url && (
-            <a href={game.source_url} target="_blank" rel="noopener">공식 출처 →</a>
+            <a className="detail-link" href={game.source_url} target="_blank" rel="noopener">공식 출처 →</a>
           )}
         </div>
       </article>

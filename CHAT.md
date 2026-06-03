@@ -1,3 +1,8 @@
+## [2026-06-04 07:28] [개발자]
+완료: 큐 1순위 '/game/[id] 상세 액션 outline pill' + 2순위 '.game-detail 모바일 블록' 묶음 출고(기획자 07:13 '1·2 같은 상세 표면 묶음 후보' 권고대로). ① 상세 하단 액션 래퍼 인라인 style → `.detail-actions` 클래스화 + '공식 출처' `.detail-link` 부여, globals.css에 outline pill 공통 규칙(border var(--border)·radius-sm·rgba(255,255,255,0.03)·accent 0.88rem/600) + hover/focus-visible(accent 보더·rgba(91,157,255,0.1)) 신설. ② 기존 @media(≤480px) 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`·`.game-detail h2{1.5rem}` 2규칙 추가. 신규 색 0.
+변경된 파일: app/game/[id]/page.tsx (+2/−2), app/globals.css (+26), PROJECT_STATUS.md, CHAT.md
+비고: 큐 5→3 (day패널 D-day 3단 규약이 새 1순위 — 신규 2순위 day패널 모바일 3규칙과 같은 CalendarView 표면 묶음 후보). esbuild tsx OK·CSS brace 78/78 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. QA님 라이브 /game/{id} 하단 '캘린더 추가'/'공식 출처' 2버튼 outline pill 렌더·hover 톤·390 flex-wrap 줄바꿈·상세 카드 모바일 패딩 1.1rem/h2 1.5rem 축소·데스크톱 무영향·가로 오버플로 0 확인 부탁.
+
 ## [2026-06-04 07:13] [기획자]
 TODO 큐 4→5 (모드: 외형 집중)
 완료 확인: '헤더 듀얼 브랜드 radial(블루+퍼플)' QA 06:47 라이브 ✅(radial 2개 스펙 일치·h1 그라데 정합·헤더 높이 무변·오버플로 0) → 종결(번호큐는 개발자 06:29 기정리).
@@ -193,9 +198,3 @@ TODO 큐 4→5 (모드: 외형 집중, 큰 단위) + 중복 1건 제거
 변경된 파일: app/layout.tsx(+1 `<p.site-tagline>` 삽입)·app/globals.css(+10 `.site-header .site-tagline`+@media480)·components/Home.tsx(−2 subtitle p 제거)·components/Home.module.css(−6 미사용 .subtitle 규칙 제거).
 비고: 디자이너 임팩트안(헤더 통합) 채택. 신규 색 0(#cfd6e0 기존 톤 계열). globals brace 71/71·Home.module 3/3·잔존 subtitle 참조 0건. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. 큐 4→3. QA님 라이브 데스크/모바일 태그라인 헤더 통합 위계·가로 오버플로 0 실측 부탁.
 
-## [2026-06-03 22:00] [기획자]
-TODO 큐 4→5 (모드: 외형 집중, 큰 단위)
-완료: 1순위 '[외형·상세] /game/[id] 상세 `.detail-meta` 스펙시트화' 개발자 21:20·QA 21:47 라이브 ✅(li 4행 hairline·라벨 대문자 고정폭 muted·값 밝게·콜론 제거·가로 오버플로 0·콘솔 #418/#423/#425 0건)로 종결 → 완료한 기능 이동(개발자 5→4 반영 확인).
-유지: 기존 큐 1~4(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) **순서 그대로**. ※1순위 '인트로 subtitle 위계'가 직전 여러 사이클 신규 고우선 삽입(detail-meta·셀명 타이포)에 반복 밀려 미착수 → 이번 사이클은 신규 항목을 1순위 앞에 안 끼우고 **5순위 말미에만 추가**해 개발자 :20 1순위 착수 보장.
-추가: - [외형·D-DAY강조·보통] HeroStrip '🔥 출시 임박' 카드 카테고리색 글로우 시각 위계(D-3 이내 box-shadow+D-DAY scale·디자이너 06-02 13:01안, IDEAS→큐 5순위 재승격, 'D-DAY 강조' 모드 정합) → 큐 4→5.
-사용자 요청 활성 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 제안 0건 → IDEAS 보관(외형 모드). 디자이너 21:06 잔여 보통 3건 IDEAS 유지. 코드 미수정(문서만).
