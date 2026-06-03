@@ -153,6 +153,9 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-04 00:22 (기획자): **큐 5→5 + 사용자 활성 요청 2건 최우선 삽입.** 사용자(운영자)가 직접 요청: ①리스트뷰 기간 기본값 '전체(과거+미래)'→'오늘 이후'(과거는 기간 필터로 유지, 완전 제거 X — 사용자 확정), ②진입 시 캘린더 '오늘 날짜 셀'이 디폴트 선택돼 day-detail 패널('오늘 이후 출시')이 자동으로 떠 있게(현재 진입 직후 아래 리스트가 비어 보이는 문제). → USER_REQUESTS.md '활성'에 등재하고 **1·2순위로 등록**(사용자 요청 최우선 규칙). 기존 1~3(ViewToggle 모바일·리스트 장르 칩·통계줄 4색)은 3~5순위로 밀고, 직전 4·5순위(헤더 듀얼 radial·핫카드+카운트다운)는 '큐 소진 후 후보'로 보관(스펙 전량 보존). 양 작업 모두 **오늘(now) 하한은 mount 후 useEffect 계산으로 SSR 하이드레이션 안전**(7건 이력 회피) 명시. 리스트 하한은 캘린더 과거 달 탐색을 깨지 않게 '리스트 표시에만/기간 전체 선택 시 복원' 주의 표기. SEO 요청은 여전히 보류(안 건드림). 신규 BUGS 0. 개발자 :20 1순위(리스트 오늘이후) 착수 권장.
+
+
 > 갱신 2026-06-04 00:11 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '[외형·모바일] MonthTabs 가로 스크롤 어포던스 — 엣지 페이드 mask + scroll-snap' 개발자 23:28(1666b87) 완료·QA 23:45 라이브 ✅(`.tabs` 양끝 16px mask 페이드·`scroll-snap-type:x`·`.tab` scroll-snap-align:center·월탭 12개·데스크톱 무영향·가로 오버플로 0·콘솔 #418/#423/#425 0건)로 종결 → 번호큐엔 이미 미반영(개발자 23:28 5→4 정리), 23:55 사이클 prose의 'MonthTabs 1순위' 잔여 표기만 본 사이클서 정정. 현재 번호큐 1~4(ViewToggle 모바일 블록·리스트 장르 칩·통계줄 4색 분해·헤더 듀얼 radial) **순서 그대로 유지**(1순위 ViewToggle 보호 — 직전 여러 사이클 고우선 삽입에 반복 밀린 잔여분이라 신규는 5순위 말미에만 추가). 신규 **5순위**: [외형·하이라이트] "출시 임박" 최근접 1건 대형 핫카드 + 라이브 카운트다운(디자이너 06-03 01:05 인벤#1, IDEAS→큐, HeroStrip — 카운트다운 useEffect mount 가드로 하이드레이션 안전). 활성 사용자 요청 0(SEO 보류 — 안 건드림). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0(ViewToggle 1순위 승격 첫 사이클). a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만). 개발자 :20 1순위(ViewToggle) 착수 대기.
 
 
@@ -172,38 +175,53 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 
 
-1. **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (디자이너 06-03 09:05 모바일#2, IDEAS→큐, `components/ViewToggle.module.css`)
+1. **[사용자요청·리스트·높음] 리스트 기간 기본값 '전체(과거+미래)' → '오늘 이후' (과거는 기간 필터로 유지·완전 제거 X)** (사용자 06-04, `components/Home.tsx` `filters.days` 초기값 L23~28 + 기간 필터 로직 L112~ + `components/Filters.tsx` 기간 select)
+   - 문제: `useState<FilterState>({ days:0 ... })`(0=전체)+필터 로직이 "과거 게임은 항상 통과, days>0이면 미래 상한만 적용"이라 진입 시 리스트 최상단이 2025/과거 출시 게임. 사용자: "리스트는 오늘 날짜부터 나오게."
+   - 구현(큰 단위 한 번에): 기본 진입을 '오늘 이후'로 — `release_date >= 오늘(now)` 하한을 기본 적용. 과거 포함은 기간 필터에서 명시 선택 시에만(기간 옵션에 '전체(과거 포함)' 추가 또는 기존 옵션 확장)으로 분리 → **완전 제거가 아니라 기본만 오늘 이후**(사용자 확정). 하한 비교는 `now`(KST, mount 후 값) 기준 → 기존 now 패턴 재사용으로 SSR/하이드레이션 안전(신규 날짜의존 SSR 노드 0).
+   - 주의: `filteredGames`는 리스트·캘린더 공유 → 하한을 무조건 전역 적용하면 캘린더 과거 달 탐색 시 빈 셀이 됨. **하한은 리스트 표시에만 적용**하거나 기간 '전체' 선택 시 과거 복원되게 설계(개발자 판단). 캘린더 그리드 과거 달 셀은 종전대로 유지.
+   - 검증: `npm run typecheck`/`build` 무에러, 진입 시 리스트 첫 항목이 오늘 이후·기간 '전체' 선택 시 과거 복원·캘린더 과거 달 탐색 정상·콘솔 #418/#423/#425 0건.
+
+
+2. **[사용자요청·캘린더·높음] 진입 시 오늘 날짜 셀 디폴트 선택 → day-detail 패널('오늘 이후 출시') 자동 표시** (사용자 06-04, `components/CalendarView.tsx` `selectedISO` 초기값/`[cursor]` 해제 effect L59~70, `scrollIntoView` L67~70)
+   - 문제: `selectedISO`가 `null`로 시작 → 진입 직후 캘린더 아래 day-detail 패널 미표시 "사이트 들어오면 아래에 게임 리스트가 없음"(사용자 지적). 셀을 클릭해야만 '그날 이후 출시' 패널이 뜸. (캘린더가 현재 달로 열리고 오늘 셀 강조되는 건 이미 구현됨.)
+   - 구현(큰 단위 한 번에): mount 후(useEffect) `selectedISO`를 **오늘(KST) ISO**로 초기 세팅 → 진입 시 오늘 셀 선택 + 패널 '오늘 이후 출시 N건' 자동 노출. 단 (a)Home mount 시 calendarCursor를 이번 달로 교체하는 흐름이 `useEffect(()=>setSelectedISO(null),[cursor])`를 건드려 **초기 선택을 지움** → 해제 effect를 '사용자가 월 이동했을 때만' 동작하도록 보정(첫 mount·오늘 포함 달은 선택 유지). (b)`scrollIntoView`가 초기 자동선택에서도 발화하면 진입하자마자 페이지가 패널로 스크롤돼 거슬림 → **scrollIntoView는 사용자 클릭에만** 발화(초기 자동선택 제외). (c)오늘 ISO는 mount 후 계산(SSR 미출력)해 날짜의존 하이드레이션(7건 이력) 회피.
+   - 검증: `npm run typecheck`/`build` 무에러, 진입 시 오늘 셀 선택·패널 '오늘 이후 출시' 자동 표시·진입 스크롤 점프 없음·월 이동 시 선택 해제 정상·콘솔 #418/#423/#425 0건.
+
+
+3. **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (디자이너 06-03 09:05 모바일#2, IDEAS→큐, `components/ViewToggle.module.css`)
    - 문제: Filters·GameModal는 최근 모바일 블록 신설됐으나 ViewToggle만 `@media(max-width:480px)` 0건 → 390px서 캘린더/리스트 2버튼이 `0.5rem 1rem` 고정 패딩으로 가운데 작게 뭉쳐 터치 폭 좁음(Filters/GameModal 모바일 블록 신설 선례와 동형, 마지막 남은 미보유 컴포넌트).
    - 구현: `@media(max-width:480px){ .toggle{gap:0.5rem} .btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center} }` 신설 → 캘린더/리스트가 화면폭 2분할 풀폭 버튼(터치 면적↑·좌우 균형). 레이아웃만(신규 색 0), 데스크톱은 미디어쿼리 밖이라 무영향, tsx 무변경.
    - 검증: `npm run typecheck`/`build` 무에러, 모바일 ≤480px 2버튼 풀폭 2분할·데스크톱 무영향·CSS brace 균형 확인.
 
 
-2. **[외형·리스트·보통] 리스트 카드 장르 칩 — `genres[]` 무채색 pill 최대 3개 추가** (디자이너 06-03 09:05 인벤#1, IDEAS→큐, `components/ListView.tsx` + `components/ListView.module.css`)
+4. **[외형·리스트·보통] 리스트 카드 장르 칩 — `genres[]` 무채색 pill 최대 3개 추가** (디자이너 06-03 09:05 인벤#1, IDEAS→큐, `components/ListView.tsx` + `components/ListView.module.css`)
    - 문제: 인벤은 행마다 장르/키워드 칩으로 게임 성격을 한눈에 보여주나, 우린 `genres[]`(44/44 전부 보유)를 상세 "장르 :" 평문으로만 쓰고 리스트 카드엔 0건. 카테고리(색면) 외에 게임 성격 신호가 없음.
    - 구현(큰 단위 한 번에): `ListView.tsx` `.cardBody`의 `.desc` 위에 `{g.genres?.slice(0,3).map(t => <span key={t} className={styles.genreChip}>{t}</span>)}`를 `<div className={styles.genreChips}>`로 감싸 추가(genres 없으면 미렌더). `ListView.module.css`: `.genreChips{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.4rem}` + `.genreChip{font-size:0.7rem;color:#9aa3b2;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);padding:0.1rem 0.5rem;border-radius:999px}` 신설.
    - **무채색 칩**으로 카테고리 4색면과 위계 분리(카테고리=색면 / 장르=중성칩). 데이터 보유=리서처 선결 불필요. 큐 1순위 '리스트 배너 그라데+리본'과 동일 ListView 표면(배너=상단/장르칩=본문)이라 무충돌·묶음 후보.
    - 검증: `npm run typecheck`/`build` 무에러, 카드별 장르 칩 최대 3개·genres 없는 게임 미렌더·과거카드 약화(기출고)와 무충돌·CSS brace 균형 확인.
 
 
-3. **[외형·카테고리 시각차별화·보통] 메인 통계줄 "총 N개" 단일 회색 텍스트 → 카테고리 4색 인라인 카운트 분해** (디자이너 13:05 데스크#2, IDEAS→큐, `components/Home.tsx` 통계 노드 L161 + `components/Home.module.css` `.stats`)
+5. **[외형·카테고리 시각차별화·보통] 메인 통계줄 "총 N개" 단일 회색 텍스트 → 카테고리 4색 인라인 카운트 분해** (디자이너 13:05 데스크#2, IDEAS→큐, `components/Home.tsx` 통계 노드 L161 + `components/Home.module.css` `.stats`)
    - 문제: `Home.tsx`가 `<p className={styles.stats}>총 {filteredGames.length}개</p>`로 총합만 회색 한 줄(`.stats{color:#aaa;font-size:0.85rem;text-align:center}`). 데이터 규모/구성을 줄 자리인데 카테고리 분포를 색으로 못 읽음(캘린더 4색 범례와 정보 단절).
    - 구현(큰 단위 한 번에): stats 노드를 카테고리별 카운트 span으로 재작성 — 4개 카테고리(mobile_kr/pc_console_kr/global_aaa/new_server) 각각 `filteredGames.filter(g=>g.category===c).length`를 `<span style={{color: CATEGORY_META[c].color}}>{CATEGORY_META[c].short} {n}</span>`로, 가운뎃점(` · `)으로 연결 후 끝에 회색 `총 {total}개`. count 0인 카테고리는 미렌더(또는 흐림). `.stats{font-size:0.9rem;font-weight:500}`로 상향(text-align:center 유지). CATEGORY_META 4색(#81c784/#64b5f6/#ba68c8/#ff8a65) 단일 출처 재사용 → **신규 색 0**. 데이터 보유(filteredGames·category 전부)=리서처 선결 불필요.
    - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 통계줄 카테고리 4색 span·총합 회색·필터 변경 시 카운트 갱신·count 0 카테고리 처리·캘린더 범례와 색 정합 확인.
 
 
-4. **[외형·헤더 임팩트·보통] `.site-header::before` 백드롭 글로우 단일 블루 → 듀얼 브랜드 radial(블루+퍼플)로 히어로 밴드 강화** (디자이너 13:05 데스크#3, IDEAS→큐, `app/globals.css` `.site-header::before` L36~)
+### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
+> 2026-06-04 00:22 사용자 요청 2건(리스트 오늘이후·캘린더 오늘셀 자동선택)을 1·2순위로 삽입 → 직전 4·5순위(헤더 듀얼 radial·핫카드+카운트다운)가 후보로 밀림. 외형 모드 유지·다음 큐 우선 후보. 전체 스펙 보존:
+
+- **[외형·헤더 임팩트·보통] `.site-header::before` 백드롭 글로우 단일 블루 → 듀얼 브랜드 radial(블루+퍼플)로 히어로 밴드 강화** (디자이너 13:05 데스크#3, IDEAS→큐, `app/globals.css` `.site-header::before` L36~)
    - 문제: h1 타이틀은 블루→퍼플 `--accent-grad`(#5b9dff→#c98ad6) 그라데 텍스트인데 헤더 백드롭은 `radial-gradient(... rgba(91,157,255,0.10) ...)` 중앙 단일 블루뿐 → 퍼플(#c98ad6=`--accent-2`)이 배경에 없어 헤더 면이 평평·블루 일변, h1 그라데와 정합 약함.
    - 구현(큰 단위 한 번에): `.site-header::before` background를 듀얼 radial로 — `radial-gradient(50% 120% at 25% 0%, rgba(91,157,255,0.12), transparent 65%), radial-gradient(50% 120% at 78% 0%, rgba(201,138,214,0.10), transparent 65%)`(좌=브랜드 블루·우=`--accent-2` 퍼플, 둘 다 기존 토큰색의 rgba). 헤더 높이/패딩/레이아웃 무변(::before 배경만), `.site-tagline`(23:20 통합분)·h1 그라데와 색 정합. **신규 색 0**(기존 accent/accent-2 재사용).
    - 검증: `npm run typecheck`/`build` 무에러, 헤더 좌상 블루·우상 퍼플 듀얼 글로우가 h1 블루→퍼플 그라데와 정합·헤더 높이 무변·가로 오버플로 0·CSS brace 균형 확인.
 
 
-5. **[외형·하이라이트·D-DAY강조·보통] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건 대형 핫카드 승격 + 라이브 카운트다운** (디자이너 06-03 01:05 인벤#1, IDEAS→큐, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
+- **[외형·하이라이트·D-DAY강조·보통] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건 대형 핫카드 승격 + 라이브 카운트다운** (디자이너 06-03 01:05 인벤#1, IDEAS→큐, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
    - 문제: 임박 스트립 카드가 카테고리/D-DAY 글로우(기출고)로 위계는 생겼으나 전부 동일 크기 균일 그리드 — 인벤 우상단 '핫카드'(최근접 1건 대형+라이브 카운트다운) 같은 단일 시각 정점이 없어 "가장 임박한 1건"이 한눈에 안 꽂힘.
    - 구현(큰 단위 한 번에): 정렬상 첫 카드(최근접, diff 0~1)를 `.hotCard`로 `grid-column:span 2` 확대(게임명 1.5rem·`.dday` 1.8rem) + 그 아래 `HH:MM:SS` 라이브 카운트다운(1rem/700 `--accent-warm` #f5a623, 1초 `setInterval`). 카테고리색 radial glow는 기출고 `.card::before`/glow 클래스 재사용(**신규 색 0**). **HeroStrip를 `'use client'`로 전환하거나 카운트다운만 별도 클라 자식 컴포넌트로 분리**하고, 카운트다운은 **mount 후(useEffect)에만 렌더(SSR 미출력)**해 날짜의존 하이드레이션 미스매치(05-31~06-03 #418/#423/#425 7건 이력) 재발을 차단. 임박 0건 시 미렌더·D-DAY(diff 0)는 "출시!" 등 정적 라벨로 폴백. 데이터 무관(출시일시만 사용·리서처 선결 불필요).
    - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 첫 카드 2칸 대형·HH:MM:SS 1초 갱신·SSR 콘솔 #418/#423/#425 0건(mount 가드)·모바일 ≤480px 컴팩트 행 레이아웃 무붕괴·reduced-motion 처리·임박 0건 미렌더 확인.
 
 
-### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
 [보통] 디자이너 21:06 데스크#2 HeroStrip 섹션 타이틀 '🔥 출시 임박' warm 좌띠 강화(`.title` 1.3rem+border-left 3px warm), [보통] HeroStrip 모바일 컴팩트 행 카테고리 좌띠 강화(≤480px `.card` border-left 3px), [보통] `--accent-grad` 소비 — 뷰토글·MonthTabs·퀵칩 active 브랜드 그라데이션. — a11y 마이크로 트윅·리팩토링/토큰 통일은 외형 모드 동안 큐 진입 금지(IDEAS 보관만).
 
 ## 알려진 버그 (BUGS)
@@ -240,7 +258,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - [디자이너 2026-06-03 05:05·외형모드·데스크#1] **[높음·리스트 위계] 리스트 과거('출시됨') 카드 시각 약화 — 다가오는 신작이 먼저 눈에** (`components/ListView.tsx`+`ListView.module.css`) — 기간 기본 '전체(과거+미래)'라 리스트 최상단이 2025/과거 출시됨 카드인데 미래 게임과 시각 비중 동일(`.imminent` amber만 강조·과거 약화 0). 라이브 데스크 실측 확인. 과거 게임 `<li>`에 `.released` 부여 → `.released{opacity:0.62}`+`.released .cardBanner{filter:saturate(0.55)}`+'출시됨'을 회색 미니칩(`.releasedTag` font 0.7rem·#888·rgba(255,255,255,0.05) 999px), `.released:hover{opacity:1}`로 탐색성 유지. CSS 위주·변경량 작음. 우선순위 높음
 - [디자이너 2026-06-03 05:05·외형모드·모바일#1] **[높음·모바일 필수] GameModal @media(max-width:480px) 블록 신설 — 유일하게 모바일 블록 부재** (`components/GameModal.module.css`) — 타 전 컴포넌트엔 모바일 블록 있으나 GameModal만 0건(직전 'Filters 모바일 블록 부재'와 동형). 390px서 `.modal{padding:1.6rem;max-width:520px}`·`.title{1.4rem}`·`.image{100px}`·`.imageEmoji{3rem}` 과대. 신설: `.overlay{padding:0.6rem}`·`.modal{padding:1.2rem;border-radius:12px;max-height:92vh}`·`.title{1.2rem}`·`.image{height:78px}`·`.imageEmoji{2.2rem}`·`.actions{gap:0.4rem}`. 우선순위 높음
 
-- [디자이너 2026-06-03 01:05·인벤#1·외형모드 / 기획자 06-04 00:11 → **큐 5순위 승격**] **[보통·핫카드] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건을 대형 핫카드로 승격 + 라이브 HH:MM:SS 카운트다운** (`components/HeroStrip.tsx`+`HeroStrip.module.css`) — 인벤 우상단 핫카드(라이브 카운트다운) 다크 재해석. 첫 카드 `grid-column:span 2`로 확대(게임명 1.5rem·`.dday` 1.8rem 아래 `HH:MM:SS` 1rem/700 #f5a623·1초 setInterval), 카테고리색 radial glow는 `.card::before` 재사용. **데이터 무관(출시일시만 보유).** 큐 2순위 '임박 스트립 글로우'와 별개 개념(글로우=균일 카드 강조/핫카드=최근접 1건 대형화)이며 공존 가능 → 글로우 출고 후 다음 큐 후보. 우선순위 보통
+- [디자이너 2026-06-03 01:05·인벤#1·외형모드 / 기획자 06-04 → 큐 5순위 승격했다 사용자요청에 밀려 '큐 소진 후 후보'로 이동] **[보통·핫카드] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건을 대형 핫카드로 승격 + 라이브 HH:MM:SS 카운트다운** (`components/HeroStrip.tsx`+`HeroStrip.module.css`) — 인벤 우상단 핫카드(라이브 카운트다운) 다크 재해석. 첫 카드 `grid-column:span 2`로 확대(게임명 1.5rem·`.dday` 1.8rem 아래 `HH:MM:SS` 1rem/700 #f5a623·1초 setInterval), 카테고리색 radial glow는 `.card::before` 재사용. **데이터 무관(출시일시만 보유).** 큐 2순위 '임박 스트립 글로우'와 별개 개념(글로우=균일 카드 강조/핫카드=최근접 1건 대형화)이며 공존 가능 → 글로우 출고 후 다음 큐 후보. 우선순위 보통
 - [디자이너 2026-06-03 01:05·인벤#2·외형모드 / **데이터 선결**] [보통] 이벤트 타입 색상 배지(출시/테스트/얼리액세스/쇼케이스 + region 플래그) — 리스트 카드/캘린더 셀에 `eventType` 마이크로 배지 1개(테스트 #4dd0e1·얼리 #9575cd·쇼케이스 #f5a623·업데이트 #78909c, 카테고리 4색과 톤 분리). **선결: data/games.json `eventType`(+선택 `region`) 필드 — 리서처/기획자 결정 필요.** 데이터 추가 전 큐 진입 보류. 우선순위 보통
 - [디자이너 2026-06-03 01:05·데스크#3·외형모드 / 기획자 큐X·IDEAS] [낮음·일관성] Filters 검색창/셀렉트/위시 버튼 border `#2a2e38`·radius 6px → `var(--border)`·`var(--radius-sm)`(8px) 토큰 정렬 — 일관성·리팩토링 성격이라 외형 모드 동안 큐 진입 X, IDEAS 보관. 우선순위 낮음
 
@@ -313,6 +331,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-04 00:22 [기획자] **사용자 활성 요청 2건 최우선 등록(큐 1·2순위).** 운영자 직접 요청: ①리스트 기간 기본 '전체'→'오늘 이후'(과거는 기간 필터로 유지·완전 제거 X), ②진입 시 캘린더 오늘 날짜 셀 디폴트 선택→day-detail 패널('오늘 이후 출시') 자동 표시(진입 직후 아래 리스트 빈 문제 해소). USER_REQUESTS.md '활성' 등재. 기존 큐 1~3(ViewToggle·장르칩·통계줄 4색) 3~5순위로 밀고, 직전 4·5(헤더 듀얼 radial·핫카드)는 '큐 소진 후 후보'로 스펙 보존 이동. 양 작업 모두 오늘 하한은 useEffect(mount 후) 계산으로 하이드레이션 안전 명시·리스트 하한은 캘린더 과거 달 무파손 주의. SEO 보류 유지. 코드 미수정(문서만).
 - 2026-06-04 00:11 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). 직전 1순위 'MonthTabs 가로 스크롤 어포던스(엣지 페이드 mask+scroll-snap)' 개발자 23:28(1666b87)·QA 23:45 라이브 ✅ 종결(번호큐 이미 미반영, 23:55 prose 잔여표기만 정정). 번호큐 1~4(ViewToggle 모바일 블록·리스트 장르 칩·통계줄 4색 분해·헤더 듀얼 radial) 순서 유지(1순위 ViewToggle 보호). IDEAS 외형 1건 5순위 승격: ⑤"출시 임박" 최근접 1건 대형 핫카드 + 라이브 HH:MM:SS 카운트다운(HeroStrip.tsx+module.css, 디자이너 06-03 01:05 인벤#1 — 카운트다운 useEffect mount 가드로 SSR 하이드레이션 미스매치 방지). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·신규 디자이너 제안 0(최신 21:06 기처리)·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-03 23:55 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위) + **중복 1건 제거**. 직전 1순위 '[외형·헤더] 인트로 태그라인 헤더 통합' 개발자 23:20(4d31340)·QA 23:40 라이브 ✅ 종결 → 완료한 기능 이동. **중복 정리**: 직전 4순위 'HeroStrip 임박 카드 카테고리색 글로우'는 repo 교차검증 결과 **이미 출고 완료**(HeroStrip.tsx glowDday/glowCat 분기+--cat 주입·module.css color-mix 외곽 글로우·D-DAY #ff7a59 scale(1.02)·@media≤480 리셋·reduced-motion 전부 존재, 디자이너 라이브도 '4글로우카드' 확인) → 22:00 IDEAS→큐 재승격이 중복 등록이었음, 큐 제거·IDEAS 종결. 기존 큐 1~3(MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 순서 유지(1순위 보호). IDEAS 외형 2건 4·5순위 승격: ④통계줄 카테고리 4색 분해(Home.tsx, 13:05 데스크#2) ⑤.site-header::before 듀얼 브랜드 radial(globals.css, 13:05 데스크#3). 활성 사용자 요청 0(SEO 보류)·미해결 코드 버그 0·3사이클 정체 0·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-03 23:20 [개발자] 큐 1순위 '[외형·헤더] 인트로 태그라인 헤더 통합' 구현 완료 → 완료한 기능 이동, 큐 4→3. `Home.tsx`의 `.subtitle` `<p>` 제거 → `layout.tsx` `.site-header` h1 아래 `<p.site-tagline>`로 이동, `globals.css` `.site-header .site-tagline`(position:relative·#cfd6e0·1.1rem·500·max-width 30rem, glow 공유) + @media480 1rem 신설, `Home.module.css` 미사용 `.subtitle` 제거. 신규 색 0·globals brace 71/71·subtitle 잔존 참조 0·4파일. 잔여 큐 1~3: MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩 + 4순위 HeroStrip 글로우. Vercel 위임. QA 라이브 검증 대기.
