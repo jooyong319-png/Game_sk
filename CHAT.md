@@ -1,3 +1,10 @@
+## [2026-06-03 10:20] [개발자]
+완료: **[외형·캘린더·보통] 캘린더 컨테이너 패널 카드화 + 빈 셀 hairline 보강** (큐 1순위)
+`CalendarView.module.css` `.view`(CalendarView.tsx L97 section 루트)에 `background:#13151b; border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:14px` 패널 카드 부여(기존 `margin:1rem 0` 유지) → 격자가 페이지에 떠 있던 것을 면 카드로 감쌈. 모바일 ≤480px에 `.view{padding:9px; border-radius:12px}` 비례 축소. 빈 셀 hairline은 기존 그리드 gap 배경(`.grid` gap:1px·#2a2e38)이 셀 구분선으로 현행 유지. today/임박/선택·cellHas 카테고리 좌띠는 셀 단위라 무영향(무회귀).
+변경된 파일: components/CalendarView.module.css (+8/−1, CSS-only)
+비고: 신규 색 0(패널 톤 #13151b 재사용)·CSS brace 63/63 균형·tsx 무변경. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 데스크·모바일 캘린더 패널 카드 묶음·가로 오버플로 0·강조 셀 무회귀 실측 부탁.
+
+
 ## [2026-06-03 09:20] [리서처]
 리서치 완료 (4개 카테고리)
 - 모바일 6→0, PC/콘솔 3→0, 글로벌 5→0, 신규서버 8→0 (후보→통과)
@@ -209,10 +216,3 @@ a11y/리팩토링 제안 0건 큐잉 → IDEAS 보관 (외형 모드). 디자이
 모바일 주요: Filters에 @media(max-width:480px) 블록 부재 → 검색+셀렉트3+위시 불규칙 줄바꿈, 풀폭검색+2×2 셀렉트 블록 신설 제안. (Chrome resize 미반영 여전 → 소스검증)
 인벤 참고: 핫카드+라이브 카운트다운(임박 1건 대형화, 데이터 무관)·이벤트 타입 색배지(테스트/얼리액세스/쇼케이스, 데이터 선결).
 DESIGN_NOTES에 6개 제안 추가(데스크3+모바일1+인벤2), 임팩트 큰 2건(accent 통일·모바일 필터) PROJECT_STATUS IDEAS 등재. 코드 미수정(문서만).
-
-## [2026-06-03 00:47] [QA]
-검증 대상: 요일 헤더(.dayHead) 주말 색 미적용 fix (개발자 06-03)
-데스크톱 1440: ⚠️ (요일헤더 fix 자체는 ✅, 단 콘솔 React 하이드레이션 에러 신규 발견)
-모바일 390: ⚠️ (Chrome resize 뷰포트 미반영·innerWidth 1920 고정·matchMedia(480)=false → 헤더색은 비미디어 CSS라 동일 적용 확인, 모바일 전용 렌더 실측 불가)
-상세: 라이브 Chrome 실측 — 요일 헤더 일=rgb(229,115,115)·토=rgb(122,167,255)·평일=rgb(136,136,136)로 **fix 확정**(셀 날짜와 동일 톤). today 채움 원형(accent bg·반경50%·"3")·셀날짜 주말색·overflowX 0·캘린더 125셀 정상. **★단 콘솔에 React 하이드레이션 에러 #418/#423/#425 7건이 매 로드 재현**(직전 사이클 '콘솔 0' 대비 신규) → BUGS [공통] 등록. 추정: 날짜 의존 SSR/CSR 불일치(#423로 루트 클라 재렌더·'불러오는 중' 플래시). 헬스체크 ✅: /(h1 🎮 게임 출시 캘린더)·/sitemap.xml(application/xml)·/robots.txt·/game/sol-enchant-20260618·/new-servers(서버 12개) 정상.
-
