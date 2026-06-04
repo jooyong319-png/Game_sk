@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-03T21:10:23+09:00",
-  "last_researched_by": "Researcher Claude 2026-06-03T21:10:23+09:00",
+  "last_updated": "2026-06-04T09:15:00+09:00",
+  "last_researched_by": "Researcher Claude 2026-06-04T09:15:00+09:00",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -949,6 +949,114 @@
       ],
       "image_url": null,
       "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=304931"
+    },
+    {
+      "id": "granblue-relink-endless-ragnarok-2026",
+      "name_ko": "그랑블루 판타지 리링크: 엔드리스 라그나로크",
+      "name_en": "Granblue Fantasy: Relink - Endless Ragnarok",
+      "release_date": "2026-07-09",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "PS4",
+        "Switch 2",
+        "PC"
+      ],
+      "developer": "Cygames",
+      "publisher": "Cygames",
+      "description": "그랑블루 판타지 리링크의 대형 확장판. 신규 스토리·캐릭터·소환수 시스템·크로스플레이 멀티 추가. 단독 구매 또는 기존 소유자용 업그레이드 키트로 출시.",
+      "genres": [
+        "액션 RPG",
+        "확장판"
+      ],
+      "image_url": null,
+      "source_url": "https://www.cygames.co.jp/en/news/id-24753"
+    },
+    {
+      "id": "marvels-wolverine-2026",
+      "name_ko": "마블 울버린",
+      "name_en": "Marvel's Wolverine",
+      "release_date": "2026-09-15",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5"
+      ],
+      "developer": "Insomniac Games",
+      "publisher": "Sony Interactive Entertainment",
+      "description": "인섬니악 게임즈의 울버린 단독 액션 어드벤처. 6월 스테이트 오브 플레이에서 게임플레이 공개와 함께 출시일 확정. PS5 독점.",
+      "genres": [
+        "액션",
+        "어드벤처"
+      ],
+      "image_url": null,
+      "source_url": "https://blog.playstation.com/2026/06/02/marvels-wolverine-new-gameplay-story-details-from-state-of-play/"
+    },
+    {
+      "id": "onimusha-way-of-the-sword-2026",
+      "name_ko": "귀무자: 검의 길",
+      "name_en": "Onimusha: Way of the Sword",
+      "release_date": "2026-09-25",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "Xbox Series X/S",
+        "PC"
+      ],
+      "developer": "Capcom",
+      "publisher": "Capcom",
+      "description": "귀무자 시리즈 20년 만의 신작. 미야모토 무사시가 주인공인 다크 판타지 검극 액션. 데모 배포 중.",
+      "genres": [
+        "액션",
+        "다크 판타지"
+      ],
+      "image_url": null,
+      "source_url": "https://www.capcom.co.jp/ir/english/news/html/e260603.html"
+    },
+    {
+      "id": "ace-combat-8-wings-of-theve-2026",
+      "name_ko": "에이스 컴뱃 8: 윙즈 오브 테베",
+      "name_en": "Ace Combat 8: Wings of Theve",
+      "release_date": "2026-10-02",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "Xbox Series X/S",
+        "PC"
+      ],
+      "developer": "Bandai Namco Aces",
+      "publisher": "Bandai Namco",
+      "description": "7년 만의 에이스 컴뱃 메인 시리즈 신작. 언리얼 엔진 5 기반. 디럭스 에디션은 9/28 얼리액세스.",
+      "genres": [
+        "플라이트 슈팅",
+        "액션"
+      ],
+      "image_url": null,
+      "source_url": "https://blog.playstation.com/2026/06/02/ace-combat-8-wings-of-theve-launches-globally-october-2-on-ps5/"
+    },
+    {
+      "id": "phantom-blade-zero-2026",
+      "name_ko": "팬텀 블레이드 제로",
+      "name_en": "Phantom Blade Zero",
+      "release_date": "2026-10-29",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "PC"
+      ],
+      "developer": "S-GAME",
+      "publisher": "S-GAME",
+      "description": "중국 S-GAME의 무협 액션 RPG. 당초 9/9 출시 예정이었으나 완성도 향상을 위해 10/29로 50일 연기 확정.",
+      "genres": [
+        "액션 RPG",
+        "무협"
+      ],
+      "image_url": null,
+      "source_url": "https://www.gematsu.com/2026/06/phantom-blade-zero-delayed-to-october-29"
     }
   ]
 }
