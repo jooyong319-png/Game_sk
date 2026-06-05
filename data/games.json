@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-04T12:15:00+09:00",
-  "last_researched_by": "Researcher Claude",
+  "last_updated": "2026-06-05T09:15:00+09:00",
+  "last_researched_by": "리서처 Claude (2026-06-05 09:15 사이클)",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -484,7 +484,7 @@
       "id": "hell-let-loose-vietnam-2026",
       "name_ko": "헬 렛 루즈: 베트남",
       "name_en": "Hell Let Loose: Vietnam",
-      "release_date": "2026-06-18",
+      "release_date": "2026-08-13",
       "release_date_approx": false,
       "category": "global_aaa",
       "platforms": [
@@ -494,13 +494,13 @@
       ],
       "developer": "Expression Games",
       "publisher": "Team17",
-      "description": "베트남 전쟁 배경 50대50 대규모 멀티플레이어 밀리터리 FPS.",
+      "description": "베트남 전쟁 배경 50대50 대규모 멀티플레이어 밀리터리 FPS. 당초 6/18 예정에서 완성도 제고 위해 8/13으로 연기(공식 발표).",
       "genres": [
         "FPS",
         "밀리터리"
       ],
       "image_url": null,
-      "source_url": "https://en.wikipedia.org/wiki/Hell_Let_Loose:_Vietnam"
+      "source_url": "https://www.hellletloose.com/blog/hell-let-loose-vietnam-release-date-update"
     },
     {
       "id": "sol-enchant-20260618",
@@ -590,9 +590,9 @@
     },
     {
       "id": "odin-q-2026",
-      "name_ko": "오딘Q (2026년 2분기 목표)",
+      "name_ko": "오딘Q (2026년 3분기 목표)",
       "name_en": "ODIN Q",
-      "release_date": "2026-06-30",
+      "release_date": "2026-09-30",
       "release_date_approx": true,
       "category": "mobile_kr",
       "platforms": [
@@ -602,12 +602,12 @@
       ],
       "developer": "라이온하트 스튜디오",
       "publisher": "카카오게임즈",
-      "description": "'오딘' 세계관 계승 언리얼5 기반 크로스플랫폼 MMORPG. 2026년 2분기 출시 목표(날짜 미확정).",
+      "description": "'오딘' 세계관 계승 언리얼5 기반 크로스플랫폼 MMORPG. 글로벌 원빌드 전환으로 2분기→3분기 연기(2026-02-11 실적 컨콜 공식, 날짜 미확정).",
       "genres": [
         "MMORPG"
       ],
       "image_url": null,
-      "source_url": "https://m.inven.co.kr/webzine/wznews.php?iskin=mobilegame&idx=312331"
+      "source_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=240409"
     },
     {
       "id": "star-fox-switch2-2026",
@@ -1126,6 +1126,72 @@
       ],
       "image_url": null,
       "source_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=240585"
+    },
+    {
+      "id": "doa6-last-round-20260625",
+      "name_ko": "데드 오어 얼라이브 6 라스트 라운드",
+      "name_en": "Dead or Alive 6 Last Round",
+      "release_date": "2026-06-25",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "Xbox Series X/S",
+        "PC"
+      ],
+      "developer": "Team Ninja",
+      "publisher": "코에이 테크모",
+      "description": "DOA6 확장판. DLC 캐릭터 5인 포함 29인 로스터·포토 모드, 출시일 기본 무료 버전 동시 제공. 차기 신작 DOA 개발도 공식 확인.",
+      "genres": [
+        "격투"
+      ],
+      "image_url": null,
+      "source_url": "https://blog.playstation.com/2026/02/12/dead-or-alive-6-last-round-launches-on-ps5-june-25-new-game-also-in-development/"
+    },
+    {
+      "id": "got-kingsroad-20260514",
+      "name_ko": "왕좌의 게임: 킹스로드",
+      "name_en": "Game of Thrones: Kingsroad",
+      "release_date": "2026-05-14",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "넷마블",
+      "publisher": "넷마블",
+      "description": "HBO '왕좌의 게임' 시즌4 배경 오픈월드 액션 RPG. 풀 수동 전투·확률형 뽑기 없는 패스형 BM. PC 5/14 선출시, 모바일 5/21 출시.",
+      "genres": [
+        "액션RPG",
+        "오픈월드"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316207"
+    },
+    {
+      "id": "arknights-endfield-20260122",
+      "name_ko": "명일방주: 엔드필드",
+      "name_en": "Arknights: Endfield",
+      "release_date": "2026-01-22",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Android",
+        "iOS"
+      ],
+      "developer": "하이퍼그리프",
+      "publisher": "그리프라인",
+      "description": "명일방주 IP 기반 3D 실시간 전략 RPG. 1/22 글로벌 동시 출시, 출시 24시간 매출 일본 1위·한국 3위.",
+      "genres": [
+        "서브컬처",
+        "RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=312085"
     }
   ]
 }
