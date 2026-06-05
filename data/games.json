@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-05T09:15:00+09:00",
-  "last_researched_by": "리서처 Claude (2026-06-05 09:15 사이클)",
+  "last_updated": "2026-06-05T21:10:00+09:00",
+  "last_researched_by": "리서처 Claude (자동 리서치 21시 사이클)",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -1192,6 +1192,73 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=312085"
+    },
+    {
+      "id": "seven-deadly-sins-origin-20260324",
+      "name_ko": "일곱 개의 대죄: 오리진",
+      "name_en": "The Seven Deadly Sins: Origin",
+      "release_date": "2026-03-24",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Android",
+        "iOS"
+      ],
+      "developer": "넷마블에프앤씨",
+      "publisher": "넷마블",
+      "description": "인기 만화 '일곱 개의 대죄' IP 기반 오픈월드 액션 RPG. 넷마블 최초 PC·모바일·PS5 완전 크로스플레이. 3/17 PS5·스팀 선공개 후 3/24 글로벌 정식 출시, 스팀 글로벌 매출 톱6 진입.",
+      "genres": [
+        "액션RPG",
+        "오픈월드"
+      ],
+      "image_url": null,
+      "source_url": "https://www.ajunews.com/view/20260324102010158"
+    },
+    {
+      "id": "mongil-star-dive-20260415",
+      "name_ko": "몬길: 스타 다이브",
+      "name_en": "Mongil: Star Dive",
+      "release_date": "2026-04-15",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "넷마블몬스터",
+      "publisher": "넷마블",
+      "description": "'몬스터 길들이기' 공식 후속작. 언리얼 엔진 5 기반 몬스터 컬렉팅 + 3인 파티 실시간 태그 액션 RPG. 모바일·PC(에픽게임즈 스토어) 글로벌 동시 출시, 콘솔 버전 연내 예정.",
+      "genres": [
+        "액션RPG",
+        "수집형"
+      ],
+      "image_url": null,
+      "source_url": "https://zdnet.co.kr/view/?no=20260415102440"
+    },
+    {
+      "id": "sao-echoes-of-aincrad-20260710",
+      "name_ko": "소드 아트 온라인: 에코즈 오브 아인크라드",
+      "name_en": "Sword Art Online: Echoes of Aincrad",
+      "release_date": "2026-07-10",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "Game Studio",
+      "publisher": "반다이남코",
+      "description": "SAO 시리즈 최초 플레이어 자신의 아바타로 아인크라드에 다이브하는 액션 RPG. 일본 7/9 콘솔, 글로벌·스팀 7/10 출시.",
+      "genres": [
+        "액션RPG",
+        "JRPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.bandainamcoent.com/news/echoes-of-aincrad-launching-this-july"
     }
   ]
 }
