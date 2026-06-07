@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-06T21:10:00+09:00",
-  "last_researched_by": "리서처 Claude (자동 리서치 21시 사이클)",
+  "last_updated": "2026-06-07T09:00:00+09:00",
+  "last_researched_by": "리서처 Claude (자동 리서치 09시 사이클)",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -1278,6 +1278,28 @@
       ],
       "image_url": null,
       "source_url": "https://en.bandainamcoent.eu/elden-ring/news/elden-ring-tarnished-edition-coming-nintendo-switch-2-august"
+    },
+    {
+      "id": "star-wars-zero-company-20260827",
+      "name_ko": "스타워즈: 제로 컴퍼니",
+      "name_en": "Star Wars Zero Company",
+      "release_date": "2026-08-27",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "비트 리액터 / 리스폰 엔터테인먼트",
+      "publisher": "일렉트로닉 아츠(EA)",
+      "description": "클론 전쟁을 배경으로 한 싱글플레이어 턴제 전략(XCOM 스타일) 게임. 분대를 지휘해 임무를 수행하며, 아나킨 스카이워커 등 등장. 2026-08-27 PC·PS5·Xbox 글로벌 동시 출시 확정($49.99).",
+      "genres": [
+        "전략",
+        "턴제 택틱스"
+      ],
+      "image_url": null,
+      "source_url": "https://ir.ea.com/press-releases/press-release-details/2026/Command-the-Clone-Wars-Most-Cunning-Operatives-in-Star-Wars-Zero-Company-Launching-August-27/default.aspx"
     }
   ]
 }
