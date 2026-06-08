@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
-          <p>문의: <a href="mailto:contact@gcalen.com">contact@gcalen.com</a></p>
+          <p>문의: <a href="mailto:contact@gcalen.com">contact@gcalen.com</a> · <a href="/blog">블로그</a></p>
         </footer>
       </body>
     </html>

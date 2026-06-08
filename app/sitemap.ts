@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getAllGames } from '@/lib/games';
+import { getAllPosts } from '@/lib/blog';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getAllGames();
@@ -21,5 +22,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticUrls, ...gameUrls];
+  const posts = await getAllPosts();
+  const blogUrls: MetadataRoute.Sitemap = posts.map(p => ({
+    url: `https://gcalen.com/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    changeFrequency: 'monthly',
+    priority: 0.75,
+  }));
+
+  return [...staticUrls, ...blogUrls, ...gameUrls];
 }
