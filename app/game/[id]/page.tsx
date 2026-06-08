@@ -5,6 +5,7 @@ import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate } from '@/lib/utils';
 import { AdSlot } from '@/components/AdSlot';
 import { GoogleCalendarButton } from '@/components/GoogleCalendarButton';
+import { ViewCounter } from '@/components/ViewCounter';
 
 interface Props {
   params: { id: string };
@@ -105,6 +106,7 @@ export default async function GamePage({ params }: Props) {
         {game.name_en && game.name_en !== game.name_ko && (
           <p className="name-en">{game.name_en}</p>
         )}
+        <ViewCounter gameId={game.id} />
         <p className="release-date">
           <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 출시일: {dateStr}{weekday}
           <span className={`dday-badge dday-${ddStage}`}>{ddText}</span>

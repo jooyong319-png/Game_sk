@@ -1,0 +1,15 @@
+.counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+.icon { font-size: 0.95rem; }
+.num { color: #4a90e2; font-weight: 700; }
+.label { color: #888; font-size: 0.8rem; }
