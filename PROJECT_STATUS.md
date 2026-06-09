@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-09 (기획자 — 개발 파이프라인 재가동 확인: 개발자가 QA 06-04 07:48 등록 '.game-detail 모바일 @media 미적용' BUG 해소(base 뒤 재배치, QA 검증 대기). 06-04 휴면 사이 외부 추가 2건 확인: ①블로그 섹션(`app/blog/`) ②Supabase 게임별 조회수 카운터. 큐 3→4(외형 집중): 신규 표면 '블로그 브랜드 외형 정합' 추가, 기존 외형 3건 유지. 활성 사용자 요청 0(SEO 보류))
+마지막 갱신: 2026-06-09 17:12 (기획자 — 큐 4→5 외형 집중: 개발자 BUG 수정 QA 16:46 ✅ 종결·BUGS 마킹, 디자이너 16:51·17:04 신규 점검 반영해 5순위 '비블로그 표면 #4a90e2 청산(SeoLanding 5종 타이틀 그라데 클립·ViewCounter num 토큰화)' IDEAS→승격. 기존 큐 1~4 순서 유지(파이프라인 06-04~09 휴면·정체 아님). 활성 사용자 요청 0(SEO 보류)·a11y/리팩토링 0건 IDEAS 보관)
 
 
 ## 현재 단계
@@ -163,6 +163,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-09 17:12 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 사이클(09:00) 큐 3→4 이후 개발자가 등록 BUG(`.game-detail` 모바일 @media)를 해소(5bfb5a2)하고 **QA 16:46 라이브 검증 ✅**(idx39 base 뒤 재배치로 미디어쿼리 정상 승리·06-04 07:48 BUG 종결) → BUGS 마킹. 디자이너 16:51·17:04 2사이클 신규 점검(신규 표면 /blog + 외형 사이클 미수혜 비블로그 표면): 큐 ③ 블로그 정합의 hex/셀렉터 상세 보강 + **비블로그 표면 폐기 구 accent #4a90e2 잔존 2종**(SeoLanding 5종 타이틀 평면·ViewCounter `.num`) 라이브 확인 → IDEAS 등재분을 신규 **5순위**로 승격(③ 블로그 정합과 같은 '#4a90e2 청산' 테마·신규 색 0·묶음 후보). 기존 큐 1~4(day패널 D-day 3단·day패널 모바일 3규칙·블로그 정합·HeroStrip 핫카드) **순서 그대로 유지** — 개발 파이프라인이 06-04~09 휴면이라 미착수분 3사이클 정체 아님(보호). 활성 사용자 요청 0(SEO 보류 — 안 건드림)·디자이너 a11y/리팩토링 0건(외형 모드, IDEAS 보관만).
+
 > 갱신 2026-06-09 (기획자): **큐 3→4 (외형 집중, 큰 단위) + 파이프라인 재가동.** 06-04 07:13 이후 휴면하던 개발 사이클이 재가동 — 개발자가 QA 06-04 07:48 등록 BUG('`.game-detail` 모바일 @media(≤480px) 미적용', cascade 결함)를 base 뒤 재배치로 해소(5bfb5a2, QA 라이브 390px 검증 대기) → 별도 큐 불필요(BUGS 마킹). 휴면 사이 **외부 추가 2건 확인**: 06-08 커밋 ①블로그 섹션(`app/blog/`) ②Supabase 게임별 조회수 카운터(RLS). **신규 3순위**: 블로그 신규 표면 브랜드 외형 정합(off-brand #4a90e2→`--accent` #5b9dff·`--accent-grad`·헤더 radial·태그칩 톤, 큰 단위·신규 색 0) — 본 사이트가 받은 외형 사이클을 블로그만 못 받아 톤 단절. 기존 외형 3건(day패널 D-day 3단·day패널 모바일 3규칙·HeroStrip 핫카드)은 1·2·4순위 유지(1·2는 CalendarView 묶음 후보). 활성 사용자 요청 0(SEO 보류 — 안 건드림)·a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만).
 
 > 갱신 2026-06-04 07:28 (개발자): **큐 5→3 (1·2순위 묶음 출고).** 1순위 '/game/[id] 상세 액션 outline pill'+2순위 '.game-detail 모바일 블록'을 같은 /game/[id] 표면이라 기획자 권고(07:13 '1·2 묶음 구현 후보')대로 한 사이클에 묶음 구현 완료(`page.tsx` 액션 div 클래스화, `globals.css` .detail-actions pill +24줄·모바일 블록 2규칙, 신규 색 0) → 완료한 기능 이동. 기존 3~5순위(day패널 D-day 3단 규약·day패널 모바일 3규칙·HeroStrip 핫카드+카운트다운) 두 칸씩 당겨 1~3순위. 로컬 빌드 sandbox 제한 → Vercel 위임. QA 라이브 검증 대기.
@@ -242,6 +244,12 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 첫 카드 2칸 대형·HH:MM:SS 1초 갱신·SSR 콘솔 #418/#423/#425 0건(mount 가드)·모바일 ≤480px 컴팩트 행 레이아웃 무붕괴·reduced-motion 처리·임박 0건 미렌더 확인.
 
 
+5. **[외형·브랜드색 청산·높음] 비(非)블로그 표면 폐기 구 accent #4a90e2 잔존 청산 — SeoLanding 5종 타이틀 그라데 클립 + ViewCounter 조회수 숫자 토큰화** (디자이너 06-09 17:04 데스크#1+#2, IDEAS→큐 승격 2026-06-09 17:12, `app/globals.css` `.seo-landing h2` L175 + `components/ViewCounter.module.css` `.num` L14)
+   - 문제: 본 사이트가 받은 외형 사이클(브랜드 블루 #5b9dff·`--accent-grad` 클립 타이틀)을 못 받은 비블로그 표면 2종에 폐기 구 accent #4a90e2·평면 타이틀 잔존. (a) SEO 랜딩 5라우트(/mobile-games·/pc-console-games·/global-games·/new-servers·/upcoming-games) h2가 평면 #fff로 메인 h1 그라데 클립과 단절. (b) ViewCounter `.num`이 #4a90e2 — 라이브 상세 조회수 숫자가 같은 화면 날짜·액션 pill #5b9dff와 두 블루 공존(iframe 390 computed rgb(74,144,226) 확정). 같은 도메인 표면 톤 단절.
+   - 구현(큰 단위 한 번에): (a) `.seo-landing h2`에 `background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;`(메인 h1과 동일 클립·5라우트 동시·SEO 유입 표면). (b) ViewCounter `.num` `color:#4a90e2`→`var(--accent)`(1줄). 전부 전역 토큰 재사용·**신규 색 0**. **3순위 블로그 정합과 같은 '#4a90e2 청산' 테마 — 개발자 판단으로 묶음 구현 가능.**
+   - 검증: `npm run typecheck`/`build` 무에러, SEO 랜딩 5라우트 h2 그라데 클립 적용(클립 미지원 폴백 가독성 확인)·상세 조회수 숫자 #5b9dff 단일 블루·데스크/모바일 무회귀·가로 오버플로 0·CSS brace 균형 확인.
+
+
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
 > 2026-06-04 07:13 갱신: 핫카드+카운트다운은 큐 5순위로 승격(헤더 듀얼 radial 종결로 큐 여유). 잔여 후보(외형 모드 유지): 디자이너 06-04 05:07 잔여 2건 — [보통] BackToTop 다크 글래스 원형 플로팅(신규 `components/BackToTop`, scrollY>600 표시·mount 가드) / [보통] `.site-footer` 브랜드 그라데 hairline(::before linear-gradient 블루→퍼플, border-top 대체). 상세 스펙은 IDEAS·DESIGN_NOTES 06-04 05:07 참조.
 
@@ -263,7 +271,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - (코드 버그 없음) 05-27 09:40 QA가 배포본에 구 푸터 문구 잔존 보고 → 소스는 정상, Vercel/CDN 캐시 지연으로 판단. 시간 경과로 해소되었을 가능성 높음. 다음 QA 사이클에서 gcalen.com 재확인만 권고.
 
 ## 개선 아이디어 (IDEAS)
-- [디자이너 2026-06-09 17:04·데스크#1+#2·외형모드 / 기획자 IDEAS·블로그 정합(큐 ③)과 같은 테마] **[높음·신규표면·브랜드 청산] 비(非)블로그 표면의 폐기 구 accent #4a90e2 + 평면 타이틀 정합** — 16:51 큐 ③(blog.module.css)이 못 덮은 별도 컴포넌트 2종. (a) **SeoLanding 5종 타이틀**(`app/globals.css` `.seo-landing h2` L175): 평면 #fff → 메인 h1과 동일 클립 `background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;`(/mobile-games·/pc-console-games·/global-games·/new-servers·/upcoming-games 5라우트 동시·SEO 최대 유입). (b) **ViewCounter `.num`**(`components/ViewCounter.module.css` L14): `color:#4a90e2`→`var(--accent)` — 라이브 상세 조회수 숫자가 날짜·액션 pill #5b9dff와 두 블루 공존(iframe 390 computed rgb(74,144,226) 확정·1줄). 둘 다 신규 색 0·전역 토큰 재사용·블로그 정합과 묶음 가능. 우선순위 높음
+- [디자이너 2026-06-09 17:04·데스크#1+#2·외형모드 / 기획자 2026-06-09 17:12 **IDEAS→큐 5순위 승격**] **[높음·신규표면·브랜드 청산] 비(非)블로그 표면의 폐기 구 accent #4a90e2 + 평면 타이틀 정합** — 16:51 큐 ③(blog.module.css)이 못 덮은 별도 컴포넌트 2종. (a) **SeoLanding 5종 타이틀**(`app/globals.css` `.seo-landing h2` L175): 평면 #fff → 메인 h1과 동일 클립 `background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;`(/mobile-games·/pc-console-games·/global-games·/new-servers·/upcoming-games 5라우트 동시·SEO 최대 유입). (b) **ViewCounter `.num`**(`components/ViewCounter.module.css` L14): `color:#4a90e2`→`var(--accent)` — 라이브 상세 조회수 숫자가 날짜·액션 pill #5b9dff와 두 블루 공존(iframe 390 computed rgb(74,144,226) 확정·1줄). 둘 다 신규 색 0·전역 토큰 재사용·블로그 정합과 묶음 가능. 우선순위 높음
 - [디자이너 2026-06-04 05:07·모바일#1·외형모드 / 기획자 06-04 06:12 → **큐 5순위 승격**] **[보통·모바일·패널 밀도] CalendarView `@media(≤480px)` 블록(L257)에 `.dayPanel{padding:0.7rem}`·`.dayRow{gap:0.45rem;padding:0.45rem 0.55rem}`·`.dayRowDate{min-width:3em;font-size:0.72rem}` 3규칙 추가** — 모바일은 셀 게임명 숨김(`.cellName{display:none}`)이라 패널이 사실상 모바일 1차 콘텐츠 표면인데 행 콘텐츠 285px(iframe 390 실측)·게임명 2줄 랩. 행 폭 ~+20px 회수·세로 리듬 타이트·데스크 무영향·CSS-only·신규 색 0. 큐 5순위(패널 D-day 색)와 같은 표면 — 묶음 후보. 우선순위 보통
 - [디자이너 2026-06-04 05:07·인벤#1·외형모드 / 기획자 보관] **[보통·플로팅 유틸] 우하단 '맨 위로' 다크 글래스 원형 BackToTop 버튼 신설** (신규 `components/BackToTop.tsx`+`BackToTop.module.css`, `app/layout.tsx` body 말미 1줄) — 인벤은 플로팅 '맨 위로' 상시 제공·우린 캘린더+패널 20행+광고로 세로 긴데 상단 복귀 수단 0. client 컴포넌트 `scrollY>600`에서만 표시(scroll 리스너+state·mount 후 가드로 하이드레이션 안전), 클릭 시 `scrollTo({top:0,behavior:'smooth'})`. 42px 원형 `rgba(26,29,36,0.85)`+`backdrop-filter:blur(8px)`+`var(--border)`·hover accent·`opacity` 전환·reduced-motion 처리(transition none·behavior auto). 아이콘 기존 SVG 스프라이트 재사용. 신규 색 0. 우선순위 보통
 - [디자이너 2026-06-04 05:07·데스크#2·외형모드 / 기획자 보관] **[보통·푸터 마감] `.site-footer` 회색 2줄+직선 `border-top` → 브랜드 블루→퍼플 그라데 hairline 마감** (`app/globals.css` `.site-footer` L70~77) — 헤더는 그라데 타이틀·라디얼 글로우로 브랜딩됐는데 푸터는 무브랜드 평면(수미 불일치). border-top 제거 → `.site-footer{position:relative}`+`::before{width:min(640px,90%);height:1px;background:linear-gradient(90deg,transparent,rgba(91,157,255,0.4),rgba(201,138,214,0.4),transparent)}` 중앙 배치. 헤더 h1 그라데와 수미쌍관·CSS-only·높이 무변·신규 색 0. 우선순위 보통
@@ -368,6 +376,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-09 17:12 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). 직전(09:00) 큐 3→4 후 개발자 BUG 수정(5bfb5a2) QA 16:46 라이브 ✅ 종결 → BUGS 마킹. 디자이너 16:51·17:04 신규 점검 반영: 신규 **5순위** [외형·브랜드색 청산·높음] 비블로그 표면 폐기 구 accent #4a90e2 청산(SeoLanding 5종 타이틀 그라데 클립 + ViewCounter `.num` 토큰화, 디자이너 17:04 IDEAS→승격, 신규 색 0, 큐 ③ 블로그 정합과 묶음 후보). 기존 큐 1~4 순서 유지(파이프라인 06-04~09 휴면이라 정체 아님·보호). 활성 사용자 요청 0(SEO 보류)·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-09 [기획자] TODO 큐 3→4 (모드: 외형 집중, 큰 단위) + 파이프라인 재가동 확인. 개발자가 QA 06-04 07:48 BUG('.game-detail 모바일 @media 미적용') 해소(5bfb5a2, base 뒤 재배치·QA 검증 대기) → BUGS 마킹. 06-04 휴면 사이 외부 추가 2건 확인: ①블로그 섹션(`app/blog/`) ②Supabase 게임별 조회수 카운터(RLS). 신규 3순위 '블로그 신규 표면 브랜드 외형 정합'(off-brand #4a90e2→`--accent`·`--accent-grad`·헤더 radial·태그칩, 신규 색 0). 기존 외형 3건(day패널 D-day 3단·day패널 모바일 3규칙·HeroStrip 핫카드) 1·2·4순위 유지. 활성 사용자 요청 0(SEO 보류)·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-09 16:40 [개발자] QA 06-04 07:48 등록 BUG 해소(파이프라인 06-04 이후 휴면→재가동 첫 사이클). `.game-detail` 모바일 @media(≤480px) 오버라이드가 상단 블록(L68)에 있어 base(L104+) 후행 동일특이도에 밀려 미적용이던 cascade 버그를, 모바일 규칙을 base 직후 신규 @media 블록으로 재배치해 수정 + `.detail-actions` 버튼 모바일 풀폭 보강. globals.css +6/−2·brace 80/80·신규 색 0·CSS-only. Vercel 위임. QA 라이브 390px 검증 대기.
 - 2026-06-04 07:13 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). '헤더 듀얼 브랜드 radial' QA 06:47 라이브 ✅ 종결 확인. 큐 1~4 순서 유지(1·2 상세 표면 묶음, 3·4 CalendarView 묶음). ⑤ HeroStrip 핫카드+라이브 카운트다운 후보→큐 승격. 활성 사용자 요청 0·신규 BUGS 0. 코드 미수정(문서만).
