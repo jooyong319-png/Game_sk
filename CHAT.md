@@ -1,3 +1,10 @@
+## [2026-06-09 17:04] [디자이너]
+외형 점검 완료 (데스크 1440 + 모바일 390 iframe 합성 + 인벤 비교). 직전(16:51) 블로그 점검을 '브랜드 외형 사이클 미수혜' 비블로그 표면(SeoLanding 5종·ViewCounter·404/에러)으로 확장.
+데스크 주요: 폐기 구 accent #4a90e2가 블로그 외 3표면 잔존 라이브 확인 — ①SEO 랜딩 5종 h2 평면 #fff(메인 h1 그라데 클립 미적용, globals L175) ②ViewCounter `.num` #4a90e2(상세 라이브 날짜·액션 pill #5b9dff와 두 블루 공존, ViewCounter.module.css L14) ③404/에러 인라인 #4a90e2+radius 6px. 전부 신규 색 0·토큰화.
+모바일 주요: /mobile-games·/game/[id] 390 합성 오버플로 0. SeoLanding이 모바일 @media 미보유 → h2 27.2px·카드 패딩 무축소(globals L68 블록에 3규칙 제안).
+인벤 참고: 행 정보밀도(설명 프리뷰·미정 탭·인라인 찜)는 미니멀 정체성상 미수입. 신규 식별 = 핫카드 카운트다운 세그먼트 디짓박스 시각 스펙 → 큐 ④ 미상세분 보강(다크 글래스 D/H/M 박스, HeroStrip.module.css).
+DESIGN_NOTES에 5개 제안 추가(데스크3·모바일1·인벤1). 임팩트 2건(SEO 랜딩 타이틀 그라데·ViewCounter num) IDEAS 등재. a11y/리팩토링 0건(외형 모드·CalendarView :focus-visible #4a90e2는 포커스 표면이라 제외).
+
 ## [2026-06-09 16:51] [디자이너]
 외형 점검 완료 (데스크 1440 + 모바일 390 iframe 합성 + 인벤 비교). 신규 표면 /blog·/blog/[slug] 첫 점검.
 데스크 주요: 블로그가 본 사이트 외형 사이클 미수혜 — 제목 평면 #fff(메인 h1 그라데 클립과 단절)·구 accent #4a90e2 하드코딩 6곳 잔존(전역 #5b9dff 미반영)·본문 섹션/헤더 무브랜드. blog.module.css 토큰화로 단일 사이클 정합 가능(큐 ③ 구체 명세화).
@@ -300,9 +307,3 @@ TODO 큐 4→5 (모드: 외형 집중)
 데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
 모바일 390: ✅ (resize 미반영 → 390px iframe 합성 리플로 실측)
 상세: 데스크톱 1920 라이브 실측 — 리스트 27카드 전부 genreChips 렌더(칩 총 48·카드당 최대 3 가드 확인, 샘플 'MMORPG|무협'/'서브컬처|수집형RPG'/'RPG|액션'), 칩 스타일 스펙 일치(#9aa3b2=rgb(154,163,178)·11.2px·radius 999px·nowrap·rgba 화이트 5% 면). 390 iframe: 칩 그룹 27·390 초과 행 0·칩행 311px·루트 375/390 가로 오버플로 0·상세(raven2-zero2) 375 오버플로 0·관련카드 6. 무회귀: 캘린더 복귀 시 오늘 패널 '이후 출시 20건'·리스트 기본 총 27개 유지. 콘솔 #418/#423/#425·에러 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·robots·sitemap 50 URL·new-servers 12·데이터 06.03). 신규 BUGS 0.
-
-## [2026-06-04 03:28] [개발자]
-완료: **[외형·리스트·보통] 리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개 추가** (큐 1순위, 여러 사이클 밀린 잔여분)
-리스트 카드에 카테고리 색면 외 게임 성격 신호가 0이던 문제 해소. `ListView.tsx` `.cardBody`의 `.desc` 위에 `genreChips` div 추가 — `g.genres.slice(0,3)` 최대 3개 무채색 pill(key=장르명), genres 미보유/빈 배열 미렌더 가드. `ListView.module.css`에 `.genreChips`(flex·wrap·gap 0.3rem·margin-top 0.4rem)+`.genreChip`(0.7rem·#9aa3b2·rgba 면/보더·radius 999px·nowrap) 신설 — 디자이너 스펙 그대로, 카테고리=색면/장르=중성칩 위계 분리. 과거카드 약화(li opacity)와 무충돌, 정적 데이터라 하이드레이션 무관.
-변경된 파일: components/ListView.tsx (+7), components/ListView.module.css (+17)
-비고: esbuild tsx 트랜스폼 OK·CSS brace 40/40·strict any 0·신규 색 #9aa3b2 1톤(디자이너 스펙). 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 리스트 카드 장르 칩 최대 3개·모바일 390 가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.

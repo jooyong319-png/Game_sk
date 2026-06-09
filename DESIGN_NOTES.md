@@ -10,6 +10,38 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-09 17:04] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 블루→퍼플 그라데 타이틀+헤더 듀얼 radial·'🔥 출시 임박' 핫카드[포켓몬 챔피언스 D-6 주황 warm 그라데]·캘린더 6월 today(9일) 셀 자동선택→day-detail 패널 '이후 출시 20건' 자동 노출[D-6 amber·D-8+ muted, 큐 ① 미구현분 정상]) 양호. **이번 사이클은 직전(16:51)이 /blog만 다룬 '브랜드 외형 사이클 미수혜 표면' 점검을 비(非)블로그 신규/유틸 표면으로 확장 — ①카테고리 SEO 랜딩 5종(`SeoLanding` 컴포넌트·/mobile-games·/pc-console-games·/global-games·/new-servers·/upcoming-games) ②상세 조회수 카운터(`ViewCounter`, 06-08 Supabase와 함께 추가·외형 사이클 한 번도 안 받음) ③404/에러 유틸 페이지.** 라이브 교차로 **폐기된 구 accent `#4a90e2`가 블로그 외 3개 표면에 잔존**(전역은 06-02에 `--accent` `#5b9dff`로 선명화, blog는 16:51 큐 ③로 명세화됐으나 이 3표면은 미점검)·SEO 랜딩 h2가 메인 h1 그라데 클립 미적용 평면 #fff 확인. **모바일(390): resize_window 뷰포트 미반영(innerW 1920·mq480 false, 기존 한계) → same-origin iframe 390px 합성 실측(/mobile-games·/game/[id] 모두 innerW 390·mq480 true·가로 오버플로 0, ViewCounter `.num` computed `rgb(74,144,226)`=#4a90e2 라이브 확정·SEO h2 27.2px 모바일 무축소).** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차 — 히어로 리뷰 배너·핫카드 라이브 카운트다운·주간 TOP10·핫딜 가격카드·아이콘 필터 스트립·BackToTop·행별 아트워크/타입배지/국기/태그칩/액션버튼은 전부 기수집(큐·IDEAS), 정보밀도 행은 우리 미니멀 정체성상 미수입. 신규 식별은 **핫카드 카운트다운의 세그먼트 디짓박스 시각 스펙**(큐 ④ 미상세분 보강). 큐(① day패널 D-day 3단·② day패널 모바일 3규칙·③ 블로그 정합·④ HeroStrip 핫카드)/IDEAS와 중복 없는 신규만. a11y/시맨틱/리팩토링 0건(외형 모드 — CalendarView `:focus-visible`의 #4a90e2 2건은 포커스 표면이라 의도적 제외).
+
+### 데스크톱(1440) 점검
+1. **[높음·신규표면·브랜드 타이틀] 카테고리 SEO 랜딩 5종의 페이지 타이틀 `.seo-landing h2`가 평면 #fff(색 오버라이드 0) — 메인 site-header h1은 `var(--accent-grad)` 블루→퍼플 클립인데 최대 SEO 유입 표면(랜딩 5종)의 h1급 타이틀만 무브랜드 평면이라 표면 정체성 단절** (`app/globals.css` `.seo-landing h2` L175, 메인 `.site-header h1 a` L53~58 패턴 차용)
+   - 현재: `.seo-landing h2{ font-size:1.7rem; margin-bottom:0.6rem }` — color 지정 없어 기본 흰색. 라이브 /mobile-games 실측 "국내 신규 모바일 게임 출시 일정"이 단색 흰색으로, 같은 화면 상단 site-header h1(그라데 클립)과 톤 갈림. 블로그(16:51 큐 ③)와 동일 증상·다른 컴포넌트(SeoLanding은 blog.module.css와 무관·5개 라우트 공유).
+   - 바꿀 값: `.seo-landing h2`에 메인 h1과 동일 클립 3줄 추가 — `background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent;`. → 랜딩 5종 타이틀이 메인과 같은 시그니처 블루→퍼플 그라데로 통일(신규 색 0·기존 토큰 재사용·레이아웃 무변). 우선순위 **높음**(SEO 최대 유입 표면·5라우트 동시 정합·블로그 정합과 같은 브랜드 청산 테마).
+
+2. **[높음·신규표면·구 accent 잔재] 상세 조회수 카운터 `ViewCounter` `.num`이 폐기된 구 accent `#4a90e2` 하드코딩 — 같은 상세 화면의 날짜(`var(--accent)` #5b9dff)·액션 pill(#5b9dff)과 두 블루 공존** (`components/ViewCounter.module.css` `.num` L14)
+   - 현재: `.num{ color:#4a90e2; font-weight:700 }`. 라이브 /game/crimson-desert-2026 '👁 1 회 조회' pill의 숫자가 채도 낮은 옛 블루 — 바로 아래 '출시일: 2026년 3월 20일'(브랜드 #5b9dff)·'캘린더 추가/공식 출처' outline pill(#5b9dff)과 한 화면서 두 블루. 06-08 Supabase 카운터와 함께 추가돼 외형 사이클을 한 번도 안 받은 표면(blog 16:51 사이클이 blog.module.css만 손봐 누락). iframe 390 computed `rgb(74,144,226)` 확정.
+   - 바꿀 값: `.num{ color:var(--accent) }`(#5b9dff 단일화). `.counter`의 하드코딩 `rgba(255,255,255,0.04)`/`rgba(255,255,255,0.08)`는 값 유지 가능하나 num만이라도 토큰화하면 충분. → 조회수 숫자가 메인 인터랙션색과 단일화(신규 색 0·전역 토큰 재사용·색만 변경). 우선순위 **높음**(라이브 상세·블로그와 같은 #4a90e2 청산 테마·1줄).
+
+3. **[보통·신규표면·유틸 페이지] 404/에러 페이지 인라인 `#4a90e2` 잔존 — `not-found.tsx` 복귀 링크 색·`error.tsx` 재시도 버튼 배경이 구 accent 하드코딩, radius도 비표준 6px** (`app/not-found.tsx` L6 + `app/error.tsx` L8)
+   - 현재: not-found `<a style={{color:'#4a90e2'}}>← 메인으로 돌아가기</a>`·error `<button style={{background:'#4a90e2',...,borderRadius:'6px'}}>다시 시도</button>`. 라이브 /game/sol-enchant(미존재 slug) 진입 시 not-found 복귀 링크가 헤더 그라데/푸터 링크(#5b9dff)보다 칙칙한 옛 블루. radius 6px도 전역 `--radius-sm`(8px)과 불일치.
+   - 바꿀 값: 두 인라인 `#4a90e2`→`var(--accent)`(또는 error 버튼은 `var(--accent-grad)` 채움으로 브랜드화)·`borderRadius:'6px'`→`'var(--radius-sm)'`(8px). → 유틸 페이지도 메인 브랜드색·표준 radius 정합(신규 색 0). 우선순위 **보통**(저빈도 표면이나 #4a90e2 청산 테마 완결·인라인 2줄).
+
+### 모바일(390) 점검 (iframe 390 합성 실측 — 오버플로 0)
+1. **[보통·모바일·신규표면] 카테고리 SEO 랜딩 5종이 `@media(max-width:480px)` 미보유 — globals의 두 모바일 블록(L68 site-header·L125 game-detail)이 `.seo-landing`을 안 다뤄 모바일서 타이틀·카드 무축소** (`app/globals.css` L68 모바일 블록 확장)
+   - 현재(iframe 390 실측): `.seo-landing h2` 27.2px(1.7rem 무축소)·`.seo-list-item padding:11.2px 16px`(0.7rem 1rem 무축소)·`.seo-landing padding:0 1rem`. 5개 SEO 랜딩이 좁은 폭에서 h2 과대·카드 좌우 패딩 과대(오버플로 0이나 밀도 헐렁).
+   - 바꿀 값: L68 `@media(≤480px)` 블록에 3규칙 추가 — `.seo-landing h2{ font-size:1.35rem }`·`.seo-list-item{ padding:0.6rem 0.7rem; gap:0.4rem }`·`.seo-landing{ padding:0 0.7rem }`. → 랜딩 5종 모바일 타이틀 비례 축소·카드 콘텐츠폭 ~+18px·리듬 타이트(데스크 무영향·레이아웃만·신규 색 0). 우선순위 **보통**(SEO 유입 표면·모바일 미보유).
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·큐 ④ 보강] 인벤 핫카드는 카운트다운을 세그먼트 디짓박스(01 : 06 : 57 : 03 + Days/Hours/Min/Sec 라벨)로 표시 → 우리 큐 ④(HeroStrip 핫카드 라이브 카운트다운)는 '카운트다운'만 명시·시각 형식 미상세. 다크 미니멀 디짓박스 스펙 구체화** (`components/HeroStrip.module.css` 신규 `.countdown`/`.cdBox`, 큐 ④ 구현 시 동반)
+   - 인벤: 라이트·콜론 구분 4박스+영문 라벨. 우린 다크·미니멀 → 박스 채움 대신 톤다운 글래스, 라벨은 D/H/M 한 글자.
+   - 바꿀 값(큐 ④ 동반): `.countdown{ display:inline-flex; gap:0.4rem; align-items:flex-end }` + `.cdBox{ display:flex; flex-direction:column; align-items:center; min-width:2.4em; padding:0.3rem 0.45rem; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:var(--radius-sm) }` + `.cdNum{ font-size:1.3rem; font-weight:800; color:var(--accent-warm); font-variant-numeric:tabular-nums }` + `.cdLabel{ font-size:0.62rem; color:var(--text-faint); letter-spacing:0.04em }`. D-DAY 임박(주황 warm)인 핫카드에 D/H/M 3박스(초는 다크 미니멀상 생략). useEffect mount 가드+`setInterval(1000)`로 하이드레이션 안전·tabular-nums로 자릿수 점프 방지. → 큐 ④가 인벤 카운트다운을 다크 글래스 디짓박스로 재해석(신규 색 0·warm/토큰 재사용). 우선순위 **보통**(큐 ④ 미상세 시각 스펙 보강·중복 아님).
+   - 참고: 인벤 행 정보밀도(설명 프리뷰·미정 탭·인라인 찜)는 우리 미니멀/모던 정체성과 충돌·기능 범위라 미수입. 아이콘 필터칩(16:51 IDEAS)·BackToTop(IDEAS)로 인벤 시각 패턴은 이미 충분 큐잉.
+
+### 우선순위 종합
+높음: 데스크#1(SEO 랜딩 5종 타이틀 그라데 클립 — SEO 최대 유입·5라우트 동시)·데스크#2(ViewCounter `.num` #4a90e2→--accent — 라이브 두 블루 공존·1줄). 둘 다 16:51 블로그 정합과 같은 '#4a90e2/평면타이틀 청산' 테마의 **미점검 표면 확장**(blog.module.css와 무관한 별도 컴포넌트). 보통: 데스크#3(404/에러 인라인 #4a90e2+radius 정합)·모바일#1(SEO 랜딩 모바일 3규칙)·인벤#1(핫카드 카운트다운 디짓박스 — 큐 ④ 시각 스펙 보강). 전부 신규 색 0·전역 토큰 재사용·CSS 위주(데스크#3만 tsx 인라인 2줄).
+
+---
+
 ## [2026-06-09 16:51] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 블루→퍼플 그라데 타이틀+헤더 듀얼 radial·'🔥 출시 임박' 핫카드[포켓몬 챔피언스 D-6 주황·warm 그라데 배너]·캘린더 6월 today(9일) 셀 자동선택→day-detail 패널 '이후 출시 20건' 자동 노출[첫 행 D-6만 amber·나머지 muted]·푸터 SEO 링크 5종+신규 '게임 출시 블로그' 링크) 전부 양호. **신규 표면 /blog·/blog/[slug] 첫 점검** — 06-08 추가된 블로그가 본 사이트 외형 사이클(accent #5b9dff 선명화·그라데 타이틀·헤더 radial·Pretendard 위계)을 못 받아 **구 accent #4a90e2 하드코딩 잔재 + 무브랜드 평면**으로 톤 단절. **모바일(390): resize_window 뷰포트 미반영(innerW 1920·mq480 false, 기존 한계 동일) → same-origin iframe 390px 합성 실측(/blog·/blog/[slug]·메인 모두 mq true·innerW 390·docW 375·오버플로 0).** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차 — 히어로 리뷰 배너·핫카드 카운트다운·주간 TOP10·핫딜 가격카드·BackToTop은 기수집분, 이번 신규 식별 **필터를 원형 아이콘 스트립(전체/출시/테스트/얼리액세스/PC/MOBILE/PS/XBOX/SWITCH/행사)**으로 시각화(우린 text `<select>` 3종 평면). 큐(day패널 D-day 3단·day패널 모바일 3규칙·블로그 정합·HeroStrip 핫카드)/IDEAS와 중복 없는 신규만 — 단, 블로그는 큐 ③ '브랜드 정합'의 **구체 hex/셀렉터 명세** 제공(직전까지 한 줄 큐만 존재, 디자인 노트 최초 상세화). a11y/시맨틱/리팩토링 0건(외형 모드).
 
@@ -460,30 +492,3 @@ _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 ### 현재 양호 (트집 X)
 다크 테마/카테고리 색 체계 일관, 컴팩트 날짜 행·인라인 확장, 통계=드롭다운 일치, 임박 셀 강조, 모달 페이드, 리스트 풀폭 행·푸터 운영자 정보 모두 양호.
 
----
-
-## [2026-05-29 23:04] [디자이너] — 라이브 실측: 리스트 카드 칩/메타 일관성 + 컨트롤 디테일
-실측: https://gcalen.com/ Chrome 데스크톱(1516px) — 캘린더/리스트/날짜 클릭 패널 정상 렌더, 콘솔 에러 0건. 날짜 셀 클릭 패널 '한 줄 컴팩트 행·인라인 확장'·기본 캘린더 뷰·헤더 좌측정렬 컴팩트 모두 라이브 반영 확인. 모바일 뷰포트는 이번에도 resize가 렌더에 미반영 → styles.css 기준 병행. 직전 사이클 이후 '리스트 카드 시각 일관성·메타 표현·컨트롤 디테일' 관점에서 신규 관찰 항목만 등록(기존 노트/IDEAS 항목 중복 안 함).
-
-### 발견한 문제 / 개선점 (신규)
-1. **리스트 카드 안에 칩/태그 스타일이 3종 혼재 + 비클릭 장르 태그가 '링크 블루'라 클릭 가능처럼 보임** — 우선순위: 보통
-   - 어디서: 리스트 뷰 카드. 한 카드 안에 (a) 카테고리 칩 "한국 MMO 신규 서버" = 솔리드 컬러 배경 pill, (b) 플랫폼 칩 "PC" = 회색 pill, (c) 장르 태그 "ARPG·핵앤슬래시·새 시즌" = 파란(accent) 텍스트 칩 — 세 가지 칩 디자인이 동시에 등장. 게다가 장르 태그의 파란색이 링크/날짜에 쓰는 accent 블루와 동일.
-   - 왜 문제: (1) 칩 언어가 통일 안 돼 시각적으로 산만. (2) 파란 장르 태그가 클릭 가능한 링크(예: 장르 필터)처럼 보이지만 실제로는 비클릭 → 어포던스 거짓 신호. accent 블루는 '실제 링크/날짜'에만 쓰는 것이 위계상 맞음. (비고: 날짜 줄의 파란 링크 스타일·날짜 중복 건은 13:02 #3에 이미 등록 → 여기선 '칩 스타일 통일'과 '장르 태그 블루 남용'만 신규로 다룸.)
-   - 개선: 비인터랙티브 메타 칩(플랫폼·장르)은 동일한 중립 톤(예: --surface 배경 + --text-dim 텍스트, 얇은 보더)으로 통일, accent 블루는 실제 링크/날짜에만 한정. 카테고리 칩만 카테고리 컬러 유지(정보 색). → 칩 3종을 2종(정보색 카테고리 / 중립 메타)으로 정리.
-
-2. **카드 메타 아이콘(⚔ 시리즈 · 🏛 개발사)이 라벨 없이 아이콘만 → 의미 불명확 + 스크린리더 미스리딩** — 우선순위: 낮음
-   - 어디서: 리스트 카드 본문. "⚔ 패스 오브 엑자일 2", "🏛 그라인딩기어게임즈" 처럼 이모지 아이콘 + 텍스트만 있고, 그 아이콘이 무엇(시리즈/개발사/배급사)을 뜻하는지 라벨이 없음.
-   - 왜 문제: 사용자는 ⚔가 시리즈인지, 🏛가 개발사인지 배급사인지 추측해야 함. 스크린리더는 이모지를 그대로 읽어(예 "교차된 검") 의미 전달 실패.
-   - 개선: 아이콘 옆에 짧은 라벨(예 "시리즈:", "개발사:")을 붙이거나, 최소한 각 줄에 aria-label/title("개발사 그라인딩기어게임즈") 부여. 시각적으로는 라벨을 흐린 톤으로 작게.
-
-3. **"오늘로" 버튼이 현재 달을 보고 있을 때도 항상 활성(클릭해도 변화 없는 noop)** — 우선순위: 낮음
-   - 어디서: 캘린더 월 네비게이션의 "오늘로" 버튼. 진입 시 이미 오늘이 포함된 달(현재 5월)을 보여주는데, 그 상태에서 "오늘로"를 눌러도 이미 그 달이라 화면 변화가 없음(개발자 동작 재확인 권장).
-   - 왜 문제: 변화 없는 버튼이 평상시와 동일해 보여, 눌렀을 때 '반응 없음'으로 오인. 버튼 상태가 현재 컨텍스트를 반영 안 함.
-   - 개선: 현재 보는 달에 오늘이 포함돼 있으면 "오늘로"를 disabled(흐림 + cursor:default + aria-disabled)로, 다른 달로 이동했을 때만 활성. 작은 JS(월 렌더 시 today 포함 여부로 disabled 토글).
-
-4. **검색 placeholder "( / 키)" 단축키 힌트가 모바일에선 무의미 + placeholder 길어짐** — 우선순위: 낮음
-   - 어디서: 검색 input placeholder "게임명 검색 ( / 키)". / 키로 검색창 포커스(데스크톱 단축키)는 좋은 기능이나, 터치 기기엔 물리 키보드 단축키가 없어 의미 없고 placeholder만 길어짐.
-   - 개선: placeholder는 "게임명 검색"으로 단순화, / 단축키 안내는 데스크톱에서만 작게 보조 표기(또는 input title/툴팁). 단축키 기능 자체는 유지.
-
-### 현재 양호 (트집 X)
-캘린더 기본 뷰·헤더 좌측정렬 컴팩트·날짜 패널 컴팩트 인라인 행·통계줄 29=드롭다운 29·카테고리 색 체계·모달 페이드·푸터 운영자정보·로딩 fallback 가드 모두 정상. 기존 '높음' 미반영 건(헤더 로고화·날짜셀 auto-scroll·키보드 접근·sticky 그룹헤더·선택셀 위계·날짜미정 D-day·통계줄 클릭필터 등)은 TODO/IDEAS 큐에 이미 있어 중복 등록 안 함 — 픽업 대기.
