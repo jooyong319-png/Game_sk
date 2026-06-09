@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-09 18:29 (개발자 — 정리 Phase 1 §A.1 색 3역할 고정: 카테고리 4색 정보색 격하[lib/types.ts CATEGORY_META 단일출처] + 잔존 오렌지/레드 리터럴 #ff7a59·#ff4d4d → 단일 --accent-warm 토큰 흡수. 운영자 17:40 declutter 방향 승인분·번호큐 소진 후 디자이너 §A.1 스펙 착수)
+마지막 갱신: 2026-06-09 18:35 (기획자 — 정리(declutter) 모드 정식 전환·큐 리필 0→3. 운영자 미니멀 리셋 활성 요청 최우선. 개발자 Phase 0(테마)·1(색 3역할) 선출고 확인 → 남은 Phase 2(그라데/이펙트 평면화)·3a(필터 3컬럼+칩 단일+중립)·3b(상세 위계/스펙2열) 큐잉. HeroStrip 핫카드 장식·SeoLanding 그라데 타이틀은 §A.2/§B-2 상충 → Phase 2 평면화)
 
 
 ## 현재 단계
@@ -170,6 +170,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-09 18:35 (기획자): **모드 정식 전환 '외형 추가'→'정리(declutter)' + 큐 리필(0→3).** 🔴 운영자 미니멀 리셋 피드백(지저분·필터 3컬럼·상세 개선·화이트 기본 테마)이 활성 사용자 요청(USER_REQUESTS 06-09, 처리 중) → 최우선. 개발자가 선착수로 **Phase 0(테마 라이트 기본+다크 토글, 18:24)·Phase 1 §A.1(색 3역할 고정·카테고리 정보색 격하·warm 흡수·#4a90e2 코드 0건, 18:29) 출고 완료** 확인(라이브 검증은 QA). 남은 정리 작업을 디자이너 17:40 스펙대로 큐잉: **①Phase 2 그라데/이펙트 평면화**(헤더 듀얼 radial·HeroStrip 글로우/펄스/스케일/카운트다운·카드배너 해치·상세 백드롭 — 18:16 출고된 핫카드 장식 포함 §B-2 평면화)·**②Phase 3a 필터 3컬럼+칩 단일+통계/캘린더 중립**(운영자 3컬럼 직접 지시)·**③Phase 3b 상세 위계/스펙2열/관련카드 정합**(운영자 상세 개선 지시). ⚠️개발자 선출고 주의: 18:16 SeoLanding/블로그 '타이틀 그라데 클립'은 §A.2 '그라데 1곳 원칙'과 상충 → Phase 2서 평면 환원 검토 명시. 18:30 useWishlist 리팩토링은 운영자 직접 지시 예외(정리 모드 중 리팩토링 일반 보류 유지). a11y/리팩토링은 정리에 자연 동반(별도 큐 X). 개발자 :20 1순위(Phase 2) 착수 권장. 코드 미수정(문서만).
+
 > 갱신 2026-06-09 18:29 (개발자): **번호큐 소진 — 정리(declutter) Phase 1 §A.1 착수.** 직전 세션이 외형 번호큐 ①~⑤를 전량 출고(블로그 정합·D-day 3단·모바일 3규칙·핫카드·비블로그 #4a90e2 청산)하고 운영자 17:46 승인 테마 Phase 0(라이트 기본+다크 토글)까지 선출고 → **번호 큐 비어있음**. 운영자 17:40 라이브 피드백('디자인 너무 지저분')으로 모드가 '외형 추가'→'정리(declutter)'로 전환·운영자가 디자이너 정리 목업 2종을 '이 방향 확정·스펙 기록' 승인했으나 **기획자 번호 큐 미반영 상태**(개발자 18:24 메모: Phase 1·2 TODO화 요청). 파이프라인 공회전을 막기 위해, 운영자가 직접 승인한 DESIGN_NOTES 17:40 §A.1(Phase 1·'최대효과')을 Phase 0 선출고 선례대로 착수 — 카테고리 4색 정보색 격하(`lib/types.ts`) + 잔존 오렌지/레드 → 단일 warm 토큰 흡수(완료한 기능 이동). **기획자님께**: 정리 Phase 1 잔여(§A.3 칩 단일언어·카테고리색 텍스트/큰 면 격리)·Phase 2(B-1·B-2·B-6·C-1 그라데/글로우/펄스/백드롭 플랫화)·Phase 3(B-3 필터 3컬럼·B-4 통계 중립·C-2~5 상세 위계)의 번호 큐 등재 부탁. a11y/리팩토링 0건(정리 모드, IDEAS 보관).
 
 > 갱신 2026-06-09 17:12 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 사이클(09:00) 큐 3→4 이후 개발자가 등록 BUG(`.game-detail` 모바일 @media)를 해소(5bfb5a2)하고 **QA 16:46 라이브 검증 ✅**(idx39 base 뒤 재배치로 미디어쿼리 정상 승리·06-04 07:48 BUG 종결) → BUGS 마킹. 디자이너 16:51·17:04 2사이클 신규 점검(신규 표면 /blog + 외형 사이클 미수혜 비블로그 표면): 큐 ③ 블로그 정합의 hex/셀렉터 상세 보강 + **비블로그 표면 폐기 구 accent #4a90e2 잔존 2종**(SeoLanding 5종 타이틀 평면·ViewCounter `.num`) 라이브 확인 → IDEAS 등재분을 신규 **5순위**로 승격(③ 블로그 정합과 같은 '#4a90e2 청산' 테마·신규 색 0·묶음 후보). 기존 큐 1~4(day패널 D-day 3단·day패널 모바일 3규칙·블로그 정합·HeroStrip 핫카드) **순서 그대로 유지** — 개발 파이프라인이 06-04~09 휴면이라 미착수분 3사이클 정체 아님(보호). 활성 사용자 요청 0(SEO 보류 — 안 건드림)·디자이너 a11y/리팩토링 0건(외형 모드, IDEAS 보관만).
@@ -227,6 +229,23 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 > 갱신 2026-06-03 13:40 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 좌상단 리본' 개발자 13:20 완료(a5e1a57)·QA 13:30 라이브 ✅(.cardBanner 세로 그라데·D-DAY 리본 글로벌 보라 #ba68c8·과거카드 무충돌·가로 오버플로 0·콘솔 #418/#423/#425 0건)로 큐 종결(개발자 5→4 반영). 보충: 디자이너 13:05 데스크#1 '캘린더 셀 게임명 `word-break:break-all`→`keep-all`(라이브 가시 타이포 결함·라틴/괄호 글자단위 절단)'을 신규 **1순위**로 큐잉(높음) → 큐 4→5. 기존 1~4(인트로 subtitle 위계·MonthTabs 가로 스크롤·ViewToggle 모바일 블록·리스트 장르 칩) 한 칸씩 밀려 2~5순위 유지. 디자이너 13:05 잔여 보통 4건(통계줄 카테고리 4색 분해·헤더 듀얼 브랜드 radial·리스트 배너 모바일 40px·image_url 배경이미지) → IDEAS 보관. 활성 사용자 요청 0(SEO 보류). 신규 BUGS 0(하이드레이션 7건 05:47 해소 확정 유지). 3사이클 정체 0. a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관). QA 라이브 검증 대기.
 
+
+
+1. **[정리·그라데/이펙트·높음] Phase 2 — 그라데/radial/글로우/펄스/해치 평면화 (그라데 1곳 원칙)** (운영자 미니멀 리셋 / 디자이너 17:40 §A.2·B-1·B-2·B-6·C-1, `app/globals.css` + `components/HeroStrip.module.css` + `components/HeroStrip.tsx` + `components/ListView.module.css` + `app/game/[id]/page.tsx`)
+   - 배경: Phase 0(테마)·Phase 1(색 3역할·#4a90e2 0) 출고 완료. 남은 최대 '지저분' 원인은 장식 이펙트 중첩. **그라데는 메인 `.site-header h1` 시그니처 클립 1곳만 유지**, 그 외 radial/글로우/펄스/해치/그라데 전부 제거 → 플랫 면 + 0.5~1px 보더. ⚠️직전 18:16 출고된 HeroStrip 핫카드는 운영자 정리 방향(§B-2)과 상충하는 장식 — **구조는 두되 글로우/펄스/스케일/카운트다운 장식을 본 Phase에서 평면화**.
+   - 구현(큰 단위 한 번에): ① **헤더 단색화** — `globals.css` `.site-header::before` L57~58 듀얼 radial(블루+퍼플) 제거(`::before` 자체 제거 가능), h1 그라데 클립만 시그니처로 유지. ② **HeroStrip 과장식 제거** — `HeroStrip.module.css` `.glowCat`/`.glowDday` box-shadow 글로우 제거(L42~70)·`.glowDday` `transform:scale(1.02)`(L58) 제거하고 `border-color`만·`.today` `pulse` 애니메이션(L90, `@keyframes pulse` L93) 제거·`.dday` text-shadow 제거·`.card` 베이스 그라데→`var(--bg-elev)` 단색. 카운트다운(`.countdown` L101~)은 §B-2 과장식 정리 대상 — 제거 또는 1줄 muted 텍스트로 축소(`HeroStrip.tsx` setInterval 포함, 제거 시 mount 가드 코드도 정리). ③ **리스트 카드 배너 평면화** — `ListView.module.css` `.cardBanner` 세로 그라데→단색 면(또는 좌측 바만)·`.cardBanner::before` 45° 해치(`repeating-linear-gradient`) 제거·`.ddayRibbon` box-shadow 제거. ④ **상세 백드롭/상단바 제거** — `game/[id]/page.tsx` 카드 래퍼 인라인 `background:radial-gradient(…카테고리색…)`·`borderTop:4px solid {카테고리색}` 제거 → 평면 `var(--bg-elev)`.
+   - 비고: 18:16 출고된 SeoLanding/블로그 '타이틀 그라데 클립'은 §A.2 '그라데 1곳 원칙'과 상충 → **본 Phase에서 평면 토큰색(`--text`)으로 되돌림 검토**(메인 h1만 시그니처 그라데 유지). 개발자 판단 — 운영자 목업이 '그라데 1곳' 기준이면 환원.
+   - 검증: `npm run typecheck`/`build` 무에러, 헤더 radial·HeroStrip glow/pulse/scale/카운트다운·카드배너 해치·상세 radial 백드롭 제거 라이브 확인, reduced-motion 무회귀, **라이트/다크 양 테마** 정상·가로 오버플로 0·CSS brace 균형.
+
+2. **[정리·밀도/칩/필터·높음] Phase 3a — 필터 3컬럼 정렬 + 칩 단일언어 + 통계/캘린더 정보색 중립화** (운영자 "3컬럼" 직접 지시 / 디자이너 17:40 §A.3·B-3·B-4·B-5, `components/Filters.tsx` + `components/Filters.module.css` + `components/Home.tsx` + `components/CalendarView.module.css`)
+   - 배경: 운영자가 검색/필터를 '제거가 아니라 3컬럼으로 깔끔히 정렬' 직접 지시. 칩 혼재·통계 4색·범례 의존을 정보색 절제로 정리.
+   - 구현(큰 단위 한 번에): ① **필터 3컬럼** — `Filters.tsx`+`Filters.module.css` 컨트롤 래퍼 `display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.6rem`(≤480 `1fr`), **3컬럼 = 검색 / 카테고리 select / 기간 select**, 플랫폼 select·위시 버튼(#f5b400)은 바에서 제거(위시 이동은 추후·일단 보류). 컨트롤 톤 중립 정렬. ② **칩 1언어** — `genreChip`·`category-tag`·`releasedTag` 중립 글래스 칩 통일(`background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--text-faint); border-radius:999px; font-size:0.7rem; padding:0.1rem 0.5rem`), 카테고리는 좌측 점(정보색)으로만 식별·글자색 중립. ③ **통계줄 중립화** — `Home.tsx` L182 `.statsCat` 인라인 `style={{color:CATEGORY_META[c].color}}` 제거 → muted(`.stats` `--text-faint`), 식별 필요 시 7px 점만. ④ **캘린더 정보색 격하** — `CalendarView.module.css` `.cellHas` tint/`inset` 바 알파↓·카테고리 우하단 점 1개·today/선택 링 `--accent` 단색·`.legend` 범례 접기/제거 검토.
+   - 검증: `npm run typecheck`/`build` 무에러, 필터 데스크 3컬럼·모바일 1열·플랫폼/위시 바 제거 라이브 확인, 칩 톤 단일·통계 중립·캘린더 정보색 절제 라이트/다크 정상·빈 상태 무붕괴·가로 오버플로 0.
+
+3. **[정리·상세 페이지·보통] Phase 3b — /game/[id] 위계 재배치 + 스펙시트 2열 + 관련카드 정합** (운영자 "상세 페이지 개선" 직접 지시 / 디자이너 17:40 §C-2·C-4·C-5, `app/game/[id]/page.tsx` + `app/globals.css`)
+   - 배경: 운영자가 상세 페이지 디자인 개선 직접 요청. Phase 2의 상세 백드롭 평면화(C-1)에 이어 위계·밀도 정리.
+   - 구현(큰 단위 한 번에): ① **위계 재배치** — 상단 행에 중립 카테고리 칩(점 1개) + **D-day warm 배지(제목 위 최상단 위계)**, 그 아래 제목 28px/500·로마자 부제(muted). '출시일 줄'은 `--accent` 캘린더 아이콘 + 날짜, 조회수는 같은 줄 muted(ViewCounter는 Phase 1서 무채색화 완료분 확인). ② **스펙시트 2열** — `.detail-meta`(개발사/배급사/플랫폼/장르) `grid-template-columns:1fr 1fr`(≤480 1열) hairline 2열로(현 1열 → 폭 활용). ③ **액션·관련카드 정합** — `.detail-actions` outline pill(블루 1색) 현행 유지, `.related-card`는 카테고리 점/좌측 바 1개(정보색)+`hover border-color`만·D-day는 warm 1색 단일화(#ff7a59→warm 계열).
+   - 검증: `npm run typecheck`/`build` 무에러, 상세 상단 D-day 배지 최상단 위계·카테고리 중립칩·스펙시트 2열(모바일 1열)·관련카드 정보색 절제 라이트/다크 정상·가로 오버플로 0·CSS brace 균형.
 
 
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
@@ -355,6 +374,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+
+- 2026-06-09 18:35 [기획자] **정리(declutter) 모드 정식 전환 + 큐 리필 0→3.** 운영자 미니멀 리셋 활성 요청 최우선. 개발자 선착수 출고 확인: Phase 0(테마 라이트 기본+다크 토글, 18:24)·Phase 1 §A.1(색 3역할·카테고리 정보색·warm 흡수·#4a90e2 코드 0건, 18:29). 남은 정리 큐잉 — ①Phase 2 그라데/이펙트 평면화(헤더 radial·HeroStrip 글로우/펄스/스케일/카운트다운·카드배너 해치·상세 백드롭) ②Phase 3a 필터 3컬럼+칩 단일+통계/캘린더 중립 ③Phase 3b 상세 위계/스펙2열/관련카드. 18:16 출고된 핫카드 장식·SeoLanding 그라데 타이틀은 §B-2/§A.2 상충 → Phase 2 평면 환원 검토. useWishlist 리팩토링(18:30)은 운영자 직접 지시 예외. 코드 미수정(문서만).
 - 2026-06-09 18:30 [개발자] **[리팩토링] useWishlist → 공유 store(useSyncExternalStore)**. 인스턴스별 useState(동기화 footgun)를 모듈 싱글톤+구독으로 승격, 탭 간 storage 동기화 추가. 공개 API 불변→소비처 무변경. 운영자 직접 지시(정리 모드 중 리팩토링 예외). esbuild OK. Vercel 위임.
 - 2026-06-09 18:24 [개발자] **테마 Phase 0 출고(운영자 승인·모드 '정리' 전환 선행)**. 라이트(화이트) 기본 + 다크 토글: globals `:root` 라이트 토큰 재정의 + `[data-theme=dark]` 다크 보존, html/body 토큰화, layout no-flash 인라인 스크립트, 신규 ThemeToggle(해/달·mount 가드), 컴포넌트 CSS 9종+blog+inline 하드코딩 색 전면 토큰화(리포 #4a90e2 0건). 16파일·신규 ThemeToggle 2개·신규 색 0·esbuild OK·brace 균형. 후속: 카테고리 JS 색 CSS변수화(별도 큐). Vercel 위임, QA 양테마 라이브 검증 대기.
 - 2026-06-09 18:16 [개발자] 큐 1·2순위 동시 출고(사용자 '최대한 많이' 요청). ①HeroStrip 최근접 1건 `.hotCard` 2칸 대형 승격 + `useCountdown` 훅 라이브 HH:MM:SS(KST 자정 타깃·mount 가드로 하이드레이션 안전·1초 갱신)·모바일 컴팩트 무붕괴 ②비블로그 #4a90e2 청산: SeoLanding 5라우트 h2 `--accent-grad` 클립 + ViewCounter `.num` 토큰화. 신규 색 0·HeroStrip.tsx/.module.css·globals.css·ViewCounter.module.css·brace 41/41·80/80·esbuild OK. Vercel 위임, QA 라이브 검증 대기. ※이번 사이클 블로그 정합 포함 3건 연속 출고로 외형 큐 소진→다음은 IDEAS 후보.

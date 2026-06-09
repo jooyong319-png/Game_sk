@@ -1,3 +1,12 @@
+## [2026-06-09 18:35] [기획자]
+🔴 정리(declutter) 모드 정식 전환 + 큐 리필 0→3. 운영자 미니멀 리셋(지저분·필터 3컬럼·상세 개선·화이트 기본 테마)이 활성 사용자 요청 → 최우선.
+개발자 선착수 출고 확인: Phase 0(테마 라이트 기본+다크 토글 18:24)·Phase 1 §A.1(색 3역할·카테고리 정보색·warm 흡수·#4a90e2 코드 0건 18:29). 👍 라이브 검증은 QA님.
+남은 정리 큐잉:
+1) Phase 2 그라데/이펙트 평면화 — 헤더 듀얼 radial·HeroStrip 글로우/펄스/스케일/카운트다운·카드배너 45°해치·상세 radial 백드롭 제거(그라데 1곳 원칙)
+2) Phase 3a 필터 3컬럼(검색/카테고리/기간, 플랫폼·위시 제거)+칩 단일언어+통계/캘린더 정보색 중립
+3) Phase 3b 상세 위계(D-day warm 배지 최상단)+스펙시트 2열+관련카드 정합
+⚠️개발자: 18:16 출고한 HeroStrip 핫카드 장식·SeoLanding/블로그 타이틀 그라데 클립은 §B-2/§A.2(그라데 1곳)와 상충 → Phase 2서 평면화/환원 검토. useWishlist 리팩토링(18:30)은 운영자 직접 지시 예외라 OK. 개발자 :20 1순위(Phase 2) 착수 권장.
+
 ## [2026-06-09 18:30] [개발자]
 완료: **[리팩토링] useWishlist 상태관리 승격** (운영자 직접 지시 — 외형/정리 모드 중 리팩토링 예외 처리). 기존 `useWishlist`는 호출 인스턴스마다 별도 useState(Set)를 들어 '공유 store'가 아니었음 → 동시 마운트 시 한쪽 토글이 타 인스턴스에 즉시 반영 안 되는 잠재 footgun. `useSyncExternalStore` + 모듈 싱글톤 스냅샷/리스너로 재작성해 단일 소스화, 보너스로 `storage` 이벤트 탭 간 동기화 추가. 공개 API `{ids,toggle,has}` 불변이라 소비처 5곳·프롭 드릴링 전부 무변경.
 변경된 파일: components/useWishlist.ts (전면 재작성, 85줄). WishlistApi 타입 export 추가. esbuild ts OK·strict any 0.
@@ -290,10 +299,3 @@ IDEAS 보관: 디자이너 05:07 잔여 2건(BackToTop 다크 글래스·푸터 
 변경된 파일: app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
 비고: 큐 5→4 (상세 액션 outline pill이 새 1순위). CSS-only·tsx 무변경·CSS brace 73/73 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. QA님 라이브에서 헤더 좌상 블루·우상 퍼플 듀얼 글로우(h1 그라데와 정합)·헤더 높이 무변·가로 오버플로 0 확인 부탁.
 
-## [2026-06-04 06:12] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-완료 확인: '/game/[id] related-dday 3단 색 규약 통일' QA 05:48 라이브 ✅(D-DAY 주황·임박 amber·그 외 muted 3단 분리·390 오버플로 0·콘솔 0) → 종결(번호큐는 개발자 05:28 기정리).
-유지: 큐 1~4(헤더 듀얼 radial·상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약) 순서 그대로.
-추가: - ⑤[외형·모바일·패널 밀도] day-detail 패널 모바일 @media(≤480px) 3규칙 — .dayPanel 0.7rem·.dayRow gap/padding 축소·.dayRowDate 3em/0.72rem (디자이너 05:07 모바일#1, IDEAS→승격. 모바일 1차 콘텐츠 표면·④와 같은 CalendarView 표면 묶음 후보·CSS-only·신규 색 0)
-IDEAS 보관: 디자이너 05:07 잔여 2건(BackToTop 다크 글래스 플로팅·푸터 브랜드 그라데 hairline).
-활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 05:48 — 패널 D-DAY amber는 큐 ④ 미구현분으로 정상). 3사이클 정체 0. a11y 제안 0건 → IDEAS 보관 (보류). 코드 미수정(문서만). 개발자 :20 1순위(헤더 듀얼 radial) 착수 권장 — ④·⑤ 묶음 구현 가능.
