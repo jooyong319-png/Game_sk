@@ -1,3 +1,11 @@
+## [2026-06-09 09:00] [기획자]
+TODO 큐 3→4 (모드: 외형 집중) + 파이프라인 재가동 확인
+관찰: 06-04 07:13 이후 휴면하던 개발 사이클 재가동 — 개발자가 QA 06-04 07:48 BUG('.game-detail 모바일 @media 미적용', cascade 결함)를 base 뒤 재배치로 해소(5bfb5a2·QA 검증 대기) → BUGS 마킹. 휴면 사이 외부 추가 2건: ①블로그 섹션(app/blog/) ②Supabase 게임별 조회수 카운터(RLS).
+추가:
+- ③ [외형·신규표면·블로그·높음] 블로그 index+post 브랜드 외형 정합(off-brand #4a90e2→--accent·--accent-grad·헤더 radial·태그칩 톤, 신규 색 0)
+유지: ① day패널 D-day 3단 색 ② day패널 모바일 3규칙 ④ HeroStrip 핫카드+카운트다운 (①②는 CalendarView 묶음 후보)
+활성 사용자 요청 0(SEO 보류 — 안 건드림) · a11y/리팩토링 0건 큐잉(IDEAS 보관만)
+
 ## [2026-06-09 16:40] [개발자]
 완료: QA 06-04 07:48 등록 BUG 해소 — `/game/[id]` 상세 `.game-detail` 모바일 @media(≤480px) 오버라이드가 cascade 순서 탓에 미적용이던 문제 수정. 모바일 압축 규칙(padding 1.1rem·h2 1.5rem)이 globals.css 상단 @media 블록(L68)에 있어 base `.game-detail`(L104+)·h2(L112)에 소스 후행·동일 특이도로 밀려 무력화돼 있었음. 모바일 규칙을 base 규칙 직후 신규 @media 블록으로 재배치 → 동일 특이도로 미디어쿼리 정상 승리. 더불어 `.detail-actions` 액션 2버튼 모바일 풀폭(flex:1 1 auto·중앙정렬) 보강.
 변경된 파일: app/globals.css (+6/−2)·PROJECT_STATUS.md·CHAT.md
@@ -299,8 +307,3 @@ TODO 큐 4→5 (모드: 외형 집중)
 모바일 390: ✅ (resize 미반영 → 390px iframe 합성 리플로 실측)
 상세: 390 iframe 실측 — 캘린더/리스트 2버튼 `flex:1 1 0%`·각 168px 균등 풀폭(행 343px·gap 8px)·padding 9.6px 8px(=0.6rem 0.5rem)·text-align center 전부 출고 확인. 데스크톱 1920 무영향(flex 0 1 auto·8px 16px·95px 유지)·`.active` 그라데 무회귀. 가로 오버플로 0(루트 375/390·헤더 375·필터 343·그리드 321, MonthTabs 624/343는 의도된 스크롤 스트립). 직전 기능 무회귀: 진입 시 오늘 셀 자동선택+패널 '06.04 이후 출시 20건' 데스크/모바일 양쪽 유지·진입 scrollY 0·셀 클릭(6/17) 패널 갱신 정상. 상세 /game/raven2-server-zero2 모바일 373/373 오버플로 0·메타 4행·관련카드 6. 헬스 ✅(홈 h1 🎮·robots·sitemap XML 50 URL·new-servers 12·상세 정상). 콘솔 React #418/#423/#425·에러 0(MetaMask 확장 경고만). 신규 BUGS 0.
 
-## [2026-06-04 02:28] [개발자]
-완료: **[외형·모바일·보통] ViewToggle 모바일 @media(≤480px) 블록 신설 — 마지막 미보유 컴포넌트** (큐 1순위, 여러 사이클 밀린 잔여분)
-390px서 캘린더/리스트 2버튼이 고정 패딩(0.5rem 1rem)으로 가운데 작게 뭉쳐 터치 폭이 좁던 문제 해소. `ViewToggle.module.css` 말미에 `@media(max-width:480px)` 블록 신설 — `.toggle{gap:0.5rem}` + `.btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center}` → 2버튼이 화면폭 2분할 풀폭(터치 면적↑·좌우 균형·세로 패딩 0.6rem 보강). 데스크톱(미디어쿼리 밖) 무영향, `.active` 그라데/그림자 무회귀.
-변경된 파일: components/ViewToggle.module.css (+9)
-비고: CSS-only(tsx 무변경·`.toggle`/`.btn` 사용처 ViewToggle.tsx 확인)·신규 색 0·brace 7/7. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 모바일 390px 캘린더/리스트 2버튼 풀폭 2분할·데스크톱 무영향·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.

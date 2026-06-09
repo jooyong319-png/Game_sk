@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-마지막 갱신: 2026-06-09 16:40 (개발자 — QA 06-04 07:48 등록 BUG '.game-detail 모바일 @media 오버라이드 미적용(cascade 순서)' 해소: 모바일 .game-detail 규칙을 base 뒤로 재배치. 개발/기획 파이프라인 06-04 이후 휴면 후 첫 재가동)
+마지막 갱신: 2026-06-09 (기획자 — 개발 파이프라인 재가동 확인: 개발자가 QA 06-04 07:48 등록 '.game-detail 모바일 @media 미적용' BUG 해소(base 뒤 재배치, QA 검증 대기). 06-04 휴면 사이 외부 추가 2건 확인: ①블로그 섹션(`app/blog/`) ②Supabase 게임별 조회수 카운터. 큐 3→4(외형 집중): 신규 표면 '블로그 브랜드 외형 정합' 추가, 기존 외형 3건 유지. 활성 사용자 요청 0(SEO 보류))
 
 
 ## 현재 단계
@@ -163,6 +163,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
+> 갱신 2026-06-09 (기획자): **큐 3→4 (외형 집중, 큰 단위) + 파이프라인 재가동.** 06-04 07:13 이후 휴면하던 개발 사이클이 재가동 — 개발자가 QA 06-04 07:48 등록 BUG('`.game-detail` 모바일 @media(≤480px) 미적용', cascade 결함)를 base 뒤 재배치로 해소(5bfb5a2, QA 라이브 390px 검증 대기) → 별도 큐 불필요(BUGS 마킹). 휴면 사이 **외부 추가 2건 확인**: 06-08 커밋 ①블로그 섹션(`app/blog/`) ②Supabase 게임별 조회수 카운터(RLS). **신규 3순위**: 블로그 신규 표면 브랜드 외형 정합(off-brand #4a90e2→`--accent` #5b9dff·`--accent-grad`·헤더 radial·태그칩 톤, 큰 단위·신규 색 0) — 본 사이트가 받은 외형 사이클을 블로그만 못 받아 톤 단절. 기존 외형 3건(day패널 D-day 3단·day패널 모바일 3규칙·HeroStrip 핫카드)은 1·2·4순위 유지(1·2는 CalendarView 묶음 후보). 활성 사용자 요청 0(SEO 보류 — 안 건드림)·a11y/리팩토링 0건 큐잉(외형 모드, IDEAS 보관만).
+
 > 갱신 2026-06-04 07:28 (개발자): **큐 5→3 (1·2순위 묶음 출고).** 1순위 '/game/[id] 상세 액션 outline pill'+2순위 '.game-detail 모바일 블록'을 같은 /game/[id] 표면이라 기획자 권고(07:13 '1·2 묶음 구현 후보')대로 한 사이클에 묶음 구현 완료(`page.tsx` 액션 div 클래스화, `globals.css` .detail-actions pill +24줄·모바일 블록 2규칙, 신규 색 0) → 완료한 기능 이동. 기존 3~5순위(day패널 D-day 3단 규약·day패널 모바일 3규칙·HeroStrip 핫카드+카운트다운) 두 칸씩 당겨 1~3순위. 로컬 빌드 sandbox 제한 → Vercel 위임. QA 라이브 검증 대기.
 
 > 갱신 2026-06-04 07:13 (기획자): **큐 4→5 (외형 집중, 큰 단위).** 직전 1순위 '헤더 듀얼 브랜드 radial(블루+퍼플)'(개발자 06:29 8006b56) QA 06:47 라이브 ✅(::before radial 2개 — 좌상 블루 rgba(91,157,255,0.12)·우상 퍼플 rgba(201,138,214,0.10)·h1 그라데 정합·헤더 높이 무변·가로 오버플로 0·콘솔 0) → 종결 확인(번호큐는 개발자 06:29 기정리). 기존 큐 1~4(상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약·day패널 모바일 3규칙) 순서 그대로 — 1·2는 /game/[id] 표면 묶음, 3·4는 CalendarView 표면 묶음 구현 후보. ⑤로 후보 보관분 'HeroStrip 최근접 1건 대형 핫카드 + 라이브 카운트다운' 승격(02:10부터 후보 대기·외형 모드 대표 큰 단위·단일 시각 정점). 활성 사용자 요청 0(SEO 보류 유지)·신규 BUGS 0.
@@ -228,7 +230,13 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
    - 검증: `npm run typecheck`/`build` 무에러, 390 패널 행 게임명 랩 감소·행 폭 ~305px 확보·데스크톱 패널 무영향·가로 오버플로 0·CSS brace 균형 확인.
 
 
-3. **[외형·하이라이트·D-DAY강조·보통] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건 대형 핫카드 승격 + 라이브 카운트다운** (디자이너 06-03 01:05 인벤#1, 후보→큐 승격 07:13, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
+3. **[외형·신규 표면·블로그·높음] 블로그(index+post) 브랜드 외형 정합 — 신규 표면이 off-brand 단색 카드로 본 사이트 톤(브랜드 블루/퍼플 그라데·헤더 radial)과 단절** (06-08 외부 추가 표면, `app/blog/blog.module.css` + `app/blog/page.tsx`·`app/blog/[slug]/page.tsx`)
+   - 문제: 06-08 추가된 블로그 표면이 본 사이트 외형 사이클(헤더 듀얼 radial·카테고리 그라데·D-day 3단 색)을 전혀 못 받음. `blog.module.css`가 **off-brand 블루 #4a90e2**(본 사이트 `--accent`=#5b9dff와 불일치)·하드코드 #1a1d24/#2a2e38 단색 카드·브랜드 그라데(`--accent-grad`) 0·헤더 임팩트 0. 같은 도메인인데 블로그만 톤이 떠 보임.
+   - 구현(큰 단위 한 번에): ① 색 정합 — `.postDate`/`.postCard:hover` border·box-shadow의 #4a90e2 → `var(--accent)`(#5b9dff), 카드면 #1a1d24→`var(--bg-elev)`·border #2a2e38→`var(--border)`. ② 헤더 임팩트 — `.title`(블로그/포스트 제목)에 `background:var(--accent-grad);-webkit-background-clip:text;color:transparent`(본 사이트 h1 톤) + `.indexSection`/`.post` 상단 `radial-gradient(120% 60% at 50% -10%, rgba(91,157,255,0.10), transparent 60%)` 백드롭. ③ 카드 hover 그라데 보더 — `.postCard:hover{ border-color:transparent; background:linear-gradient(var(--bg-elev),var(--bg-elev)) padding-box, var(--accent-grad) border-box; box-shadow:0 8px 24px -8px rgba(91,157,255,0.30) }`. ④ `.tag`/`.postTags` 칩을 본 사이트 톤(`--border`·#9aa3b2). 폰트는 globals `--font-sans`(Pretendard) 상속이라 OK. **신규 색 0(전부 기존 토큰)**.
+   - 검증: `npm run typecheck`/`build` 무에러, /blog·/blog/[slug] 데스크/모바일 카드 hover 그라데 보더·제목 그라데·상단 radial·태그칩 톤 본 사이트와 정합·빈 상태(`.empty`) 무붕괴(글 0건 가능)·가로 오버플로 0·CSS brace 균형.
+
+
+4. **[외형·하이라이트·D-DAY강조·보통] "🔥 출시 임박" 스트립 최근접(D-0~D-1) 1건 대형 핫카드 승격 + 라이브 카운트다운** (디자이너 06-03 01:05 인벤#1, 후보→큐 승격 07:13, `components/HeroStrip.tsx` + `components/HeroStrip.module.css`)
    - 문제: 임박 스트립 카드가 카테고리/D-DAY 글로우(기출고)로 위계는 생겼으나 전부 동일 크기 균일 그리드 — 인벤 우상단 '핫카드'(최근접 1건 대형+라이브 카운트다운) 같은 단일 시각 정점이 없어 "가장 임박한 1건"이 한눈에 안 꽂힘.
    - 구현(큰 단위 한 번에): 정렬상 첫 카드(최근접, diff 0~1)를 `.hotCard`로 `grid-column:span 2` 확대(게임명 1.5rem·`.dday` 1.8rem) + 그 아래 `HH:MM:SS` 라이브 카운트다운(1rem/700 `--accent-warm` #f5a623, 1초 `setInterval`). 카테고리색 radial glow는 기출고 `.card::before`/glow 클래스 재사용(**신규 색 0**). HeroStrip를 `'use client'`로 전환 — 카운트다운은 mount 후에만 렌더(하이드레이션 #418/#423/#425 가드 필수).
    - 검증: `npm run typecheck`/`build` 무에러(strict·any 0), 첫 카드 2칸 대형·HH:MM:SS 1초 갱신·SSR 콘솔 #418/#423/#425 0건(mount 가드)·모바일 ≤480px 컴팩트 행 레이아웃 무붕괴·reduced-motion 처리·임박 0건 미렌더 확인.
@@ -241,7 +249,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 
 ## 알려진 버그 (BUGS)
-- [2026-06-04 07:48] [모바일] (/game/[id] 상세 — 07:28 출고분 중 `.game-detail` 모바일 @media(≤480px) 2규칙(padding 1.2rem 1.1rem 1.6rem·h2 1.5rem)이 **라이브 미적용**. 원인: 신규 규칙을 추가한 @media 블록이 globals.css **L68(파일 상단·헤더용 기존 블록)**인데 base `.game-detail{padding:1.5rem 1.8rem 2rem}`(L104)·`.game-detail h2{font-size:2rem}`(L112)가 **소스 후행+동일 특이도**라 cascade 순서로 미디어쿼리 규칙을 override(미디어쿼리는 특이도 가산 없음). 재현: 뷰포트 390(matchMedia ≤480 true) /game/sol-enchant-20260618에서 .game-detail computed padding 24/28.8/32px·h2 32px = 데스크 값 그대로. 수정안: 모바일 2규칙을 base 규칙 뒤(파일 말미) 별도 @media 블록으로 이동(헤더 2규칙은 기존 위치 유지 가능 — .site-header base가 L68보다 앞이라 정상 동작 중), 또는 특이도 상향. ※같은 푸시의 detail-actions pill은 데스크/모바일 모두 정상)
+- [2026-06-04 07:48 → 2026-06-09 ✅개발자 수정·QA 검증 대기] (개발자 5bfb5a2: 모바일 `.game-detail` 2규칙을 base 뒤 별도 @media 블록으로 재배치 + `.detail-actions` 모바일 풀폭 보강 → cascade 미적용 해소. QA 라이브 390px 검증 후 종결) [이전 보고] [모바일] (/game/[id] 상세 — 07:28 출고분 중 `.game-detail` 모바일 @media(≤480px) 2규칙(padding 1.2rem 1.1rem 1.6rem·h2 1.5rem)이 **라이브 미적용**. 원인: 신규 규칙을 추가한 @media 블록이 globals.css **L68(파일 상단·헤더용 기존 블록)**인데 base `.game-detail{padding:1.5rem 1.8rem 2rem}`(L104)·`.game-detail h2{font-size:2rem}`(L112)가 **소스 후행+동일 특이도**라 cascade 순서로 미디어쿼리 규칙을 override(미디어쿼리는 특이도 가산 없음). 재현: 뷰포트 390(matchMedia ≤480 true) /game/sol-enchant-20260618에서 .game-detail computed padding 24/28.8/32px·h2 32px = 데스크 값 그대로. 수정안: 모바일 2규칙을 base 규칙 뒤(파일 말미) 별도 @media 블록으로 이동(헤더 2규칙은 기존 위치 유지 가능 — .site-header base가 L68보다 앞이라 정상 동작 중), 또는 특이도 상향. ※같은 푸시의 detail-actions pill은 데스크/모바일 모두 정상)
 - [2026-06-03 05:47·QA] ✅ **해소 확정 — 하이드레이션 #418×3·#423×1·#425×3=7건 라이브 0건** (개발자 05:31 kstDateOnly fix). gcalen.com Chrome 실측: 캐시버스트 2회·**KST 05:47(개발자가 지목한 00~09시 빌드 위험구간)** 재로드 후 콘솔 React #418/#423/#425 **0건**, adsbygoogle 'no_div' ERROR도 미관측. 소스 확인: lib/utils.ts kstDateOnly 신설·Home.tsx 4곳 적용. 이전 04:47/03:48 '7건 잔존' 항목은 본 항목으로 해소.
 - [2026-06-03 04:47·QA] [공통] (홈) ⚠️**배포 블로커는 해소 / 하이드레이션 7건은 잔존** — 개발자 vercel.json 출고 후 라이브 재검 결과 gcalen.com이 **레거시 정적 배포 → 신 Next 앱으로 전환 확인**(Chrome 실측: h1 SVG 게임패드·'불러오는 중' 플래시 제거·기간 기본 '전체(과거+미래)'·총 44개·임박 스트립 라이브 = 개발자 (a) 검증항목 전부 충족, 번들 _next/static/chunks). 따라서 직전 '구버전 잔존/f021717 미배포 추정'(03:48)은 **정정**: 신 빌드 정상 배포됨. **그러나 콘솔 하이드레이션 #425×3·#418×3·#423×1=7건이 이 신 빌드에서도 매 로드 재현**(데스크톱 1440 + 모바일폭 시도 동일, fd9d1056*.js). 즉 f021717 serverNow fix가 라이브에 반영됐는데도 7건 미해소 → **fix 불완전 또는 별도 원인**(예: 애드센스 ad-div DOM 주입이 hydration 직전 컨테이너 변형 → adsbygoogle 'no_div' [ERROR] 1건 동반, 혹은 잔여 날짜의존 노드). 재현: gcalen.com 진입 후 DevTools 콘솔. 개발자: 이제 미배포 아님 — **fix 자체 재점검** 권고(비최소화/dev 빌드로 #418·#425 발생 노드 특정 → suppressHydrationWarning/useEffect mount 가드/광고 컨테이너 격리 검토).
 - [2026-06-03 03:48·QA재확인 / **04:47 정정: 신 빌드 정상 배포 확인됨, '미배포 추정' 철회 — 상단 04:47 항목 참조**] [공통] (홈) 하이드레이션 **#425×3·#418×3·#423×1=7건 여전 미해소** — 개발자 04:20 serverNow 단일기준 fix(f021717) 후 라이브 재검(2회·`?t=` 캐시버스트 동일 재현). **단 라이브 SSR raw HTML이 구버전 잔존**(본문 '불러오는 중...' 플래시 + 기간 셀렉트 기본값 '앞으로 1년' = da3ab91 이전 상태) → 최신 커밋 **f021717 미배포 추정**(Vercel 빌드 지연 또는 빌드 실패 가능). 클라 JS 렌더 자체는 정상(125셀·임박 스트립 D-DAY/D-1/D-2·가로오버플로 0·h1 🎮). 판정 보류: 다음 사이클 재확인 필요 — 빌드가 실패 중이면 그 자체가 배포 블로커(개발자: Vercel 배포 로그/typecheck 확인 요망).
@@ -358,6 +366,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 일간/주간 뷰 (월간 안정화 후)
 
 ## 최근 변경 로그
+- 2026-06-09 [기획자] TODO 큐 3→4 (모드: 외형 집중, 큰 단위) + 파이프라인 재가동 확인. 개발자가 QA 06-04 07:48 BUG('.game-detail 모바일 @media 미적용') 해소(5bfb5a2, base 뒤 재배치·QA 검증 대기) → BUGS 마킹. 06-04 휴면 사이 외부 추가 2건 확인: ①블로그 섹션(`app/blog/`) ②Supabase 게임별 조회수 카운터(RLS). 신규 3순위 '블로그 신규 표면 브랜드 외형 정합'(off-brand #4a90e2→`--accent`·`--accent-grad`·헤더 radial·태그칩, 신규 색 0). 기존 외형 3건(day패널 D-day 3단·day패널 모바일 3규칙·HeroStrip 핫카드) 1·2·4순위 유지. 활성 사용자 요청 0(SEO 보류)·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-09 16:40 [개발자] QA 06-04 07:48 등록 BUG 해소(파이프라인 06-04 이후 휴면→재가동 첫 사이클). `.game-detail` 모바일 @media(≤480px) 오버라이드가 상단 블록(L68)에 있어 base(L104+) 후행 동일특이도에 밀려 미적용이던 cascade 버그를, 모바일 규칙을 base 직후 신규 @media 블록으로 재배치해 수정 + `.detail-actions` 버튼 모바일 풀폭 보강. globals.css +6/−2·brace 80/80·신규 색 0·CSS-only. Vercel 위임. QA 라이브 390px 검증 대기.
 - 2026-06-04 07:13 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). '헤더 듀얼 브랜드 radial' QA 06:47 라이브 ✅ 종결 확인. 큐 1~4 순서 유지(1·2 상세 표면 묶음, 3·4 CalendarView 묶음). ⑤ HeroStrip 핫카드+라이브 카운트다운 후보→큐 승격. 활성 사용자 요청 0·신규 BUGS 0. 코드 미수정(문서만).
 - 2026-06-04 06:29 [개발자] 큐 1순위 '[외형·헤더] .site-header::before 단일 블루 → 듀얼 브랜드 radial(블루+퍼플)' 구현 완료 → 완료한 기능 이동, 큐 5→4. `app/globals.css` ::before background 1선언 교체(좌상 블루 0.12·우상 퍼플 0.10, 기획자 스펙 그대로). 신규 색 0·CSS-only·brace 73/73. 잔여 큐 1~4: 상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약·dayPanel 모바일 3규칙. Vercel 위임. QA 라이브 검증 대기.
