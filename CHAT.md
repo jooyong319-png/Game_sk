@@ -1,3 +1,8 @@
+## [2026-06-09 18:13] [개발자]
+완료: 큐 1순위 '블로그(index+post) 브랜드 외형 정합'. 06-08 추가된 /blog 표면이 본 사이트 외형 사이클(브랜드 블루 #5b9dff·--accent-grad 클립·헤더 radial)을 못 받아 off-brand #4a90e2·단색 카드로 떠 있던 톤 단절 해소. ①.postDate/카드면/보더/backLink/postBody a/pre border 전역 토큰화 ②제목(.title·.postH1) --accent-grad 클립 + .indexSection/.post 상단 radial 백드롭 ③.postCard:hover 그라데 보더(padding-box/border-box) ④.tag 칩 본 사이트 톤(#9aa3b2·--border).
+변경된 파일: app/blog/blog.module.css (단일, ~15곳 치환·신규 색 0). CSS brace 34/34·off-brand 리터럴 grep 0건.
+비고: tsx 무변경·CSS-only. 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 /blog·/blog/[slug] 데스크/모바일 제목 그라데·카드 hover 그라데 보더·상단 radial·태그칩 정합·빈 상태 무붕괴·콘솔 0 확인 부탁.
+
 ## [2026-06-09 17:40] [디자이너]
 🔴 운영자 라이브 피드백 → 모드 전환 '외형 추가' → '정리(declutter)'. "디자인 너무 지저분 / 검색·필터 굳이? / 게임 상세 페이지도 별로".
 대응: 지저분함 진단(한 화면 색 11개 의미중복·HeroStrip 카드 1개에 이펙트 7중첩·무여백 적층·칩 혼재) → 절제 시스템 4규칙(색 3역할 고정·그라데 1곳·중립 칩 1언어·여백 우선) 정의. 메인+상세 **정리 목업 2종 제시 → 운영자 '이 방향 확정·스펙 기록' 승인.**
@@ -300,10 +305,3 @@ IDEAS 보관: 디자이너 05:07 잔여 3건(dayPanel 모바일 3규칙·BackToT
 모바일 주요: CalendarView @media(≤480px)에 .dayPanel/.dayRow 오버라이드 0 — 셀 게임명 숨김이라 패널이 모바일 1차 표면인데 행 폭 285px·게임명 2줄 랩(iframe 390 실측)
 인벤 참고: 우하단 플로팅 '맨 위로' 원형 버튼 → 다크 글래스 BackToTop 신설 제안 (주간 TOP10은 집계 데이터 부재로 계속 보류)
 DESIGN_NOTES에 4개 제안 추가 (Chrome resize 모바일 미반영 지속 → 390px same-origin iframe 합성 실측으로 대체. 통계줄 4색 분해 라이브 반영 확인)
-
-## [2026-06-04 04:49] [QA]
-검증 대상: 메인 통계줄 카테고리 4색 인라인 카운트 분해 (개발자 04:23 d9c549f)
-데스크톱 1440: ✅ (resize 실뷰포트 미반영·innerWidth 1920 고정 실측)
-모바일 390: ✅ (resize/mq480 미반영 → same-origin iframe 390px 합성, 실뷰포트 390 확보)
-상세: 라이브 캐시버스트 — 캘린더 뷰 4칩(모바일 11 #81c784·PC·콘솔 5 #64b5f6·글로벌 16 #ba68c8·신서버 12 #ff8a65)+회색 '총 44개', 0.9rem(14.4px)/500·가운뎃점 ::before(첫 span 無) 스펙 일치. 리스트 뷰 전환 9·5·13·총 27(신서버 0 미렌더 가드 OK)·재전환 44 복원. 캘린더 범례 스와치 4색 정합. 390 iframe: 통계줄 한 줄 22px(콘텐츠 351px<390)·scrollW 375 가로 오버플로 0·ViewToggle 168px 풀폭·/game/sol-enchant 상세 related 단일컬럼·backdrop·오버플로 0. 오늘셀(06.04) 자동선택+패널 '이후 출시 20건'·scrollY 0 무회귀. 콘솔 에러/#418/#423/#425 0건. 헬스 ✅(홈 h1·sitemap 50 URL·robots·상세 D-15·같은시기 6장·new-servers 12). 신규 BUGS 0.
-참고: 캘린더 뷰 통계줄 콘텐츠 351px — 390px 모바일서 한 줄이지만 여유 적음(카운트 자릿수 증가 시 2줄 줄바꿈 가능, nowrap 칩 단위라 깨짐은 아님 → 관찰만).
