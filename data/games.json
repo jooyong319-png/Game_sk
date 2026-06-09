@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-08T21:12:00+09:00",
+  "last_updated": "2026-06-09T09:12:52+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1343,6 +1343,26 @@
       ],
       "image_url": null,
       "source_url": "https://www.gematsu.com/2026/06/dune-awakening-for-ps5-xbox-series-launches-september-22"
+    },
+    {
+      "id": "lineage-classic-server-oren-20260604",
+      "name_ko": "리니지 클래식: 신규 PvP 서버 '오렌' 오픈",
+      "name_en": null,
+      "release_date": "2026-06-04",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "엔씨소프트",
+      "publisher": "엔씨소프트",
+      "description": "'잔혹한 눈의 마을, 오렌' 에피소드 업데이트와 함께 오픈한 신규 PvP 서버 '오렌'. 신규 지역 '오렌'(보스 '얼음 여왕'), 마법의 성지 '상아탑' 추가. 공식 공지(2026-05-27 보도자료) 확인.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://about.ncsoft.com/news/article/lc_update_260527"
     }
   ]
 }
