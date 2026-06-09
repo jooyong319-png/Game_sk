@@ -1,4 +1,9 @@
 ## [2026-06-09 19:20] [개발자]
+완료: **정리 Phase 3a §A.3 — 칩 단일언어(중립 글래스 1언어 + 카테고리 좌점)**(큐 1순위 잔여). ①`.category-tag`: `cat-bg-*` 채색 배경 → 중립 글래스(bg rgba(255,255,255,0.04)·border var(--border)·color var(--text-faint)·radius 999·0.7rem·padding 0.1/0.5)로 전환하고 카테고리는 `::before` 7px 점(정보색)으로만 식별 — `.category-tag.cat-bg-*` 4종에 `--cat-dot`(#6f9c7a/#5f86b8/#9a7bb0/#c08560) 주입. List/Modal/SEO/상세 4소비처 자동 적용(tsx 무변경). ②`ListView.module.css` `.genreChip`·`.releasedTag`도 동일 스펙(border var(--border)·bg 0.04)으로 정렬해 3칩 1언어화. cat-bg standalone(cardBanner·modal image 배경)은 `.category-tag` 미동반이라 무영향.
+변경된 파일: app/globals.css(+18/−1), components/ListView.module.css(genreChip·releasedTag 2블록). 신규 색 0(정보색 4종은 CATEGORY_META와 동일값)·esbuild CSS OK·brace 85/85·39/39.
+비고: QA님 — 라이브 List 카드칩/GameModal/SEO 랜딩/상세 카테고리 칩이 라이트·다크 모두 중립 글래스+좌측 점으로 식별 유지되는지, 가로 오버플로 0·칩 3종 톤 일치 확인 부탁. 큐 1순위는 이제 Phase 3b(상세 위계 재배치)만 남음.
+
+## [2026-06-09 19:20] [개발자]
 완료: **정리 Phase 3a 부분 출고 — 필터 3컬럼 + 통계 중립 + 캘린더 정보색 격하**(큐 1순위 §B-3·B-4·B-5). ①필터: 플랫폼 select·위시 버튼 제거하고 검색/카테고리/기간 3컬럼 그리드(≤480 1열)·컨트롤 38px 톤 통일(운영자 '3컬럼' 직접 지시). FilterState platform/wishlistOnly 필드는 보존해 Home 필터 로직 무변경. ②통계줄: 카테고리 글자색(4색) 제거→muted, 식별은 7px 점만. ③캘린더: 셀 tint+좌측 정보색 바 제거(카테고리는 우하단 점), today/선택 셀 링 warm→`--accent` 블루 단색 통일.
 변경된 파일: Filters.tsx/.module.css, Home.tsx/.module.css, CalendarView.module.css (5, +62/−93 순감). 신규 색 0·color-mix 0·esbuild OK·CSS brace 균형.
 비고: 묶음 큐였던 §A.3 '칩 단일언어'는 `category-tag`가 List/Modal/SEO 3곳서 `cat-bg-*` 채색으로 카테고리 식별 중이라 다컴포넌트 색면 전환(좌점 보전)이 필요 → 별도 사이클로 분리, 번호큐 #1 재등재(Phase 3b는 #2 유지)했습니다. 기획자님 확인 부탁. QA님 라이트/다크 양 테마 — 필터 3컬럼/모바일 1열·플랫폼·위시 바 제거·통계 점·캘린더 점 식별·today/선택 블루 링·가로 오버플로 0 실측 부탁.
@@ -289,12 +294,3 @@ TODO 큐 3→4 (모드: 외형 집중) + 파이프라인 재가동 확인
 완료: 큐 1순위 '/game/[id] 상세 액션 outline pill' + 2순위 '.game-detail 모바일 블록' 묶음 출고(기획자 07:13 '1·2 같은 상세 표면 묶음 후보' 권고대로). ① 상세 하단 액션 래퍼 인라인 style → `.detail-actions` 클래스화 + '공식 출처' `.detail-link` 부여, globals.css에 outline pill 공통 규칙(border var(--border)·radius-sm·rgba(255,255,255,0.03)·accent 0.88rem/600) + hover/focus-visible(accent 보더·rgba(91,157,255,0.1)) 신설. ② 기존 @media(≤480px) 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`·`.game-detail h2{1.5rem}` 2규칙 추가. 신규 색 0.
 변경된 파일: app/game/[id]/page.tsx (+2/−2), app/globals.css (+26), PROJECT_STATUS.md, CHAT.md
 비고: 큐 5→3 (day패널 D-day 3단 규약이 새 1순위 — 신규 2순위 day패널 모바일 3규칙과 같은 CalendarView 표면 묶음 후보). esbuild tsx OK·CSS brace 78/78 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. QA님 라이브 /game/{id} 하단 '캘린더 추가'/'공식 출처' 2버튼 outline pill 렌더·hover 톤·390 flex-wrap 줄바꿈·상세 카드 모바일 패딩 1.1rem/h2 1.5rem 축소·데스크톱 무영향·가로 오버플로 0 확인 부탁.
-
-## [2026-06-04 07:13] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-완료 확인: '헤더 듀얼 브랜드 radial(블루+퍼플)' QA 06:47 라이브 ✅(radial 2개 스펙 일치·h1 그라데 정합·헤더 높이 무변·오버플로 0) → 종결(번호큐는 개발자 06:29 기정리).
-유지: 큐 1~4(상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약·day패널 모바일 3규칙) 순서 그대로 — 1·2 /game/[id] 묶음·3·4 CalendarView 묶음 구현 후보.
-추가: - ⑤[외형·하이라이트·D-DAY강조] HeroStrip 최근접 1건 대형 핫카드(span 2·게임명 1.5rem·dday 1.8rem) + HH:MM:SS 라이브 카운트다운 — 'use client' 전환·mount 가드 필수·신규 색 0 (디자이너 06-03 01:05 인벤#1, 02:10부터 후보 대기 → 승격)
-IDEAS 보관: 디자이너 05:07 잔여 2건(BackToTop 다크 글래스·푸터 브랜드 hairline) — 다음 큐 우선 후보.
-활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 06:47 신규 0·'데이터 갱신 06.02' 이틀 경과는 리서처 주기 참고). 3사이클 정체 0. a11y 제안 0건 → IDEAS 보관 (보류). 코드 미수정(문서만). 개발자 :20 1순위(상세 액션 outline pill) 착수 권장 — 2순위와 같은 상세 표면 묶음 가능.
-
