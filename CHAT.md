@@ -1,9 +1,17 @@
+## [2026-06-10 08:20] [개발자]
+완료: 없음 — 저장소 동기화 + 컨텍스트 점검 + 정리(declutter) 출고물 무결성 재검증. **번호 큐 비어있음(9사이클 연속).** 운영자 미니멀 리셋 지시(정리 Phase 0~3b·§E 헤더 내비·상단 광고 제거) 전량 ~06-09 23:29 출고 완료, 18:40 이후 기획자 신규 TODO 등재 0·활성 사용자 신규 요청 0 → 구현 대상 부재.
+검증(이번 사이클): 폐기 #4a90e2 grep 0건(app/components/lib)·`--accent-grad` h1 1곳만 소비(globals.css L65)·site-header radial-gradient 0건(듀얼 radial 제거 유지)·`size="top"` 광고 grep 0건·HeroStrip 글로우/펄스 제거(.glowCat/.glowDday 보더 큐만 잔존) → 정리 출고물 회귀 0.
+보류 사유: 정리(declutter) 모드 유지. IDEAS·'큐 소진 후 후보'는 대부분 시각요소 *추가*(그라데/글로우/플로팅)라 운영자 '지저분' 피드백과 상충 → 기획자 승인 전 무단 착수 안 함.
+변경된 파일: CHAT.md만(heartbeat 추가·가장 오래된 06-09 16:46 QA 항목 1건 정리·30개 한계 유지). 코드 무수정.
+비고: **기획자님 — 큐 공회전 9사이클 연속(00:20~08:20). 다음 방향 번호 큐 등재 부탁.** QA님 — 06-09 23:29 상단 광고 제거·21:31 Phase 3b 상세 위계·19:40 §E 헤더 내비 라이브 검증(라이트/다크) 대기.
+
 ## [2026-06-10 07:20] [개발자]
 완료: 없음 — 저장소 동기화 + 컨텍스트 점검 + 정리(declutter) 출고물 무결성 재검증. **번호 큐 비어있음.** 운영자 미니멀 리셋 지시(정리 Phase 0~3b·§E 헤더 내비·상단 광고 제거) 전량 ~06-09 23:29 출고 완료, 18:40 이후 기획자 신규 TODO 등재 0·활성 사용자 신규 요청 0 → 구현 대상 부재.
 검증(이번 사이클): `size="top"` 광고 grep 0건(app/components)·폐기 #4a90e2 grep 0건(app/components/lib)·`--accent-grad` h1 1곳만 소비·site-header `radial-gradient` 0건(듀얼 radial 제거 유지) → 정리 출고물 회귀 0.
 보류 사유: 정리(declutter) 모드 유지. IDEAS·'큐 소진 후 후보'는 대부분 시각요소 *추가*(그라데/글로우/플로팅)라 운영자 '지저분' 피드백과 상충 → 기획자 승인 전 무단 착수 안 함.
 변경된 파일: CHAT.md만(heartbeat 추가·가장 오래된 06-09 09:00 기획자 항목 1건 정리·30개 한계 유지). 코드 무수정.
 비고: **기획자님 — 큐 공회전 8사이클 연속(00:20~07:20). 다음 방향 번호 큐 등재 부탁.** QA님 — 06-09 23:29 상단 광고 제거·21:31 Phase 3b 상세 위계·19:40 §E 헤더 내비 라이브 검증(라이트/다크) 대기.
+
 ## [2026-06-10 06:20] [개발자]
 완료: 없음 — 저장소 동기화 + 컨텍스트 점검 + 정리 출고물 무결성 재검증. **번호 큐 비어있음**(운영자 미니멀 리셋 지시 Phase 0~3b·§E 헤더 내비·상단 광고 제거 전량 ~06-09 23:29 출고 완료, 18:40 이후 기획자 신규 TODO 등재 0).
 검증(이번 사이클): 폐기 #4a90e2 전역 grep 0건·`--accent-grad` h1 1곳만 소비·HeroStrip 글로우/펄스/radial 제거·site-header 듀얼 radial 제거·size="top" 광고 grep 0건 → 정리 출고물 회귀 0. (참고: `--accent-2` 토큰은 정의만 있고 미참조 → 제거는 마이크로 리팩토링이라 외형/정리 모드 스코프 외로 보류.)
@@ -90,6 +98,7 @@
 - 패스 오브 엑자일2 '고대의 귀환'(0.5.0, 5/30): 기등록(poe2-season-return-of-ancients-20260530) → 중복 제외
 - 마비노기(PC/모바일): 신규 정식 서버 공식 공지 없음(모바일은 몰리 이후 채널 축소 기조) → 추가 X
 - 글로벌 7~8월: MGS 마스터컬렉션 Vol.2(8/27)·엘든링 타니쉬드(8/28)·비스트 오브 리인카네이션(8/4)·마블 토콘(8/6)·AC 블랙플래그 리싱크드(7/9) 전부 기등록. Wild Blue Skies(8/13)·Grave Seasons(8/14)=인디 코지팜류·AAA 아님 → 제외. 신규 확정 발매일 없음
+
 ## [2026-06-09 19:40] [개발자]
 완료: **§E 헤더 리디자인 — 내비 포함형**(운영자 직접 지시·17:58 확정 스펙). ①헤더를 중앙정렬 2줄(타이틀+태그라인) → **단일 flex 행**으로 재구성: 좌 워드마크(게임패드 SVG+`--accent-grad` 클립 유지)·중앙 `.site-nav` 6링크(캘린더/출시예정/신규서버/모바일/PC·콘솔/글로벌, `usePathname()`로 활성 라우트 accent 언더라인)·우 유틸 2개(위시★·테마토글). ②**위시 토글 복구** — Phase 3a서 필터바 위시 버튼 제거 후 "위시만 보기"가 켤 UI 없이 공백이던 것을, §E대로 헤더 우측 ★로 이관. 헤더(layout 트리)와 Home(page 트리)이 분리돼 props 공유 불가 → `useWishlistFilter` 공유 store(useSyncExternalStore, 세션·비영속, SSR=false 하이드레이션 가드) 신설로 동기화. ③모바일(≤480): nav를 워드마크 행 아래 가로 스크롤 스트립(mask 페이드+scroll-snap, MonthTabs 톤)·유틸은 워드마크 행 우측 유지. ④sticky top·태그라인 바에서 제거(SEO desc는 `<head>` 메타 유지).
 변경된 파일: app/layout.tsx, components/HeaderNav.tsx(신규 59), components/useWishlistFilter.ts(신규 39), components/Home.tsx(위시필터 store 연결 4줄), app/globals.css(헤더 블록 재작성 ~+70/−34), components/ThemeToggle.module.css(absolute→인라인 유틸) — 총 6. 신규 색 0(토큰+시그니처 그라데만)·esbuild tsx+css 무에러·brace globals 93/93·ThemeToggle 4/4.
@@ -123,6 +132,7 @@
 완료: **[리팩토링] useWishlist 상태관리 승격** (운영자 직접 지시 — 외형/정리 모드 중 리팩토링 예외 처리). 기존 `useWishlist`는 호출 인스턴스마다 별도 useState(Set)를 들어 '공유 store'가 아니었음 → 동시 마운트 시 한쪽 토글이 타 인스턴스에 즉시 반영 안 되는 잠재 footgun. `useSyncExternalStore` + 모듈 싱글톤 스냅샷/리스너로 재작성해 단일 소스화, 보너스로 `storage` 이벤트 탭 간 동기화 추가. 공개 API `{ids,toggle,has}` 불변이라 소비처 5곳·프롭 드릴링 전부 무변경.
 변경된 파일: components/useWishlist.ts (전면 재작성, 85줄). WishlistApi 타입 export 추가. esbuild ts OK·strict any 0.
 비고: 기획자님 — 정리 모드 중이지만 운영자 직접 요청이라 진행했습니다. QA님 위시 토글 지속·새로고침 복원·2탭 동시 토글 반영(신규 탭 동기화) 실측 부탁.
+
 ## [2026-06-09 18:29] [개발자]
 완료: **정리(declutter) Phase 1 §A.1 '색=3역할 고정'** 착수(번호큐 소진·운영자 17:40 승인 방향). ①카테고리 4색을 `lib/types.ts` CATEGORY_META 단일 출처에서 디자이너 17:40 목업 정보색으로 톤다운(모바일 #6f9c7a·PC #5f86b8·글로벌 #9a7bb0·신서버 #c08560) → 캘린더 셀/범례/리스트/관련카드/모달 일괄 차분화. ②임박강조 warm 단일화 — 전역 D-day '오늘' 잔존 오렌지 #ff7a59 3곳 + HeroStrip 레드 #ff4d4d(+글로우)를 단일 `var(--accent-warm)`(라이트 #c47a00/다크 #f5a623)로 흡수(오늘=warm 진하게는 weight/펄스로 유지). 리포 전역 #ff7a59·#ff4d4d grep 0건.
 변경된 파일: lib/types.ts(4줄), CalendarView.module.css(1), app/globals.css(2), HeroStrip.module.css(3) — 총 4파일. 신규 색 0·esbuild types.ts OK·CSS brace 67/81/41 균형.
@@ -183,10 +193,3 @@ DESIGN_NOTES에 5개 제안 추가(데스크3·모바일1·인벤1). 임팩트 2
 모바일 주요: /blog·/blog/[slug]·메인 모두 390 오버플로 0(양호). 블로그만 모바일 @media가 제목 2개만 축소 → 카드 패딩/본문 줄길이 3규칙 제안.
 인벤 참고: 필터를 원형 아이콘 스트립(출시/테스트/얼리액세스+플랫폼아이콘)으로 시각화 → 우리 text select 3종을 다크 아이콘칩 스트립으로 재해석(큰 단위·IDEAS 후보).
 DESIGN_NOTES에 4개 제안 추가(데스크3·모바일1·인벤1). 큐 ③ 블로그 정합의 hex/셀렉터 상세 제공. a11y/리팩토링 0건(외형 모드).
-
-## [2026-06-09 16:46] [QA]
-검증 대상: `.game-detail` 모바일 @media cascade 미적용 BUG 수정 (5bfb5a2 — base 뒤 재배치)
-데스크톱 1920: ✅
-모바일 390: ✅ (라이브 CSSOM 검증 — 뷰포트 강제 불가)
-상세: /game/sol-enchant 라이브 @media(≤480px)에 `.game-detail` padding 1.2rem 1.1rem 1.6rem·h2 1.5rem·detail-actions flex:1 1 auto 존재, base(idx24)보다 후행(idx39)→동일특이도 미디어쿼리 승리. 데스크 computed 24/28.8/32px·h2 32px 무영향·가로오버플로 0·콘솔 #418/#423/#425·adsbygoogle 0건(메타마스크 확장 경고만). 06-04 07:48 BUG 종결. ※Chrome resize 무효(창 최대화 1920 고정)로 390 실렌더 불가→CSSOM·소스순서 대체검증. 기본 헬스체크(/ ·sitemap.xml ·robots.txt ·/game/{id} ·/new-servers) 전부 정상.
-
