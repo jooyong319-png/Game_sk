@@ -10,6 +10,51 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-09 17:40] [디자이너] - 🔴 운영자 피드백: 미니멀 리셋(정리) 방향 + 메인/상세 목업 확정
+**모드 전환: '외형 추가' → '정리(declutter)'.** 운영자(쌀먹닷컴) 라이브 피드백 — "디자인이 너무 지저분하다 / UX도 검색·필터 굳이 필요한가 / 게임 상세 페이지 디자인도 별로". 정리 방향 4축(① 색 가짓수 ② 그라데·이펙트 ③ 요소·밀도 ④ 칩 통일) + 검색/필터는 '3컬럼 정렬'(제거 아님), 적용 범위 '전부' 확정. 디자이너가 메인+상세 **정리 목업 2종 제시 → 운영자 '이 방향으로 확정·스펙 기록' 승인.** 아래는 그 목업의 hex/셀렉터/파일 스펙. **이번 사이클부터 기존 '추가' 큐(핫카드 카운트다운·필터 아이콘칩 등 장식 추가성)는 정리 방향과 상충하므로 보류 권장**, 진행 중인 #4a90e2 청산·SEO 랜딩 정합은 본 정리에 흡수. 디자이너는 코드 미수정(제안만).
+
+### 진단 (지저분함의 정체 — 라이브 실측)
+- **색 11개 경쟁·의미 중복**: 블루 3종(`--accent` #5b9dff 브랜드 / `cat-pc_console_kr` #64b5f6 / 폐기 #4a90e2) · 퍼플 2종(`--accent-2` #c98ad6 / `cat-global_aaa` #ba68c8) · warm 4종(`--accent-warm`/임박 #f5a623 / D-day #ff7a59 / `cat-new_server` #ff8a65 / 위시 #f5b400) · 카테고리 green #81c784. 같은 색이 표면마다 다른 뜻 → 산만.
+- **이펙트 중첩**: HeroStrip `.card` 하나에 7중첩(베이스 `linear-gradient(135deg)` + `::before` radial glow + `.glowCat` color-mix box-shadow + `.glowDday` 주황 글로우+`scale(1.02)` + `.dday` text-shadow + `.today` `pulse` 애니메이션). 헤더 `::before` 듀얼 radial, 리스트 `.cardBanner` 세로 그라데+45° 해치(`repeating-linear-gradient`), 캘린더 `.cellHas` color-mix tint+inset 바, 상세 카드 카테고리 라디얼 백드롭.
+- **밀도**: 메인이 광고슬롯→핫카드→토글→월탭12→필터3종→통계줄(4색)→캘린더→범례→패널20행 무여백 적층.
+- **칩 혼재**: `genreChip`·`category-tag`·`releasedTag`·플랫폼 select가 제각각.
+
+### A. 절제 시스템 (규칙 — 모든 표면 공통)
+1. **색 = 3역할 고정.** (a) 인터랙션/브랜드 = 블루 `--accent` #5b9dff **하나**(#4a90e2·#64b5f6 흡수). (b) 임박 강조 = warm `--accent-warm` #f5a623 **하나**(#ff7a59·#ff4d4d·#f5b400 흡수, D-day는 '오늘=warm 진하게/임박=warm/그 외=muted #888' 한 계열). (c) 카테고리 4색 = '정보색'으로 격하 — **채도/명도 낮춰 점·얇은 좌측 바에서만**, 텍스트/큰 면엔 미사용. 목업 적용값: 모바일 #6f9c7a·PC #5f86b8·글로벌 #9a7bb0·신서버 #c08560(현 #81c784/#64b5f6/#ba68c8/#ff8a65에서 톤다운). 퍼플 `--accent-2` #c98ad6은 **h1 그라데 끝색으로만** 잔존.
+2. **그라데 = 1곳 원칙.** 메인 `.site-header h1 a` 시그니처 클립(블루→퍼플)만 유지. 그 외 그라데/radial/해치/글로우 전부 제거 → **플랫 면 + 0.5~1px 보더**.
+3. **칩 = 1언어.** 중립 글래스 칩 통일 — `background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--text-faint); border-radius:999px; font-size:0.7rem; padding:0.1rem 0.5rem`. 카테고리는 좌측 점(정보색)으로만 식별, 글자색은 중립.
+4. **밀도 = 여백 우선.** 장식 요소(범례·통계 4색·광고 비중·핫카드 글로우) 축소, 섹션 간 수직 여백 확대.
+
+### B. 메인 화면 정리안 (목업 기준·파일/셀렉터/hex)
+1. **[높음] 헤더 단색화** — `app/globals.css` `.site-header::before` L41~44 듀얼 radial `background` 제거(`::before` 자체 제거 가능) → 단색 다크. h1 그라데 클립만 시그니처로 유지.
+2. **[높음] HeroStrip 과장식 제거** — `components/HeroStrip.module.css`: `.card` 베이스 `linear-gradient(135deg,#1a1d24,#0f1115)`→`var(--bg-elev)` 단색 / `.card::before` radial glow 제거(`display:none` 또는 규칙 삭제) / `.glowCat`·`.glowDday` box-shadow 글로우·`transform:scale` 제거하고 `border-color`만 / `.dday` `text-shadow` 제거 / `.today` `pulse` 애니메이션 제거(색만 warm #f5a623, #ff4d4d 폐지). 모바일 컴팩트 행(≤480 nth-child(n+4) 숨김)은 현행 유지.
+3. **[높음] 필터 3컬럼 정렬** — `components/Filters.tsx`+`Filters.module.css`: 컨트롤 래퍼를 `display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.6rem`(≤480 `1fr`)로. **3컬럼 = 검색 / 카테고리 select / 기간 select.** 플랫폼 select·위시 버튼(`#f5b400`)은 바에서 제거(위시는 추후 헤더 아이콘 등으로 이동 검토·일단 보류). 컨트롤 톤 통일(height 38px·`var(--border)`·`var(--radius-sm)` 8px). 운영자 '3컬럼' 지시 직접 반영.
+4. **[보통] 통계줄 중립화** — `components/Home.tsx` L182 `.statsCat` 인라인 `style={{color:CATEGORY_META[c].color}}` 제거 → 전부 muted(`.stats` #aaa). 카테고리 식별 필요 시 글자색 대신 7px 점만.
+5. **[보통] 캘린더 정보색 격하** — `components/CalendarView.module.css` `.cellHas` L108~109 `color-mix 8% tint`+`inset 3px` 바 → tint 제거(또는 알파 ↓), 카테고리는 우하단 점 1개(정보색)로. today/선택 셀 링은 `--accent` 블루 단색(`inset 0 0 0 1px var(--accent)`, #4a90e2 폐지). `.legend` L38 범례는 점 색 격하로 의존도↓ → 접기/제거 검토.
+6. **[보통] 리스트 카드 배너 평면화** — `components/ListView.module.css` `.cardBanner` L96~102 세로 그라데→단색 면(또는 배너 축소·좌측 바만) / `.cardBanner::before` L104~108 45° 해치(`repeating-linear-gradient`) 제거 / `.ddayRibbon` L205 `box-shadow` 제거(평면) / `.genreChip` L158 = 위 §A.3 중립 칩 언어로.
+
+### C. 상세 페이지(/game/[id]) 정리안 (목업 기준)
+1. **[높음] 카테고리 라디얼 백드롭 + 상단 컬러바 제거** — `app/game/[id]/page.tsx` 카드 래퍼 인라인 `background:radial-gradient(...카테고리색...)` 및 `borderTop:4px solid {카테고리색}` 제거 → 평면 `var(--bg-elev)`. 목업처럼 카드 뒤 보라 노이즈 제거.
+2. **[높음] 위계 재배치** — 상단 행: 중립 카테고리 칩(점 1개) + **D-day warm 배지(제목 위 최상단 위계)**. 그 아래 제목(28px/500)·로마자 부제(muted). 현 '출시일 줄'은 `--accent` 캘린더 아이콘 + 날짜, 조회수는 같은 줄 muted.
+3. **[높음] ViewCounter 무채색화** — `components/ViewCounter.module.css` `.num` L14 `#4a90e2` → `var(--text-faint)` 또는 muted(폐기 블루 청산·두 번째 블루 제거). `.counter` pill 톤다운 유지.
+4. **[보통] 스펙시트 2열** — `.detail-meta`(개발사/배급사/플랫폼/장르)를 `grid-template-columns:1fr 1fr`(≤480 1열) hairline 2열로(현 1열 스펙시트는 06-03 적용분 — 2열로 폭 활용).
+5. **[보통] 액션·관련카드 정합** — `.detail-actions` outline pill(블루 1색)은 현행 유지. `.related-card`는 카테고리 점/좌측 바 1개(정보색)+`hover border-color`만, D-day는 warm 1색(현 dday-today #ff7a59→warm 계열로 단일화).
+
+### D. 테마(라이트 기본 + 다크 토글) — 운영자 추가 지시 [2026-06-09 17:46]
+운영자: "배경 다크/화이트 둘 다 만들고 **화이트를 디폴트 톤**으로." → **기존 '다크 테마 유지' 정체성 갱신: 라이트(화이트) 기본 + 다크 선택 토글.** (인벤이 라이트라 그동안 다크로 차별화했으나 운영자 결정으로 라이트 기본 전환 — 차별화는 미니멀/정보색 절제로 계승.) 현 코드가 색을 `:root` 토큰(--bg/--bg-elev/--border/--text/--text-faint/--accent…)으로 이미 토큰화해 **테마는 토큰 재정의로 구현 가능**(컴포넌트 대량수정 불필요).
+구현 방향(개발자 — 운영자 "리액트 기능" 관련): (1) `app/globals.css` L3 `html,body{ background:#0f1115; color:#e6e6e6 }` 하드코딩 → `var(--bg)`/`var(--text)`. (2) `:root`를 **라이트 토큰 기본**으로 재정의 + `[data-theme="dark"]`(또는 `html.dark`)에 현 다크 값 오버라이드. (3) 토글: `next-themes` 라이브러리(`defaultTheme="light"`·SSR no-flash·localStorage 지속·`attribute="data-theme"`) 또는 `<head>` 인라인 스크립트로 paint 전 data-theme 설정 — **하이드레이션 플래시/미스매치 회피(프로젝트 #418/#423/#425 이력 고려 필수)**. 토글 버튼은 헤더 우측 작은 아이콘(해/달).
+라이트 토큰 제안값: `--bg:#f6f7f9`·`--bg-elev:#ffffff`·`--border:#e4e7ec`·`--text:#1a1d24`·`--text-faint:#6b7280`·`--accent:#2f6fe0`(화이트 대비 위해 #5b9dff보다 진하게)·`--accent-2:#9b5fc0`·`--accent-grad:linear-gradient(92deg,#2f6fe0,#9b5fc0)`·`--accent-warm:#c47a00`. 카테고리 정보색(화이트용 점/좌바): 모바일 #3f7d54·PC #3a6ea5·글로벌 #7e4f99·신서버 #b5601f. 다크 토큰은 현 값 유지(=다크 모드).
+주의: §A~C 정리안 hex는 **다크 테마 값**으로 이관 — 각 표면이 토큰만 참조하면 라이트/다크 자동 전환. **인라인 하드코딩(상세 `page.tsx` 백드롭·`not-found`/`error` #4a90e2·HeroStrip 일부 #fff·ViewCounter 등)은 반드시 토큰화해야 양 테마 정상**(라이트에서 #fff 글자가 흰 배경에 사라지는 류 방지).
+
+### 우선순위(Phase) 종합
+- **Phase 0 (선행·테마 토큰화)**: §D — `html,body` 색 토큰화 + `:root` 라이트 기본 + `[data-theme=dark]` 다크 오버라이드 + next-themes 토글(라이트 기본). 색 정리(Phase 1)와 같은 토큰 작업이라 묶음.
+- **Phase 1 (색·최대효과)**: §A.1 색 3역할 고정 — 카테고리 4색 정보색 격하 + 주황/블루 단일화 + #4a90e2 전량 청산(ViewCounter·not-found·error·CalendarView 셀링·blog 잔여). 한 번에 가장 큰 '덜 지저분' 효과.
+- **Phase 2 (그라데·이펙트)**: B-1·B-2·B-6·C-1 — 헤더 radial·HeroStrip 글로우/펄스·카드 배너 해치/그라데·상세 백드롭 제거(플랫화).
+- **Phase 3 (밀도·칩·필터)**: B-3 필터 3컬럼·§A.3 칩 단일언어·B-4 통계 중립·B-5 범례 정리·C-2~5 상세 위계/스펙2열, 섹션 여백 확대.
+전부 신규 색 0(기존 토큰 재사용·정보색은 기존 4색 톤다운)·운영자 승인 목업 기준. a11y/리팩토링은 정리 과정에 자연 동반되나 별도 큐잉 X(외형/정리 모드).
+
+---
+
 ## [2026-06-09 17:04] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 블루→퍼플 그라데 타이틀+헤더 듀얼 radial·'🔥 출시 임박' 핫카드[포켓몬 챔피언스 D-6 주황 warm 그라데]·캘린더 6월 today(9일) 셀 자동선택→day-detail 패널 '이후 출시 20건' 자동 노출[D-6 amber·D-8+ muted, 큐 ① 미구현분 정상]) 양호. **이번 사이클은 직전(16:51)이 /blog만 다룬 '브랜드 외형 사이클 미수혜 표면' 점검을 비(非)블로그 신규/유틸 표면으로 확장 — ①카테고리 SEO 랜딩 5종(`SeoLanding` 컴포넌트·/mobile-games·/pc-console-games·/global-games·/new-servers·/upcoming-games) ②상세 조회수 카운터(`ViewCounter`, 06-08 Supabase와 함께 추가·외형 사이클 한 번도 안 받음) ③404/에러 유틸 페이지.** 라이브 교차로 **폐기된 구 accent `#4a90e2`가 블로그 외 3개 표면에 잔존**(전역은 06-02에 `--accent` `#5b9dff`로 선명화, blog는 16:51 큐 ③로 명세화됐으나 이 3표면은 미점검)·SEO 랜딩 h2가 메인 h1 그라데 클립 미적용 평면 #fff 확인. **모바일(390): resize_window 뷰포트 미반영(innerW 1920·mq480 false, 기존 한계) → same-origin iframe 390px 합성 실측(/mobile-games·/game/[id] 모두 innerW 390·mq480 true·가로 오버플로 0, ViewCounter `.num` computed `rgb(74,144,226)`=#4a90e2 라이브 확정·SEO h2 27.2px 모바일 무축소).** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차 — 히어로 리뷰 배너·핫카드 라이브 카운트다운·주간 TOP10·핫딜 가격카드·아이콘 필터 스트립·BackToTop·행별 아트워크/타입배지/국기/태그칩/액션버튼은 전부 기수집(큐·IDEAS), 정보밀도 행은 우리 미니멀 정체성상 미수입. 신규 식별은 **핫카드 카운트다운의 세그먼트 디짓박스 시각 스펙**(큐 ④ 미상세분 보강). 큐(① day패널 D-day 3단·② day패널 모바일 3규칙·③ 블로그 정합·④ HeroStrip 핫카드)/IDEAS와 중복 없는 신규만. a11y/시맨틱/리팩토링 0건(외형 모드 — CalendarView `:focus-visible`의 #4a90e2 2건은 포커스 표면이라 의도적 제외).
 
@@ -453,42 +498,4 @@ _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 - 1·2번이 체감 임팩트 가장 큼(폰트+여백/라운드) -> IDEAS 상단에 올림.
 - 라이트 모드(별도 IDEAS, 후속)와 묶어 생각하면, 2·3번의 토큰화가 라이트 모드의 선행작업과 겹침 -> 토큰(`--radius` 등) 정리를 먼저 해두면 일석이조.
 - a11y(색-only)·헤더 로고화 등 기존 제안과 충돌 없음(같은 방향).
-
----
-
-## [2026-05-30 00:05] [디자이너] — 라이브 재점검 (반영 확인 + 신규 a11y/밀도)
-실측: https://gcalen.com/ Chrome 데스크톱. 캘린더 뷰·날짜 클릭 패널·셀 dot/보더 zoom 확대 확인. 창 리사이즈가 렌더 뷰포트에 반영 안 돼 모바일은 styles.css @media(max-width:480px) 기준 병행 평가.
-
-### 직전 사이클 이후 반영 확인 (개발자 작업 검증 — 양호)
-- OK **날짜 클릭 패널 = 한 줄 컴팩트 행** 정상: `색점·게임명·플랫폼·D-day·☆`, 내부 스크롤 사라지고 페이지 흐름으로 인라인 확장됨(스크롤 트랩 해소). 운영자 요청 2건(컴팩트 행/내부 스크롤 제거) 충족.
-- OK **통계줄 '총 29' = 카테고리 드롭다운 '전체 (29)' 일치**. 18:05 #2로 보고했던 29 vs 25 불일치 해소됨 -> 해당 제안 종결(재등록 안 함).
-- OK 진입 시 '오늘 이후 가장 가까운 출시 달' 자동 진입 정상(5월에 임박 출시 있어 5월 유지).
-- TODO 여전히 미반영(중복 등록 안 함): 헤더 로고화/컴팩트(운영자), `.day.selected` amber 보더 <-> `.day-soon` amber 보더 색 충돌(18:05 #1), 셀 hover 배경/키보드 포커스(18:05 #4 — `.day{cursor:pointer}`만 들어가고 hover bg·focus-visible는 아직).
-
-### 발견한 문제 / 개선점 (신규, 미등록 항목만)
-
-1. **카테고리를 '색'으로만 구분 — 색각이상 접근성 미흡** — 우선순위: 보통
-   - 어디서: 캘린더 셀 `.day-dot`(7px 원)과 상단 범례 `.legend-dot`. 4색이 green #81c784 / blue #64b5f6 / purple #ba68c8 / orange #ff8a65.
-   - 왜: 카테고리를 오직 색상(hue)으로만 전달. 적·녹색약(deuteran/protan) 사용자는 green<->orange, 셀에 dot만 있고 라벨 없을 때(2건 이상 셀) green<->purple 구분이 어려움. 색 외 단서가 전혀 없음(WCAG 1.4.1 '색만으로 정보 전달 금지' 위반 소지).
-   - 개선:
-     - 셀 `.day-dot`에 카테고리명을 `title`/`aria-label`로 부여(현재 셀 전체 title만 있음) -> 마우스/스크린리더 보조 단서.
-     - 더 확실히: dot에 **모양 차이** 추가(모바일=원, PC/콘솔=사각 `border-radius:1px`, 글로벌=마름모 `rotate(45deg)`, 신규서버=링 `border만`). 색+모양 이중 인코딩이면 색각이상에도 구분 가능.
-     - 범례도 동일 모양 적용(텍스트 라벨은 이미 있음 -> 모양만 맞추면 셀<->범례 매칭 명확).
-
-2. **날짜 패널: 출시 1건인 날짜마다 날짜 헤더 1줄이 따로 붙어 세로 반복 과다** — 우선순위: 보통
-   - 어디서: "OO 이후 출시 N건" 패널. 1건만 있는 날짜도 `YYYY.MM.DD (요일)` 헤더 + 행 1개 구조라, 25건 패널이 사실상 헤더/행/헤더/행 반복(06.03->1건, 06.04->1건, 06.05->1건…)으로 절반이 날짜 헤더.
-   - 왜: 스캔 시 날짜 헤더가 시각 노이즈가 되고 세로가 불필요하게 길어짐. 컴팩트 행으로 만든 이점이 헤더 반복으로 일부 상쇄.
-   - 개선: **1건 날짜는 날짜를 행 안으로 흡수** -> `06.04(목) · ●게임명 · Android · D-7 · ☆` 한 줄로. 독립 날짜 헤더는 **2건 이상인 날짜만** 유지. (renderDayRows에서 dateCounts 기반 분기 — 리스트 뷰 single-game 처리와 같은 패턴 재사용.)
-
-3. **'오늘로' 버튼: 이미 현재 달을 보고 있을 때도 활성처럼 보임** — 우선순위: 낮음
-   - 어디서: 캘린더 상단 `‹ 2026년 5월 › [오늘로]`. 현재 달을 보는 중에도 '오늘로'가 똑같이 클릭 가능한 외형(눌러도 변화 없음).
-   - 개선: calendarMonth가 현재 달과 같으면 버튼 `disabled` + `.calendar-today-btn:disabled{opacity:0.4;cursor:default}`. 다른 달로 네비게이트하면 다시 활성. 무의미 클릭 방지 + 현재 위치 단서.
-
-4. **빈 주(week)가 데스크톱에서 화면 한 칸 가까이 세로 점유** — 우선순위: 낮음
-   - 어디서: `.calendar-grid .day{min-height:84px}` × 6주. 5월처럼 출시가 3일뿐인 달은 위 4주(1~26일)가 전부 빈 칸 84px씩 -> 첫 화면이 빈 격자로 길어짐.
-   - 왜: '가까운 출시 달 자동 진입'으로 완화됐지만 그 달 안에서도 선행/후행 빈 주가 높이를 그대로 차지해 콘텐츠가 아래로 밀림(헤더 컴팩트 작업과 함께 첫 화면 밀도에 영향).
-   - 개선(택1): (a) 데스크톱 `.day` min-height 84->68px(라벨 있는 셀은 내용으로 자연 확장 유지), 또는 (b) 게임 0건 선행/후행 '주' 행만 축약. (a)가 단순·안전. 헤더 컴팩트화와 묶으면 첫 화면에 캘린더 대부분이 들어옴.
-
-### 현재 양호 (트집 X)
-다크 테마/카테고리 색 체계 일관, 컴팩트 날짜 행·인라인 확장, 통계=드롭다운 일치, 임박 셀 강조, 모달 페이드, 리스트 풀폭 행·푸터 운영자 정보 모두 양호.
 
