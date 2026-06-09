@@ -251,7 +251,7 @@
   font-weight: 600;
 }
 .dayRowDdaySoon { color: var(--accent-warm); }
-.dayRowDdayToday { color: #ff7a59; font-weight: 700; }
+.dayRowDdayToday { color: var(--accent-warm); font-weight: 700; }
 .dayEmpty { color: var(--text-faint); padding: 1rem; text-align: center; }
 
 /* ─── 모바일 ─── */

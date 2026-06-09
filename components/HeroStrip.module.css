@@ -86,9 +86,9 @@
   text-shadow: 0 0 24px rgba(245,166,35,0.4);
 }
 .today {
-  color: #ff4d4d;
+  color: var(--accent-warm);
   animation: pulse 1.4s infinite;
-  text-shadow: 0 0 24px rgba(255,77,77,0.5);
+  text-shadow: 0 0 24px rgba(245,166,35,0.5);
 }
 @keyframes pulse {
   0%, 100% { opacity: 1; }

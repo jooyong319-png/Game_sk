@@ -2,6 +2,10 @@
 완료: **[리팩토링] useWishlist 상태관리 승격** (운영자 직접 지시 — 외형/정리 모드 중 리팩토링 예외 처리). 기존 `useWishlist`는 호출 인스턴스마다 별도 useState(Set)를 들어 '공유 store'가 아니었음 → 동시 마운트 시 한쪽 토글이 타 인스턴스에 즉시 반영 안 되는 잠재 footgun. `useSyncExternalStore` + 모듈 싱글톤 스냅샷/리스너로 재작성해 단일 소스화, 보너스로 `storage` 이벤트 탭 간 동기화 추가. 공개 API `{ids,toggle,has}` 불변이라 소비처 5곳·프롭 드릴링 전부 무변경.
 변경된 파일: components/useWishlist.ts (전면 재작성, 85줄). WishlistApi 타입 export 추가. esbuild ts OK·strict any 0.
 비고: 기획자님 — 정리 모드 중이지만 운영자 직접 요청이라 진행했습니다. QA님 위시 토글 지속·새로고침 복원·2탭 동시 토글 반영(신규 탭 동기화) 실측 부탁.
+## [2026-06-09 18:29] [개발자]
+완료: **정리(declutter) Phase 1 §A.1 '색=3역할 고정'** 착수(번호큐 소진·운영자 17:40 승인 방향). ①카테고리 4색을 `lib/types.ts` CATEGORY_META 단일 출처에서 디자이너 17:40 목업 정보색으로 톤다운(모바일 #6f9c7a·PC #5f86b8·글로벌 #9a7bb0·신서버 #c08560) → 캘린더 셀/범례/리스트/관련카드/모달 일괄 차분화. ②임박강조 warm 단일화 — 전역 D-day '오늘' 잔존 오렌지 #ff7a59 3곳 + HeroStrip 레드 #ff4d4d(+글로우)를 단일 `var(--accent-warm)`(라이트 #c47a00/다크 #f5a623)로 흡수(오늘=warm 진하게는 weight/펄스로 유지). 리포 전역 #ff7a59·#ff4d4d grep 0건.
+변경된 파일: lib/types.ts(4줄), CalendarView.module.css(1), app/globals.css(2), HeroStrip.module.css(3) — 총 4파일. 신규 색 0·esbuild types.ts OK·CSS brace 67/81/41 균형.
+비고: ⚠️기획자님 — 번호 큐가 비어 운영자 직접 승인된 정리 §A.1을 Phase 0 선출고 선례대로 선착수했습니다. 정리 Phase 1 잔여(칩 단일언어·카테고리색 텍스트 격리)·Phase 2(플랫화: 헤더 radial·HeroStrip 펄스/글로우·카드 해치·상세 백드롭 제거)·Phase 3(필터 3컬럼·통계 중립·상세 위계) 번호 큐 등재 부탁. 카테고리 4색이 JS 상수라 라이트 전용 정보색 분기는 CSS변수화 리팩토링 필요(별도 큐). 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 카테고리 4색 톤다운·D-DAY/임박 단일 warm(오렌지·레드 잔존 0)·양 테마 가독성·콘솔 0 실측 부탁.
 
 ## [2026-06-09 18:24] [개발자]
 완료: **테마 Phase 0(운영자 17:46 승인 '화이트 디폴트' + 다크 토글)**. 디자이너 §D 스펙대로 구현 — ①globals `:root`를 라이트 기본 토큰(#f6f7f9/#fff/#e4e7ec/#1a1d24/#6b7280/#2f6fe0…)으로 재정의 + `[data-theme=dark]`에 기존 다크값 보존, html/body 색 토큰화 ②layout `<head>` no-flash 인라인 스크립트(paint 전 localStorage 테마 적용·기본 light·하이드레이션 안전) ③신규 ThemeToggle 컴포넌트(헤더 우상단 해/달, mount 가드·localStorage 지속) + ic-sun/ic-moon 스프라이트 ④양 테마 정상 위해 컴포넌트 CSS 9종+blog+not-found/error/CalendarView 포커스링의 하드코딩 색 전면 토큰화 → 리포 전역 #4a90e2 0건.
@@ -293,10 +297,3 @@ TODO 큐 4→5 (모드: 외형 집중)
 추가: - ⑤[외형·모바일·패널 밀도] day-detail 패널 모바일 @media(≤480px) 3규칙 — .dayPanel 0.7rem·.dayRow gap/padding 축소·.dayRowDate 3em/0.72rem (디자이너 05:07 모바일#1, IDEAS→승격. 모바일 1차 콘텐츠 표면·④와 같은 CalendarView 표면 묶음 후보·CSS-only·신규 색 0)
 IDEAS 보관: 디자이너 05:07 잔여 2건(BackToTop 다크 글래스 플로팅·푸터 브랜드 그라데 hairline).
 활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 05:48 — 패널 D-DAY amber는 큐 ④ 미구현분으로 정상). 3사이클 정체 0. a11y 제안 0건 → IDEAS 보관 (보류). 코드 미수정(문서만). 개발자 :20 1순위(헤더 듀얼 radial) 착수 권장 — ④·⑤ 묶음 구현 가능.
-
-## [2026-06-04 05:48] [QA]
-검증 대상: /game/[id] related-dday 단일 블루 → 전역 D-day 3단 색 규약 통일 (개발자 05:28 f250652)
-데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
-모바일 390: ✅ (390px same-origin iframe 합성 실측)
-상세: /game/raven2-server-zero2 관련카드 6장 실측 — D-DAY rgb(255,122,89)=#ff7a59 ✅·D-1/D-2 amber rgb(245,166,35)=#f5a623 ✅·출시됨 #888 muted ✅. /game/sol-enchant 관련 D-14/15/16·(예정) 전부 #888 — 8일+ muted 규약 일치. 390 iframe: 관련카드 단일컬럼 375px·본문 scrollW 375 가로 오버플로 0(>391 요소 0). 홈 390 무회귀: 통계줄 4칩+총44 한 줄 21px·오늘(06.04) 패널 자동노출 '이후 출시 20건'·오버플로 0(MonthTabs 의도된 스크롤 스트립만 초과). 콘솔 에러/#418/#423/#425 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·sitemap 50 URL·robots·상세 D-15·new-servers 12). 신규 BUGS 0.
-참고: day-detail 패널 D-DAY는 아직 amber 한 톤(rgb 245,166,35) — 큐 ⑤ 미구현분으로 정상(버그 아님).

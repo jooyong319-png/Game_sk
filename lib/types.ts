@@ -37,8 +37,8 @@ export const CATEGORY_META: Record<Category, {
   emoji: string;
   color: string;
 }> = {
-  mobile_kr:     { label: '국내 모바일',     short: '모바일',  emoji: '📱', color: '#81c784' },
-  pc_console_kr: { label: '국내 PC·콘솔',    short: 'PC·콘솔', emoji: '🎮', color: '#64b5f6' },
-  global_aaa:    { label: '글로벌 대작',     short: '글로벌',  emoji: '🌍', color: '#ba68c8' },
-  new_server:    { label: '한국 MMO 신규 서버', short: '신서버', emoji: '🆕', color: '#ff8a65' },
+  mobile_kr:     { label: '국내 모바일',     short: '모바일',  emoji: '📱', color: '#6f9c7a' },
+  pc_console_kr: { label: '국내 PC·콘솔',    short: 'PC·콘솔', emoji: '🎮', color: '#5f86b8' },
+  global_aaa:    { label: '글로벌 대작',     short: '글로벌',  emoji: '🌍', color: '#9a7bb0' },
+  new_server:    { label: '한국 MMO 신규 서버', short: '신서버', emoji: '🆕', color: '#c08560' },
 };
