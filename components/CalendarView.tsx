@@ -229,7 +229,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now }: Pro
                   <span className={styles.dayRowDate}>{mmdd}</span>
                   <span className={styles.dayRowDot} style={{ background: cat.color }} title={cat.label} />
                   <span className={styles.dayRowName}>{g.name_ko}</span>
-                  <span className={`${styles.dayRowDday} ${diff <= 7 && diff >= 0 ? styles.dayRowDdaySoon : ''}`}>{dd}</span>
+                  <span className={`${styles.dayRowDday} ${diff === 0 ? styles.dayRowDdayToday : diff > 0 && diff <= 7 ? styles.dayRowDdaySoon : ''}`}>{dd}</span>
                 </button>
               );
             })}

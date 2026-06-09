@@ -251,6 +251,7 @@
   font-weight: 600;
 }
 .dayRowDdaySoon { color: #f5a623; }
+.dayRowDdayToday { color: #ff7a59; font-weight: 700; }
 .dayEmpty { color: #888; padding: 1rem; text-align: center; }
 
 /* ─── 모바일 ─── */
@@ -265,4 +266,7 @@
     box-shadow: inset 4px 0 0 var(--cat, #5b9dff);
   }
   .cellDot { width: 7px; height: 7px; }
+  .dayPanel { padding: 0.7rem; }
+  .dayRow { gap: 0.45rem; padding: 0.45rem 0.55rem; }
+  .dayRowDate { min-width: 3em; font-size: 0.72rem; }
 }
