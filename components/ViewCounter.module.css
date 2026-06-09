@@ -11,5 +11,5 @@
   margin-top: 0.5rem;
 }
 .icon { font-size: 0.95rem; }
-.num { color: #4a90e2; font-weight: 700; }
+.num { color: var(--accent); font-weight: 700; }
 .label { color: #888; font-size: 0.8rem; }

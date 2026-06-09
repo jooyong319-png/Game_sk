@@ -94,6 +94,19 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
+/* TODO#1: 최근접 1건 대형 핫카드 + 라이브 카운트다운 (데스크 그리드 2칸 승격) */
+.hotCard { grid-column: span 2; }
+.hotCard .name { font-size: 1.5rem; }
+.hotCard .dday { font-size: 2.2rem; }
+.countdown {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-warm);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  align-self: flex-end;
+  z-index: 1;
+}
 @media (max-width: 480px) {
   /* compact list (inven-style): single column of short horizontal rows */
   .title { margin-bottom: 0.4rem; }
@@ -147,6 +160,10 @@
     white-space: nowrap;
   }
   .today { text-shadow: none; }
+  .hotCard { grid-column: auto; }
+  .hotCard .name { font-size: 0.95rem; }
+  .hotCard .dday { font-size: 1.05rem; }
+  .countdown { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .glowDday { transform: none; }

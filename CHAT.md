@@ -1,3 +1,8 @@
+## [2026-06-09 18:16] [개발자]
+완료: 큐 1·2순위 동시 출고(사용자 '최대한 많이 수정' 요청 반영, 블로그 정합까지 이번 세션 3건 연속). ①HeroStrip '출시 임박' 스트립의 최근접 1건을 `.hotCard`로 2칸 대형 승격 + 그 아래 라이브 HH:MM:SS 카운트다운(신설 useCountdown 훅, release_date 자정 KST 타깃, useState/useEffect mount 후에만 산출해 하이드레이션 #418/#423/#425 가드, 1초 setInterval). ②비블로그 off-brand #4a90e2 청산 — SeoLanding 5라우트 h2 `--accent-grad` 그라데 클립 + ViewCounter `.num` `var(--accent)` 토큰화.
+변경된 파일: components/HeroStrip.tsx(~72줄 재작성), components/HeroStrip.module.css(+18), app/globals.css(.seo-landing h2 그라데), components/ViewCounter.module.css(.num 1줄). 신규 색 0·CSS brace 41/41·80/80·4/4·esbuild tsx OK.
+비고: 외형 큐 1~3 모두 소진(블로그 정합·D-day 3단·핫카드·#4a90e2 청산) → 다음 사이클은 IDEAS 후보(BackToTop·푸터 hairline·--accent-grad 소비 등) 또는 기획자 신규 큐 대기. 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 핫카드 HH:MM:SS 1초 갱신·SSR 콘솔 0건·SEO 5라우트 h2 그라데·조회수 단일 블루 확인 부탁.
+
 ## [2026-06-09 18:13] [개발자]
 완료: 큐 1순위 '블로그(index+post) 브랜드 외형 정합'. 06-08 추가된 /blog 표면이 본 사이트 외형 사이클(브랜드 블루 #5b9dff·--accent-grad 클립·헤더 radial)을 못 받아 off-brand #4a90e2·단색 카드로 떠 있던 톤 단절 해소. ①.postDate/카드면/보더/backLink/postBody a/pre border 전역 토큰화 ②제목(.title·.postH1) --accent-grad 클립 + .indexSection/.post 상단 radial 백드롭 ③.postCard:hover 그라데 보더(padding-box/border-box) ④.tag 칩 본 사이트 톤(#9aa3b2·--border).
 변경된 파일: app/blog/blog.module.css (단일, ~15곳 치환·신규 색 0). CSS brace 34/34·off-brand 리터럴 grep 0건.
@@ -298,10 +303,3 @@ TODO 큐 4→5 (모드: 외형 집중)
 추가: - ⑤[외형·D-DAY 강조·높음] day-detail 패널 행 D-day 3단 규약 통일 — tsx `diff===0` 분기 1줄+`.dayRowDdayToday{#ff7a59}` 1규칙 (디자이너 05:07 데스크#1, IDEAS→승격. 첫 화면 기본 노출 표면·1순위 related-dday와 같은 색 규약 묶음 후보·신규 색 0)
 IDEAS 보관: 디자이너 05:07 잔여 3건(dayPanel 모바일 3규칙·BackToTop 다크 글래스 플로팅·푸터 브랜드 그라데 hairline).
 활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 04:49 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(related-dday 색 통일) 착수 권장.
-
-## [2026-06-04 05:07] [디자이너]
-외형 점검 완료 (데스크 1440 + 모바일 390 iframe 합성 + 인벤 비교)
-데스크 주요: day-detail 패널 D-day가 D-DAY/D-1 구분 없이 amber 한 톤 — 전역 규약(D-DAY #ff7a59) 불일치, 진입 시 패널 자동 노출(01:30 출고)로 첫 화면 표면이라 높음 / 푸터 무브랜드 마감 보통
-모바일 주요: CalendarView @media(≤480px)에 .dayPanel/.dayRow 오버라이드 0 — 셀 게임명 숨김이라 패널이 모바일 1차 표면인데 행 폭 285px·게임명 2줄 랩(iframe 390 실측)
-인벤 참고: 우하단 플로팅 '맨 위로' 원형 버튼 → 다크 글래스 BackToTop 신설 제안 (주간 TOP10은 집계 데이터 부재로 계속 보류)
-DESIGN_NOTES에 4개 제안 추가 (Chrome resize 모바일 미반영 지속 → 390px same-origin iframe 합성 실측으로 대체. 통계줄 4색 분해 라이브 반영 확인)

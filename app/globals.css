@@ -172,7 +172,14 @@ a:hover { text-decoration: underline; }
   margin: 1rem auto;
   padding: 0 1rem;
 }
-.seo-landing h2 { font-size: 1.7rem; margin-bottom: 0.6rem; }
+.seo-landing h2 {
+  font-size: 1.7rem;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.6rem;
+}
 .seo-intro { color: #cfd6e0; line-height: 1.6; margin-bottom: 0.5rem; }
 .seo-intro strong { color: var(--accent); font-weight: 700; }
 .seo-count { color: var(--text-faint); font-size: 0.85rem; margin-bottom: 1rem; }
