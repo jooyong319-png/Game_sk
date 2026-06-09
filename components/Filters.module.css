@@ -1,64 +1,39 @@
+/* 정리 Phase 3a §B-3: 3컬럼(검색 / 카테고리 / 기간) 그리드. 컨트롤 톤 통일(38px·border·radius-sm). */
 .filters {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 0.6rem;
   margin: 0.8rem 0 1rem;
-  align-items: flex-end;
+  align-items: end;
 }
-.search {
-  flex: 1 1 200px;
-  min-width: 180px;
-  background: var(--bg-elev);
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-}
-.label {
+.field {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  font-size: 0.8rem;
+  gap: 0.3rem;
+}
+.fieldLabel {
+  font-size: 0.75rem;
   color: var(--text-faint);
 }
-.label select {
+.control {
+  height: 38px;
+  width: 100%;
   background: var(--bg-elev);
   color: var(--text);
   border: 1px solid var(--border);
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
+  padding: 0 0.7rem;
   font-size: 0.92rem;
 }
-.wishBtn {
-  background: rgba(255,255,255,0.05);
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 0.55rem 0.95rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.15s;
+.control:focus-visible {
+  outline: none;
+  border-color: var(--accent);
 }
-.wishBtn:hover { border-color: #f5b400; color: var(--text); }
-.wishActive { background: rgba(245,180,0,0.18); border-color: #f5b400; color: var(--text); }
 
-/* 모바일(≤480px): 검색=풀폭 1줄, 셀렉트 3종=2열 그리드형, 위시=풀폭 버튼 */
+/* 모바일(≤480px): 3컬럼 → 1열 스택 */
 @media (max-width: 480px) {
   .filters {
+    grid-template-columns: 1fr;
     gap: 0.5rem;
-  }
-  .search {
-    flex: 1 1 100%;
-  }
-  .label {
-    flex: 1 1 calc(50% - 0.25rem);
-  }
-  .label select {
-    width: 100%;
-  }
-  .wishBtn {
-    flex: 1 1 100%;
-    text-align: center;
   }
 }

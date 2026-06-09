@@ -13,27 +13,33 @@ export interface FilterState {
 interface Props {
   value: FilterState;
   onChange: (next: FilterState) => void;
-  wishlistCount: number;
 }
 
-export function Filters({ value, onChange, wishlistCount }: Props) {
+// 정리(declutter) Phase 3a §B-3: 3컬럼(검색 / 카테고리 / 기간) 그리드.
+// 플랫폼 select·위시 버튼은 바에서 제거(운영자 '3컬럼' 직접 지시). platform/wishlistOnly
+// 상태 필드는 보존(Home 필터 로직 무변경 — 기본값 유지라 필터 무영향).
+export function Filters({ value, onChange }: Props) {
   const set = <K extends keyof FilterState>(key: K, v: FilterState[K]) =>
     onChange({ ...value, [key]: v });
 
   return (
     <section className={styles.filters} aria-label="필터">
-      <input
-        type="search"
-        placeholder="게임명 검색…"
-        value={value.search}
-        onChange={e => set('search', e.target.value)}
-        className={styles.search}
-        aria-label="게임명 검색"
-      />
+      <label className={styles.field}>
+        <span className={styles.fieldLabel}>검색</span>
+        <input
+          type="search"
+          placeholder="게임명 검색…"
+          value={value.search}
+          onChange={e => set('search', e.target.value)}
+          className={styles.control}
+          aria-label="게임명 검색"
+        />
+      </label>
 
-      <label className={styles.label}>
-        카테고리
+      <label className={styles.field}>
+        <span className={styles.fieldLabel}>카테고리</span>
         <select
+          className={styles.control}
           value={value.category ?? ''}
           onChange={e => set('category', (e.target.value || null) as Category | null)}
         >
@@ -45,22 +51,13 @@ export function Filters({ value, onChange, wishlistCount }: Props) {
         </select>
       </label>
 
-      <label className={styles.label}>
-        플랫폼
-        <select value={value.platform ?? ''} onChange={e => set('platform', e.target.value || null)}>
-          <option value="">전체</option>
-          <option value="pc">PC</option>
-          <option value="ps5">PlayStation 5</option>
-          <option value="xbox">Xbox</option>
-          <option value="switch">Switch</option>
-          <option value="ios">iOS</option>
-          <option value="android">Android</option>
-        </select>
-      </label>
-
-      <label className={styles.label}>
-        기간
-        <select value={value.days} onChange={e => set('days', parseInt(e.target.value, 10))}>
+      <label className={styles.field}>
+        <span className={styles.fieldLabel}>기간</span>
+        <select
+          className={styles.control}
+          value={value.days}
+          onChange={e => set('days', parseInt(e.target.value, 10))}
+        >
           <option value={0}>오늘 이후</option>
           <option value={30}>앞으로 30일</option>
           <option value={90}>앞으로 90일</option>
@@ -69,15 +66,6 @@ export function Filters({ value, onChange, wishlistCount }: Props) {
           <option value={-1}>전체 (과거 포함)</option>
         </select>
       </label>
-
-      <button
-        type="button"
-        className={`${styles.wishBtn} ${value.wishlistOnly ? styles.wishActive : ''}`}
-        onClick={() => set('wishlistOnly', !value.wishlistOnly)}
-        aria-pressed={value.wishlistOnly}
-      >
-        <svg className="ic ic-fill" aria-hidden="true"><use href="#ic-star" /></svg> 위시리스트{wishlistCount > 0 ? ` (${wishlistCount})` : ''}
-      </button>
     </section>
   );
 }

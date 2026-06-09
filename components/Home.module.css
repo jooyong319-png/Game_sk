@@ -14,6 +14,15 @@
 .statsTotal {
   white-space: nowrap;
 }
+/* 정리 §B-4: 카테고리 식별은 글자색 대신 muted 7px 점만 */
+.statsDot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 0.32rem;
+  vertical-align: middle;
+}
 .stats > span + span::before {
   content: '·';
   color: var(--text-faint);

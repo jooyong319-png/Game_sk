@@ -104,17 +104,16 @@
   box-shadow: inset 0 0 0 2px var(--accent);
 }
 .cellHas {
-  background: var(--bg); /* color-mix 미지원 폴백(선행) */
-  background: color-mix(in srgb, var(--cat, var(--accent)) 8%, var(--bg));
-  box-shadow: inset 3px 0 0 var(--cat, var(--accent));
+  /* 정리 §B-5: tint·좌측 정보색 바 제거 — 카테고리는 우하단 점(.cellDot)으로만 식별 */
+  background: var(--bg);
 }
 .cellToday {
-  background: rgba(91,157,255,0.08);
-  box-shadow: inset 0 0 0 2px rgba(91,157,255,0.45);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--accent);
 }
 .cellSelected {
-  background: rgba(245,166,35,0.12);
-  box-shadow: inset 0 0 0 2px var(--accent-warm);
+  background: var(--bg-elev);
+  box-shadow: inset 0 0 0 2px var(--accent);
 }
 
 .cellDate {
@@ -261,9 +260,7 @@
   .cellDate { font-size: 0.72rem; }
   .cellName { display: none; }
   .cellHas {
-    background: #1d2330; /* color-mix 미지원 폴백(선행) */
-    background: color-mix(in srgb, var(--cat, var(--accent)) 16%, var(--bg));
-    box-shadow: inset 4px 0 0 var(--cat, var(--accent));
+    background: var(--bg);
   }
   .cellDot { width: 7px; height: 7px; }
   .dayPanel { padding: 0.7rem; }

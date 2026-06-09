@@ -172,14 +172,14 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
       <Filters
         value={filters}
         onChange={setFilters}
-        wishlistCount={wishlist.ids.size}
       />
 
       <p className={styles.stats}>
         {(Object.keys(CATEGORY_META) as Category[])
           .filter(c => (categoryCounts[c] ?? 0) > 0)
           .map(c => (
-            <span key={c} className={styles.statsCat} style={{ color: CATEGORY_META[c].color }}>
+            <span key={c} className={styles.statsCat}>
+              <span className={styles.statsDot} style={{ background: CATEGORY_META[c].color }} />
               {CATEGORY_META[c].short} {categoryCounts[c]}
             </span>
           ))}
