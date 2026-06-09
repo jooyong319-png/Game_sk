@@ -1,3 +1,8 @@
+## [2026-06-09 16:40] [개발자]
+완료: QA 06-04 07:48 등록 BUG 해소 — `/game/[id]` 상세 `.game-detail` 모바일 @media(≤480px) 오버라이드가 cascade 순서 탓에 미적용이던 문제 수정. 모바일 압축 규칙(padding 1.1rem·h2 1.5rem)이 globals.css 상단 @media 블록(L68)에 있어 base `.game-detail`(L104+)·h2(L112)에 소스 후행·동일 특이도로 밀려 무력화돼 있었음. 모바일 규칙을 base 규칙 직후 신규 @media 블록으로 재배치 → 동일 특이도로 미디어쿼리 정상 승리. 더불어 `.detail-actions` 액션 2버튼 모바일 풀폭(flex:1 1 auto·중앙정렬) 보강.
+변경된 파일: app/globals.css (+6/−2)·PROJECT_STATUS.md·CHAT.md
+비고: 개발/기획 파이프라인이 06-04 07:48 이후 휴면(06-07~09 리서처만 가동)이라, 큐 TODO(day패널 D-day 3단 규약 등)보다 미해결 등록 BUG를 우선 처리. 신규 색 0·CSS-only·tsx 무변경·CSS brace 80/80. 상단 @media의 `.site-header` 2규칙은 base header보다 후행이라 정상 동작 → 무변경. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. QA님 라이브 /game/{id} 390px 상세 카드 패딩 1.1rem·h2 1.5rem·액션 2버튼 풀폭·데스크톱(>480px) 무영향·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
+
 ## [2026-06-09 09:13] [리서처]
 리서치 완료 (4개 카테고리)
 - 모바일 0→0, PC/콘솔 0→0, 글로벌 0→0, 신규서버 8→1 (후보→통과)
@@ -299,11 +304,3 @@ TODO 큐 4→5 (모드: 외형 집중)
 390px서 캘린더/리스트 2버튼이 고정 패딩(0.5rem 1rem)으로 가운데 작게 뭉쳐 터치 폭이 좁던 문제 해소. `ViewToggle.module.css` 말미에 `@media(max-width:480px)` 블록 신설 — `.toggle{gap:0.5rem}` + `.btn{flex:1 1 0; padding:0.6rem 0.5rem; text-align:center}` → 2버튼이 화면폭 2분할 풀폭(터치 면적↑·좌우 균형·세로 패딩 0.6rem 보강). 데스크톱(미디어쿼리 밖) 무영향, `.active` 그라데/그림자 무회귀.
 변경된 파일: components/ViewToggle.module.css (+9)
 비고: CSS-only(tsx 무변경·`.toggle`/`.btn` 사용처 ViewToggle.tsx 확인)·신규 색 0·brace 7/7. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 모바일 390px 캘린더/리스트 2버튼 풀폭 2분할·데스크톱 무영향·가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
-
-## [2026-06-04 02:10] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-사용자요청 처리: ②'진입 시 캘린더 오늘 셀 자동선택→day-detail 패널 자동 표시' **QA 라이브 검증 완료**(01:47 — 오늘 셀 자동선택·패널 '이후 출시 20건' 자동 노출·스크롤 점프 0·콘솔 0) → USER_REQUESTS '활성' 2건 모두 종결·아카이브 이동. **활성 사용자 요청 0**(SEO 보류 — 안 건드림).
-유지: 큐 1~4(ViewToggle 모바일 블록·리스트 장르 칩·통계줄 4색 분해·상세 related-dday 색 통일) 순서 그대로 — 1순위 ViewToggle 보호(여러 사이클 밀린 잔여, 신규는 말미만).
-추가: - ⑤[외형·헤더 임팩트] `.site-header::before` 단일 블루 → 듀얼 브랜드 radial(블루+퍼플) — 00:22 사용자요청 삽입 때 후보로 밀렸던 것 재승격(디자이너 13:05 데스크#3, 신규 색 0). 후보 풀엔 핫카드+카운트다운 잔존.
-신규 BUGS 0(QA 01:47 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(ViewToggle) 착수 권장.
-

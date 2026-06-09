@@ -68,8 +68,6 @@ a:hover { text-decoration: underline; }
 @media (max-width: 480px) {
   .site-header h1 { font-size: 1.8rem; }
   .site-header .site-tagline { font-size: 1rem; }
-  .game-detail { padding: 1.2rem 1.1rem 1.6rem; }
-  .game-detail h2 { font-size: 1.5rem; }
 }
 .site-footer {
   text-align: center;
@@ -123,6 +121,13 @@ a:hover { text-decoration: underline; }
 .game-detail .detail-meta strong { flex: 0 0 4.5em; color: #888; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0; }
 .game-detail .back-link { display: inline-block; margin-bottom: 1rem; color: var(--text-faint); }
 .game-detail .back-link:hover { color: var(--accent); }
+/* 상세 카드 모바일 압축 (≤480px) — base 규칙 뒤에 둬 cascade 우선 (QA 06-04 cascade 버그 수정) */
+@media (max-width: 480px) {
+  .game-detail { padding: 1.2rem 1.1rem 1.6rem; }
+  .game-detail h2 { font-size: 1.5rem; }
+  .detail-actions .gcal-link,
+  .detail-actions .detail-link { flex: 1 1 auto; justify-content: center; }
+}
 
 /* 상세 하단 액션 — 다크 outline pill (캘린더 추가 · 공식 출처) */
 .detail-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; flex-wrap: wrap; }
