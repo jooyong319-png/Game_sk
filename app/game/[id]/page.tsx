@@ -94,16 +94,20 @@ export default async function GamePage({ params }: Props) {
       <AdSlot slot="detail-top" size="top" />
       <article className="game-detail">
         <a href="/" className="back-link">← 전체 목록으로</a>
-        <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
+        <div className="detail-head">
+          <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
+          <span className={`dday-badge dday-${ddStage}`}>{ddText}</span>
+        </div>
         <h2>{game.name_ko}</h2>
         {game.name_en && game.name_en !== game.name_ko && (
           <p className="name-en">{game.name_en}</p>
         )}
-        <ViewCounter gameId={game.id} />
-        <p className="release-date">
-          <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 출시일: {dateStr}{weekday}
-          <span className={`dday-badge dday-${ddStage}`}>{ddText}</span>
-        </p>
+        <div className="detail-release-row">
+          <p className="release-date">
+            <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 출시일: {dateStr}{weekday}
+          </p>
+          <ViewCounter gameId={game.id} />
+        </div>
         {game.description && <p className="desc">{game.description}</p>}
         <ul className="detail-meta">
           {game.developer && <li><strong>개발사</strong>{game.developer}</li>}
@@ -133,7 +137,7 @@ export default async function GamePage({ params }: Props) {
                   key={g.id}
                   href={`/game/${g.id}`}
                   className="related-card"
-                  style={{ borderLeft: `4px solid ${CATEGORY_META[g.category].color}` }}
+                  style={{ borderLeft: `3px solid ${CATEGORY_META[g.category].color}` }}
                 >
                   <span className="related-name">{g.name_ko}</span>
                   <span className="related-date">{formatShortDate(g.release_date)}</span>

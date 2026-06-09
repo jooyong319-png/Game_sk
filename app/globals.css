@@ -187,15 +187,18 @@ a:hover { text-decoration: underline; }
   border-radius: 12px;
   padding: 1.5rem 1.8rem 2rem;
 }
-.game-detail h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0.6rem 0 0.3rem; }
+.game-detail h2 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.01em; margin: 0.5rem 0 0.3rem; }
 .game-detail .name-en { color: var(--text-faint); font-size: 0.9rem; margin-bottom: 0.5rem; }
+.game-detail .detail-head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0.4rem 0 0; }
+.game-detail .detail-release-row { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin: 0.5rem 0 1rem; }
+.game-detail .detail-release-row .release-date { margin: 0; }
 .game-detail .release-date { color: var(--accent); font-size: 1rem; font-weight: 600; margin: 0.5rem 0 1rem; }
-.game-detail .dday-badge { display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 1.15rem; font-weight: 800; margin-left: 0.5rem; vertical-align: middle; }
+.game-detail .dday-badge { display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 1rem; font-weight: 800; vertical-align: middle; }
 .game-detail .dday-badge.dday-soon { color: var(--accent-warm); background: rgba(245, 166, 35, 0.12); }
 .game-detail .dday-badge.dday-today { color: var(--accent-warm); background: rgba(245, 166, 35, 0.16); }
 .game-detail .dday-badge.dday-far { color: var(--text-faint); background: var(--border); }
 .game-detail .desc { color: var(--text); margin-bottom: 1rem; line-height: 1.6; }
-.game-detail .detail-meta { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; margin: 1rem 0; }
+.game-detail .detail-meta { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.6rem; margin: 1rem 0; }
 .game-detail .detail-meta li { display: flex; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.92rem; color: var(--text); }
 .game-detail .detail-meta li:last-child { border-bottom: none; }
 .game-detail .detail-meta strong { flex: 0 0 4.5em; color: var(--text-faint); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0; }
@@ -205,6 +208,7 @@ a:hover { text-decoration: underline; }
 @media (max-width: 480px) {
   .game-detail { padding: 1.2rem 1.1rem 1.6rem; }
   .game-detail h2 { font-size: 1.5rem; }
+  .game-detail .detail-meta { grid-template-columns: 1fr; }
   .detail-actions .gcal-link,
   .detail-actions .detail-link { flex: 1 1 auto; justify-content: center; }
 }
