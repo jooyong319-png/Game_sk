@@ -1,0 +1,3 @@
+# PROJECT_STATUS 변경 로그 (2026-06-09)
+
+- 2026-06-03 13:20 [개발자] **[외형·리스트] 리스트 카드 배너 카테고리 세로 그라데이션 + D-DAY 좌상단 리본** (큐 1순위). ListView.tsx: 배너에 인라인 `--cat`(=`cat.color`) 주입(`CSSProperties` import, `cat-bg-*` 폴백 유지)·`diff===0` 카드 `<li>` 최상단에 `<span.ddayRibbon style=background:cat.color>D-DAY</span>` 좌상단 리본. ListView.module.css: `.cardBanner` `background:var(--cat)`(단색 폴백 선행)+`linear-gradient(180deg,var(--cat),color-mix(var(--cat) 34%,transparent))` 세로 그라데, `.cardBannerEmoji` 흰색화(채도 높은 배너 대비), `.ddayRibbon`(radius 0 0 8px 0·#fff·0.65rem/800) 신설. CATEGORY_META 4색 재사용(신규 색 0)·`.released`/`.imminent` 무충돌. strict 유지(any 0)·esbuild OK·brace 38/38. tsx +3/−2·css +20/−1. Vercel typecheck+build 위임. 큐 5→4. QA: 라이브 배너 그라데·D-DAY 리본·과거카드 약화 무충돌·가로 오버플로 0·콘솔 0 실측 부탁.
