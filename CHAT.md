@@ -1,3 +1,8 @@
+## [2026-06-09 18:30] [개발자]
+완료: **[리팩토링] useWishlist 상태관리 승격** (운영자 직접 지시 — 외형/정리 모드 중 리팩토링 예외 처리). 기존 `useWishlist`는 호출 인스턴스마다 별도 useState(Set)를 들어 '공유 store'가 아니었음 → 동시 마운트 시 한쪽 토글이 타 인스턴스에 즉시 반영 안 되는 잠재 footgun. `useSyncExternalStore` + 모듈 싱글톤 스냅샷/리스너로 재작성해 단일 소스화, 보너스로 `storage` 이벤트 탭 간 동기화 추가. 공개 API `{ids,toggle,has}` 불변이라 소비처 5곳·프롭 드릴링 전부 무변경.
+변경된 파일: components/useWishlist.ts (전면 재작성, 85줄). WishlistApi 타입 export 추가. esbuild ts OK·strict any 0.
+비고: 기획자님 — 정리 모드 중이지만 운영자 직접 요청이라 진행했습니다. QA님 위시 토글 지속·새로고침 복원·2탭 동시 토글 반영(신규 탭 동기화) 실측 부탁.
+
 ## [2026-06-09 18:24] [개발자]
 완료: **테마 Phase 0(운영자 17:46 승인 '화이트 디폴트' + 다크 토글)**. 디자이너 §D 스펙대로 구현 — ①globals `:root`를 라이트 기본 토큰(#f6f7f9/#fff/#e4e7ec/#1a1d24/#6b7280/#2f6fe0…)으로 재정의 + `[data-theme=dark]`에 기존 다크값 보존, html/body 색 토큰화 ②layout `<head>` no-flash 인라인 스크립트(paint 전 localStorage 테마 적용·기본 light·하이드레이션 안전) ③신규 ThemeToggle 컴포넌트(헤더 우상단 해/달, mount 가드·localStorage 지속) + ic-sun/ic-moon 스프라이트 ④양 테마 정상 위해 컴포넌트 CSS 9종+blog+not-found/error/CalendarView 포커스링의 하드코딩 색 전면 토큰화 → 리포 전역 #4a90e2 0건.
 변경된 파일: globals.css, layout.tsx, ThemeToggle.tsx/.module.css(신규), CalendarView/ListView/GameModal/Filters/Home/MonthTabs/ViewToggle/HeroStrip/ViewCounter.module.css, blog.module.css, not-found.tsx, error.tsx (총 16). 신규 색 0·esbuild tsx OK·CSS brace 전부 균형.
@@ -295,8 +300,3 @@ IDEAS 보관: 디자이너 05:07 잔여 2건(BackToTop 다크 글래스 플로�
 모바일 390: ✅ (390px same-origin iframe 합성 실측)
 상세: /game/raven2-server-zero2 관련카드 6장 실측 — D-DAY rgb(255,122,89)=#ff7a59 ✅·D-1/D-2 amber rgb(245,166,35)=#f5a623 ✅·출시됨 #888 muted ✅. /game/sol-enchant 관련 D-14/15/16·(예정) 전부 #888 — 8일+ muted 규약 일치. 390 iframe: 관련카드 단일컬럼 375px·본문 scrollW 375 가로 오버플로 0(>391 요소 0). 홈 390 무회귀: 통계줄 4칩+총44 한 줄 21px·오늘(06.04) 패널 자동노출 '이후 출시 20건'·오버플로 0(MonthTabs 의도된 스크롤 스트립만 초과). 콘솔 에러/#418/#423/#425 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·sitemap 50 URL·robots·상세 D-15·new-servers 12). 신규 BUGS 0.
 참고: day-detail 패널 D-DAY는 아직 amber 한 톤(rgb 245,166,35) — 큐 ⑤ 미구현분으로 정상(버그 아님).
-
-## [2026-06-04 05:28] [개발자]
-완료: 큐 1순위 '/game/[id] 같은 시기 출시 미니카드 D-day(.related-dday) 단일 블루 → 전역 D-day 3단 색 규약 통일'. related 루프에 rdStage(today/soon/far) 분기 추가, 기본색 muted(--text-faint) 톤다운 + D-DAY 주황 #ff7a59 / 임박(≤7) amber #f5a623 — 본문 dday-badge·메인 리스트와 동일 규약. 출시됨/예정/8일+ 는 muted. 신규 색 0.
-변경된 파일: app/game/[id]/page.tsx (+2/−1), app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
-비고: 큐 5→4 (헤더 듀얼 radial이 새 1순위). esbuild tsx 통과, CSS brace 73/73. Vercel 빌드 검증 위임. QA님 라이브에서 /game/{id} 하단 관련카드 D-day 색 3단 분기 확인 부탁.
