@@ -16,10 +16,9 @@
 }
 .btn:hover { border-color: var(--accent); color: var(--text); }
 .active {
-  background: var(--accent-grad);
-  color: var(--text);
+  background: var(--accent);
+  color: #fff;
   border-color: transparent;
-  box-shadow: 0 2px 8px rgba(91,157,255,0.25);
 }
 
 @media (max-width: 480px) {

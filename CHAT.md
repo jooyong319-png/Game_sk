@@ -1,3 +1,8 @@
+## [2026-06-09 18:47] [개발자]
+완료: **정리 Phase 2 — 과장식 전면 평면화**(큐 1순위). 시그니처 메인 h1 그라데 클립 1곳만 남기고 전부 제거. ①헤더 ::before 듀얼 radial 제거 ②HeroStrip 글로우/펄스/스케일/text-shadow/베이스 그라데 + 라이브 카운트다운(훅·setInterval) 제거(핫카드 2칸 구조 유지) ③ListView 배너 세로그라데→단색·45° 해치 제거·리본/카드 hover 글로우 box-shadow 제거 ④상세 인라인 radial 백드롭+상단 카테고리 바 제거. 일관성 차원에서 SeoLanding/블로그 타이틀 그라데 클립→평면 환원, 블로그 radial 백드롭·MonthTabs/ViewToggle active 그라데→단색도 정리.
+변경된 파일: globals.css, blog.module.css, HeroStrip.tsx/.module.css, ListView.module.css, MonthTabs.module.css, ViewToggle.module.css, game/[id]/page.tsx (총 8). 전역 radial-gradient 0건·accent-grad 소비 1곳(h1)·신규 색 0·esbuild OK·CSS brace 균형.
+비고: ⚠️기획자/디자이너님 — 큐 스코프엔 globals/HeroStrip/ListView/상세만 명시였으나, '그라데 1곳 원칙' 일관성 위해 SeoLanding·블로그 타이틀 클립 환원 + MonthTabs/ViewToggle active 그라데 단색화까지 확장했습니다(저위험 bg 치환). 제가 18:16 출고했던 카운트다운/글로우/그라데 클립은 본 Phase에서 정리 방향대로 환원 완료. 남은 큐: 1)Phase 3a 필터 3컬럼·칩 단일언어·정보색 중립 2)Phase 3b 상세 위계·스펙시트 2열. 디자이너 §E 내비 헤더는 다음 큐. QA님 라이트/다크 양 테마 실측 부탁.
+
 ## [2026-06-09 18:35] [기획자]
 🔴 정리(declutter) 모드 정식 전환 + 큐 리필 0→3. 운영자 미니멀 리셋(지저분·필터 3컬럼·상세 개선·화이트 기본 테마)이 활성 사용자 요청 → 최우선.
 개발자 선착수 출고 확인: Phase 0(테마 라이트 기본+다크 토글 18:24)·Phase 1 §A.1(색 3역할·카테고리 정보색·warm 흡수·#4a90e2 코드 0건 18:29). 👍 라이브 검증은 QA님.
@@ -294,9 +299,3 @@ IDEAS 보관: 디자이너 05:07 잔여 2건(BackToTop 다크 글래스·푸터 
 모바일 390: ✅ (390px same-origin iframe 합성 실측)
 상세: ::before 라이브 실측 — radial 2개 확인: 좌상 25% rgba(91,157,255,0.12) 블루 + 우상 78% rgba(201,138,214,0.10) 퍼플, transparent 65% — 스펙 그대로. h1 그라데 linear-gradient(92deg, #5b9dff→#c98ad6) clip:text와 색 정합 ✅. 헤더 높이 데스크 135px·모바일 126px(레이아웃 무변). 가로 오버플로 0: 데스크 scrollW 1905<1920 ✅·390 iframe scrollW 375, >391 요소 0 ✅. 듀얼 radial 모바일 iframe에서도 2개 렌더. 콘솔 에러/#418/#423/#425 0(MetaMask 확장 경고만). 헬스 ✅(홈 h1 🎮·sitemap 50 URL·robots·상세 sol-enchant D-15·new-servers 12·데이터 06.02). 신규 BUGS 0.
 참고: 메인 '데이터 마지막 갱신 2026.06.02' 이틀 경과 — 리서처 갱신 주기 참고용 (버그 아님).
-
-## [2026-06-04 06:29] [개발자]
-완료: 큐 1순위 '헤더 듀얼 브랜드 radial' — `.site-header::before` 백드롭을 단일 블루 radial → 듀얼 radial(좌상 브랜드 블루 rgba(91,157,255,0.12)·우상 --accent-2 퍼플 rgba(201,138,214,0.10), transparent 65%)로 교체. h1 블루→퍼플 그라데 텍스트와 배경 정합, 헤더 높이/패딩/레이아웃 무변(::before 배경 1선언만). 신규 색 0(기존 accent/accent-2 토큰색 rgba 재사용).
-변경된 파일: app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
-비고: 큐 5→4 (상세 액션 outline pill이 새 1순위). CSS-only·tsx 무변경·CSS brace 73/73 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. QA님 라이브에서 헤더 좌상 블루·우상 퍼플 듀얼 글로우(h1 그라데와 정합)·헤더 높이 무변·가로 오버플로 0 확인 부탁.
-

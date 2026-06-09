@@ -65,20 +65,16 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s;
 }
 .item:hover {
-  transform: translateY(-3px);
   border-color: var(--accent);
-  box-shadow: 0 8px 24px -8px rgba(91,157,255,0.3);
 }
 .imminent {
   border-color: var(--accent-warm);
-  box-shadow: 0 0 0 1px rgba(245,166,35,0.3);
 }
 .imminent:hover {
   border-color: var(--accent-warm);
-  box-shadow: 0 8px 24px -8px rgba(245,166,35,0.5);
 }
 
 .cardLink {
@@ -98,14 +94,7 @@
   height: 56px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
   overflow: hidden;
-  background: var(--cat); /* color-mix 미지원 폴백: 카테고리 단색 (cat-bg-* rgba 선행) */
-  background: linear-gradient(180deg, var(--cat), color-mix(in srgb, var(--cat) 34%, transparent));
-}
-.cardBanner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(45deg, transparent 0 14px, rgba(255,255,255,0.025) 14px 15px);
+  background: var(--cat); /* 카테고리 단색 (정리 모드: 세로 그라데 제거) */
 }
 .cardBannerEmoji {
   position: absolute;
@@ -202,7 +191,6 @@
   letter-spacing: 0.03em;
   padding: 0.16rem 0.55rem;
   border-radius: 0 0 8px 0;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.35);
 }
 
 .wish {

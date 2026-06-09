@@ -48,15 +48,6 @@ a:hover { text-decoration: underline; }
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 100%);
   box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
 }
-.site-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(50% 120% at 25% 0%, rgba(91,157,255,0.12), transparent 65%),
-    radial-gradient(50% 120% at 78% 0%, rgba(201,138,214,0.10), transparent 65%);
-}
 .site-header h1 {
   position: relative;
   font-size: 2.1rem;
@@ -189,10 +180,7 @@ a:hover { text-decoration: underline; }
 }
 .seo-landing h2 {
   font-size: 1.7rem;
-  background: var(--accent-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text);
   margin-bottom: 0.6rem;
 }
 .seo-intro { color: var(--text); line-height: 1.6; margin-bottom: 0.5rem; }
