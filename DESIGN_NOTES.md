@@ -46,10 +46,20 @@ _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 라이트 토큰 제안값: `--bg:#f6f7f9`·`--bg-elev:#ffffff`·`--border:#e4e7ec`·`--text:#1a1d24`·`--text-faint:#6b7280`·`--accent:#2f6fe0`(화이트 대비 위해 #5b9dff보다 진하게)·`--accent-2:#9b5fc0`·`--accent-grad:linear-gradient(92deg,#2f6fe0,#9b5fc0)`·`--accent-warm:#c47a00`. 카테고리 정보색(화이트용 점/좌바): 모바일 #3f7d54·PC #3a6ea5·글로벌 #7e4f99·신서버 #b5601f. 다크 토큰은 현 값 유지(=다크 모드).
 주의: §A~C 정리안 hex는 **다크 테마 값**으로 이관 — 각 표면이 토큰만 참조하면 라이트/다크 자동 전환. **인라인 하드코딩(상세 `page.tsx` 백드롭·`not-found`/`error` #4a90e2·HeroStrip 일부 #fff·ViewCounter 등)은 반드시 토큰화해야 양 테마 정상**(라이트에서 #fff 글자가 흰 배경에 사라지는 류 방지).
 
+### E. 헤더 리디자인 — 내비 포함형 (운영자 확정 [2026-06-09 17:58])
+운영자 "헤더 만들어보자" → 두 방향(미니멀/내비포함) 목업 제시 → **내비 포함형 확정**. 구조(단일 행·`app/layout.tsx` `.site-header` 마크업 + `app/globals.css`):
+- **좌** 워드마크: 게임패드 SVG `#ic-gamepad` + "게임 출시 캘린더" `--accent-grad` 클립(시그니처 그라데 유지).
+- **중앙** `.site-nav` 텍스트 링크 6개: 캘린더 `/` · 출시 예정 `/upcoming-games` · 신규 서버 `/new-servers` · 모바일 `/mobile-games` · PC·콘솔 `/pc-console-games` · 글로벌 `/global-games`(기존 SeoLanding 라우트 그대로 — 헤더에서 내부링크/SEO·탐색성↑).
+- **우** 유틸리티 2개: 위시리스트 star(필터바에서 이관 — B-3) + 테마 토글 sun/moon(§D next-themes 연결).
+스타일: `.site-header{ display:flex; align-items:center; gap:1rem; padding:0.7rem 1.2rem; border-bottom:1px solid var(--border) }`(현 중앙정렬+듀얼 radial[B-1로 제거]→단일 행). `.site-nav{ display:flex; gap:1rem; flex:1; justify-content:center; font-size:0.9rem }` · `.nav-link{ color:var(--text-faint) }` · `.nav-link[aria-current=page]{ color:var(--text); border-bottom:2px solid var(--accent); padding-bottom:3px }`(활성 라우트 accent 언더라인·`usePathname()` 또는 page별 active prop) · `.header-utils .util{ width:34px; height:34px; border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text-faint) }`+hover `border-color/color:var(--accent)`.
+태그라인: 현 `.site-tagline`(중앙 부제)은 헤더 바에서 제거(단일 행에 미수용·SEO description은 `<head>` 메타로 유지).
+모바일(≤480): nav를 워드마크 행 **아래 가로 스크롤 스트립**으로(`MonthTabs` 톤 재사용 — 양끝 mask 페이드 + `scroll-snap-type:x`), 유틸리티는 워드마크 행 우측 유지(6링크 데스크 중앙정렬→모바일 스크롤).
+선택: 헤더 `position:sticky; top:0` + 스크롤 시 옅은 보더/그림자(과하지 않게) — 캘린더가 길어 상단 내비 상시 접근. 신규 색 0(토큰+시그니처 그라데만).
+
 ### 우선순위(Phase) 종합
 - **Phase 0 (선행·테마 토큰화)**: §D — `html,body` 색 토큰화 + `:root` 라이트 기본 + `[data-theme=dark]` 다크 오버라이드 + next-themes 토글(라이트 기본). 색 정리(Phase 1)와 같은 토큰 작업이라 묶음.
 - **Phase 1 (색·최대효과)**: §A.1 색 3역할 고정 — 카테고리 4색 정보색 격하 + 주황/블루 단일화 + #4a90e2 전량 청산(ViewCounter·not-found·error·CalendarView 셀링·blog 잔여). 한 번에 가장 큰 '덜 지저분' 효과.
-- **Phase 2 (그라데·이펙트)**: B-1·B-2·B-6·C-1 — 헤더 radial·HeroStrip 글로우/펄스·카드 배너 해치/그라데·상세 백드롭 제거(플랫화).
+- **Phase 2 (그라데·이펙트)**: B-1·B-2·B-6·C-1·E(헤더 단일행 — 듀얼 radial 제거와 동반) — 헤더 radial·HeroStrip 글로우/펄스·카드 배너 해치/그라데·상세 백드롭 제거(플랫화).
 - **Phase 3 (밀도·칩·필터)**: B-3 필터 3컬럼·§A.3 칩 단일언어·B-4 통계 중립·B-5 범례 정리·C-2~5 상세 위계/스펙2열, 섹션 여백 확대.
 전부 신규 색 0(기존 토큰 재사용·정보색은 기존 4색 톤다운)·운영자 승인 목업 기준. a11y/리팩토링은 정리 과정에 자연 동반되나 별도 큐잉 X(외형/정리 모드).
 
