@@ -1,3 +1,8 @@
+## [2026-06-09 18:24] [개발자]
+완료: **테마 Phase 0(운영자 17:46 승인 '화이트 디폴트' + 다크 토글)**. 디자이너 §D 스펙대로 구현 — ①globals `:root`를 라이트 기본 토큰(#f6f7f9/#fff/#e4e7ec/#1a1d24/#6b7280/#2f6fe0…)으로 재정의 + `[data-theme=dark]`에 기존 다크값 보존, html/body 색 토큰화 ②layout `<head>` no-flash 인라인 스크립트(paint 전 localStorage 테마 적용·기본 light·하이드레이션 안전) ③신규 ThemeToggle 컴포넌트(헤더 우상단 해/달, mount 가드·localStorage 지속) + ic-sun/ic-moon 스프라이트 ④양 테마 정상 위해 컴포넌트 CSS 9종+blog+not-found/error/CalendarView 포커스링의 하드코딩 색 전면 토큰화 → 리포 전역 #4a90e2 0건.
+변경된 파일: globals.css, layout.tsx, ThemeToggle.tsx/.module.css(신규), CalendarView/ListView/GameModal/Filters/Home/MonthTabs/ViewToggle/HeroStrip/ViewCounter.module.css, blog.module.css, not-found.tsx, error.tsx (총 16). 신규 색 0·esbuild tsx OK·CSS brace 전부 균형.
+비고: ⚠️기획자님 — 디자이너 17:40 '정리(declutter)' 모드 전환이 아직 번호 큐 미반영 상태라, 운영자 직접 승인된 §D 테마(Phase 0)를 사용자 지시로 선출고했습니다. 후속 Phase 1(색 3역할·카테고리 정보색 격하)·Phase 2(플랫화) TODO화 부탁. **개발자 후속 메모**: 카테고리 4색이 lib/types.ts CATEGORY_META JS 상수라 테마 토큰 미연동 → 라이트 정보색 적용은 CSS변수화 리팩토링 필요(별도 큐). rgba(255,255,255,0.0x) 미세 오버레이는 라이트서 틴트 소실(무해)·Phase 2 보강 후보. QA님 라이트 기본 진입·다크 토글·새로고침 플래시 0·SSR 콘솔 0·메인/상세/블로그/SEO랜딩/모달 양테마 가독성 실측 부탁.
+
 ## [2026-06-09 18:16] [개발자]
 완료: 큐 1·2순위 동시 출고(사용자 '최대한 많이 수정' 요청 반영, 블로그 정합까지 이번 세션 3건 연속). ①HeroStrip '출시 임박' 스트립의 최근접 1건을 `.hotCard`로 2칸 대형 승격 + 그 아래 라이브 HH:MM:SS 카운트다운(신설 useCountdown 훅, release_date 자정 KST 타깃, useState/useEffect mount 후에만 산출해 하이드레이션 #418/#423/#425 가드, 1초 setInterval). ②비블로그 off-brand #4a90e2 청산 — SeoLanding 5라우트 h2 `--accent-grad` 그라데 클립 + ViewCounter `.num` `var(--accent)` 토큰화.
 변경된 파일: components/HeroStrip.tsx(~72줄 재작성), components/HeroStrip.module.css(+18), app/globals.css(.seo-landing h2 그라데), components/ViewCounter.module.css(.num 1줄). 신규 색 0·CSS brace 41/41·80/80·4/4·esbuild tsx OK.
@@ -295,11 +300,3 @@ IDEAS 보관: 디자이너 05:07 잔여 2건(BackToTop 다크 글래스 플로�
 완료: 큐 1순위 '/game/[id] 같은 시기 출시 미니카드 D-day(.related-dday) 단일 블루 → 전역 D-day 3단 색 규약 통일'. related 루프에 rdStage(today/soon/far) 분기 추가, 기본색 muted(--text-faint) 톤다운 + D-DAY 주황 #ff7a59 / 임박(≤7) amber #f5a623 — 본문 dday-badge·메인 리스트와 동일 규약. 출시됨/예정/8일+ 는 muted. 신규 색 0.
 변경된 파일: app/game/[id]/page.tsx (+2/−1), app/globals.css (+3/−1), PROJECT_STATUS.md, CHAT.md
 비고: 큐 5→4 (헤더 듀얼 radial이 새 1순위). esbuild tsx 통과, CSS brace 73/73. Vercel 빌드 검증 위임. QA님 라이브에서 /game/{id} 하단 관련카드 D-day 색 3단 분기 확인 부탁.
-
-## [2026-06-04 05:11] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-완료 확인: '메인 통계줄 카테고리 4색 인라인 카운트 분해' QA 04:49 라이브 ✅(4칩 색·스펙 일치·리스트 27 가드·390 오버플로 0·콘솔 0) → 종결(번호큐는 개발자 04:23 기정리).
-유지: 큐 1~4(related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill·.game-detail 모바일 블록) 순서 그대로.
-추가: - ⑤[외형·D-DAY 강조·높음] day-detail 패널 행 D-day 3단 규약 통일 — tsx `diff===0` 분기 1줄+`.dayRowDdayToday{#ff7a59}` 1규칙 (디자이너 05:07 데스크#1, IDEAS→승격. 첫 화면 기본 노출 표면·1순위 related-dday와 같은 색 규약 묶음 후보·신규 색 0)
-IDEAS 보관: 디자이너 05:07 잔여 3건(dayPanel 모바일 3규칙·BackToTop 다크 글래스 플로팅·푸터 브랜드 그라데 hairline).
-활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 04:49 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(related-dday 색 통일) 착수 권장.

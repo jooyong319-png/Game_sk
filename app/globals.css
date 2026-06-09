@@ -1,6 +1,6 @@
 /* ─── Reset & Base ─── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #0f1115; color: #e6e6e6; line-height: 1.5; }
+html, body { background: var(--bg); color: var(--text); line-height: 1.5; }
 body {
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -10,6 +10,25 @@ a:hover { text-decoration: underline; }
 
 /* ─── 변수 ─── */
 :root {
+  /* 라이트(화이트) 기본 테마 — 운영자 17:46 결정 */
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --bg-elev: #ffffff;
+  --border: #e4e7ec;
+  --text: #1a1d24;
+  --text-faint: #6b7280;
+  --accent: #2f6fe0;
+  --accent-2: #9b5fc0;
+  --accent-grad: linear-gradient(92deg, #2f6fe0, #9b5fc0);
+  --accent-warm: #c47a00;
+  --danger: #e74c3c;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+}
+/* 다크 테마(선택 토글) — 기존 다크 정체성 값 보존 */
+[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #0f1115;
   --bg-elev: #1a1d24;
   --border: #2a2e38;
@@ -19,10 +38,6 @@ a:hover { text-decoration: underline; }
   --accent-2: #c98ad6;
   --accent-grad: linear-gradient(92deg, #5b9dff, #c98ad6);
   --accent-warm: #f5a623;
-  --danger: #e74c3c;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
 }
 
 /* ─── 헤더 / 푸터 ─── */
@@ -30,7 +45,7 @@ a:hover { text-decoration: underline; }
   position: relative;
   text-align: center;
   padding: 2rem 1rem 1.2rem;
-  background: linear-gradient(180deg, #171a22 0%, #0f1115 100%);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 100%);
   box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
 }
 .site-header::before {
@@ -60,7 +75,7 @@ a:hover { text-decoration: underline; }
   position: relative;
   margin: 0.45rem auto 0;
   max-width: 30rem;
-  color: #cfd6e0;
+  color: var(--text);
   font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -72,7 +87,7 @@ a:hover { text-decoration: underline; }
 .site-footer {
   text-align: center;
   padding: 2rem 1rem;
-  color: #666;
+  color: var(--text-faint);
   font-size: 0.85rem;
   border-top: 1px solid var(--border);
   margin-top: 3rem;
@@ -111,14 +126,14 @@ a:hover { text-decoration: underline; }
 .game-detail .name-en { color: var(--text-faint); font-size: 0.9rem; margin-bottom: 0.5rem; }
 .game-detail .release-date { color: var(--accent); font-size: 1rem; font-weight: 600; margin: 0.5rem 0 1rem; }
 .game-detail .dday-badge { display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 1.15rem; font-weight: 800; margin-left: 0.5rem; vertical-align: middle; }
-.game-detail .dday-badge.dday-soon { color: #f5a623; background: rgba(245, 166, 35, 0.12); }
+.game-detail .dday-badge.dday-soon { color: var(--accent-warm); background: rgba(245, 166, 35, 0.12); }
 .game-detail .dday-badge.dday-today { color: #ff7a59; background: rgba(255, 122, 89, 0.14); }
 .game-detail .dday-badge.dday-far { color: var(--text-faint); background: var(--border); }
-.game-detail .desc { color: #cfd6e0; margin-bottom: 1rem; line-height: 1.6; }
+.game-detail .desc { color: var(--text); margin-bottom: 1rem; line-height: 1.6; }
 .game-detail .detail-meta { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; margin: 1rem 0; }
-.game-detail .detail-meta li { display: flex; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.92rem; color: #e6e6e6; }
+.game-detail .detail-meta li { display: flex; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.92rem; color: var(--text); }
 .game-detail .detail-meta li:last-child { border-bottom: none; }
-.game-detail .detail-meta strong { flex: 0 0 4.5em; color: #888; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0; }
+.game-detail .detail-meta strong { flex: 0 0 4.5em; color: var(--text-faint); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0; }
 .game-detail .back-link { display: inline-block; margin-bottom: 1rem; color: var(--text-faint); }
 .game-detail .back-link:hover { color: var(--accent); }
 /* 상세 카드 모바일 압축 (≤480px) — base 규칙 뒤에 둬 cascade 우선 (QA 06-04 cascade 버그 수정) */
@@ -163,7 +178,7 @@ a:hover { text-decoration: underline; }
 .related-date { font-size: 0.8rem; color: var(--text-faint); }
 .related-dday { font-size: 0.85rem; font-weight: 700; color: var(--text-faint); }
 .related-dday.dday-today { color: #ff7a59; }
-.related-dday.dday-soon { color: #f5a623; }
+.related-dday.dday-soon { color: var(--accent-warm); }
 @media (prefers-reduced-motion: reduce) { .related-card:hover { transform: none; } }
 
 /* ─── 랜딩 페이지 (SEO 키워드) ─── */
@@ -180,7 +195,7 @@ a:hover { text-decoration: underline; }
   color: transparent;
   margin-bottom: 0.6rem;
 }
-.seo-intro { color: #cfd6e0; line-height: 1.6; margin-bottom: 0.5rem; }
+.seo-intro { color: var(--text); line-height: 1.6; margin-bottom: 0.5rem; }
 .seo-intro strong { color: var(--accent); font-weight: 700; }
 .seo-count { color: var(--text-faint); font-size: 0.85rem; margin-bottom: 1rem; }
 .seo-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
@@ -230,7 +245,7 @@ a:hover { text-decoration: underline; }
 }
 .ad-slot-mid { min-height: 250px; }
 .ad-slot-label {
-  color: #555;
+  color: var(--text-faint);
   font-size: 0.8rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;

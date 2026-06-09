@@ -8,9 +8,9 @@
 .search {
   flex: 1 1 200px;
   min-width: 180px;
-  background: #1a1d24;
-  color: #e6e6e6;
-  border: 1px solid #2a2e38;
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   font-size: 0.95rem;
@@ -20,28 +20,28 @@
   flex-direction: column;
   gap: 0.25rem;
   font-size: 0.8rem;
-  color: #aaa;
+  color: var(--text-faint);
 }
 .label select {
-  background: #1a1d24;
-  color: #e6e6e6;
-  border: 1px solid #2a2e38;
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   font-size: 0.92rem;
 }
 .wishBtn {
   background: rgba(255,255,255,0.05);
-  color: #cfd6e0;
-  border: 1px solid #2a2e38;
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 0.55rem 0.95rem;
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.15s;
 }
-.wishBtn:hover { border-color: #f5b400; color: #fff; }
-.wishActive { background: rgba(245,180,0,0.18); border-color: #f5b400; color: #fff; }
+.wishBtn:hover { border-color: #f5b400; color: var(--text); }
+.wishActive { background: rgba(245,180,0,0.18); border-color: #f5b400; color: var(--text); }
 
 /* 모바일(≤480px): 검색=풀폭 1줄, 셀렉트 3종=2열 그리드형, 위시=풀폭 버튼 */
 @media (max-width: 480px) {

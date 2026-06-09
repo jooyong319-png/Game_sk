@@ -7,9 +7,9 @@
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
   font-size: 0.85rem;
-  color: #aaa;
+  color: var(--text-faint);
   margin-top: 0.5rem;
 }
 .icon { font-size: 0.95rem; }
 .num { color: var(--accent); font-weight: 700; }
-.label { color: #888; font-size: 0.8rem; }
+.label { color: var(--text-faint); font-size: 0.8rem; }

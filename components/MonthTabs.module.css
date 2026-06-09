@@ -11,7 +11,7 @@
 .tab {
   flex: 0 0 auto;
   background: rgba(255,255,255,0.04);
-  color: #cfd6e0;
+  color: var(--text);
   border: 1px solid rgba(255,255,255,0.08);
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
@@ -24,11 +24,11 @@
 .tab:hover {
   background: rgba(91,157,255,0.12);
   border-color: rgba(91,157,255,0.4);
-  color: #fff;
+  color: var(--text);
 }
 .active {
   background: var(--accent-grad);
-  color: #fff;
+  color: var(--text);
   border-color: transparent;
   box-shadow: 0 2px 8px rgba(91,157,255,0.25);
 }

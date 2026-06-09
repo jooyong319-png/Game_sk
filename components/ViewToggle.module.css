@@ -6,18 +6,18 @@
 }
 .btn {
   background: rgba(255,255,255,0.04);
-  color: #cfd6e0;
-  border: 1px solid #2a2e38;
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.95rem;
   transition: all 0.15s;
 }
-.btn:hover { border-color: var(--accent); color: #fff; }
+.btn:hover { border-color: var(--accent); color: var(--text); }
 .active {
   background: var(--accent-grad);
-  color: #fff;
+  color: var(--text);
   border-color: transparent;
   box-shadow: 0 2px 8px rgba(91,157,255,0.25);
 }

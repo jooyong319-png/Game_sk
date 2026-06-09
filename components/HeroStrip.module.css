@@ -3,7 +3,7 @@
   font-size: 1.15rem;
   font-weight: 700;
   margin-bottom: 0.7rem;
-  color: #fff;
+  color: var(--text);
 }
 .strip {
   display: grid;
@@ -12,7 +12,7 @@
 }
 .card {
   position: relative;
-  background: linear-gradient(135deg, #1a1d24, #0f1115);
+  background: linear-gradient(135deg, var(--bg-elev), var(--bg));
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   padding: 1.4rem 1.2rem 1.1rem;
@@ -23,7 +23,7 @@
   overflow: hidden;
   transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
   text-decoration: none;
-  color: #fff;
+  color: var(--text);
 }
 .card::before {
   content: '';
@@ -67,7 +67,7 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #f5a623;
+  color: var(--accent-warm);
   z-index: 1;
 }
 .name {
@@ -80,7 +80,7 @@
 .dday {
   font-size: 1.8rem;
   font-weight: 900;
-  color: #f5a623;
+  color: var(--accent-warm);
   z-index: 1;
   align-self: flex-end;
   text-shadow: 0 0 24px rgba(245,166,35,0.4);
@@ -139,7 +139,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--cat, #f5a623);
+    background: var(--cat, var(--accent-warm));
     z-index: 1;
   }
   .cat { display: none; }
