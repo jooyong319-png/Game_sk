@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { HeaderNav } from '@/components/HeaderNav';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gcalen.com'),
@@ -65,9 +65,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <symbol id="ic-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></symbol>
         </svg>
         <header className="site-header">
-          <h1><a href="/"><svg className="ic ic-gamepad" aria-hidden="true"><use href="#ic-gamepad" /></svg> 게임 출시 캘린더</a></h1>
-          <p className="site-tagline">국내외 신규 출시 게임을 한눈에</p>
-          <ThemeToggle />
+          <h1 className="site-wordmark"><a href="/"><svg className="ic ic-gamepad" aria-hidden="true"><use href="#ic-gamepad" /></svg> 게임 출시 캘린더</a></h1>
+          <HeaderNav />
         </header>
         <main id="main">{children}</main>
         <footer className="site-footer">

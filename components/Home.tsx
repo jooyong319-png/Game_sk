@@ -11,6 +11,7 @@ import { CalendarView } from './CalendarView';
 import { ListView } from './ListView';
 import { GameModal } from './GameModal';
 import { useWishlist } from './useWishlist';
+import { useWishlistFilter } from './useWishlistFilter';
 import styles from './Home.module.css';
 
 interface HomeProps {
@@ -39,6 +40,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
   const [openGameId, setOpenGameId] = useState<string | null>(null);
 
   const wishlist = useWishlist();
+  const wishlistOnly = useWishlistFilter().on; // 헤더 ★ 토글과 공유(§E)
 
   // mount 직후 1회: 실제 현재 시각/이번 달로 교체 (하이드레이션 이후라 에러 아님)
   useEffect(() => {
@@ -97,7 +99,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
 
     return initialGames.filter(g => {
       if (filters.category && g.category !== filters.category) return false;
-      if (filters.wishlistOnly && !wishlist.has(g.id)) return false;
+      if (wishlistOnly && !wishlist.has(g.id)) return false;
 
       if (filters.search) {
         const hay = `${g.name_ko} ${g.name_en ?? ''}`.toLowerCase();
@@ -117,7 +119,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
 
       return true;
     });
-  }, [initialGames, filters, wishlist.ids, now]);
+  }, [initialGames, filters, wishlist.ids, wishlistOnly, now]);
 
   // 리스트 전용: '오늘 이후' 하한 적용(캘린더 공유 filteredGames는 무하한 → 과거 달 탐색 보존).
   // 기간 '전체 (과거 포함)'(-1) 선택 시에만 과거 복원. 하한은 now(KST, mount 후) 기준이라 SSR 안전.

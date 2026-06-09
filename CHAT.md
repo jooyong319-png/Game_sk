@@ -12,6 +12,10 @@
 - 패스 오브 엑자일2 '고대의 귀환'(0.5.0, 5/30): 기등록(poe2-season-return-of-ancients-20260530) → 중복 제외
 - 마비노기(PC/모바일): 신규 정식 서버 공식 공지 없음(모바일은 몰리 이후 채널 축소 기조) → 추가 X
 - 글로벌 7~8월: MGS 마스터컬렉션 Vol.2(8/27)·엘든링 타니쉬드(8/28)·비스트 오브 리인카네이션(8/4)·마블 토콘(8/6)·AC 블랙플래그 리싱크드(7/9) 전부 기등록. Wild Blue Skies(8/13)·Grave Seasons(8/14)=인디 코지팜류·AAA 아님 → 제외. 신규 확정 발매일 없음
+## [2026-06-09 19:40] [개발자]
+완료: **§E 헤더 리디자인 — 내비 포함형**(운영자 직접 지시·17:58 확정 스펙). ①헤더를 중앙정렬 2줄(타이틀+태그라인) → **단일 flex 행**으로 재구성: 좌 워드마크(게임패드 SVG+`--accent-grad` 클립 유지)·중앙 `.site-nav` 6링크(캘린더/출시예정/신규서버/모바일/PC·콘솔/글로벌, `usePathname()`로 활성 라우트 accent 언더라인)·우 유틸 2개(위시★·테마토글). ②**위시 토글 복구** — Phase 3a서 필터바 위시 버튼 제거 후 "위시만 보기"가 켤 UI 없이 공백이던 것을, §E대로 헤더 우측 ★로 이관. 헤더(layout 트리)와 Home(page 트리)이 분리돼 props 공유 불가 → `useWishlistFilter` 공유 store(useSyncExternalStore, 세션·비영속, SSR=false 하이드레이션 가드) 신설로 동기화. ③모바일(≤480): nav를 워드마크 행 아래 가로 스크롤 스트립(mask 페이드+scroll-snap, MonthTabs 톤)·유틸은 워드마크 행 우측 유지. ④sticky top·태그라인 바에서 제거(SEO desc는 `<head>` 메타 유지).
+변경된 파일: app/layout.tsx, components/HeaderNav.tsx(신규 59), components/useWishlistFilter.ts(신규 39), components/Home.tsx(위시필터 store 연결 4줄), app/globals.css(헤더 블록 재작성 ~+70/−34), components/ThemeToggle.module.css(absolute→인라인 유틸) — 총 6. 신규 색 0(토큰+시그니처 그라데만)·esbuild tsx+css 무에러·brace globals 93/93·ThemeToggle 4/4.
+비고: QA님 — 라이브 데스크 1440(워드마크 그라데·6링크 중앙·활성 라우트 언더라인[/ 캘린더, /mobile-games 모바일 등]·위시★ 토글 시 리스트 위시필터 동작·테마토글 라이트/다크) + 모바일 390(nav 가로 스크롤 스트립·양끝 페이드·유틸 우측 유지·sticky) + 하이드레이션 콘솔 0 확인 부탁. 운영자 확정 스펙이라 정리 모드 중 직접 지시 예외로 진행.
 
 ## [2026-06-09 19:20] [개발자]
 완료: **정리 Phase 3a §A.3 — 칩 단일언어(중립 글래스 1언어 + 카테고리 좌점)**(큐 1순위 잔여). ①`.category-tag`: `cat-bg-*` 채색 배경 → 중립 글래스(bg rgba(255,255,255,0.04)·border var(--border)·color var(--text-faint)·radius 999·0.7rem·padding 0.1/0.5)로 전환하고 카테고리는 `::before` 7px 점(정보색)으로만 식별 — `.category-tag.cat-bg-*` 4종에 `--cat-dot`(#6f9c7a/#5f86b8/#9a7bb0/#c08560) 주입. List/Modal/SEO/상세 4소비처 자동 적용(tsx 무변경). ②`ListView.module.css` `.genreChip`·`.releasedTag`도 동일 스펙(border var(--border)·bg 0.04)으로 정렬해 3칩 1언어화. cat-bg standalone(cardBanner·modal image 배경)은 `.category-tag` 미동반이라 무영향.
@@ -298,14 +302,3 @@ TODO 큐 3→4 (모드: 외형 집중) + 파이프라인 재가동 확인
 - 메이플스토리 챌린저스 월드 시즌2(6/19): 시즌제 한시 서버 → 임시 서버 제외 규칙. 6/13 여름 쇼케이스 'OVERDRIVE' 후 신규 월드 발표 여부 재확인 예정
 - RF온라인 넥스트: 신규 서버 없음(2월 서버 통합 방향) / 마비노기 PC·리니지 클래식: 올해 신규 서버 공지 미확인(하이네·로엔그린 기등록) / DK모바일 리본 '번영의 월드': 기등록(중복)
 - 데이브 더 다이버: 인 더 정글(6/18): DLC 콘텐츠 팩 → 단독 타이틀 아님, 제외
-
-## [2026-06-04 07:48] [QA]
-검증 대상: /game/[id] 상세 액션 outline pill + .game-detail 모바일 @media(≤480px) 오버라이드 (개발자 07:28 fd55952)
-데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
-모바일 390: ❌ (.game-detail 모바일 오버라이드 미적용 — cascade 순서 버그, BUGS 등록)
-상세: ① pill ✅ — .detail-actions flex·gap 0.6rem·wrap / .gcal-link·.detail-link 패딩 8/15.2px·border 1px var(--border)·radius 8px·bg rgba(255,255,255,0.03)·accent rgb(91,157,255)·0.88rem/600·밑줄 0 — 스펙 그대로. 390 iframe 2버튼 한 줄(30~257px)·오버플로 0(scrollW 375). 데스크 .game-detail 무영향(padding 24/28.8/32·h2 32px) ✅. ② ❌ 모바일 2규칙 미적용 — @media 블록이 globals.css L68(상단)인데 base .game-detail(L104)·h2(L112)가 소스 후행+동일 특이도라 override. 390 iframe(mq true) 실측 padding 24/28.8/32px·h2 32px = 데스크 값 그대로. 콘솔 에러/#418/#423/#425 0(MetaMask 확장 경고만). 헬스 ✅(홈·sitemap XML·robots·상세 D-15·new-servers 12). 홈 무회귀(기간 '오늘 이후'+'전체(과거 포함)'·통계 4칩+총44·듀얼 radial·오늘패널 20건·scrollW 1905<1920).
-
-## [2026-06-04 07:28] [개발자]
-완료: 큐 1순위 '/game/[id] 상세 액션 outline pill' + 2순위 '.game-detail 모바일 블록' 묶음 출고(기획자 07:13 '1·2 같은 상세 표면 묶음 후보' 권고대로). ① 상세 하단 액션 래퍼 인라인 style → `.detail-actions` 클래스화 + '공식 출처' `.detail-link` 부여, globals.css에 outline pill 공통 규칙(border var(--border)·radius-sm·rgba(255,255,255,0.03)·accent 0.88rem/600) + hover/focus-visible(accent 보더·rgba(91,157,255,0.1)) 신설. ② 기존 @media(≤480px) 블록에 `.game-detail{padding:1.2rem 1.1rem 1.6rem}`·`.game-detail h2{1.5rem}` 2규칙 추가. 신규 색 0.
-변경된 파일: app/game/[id]/page.tsx (+2/−2), app/globals.css (+26), PROJECT_STATUS.md, CHAT.md
-비고: 큐 5→3 (day패널 D-day 3단 규약이 새 1순위 — 신규 2순위 day패널 모바일 3규칙과 같은 CalendarView 표면 묶음 후보). esbuild tsx OK·CSS brace 78/78 균형. 로컬 빌드 sandbox 제한 → Vercel typecheck+build 위임. QA님 라이브 /game/{id} 하단 '캘린더 추가'/'공식 출처' 2버튼 outline pill 렌더·hover 톤·390 flex-wrap 줄바꿈·상세 카드 모바일 패딩 1.1rem/h2 1.5rem 축소·데스크톱 무영향·가로 오버플로 0 확인 부탁.

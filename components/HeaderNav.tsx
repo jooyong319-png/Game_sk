@@ -1,0 +1,59 @@
+'use client';
+import { usePathname } from 'next/navigation';
+import { ThemeToggle } from './ThemeToggle';
+import { useWishlistFilter } from './useWishlistFilter';
+
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+// 기존 SeoLanding 라우트 그대로 — 헤더 내부링크로 탐색성·SEO 보강(§E).
+const NAV: NavItem[] = [
+  { href: '/', label: '캘린더' },
+  { href: '/upcoming-games', label: '출시 예정' },
+  { href: '/new-servers', label: '신규 서버' },
+  { href: '/mobile-games', label: '모바일' },
+  { href: '/pc-console-games', label: 'PC·콘솔' },
+  { href: '/global-games', label: '글로벌' },
+];
+
+export function HeaderNav() {
+  const pathname = usePathname();
+  const wishFilter = useWishlistFilter();
+
+  return (
+    <>
+      <nav className="site-nav" aria-label="주요 메뉴">
+        {NAV.map(item => {
+          const active = pathname === item.href;
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              className="nav-link"
+              aria-current={active ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+      </nav>
+      <div className="header-utils">
+        <button
+          type="button"
+          className="util"
+          onClick={wishFilter.toggle}
+          aria-pressed={wishFilter.on}
+          aria-label="위시리스트만 보기"
+          title="위시리스트만 보기"
+        >
+          <svg className={wishFilter.on ? 'ic ic-fill' : 'ic'} aria-hidden="true">
+            <use href="#ic-star" />
+          </svg>
+        </button>
+        <ThemeToggle />
+      </div>
+    </>
+  );
+}

@@ -40,40 +40,97 @@ a:hover { text-decoration: underline; }
   --accent-warm: #f5a623;
 }
 
-/* ─── 헤더 / 푸터 ─── */
+/* ─── 헤더 (내비 포함형 단일행 §E) / 푸터 ─── */
 .site-header {
-  position: relative;
-  text-align: center;
-  padding: 2rem 1rem 1.2rem;
-  background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 100%);
-  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 1.2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
 }
-.site-header h1 {
+.site-header .site-wordmark {
   position: relative;
-  font-size: 2.1rem;
+  font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 .site-header a { color: inherit; }
 .site-header a:hover { text-decoration: none; }
-.site-header h1 a {
+.site-header .site-wordmark a {
   background: var(--accent-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.site-header .site-tagline {
-  position: relative;
-  margin: 0.45rem auto 0;
-  max-width: 30rem;
-  color: var(--text);
-  font-size: 1.1rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+/* 중앙 내비 6링크 — 활성 라우트 accent 언더라인 */
+.site-nav {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  justify-content: center;
+  font-size: 0.9rem;
 }
+.nav-link {
+  color: var(--text-faint);
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link[aria-current="page"] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+/* 우측 유틸리티 (위시★ · 테마토글) */
+.header-utils {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.header-utils .util {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.header-utils .util:hover,
+.header-utils .util[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+/* 모바일: 내비를 워드마크 행 아래 가로 스크롤 스트립으로(MonthTabs 톤) */
 @media (max-width: 480px) {
-  .site-header h1 { font-size: 1.8rem; }
-  .site-header .site-tagline { font-size: 1rem; }
+  .site-header {
+    flex-wrap: wrap;
+    padding: 0.6rem 0.8rem;
+  }
+  .site-header .site-wordmark { font-size: 1.1rem; flex: 1; }
+  .site-nav {
+    order: 3;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  }
+  .site-nav .nav-link { scroll-snap-align: start; }
 }
 .site-footer {
   text-align: center;
