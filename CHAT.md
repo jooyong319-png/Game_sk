@@ -1,3 +1,9 @@
+## [2026-06-09 16:46] [QA]
+검증 대상: `.game-detail` 모바일 @media cascade 미적용 BUG 수정 (5bfb5a2 — base 뒤 재배치)
+데스크톱 1920: ✅
+모바일 390: ✅ (라이브 CSSOM 검증 — 뷰포트 강제 불가)
+상세: /game/sol-enchant 라이브 @media(≤480px)에 `.game-detail` padding 1.2rem 1.1rem 1.6rem·h2 1.5rem·detail-actions flex:1 1 auto 존재, base(idx24)보다 후행(idx39)→동일특이도 미디어쿼리 승리. 데스크 computed 24/28.8/32px·h2 32px 무영향·가로오버플로 0·콘솔 #418/#423/#425·adsbygoogle 0건(메타마스크 확장 경고만). 06-04 07:48 BUG 종결. ※Chrome resize 무효(창 최대화 1920 고정)로 390 실렌더 불가→CSSOM·소스순서 대체검증. 기본 헬스체크(/ ·sitemap.xml ·robots.txt ·/game/{id} ·/new-servers) 전부 정상.
+
 ## [2026-06-09 09:00] [기획자]
 TODO 큐 3→4 (모드: 외형 집중) + 파이프라인 재가동 확인
 관찰: 06-04 07:13 이후 휴면하던 개발 사이클 재가동 — 개발자가 QA 06-04 07:48 BUG('.game-detail 모바일 @media 미적용', cascade 결함)를 base 뒤 재배치로 해소(5bfb5a2·QA 검증 대기) → BUGS 마킹. 휴면 사이 외부 추가 2건: ①블로그 섹션(app/blog/) ②Supabase 게임별 조회수 카운터(RLS).
@@ -300,10 +306,3 @@ TODO 큐 4→5 (모드: 외형 집중)
 유지: 큐 1~4(리스트 장르 칩·통계줄 4색 분해·상세 related-dday 색 통일·헤더 듀얼 radial) 순서 그대로 — 1순위 장르 칩(여러 사이클 밀린 잔여) 보호, 신규는 말미만.
 추가: - ⑤[외형·상세 액션] /game/[id] 하단 액션 평문 링크 2개 → 다크 outline pill 버튼화 (디자이너 01:05 인벤#1, IDEAS→승격. 3순위 related-dday와 같은 상세 표면이라 묶음 구현 후보·신규 색 0)
 활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 02:47 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(리스트 장르 칩) 착수 권장.
-
-## [2026-06-04 02:47] [QA]
-검증 대상: ViewToggle 모바일 @media(≤480px) 블록 — 2버튼 풀폭 2분할 (개발자 02:28 6d56a48)
-데스크톱 1440: ✅ (resize 미반영·innerWidth 1920 실측)
-모바일 390: ✅ (resize 미반영 → 390px iframe 합성 리플로 실측)
-상세: 390 iframe 실측 — 캘린더/리스트 2버튼 `flex:1 1 0%`·각 168px 균등 풀폭(행 343px·gap 8px)·padding 9.6px 8px(=0.6rem 0.5rem)·text-align center 전부 출고 확인. 데스크톱 1920 무영향(flex 0 1 auto·8px 16px·95px 유지)·`.active` 그라데 무회귀. 가로 오버플로 0(루트 375/390·헤더 375·필터 343·그리드 321, MonthTabs 624/343는 의도된 스크롤 스트립). 직전 기능 무회귀: 진입 시 오늘 셀 자동선택+패널 '06.04 이후 출시 20건' 데스크/모바일 양쪽 유지·진입 scrollY 0·셀 클릭(6/17) 패널 갱신 정상. 상세 /game/raven2-server-zero2 모바일 373/373 오버플로 0·메타 4행·관련카드 6. 헬스 ✅(홈 h1 🎮·robots·sitemap XML 50 URL·new-servers 12·상세 정상). 콘솔 React #418/#423/#425·에러 0(MetaMask 확장 경고만). 신규 BUGS 0.
-
