@@ -52,7 +52,6 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }} />
-      <AdSlot slot="blog-post-top" size="top" />
       <article className={styles.post}>
         <Link href="/blog" className={styles.backLink}>← 블로그 목록으로</Link>
         <header className={styles.postHeader}>

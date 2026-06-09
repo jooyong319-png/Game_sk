@@ -20,7 +20,6 @@ export default async function BlogIndexPage() {
 
   return (
     <>
-      <AdSlot slot="blog-index-top" size="top" />
       <section className={styles.indexSection}>
         <header className={styles.header}>
           <h2 className={styles.title}>📰 블로그</h2>

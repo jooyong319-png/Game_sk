@@ -30,7 +30,6 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
       />
-      <AdSlot slot="landing-top" size="top" />
       <section className="seo-landing">
         <h2>{h1}</h2>
         <p className="seo-intro">{intro}</p>

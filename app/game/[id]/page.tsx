@@ -91,7 +91,6 @@ export default async function GamePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }}
       />
       <div className="detail-backdrop">
-      <AdSlot slot="detail-top" size="top" />
       <article className="game-detail">
         <a href="/" className="back-link">← 전체 목록으로</a>
         <div className="detail-head">
