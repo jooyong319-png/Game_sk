@@ -1,3 +1,9 @@
+## [2026-06-09 17:48] [QA]
+검증 대상: day-detail 패널 D-day 3단 색 규약 통일 + 모바일 패널 밀도 3규칙 (d4fe0f1, 큐 1·2)
+데스크톱 1440: ✅
+모바일 390: ✅ (CSSOM 검증 — 창 1920 고정으로 실렌더 불가)
+상세: 라이브 패널 D-day 3단 정상 — 포켓몬 D-6 amber #f5a623(rgb245,166,35)·D-8~D-10 #888(rgb136)·D-DAY(diff0) 룰 .dayRowDdayToday{#ff7a59;700} 배포 확인(당일 출시 0건→실표시 없음). 모바일 @media(≤480) 신규 3규칙(.dayPanel 0.7rem·.dayRow gap0.45/pad0.45 0.55·.dayRowDate min3em 0.72rem) 전부 존재, 미디어블록(idx90)>base .dayRow(idx82) 동일특이도 후행→정상 승리(06-04 cascade 회귀 없음). 가로 오버플로 0·콘솔 사이트에러 0(메타마스크 확장 경고만). 헬스: / h1·sitemap 70 URL·robots·/game/sol-enchant·/new-servers 전부 정상.
+
 ## [2026-06-09 17:30] [개발자]
 완료: 큐 1·2순위 묶음 구현(같은 CalendarView 표면). ①캘린더 day-detail 패널 행 D-day를 단일 amber 한 톤 → 전역 3단 색 규약(D-DAY 오늘 #ff7a59 700 / 임박 D-1~7 amber #f5a623 / 그 외 #888)으로 통일 — HeroStrip 글로우카드·리스트 리본·상세 배지와 색 정합. ②모바일 @media(≤480px)에 패널 밀도 3규칙(.dayPanel/.dayRow/.dayRowDate) 추가 — 셀 게임명 숨김으로 패널이 모바일 1차 콘텐츠 표면인데 패딩 과대였던 행 폭 ~+20px 회수.
 변경된 파일: components/CalendarView.tsx (+1/−1), components/CalendarView.module.css (+4). 신규 색 0·CSS brace 67/67·esbuild tsx OK.
@@ -301,9 +307,3 @@ DESIGN_NOTES에 4개 제안 추가 (Chrome resize 모바일 미반영 지속 →
 변경된 파일: components/Home.tsx (+9/−2), components/Home.module.css (+14/−1)
 비고: 라벨은 full label 대신 `short`(모바일/PC·콘솔/글로벌/신서버) — '한국 MMO 신규 서버' full은 390px 한 줄 초과 위험. 44개 실데이터 시뮬: 캘린더 뷰 모바일 11·PC·콘솔 5·글로벌 16·신서버 12·총 44 / 리스트 뷰(오늘 이후) 9·5·13·총 27(신서버 0 → 미렌더 가드). esbuild tsx OK·brace 균형·strict any 0. 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 통계줄 4색 칩+회색 총합·뷰 전환 카운트 갱신(44↔27)·범례 색 정합·모바일 390 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
 
-## [2026-06-04 04:11] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-완료 확인: '리스트 카드 장르 칩 — genres[] 무채색 pill 최대 3개' QA 03:47 라이브 ✅(27카드 전부 렌더·칩 총 48·카드당 최대 3 가드·390 가로 오버플로 0) → 종결.
-유지: 큐 1~4(통계줄 4색 분해·related-dday 색 통일·헤더 듀얼 radial·상세 액션 outline pill) 순서 그대로 — 1순위 통계줄 4색(여러 사이클 밀린 잔여) 보호, 신규는 말미만.
-추가: - ⑤[외형·모바일·상세] /game/[id] `.game-detail` 모바일 @media(≤480px) 오버라이드 신설 — padding 1.8→1.1rem·h2 2→1.5rem (디자이너 01:05 모바일#1, IDEAS→승격. 2·4순위와 같은 상세 표면 묶음 후보·CSS-only·신규 색 0)
-활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 03:47 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(통계줄 4색 분해) 착수 권장.
