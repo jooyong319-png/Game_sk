@@ -10,6 +10,37 @@ AI 디자이너 Claude가 배포된 사이트(https://gcalen.com/)를 직접 보
 
 _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
+## [2026-06-09 16:51] [디자이너] - 외형 모드 + 인벤 비교
+실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(h1 게임패드 블루→퍼플 그라데 타이틀+헤더 듀얼 radial·'🔥 출시 임박' 핫카드[포켓몬 챔피언스 D-6 주황·warm 그라데 배너]·캘린더 6월 today(9일) 셀 자동선택→day-detail 패널 '이후 출시 20건' 자동 노출[첫 행 D-6만 amber·나머지 muted]·푸터 SEO 링크 5종+신규 '게임 출시 블로그' 링크) 전부 양호. **신규 표면 /blog·/blog/[slug] 첫 점검** — 06-08 추가된 블로그가 본 사이트 외형 사이클(accent #5b9dff 선명화·그라데 타이틀·헤더 radial·Pretendard 위계)을 못 받아 **구 accent #4a90e2 하드코딩 잔재 + 무브랜드 평면**으로 톤 단절. **모바일(390): resize_window 뷰포트 미반영(innerW 1920·mq480 false, 기존 한계 동일) → same-origin iframe 390px 합성 실측(/blog·/blog/[slug]·메인 모두 mq true·innerW 390·docW 375·오버플로 0).** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차 — 히어로 리뷰 배너·핫카드 카운트다운·주간 TOP10·핫딜 가격카드·BackToTop은 기수집분, 이번 신규 식별 **필터를 원형 아이콘 스트립(전체/출시/테스트/얼리액세스/PC/MOBILE/PS/XBOX/SWITCH/행사)**으로 시각화(우린 text `<select>` 3종 평면). 큐(day패널 D-day 3단·day패널 모바일 3규칙·블로그 정합·HeroStrip 핫카드)/IDEAS와 중복 없는 신규만 — 단, 블로그는 큐 ③ '브랜드 정합'의 **구체 hex/셀렉터 명세** 제공(직전까지 한 줄 큐만 존재, 디자인 노트 최초 상세화). a11y/시맨틱/리팩토링 0건(외형 모드).
+
+### 데스크톱(1440) 점검
+1. **[높음·신규표면·브랜드 타이틀] `/blog` 섹션 타이틀 `.title`(📰 블로그)·`/blog/[slug]` `.postH1`이 평면 흰색 `#fff` — 메인 h1은 `var(--accent-grad)` 블루→퍼플 클립 그라데인데 블로그 두 제목만 무브랜드 평면이라 표면 정체성 단절** (`app/blog/blog.module.css` `.title` L6 + `.postH1` L? 상세, 메인 `app/globals.css` `.site-header h1 a` L53~58 패턴 차용)
+   - 현재: `.title{ font-size:2rem; font-weight:800; color:#fff }`·`.postH1{ font-size:1.9rem; font-weight:800; color:#fff }`. 라이브 /blog·/blog/[slug] 실측 두 제목 모두 단색 흰색 — 같은 페이지 상단 site-header h1(그라데 클립)과 동일 화면에서 톤 갈림.
+   - 바꿀 값: 두 셀렉터에 메인 h1과 동일 클립 3줄 추가 — `background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent;`(기존 color:#fff 대체). → 블로그 제목이 메인과 같은 시그니처 블루→퍼플 그라데로 통일(신규 색 0·기존 토큰 재사용·레이아웃 무변). 우선순위 **높음**(큐 ③ 핵심·첫 화면 브랜드 앵커).
+
+2. **[높음·신규표면·구 accent 잔재] `blog.module.css` 전반이 폐기된 구 accent `#4a90e2`/파생색 하드코딩 — 전역은 06-02에 `--accent` `#4a90e2`→`#5b9dff` 선명화했는데 블로그만 칙칙한 옛 블루로 6곳 잔존** (`app/blog/blog.module.css` `.postCard:hover` L?·`.postDate` L?·`.tag` L?·`.backLink:hover`·`.postBody a`)
+   - 현재(6곳): `.postCard:hover{ border-color:#4a90e2; box-shadow:0 8px 24px -8px rgba(74,144,226,0.3) }`·`.postDate{ color:#4a90e2 }`·`.tag{ color:#6ab0e8; background:rgba(74,144,226,0.08) }`·`.backLink:hover{ color:#4a90e2 }`·`.postBody a{ color:#4a90e2 }`. 라이브에서 카드 날짜·태그칩·링크가 메인 인터랙션색(#5b9dff)보다 채도 낮은 옛 블루라 한 사이트 안에서 두 블루가 공존.
+   - 바꿀 값(전부 토큰화·CSS Module도 globals `:root` 토큰 상속): `#4a90e2`→`var(--accent)`(4곳)·`rgba(74,144,226,0.3)`→`rgba(91,157,255,0.3)`·`rgba(74,144,226,0.08)`→`rgba(91,157,255,0.1)`·`.tag` color `#6ab0e8`→`var(--accent)`. 하드코딩 `#1a1d24`/`#2a2e38`(.postCard/.postHeader 등)도 값 동일하니 `var(--bg-elev)`/`var(--border)`로 정리 권장(외형 무변·단일 출처화). → 블로그 인터랙션색이 메인 #5b9dff와 단일화(신규 색 0·전역 토큰 재사용). 우선순위 **높음**(큐 ③ 핵심·구색 잔재 청산).
+
+3. **[보통·신규표면·헤더/섹션 마커] `/blog` `.header`에 메인 헤더의 radial 글로우 부재 + `/blog/[slug]` `.postBody h2`(국내 신규 모바일 게임 등)가 평면 흰 줄 — 메인은 헤더 듀얼 radial·HeroStrip `.title` 좌측 accent 바로 섹션을 앵커링하는데 블로그 본문 섹션은 장식 0** (`app/blog/blog.module.css` `.header` L5 + `.postBody h2` L?)
+   - 현재: `.header{ margin-bottom:2rem }`(배경 장식 0)·`.postBody h2{ font-size:1.4rem; color:#fff; margin:1.8rem 0 0.8rem; font-weight:700 }`(평면). 라이브 post에서 H2 섹션 구분이 굵기뿐 — 긴 큐레이션 글에서 섹션 스캔 약함.
+   - 바꿀 값: `.postBody h2`에 `padding-left:0.6rem; border-left:3px solid var(--accent)` 2속성 추가(HeroStrip `.title` 좌띠 패턴 차용·기존 토큰). 헤더 글로우는 선택 — `.header{ position:relative }` + 메인 `.site-header::before`의 라이트버전 radial 1개(`background:radial-gradient(60% 100% at 20% 0%, rgba(91,157,255,0.08), transparent 60%)`)를 `::before`로. → 본문 섹션이 accent 좌띠로 앵커링되고 인덱스 헤더가 은은한 브랜드 글로우 획득(신규 색 0). 우선순위 **보통**.
+
+### 모바일(390) 점검 (iframe 390 합성 실측 — 오버플로 0)
+1. **[보통·모바일·신규표면] `blog.module.css` `@media(max-width:480px)` 블록이 `.title`(1.6rem)·`.postH1`(1.5rem)만 축소 — `.postLink` 카드 패딩(`1.2rem 1.4rem`)·`.postBody`(1rem/1.7) 모바일 오버라이드 0이라 390서 본문폭 손실·줄길이 과대** (`app/blog/blog.module.css` `@media(≤480px)` L? 블록 확장)
+   - 현재(iframe 390 실측): 인덱스 카드 `.postLink padding:1.2rem 1.4rem`(좌우 22px×2) + `.indexSection padding:0 1rem` → 카드 콘텐츠폭 ~329px, post 본문 `.post max-width:760px; padding:0 1rem`. 데스크 톤 그대로라 좁은 폭에서 카드 좌우 패딩이 과대.
+   - 바꿀 값: `@media(≤480px)` 블록에 `.postLink{ padding:1rem 1.1rem }`·`.postBody{ font-size:0.95rem; line-height:1.65 }`·`.tag{ font-size:0.72rem }` 3규칙 추가. → 카드 콘텐츠폭 ~+18px·본문 줄길이/리듬 모바일 정돈(데스크 무영향·레이아웃만·신규 색 0). 우선순위 **보통**(신규표면 모바일 미보유).
+
+### 인벤 참고 ('인벤에 있는데 우리에게 필요')
+1. **[보통·큰단위·카테고리 시각화] 인벤은 필터를 원형 아이콘 스트립(전체/출시/테스트/얼리액세스 + PC/MOBILE/PS/XBOX/SWITCH 아이콘 + 행사)으로 시각화 → 우린 `카테고리/플랫폼/기간` 모두 text `<select>` 평면이라 표면 색·시각 신호 0. 플랫폼 필터를 다크 아이콘칩 가로 스트립으로 재해석** (`components/Filters.tsx` 플랫폼 select → 아이콘칩 row + `Filters.module.css`)
+   - 인벤: 라이트·원형 아이콘+라벨 빽빽. 우린 다크·미니멀 → **채움 아닌 다크 글래스 칩**(아이콘+짧은 라벨, 활성 시 accent 보더·tint)으로 절제, 6플랫폼(PC/PS5/Xbox/Switch/iOS/Android)만.
+   - 바꿀 값(큰 단위·개발자 판단 필요): 플랫폼 `<select>`를 `.platChip` 가로 스크롤 row로 — `.platChip{ display:inline-flex; gap:0.35rem; padding:0.35rem 0.7rem; border:1px solid var(--border); border-radius:999px; background:rgba(255,255,255,0.03); color:var(--text-faint); font-size:0.82rem }` + `.platChip[aria-pressed=true]{ border-color:var(--accent); background:rgba(91,157,255,0.1); color:var(--text) }` + 아이콘은 layout.tsx SVG 스프라이트 재사용. 카테고리/기간은 select 유지(점진). → 플랫폼 필터가 시각 신호 있는 칩 스트립으로 승격(인벤 아이콘 필터를 다크 미니멀로 흡수). 신규 색 0·기존 토큰. 우선순위 **보통**(큰 단위·IDEAS 보관 후보).
+
+### 우선순위 종합
+높음: 데스크#1(블로그 타이틀 그라데 클립 — 큐 ③ 핵심 브랜드 앵커)·데스크#2(블로그 구 accent #4a90e2 6곳 토큰화 — 구색 청산). 둘은 같은 blog.module.css 표면이라 **묶음 구현 후보**(큐 ③ 단일 사이클 소화 가능). 보통: 데스크#3(블로그 본문 h2 accent 좌띠+헤더 글로우)·모바일#1(블로그 모바일 3규칙)·인벤#1(플랫폼 아이콘칩 스트립·큰 단위 IDEAS 후보). 전부 신규 색 0·전역 토큰 재사용·CSS 위주(인벤#1만 tsx 동반).
+
+---
+
 ## [2026-06-04 05:07] [디자이너] - 외형 모드 + 인벤 비교
 실측: gcalen.com Chrome 데스크톱 1440 라이브 — 메인(통계줄 카테고리 4색 분해[모바일 11 #81c784·PC·콘솔 5 #64b5f6·글로벌 16 #ba68c8·신서버 12 #ff8a65] 신규 출고 확인·'🔥 출시 임박' 3글로우카드[미르 D-DAY·메이크드라마 D-DAY·고딕 D-1]·캘린더 6월 today 셀 자동선택→day-detail 패널 '이후 출시 20건' 자동 노출) 전부 양호. **모바일(390): resize_window 뷰포트 미반영(innerWidth 1920·mq480 false, 기존 한계 동일) → same-origin iframe 390px 합성으로 실측(mq true·innerW 386·docW 371 오버플로 0).** 인벤(https://www.inven.co.kr/webzine/calendar/) 데스크 1440 교차 — 히어로 리뷰 배너·핫카드 카운트다운(06:18:53:48)·주간 TOP10(▲▼NEW)·행별 타입배지/국기/태그칩/액션버튼에 더해 **우하단 플로팅 '맨 위로' 원형 버튼 상시 제공** 확인. 이번 사이클은 직전 사이클들이 미점검한 **day-detail 패널(캘린더 셀 클릭 하단 패널) + 푸터 + 플로팅 유틸** 표면 집중 — 큐(related-dday·헤더 듀얼 radial·상세 액션 pill·.game-detail 모바일)/IDEAS(핫카드·HeroStrip warm 좌띠·Home 모바일 패딩·리스트 날짜 요일색·image_url 배너 등)와 중복 없는 신규만. a11y/시맨틱/리팩토링 0건(외형 모드).
 
@@ -456,34 +487,3 @@ _(오래된 37 개 항목은 archive/DESIGN_NOTES_2026-05.md로 이동됨)_
 
 ### 현재 양호 (트집 X)
 캘린더 기본 뷰·헤더 좌측정렬 컴팩트·날짜 패널 컴팩트 인라인 행·통계줄 29=드롭다운 29·카테고리 색 체계·모달 페이드·푸터 운영자정보·로딩 fallback 가드 모두 정상. 기존 '높음' 미반영 건(헤더 로고화·날짜셀 auto-scroll·키보드 접근·sticky 그룹헤더·선택셀 위계·날짜미정 D-day·통계줄 클릭필터 등)은 TODO/IDEAS 큐에 이미 있어 중복 등록 안 함 — 픽업 대기.
-
----
-
-## [2026-05-29 13:02] [디자이너] — 라이브 실측: 복구 후 정상 확인 + 리스트/패널 스캔 폴리시
-실측: https://gcalen.com/ Chrome 데스크톱(1516px) — 캘린더/리스트/날짜클릭 패널/검색/상세 모달 전부 정상 렌더, 콘솔 에러 0건. 개발자 12:30 헤더 좌측정렬·컴팩트화 라이브 반영 확인(캘린더 상향). 검색 → "2건 일치" 피드백·드롭다운 "전체(2)" 동기 정상. 모바일 뷰포트는 이번에도 resize가 렌더에 미반영 → styles.css 병행. 아래는 기존 노트/IDEAS에 없던 신규 관찰 항목만 등록(이미 등록된 auto-scroll·모바일라벨·날짜미정 D-day·통계줄클릭·헤더로고화·기본뷰캘린더·선택셀위계 등은 중복 안 함).
-
-### 발견한 문제 / 개선점 (신규)
-1. **긴 리스트/날짜 패널 스크롤 시 날짜 그룹 헤더가 사라져 "지금 보는 날짜" 맥락 상실** — 우선순위: 보통
-   - 어디서: 리스트 뷰 + 날짜 클릭 패널. 29건(패널은 "이후 출시 25건")을 스크롤하면 `2026.06.18 (목)` 같은 날짜 그룹 헤더(`.date-group-header`)가 위로 떠내려가 사라짐. 화면 중간에서는 현재 행들이 어느 날짜 소속인지 알 수 없음(게임마다 D-day 배지는 있으나 절대 날짜는 재구성 필요).
-   - 왜 문제: 날짜 기반 캘린더인데 정작 긴 목록을 훑을 때 날짜 컨텍스트가 끊겨 스캔성이 떨어짐.
-   - 개선: `.date-group-header`에 `position:sticky; top:0`(+ 불투명 배경 `--bg`·약간의 z-index)를 주어 해당 그룹을 훑는 동안 날짜가 상단에 고정되게. 리스트 뷰·날짜 패널 공통 적용(모바일에서 특히 효과 큼).
-
-2. **D-day 배지 색이 임박(D-2)·원거리(D-217) 구분 없이 동일 → 긴급도 시각 신호 없음** — 우선순위: 낮음
-   - 어디서: 날짜 패널 + 리스트 행 우측 D-day 배지. D-2, D-6, D-21, D-171, D-217이 전부 같은 amber/주황 톤 → "임박 게임"과 "먼 게임"이 시각적으로 구분 안 됨.
-   - 왜 문제: 캘린더의 핵심 가치는 "곧 나올 게임"인데 리스트에서 그게 눈에 안 띔. 캘린더 셀은 .day-soon(7일 내) 강조가 있지만 리스트/패널 배지에는 그 구분이 없음.
-   - 개선: D-day 근접도로 배지 색 단계화 — 예) ≤7일 amber(기존 임박 톤 재사용), ≤30일 중립 텍스트, >30일 흐린 톤(--text-dim). 색만이 아니라 ≤7일은 굵게 등 보조 단서 함께.
-
-3. **리스트 뷰 카드 내부의 출시일이 날짜그룹 헤더와 중복 표시 + 링크처럼 보이는 파란 스타일(클릭 어포던스 혼동)** — 우선순위: 낮음
-   - 어디서: 리스트 뷰 카드. 카드 위에 날짜그룹 헤더 `2026.06.03 (수)`가 있는데, 카드 안에 또 `🗓 2026.06.03 (수)`가 파란·링크처럼 반복 표시됨. 그룹 헤더가 이미 날짜를 명시하므로 중복.
-   - 왜 문제: (1) 동일 정보 중복으로 시각 노이즈. (2) 카드 전체가 클릭=모달인데 그 안에 파란 "링크처럼" 보이는 날짜가 있어 클릭 대상 어포던스가 혼동.
-   - 개선: 카드 내 날짜 줄을 제거하거나, 날짜 대신 "출시 시각/플랫폼 출시 메모" 같은 비중복 정보로 교체(날짜 출처는 그룹 헤더로 일원화). 링크가 아니면 파란 링크 스타일 제거(메타 텍스트 톤으로).
-
-4. **검색어 입력 시 컨트롤 바가 2줄로 reflow되며 퀵칩(이번주/다음주/위시리스트)이 우측 단독 행으로 분리 → 레이아웃 점프/정렬 불균형** — 우선순위: 낮음
-   - 어디서: 검색창. 검색어가 비었을 때는 검색+드롭다운+퀵칩이 한 줄(1516px)이다가, 검색어를 치면(✕ 버튼·"N건 일치" 추가) 퀵칩이 두 번째 줄로 내려가 우측 단독 정렬됨. 필터 바가 상태에 따라 정렬/높이가 튀며 화면이 점프.
-   - 개선: 컨트롤 컨테이너의 wrap 정책 고정 — 퀵칩이 줄바꿈될 때도 좌측 정렬 유지하거나, 검색 상태와 무관하게 항상 동일 그리드 레이아웃으로 고정해 점프 제거. (개발자: 1516px에서도 reflow되는지 재현 확인 권장.)
-
-### 현재 양호 (트집 X)
-헤더 좌측정렬·컴팩트화(개발자 12:30) 라이브 반영 확인. 날짜 패널 한 줄 컴팩트 행·인라인 확장·검색 피드백·통계줄 29=드롭다운 29 일치·모달 페이드·푸터 운영자정보·로딩 fallback 가드 모두 정상. 기존 "높음" 미반영 건(헤더 로고화·기본뷰 캘린더 고정·auto-scroll·날짜미정 D-day·통계줄 클릭필터·선택셀 위계)은 TODO/IDEAS 큐에 이미 있어 중복 등록 안 함 — 픽업 대기.
-
----
-

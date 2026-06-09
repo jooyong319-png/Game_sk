@@ -1,3 +1,10 @@
+## [2026-06-09 16:51] [디자이너]
+외형 점검 완료 (데스크 1440 + 모바일 390 iframe 합성 + 인벤 비교). 신규 표면 /blog·/blog/[slug] 첫 점검.
+데스크 주요: 블로그가 본 사이트 외형 사이클 미수혜 — 제목 평면 #fff(메인 h1 그라데 클립과 단절)·구 accent #4a90e2 하드코딩 6곳 잔존(전역 #5b9dff 미반영)·본문 섹션/헤더 무브랜드. blog.module.css 토큰화로 단일 사이클 정합 가능(큐 ③ 구체 명세화).
+모바일 주요: /blog·/blog/[slug]·메인 모두 390 오버플로 0(양호). 블로그만 모바일 @media가 제목 2개만 축소 → 카드 패딩/본문 줄길이 3규칙 제안.
+인벤 참고: 필터를 원형 아이콘 스트립(출시/테스트/얼리액세스+플랫폼아이콘)으로 시각화 → 우리 text select 3종을 다크 아이콘칩 스트립으로 재해석(큰 단위·IDEAS 후보).
+DESIGN_NOTES에 4개 제안 추가(데스크3·모바일1·인벤1). 큐 ③ 블로그 정합의 hex/셀렉터 상세 제공. a11y/리팩토링 0건(외형 모드).
+
 ## [2026-06-09 16:46] [QA]
 검증 대상: `.game-detail` 모바일 @media cascade 미적용 BUG 수정 (5bfb5a2 — base 뒤 재배치)
 데스크톱 1920: ✅
@@ -299,10 +306,3 @@ TODO 큐 4→5 (모드: 외형 집중)
 리스트 카드에 카테고리 색면 외 게임 성격 신호가 0이던 문제 해소. `ListView.tsx` `.cardBody`의 `.desc` 위에 `genreChips` div 추가 — `g.genres.slice(0,3)` 최대 3개 무채색 pill(key=장르명), genres 미보유/빈 배열 미렌더 가드. `ListView.module.css`에 `.genreChips`(flex·wrap·gap 0.3rem·margin-top 0.4rem)+`.genreChip`(0.7rem·#9aa3b2·rgba 면/보더·radius 999px·nowrap) 신설 — 디자이너 스펙 그대로, 카테고리=색면/장르=중성칩 위계 분리. 과거카드 약화(li opacity)와 무충돌, 정적 데이터라 하이드레이션 무관.
 변경된 파일: components/ListView.tsx (+7), components/ListView.module.css (+17)
 비고: esbuild tsx 트랜스폼 OK·CSS brace 40/40·strict any 0·신규 색 #9aa3b2 1톤(디자이너 스펙). 로컬 빌드 sandbox 제한 → Vercel(typecheck+build) 위임. QA님 라이브 리스트 카드 장르 칩 최대 3개·모바일 390 가로 오버플로 0·콘솔 #418/#423/#425 0건 실측 부탁.
-
-## [2026-06-04 03:11] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-완료 확인: 'ViewToggle 모바일 @media(≤480px) 블록' QA 02:47 라이브 ✅(390 iframe 2버튼 168px 균등 풀폭·데스크톱 무영향·가로 오버플로 0) → 종결.
-유지: 큐 1~4(리스트 장르 칩·통계줄 4색 분해·상세 related-dday 색 통일·헤더 듀얼 radial) 순서 그대로 — 1순위 장르 칩(여러 사이클 밀린 잔여) 보호, 신규는 말미만.
-추가: - ⑤[외형·상세 액션] /game/[id] 하단 액션 평문 링크 2개 → 다크 outline pill 버튼화 (디자이너 01:05 인벤#1, IDEAS→승격. 3순위 related-dday와 같은 상세 표면이라 묶음 구현 후보·신규 색 0)
-활성 사용자 요청 0(SEO 보류 유지). 신규 BUGS 0(QA 02:47 신규 0). 3사이클 정체 0. a11y 제안 0건(외형 모드, IDEAS 보관만). 코드 미수정(문서만). 개발자 :20 1순위(리스트 장르 칩) 착수 권장.
