@@ -7,6 +7,7 @@ import { AdSlot } from '@/components/AdSlot';
 import { GoogleCalendarButton } from '@/components/GoogleCalendarButton';
 import { ViewCounter } from '@/components/ViewCounter';
 import { Comments } from '@/components/Comments';
+import { PageShell } from '@/components/PageShell';
 
 interface Props {
   params: { id: string };
@@ -70,7 +71,7 @@ export default async function GamePage({ params }: Props) {
   };
 
   return (
-    <>
+    <PageShell>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }}
@@ -109,6 +110,6 @@ export default async function GamePage({ params }: Props) {
       <Comments gameId={game.id} />
       <AdSlot slot="detail-bottom" size="mid" />
       </div>
-    </>
+    </PageShell>
   );
 }

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug, markdownToHtml, formatPostDate } from '@/lib/blog';
 import { AdSlot } from '@/components/AdSlot';
+import { PageShell } from '@/components/PageShell';
 import styles from '../blog.module.css';
 
 interface Props { params: { slug: string }; }
@@ -50,7 +51,7 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   return (
-    <>
+    <PageShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }} />
       <article className={styles.post}>
         <Link href="/blog" className={styles.backLink}>← 블로그 목록으로</Link>
@@ -67,6 +68,6 @@ export default async function BlogPostPage({ params }: Props) {
         <div className={styles.postBody} dangerouslySetInnerHTML={{ __html: html }} />
       </article>
       <AdSlot slot="blog-post-bottom" size="mid" />
-    </>
+    </PageShell>
   );
 }

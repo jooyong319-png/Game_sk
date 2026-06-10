@@ -1,6 +1,7 @@
 import { CATEGORY_META, type Game, type Category } from '@/lib/types';
 import { formatKoreanDate } from '@/lib/utils';
 import { AdSlot } from './AdSlot';
+import { PageShell } from './PageShell';
 
 interface SeoLandingProps {
   h1: string;
@@ -25,7 +26,7 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
   };
 
   return (
-    <>
+    <PageShell>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
@@ -53,14 +54,6 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
         </ul>
       </section>
       <AdSlot slot="landing-bottom" size="mid" />
-      <nav className="seo-nav" aria-label="카테고리 바로가기">
-        <a href="/upcoming-games">신규 게임 출시 예정 일정</a>
-        <a href="/new-servers">신규 서버 오픈 일정</a>
-        <a href="/mobile-games">국내 신규 모바일 게임 출시 일정</a>
-        <a href="/pc-console-games">신규 PC·콘솔 게임 출시 일정</a>
-        <a href="/global-games">글로벌 대작 게임 출시 일정</a>
-        <a href="/">전체 캘린더</a>
-      </nav>
-    </>
+      </PageShell>
   );
 }

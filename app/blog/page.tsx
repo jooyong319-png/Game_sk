@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllPosts, formatPostDate } from '@/lib/blog';
 import { AdSlot } from '@/components/AdSlot';
+import { PageShell } from '@/components/PageShell';
 import styles from './blog.module.css';
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export default async function BlogIndexPage() {
   const posts = await getAllPosts();
 
   return (
-    <>
+    <PageShell>
       <section className={styles.indexSection}>
         <header className={styles.header}>
           <h2 className={styles.title}>📰 블로그</h2>
@@ -52,6 +53,6 @@ export default async function BlogIndexPage() {
         )}
       </section>
       <AdSlot slot="blog-index-bottom" size="mid" />
-    </>
+    </PageShell>
   );
 }
