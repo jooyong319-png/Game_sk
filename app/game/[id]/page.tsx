@@ -6,6 +6,7 @@ import { calcDayDiff, formatShortDate } from '@/lib/utils';
 import { AdSlot } from '@/components/AdSlot';
 import { GoogleCalendarButton } from '@/components/GoogleCalendarButton';
 import { ViewCounter } from '@/components/ViewCounter';
+import { Comments } from '@/components/Comments';
 
 interface Props {
   params: { id: string };
@@ -54,22 +55,6 @@ export default async function GamePage({ params }: Props) {
     ? 'far'
     : diff === 0 ? 'today' : diff > 0 && diff <= 7 ? 'soon' : 'far';
 
-  // 같은 시기(출시일 ±2주) 출시 게임 — 자기 제외, 가까운 순 최대 6개 (빌드타임)
-  const allGames = await getAllGames();
-  const targetTime = new Date(game.release_date).getTime();
-  const WINDOW_MS = 14 * 24 * 60 * 60 * 1000;
-  const related = allGames
-    .filter(
-      g =>
-        g.id !== game.id &&
-        Math.abs(new Date(g.release_date).getTime() - targetTime) <= WINDOW_MS
-    )
-    .sort(
-      (a, b) =>
-        Math.abs(new Date(a.release_date).getTime() - targetTime) -
-        Math.abs(new Date(b.release_date).getTime() - targetTime)
-    )
-    .slice(0, 6);
 
   const jsonld = {
     '@context': 'https://schema.org',
@@ -121,32 +106,7 @@ export default async function GamePage({ params }: Props) {
           )}
         </div>
       </article>
-      {related.length > 0 && (
-        <section className="detail-related">
-          <h3>같은 시기 출시</h3>
-          <div className="related-grid">
-            {related.map(g => {
-              const rDiff = calcDayDiff(g.release_date);
-              const rdText = g.release_date_approx
-                ? '(예정)'
-                : rDiff < 0 ? '출시됨' : rDiff === 0 ? 'D-DAY' : `D-${rDiff}`;
-              const rdStage = rDiff === 0 ? 'today' : rDiff > 0 && rDiff <= 7 ? 'soon' : 'far';
-              return (
-                <a
-                  key={g.id}
-                  href={`/game/${g.id}`}
-                  className="related-card"
-                  style={{ borderLeft: `3px solid ${CATEGORY_META[g.category].color}` }}
-                >
-                  <span className="related-name">{g.name_ko}</span>
-                  <span className="related-date">{formatShortDate(g.release_date)}</span>
-                  <span className={`related-dday dday-${rdStage}`}>{rdText}</span>
-                </a>
-              );
-            })}
-          </div>
-        </section>
-      )}
+      <Comments gameId={game.id} />
       <AdSlot slot="detail-bottom" size="mid" />
       </div>
     </>
