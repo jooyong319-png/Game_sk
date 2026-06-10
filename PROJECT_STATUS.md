@@ -178,27 +178,29 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-10 13:40 (기획자): **§H(운영자 확정 "B로 가자") 미구현분 큐잉 — 큐 1→4.** 직전 12:30 마일스톤 종결이 §F 3컬럼·정리·테마는 정확히 반영했으나, **운영자 2026-06-10 09:30~09:35 추가 지시 §H(컬럼 패널 B 색구분·하단 광고 제거·모바일 1컬럼 스택)는 '결정 확정'만 됐고 코드 미반영**임을 확인(grep: Home.module.css `.phead/.pbody` 패널 0·페이지 bg `#eceef1` 0·`app/page.tsx`+`SeoLanding.tsx` 하단 AdSlot 잔존·CategoryRail 모바일 칩=가로 *랩*(스크롤 아님)). 디자이너 09:35도 "기획자 TODO화 시 §H 1·2·3 묶음 권장"으로 명시 위임. §H는 운영자 직접 지시 + 구조 정리(declutter 정합)라 '장식 추가' 보류 대상이 **아님** → 외형 모드 최우선 큐잉. 개발자 큐 0건(13:20 heartbeat 대기) 해소. ※USER_REQUESTS ⑦은 'B 확정'을 완료로 기재했으나 구현 미완 — 본 큐로 추적(USER_REQUESTS는 기획자 편집 대상 아님, 문서상 불일치는 본 노트로 정정).
+> 갱신 2026-06-10 14:11 (기획자): **운영자 직접 푸시(Sync Bot 4커밋·13:51~14:08) 반영 — 큐 유지 4건, §H-1·§H-3 스펙만 정합 갱신.** 운영자가 직접 (a)`e77c305` AGENTS.md 미니멀 리셋 모드 추가 (b)`7b5bd6f` 상세 `같은 시기 출시`→Supabase 댓글 시스템(`components/Comments.tsx`/`.module.css` 신규·`app/game/[id]/page.tsx` −42) (c)`b6134f0` 3컬럼 비율을 ssalmuk.com 톤으로(`Home.module.css`: max 1200→**1400**·좌레일 160→**220**·우레일 190→**320**·gap 1.6rem·우레일 sticky·**≤1100 우레일 숨김**·**≤760 1컬럼 스택**) 커밋. 재검(grep, 최신 체크아웃 b6134f0): §H-1 패널 B 마커 `.phead/.pbody` 0·`#eceef1` 0 / §H-2 `main-mid`·`landing-bottom` 잔존 / §H-3 CategoryRail `flex-wrap:wrap`(가로 스크롤 아님)·ViewToggle 기본 `calendar` → **세 §H 전부 여전히 미구현, 큐 유효**. 단 운영자가 **3컬럼 비율/브레이크포인트를 직접 확정**했으므로 §H-1은 그리드 컬럼값 재지정 금지(패널 래핑+라벨헤더+#eceef1+warm 띠만), §H-3 브레이크포인트는 ≤900→**≤1100(우레일 숨김)/≤760(스택)** 로 정정. §H-4 QA에 신규 댓글 시스템+와이드 비율 검증 추가. ※댓글 시스템이 `같은 시기 출시`를 대체 → IDEAS의 `.related-card`/`같은 시기 출시`/`.related-dday` 항목 5건은 표면 소멸로 **무효**(로그청소 봇 정리 대상으로 위임).
 
 1. **[운영자·구조·외형·큰단위·높음] §H-1 데스크톱 3컬럼 "패널 B" 색구분** (개발자, `components/Home.module.css` + `components/Home.tsx`)
    - 운영자 확정(09:35 "B로 가자"): A안(3색 틴트) 반려. 세 컬럼을 **동일 near-white 패널**로 구획, 색은 의미부에만.
    - 구현: 각 컬럼(좌 카테고리·중 본문·우 출시임박)을 패널 div로 래핑 → `.panel{ background:var(--bg-elev); border:1px solid var(--border); border-radius:10px; padding:0 }` + 컬럼 헤더 `.phead`(라벨 '카테고리'/'캘린더'/'출시 임박' + 하단 1px 보더 `var(--border)`)와 바디 `.pbody`(padding 1rem) 분리. 페이지 bg는 라이트 토큰 `--bg` `#f6f7f9`→`#eceef1`로 살짝 진하게(패널 분리 대비). **다크모드는 토큰 자동 전환**(헤더 bg=`--bg-elev`, 하드코딩 금지).
    - **warm은 '출시 임박' 컬럼 헤더 띠에만**: 우 패널 `.phead`에 좌측 `border-left:3px solid var(--accent-warm)` + 라벨색 `#c47a00`(라이트) / 토큰 warm(다크) + 헤더 하단보더 `#efe6d4`. 패널 바디는 흰색 유지. 좌·중 헤더는 중립.
    - 완료기준: 데스크 ≥900px 좌·중·우 3패널이 #eceef1 위 흰 카드로 분리·각 헤더 라벨·우 헤더만 warm 좌띠·라이트/다크 양 테마 정상·신규 색 0(토큰/지정 hex만)·가로 오버플로 0.
+   - ⚠️**운영자 확정 비율 보존**(`b6134f0`): `.layout` 그리드 `220px minmax(0,1fr) 320px`·`.home` max 1400px·우레일 sticky·≤1100 우레일 숨김·≤760 스택 = **재지정 금지**. 이 셸 위에 패널 div 래핑 + `.phead`/`.pbody` + 페이지 bg `#eceef1`만 덧입힘.
 
 2. **[운영자·외형·높음] §H-2 하단 광고 제거 (메인·SEO 랜딩)** (개발자, `app/page.tsx` L35 `main-mid` + `components/SeoLanding.tsx` L55 `landing-bottom`)
    - 운영자 지시 "하단 광고 자리 빼고". 범위: `Home`(메인) 하단 `<AdSlot slot="main-mid" size="mid" />` + `SeoLanding` 하단 `<AdSlot slot="landing-bottom" size="mid" />` 2곳 제거. **blog/detail 하단(`blog-*-bottom`·`detail-bottom`)은 §H 명시 범위 밖 → 보존**(운영자 추가 지시 시 별도 큐). AdSlot 컴포넌트·상단 처리 무관(상단은 이전 사이클 전 표면 제거 완료).
    - 완료기준: 메인·랜딩 5라우트 하단 광고 슬롯 미렌더·미사용 import 0·blog/detail 하단 mid 유지·grep `main-mid`/`landing-bottom` 0건.
 
 3. **[운영자·모바일·구조·높음] §H-3 모바일 1컬럼 스택 마감** (개발자, `components/CategoryRail.module.css` + `components/Home.module.css` ≤900px + `components/Home.tsx`/`ViewToggle`)
-   - 운영자 "모바일도 수정". ≤900px 스택 순서 확정: 헤더(미니멀) → **카테고리 가로 스크롤 칩**(전체/모바일/PC·콘솔/글로벌/신서버, 점+라벨) → 검색+토글 → 캘린더 패널 → 출시임박 패널(warm 헤더). 좌/우 레일 그리드 해제.
+   - 운영자 "모바일도 수정". ≤760px 스택 순서 확정(운영자 `b6134f0` 브레이크포인트): 헤더(미니멀) → **카테고리 가로 스크롤 칩**(전체/모바일/PC·콘솔/글로벌/신서버, 점+라벨) → 검색+토글 → 캘린더 패널 → 출시임박 패널(warm 헤더). 좌/우 레일 그리드 해제(≤760 운영자 스택 셸 기반·order 좌→중→우).
    - 카테고리 칩: 현 모바일 '가로 *랩*'을 **가로 스크롤**로 — `.chips{ display:flex; flex-wrap:nowrap; overflow-x:auto; scroll-snap-type:x proximity }` + 엣지 페이드 `mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(+`-webkit-`), 칩 `scroll-snap-align:start`. 데스크 무영향.
-   - 디자이너 권고: **모바일 기본 뷰 = 리스트**(좁은 폭 캘린더 셀 과밀) — ViewToggle 초기값을 모바일(≤900px)에서 list로(캘린더 토글은 유지). mount 가드로 하이드레이션 안전(#418/#423/#425 이력).
+   - 디자이너 권고: **모바일 기본 뷰 = 리스트**(좁은 폭 캘린더 셀 과밀) — ViewToggle 초기값을 모바일(≤760px)에서 list로(캘린더 토글은 유지). mount 가드로 하이드레이션 안전(#418/#423/#425 이력).
    - 완료기준: 390px 실측 스택 순서 일치·카테고리 칩 가로 스크롤+엣지 페이드·모바일 진입 리스트 기본·가로 오버플로 0·콘솔 0·데스크 무영향.
 
 4. **[검수·코디네이션·보통] §H + 정리/§F/테마 전 표면 라이브 전수 검증** (QA, gcalen.com 메인·/game/[id]·/blog·/blog/[slug]·SEO 랜딩 5종)
    - §H 출고분: ① 데스크 3패널 B(흰 패널+헤더 라벨+우 헤더 warm 좌띠·#eceef1 페이지 bg) ② 메인·랜딩 하단 광고 미노출(blog/detail 하단 유지) ③ 모바일 스택 순서·카테고리 가로 스크롤 칩·리스트 기본.
    - 기존 마일스톤분: ④ 라이트 기본+다크 토글 무플래시·#4a90e2 잔재 0 ⑤ 그라데 1곳(h1)·헤더 radial 0·HeroStrip 글로우 0·상세 D-day warm 배지/스펙2열 ⑥ 콘솔 #418/#423/#425 0·가로 오버플로 0.
+   - **운영자 직접 푸시 추가 검증**: ⑦ `/game/[id]` 신규 Supabase 댓글 시스템(`Comments`) 정상 렌더·작성/표시·700px 중앙 정렬·`같은 시기 출시` 미잔존 ⑧ 데스크 와이드 비율(max 1400·좌 220·우 320·우레일 sticky)·≤1100 우레일 숨김·≤760 스택 정상.
    - 완료기준: 전 표면 ✅ → 보고(CHAT). 결함 시 BUGS 등재 후 기획자 큐잉.
 
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)

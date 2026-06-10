@@ -1,3 +1,11 @@
+## [2026-06-10 14:11] [기획자]
+TODO 큐 4 유지 (모드: 미니멀 리셋) — 운영자 직접 푸시(Sync Bot 4커밋·13:51~14:08) 반영, 신규 추가 0.
+운영자가 코드 직접 커밋: (a) AGENTS.md 미니멀 리셋 모드 추가 (b) 상세 `같은 시기 출시`→**Supabase 댓글 시스템**(Comments 신규) (c) 3컬럼 비율 ssalmuk.com 톤(max 1400·좌 220·우 320·우레일 sticky·≤1100 우레일 숨김·≤760 스택).
+재검(grep, 최신 b6134f0): §H-1 `.phead/.pbody`·`#eceef1` 0 / §H-2 `main-mid`·`landing-bottom` 잔존 / §H-3 CategoryRail `flex-wrap:wrap`·ViewToggle 기본 calendar → **세 §H 전부 미구현·큐 유효**.
+정합 갱신: §H-1=운영자 확정 비율 보존(그리드 재지정 금지, 패널 래핑+#eceef1+warm 띠만) / §H-3 브레이크포인트 ≤900→≤1100·≤760 정정 / §H-4 QA에 댓글 시스템·와이드 비율 검증 추가.
+댓글 시스템이 `같은 시기 출시` 대체 → IDEAS 관련 5건(`.related-card`/`.related-dday`) 표면 소멸로 무효 → 로그청소 위임.
+장식 추가 IDEAS(글로우/플로팅 등) '지저분' 정합 보류 유지. 확정 방향 위반: 없음.
+
 ## [2026-06-10 13:40] [기획자]
 TODO 큐 1→4 (모드: 외형 집중)
 운영자 확정 §H(09:30~09:35 "B로 가자") **미구현분 발견·큐잉** — 직전 12:30 마일스톤이 §F 3컬럼/정리/테마는 정확히 종결했으나 §H(컬럼 패널 B·하단광고·모바일 스택)는 '결정'만 됐고 코드 미반영(grep 확인: `.phead/.pbody` 0·`#eceef1` 0·하단 AdSlot 잔존·모바일 칩=가로 랩). 디자이너 09:35 위임("§H 1·2·3 TODO화 권장")대로 큐잉. 운영자 직접 지시 + 구조 정리라 '장식 추가 보류' 대상 아님 → 외형 최우선.
@@ -198,8 +206,3 @@ IDEAS·후보(그라데/글로우/플로팅 등 시각 *추가*)는 운영자 '�
 완료: **정리 Phase 3a 부분 출고 — 필터 3컬럼 + 통계 중립 + 캘린더 정보색 격하**(큐 1순위 §B-3·B-4·B-5). ①필터: 플랫폼 select·위시 버튼 제거하고 검색/카테고리/기간 3컬럼 그리드(≤480 1열)·컨트롤 38px 톤 통일(운영자 '3컬럼' 직접 지시). FilterState platform/wishlistOnly 필드는 보존해 Home 필터 로직 무변경. ②통계줄: 카테고리 글자색(4색) 제거→muted, 식별은 7px 점만. ③캘린더: 셀 tint+좌측 정보색 바 제거(카테고리는 우하단 점), today/선택 셀 링 warm→`--accent` 블루 단색 통일.
 변경된 파일: Filters.tsx/.module.css, Home.tsx/.module.css, CalendarView.module.css (5, +62/−93 순감). 신규 색 0·color-mix 0·esbuild OK·CSS brace 균형.
 비고: 묶음 큐였던 §A.3 '칩 단일언어'는 `category-tag`가 List/Modal/SEO 3곳서 `cat-bg-*` 채색으로 카테고리 식별 중이라 다컴포넌트 색면 전환(좌점 보전)이 필요 → 별도 사이클로 분리, 번호큐 #1 재등재(Phase 3b는 #2 유지)했습니다. 기획자님 확인 부탁. QA님 라이트/다크 양 테마 — 필터 3컬럼/모바일 1열·플랫폼·위시 바 제거·통계 점·캘린더 점 식별·today/선택 블루 링·가로 오버플로 0 실측 부탁.
-
-## [2026-06-09 18:47] [개발자]
-완료: **정리 Phase 2 — 과장식 전면 평면화**(큐 1순위). 시그니처 메인 h1 그라데 클립 1곳만 남기고 전부 제거. ①헤더 ::before 듀얼 radial 제거 ②HeroStrip 글로우/펄스/스케일/text-shadow/베이스 그라데 + 라이브 카운트다운(훅·setInterval) 제거(핫카드 2칸 구조 유지) ③ListView 배너 세로그라데→단색·45° 해치 제거·리본/카드 hover 글로우 box-shadow 제거 ④상세 인라인 radial 백드롭+상단 카테고리 바 제거. 일관성 차원에서 SeoLanding/블로그 타이틀 그라데 클립→평면 환원, 블로그 radial 백드롭·MonthTabs/ViewToggle active 그라데→단색도 정리.
-변경된 파일: globals.css, blog.module.css, HeroStrip.tsx/.module.css, ListView.module.css, MonthTabs.module.css, ViewToggle.module.css, game/[id]/page.tsx (총 8). 전역 radial-gradient 0건·accent-grad 소비 1곳(h1)·신규 색 0·esbuild OK·CSS brace 균형.
-비고: ⚠️기획자/디자이너님 — 큐 스코프엔 globals/HeroStrip/ListView/상세만 명시였으나, '그라데 1곳 원칙' 일관성 위해 SeoLanding·블로그 타이틀 클립 환원 + MonthTabs/ViewToggle active 그라데 단색화까지 확장했습니다(저위험 bg 치환). 제가 18:16 출고했던 카운트다운/글로우/그라데 클립은 본 Phase에서 정리 방향대로 환원 완료. 남은 큐: 1)Phase 3a 필터 3컬럼·칩 단일언어·정보색 중립 2)Phase 3b 상세 위계·스펙시트 2열. 디자이너 §E 내비 헤더는 다음 큐. QA님 라이트/다크 양 테마 실측 부탁.
