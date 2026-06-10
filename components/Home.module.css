@@ -1,7 +1,7 @@
 .home {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.2rem 1.5rem;
 }
 .stats {
   color: var(--text-faint);
@@ -11,10 +11,7 @@
   text-align: center;
 }
 .statsCat,
-.statsTotal {
-  white-space: nowrap;
-}
-/* 정리 §B-4: 카테고리 식별은 글자색 대신 muted 7px 점만 */
+.statsTotal { white-space: nowrap; }
 .statsDot {
   display: inline-block;
   width: 7px;
@@ -29,9 +26,7 @@
   font-weight: 400;
   margin: 0 0.5rem;
 }
-.statsTotal {
-  color: var(--text-faint);
-}
+.statsTotal { color: var(--text-faint); }
 .lastUpdated {
   text-align: center;
   color: var(--text-faint);
@@ -39,27 +34,39 @@
   margin: 0 0 0.5rem;
 }
 
-/* §F 데스크톱 3컬럼 셸 — 좌 카테고리 레일 · 중앙 본문 · 우 '출시 임박' 레일. */
+/* ─── 데스크톱 3컬럼 (쌀먹닷컴 스타일 비율) ─── */
 .layout {
   display: grid;
-  grid-template-columns: 160px 1fr 190px;
-  gap: 1.4rem;
+  grid-template-columns: 220px minmax(0, 1fr) 320px;
+  gap: 1.6rem;
   align-items: start;
 }
-/* 출시 임박 0건이면 우 레일 미렌더 → 2컬럼으로 축소(빈 트랙 방지) */
 .noRail {
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 220px minmax(0, 1fr);
 }
+
+/* 중앙 본문 */
 .main {
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
+
+/* 우 사이드바: sticky로 따라옴 */
 .rightRail {
   min-width: 0;
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
-/* 중앙 본문 상단 1행: 검색 input + 캘린더/리스트 토글 */
+.rightRail::-webkit-scrollbar { width: 6px; }
+.rightRail::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* 검색 + 토글 한 줄 */
 .topRow {
   display: flex;
   gap: 0.6rem;
@@ -68,31 +75,52 @@
 .topSearch {
   flex: 1 1 auto;
   min-width: 0;
-  height: 38px;
+  height: 40px;
   background: var(--bg-elev);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0 0.8rem;
-  font-size: 0.92rem;
+  border-radius: var(--radius-sm, 8px);
+  padding: 0 0.9rem;
+  font-size: 0.95rem;
 }
 .topSearch:focus-visible {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47, 111, 224, 0.12);
 }
-@media (max-width: 900px) {
+
+/* ─── 태블릿: 우 사이드바만 숨김 (2컬럼) ─── */
+@media (max-width: 1100px) {
   .layout {
-    grid-template-columns: 1fr;
-    gap: 0.9rem;
+    grid-template-columns: 200px minmax(0, 1fr);
   }
-  /* 모바일 스택 순서: 본문 → 출시 임박 → 카테고리(운영자 본문 우선) */
-  .main {
-    order: 1;
+  .noRail {
+    grid-template-columns: 200px minmax(0, 1fr);
   }
   .rightRail {
-    order: 2;
+    display: none;
   }
-  .layout > :first-child {
+}
+
+/* ─── 모바일: 1컬럼 스택 ─── */
+@media (max-width: 760px) {
+  .home {
+    padding: 0.8rem 1rem;
+  }
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .noRail {
+    grid-template-columns: 1fr;
+  }
+  /* 스택 순서: 좌 필터 → 중 본문 → 우 임박 */
+  .layout > :first-child { order: 1; }
+  .main { order: 2; }
+  .rightRail {
+    display: block;
     order: 3;
+    position: static;
+    max-height: none;
   }
 }
