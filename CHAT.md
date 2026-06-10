@@ -1,3 +1,10 @@
+## [2026-06-10 12:20] [개발자]
+완료: 없음 — 저장소 동기화 + 컨텍스트 점검 + 정리(declutter) 출고물 무결성 재검증. **번호 큐 비어있음.** 직전 11:33 사이클이 잔여 declutter 폴리시(본문 여백·범례 제거·통계 중립·고아 Filters 삭제)를 마지막으로 운영자 미니멀 리셋 지시(§F 3컬럼·§E 헤더·광고 제거·declutter 전량) 전량 출고 완료, 그 이후 기획자 신규 TODO 등재 0 → 구현 대상 부재.
+검증(이번 사이클): 폐기 #4a90e2 grep 0건(app/components/lib)·`size="top"` 광고 0건·site-header radial-gradient 0건·클라 컴포넌트의 `@/lib/games` import 0건·고아 `Filters.tsx` 삭제 유지·신규 `CategoryRail` 존재 → 정리 출고물 회귀 0.
+보류 사유: 정리(declutter) 모드 유지. IDEAS·'큐 소진 후 후보'는 대부분 시각요소 *추가*(그라데/글로우/플로팅)라 운영자 '지저분' 피드백과 상충 → 기획자 승인 전 무단 착수 안 함.
+변경된 파일: CHAT.md만(heartbeat 추가·가장 오래된 06-09 18:13 항목 1건 정리·30개 한계 유지). 코드 무수정.
+비고: **기획자님 — 큐 비어있음, 다음 방향 번호 큐 등재 부탁.** QA님 — 06-10 11:33 declutter 폴리시(본문 여백·캘린더 범례 미노출·좌레일 식별·통계 중립)·09:20 §F 3컬럼/우레일 라이브(라이트/다크·≤900 스택·오버플로0·콘솔 #418/#423/#425) 검증 대기.
+
 ## [2026-06-10 11:33] [개발자]
 완료: 큐 1순위(번호큐 마지막) '잔여 declutter 폴리시' 4항목 묶음 출고. ①본문 섹션 균일 여백 ②중복 캘린더 범례 제거 ③통계줄 중립 확인 ④고아 Filters 컴포넌트 삭제. → 운영자 declutter 지시 전량 출고, 번호 큐 소진.
 변경된 파일: Home.module.css(.main flex column gap 1.25rem·child margin 정리)·MonthTabs.module.css(.tabs margin 0 auto)·CalendarView.module.css(.view margin 0·legend 3규칙 제거)·CalendarView.tsx(범례 div 8줄 제거)·Home.tsx(FilterState import @/lib/types로)·lib/types.ts(FilterState 이전 +9) · 삭제 Filters.tsx/Filters.module.css
@@ -191,8 +198,3 @@
 완료: 큐 1·2순위 동시 출고(사용자 '최대한 많이 수정' 요청 반영, 블로그 정합까지 이번 세션 3건 연속). ①HeroStrip '출시 임박' 스트립의 최근접 1건을 `.hotCard`로 2칸 대형 승격 + 그 아래 라이브 HH:MM:SS 카운트다운(신설 useCountdown 훅, release_date 자정 KST 타깃, useState/useEffect mount 후에만 산출해 하이드레이션 #418/#423/#425 가드, 1초 setInterval). ②비블로그 off-brand #4a90e2 청산 — SeoLanding 5라우트 h2 `--accent-grad` 그라데 클립 + ViewCounter `.num` `var(--accent)` 토큰화.
 변경된 파일: components/HeroStrip.tsx(~72줄 재작성), components/HeroStrip.module.css(+18), app/globals.css(.seo-landing h2 그라데), components/ViewCounter.module.css(.num 1줄). 신규 색 0·CSS brace 41/41·80/80·4/4·esbuild tsx OK.
 비고: 외형 큐 1~3 모두 소진(블로그 정합·D-day 3단·핫카드·#4a90e2 청산) → 다음 사이클은 IDEAS 후보(BackToTop·푸터 hairline·--accent-grad 소비 등) 또는 기획자 신규 큐 대기. 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 핫카드 HH:MM:SS 1초 갱신·SSR 콘솔 0건·SEO 5라우트 h2 그라데·조회수 단일 블루 확인 부탁.
-
-## [2026-06-09 18:13] [개발자]
-완료: 큐 1순위 '블로그(index+post) 브랜드 외형 정합'. 06-08 추가된 /blog 표면이 본 사이트 외형 사이클(브랜드 블루 #5b9dff·--accent-grad 클립·헤더 radial)을 못 받아 off-brand #4a90e2·단색 카드로 떠 있던 톤 단절 해소. ①.postDate/카드면/보더/backLink/postBody a/pre border 전역 토큰화 ②제목(.title·.postH1) --accent-grad 클립 + .indexSection/.post 상단 radial 백드롭 ③.postCard:hover 그라데 보더(padding-box/border-box) ④.tag 칩 본 사이트 톤(#9aa3b2·--border).
-변경된 파일: app/blog/blog.module.css (단일, ~15곳 치환·신규 색 0). CSS brace 34/34·off-brand 리터럴 grep 0건.
-비고: tsx 무변경·CSS-only. 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 /blog·/blog/[slug] 데스크/모바일 제목 그라데·카드 hover 그라데 보더·상단 radial·태그칩 정합·빈 상태 무붕괴·콘솔 0 확인 부탁.
