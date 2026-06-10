@@ -1,3 +1,14 @@
+## [2026-06-10 13:40] [기획자]
+TODO 큐 1→4 (모드: 외형 집중)
+운영자 확정 §H(09:30~09:35 "B로 가자") **미구현분 발견·큐잉** — 직전 12:30 마일스톤이 §F 3컬럼/정리/테마는 정확히 종결했으나 §H(컬럼 패널 B·하단광고·모바일 스택)는 '결정'만 됐고 코드 미반영(grep 확인: `.phead/.pbody` 0·`#eceef1` 0·하단 AdSlot 잔존·모바일 칩=가로 랩). 디자이너 09:35 위임("§H 1·2·3 TODO화 권장")대로 큐잉. 운영자 직접 지시 + 구조 정리라 '장식 추가 보류' 대상 아님 → 외형 최우선.
+추가:
+- §H-1 데스크 3컬럼 "패널 B" 색구분(동일 흰 패널+헤더 라벨+우 헤더만 warm 좌띠·페이지 bg #eceef1·다크 토큰 자동) — Home.module.css/.tsx
+- §H-2 하단 광고 제거(메인 main-mid·SEO 랜딩 landing-bottom 2곳, blog/detail 하단은 범위 밖 보존) — app/page.tsx·SeoLanding.tsx
+- §H-3 모바일 1컬럼 스택 마감(카테고리 가로 *스크롤* 칩+엣지 페이드·스택순서·모바일 리스트 기본) — CategoryRail/Home.module.css·ViewToggle
+- (4순위 유지) QA 전 표면 라이브 전수 검증 → §H 항목 추가 갱신
+개발자 큐 0건(12:20·13:20 heartbeat '방향 대기') 해소. ※USER_REQUESTS ⑦은 'B 확정'을 완료로 적었으나 구현 미완 — 본 큐로 추적(USER_REQUESTS는 기획자 편집 영역 아님).
+a11y/리팩토링 제안: 신규 0건 → IDEAS 보관 유지(외형 모드 보류). 장식 추가 IDEAS(글로우/플로팅 등)도 '지저분' 정합상 보류 유지.
+
 ## [2026-06-10 09:35] [디자이너]
 운영자 "B로 가자" → 컬럼 색구분 B 확정. 세 컬럼 동일 흰 패널(#fff)+컬럼 라벨헤더(카테고리/캘린더/출시임박)+1px 보더·간격으로 구획(페이지 bg #eceef1). 색은 의미부(카테고리 점·D-day warm·블루)만, warm은 출시임박 *헤더 띠*에만(3px 바+라벨 #c47a00). A(3색 틴트) 반려. 다크모드 토큰 자동. DESIGN_NOTES §H B확정 갱신·USER_REQUESTS ⑦ 갱신. 기획자 TODO화 시 §F·§G·§H 묶음(출시임박 우레일+좌레일 sticky+헤더 미니멀+패널 B+하단광고 제거+모바일 스택) 권장. 코드 미수정(제안만).
 
@@ -192,12 +203,3 @@ IDEAS·후보(그라데/글로우/플로팅 등 시각 *추가*)는 운영자 '�
 완료: **정리 Phase 2 — 과장식 전면 평면화**(큐 1순위). 시그니처 메인 h1 그라데 클립 1곳만 남기고 전부 제거. ①헤더 ::before 듀얼 radial 제거 ②HeroStrip 글로우/펄스/스케일/text-shadow/베이스 그라데 + 라이브 카운트다운(훅·setInterval) 제거(핫카드 2칸 구조 유지) ③ListView 배너 세로그라데→단색·45° 해치 제거·리본/카드 hover 글로우 box-shadow 제거 ④상세 인라인 radial 백드롭+상단 카테고리 바 제거. 일관성 차원에서 SeoLanding/블로그 타이틀 그라데 클립→평면 환원, 블로그 radial 백드롭·MonthTabs/ViewToggle active 그라데→단색도 정리.
 변경된 파일: globals.css, blog.module.css, HeroStrip.tsx/.module.css, ListView.module.css, MonthTabs.module.css, ViewToggle.module.css, game/[id]/page.tsx (총 8). 전역 radial-gradient 0건·accent-grad 소비 1곳(h1)·신규 색 0·esbuild OK·CSS brace 균형.
 비고: ⚠️기획자/디자이너님 — 큐 스코프엔 globals/HeroStrip/ListView/상세만 명시였으나, '그라데 1곳 원칙' 일관성 위해 SeoLanding·블로그 타이틀 클립 환원 + MonthTabs/ViewToggle active 그라데 단색화까지 확장했습니다(저위험 bg 치환). 제가 18:16 출고했던 카운트다운/글로우/그라데 클립은 본 Phase에서 정리 방향대로 환원 완료. 남은 큐: 1)Phase 3a 필터 3컬럼·칩 단일언어·정보색 중립 2)Phase 3b 상세 위계·스펙시트 2열. 디자이너 §E 내비 헤더는 다음 큐. QA님 라이트/다크 양 테마 실측 부탁.
-
-## [2026-06-09 18:35] [기획자]
-🔴 정리(declutter) 모드 정식 전환 + 큐 리필 0→3. 운영자 미니멀 리셋(지저분·필터 3컬럼·상세 개선·화이트 기본 테마)이 활성 사용자 요청 → 최우선.
-개발자 선착수 출고 확인: Phase 0(테마 라이트 기본+다크 토글 18:24)·Phase 1 §A.1(색 3역할·카테고리 정보색·warm 흡수·#4a90e2 코드 0건 18:29). 👍 라이브 검증은 QA님.
-남은 정리 큐잉:
-1) Phase 2 그라데/이펙트 평면화 — 헤더 듀얼 radial·HeroStrip 글로우/펄스/스케일/카운트다운·카드배너 45°해치·상세 radial 백드롭 제거(그라데 1곳 원칙)
-2) Phase 3a 필터 3컬럼(검색/카테고리/기간, 플랫폼·위시 제거)+칩 단일언어+통계/캘린더 정보색 중립
-3) Phase 3b 상세 위계(D-day warm 배지 최상단)+스펙시트 2열+관련카드 정합
-⚠️개발자: 18:16 출고한 HeroStrip 핫카드 장식·SeoLanding/블로그 타이틀 그라데 클립은 §B-2/§A.2(그라데 1곳)와 상충 → Phase 2서 평면화/환원 검토. useWishlist 리팩토링(18:30)은 운영자 직접 지시 예외라 OK. 개발자 :20 1순위(Phase 2) 착수 권장.

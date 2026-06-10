@@ -178,13 +178,28 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 다음 TODO (우선순위 순)
 
-> 갱신 2026-06-10 12:30 (기획자): **정리(declutter)+§F 3컬럼 프로젝트 마일스톤 완료 — 큐 정리·경량화.** 운영자 미니멀 리셋 전 범위 출고 완료 확인(코드 grep): Phase 0 테마 라이트 기본+다크 토글 / Phase 1 색 3역할·#4a90e2 0건 / Phase 2 헤더 radial·HeroStrip 글로우/펄스/카운트다운·카드배너 해치·상세 백드롭 평면화 / Phase 3 칩 단일·통계 중립·상세 위계/스펙2열 / §F 데스크톱 3컬럼(좌 sticky 카테고리 레일·중 검색+토글+본문·우 출시임박 세로 레일·≤900px 1컬럼 스택 본문→임박→카테고리) / §E 헤더 미니멀 / 상단 광고 전 표면 제거. 개발자 회귀 0 재검증(12:20). **남은 declutter 작업 0** → 번호큐 경량(라이브 전수 검수 1건). IDEAS·후보는 대부분 시각요소 *추가*(그라데/글로우/플로팅 등)라 운영자 '지저분' 피드백과 상충 → 큐 진입 보류(운영자 신규 방향 대기). a11y/리팩토링도 보류 유지. 누적 갱신 prose 27건 정리(token 절약).
+> 갱신 2026-06-10 13:40 (기획자): **§H(운영자 확정 "B로 가자") 미구현분 큐잉 — 큐 1→4.** 직전 12:30 마일스톤 종결이 §F 3컬럼·정리·테마는 정확히 반영했으나, **운영자 2026-06-10 09:30~09:35 추가 지시 §H(컬럼 패널 B 색구분·하단 광고 제거·모바일 1컬럼 스택)는 '결정 확정'만 됐고 코드 미반영**임을 확인(grep: Home.module.css `.phead/.pbody` 패널 0·페이지 bg `#eceef1` 0·`app/page.tsx`+`SeoLanding.tsx` 하단 AdSlot 잔존·CategoryRail 모바일 칩=가로 *랩*(스크롤 아님)). 디자이너 09:35도 "기획자 TODO화 시 §H 1·2·3 묶음 권장"으로 명시 위임. §H는 운영자 직접 지시 + 구조 정리(declutter 정합)라 '장식 추가' 보류 대상이 **아님** → 외형 모드 최우선 큐잉. 개발자 큐 0건(13:20 heartbeat 대기) 해소. ※USER_REQUESTS ⑦은 'B 확정'을 완료로 기재했으나 구현 미완 — 본 큐로 추적(USER_REQUESTS는 기획자 편집 대상 아님, 문서상 불일치는 본 노트로 정정).
 
-1. **[검수·코디네이션·보통] 정리+§F 3컬럼+라이트 테마 전 표면 라이브 전수 검증 (마일스톤 종결)** (QA, 대상: gcalen.com 메인·/game/[id]·/blog·/blog/[slug]·SEO 랜딩 5종)
-   - 배경: 색·플랫화·3컬럼 구조·라이트 기본 테마라는 대규모 변경이 연속 착륙 → 전 표면 라이브 회귀 전수 점검으로 마일스톤 종결.
-   - 점검(라이브): ① 데스크 ≥900px 3컬럼(좌 sticky 레일 거터 없음·중 본문·우 출시임박 레일) / ≤900px 1컬럼 스택 순서(본문→임박→카테고리). ② 라이트 기본 진입·다크 토글 무플래시·양 테마 색 정상(#4a90e2 잔재 0·카테고리 정보색·warm 단일). ③ 그라데 1곳(메인 h1만)·헤더 radial 0·HeroStrip 글로우/펄스 0·카드배너 해치 0·상세 radial 백드롭 0. ④ 상세 D-day warm 배지 최상단·스펙 2열·관련카드 절제. ⑤ 상단 광고 미노출·하단 광고 정상. ⑥ 콘솔 하이드레이션(#418/#423/#425) 0·가로 오버플로 0.
-   - 완료기준: 위 6항 전 표면 ✅ → 마일스톤 종결 보고(CHAT). 결함 발견 시 BUGS 등재 후 기획자 큐잉.
+1. **[운영자·구조·외형·큰단위·높음] §H-1 데스크톱 3컬럼 "패널 B" 색구분** (개발자, `components/Home.module.css` + `components/Home.tsx`)
+   - 운영자 확정(09:35 "B로 가자"): A안(3색 틴트) 반려. 세 컬럼을 **동일 near-white 패널**로 구획, 색은 의미부에만.
+   - 구현: 각 컬럼(좌 카테고리·중 본문·우 출시임박)을 패널 div로 래핑 → `.panel{ background:var(--bg-elev); border:1px solid var(--border); border-radius:10px; padding:0 }` + 컬럼 헤더 `.phead`(라벨 '카테고리'/'캘린더'/'출시 임박' + 하단 1px 보더 `var(--border)`)와 바디 `.pbody`(padding 1rem) 분리. 페이지 bg는 라이트 토큰 `--bg` `#f6f7f9`→`#eceef1`로 살짝 진하게(패널 분리 대비). **다크모드는 토큰 자동 전환**(헤더 bg=`--bg-elev`, 하드코딩 금지).
+   - **warm은 '출시 임박' 컬럼 헤더 띠에만**: 우 패널 `.phead`에 좌측 `border-left:3px solid var(--accent-warm)` + 라벨색 `#c47a00`(라이트) / 토큰 warm(다크) + 헤더 하단보더 `#efe6d4`. 패널 바디는 흰색 유지. 좌·중 헤더는 중립.
+   - 완료기준: 데스크 ≥900px 좌·중·우 3패널이 #eceef1 위 흰 카드로 분리·각 헤더 라벨·우 헤더만 warm 좌띠·라이트/다크 양 테마 정상·신규 색 0(토큰/지정 hex만)·가로 오버플로 0.
 
+2. **[운영자·외형·높음] §H-2 하단 광고 제거 (메인·SEO 랜딩)** (개발자, `app/page.tsx` L35 `main-mid` + `components/SeoLanding.tsx` L55 `landing-bottom`)
+   - 운영자 지시 "하단 광고 자리 빼고". 범위: `Home`(메인) 하단 `<AdSlot slot="main-mid" size="mid" />` + `SeoLanding` 하단 `<AdSlot slot="landing-bottom" size="mid" />` 2곳 제거. **blog/detail 하단(`blog-*-bottom`·`detail-bottom`)은 §H 명시 범위 밖 → 보존**(운영자 추가 지시 시 별도 큐). AdSlot 컴포넌트·상단 처리 무관(상단은 이전 사이클 전 표면 제거 완료).
+   - 완료기준: 메인·랜딩 5라우트 하단 광고 슬롯 미렌더·미사용 import 0·blog/detail 하단 mid 유지·grep `main-mid`/`landing-bottom` 0건.
+
+3. **[운영자·모바일·구조·높음] §H-3 모바일 1컬럼 스택 마감** (개발자, `components/CategoryRail.module.css` + `components/Home.module.css` ≤900px + `components/Home.tsx`/`ViewToggle`)
+   - 운영자 "모바일도 수정". ≤900px 스택 순서 확정: 헤더(미니멀) → **카테고리 가로 스크롤 칩**(전체/모바일/PC·콘솔/글로벌/신서버, 점+라벨) → 검색+토글 → 캘린더 패널 → 출시임박 패널(warm 헤더). 좌/우 레일 그리드 해제.
+   - 카테고리 칩: 현 모바일 '가로 *랩*'을 **가로 스크롤**로 — `.chips{ display:flex; flex-wrap:nowrap; overflow-x:auto; scroll-snap-type:x proximity }` + 엣지 페이드 `mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)`(+`-webkit-`), 칩 `scroll-snap-align:start`. 데스크 무영향.
+   - 디자이너 권고: **모바일 기본 뷰 = 리스트**(좁은 폭 캘린더 셀 과밀) — ViewToggle 초기값을 모바일(≤900px)에서 list로(캘린더 토글은 유지). mount 가드로 하이드레이션 안전(#418/#423/#425 이력).
+   - 완료기준: 390px 실측 스택 순서 일치·카테고리 칩 가로 스크롤+엣지 페이드·모바일 진입 리스트 기본·가로 오버플로 0·콘솔 0·데스크 무영향.
+
+4. **[검수·코디네이션·보통] §H + 정리/§F/테마 전 표면 라이브 전수 검증** (QA, gcalen.com 메인·/game/[id]·/blog·/blog/[slug]·SEO 랜딩 5종)
+   - §H 출고분: ① 데스크 3패널 B(흰 패널+헤더 라벨+우 헤더 warm 좌띠·#eceef1 페이지 bg) ② 메인·랜딩 하단 광고 미노출(blog/detail 하단 유지) ③ 모바일 스택 순서·카테고리 가로 스크롤 칩·리스트 기본.
+   - 기존 마일스톤분: ④ 라이트 기본+다크 토글 무플래시·#4a90e2 잔재 0 ⑤ 그라데 1곳(h1)·헤더 radial 0·HeroStrip 글로우 0·상세 D-day warm 배지/스펙2열 ⑥ 콘솔 #418/#423/#425 0·가로 오버플로 0.
+   - 완료기준: 전 표면 ✅ → 보고(CHAT). 결함 시 BUGS 등재 후 기획자 큐잉.
 
 ### (큐 소진 후 후보, IDEAS에서 — 외형 모드 유지)
 > 2026-06-04 07:13 갱신: 핫카드+카운트다운은 큐 5순위로 승격(헤더 듀얼 radial 종결로 큐 여유). 잔여 후보(외형 모드 유지): 디자이너 06-04 05:07 잔여 2건 — [보통] BackToTop 다크 글래스 원형 플로팅(신규 `components/BackToTop`, scrollY>600 표시·mount 가드) / [보통] `.site-footer` 브랜드 그라데 hairline(::before linear-gradient 블루→퍼플, border-top 대체). 상세 스펙은 IDEAS·DESIGN_NOTES 06-04 05:07 참조.
@@ -311,6 +326,8 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 
 ## 최근 변경 로그
 
+- 2026-06-10 13:40 [기획자] **§H(운영자 "B로 가자" 확정) 미구현분 큐잉 — 큐 1→4.** 12:30 마일스톤이 §F/정리/테마는 종결했으나 §H(컬럼 패널 B·하단광고 제거·모바일 스택)는 결정만 되고 코드 미반영 확인(grep). 디자이너 09:35 위임대로 §H-1(패널 B)·§H-2(메인/랜딩 하단광고 제거)·§H-3(모바일 가로스크롤 칩+스택+리스트 기본) 큐잉 + QA 전수검증 4순위. 운영자 직접 지시+구조정리라 보류 대상 아님. 개발자 큐 0건 해소. 코드 미수정(문서만).
+
 - 2026-06-10 12:30 [기획자] **정리(declutter)+§F 3컬럼 마일스톤 완료 — 큐 경량화·prose 정리.** 운영자 미니멀 리셋 전 범위(Phase 0 테마·Phase 1 색·Phase 2 평면화·Phase 3 칩/통계/상세·§F 3컬럼·§E 헤더 미니멀·상단 광고 제거) 출고 완료·회귀 0 확인. 좌 레일 sticky·모바일 1컬럼 스택(본문→임박→카테고리)·상세 D-day 배지/스펙2열 코드 확인. 남은 declutter 0 → 번호큐를 라이브 전수 검수 1건으로 경량화. 장식 추가 IDEAS는 운영자 '지저분' 피드백과 상충 → 보류(신규 방향 대기). 다음 TODO 누적 갱신 prose 27건 정리(token 절약). 코드 미수정(문서만).
 
 - 2026-06-10 09:20 [개발자] **§F 좌측 카테고리 레일 + 2컬럼 레이아웃 셸 출고** (큐 1순위, 큐 3→2): 신규 `CategoryRail.tsx`/`.module.css`(검색 input·카테고리 5행 정보색점+카운트+활성·기간 select, 가로 `Filters` 바 흡수) + `Home.tsx` `.layout` 그리드 재구성·`railCounts` useMemo(통계줄 카운트 일치) + `Home.module.css` `.layout`(160px 1fr·≤900 1컬럼 스택, 본문 order 우선). 직전 8사이클 '큐 비어있음' 오판 정정(기획자 18:50 §F 리필분 누락). 우측 출시임박 레일은 차기 TODO. 4파일·strict any 0·신규 색 0·brace Home 13/13·Rail 18/18·div 3/3. Vercel 위임, QA 양테마 검증 대기.
@@ -332,5 +349,3 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 2026-06-09 [기획자] TODO 큐 3→4 (모드: 외형 집중, 큰 단위) + 파이프라인 재가동 확인. 개발자가 QA 06-04 07:48 BUG('.game-detail 모바일 @media 미적용') 해소(5bfb5a2, base 뒤 재배치·QA 검증 대기) → BUGS 마킹. 06-04 휴면 사이 외부 추가 2건 확인: ①블로그 섹션(`app/blog/`) ②Supabase 게임별 조회수 카운터(RLS). 신규 3순위 '블로그 신규 표면 브랜드 외형 정합'(off-brand #4a90e2→`--accent`·`--accent-grad`·헤더 radial·태그칩, 신규 색 0). 기존 외형 3건(day패널 D-day 3단·day패널 모바일 3규칙·HeroStrip 핫카드) 1·2·4순위 유지. 활성 사용자 요청 0(SEO 보류)·a11y/리팩토링 0건(IDEAS 보관). 코드 미수정(문서만).
 - 2026-06-09 16:40 [개발자] QA 06-04 07:48 등록 BUG 해소(파이프라인 06-04 이후 휴면→재가동 첫 사이클). `.game-detail` 모바일 @media(≤480px) 오버라이드가 상단 블록(L68)에 있어 base(L104+) 후행 동일특이도에 밀려 미적용이던 cascade 버그를, 모바일 규칙을 base 직후 신규 @media 블록으로 재배치해 수정 + `.detail-actions` 버튼 모바일 풀폭 보강. globals.css +6/−2·brace 80/80·신규 색 0·CSS-only. Vercel 위임. QA 라이브 390px 검증 대기.
 - 2026-06-04 07:13 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). '헤더 듀얼 브랜드 radial' QA 06:47 라이브 ✅ 종결 확인. 큐 1~4 순서 유지(1·2 상세 표면 묶음, 3·4 CalendarView 묶음). ⑤ HeroStrip 핫카드+라이브 카운트다운 후보→큐 승격. 활성 사용자 요청 0·신규 BUGS 0. 코드 미수정(문서만).
-- 2026-06-04 06:29 [개발자] 큐 1순위 '[외형·헤더] .site-header::before 단일 블루 → 듀얼 브랜드 radial(블루+퍼플)' 구현 완료 → 완료한 기능 이동, 큐 5→4. `app/globals.css` ::before background 1선언 교체(좌상 블루 0.12·우상 퍼플 0.10, 기획자 스펙 그대로). 신규 색 0·CSS-only·brace 73/73. 잔여 큐 1~4: 상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약·dayPanel 모바일 3규칙. Vercel 위임. QA 라이브 검증 대기.
-- 2026-06-04 06:12 [기획자] TODO 큐 4→5 (모드: 외형 집중, 큰 단위). 'related-dday 3단 색 규약 통일' QA 05:48 라이브 ✅ 종결. 큐 1~4 유지(헤더 듀얼 radial·상세 액션 outline pill·.game-detail 모바일 블록·day패널 D-day 3단 규약), 신규 ⑤ 'day-detail 패널 모바일 @media(≤480px) 3규칙'(디자이너 05:07 모바일#1 IDEAS→승격, ④와 같은 CalendarView 표면 묶음 후보). 디자이너 잔여 2건(BackToTop·푸터 hairline) IDEAS 보관. 활성 사용자 요청 0(SEO 보류)·신규 BUGS 0. 코드 미수정(문서만).
