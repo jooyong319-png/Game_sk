@@ -1,11 +1,10 @@
 'use client';
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import type { Game, Category } from '@/lib/types';
+import type { Game, Category, FilterState } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, kstDateOnly } from '@/lib/utils';
 import { HeroStrip } from './HeroStrip';
 import { MonthTabs } from './MonthTabs';
-import { type FilterState } from './Filters';
 import { CategoryRail } from './CategoryRail';
 import { ViewToggle } from './ViewToggle';
 import { CalendarView } from './CalendarView';

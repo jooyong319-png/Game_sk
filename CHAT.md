@@ -1,3 +1,8 @@
+## [2026-06-10 11:33] [개발자]
+완료: 큐 1순위(번호큐 마지막) '잔여 declutter 폴리시' 4항목 묶음 출고. ①본문 섹션 균일 여백 ②중복 캘린더 범례 제거 ③통계줄 중립 확인 ④고아 Filters 컴포넌트 삭제. → 운영자 declutter 지시 전량 출고, 번호 큐 소진.
+변경된 파일: Home.module.css(.main flex column gap 1.25rem·child margin 정리)·MonthTabs.module.css(.tabs margin 0 auto)·CalendarView.module.css(.view margin 0·legend 3규칙 제거)·CalendarView.tsx(범례 div 8줄 제거)·Home.tsx(FilterState import @/lib/types로)·lib/types.ts(FilterState 이전 +9) · 삭제 Filters.tsx/Filters.module.css
+비고: 좌 CategoryRail이 카테고리 점+라벨+카운트를 상시 노출 → 캘린더 상단 범례 완전 중복이라 제거(§B-5). 통계줄은 이미 §B-4 중립(텍스트 faint·점만)이라 무변경. Filters는 §F 3컬럼 이관 후 타입만 쓰이던 데드코드. strict any 0·신규 색 0·esbuild 4파일 OK·CSS brace 균형(19/7/64). 로컬 빌드 sandbox 권한 제한 → Vercel 위임. **번호 큐 비어있음 — 기획자 다음 방향 등재 부탁.** QA님 라이브(데스크 섹션 여백↑·캘린더 범례 미노출·좌레일 식별·통계 중립·라이트/다크·오버플로0·콘솔 #418/#423/#425) 검증 부탁.
+
 ## [2026-06-10 09:20] [개발자]
 완료: 큐 1순위 §F 우측 "출시 임박" 세로 레일 이관 + 중앙 검색+토글 1행 + 데스크톱 3컬럼 그리드(160/1fr/190) 완성. 디자이너 09:25가 운영자 "어색해"의 주범으로 지목한 **좌측 빈 흰 세로 거터**(3컬럼 좌측만 완성·우측 공백) 해소.
 변경된 파일: components/HeroStrip.tsx(전면 재작성 ~40줄·가로 배너→세로 레일 컴팩트 행, 장식 전량 제거)·HeroStrip.module.css(전면 재작성 ~75줄)·Home.tsx(+topRow 검색+토글·HeroStrip→rightRail aside·noRail 가드 ~+20/−6)·Home.module.css(.layout 3컬럼·.rightRail/.topRow/.topSearch·모바일 order 본문→임박→카테고리 +40)·CategoryRail.tsx(검색 input/prop 제거 −15)·CategoryRail.module.css(.search 제거 −14)·ViewToggle.module.css(.toggle margin 0 정렬)
@@ -191,9 +196,3 @@
 완료: 큐 1순위 '블로그(index+post) 브랜드 외형 정합'. 06-08 추가된 /blog 표면이 본 사이트 외형 사이클(브랜드 블루 #5b9dff·--accent-grad 클립·헤더 radial)을 못 받아 off-brand #4a90e2·단색 카드로 떠 있던 톤 단절 해소. ①.postDate/카드면/보더/backLink/postBody a/pre border 전역 토큰화 ②제목(.title·.postH1) --accent-grad 클립 + .indexSection/.post 상단 radial 백드롭 ③.postCard:hover 그라데 보더(padding-box/border-box) ④.tag 칩 본 사이트 톤(#9aa3b2·--border).
 변경된 파일: app/blog/blog.module.css (단일, ~15곳 치환·신규 색 0). CSS brace 34/34·off-brand 리터럴 grep 0건.
 비고: tsx 무변경·CSS-only. 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 /blog·/blog/[slug] 데스크/모바일 제목 그라데·카드 hover 그라데 보더·상단 radial·태그칩 정합·빈 상태 무붕괴·콘솔 0 확인 부탁.
-
-## [2026-06-09 17:40] [디자이너]
-🔴 운영자 라이브 피드백 → 모드 전환 '외형 추가' → '정리(declutter)'. "디자인 너무 지저분 / 검색·필터 굳이? / 게임 상세 페이지도 별로".
-대응: 지저분함 진단(한 화면 색 11개 의미중복·HeroStrip 카드 1개에 이펙트 7중첩·무여백 적층·칩 혼재) → 절제 시스템 4규칙(색 3역할 고정·그라데 1곳·중립 칩 1언어·여백 우선) 정의. 메인+상세 **정리 목업 2종 제시 → 운영자 '이 방향 확정·스펙 기록' 승인.**
-스펙 기록: DESIGN_NOTES 17:40에 hex/셀렉터/파일 전량 — 메인(헤더 단색·HeroStrip 글로우/펄스 제거·필터 3컬럼[검색/카테고리/기간, 플랫폼·위시 제거]·통계 중립·캘린더 정보색 격하·카드배너 해치/그라데 제거) + 상세(보라 라디얼 백드롭 제거·D-day 위계 최상단·ViewCounter #4a90e2→muted·스펙2열·관련카드 정보색). Phase 1(색 단일화+#4a90e2 청산)→2(플랫화)→3(밀도·칩·필터).
-운영자 '3컬럼' 지시 직접 반영(필터 제거 아님). USER_REQUESTS 활성 등재(처리 중). 기존 '추가' 큐(핫카드 카운트다운·필터 아이콘칩)는 정리와 상충 → 보류 권장. 신규 색 0. 코드 미수정(제안만). 기획자 TODO화 부탁.

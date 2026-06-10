@@ -30,6 +30,16 @@ export interface GamesData {
   games: Game[];
 }
 
+// 메인 필터 상태 (좌 CategoryRail + 검색바가 사용). §F 3컬럼 이관 후
+// 가로 Filters 바는 제거됐고, 타입만 단일 출처로 보존한다.
+export interface FilterState {
+  category: Category | null;
+  platform: string | null;
+  days: number;
+  search: string;
+  wishlistOnly: boolean;
+}
+
 // 카테고리별 표기/색/이모지 단일 출처
 export const CATEGORY_META: Record<Category, {
   label: string;

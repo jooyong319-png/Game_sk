@@ -1,5 +1,5 @@
 .view {
-  margin: 1rem 0;
+  margin: 0;
   background: var(--bg);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 14px;
@@ -34,18 +34,6 @@
   cursor: pointer;
 }
 .todayBtn:hover { background: rgba(91,157,255,0.22); color: var(--text); }
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: center;
-  margin-bottom: 0.8rem;
-  font-size: 0.8rem;
-  color: var(--text-faint);
-}
-.legendItem { display: flex; align-items: center; gap: 0.3rem; }
-.legendDot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
 
 /* ─── 주말 색 구분 (한국 달력 관습) ─── */
 .sun { color: #e57373; }

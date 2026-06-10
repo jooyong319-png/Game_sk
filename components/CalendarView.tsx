@@ -119,15 +119,6 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now }: Pro
         <button type="button" className={styles.todayBtn} onClick={today}>오늘로</button>
       </header>
 
-      <div className={styles.legend} aria-hidden>
-        {(['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'] as const).map(c => (
-          <span key={c} className={styles.legendItem}>
-            <span className={styles.legendDot} style={{ background: CATEGORY_META[c].color }} />
-            {CATEGORY_META[c].short}
-          </span>
-        ))}
-      </div>
-
       <div className={styles.grid}>
         {['일','월','화','수','목','금','토'].map((d, i) => (<div key={d} className={`${styles.dayHead} ${i === 0 ? styles.sun : i === 6 ? styles.sat : ''}`.trim()}>{d}</div>))}
         {cells.map((cell, i) => {
