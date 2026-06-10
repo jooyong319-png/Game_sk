@@ -42,9 +42,9 @@
 
 /* ─── 주말 색 구분 (한국 달력 관습) ─── */
 .sun { color: #e57373; }
-.sat { color: var(--accent); }
+.sat { color: #4a90e2; }
 .cellDate.sun { color: #e57373; }
-.cellDate.sat { color: var(--accent); }
+.cellDate.sat { color: #4a90e2; }
 /* 강조 셀 날짜는 흰색 유지 (소스 후행 override) */
 .cellSelected .cellDate { color: var(--text); }
 
@@ -68,7 +68,7 @@
 }
 /* 요일 헤더 주말 색 (2클래스 특이도로 후행 .dayHead{color:var(--text-faint)} override) */
 .dayHead.sun { color: #e57373; }
-.dayHead.sat { color: var(--accent); }
+.dayHead.sat { color: #4a90e2; }
 
 /* ─── Cell ─── */
 .cell {
