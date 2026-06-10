@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-10T09:15:00+09:00",
+  "last_updated": "2026-06-10T09:40:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1342,6 +1342,28 @@
       ],
       "image_url": null,
       "source_url": "https://about.ncsoft.com/news/article/lc_update_260527"
+    },
+    {
+      "id": "odin-server-skadi-20260624",
+      "name_ko": "오딘: 발할라 라이징 5주년 신규 서버 '스카디' 오픈",
+      "name_en": null,
+      "release_date": "2026-06-24",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "라이온하트 스튜디오",
+      "publisher": "카카오게임즈",
+      "description": "오딘: 발할라 라이징 서비스 5주년 기념 업데이트로 신규 서버 '스카디' 오픈. 신규 소서리스 전직 '알케미스트', '월드 거점 점령전' 동시 추가. 사전등록 6/23까지.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2437758"
     }
   ]
 }
