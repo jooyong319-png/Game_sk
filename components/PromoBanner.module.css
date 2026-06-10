@@ -7,9 +7,9 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
-/* calendar: 브랜드 블루 계열(기존 rgba(91,157,255) 톤 재사용) */
+/* calendar: 브랜드 그린 계열 */
 .calendar {
-  background: rgba(91, 157, 255, 0.10);
+  background: rgba(16, 185, 129, 0.10);
   border-left: 3px solid var(--accent);
 }
 /* update: warm(amber) 계열 */

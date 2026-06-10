@@ -34,6 +34,6 @@
 .active .icon {
   color: var(--accent);
   border-color: var(--accent);
-  background: rgba(91, 157, 255, 0.10);
+  background: rgba(16, 185, 129, 0.10);
 }
 .active .label { font-weight: 700; }

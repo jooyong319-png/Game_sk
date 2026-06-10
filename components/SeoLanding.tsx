@@ -1,4 +1,5 @@
-import { CATEGORY_META, type Game, type Category } from '@/lib/types';
+import type { CSSProperties } from 'react';
+import { CATEGORY_META, type Game } from '@/lib/types';
 import { formatKoreanDate } from '@/lib/utils';
 import { PageShell } from './PageShell';
 
@@ -36,17 +37,28 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
         <p className="seo-count">총 {games.length}개</p>
         <ul className="seo-list">
           {games.length === 0 ? (
-            <li>현재 등록된 항목이 없습니다.</li>
+            <li className="seo-empty">
+              <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg>
+              <span>아직 등록된 일정이 없어요.</span>
+            </li>
           ) : games.map(g => {
             const catLabel = CATEGORY_META[g.category]?.label ?? g.category;
             return (
-              <li key={g.id} className="seo-list-item">
-                <a href={`/game/${g.id}`}><strong>{g.name_ko}</strong></a>
-                <span className="seo-date">
-                  {formatKoreanDate(g.release_date)}{g.release_date_approx ? ' (예정)' : ''}
-                </span>
-                <span className={`category-tag cat-bg-${g.category}`}>{catLabel}</span>
-                {g.developer && <span className="seo-dev">{g.developer}</span>}
+              <li
+                key={g.id}
+                className="seo-list-item"
+                style={{ '--cat': CATEGORY_META[g.category]?.color } as CSSProperties}
+              >
+                <div className="seo-li-main">
+                  <span className={`category-tag cat-bg-${g.category}`}>{catLabel}</span>
+                  <a href={`/game/${g.id}`} className="seo-name">{g.name_ko}</a>
+                </div>
+                <div className="seo-li-meta">
+                  <span className="seo-date">
+                    {formatKoreanDate(g.release_date)}{g.release_date_approx ? ' (예정)' : ''}
+                  </span>
+                  {g.developer && <span className="seo-dev">· {g.developer}</span>}
+                </div>
               </li>
             );
           })}

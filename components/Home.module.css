@@ -65,7 +65,7 @@
 .topSearch:focus-visible {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(47, 111, 224, 0.12);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
 }
 /* 위시만 보기 토글 — 헤더에서 본문 상단행으로 이관(필터가 작동하는 화면에만 노출) */
 .wishToggle {

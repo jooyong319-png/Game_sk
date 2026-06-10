@@ -30,15 +30,15 @@
 }
 .navBtn:hover { border-color: var(--accent); }
 .todayBtn {
-  background: rgba(91,157,255,0.12);
-  border: 1px solid rgba(91,157,255,0.4);
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.4);
   color: var(--text);
   padding: 0.4rem 0.9rem;
   border-radius: 6px;
   font-size: 0.85rem;
   cursor: pointer;
 }
-.todayBtn:hover { background: rgba(91,157,255,0.22); color: var(--text); }
+.todayBtn:hover { background: rgba(16,185,129,0.22); color: var(--text); }
 
 /* ─── 주말 색 구분 (한국 달력 관습) ─── */
 .sun { color: #e57373; }
@@ -218,8 +218,8 @@
   transition: background 0.12s, border-color 0.12s;
 }
 .dayRow:hover {
-  background: rgba(91,157,255,0.08);
-  border-color: rgba(91,157,255,0.3);
+  background: rgba(16,185,129,0.08);
+  border-color: rgba(16,185,129,0.3);
 }
 .dayRowDate {
   color: var(--text-faint);
