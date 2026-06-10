@@ -1,3 +1,8 @@
+## [2026-06-10 09:20] [개발자]
+완료: §F 좌측 카테고리 레일 + 2컬럼 레이아웃 셸(큐 1순위, 큐 3→2). ⚠️직전 8사이클 '번호 큐 비어있음' 보고는 오판이었음 — 기획자 18:50 §F 3건(0→3) 리필분을 못 읽고 공회전. 이번에 1순위 정상 착수.
+변경된 파일: components/CategoryRail.tsx(신규 ~84줄)·CategoryRail.module.css(신규 ~102줄)·components/Home.tsx(+railCounts·.layout 재구성·Filters 바 제거 ~+35/−20)·Home.module.css(+24 .layout/.main/모바일)
+비고: 명세는 3트랙(150/1fr/190)이나 우측 '출시 임박' 레일은 현 1순위(차기 TODO) 작업이라 빈 트랙 방지 위해 1단계는 2트랙(160px 1fr)으로 출고 — 3트랙 확장+HeroStrip 우레일 이관은 차기. strict any 0·신규 색 0·brace 균형·@/lib/games 클라 import 0. **기획자님 — 큐 오판 정정했고 §F 2건(우레일 이관·잔여 declutter) 남음.** QA님 라이브(라이트/다크·데스크 좌 레일 점/카운트/활성/기간 동작·≤900 본문→레일 스택·가로 오버플로 0) 검증 부탁.
+
 ## [2026-06-10 09:15] [리서처]
 리서치 완료 (4개 카테고리)
 - 모바일 후보→통과 0→0, PC/콘솔 0→0, 글로벌 후보 일부 기존중복→0, 신규서버 후보 6→0
@@ -193,15 +198,3 @@
 완료: 큐 1·2순위 묶음 구현(같은 CalendarView 표면). ①캘린더 day-detail 패널 행 D-day를 단일 amber 한 톤 → 전역 3단 색 규약(D-DAY 오늘 #ff7a59 700 / 임박 D-1~7 amber #f5a623 / 그 외 #888)으로 통일 — HeroStrip 글로우카드·리스트 리본·상세 배지와 색 정합. ②모바일 @media(≤480px)에 패널 밀도 3규칙(.dayPanel/.dayRow/.dayRowDate) 추가 — 셀 게임명 숨김으로 패널이 모바일 1차 콘텐츠 표면인데 패딩 과대였던 행 폭 ~+20px 회수.
 변경된 파일: components/CalendarView.tsx (+1/−1), components/CalendarView.module.css (+4). 신규 색 0·CSS brace 67/67·esbuild tsx OK.
 비고: 로컬 빌드 sandbox 디스크 제한 → Vercel(typecheck+build) 위임. QA님 라이브 진입 직후 패널 D-DAY 행 주황 700·D-1~7 amber·그 외 #888 3단 + 모바일 390px 행 폭 회수·데스크 무회귀·콘솔 0 확인 부탁. (※이번 사이클 repo가 직전 세션 잔존 dir 권한문제로 fresh clone 후 작업)
-
-## [2026-06-09 17:12] [기획자]
-TODO 큐 4→5 (모드: 외형 집중)
-관찰: 직전(09:00) 큐 3→4 후 개발자가 `.game-detail` 모바일 @media BUG 해소(5bfb5a2) → QA 16:46 라이브 ✅ 종결(06-04 07:48 BUG 마감, BUGS 마킹). 디자이너 16:51·17:04 2사이클 신규 점검 — /blog 신규 표면 + 외형 사이클 미수혜 비블로그 표면(SeoLanding·ViewCounter) 폐기 구 accent #4a90e2 잔존 라이브 확인.
-추가:
-- ⑤ [외형·브랜드색 청산·높음] 비블로그 표면 #4a90e2 청산 — SeoLanding 5종 타이틀 그라데 클립(`.seo-landing h2`→`--accent-grad` 클립) + ViewCounter `.num` #4a90e2→`--accent`(디자이너 17:04 IDEAS→승격, 신규 색 0, 큐 ③ 블로그 정합과 묶음 후보)
-유지: ① day패널 D-day 3단 색 ② day패널 모바일 3규칙 ③ 블로그 브랜드 정합 ④ HeroStrip 핫카드+카운트다운 (①②는 CalendarView 묶음, ③⑤는 #4a90e2 청산 묶음 후보)
-개발 파이프라인 06-04~09 휴면 → 미착수 큐 3사이클 정체 아님(보호). 활성 사용자 요청 0(SEO 보류 — 안 건드림). 디자이너 a11y/리팩토링 0건 → IDEAS 보관(외형 모드).
-추가 지시(17:46): 라이트/다크 테마 토글 + **화이트 기본 톤**("리액트 기능 가능") → 다크 정체성 갱신. 색이 이미 :root 토큰화돼 있어 토큰 재정의+next-themes(defaultTheme=light)로 구현 가능. 다크 목업=다크 테마로 이관, 라이트 토큰값 제안(--bg #f6f7f9·--accent #2f6fe0 등). 인라인 하드코딩(#fff·#4a90e2·상세 백드롭) 토큰화 필수. DESIGN_NOTES §D + Phase 0 추가.
-추가(17:58): "헤더 만들어보자" → 미니멀/내비포함 2안 목업 → **내비 포함형 확정**(좌 워드마크+카테고리 랜딩 5 내비[/upcoming·/new-servers·/mobile·/pc-console·/global]+우 위시·테마토글, 활성 라우트 accent 언더라인, 태그라인 헤더서 제거, 모바일 내비 가로스크롤[MonthTabs 톤]). DESIGN_NOTES §E 추가·Phase 2 동반. 코드 미수정(제안만).
-추가(18:10): "웹 3컬럼 — 1컬럼 카테고리/2컬럼 본문/3컬럼 출시임박" 목업 → **3컬럼 확정 + 헤더 미니멀 확정**. 좌측 카테고리 레일(필터+기간)=가로 필터바(B-3) 대체, 중앙 캘린더 본문, 우측 출시임박 세로 레일(HeroStrip 이관). 헤더 내비(§E)는 카테고리 중복돼 미니멀(워드마크+위시·테마토글)로 갱신. 모바일 1컬럼 스택. DESIGN_NOTES §F 추가·§E 갱신·Phase L(구조). 코드 미수정(제안만).
-

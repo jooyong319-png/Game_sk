@@ -5,7 +5,8 @@ import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, kstDateOnly } from '@/lib/utils';
 import { HeroStrip } from './HeroStrip';
 import { MonthTabs } from './MonthTabs';
-import { Filters, type FilterState } from './Filters';
+import { type FilterState } from './Filters';
+import { CategoryRail } from './CategoryRail';
 import { ViewToggle } from './ViewToggle';
 import { CalendarView } from './CalendarView';
 import { ListView } from './ListView';
@@ -138,6 +139,34 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
     return counts;
   }, [visibleGames]);
 
+  // §F 좌측 레일 카테고리별 카운트 — 현재 모집단(검색/플랫폼/기간/위시·리스트뷰 하한
+  // 반영) 기준, 카테고리 필터만 제외. 통계줄 '총 N개'와 동일 모집단으로 일치.
+  const railCounts = useMemo(() => {
+    const today = new Date(now);
+    today.setHours(0, 0, 0, 0);
+    const future = new Date(today);
+    if (filters.days > 0) future.setDate(today.getDate() + filters.days);
+    const counts: Partial<Record<Category, number>> = {};
+    let total = 0;
+    for (const g of initialGames) {
+      if (wishlistOnly && !wishlist.has(g.id)) continue;
+      if (filters.search) {
+        const hay = `${g.name_ko} ${g.name_en ?? ''}`.toLowerCase();
+        if (!hay.includes(filters.search.toLowerCase())) continue;
+      }
+      if (filters.platform) {
+        const pf = g.platforms.map(p => p.toLowerCase());
+        if (!pf.some(p => p.includes(filters.platform!.toLowerCase()))) continue;
+      }
+      const rel = new Date(g.release_date);
+      if (filters.days > 0 && rel > future) continue;
+      if (view === 'list' && filters.days !== -1 && rel < today) continue;
+      counts[g.category] = (counts[g.category] ?? 0) + 1;
+      total++;
+    }
+    return { counts, total };
+  }, [initialGames, filters.search, filters.platform, filters.days, wishlistOnly, wishlist.ids, now, view]);
+
   const imminent = useMemo(() => {
     const today = new Date(now);
     today.setHours(0, 0, 0, 0);
@@ -152,31 +181,39 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
 
   return (
     <div className={styles.home}>
-      {imminent.length > 0 && (
-        <HeroStrip items={imminent} onPick={openModal} />
-      )}
+      <div className={styles.layout}>
+        <CategoryRail
+          search={filters.search}
+          category={filters.category}
+          days={filters.days}
+          counts={railCounts.counts}
+          totalCount={railCounts.total}
+          onSearch={v => setFilters({ ...filters, search: v })}
+          onCategory={c => setFilters({ ...filters, category: c })}
+          onDays={d => setFilters({ ...filters, days: d })}
+        />
 
-      <ViewToggle value={view} onChange={setView} />
+        <div className={styles.main}>
+          {imminent.length > 0 && (
+            <HeroStrip items={imminent} onPick={openModal} />
+          )}
 
-      <MonthTabs
-        cursor={calendarCursor}
-        onJump={(month) => {
-          const next = new Date(calendarCursor);
-          const today = new Date(now);
-          const useYear = month < today.getMonth() + 1
-            ? today.getFullYear() + 1
-            : today.getFullYear();
-          next.setFullYear(useYear, month - 1, 1);
-          setCalendarCursor(next);
-        }}
-      />
+          <ViewToggle value={view} onChange={setView} />
 
-      <Filters
-        value={filters}
-        onChange={setFilters}
-      />
+          <MonthTabs
+            cursor={calendarCursor}
+            onJump={(month) => {
+              const next = new Date(calendarCursor);
+              const today = new Date(now);
+              const useYear = month < today.getMonth() + 1
+                ? today.getFullYear() + 1
+                : today.getFullYear();
+              next.setFullYear(useYear, month - 1, 1);
+              setCalendarCursor(next);
+            }}
+          />
 
-      <p className={styles.stats}>
+          <p className={styles.stats}>
         {(Object.keys(CATEGORY_META) as Category[])
           .filter(c => (categoryCounts[c] ?? 0) > 0)
           .map(c => (
@@ -201,9 +238,11 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
         <ListView games={listGames} wishlist={wishlist} onPick={openModal} now={now} />
       )}
 
-      <p className={styles.lastUpdated}>
-        데이터 마지막 갱신: {formatShortDate(lastUpdated.slice(0, 10))}
-      </p>
+          <p className={styles.lastUpdated}>
+            데이터 마지막 갱신: {formatShortDate(lastUpdated.slice(0, 10))}
+          </p>
+        </div>
+      </div>
 
       {openGame && <GameModal game={openGame} onClose={() => closeModal()} wishlist={wishlist} />}
     </div>

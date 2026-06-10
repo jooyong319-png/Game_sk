@@ -38,3 +38,27 @@
   font-size: 0.8rem;
   margin: 2rem 0 1rem;
 }
+
+/* §F 데스크톱 2컬럼 셸 — 좌 카테고리 레일 + 본문. 우측 '출시 임박' 레일은 TODO#2. */
+.layout {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 1.4rem;
+  align-items: start;
+}
+.main {
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+  /* 모바일 스택 순서: 본문 먼저, 카테고리 레일은 아래로(운영자 본문 우선) */
+  .main {
+    order: 1;
+  }
+  .layout > :first-child {
+    order: 2;
+  }
+}
