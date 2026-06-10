@@ -1,3 +1,8 @@
+## [2026-06-10 09:25] [디자이너]
+라이브 중간점검 (운영자 "사이트 어색해" — 데스크 1440 실측). 개발이 좌측 카테고리 레일+라이트 테마 선반영 → 3컬럼 절반 상태.
+어색함 원인 3 (DESIGN_NOTES §G 기록): ①[높음·구조] 우측 '출시 임박' 레일 미구현 → HeroStrip 상단 큰 카드 잔존 + 좌측 레일이 '기간'서 끝나 아래 페이지끝까지 빈 흰 세로 거터(주범). 조치=§F대로 출시임박 우레일 이관+좌레일 sticky. ②[높음·중복] 헤더 내비(모바일·PC·콘솔·글로벌)↔좌레일 카테고리 중복 → §E 헤더 미니멀(내비 제거) 미반영분. ③[보통·색] 좌레일 카테고리 점 아직 원색(§A 정보색 미적용).
+종합: 둘 다 기존 §F·§E 미완성분 — 신규 결정 불필요, 개발 이어서 완료하면 해소. 코드 미수정(제안만).
+
 ## [2026-06-10 09:20] [개발자]
 완료: §F 좌측 카테고리 레일 + 2컬럼 레이아웃 셸(큐 1순위, 큐 3→2). ⚠️직전 8사이클 '번호 큐 비어있음' 보고는 오판이었음 — 기획자 18:50 §F 3건(0→3) 리필분을 못 읽고 공회전. 이번에 1순위 정상 착수.
 변경된 파일: components/CategoryRail.tsx(신규 ~84줄)·CategoryRail.module.css(신규 ~102줄)·components/Home.tsx(+railCounts·.layout 재구성·Filters 바 제거 ~+35/−20)·Home.module.css(+24 .layout/.main/모바일)
@@ -193,8 +198,3 @@
 데스크톱 1440: ✅
 모바일 390: ✅ (CSSOM 검증 — 창 1920 고정으로 실렌더 불가)
 상세: 라이브 패널 D-day 3단 정상 — 포켓몬 D-6 amber #f5a623(rgb245,166,35)·D-8~D-10 #888(rgb136)·D-DAY(diff0) 룰 .dayRowDdayToday{#ff7a59;700} 배포 확인(당일 출시 0건→실표시 없음). 모바일 @media(≤480) 신규 3규칙(.dayPanel 0.7rem·.dayRow gap0.45/pad0.45 0.55·.dayRowDate min3em 0.72rem) 전부 존재, 미디어블록(idx90)>base .dayRow(idx82) 동일특이도 후행→정상 승리(06-04 cascade 회귀 없음). 가로 오버플로 0·콘솔 사이트에러 0(메타마스크 확장 경고만). 헬스: / h1·sitemap 70 URL·robots·/game/sol-enchant·/new-servers 전부 정상.
-
-## [2026-06-09 17:30] [개발자]
-완료: 큐 1·2순위 묶음 구현(같은 CalendarView 표면). ①캘린더 day-detail 패널 행 D-day를 단일 amber 한 톤 → 전역 3단 색 규약(D-DAY 오늘 #ff7a59 700 / 임박 D-1~7 amber #f5a623 / 그 외 #888)으로 통일 — HeroStrip 글로우카드·리스트 리본·상세 배지와 색 정합. ②모바일 @media(≤480px)에 패널 밀도 3규칙(.dayPanel/.dayRow/.dayRowDate) 추가 — 셀 게임명 숨김으로 패널이 모바일 1차 콘텐츠 표면인데 패딩 과대였던 행 폭 ~+20px 회수.
-변경된 파일: components/CalendarView.tsx (+1/−1), components/CalendarView.module.css (+4). 신규 색 0·CSS brace 67/67·esbuild tsx OK.
-비고: 로컬 빌드 sandbox 디스크 제한 → Vercel(typecheck+build) 위임. QA님 라이브 진입 직후 패널 D-DAY 행 주황 700·D-1~7 amber·그 외 #888 3단 + 모바일 390px 행 폭 회수·데스크 무회귀·콘솔 0 확인 부탁. (※이번 사이클 repo가 직전 세션 잔존 dir 권한문제로 fresh clone 후 작업)
