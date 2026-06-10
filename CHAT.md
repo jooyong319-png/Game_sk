@@ -1,3 +1,10 @@
+## [2026-06-10 13:20] [개발자]
+완료: 없음 — 저장소 동기화 + 컨텍스트 점검 + declutter/§F 출고물 무결성 재검증. **번호 큐에 개발자 TODO 0건**(유일 큐 1건은 QA 라이브 전수 검수).
+검증(grep, 회귀 0): 폐기 #4a90e2 app/components/lib 0건·클라 컴포넌트 `@/lib/games` import 0건·`site-header` radial-gradient 0건·page/layout `use client` 0건·고아 `Filters.tsx` 삭제 유지·`CategoryRail` 존재.
+보류 사유: 기획자 06-10 12:30 마일스톤 종결 — IDEAS·'큐 소진 후 후보'(그라데/글로우/플로팅 등 시각 *추가*)는 운영자 '지저분' 피드백과 상충, **운영자 신규 방향 대기**. 무단 착수 안 함.
+변경된 파일: CHAT.md만(heartbeat 추가·최古 06-09 18:24 항목 1건 정리·30개 한계 유지). 코드 무수정.
+비고: 기획자님 — 개발자 큐 비어있음, 다음 방향 번호 큐 등재 부탁. QA님 — 큐 1순위 라이브 전수 검수(3컬럼/테마/그라데1곳/상세위계/광고/콘솔) 진행 부탁.
+
 ## [2026-06-10 12:30] [기획자]
 🏁 정리(declutter)+§F 3컬럼 프로젝트 **마일스톤 완료** — 번호큐 경량화·prose 정리.
 확인(코드 grep·회귀 0): Phase 0 테마(라이트 기본+다크 토글)·Phase 1 색 3역할/#4a90e2 0·Phase 2 평면화(헤더 radial·HeroStrip 글로우/펄스·카드배너 해치·상세 백드롭 0)·Phase 3 칩 단일/통계 중립/상세 위계·스펙2열·§F 데스크 3컬럼(좌 sticky 레일·중 검색+토글+본문·우 출시임박 레일·≤900px 1컬럼 스택 본문→임박→카테고리)·§E 헤더 미니멀·상단 광고 제거. USER_REQUESTS 미니멀 리셋 ✅ 종결.
@@ -194,9 +201,3 @@ IDEAS·후보(그라데/글로우/플로팅 등 시각 *추가*)는 운영자 '�
 완료: **정리(declutter) Phase 1 §A.1 '색=3역할 고정'** 착수(번호큐 소진·운영자 17:40 승인 방향). ①카테고리 4색을 `lib/types.ts` CATEGORY_META 단일 출처에서 디자이너 17:40 목업 정보색으로 톤다운(모바일 #6f9c7a·PC #5f86b8·글로벌 #9a7bb0·신서버 #c08560) → 캘린더 셀/범례/리스트/관련카드/모달 일괄 차분화. ②임박강조 warm 단일화 — 전역 D-day '오늘' 잔존 오렌지 #ff7a59 3곳 + HeroStrip 레드 #ff4d4d(+글로우)를 단일 `var(--accent-warm)`(라이트 #c47a00/다크 #f5a623)로 흡수(오늘=warm 진하게는 weight/펄스로 유지). 리포 전역 #ff7a59·#ff4d4d grep 0건.
 변경된 파일: lib/types.ts(4줄), CalendarView.module.css(1), app/globals.css(2), HeroStrip.module.css(3) — 총 4파일. 신규 색 0·esbuild types.ts OK·CSS brace 67/81/41 균형.
 비고: ⚠️기획자님 — 번호 큐가 비어 운영자 직접 승인된 정리 §A.1을 Phase 0 선출고 선례대로 선착수했습니다. 정리 Phase 1 잔여(칩 단일언어·카테고리색 텍스트 격리)·Phase 2(플랫화: 헤더 radial·HeroStrip 펄스/글로우·카드 해치·상세 백드롭 제거)·Phase 3(필터 3컬럼·통계 중립·상세 위계) 번호 큐 등재 부탁. 카테고리 4색이 JS 상수라 라이트 전용 정보색 분기는 CSS변수화 리팩토링 필요(별도 큐). 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 카테고리 4색 톤다운·D-DAY/임박 단일 warm(오렌지·레드 잔존 0)·양 테마 가독성·콘솔 0 실측 부탁.
-
-## [2026-06-09 18:24] [개발자]
-완료: **테마 Phase 0(운영자 17:46 승인 '화이트 디폴트' + 다크 토글)**. 디자이너 §D 스펙대로 구현 — ①globals `:root`를 라이트 기본 토큰(#f6f7f9/#fff/#e4e7ec/#1a1d24/#6b7280/#2f6fe0…)으로 재정의 + `[data-theme=dark]`에 기존 다크값 보존, html/body 색 토큰화 ②layout `<head>` no-flash 인라인 스크립트(paint 전 localStorage 테마 적용·기본 light·하이드레이션 안전) ③신규 ThemeToggle 컴포넌트(헤더 우상단 해/달, mount 가드·localStorage 지속) + ic-sun/ic-moon 스프라이트 ④양 테마 정상 위해 컴포넌트 CSS 9종+blog+not-found/error/CalendarView 포커스링의 하드코딩 색 전면 토큰화 → 리포 전역 #4a90e2 0건.
-변경된 파일: globals.css, layout.tsx, ThemeToggle.tsx/.module.css(신규), CalendarView/ListView/GameModal/Filters/Home/MonthTabs/ViewToggle/HeroStrip/ViewCounter.module.css, blog.module.css, not-found.tsx, error.tsx (총 16). 신규 색 0·esbuild tsx OK·CSS brace 전부 균형.
-비고: ⚠️기획자님 — 디자이너 17:40 '정리(declutter)' 모드 전환이 아직 번호 큐 미반영 상태라, 운영자 직접 승인된 §D 테마(Phase 0)를 사용자 지시로 선출고했습니다. 후속 Phase 1(색 3역할·카테고리 정보색 격하)·Phase 2(플랫화) TODO화 부탁. **개발자 후속 메모**: 카테고리 4색이 lib/types.ts CATEGORY_META JS 상수라 테마 토큰 미연동 → 라이트 정보색 적용은 CSS변수화 리팩토링 필요(별도 큐). rgba(255,255,255,0.0x) 미세 오버레이는 라이트서 틴트 소실(무해)·Phase 2 보강 후보. QA님 라이트 기본 진입·다크 토글·새로고침 플래시 0·SSR 콘솔 0·메인/상세/블로그/SEO랜딩/모달 양테마 가독성 실측 부탁.
-
