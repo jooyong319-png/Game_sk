@@ -39,26 +39,58 @@
   margin: 2rem 0 1rem;
 }
 
-/* §F 데스크톱 2컬럼 셸 — 좌 카테고리 레일 + 본문. 우측 '출시 임박' 레일은 TODO#2. */
+/* §F 데스크톱 3컬럼 셸 — 좌 카테고리 레일 · 중앙 본문 · 우 '출시 임박' 레일. */
 .layout {
   display: grid;
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 160px 1fr 190px;
   gap: 1.4rem;
   align-items: start;
 }
+/* 출시 임박 0건이면 우 레일 미렌더 → 2컬럼으로 축소(빈 트랙 방지) */
+.noRail {
+  grid-template-columns: 160px 1fr;
+}
 .main {
   min-width: 0;
+}
+.rightRail {
+  min-width: 0;
+}
+/* 중앙 본문 상단 1행: 검색 input + 캘린더/리스트 토글 */
+.topRow {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.topSearch {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 38px;
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 0.8rem;
+  font-size: 0.92rem;
+}
+.topSearch:focus-visible {
+  outline: none;
+  border-color: var(--accent);
 }
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
     gap: 0.9rem;
   }
-  /* 모바일 스택 순서: 본문 먼저, 카테고리 레일은 아래로(운영자 본문 우선) */
+  /* 모바일 스택 순서: 본문 → 출시 임박 → 카테고리(운영자 본문 우선) */
   .main {
     order: 1;
   }
-  .layout > :first-child {
+  .rightRail {
     order: 2;
+  }
+  .layout > :first-child {
+    order: 3;
   }
 }

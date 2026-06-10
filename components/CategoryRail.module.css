@@ -6,20 +6,6 @@
   position: sticky;
   top: 1rem;
 }
-.search {
-  height: 36px;
-  width: 100%;
-  background: var(--bg-elev);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0 0.7rem;
-  font-size: 0.9rem;
-}
-.search:focus-visible {
-  outline: none;
-  border-color: var(--accent);
-}
 .list {
   display: flex;
   flex-direction: column;

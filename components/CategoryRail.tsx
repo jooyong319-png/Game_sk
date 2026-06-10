@@ -4,12 +4,10 @@ import { CATEGORY_META } from '@/lib/types';
 import styles from './CategoryRail.module.css';
 
 interface Props {
-  search: string;
   category: Category | null;
   days: number;
   counts: Partial<Record<Category, number>>;
   totalCount: number;
-  onSearch: (v: string) => void;
   onCategory: (c: Category | null) => void;
   onDays: (d: number) => void;
 }
@@ -20,20 +18,11 @@ interface Props {
 const ORDER: Category[] = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
 
 export function CategoryRail({
-  search, category, days, counts, totalCount,
-  onSearch, onCategory, onDays,
+  category, days, counts, totalCount,
+  onCategory, onDays,
 }: Props) {
   return (
     <aside className={styles.rail} aria-label="카테고리 필터">
-      <input
-        type="search"
-        placeholder="게임명 검색…"
-        value={search}
-        onChange={e => onSearch(e.target.value)}
-        className={styles.search}
-        aria-label="게임명 검색"
-      />
-
       <nav className={styles.list} aria-label="카테고리">
         <button
           type="button"

@@ -181,24 +181,28 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
 
   return (
     <div className={styles.home}>
-      <div className={styles.layout}>
+      <div className={`${styles.layout} ${imminent.length === 0 ? styles.noRail : ''}`}>
         <CategoryRail
-          search={filters.search}
           category={filters.category}
           days={filters.days}
           counts={railCounts.counts}
           totalCount={railCounts.total}
-          onSearch={v => setFilters({ ...filters, search: v })}
           onCategory={c => setFilters({ ...filters, category: c })}
           onDays={d => setFilters({ ...filters, days: d })}
         />
 
         <div className={styles.main}>
-          {imminent.length > 0 && (
-            <HeroStrip items={imminent} onPick={openModal} />
-          )}
-
-          <ViewToggle value={view} onChange={setView} />
+          <div className={styles.topRow}>
+            <input
+              type="search"
+              placeholder="게임명 검색…"
+              value={filters.search}
+              onChange={e => setFilters({ ...filters, search: e.target.value })}
+              className={styles.topSearch}
+              aria-label="게임명 검색"
+            />
+            <ViewToggle value={view} onChange={setView} />
+          </div>
 
           <MonthTabs
             cursor={calendarCursor}
@@ -242,6 +246,12 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
             데이터 마지막 갱신: {formatShortDate(lastUpdated.slice(0, 10))}
           </p>
         </div>
+
+        {imminent.length > 0 && (
+          <aside className={styles.rightRail} aria-label="출시 임박">
+            <HeroStrip items={imminent} onPick={openModal} />
+          </aside>
+        )}
       </div>
 
       {openGame && <GameModal game={openGame} onClose={() => closeModal()} wishlist={wishlist} />}
