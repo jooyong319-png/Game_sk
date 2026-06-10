@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-09T21:12:00+09:00",
+  "last_updated": "2026-06-10T09:15:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -9,27 +9,6 @@
     "new_server": "한국 MMO 신규 서버"
   },
   "games": [
-    {
-      "id": "dk-mobile-reborn-server-prosperity-20251211",
-      "name_ko": "DK모바일 리본 신규 서버 '번영의 월드' 오픈",
-      "name_en": null,
-      "release_date": "2025-12-11",
-      "release_date_approx": false,
-      "category": "new_server",
-      "platforms": [
-        "Android",
-        "iOS"
-      ],
-      "developer": "엔트런스",
-      "publisher": "엔트런스",
-      "description": "유료 재화 '다이아'를 전면 삭제하고 모든 경제를 '플린'으로 통합한 플레이 중심 신규 서버. 경험치·드롭률 상향 하이퍼 성장 상시 적용, 3주 간격 상위 콘텐츠 해금(2025-12-11 정식 오픈).",
-      "genres": [
-        "MMORPG",
-        "신규 서버"
-      ],
-      "image_url": null,
-      "source_url": "https://www.thisisgame.com/articles/409201"
-    },
     {
       "id": "lineage-classic-server-haine-loengrin-20260311",
       "name_ko": "리니지 클래식 신규 서버 '하이네'·'로엔그린' 오픈",
