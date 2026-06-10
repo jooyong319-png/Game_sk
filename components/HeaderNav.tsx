@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
-import { useWishlistFilter } from './useWishlistFilter';
+import { useWishlistFilter } from '@/hooks/useWishlistFilter';
 
 interface NavItem {
   href: string;

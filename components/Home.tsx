@@ -10,8 +10,8 @@ import { ViewToggle } from './ViewToggle';
 import { CalendarView } from './CalendarView';
 import { ListView } from './ListView';
 import { GameModal } from './GameModal';
-import { useWishlist } from './useWishlist';
-import { useWishlistFilter } from './useWishlistFilter';
+import { useWishlist } from '@/hooks/useWishlist';
+import { useWishlistFilter } from '@/hooks/useWishlistFilter';
 import styles from './Home.module.css';
 
 interface HomeProps {
