@@ -1,3 +1,9 @@
+## [2026-06-10 12:30] [기획자]
+🏁 정리(declutter)+§F 3컬럼 프로젝트 **마일스톤 완료** — 번호큐 경량화·prose 정리.
+확인(코드 grep·회귀 0): Phase 0 테마(라이트 기본+다크 토글)·Phase 1 색 3역할/#4a90e2 0·Phase 2 평면화(헤더 radial·HeroStrip 글로우/펄스·카드배너 해치·상세 백드롭 0)·Phase 3 칩 단일/통계 중립/상세 위계·스펙2열·§F 데스크 3컬럼(좌 sticky 레일·중 검색+토글+본문·우 출시임박 레일·≤900px 1컬럼 스택 본문→임박→카테고리)·§E 헤더 미니멀·상단 광고 제거. USER_REQUESTS 미니멀 리셋 ✅ 종결.
+번호큐: **라이브 전수 검수 1건만**(QA — 6항: 3컬럼/테마/그라데 1곳/상세 위계/광고/콘솔). 남은 declutter 0.
+IDEAS·후보(그라데/글로우/플로팅 등 시각 *추가*)는 운영자 '지저분' 피드백과 상충 → 큐 진입 보류, **운영자 신규 방향 대기**. a11y/리팩토링도 보류 유지. 누적 갱신 prose 27건 정리(token 절약).
+
 ## [2026-06-10 12:20] [개발자]
 완료: 없음 — 저장소 동기화 + 컨텍스트 점검 + 정리(declutter) 출고물 무결성 재검증. **번호 큐 비어있음.** 직전 11:33 사이클이 잔여 declutter 폴리시(본문 여백·범례 제거·통계 중립·고아 Filters 삭제)를 마지막으로 운영자 미니멀 리셋 지시(§F 3컬럼·§E 헤더·광고 제거·declutter 전량) 전량 출고 완료, 그 이후 기획자 신규 TODO 등재 0 → 구현 대상 부재.
 검증(이번 사이클): 폐기 #4a90e2 grep 0건(app/components/lib)·`size="top"` 광고 0건·site-header radial-gradient 0건·클라 컴포넌트의 `@/lib/games` import 0건·고아 `Filters.tsx` 삭제 유지·신규 `CategoryRail` 존재 → 정리 출고물 회귀 0.
@@ -194,7 +200,3 @@
 변경된 파일: globals.css, layout.tsx, ThemeToggle.tsx/.module.css(신규), CalendarView/ListView/GameModal/Filters/Home/MonthTabs/ViewToggle/HeroStrip/ViewCounter.module.css, blog.module.css, not-found.tsx, error.tsx (총 16). 신규 색 0·esbuild tsx OK·CSS brace 전부 균형.
 비고: ⚠️기획자님 — 디자이너 17:40 '정리(declutter)' 모드 전환이 아직 번호 큐 미반영 상태라, 운영자 직접 승인된 §D 테마(Phase 0)를 사용자 지시로 선출고했습니다. 후속 Phase 1(색 3역할·카테고리 정보색 격하)·Phase 2(플랫화) TODO화 부탁. **개발자 후속 메모**: 카테고리 4색이 lib/types.ts CATEGORY_META JS 상수라 테마 토큰 미연동 → 라이트 정보색 적용은 CSS변수화 리팩토링 필요(별도 큐). rgba(255,255,255,0.0x) 미세 오버레이는 라이트서 틴트 소실(무해)·Phase 2 보강 후보. QA님 라이트 기본 진입·다크 토글·새로고침 플래시 0·SSR 콘솔 0·메인/상세/블로그/SEO랜딩/모달 양테마 가독성 실측 부탁.
 
-## [2026-06-09 18:16] [개발자]
-완료: 큐 1·2순위 동시 출고(사용자 '최대한 많이 수정' 요청 반영, 블로그 정합까지 이번 세션 3건 연속). ①HeroStrip '출시 임박' 스트립의 최근접 1건을 `.hotCard`로 2칸 대형 승격 + 그 아래 라이브 HH:MM:SS 카운트다운(신설 useCountdown 훅, release_date 자정 KST 타깃, useState/useEffect mount 후에만 산출해 하이드레이션 #418/#423/#425 가드, 1초 setInterval). ②비블로그 off-brand #4a90e2 청산 — SeoLanding 5라우트 h2 `--accent-grad` 그라데 클립 + ViewCounter `.num` `var(--accent)` 토큰화.
-변경된 파일: components/HeroStrip.tsx(~72줄 재작성), components/HeroStrip.module.css(+18), app/globals.css(.seo-landing h2 그라데), components/ViewCounter.module.css(.num 1줄). 신규 색 0·CSS brace 41/41·80/80·4/4·esbuild tsx OK.
-비고: 외형 큐 1~3 모두 소진(블로그 정합·D-day 3단·핫카드·#4a90e2 청산) → 다음 사이클은 IDEAS 후보(BackToTop·푸터 hairline·--accent-grad 소비 등) 또는 기획자 신규 큐 대기. 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 핫카드 HH:MM:SS 1초 갱신·SSR 콘솔 0건·SEO 5라우트 h2 그라데·조회수 단일 블루 확인 부탁.
