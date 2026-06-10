@@ -67,12 +67,13 @@ a:hover { text-decoration: underline; }
   background-clip: text;
   color: transparent;
 }
-/* 중앙 내비 6링크 — 활성 라우트 accent 언더라인 */
+/* 좌측 그룹 내비 6링크 — 워드마크 옆에 붙이고, 유틸은 우측 끝으로 밀어냄 */
 .site-nav {
   display: flex;
   gap: 1rem;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
+  margin-left: 0.75rem;
   font-size: 0.9rem;
 }
 .nav-link {
@@ -87,29 +88,11 @@ a:hover { text-decoration: underline; }
   color: var(--text);
   border-bottom-color: var(--accent);
 }
-/* 우측 유틸리티 (위시★ · 테마토글) */
+/* 우측 유틸리티 (테마토글) — 위시★는 본문 상단행으로 이관 */
 .header-utils {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-.header-utils .util {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg-elev);
-  color: var(--text-faint);
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-}
-.header-utils .util:hover,
-.header-utils .util[aria-pressed="true"] {
-  color: var(--accent);
-  border-color: var(--accent);
 }
 /* 모바일: 내비를 워드마크 행 아래 가로 스크롤 스트립으로(MonthTabs 톤) */
 @media (max-width: 480px) {
@@ -122,6 +105,7 @@ a:hover { text-decoration: underline; }
     order: 3;
     flex: 1 1 100%;
     justify-content: flex-start;
+    margin-left: 0;
     gap: 0.9rem;
     overflow-x: auto;
     scroll-snap-type: x proximity;

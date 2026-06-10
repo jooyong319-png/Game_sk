@@ -1,86 +1,42 @@
-import Link from 'next/link';
-import { getAllGames } from '@/lib/games';
-import { calcDayDiff } from '@/lib/utils';
-import { CATEGORY_META } from '@/lib/types';
 import type { ReactNode } from 'react';
+import { getAllGames } from '@/lib/games';
+import { calcDayDiff, kstDateOnly } from '@/lib/utils';
+import { MonthStats } from './MonthStats';
+import { HeroStrip } from './HeroStrip';
+import { NextByCategory } from './NextByCategory';
+import { PromoBanner } from './PromoBanner';
 import styles from './PageShell.module.css';
 
 interface Props {
   children: ReactNode;
-  /** 우측 출시 임박 사이드바 표시 여부 (기본 true) */
-  showRightRail?: boolean;
 }
 
-export async function PageShell({ children, showRightRail = true }: Props) {
-  let imminent: Awaited<ReturnType<typeof loadImminent>> = [];
-  if (showRightRail) {
-    imminent = await loadImminent();
-  }
+// 서브페이지(출시예정·카테고리·블로그·상세) 공용 3컬럼 셸 — 홈과 동일한 좌/우 사이드바.
+// 정적 생성이라 빌드 시각(KST) 기준 D-day(데이터 일일 갱신 시 재배포로 신선도 유지).
+export async function PageShell({ children }: Props) {
+  const games = await getAllGames();
+  const now = kstDateOnly(new Date().toISOString());
+  const today = new Date(now); today.setHours(0, 0, 0, 0);
+  const imminent = games
+    .map(g => ({ g, diff: calcDayDiff(g.release_date, today) }))
+    .filter(x => x.diff >= 0 && x.diff <= 7)
+    .sort((a, b) => a.diff - b.diff)
+    .slice(0, 5);
 
   return (
     <div className={styles.layout}>
-      {/* 좌 사이드바: 카테고리/페이지 내비 */}
-      <aside className={styles.leftNav} aria-label="사이트 내비게이션">
-        <LeftNav />
+      <aside className={styles.leftCol} aria-label="요약">
+        <MonthStats games={games} now={now} />
+        <PromoBanner variant="calendar" />
       </aside>
 
-      {/* 중앙 본문 */}
       <main className={styles.main}>{children}</main>
 
-      {/* 우 사이드바: 출시 임박 sticky */}
-      {showRightRail && imminent.length > 0 && (
-        <aside className={styles.rightRail} aria-label="출시 임박">
-          <h3 className={styles.railTitle}>🔥 출시 임박</h3>
-          <ul className={styles.railList}>
-            {imminent.map(({ g, diff }) => {
-              const dd = diff === 0 ? 'D-DAY' : `D-${diff}`;
-              const cat = CATEGORY_META[g.category];
-              return (
-                <li key={g.id}>
-                  <Link href={`/game/${g.id}`} className={styles.railCard}>
-                    <span className={styles.railCat} style={{ color: cat.color }}>
-                      {cat.short}
-                    </span>
-                    <span className={styles.railName}>{g.name_ko}</span>
-                    <span className={styles.railDday}>{dd}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
-      )}
+      <aside className={styles.rightCol} aria-label="추천 일정">
+        {imminent.length > 0 && <HeroStrip items={imminent} />}
+        <NextByCategory games={games} now={now} />
+        <PromoBanner variant="update" />
+      </aside>
     </div>
-  );
-}
-
-async function loadImminent() {
-  const all = await getAllGames();
-  const today = new Date();
-  return all
-    .map(g => ({ g, diff: calcDayDiff(g.release_date, today) }))
-    .filter(x => x.diff >= 0 && x.diff <= 14)
-    .sort((a, b) => a.diff - b.diff)
-    .slice(0, 5);
-}
-
-function LeftNav() {
-  const items = [
-    { href: '/', label: '📅 캘린더', exact: true },
-    { href: '/upcoming-games', label: '출시 예정' },
-    { href: '/new-servers', label: '신규 서버' },
-    { href: '/mobile-games', label: '모바일' },
-    { href: '/pc-console-games', label: 'PC·콘솔' },
-    { href: '/global-games', label: '글로벌' },
-    { href: '/blog', label: '📰 블로그' },
-  ];
-  return (
-    <nav className={styles.navList}>
-      {items.map(it => (
-        <Link key={it.href} href={it.href} className={styles.navLink}>
-          {it.label}
-        </Link>
-      ))}
-    </nav>
   );
 }

@@ -1,8 +1,9 @@
 'use client';
 import { useMemo, useState, useEffect, useRef, type CSSProperties } from 'react';
-import type { Game } from '@/lib/types';
+import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday, kstDateOnly } from '@/lib/utils';
+import { CategoryFilterBar } from './CategoryFilterBar';
 import styles from './CalendarView.module.css';
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
   wishlist: { has: (id: string) => boolean };
   onPick: (id: string) => void;
   now: Date;
+  category: Category | null;
+  onCategory: (c: Category | null) => void;
 }
 
 interface Cell {
@@ -53,7 +56,7 @@ function buildCells(cursor: Date, games: Game[], now: Date): Cell[] {
   return cells;
 }
 
-export function CalendarView({ cursor, onCursorChange, games, onPick, now }: Props) {
+export function CalendarView({ cursor, onCursorChange, games, onPick, now, category, onCategory }: Props) {
   const cells = useMemo(() => buildCells(cursor, games, now), [cursor, games, now]);
   const monthLabel = `${cursor.getFullYear()}년 ${cursor.getMonth() + 1}월`;
   const [selectedISO, setSelectedISO] = useState<string | null>(null);
@@ -112,6 +115,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now }: Pro
 
   return (
     <section className={styles.view}>
+      <CategoryFilterBar category={category} onCategory={onCategory} className={styles.calCatBar} />
       <header className={styles.header}>
         <button type="button" className={styles.navBtn} onClick={prev} aria-label="이전 달">‹</button>
         <h2 className={styles.label}>{monthLabel}</h2>

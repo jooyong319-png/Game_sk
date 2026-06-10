@@ -1,0 +1,60 @@
+/* 좌측 레일 위젯 '이달의 출시' — 패널 면(3컬럼 패널과 동일 톤) */
+.widget {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+}
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.total {
+  margin-left: auto;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.name {
+  flex: 0 0 3.4em;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
+.track {
+  flex: 1 1 auto;
+  height: 7px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  min-width: 2px;
+  transition: width 0.3s ease;
+}
+.num {
+  flex: 0 0 auto;
+  min-width: 1.6em;
+  text-align: right;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,11 +1,16 @@
 .view {
   margin: 0;
-  background: var(--bg);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 14px;
 }
 
+.calCatBar {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
 .header {
   display: flex;
   align-items: center;
@@ -168,7 +173,7 @@
 /* ─── Day Detail Panel (셀 클릭 시 하단 표시) ─── */
 .dayPanel {
   margin-top: 1rem;
-  background: var(--bg-elev);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1rem;
@@ -184,12 +189,12 @@
   align-items: center;
   margin-bottom: 0.8rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid var(--border);
 }
 .dayPanelTitle { font-size: 1rem; font-weight: 700; color: var(--text); }
 .dayPanelClose {
-  background: rgba(255,255,255,0.05);
-  border: none;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
   color: var(--text);
   font-size: 1.2rem;
   width: 32px; height: 32px;
@@ -197,15 +202,15 @@
   cursor: pointer;
   line-height: 1;
 }
-.dayPanelClose:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+.dayPanelClose:hover { background: var(--border); color: var(--text); }
 .dayPanelList { display: flex; flex-direction: column; gap: 0.4rem; }
 .dayRow {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.5rem 0.7rem;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
   border-radius: 6px;
   cursor: pointer;
   text-align: left;

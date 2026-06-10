@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getAllGames } from '@/lib/games';
+import { getUpcomingGames } from '@/lib/games';
 import { SeoLanding } from '@/components/SeoLanding';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const games = await getAllGames();
+  const games = await getUpcomingGames(); // 이미 지난 출시 제외
   return (
     <SeoLanding
       slug="upcoming-games"

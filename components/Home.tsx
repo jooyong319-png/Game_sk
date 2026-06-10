@@ -1,11 +1,11 @@
 'use client';
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import type { Game, Category, FilterState } from '@/lib/types';
-import { CATEGORY_META } from '@/lib/types';
+import type { Game, FilterState } from '@/lib/types';
 import { calcDayDiff, formatShortDate, kstDateOnly } from '@/lib/utils';
 import { HeroStrip } from './HeroStrip';
-import { MonthTabs } from './MonthTabs';
-import { CategoryRail } from './CategoryRail';
+import { MonthStats } from './MonthStats';
+import { NextByCategory } from './NextByCategory';
+import { PromoBanner } from './PromoBanner';
 import { ViewToggle } from './ViewToggle';
 import { CalendarView } from './CalendarView';
 import { ListView } from './ListView';
@@ -24,7 +24,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
   const [filters, setFilters] = useState<FilterState>({
     category: null,
     platform: null,
-    days: 0,           // 0 = '오늘 이후'(리스트 기본 하한 today). -1 = 전체(과거 포함). 30/90/.. = 미래 N일 상한.
+    days: -1,          // 기간 필터 제거(월 탭/월 네비가 스코프 담당) → 날짜 무하한(-1=전체).
     search: '',
     wishlistOnly: false,
   });
@@ -40,7 +40,8 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
   const [openGameId, setOpenGameId] = useState<string | null>(null);
 
   const wishlist = useWishlist();
-  const wishlistOnly = useWishlistFilter().on; // 헤더 ★ 토글과 공유(§E)
+  const wishFilter = useWishlistFilter(); // 위시만 보기 토글 — 본문 상단행 ★(§F)
+  const wishlistOnly = wishFilter.on;
 
   // mount 직후 1회: 실제 현재 시각/이번 달로 교체 (하이드레이션 이후라 에러 아님)
   useEffect(() => {
@@ -130,42 +131,6 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
     return filteredGames.filter(g => new Date(g.release_date) >= today);
   }, [filteredGames, filters.days, now]);
 
-  // 통계줄 카테고리 4색 분해용: 현재 뷰(리스트/캘린더)와 동일 모집단으로 카운트 (큐 1순위, 디자이너 데스크#2)
-  const visibleGames = view === 'list' ? listGames : filteredGames;
-  const categoryCounts = useMemo(() => {
-    const counts: Partial<Record<Category, number>> = {};
-    for (const g of visibleGames) counts[g.category] = (counts[g.category] ?? 0) + 1;
-    return counts;
-  }, [visibleGames]);
-
-  // §F 좌측 레일 카테고리별 카운트 — 현재 모집단(검색/플랫폼/기간/위시·리스트뷰 하한
-  // 반영) 기준, 카테고리 필터만 제외. 통계줄 '총 N개'와 동일 모집단으로 일치.
-  const railCounts = useMemo(() => {
-    const today = new Date(now);
-    today.setHours(0, 0, 0, 0);
-    const future = new Date(today);
-    if (filters.days > 0) future.setDate(today.getDate() + filters.days);
-    const counts: Partial<Record<Category, number>> = {};
-    let total = 0;
-    for (const g of initialGames) {
-      if (wishlistOnly && !wishlist.has(g.id)) continue;
-      if (filters.search) {
-        const hay = `${g.name_ko} ${g.name_en ?? ''}`.toLowerCase();
-        if (!hay.includes(filters.search.toLowerCase())) continue;
-      }
-      if (filters.platform) {
-        const pf = g.platforms.map(p => p.toLowerCase());
-        if (!pf.some(p => p.includes(filters.platform!.toLowerCase()))) continue;
-      }
-      const rel = new Date(g.release_date);
-      if (filters.days > 0 && rel > future) continue;
-      if (view === 'list' && filters.days !== -1 && rel < today) continue;
-      counts[g.category] = (counts[g.category] ?? 0) + 1;
-      total++;
-    }
-    return { counts, total };
-  }, [initialGames, filters.search, filters.platform, filters.days, wishlistOnly, wishlist.ids, now, view]);
-
   const imminent = useMemo(() => {
     const today = new Date(now);
     today.setHours(0, 0, 0, 0);
@@ -180,15 +145,11 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
 
   return (
     <div className={styles.home}>
-      <div className={`${styles.layout} ${imminent.length === 0 ? styles.noRail : ''}`}>
-        <CategoryRail
-          category={filters.category}
-          days={filters.days}
-          counts={railCounts.counts}
-          totalCount={railCounts.total}
-          onCategory={c => setFilters({ ...filters, category: c })}
-          onDays={d => setFilters({ ...filters, days: d })}
-        />
+      <div className={styles.layout}>
+        <div className={styles.leftCol}>
+          <MonthStats games={initialGames} now={now} />
+          <PromoBanner variant="calendar" />
+        </div>
 
         <div className={styles.main}>
           <div className={styles.topRow}>
@@ -200,33 +161,19 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
               className={styles.topSearch}
               aria-label="게임명 검색"
             />
+            <button
+              type="button"
+              className={`${styles.wishToggle} ${wishlistOnly ? styles.wishToggleOn : ''}`}
+              onClick={wishFilter.toggle}
+              aria-pressed={wishlistOnly}
+              aria-label="위시리스트만 보기"
+              title="위시리스트만 보기"
+            >
+              <svg className={wishlistOnly ? 'ic ic-fill' : 'ic'} aria-hidden="true"><use href="#ic-star" /></svg>
+              <span className={styles.wishToggleLabel}>위시</span>
+            </button>
             <ViewToggle value={view} onChange={setView} />
           </div>
-
-          <MonthTabs
-            cursor={calendarCursor}
-            onJump={(month) => {
-              const next = new Date(calendarCursor);
-              const today = new Date(now);
-              const useYear = month < today.getMonth() + 1
-                ? today.getFullYear() + 1
-                : today.getFullYear();
-              next.setFullYear(useYear, month - 1, 1);
-              setCalendarCursor(next);
-            }}
-          />
-
-          <p className={styles.stats}>
-        {(Object.keys(CATEGORY_META) as Category[])
-          .filter(c => (categoryCounts[c] ?? 0) > 0)
-          .map(c => (
-            <span key={c} className={styles.statsCat}>
-              <span className={styles.statsDot} style={{ background: CATEGORY_META[c].color }} />
-              {CATEGORY_META[c].short} {categoryCounts[c]}
-            </span>
-          ))}
-        <span className={styles.statsTotal}>총 {visibleGames.length}개</span>
-      </p>
 
       {view === 'calendar' ? (
         <CalendarView
@@ -236,9 +183,18 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
           wishlist={wishlist}
           onPick={openModal}
           now={now}
+          category={filters.category}
+          onCategory={c => setFilters({ ...filters, category: c })}
         />
       ) : (
-        <ListView games={listGames} wishlist={wishlist} onPick={openModal} now={now} />
+        <ListView
+          games={listGames}
+          wishlist={wishlist}
+          onPick={openModal}
+          now={now}
+          category={filters.category}
+          onCategory={c => setFilters({ ...filters, category: c })}
+        />
       )}
 
           <p className={styles.lastUpdated}>
@@ -246,11 +202,11 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
           </p>
         </div>
 
-        {imminent.length > 0 && (
-          <aside className={styles.rightRail} aria-label="출시 임박">
-            <HeroStrip items={imminent} onPick={openModal} />
-          </aside>
-        )}
+        <aside className={styles.rightCol} aria-label="추천 일정">
+          {imminent.length > 0 && <HeroStrip items={imminent} />}
+          <NextByCategory games={initialGames} now={now} />
+          <PromoBanner variant="update" />
+        </aside>
       </div>
 
       {openGame && <GameModal game={openGame} onClose={() => closeModal()} wishlist={wishlist} />}

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug, markdownToHtml, formatPostDate } from '@/lib/blog';
-import { AdSlot } from '@/components/AdSlot';
 import { PageShell } from '@/components/PageShell';
 import styles from '../blog.module.css';
 
@@ -67,7 +66,6 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
         <div className={styles.postBody} dangerouslySetInnerHTML={{ __html: html }} />
       </article>
-      <AdSlot slot="blog-post-bottom" size="mid" />
     </PageShell>
   );
 }

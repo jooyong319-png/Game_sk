@@ -1,0 +1,39 @@
+/* 카테고리 아이콘 필터 줄 — 리스트·캘린더 공용 */
+.bar {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.32rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.1rem 0.5rem;
+  color: var(--text-faint);
+}
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  font-size: 1.15rem;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.item:hover .icon { color: var(--accent); border-color: var(--accent); }
+.label { font-size: 0.72rem; font-weight: 500; white-space: nowrap; }
+.active { color: var(--accent); }
+.active .icon {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(91, 157, 255, 0.10);
+}
+.active .label { font-weight: 700; }

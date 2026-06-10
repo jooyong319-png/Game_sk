@@ -2,6 +2,7 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import type { Game, GamesData, Category } from './types';
+import { kstDateOnly } from './utils';
 
 // 서버 전용 데이터 로더 (file I/O)
 async function readGamesFile(): Promise<GamesData> {
@@ -34,6 +35,24 @@ export async function getGameById(id: string): Promise<Game | null> {
 export async function getGamesByCategory(category: Category): Promise<Game[]> {
   const all = await getAllGames();
   return all.filter(g => g.category === category);
+}
+
+// 오늘(KST) 기준 날짜 문자열 'YYYY-MM-DD'
+function todayKstStr(): string {
+  const t = kstDateOnly(new Date().toISOString());
+  return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+}
+
+// 이미 지난 출시 제외 (오늘 이후 + 출시일 미정만) — '출시 예정' 표면용.
+// 정적 생성이라 빌드 시각 기준(데이터 일일 갱신 시 재배포로 신선도 유지).
+export async function getUpcomingGames(): Promise<Game[]> {
+  const today = todayKstStr();
+  return (await getAllGames()).filter(g => g.release_date_approx || g.release_date >= today);
+}
+
+export async function getUpcomingGamesByCategory(category: Category): Promise<Game[]> {
+  const today = todayKstStr();
+  return (await getGamesByCategory(category)).filter(g => g.release_date_approx || g.release_date >= today);
 }
 
 // 메타

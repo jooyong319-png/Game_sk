@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getGamesByCategory } from '@/lib/games';
+import { getUpcomingGamesByCategory } from '@/lib/games';
 import { SeoLanding } from '@/components/SeoLanding';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const games = await getGamesByCategory('pc_console_kr');
+  const games = await getUpcomingGamesByCategory('pc_console_kr'); // 지난 출시 제외
   return (
     <SeoLanding
       slug="pc-console-games"

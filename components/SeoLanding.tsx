@@ -1,6 +1,5 @@
 import { CATEGORY_META, type Game, type Category } from '@/lib/types';
 import { formatKoreanDate } from '@/lib/utils';
-import { AdSlot } from './AdSlot';
 import { PageShell } from './PageShell';
 
 interface SeoLandingProps {
@@ -53,7 +52,6 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
           })}
         </ul>
       </section>
-      <AdSlot slot="landing-bottom" size="mid" />
       </PageShell>
   );
 }

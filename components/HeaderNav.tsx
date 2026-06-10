@@ -1,7 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
-import { useWishlistFilter } from '@/hooks/useWishlistFilter';
 
 interface NavItem {
   href: string;
@@ -16,11 +15,11 @@ const NAV: NavItem[] = [
   { href: '/mobile-games', label: '모바일' },
   { href: '/pc-console-games', label: 'PC·콘솔' },
   { href: '/global-games', label: '글로벌' },
+  { href: '/blog', label: '블로그' },
 ];
 
 export function HeaderNav() {
   const pathname = usePathname();
-  const wishFilter = useWishlistFilter();
 
   return (
     <>
@@ -40,18 +39,6 @@ export function HeaderNav() {
         })}
       </nav>
       <div className="header-utils">
-        <button
-          type="button"
-          className="util"
-          onClick={wishFilter.toggle}
-          aria-pressed={wishFilter.on}
-          aria-label="위시리스트만 보기"
-          title="위시리스트만 보기"
-        >
-          <svg className={wishFilter.on ? 'ic ic-fill' : 'ic'} aria-hidden="true">
-            <use href="#ic-star" />
-          </svg>
-        </button>
         <ThemeToggle />
       </div>
     </>

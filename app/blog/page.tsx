@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllPosts, formatPostDate } from '@/lib/blog';
-import { AdSlot } from '@/components/AdSlot';
 import { PageShell } from '@/components/PageShell';
 import styles from './blog.module.css';
 
@@ -52,7 +51,6 @@ export default async function BlogIndexPage() {
           </ul>
         )}
       </section>
-      <AdSlot slot="blog-index-bottom" size="mid" />
     </PageShell>
   );
 }

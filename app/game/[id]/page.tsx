@@ -2,9 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllGames, getGameById, formatKoreanDate, getKoreanWeekday } from '@/lib/games';
 import { CATEGORY_META } from '@/lib/types';
-import { calcDayDiff, formatShortDate } from '@/lib/utils';
-import { AdSlot } from '@/components/AdSlot';
 import { GoogleCalendarButton } from '@/components/GoogleCalendarButton';
+import { DdayBadge } from '@/components/DdayBadge';
 import { ViewCounter } from '@/components/ViewCounter';
 import { Comments } from '@/components/Comments';
 import { PageShell } from '@/components/PageShell';
@@ -48,14 +47,6 @@ export default async function GamePage({ params }: Props) {
   const dateStr = formatKoreanDate(game.release_date);
   const weekday = game.release_date_approx ? '' : ` (${getKoreanWeekday(game.release_date)})`;
   const url = `https://gcalen.com/game/${game.id}`;
-  const diff = calcDayDiff(game.release_date);
-  const ddText = game.release_date_approx
-    ? '(예정)'
-    : diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
-  const ddStage = game.release_date_approx
-    ? 'far'
-    : diff === 0 ? 'today' : diff > 0 && diff <= 7 ? 'soon' : 'far';
-
 
   const jsonld = {
     '@context': 'https://schema.org',
@@ -81,7 +72,7 @@ export default async function GamePage({ params }: Props) {
         <a href="/" className="back-link">← 전체 목록으로</a>
         <div className="detail-head">
           <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
-          <span className={`dday-badge dday-${ddStage}`}>{ddText}</span>
+          <DdayBadge releaseDate={game.release_date} approx={game.release_date_approx} />
         </div>
         <h2>{game.name_ko}</h2>
         {game.name_en && game.name_en !== game.name_ko && (
@@ -108,7 +99,6 @@ export default async function GamePage({ params }: Props) {
         </div>
       </article>
       <Comments gameId={game.id} />
-      <AdSlot slot="detail-bottom" size="mid" />
       </div>
     </PageShell>
   );

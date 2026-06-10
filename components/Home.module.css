@@ -3,30 +3,6 @@
   margin: 0 auto;
   padding: 1.2rem 1.5rem;
 }
-.stats {
-  color: var(--text-faint);
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin: 0;
-  text-align: center;
-}
-.statsCat,
-.statsTotal { white-space: nowrap; }
-.statsDot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  margin-right: 0.32rem;
-  vertical-align: middle;
-}
-.stats > span + span::before {
-  content: '·';
-  color: var(--text-faint);
-  font-weight: 400;
-  margin: 0 0.5rem;
-}
-.statsTotal { color: var(--text-faint); }
 .lastUpdated {
   text-align: center;
   color: var(--text-faint);
@@ -34,15 +10,12 @@
   margin: 0 0 0.5rem;
 }
 
-/* ─── 데스크톱 3컬럼 (쌀먹닷컴 스타일 비율) ─── */
+/* ─── 데스크톱 3컬럼  ─── */
 .layout {
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr) 320px;
   gap: 1.6rem;
   align-items: start;
-}
-.noRail {
-  grid-template-columns: 220px minmax(0, 1fr);
 }
 
 /* 중앙 본문 */
@@ -53,9 +26,13 @@
   gap: 1.25rem;
 }
 
-/* 우 사이드바: sticky로 따라옴 */
-.rightRail {
+/* 좌·우 사이드 컬럼: 패널(레일+위젯+프로모)을 세로 적층 + sticky로 따라옴 */
+.leftCol,
+.rightCol {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
   position: sticky;
   top: 1rem;
   align-self: start;
@@ -63,8 +40,10 @@
   overflow-y: auto;
   scrollbar-width: thin;
 }
-.rightRail::-webkit-scrollbar { width: 6px; }
-.rightRail::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.leftCol::-webkit-scrollbar,
+.rightCol::-webkit-scrollbar { width: 6px; }
+.leftCol::-webkit-scrollbar-thumb,
+.rightCol::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 /* 검색 + 토글 한 줄 */
 .topRow {
@@ -88,16 +67,34 @@
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(47, 111, 224, 0.12);
 }
+/* 위시만 보기 토글 — 헤더에서 본문 상단행으로 이관(필터가 작동하는 화면에만 노출) */
+.wishToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+  height: 40px;
+  padding: 0 0.8rem;
+  background: var(--bg-elev);
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 8px);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.wishToggle:hover { color: var(--text); }
+.wishToggleOn {
+  color: var(--accent);
+  border-color: var(--accent);
+}
 
-/* ─── 태블릿: 우 사이드바만 숨김 (2컬럼) ─── */
+/* ─── 태블릿: 우 사이드 컬럼 숨김 (2컬럼) ─── */
 @media (max-width: 1100px) {
   .layout {
     grid-template-columns: 200px minmax(0, 1fr);
   }
-  .noRail {
-    grid-template-columns: 200px minmax(0, 1fr);
-  }
-  .rightRail {
+  .rightCol {
     display: none;
   }
 }
@@ -111,16 +108,24 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .noRail {
-    grid-template-columns: 1fr;
+  /* 스택 순서: 좌(필터+위젯) → 중 본문 → 우(임박+위젯) */
+  .leftCol {
+    order: 1;
+    position: static;
+    max-height: none;
+    overflow: visible;
+    gap: 1rem;
   }
-  /* 스택 순서: 좌 필터 → 중 본문 → 우 임박 */
-  .layout > :first-child { order: 1; }
   .main { order: 2; }
-  .rightRail {
-    display: block;
+  .rightCol {
+    display: flex;
     order: 3;
     position: static;
     max-height: none;
+    overflow: visible;
+    gap: 1rem;
   }
+  /* 상단행 공간 확보: 위시 토글은 ★ 아이콘만(라벨 숨김) */
+  .wishToggleLabel { display: none; }
+  .wishToggle { padding: 0 0.7rem; }
 }

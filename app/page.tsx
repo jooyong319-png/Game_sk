@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getAllGames, getLastUpdated } from '@/lib/games';
 import { Home } from '@/components/Home';
-import { AdSlot } from '@/components/AdSlot';
 
 export const metadata: Metadata = {
   title: '게임 출시 캘린더 | 국내외 신작·신규 서버 일정 한눈에',
@@ -32,7 +31,6 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       <Home initialGames={games} lastUpdated={lastUpdated} serverNow={serverNow} />
-      <AdSlot slot="main-mid" size="mid" />
       <nav className="seo-nav" aria-label="카테고리 바로가기">
         <a href="/upcoming-games">신규 게임 출시 예정 일정</a>
         <a href="/new-servers">신규 서버 오픈 일정</a>
