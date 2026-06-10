@@ -1,3 +1,10 @@
+## [2026-06-10 09:30] [디자이너]
+운영자 추가 지시 3건 + "더 좋은 디자인 있으면" → 데스크/모바일 목업 제시·DESIGN_NOTES §H 기록.
+①컬럼 패널 색 구분: 좌·중·우 각 div 패널화. 색구분 2안 — A(운영자) 중앙 흰·좌 중립·우 warm 틴트 / B(디자이너 권고) 동일 near-white+컬럼 라벨헤더+보더로 구분, warm은 출시임박 헤더 띠만(막 정리한 색 재산만화 방지·Linear/Vercel 톤·다크전환 깔끔). 운영자 택1.
+②하단 광고 제거(SeoLanding/Home 하단 AdSlot). 상단은 유지/별도.
+③모바일 1컬럼 스택: 헤더→카테고리 가로칩→검색/토글→캘린더 패널→출시임박 패널(warm), 하단광고 없음. 권고: 모바일 기본 리스트뷰(좁은폭 셀 과밀).
+구조(Phase L) 트랙. 신규 색 0. 코드 미수정(제안만). 기획자 TODO화 시 §H 1·2·3 + 직전 §F·§G(출시임박 우레일·헤더 미니멀·좌레일 sticky) 묶음 처리 권장.
+
 ## [2026-06-10 13:20] [개발자]
 완료: 없음 — 저장소 동기화 + 컨텍스트 점검 + declutter/§F 출고물 무결성 재검증. **번호 큐에 개발자 TODO 0건**(유일 큐 1건은 QA 라이브 전수 검수).
 검증(grep, 회귀 0): 폐기 #4a90e2 app/components/lib 0건·클라 컴포넌트 `@/lib/games` import 0건·`site-header` radial-gradient 0건·page/layout `use client` 0건·고아 `Filters.tsx` 삭제 유지·`CategoryRail` 존재.
@@ -196,8 +203,3 @@ IDEAS·후보(그라데/글로우/플로팅 등 시각 *추가*)는 운영자 '�
 완료: **[리팩토링] useWishlist 상태관리 승격** (운영자 직접 지시 — 외형/정리 모드 중 리팩토링 예외 처리). 기존 `useWishlist`는 호출 인스턴스마다 별도 useState(Set)를 들어 '공유 store'가 아니었음 → 동시 마운트 시 한쪽 토글이 타 인스턴스에 즉시 반영 안 되는 잠재 footgun. `useSyncExternalStore` + 모듈 싱글톤 스냅샷/리스너로 재작성해 단일 소스화, 보너스로 `storage` 이벤트 탭 간 동기화 추가. 공개 API `{ids,toggle,has}` 불변이라 소비처 5곳·프롭 드릴링 전부 무변경.
 변경된 파일: components/useWishlist.ts (전면 재작성, 85줄). WishlistApi 타입 export 추가. esbuild ts OK·strict any 0.
 비고: 기획자님 — 정리 모드 중이지만 운영자 직접 요청이라 진행했습니다. QA님 위시 토글 지속·새로고침 복원·2탭 동시 토글 반영(신규 탭 동기화) 실측 부탁.
-
-## [2026-06-09 18:29] [개발자]
-완료: **정리(declutter) Phase 1 §A.1 '색=3역할 고정'** 착수(번호큐 소진·운영자 17:40 승인 방향). ①카테고리 4색을 `lib/types.ts` CATEGORY_META 단일 출처에서 디자이너 17:40 목업 정보색으로 톤다운(모바일 #6f9c7a·PC #5f86b8·글로벌 #9a7bb0·신서버 #c08560) → 캘린더 셀/범례/리스트/관련카드/모달 일괄 차분화. ②임박강조 warm 단일화 — 전역 D-day '오늘' 잔존 오렌지 #ff7a59 3곳 + HeroStrip 레드 #ff4d4d(+글로우)를 단일 `var(--accent-warm)`(라이트 #c47a00/다크 #f5a623)로 흡수(오늘=warm 진하게는 weight/펄스로 유지). 리포 전역 #ff7a59·#ff4d4d grep 0건.
-변경된 파일: lib/types.ts(4줄), CalendarView.module.css(1), app/globals.css(2), HeroStrip.module.css(3) — 총 4파일. 신규 색 0·esbuild types.ts OK·CSS brace 67/81/41 균형.
-비고: ⚠️기획자님 — 번호 큐가 비어 운영자 직접 승인된 정리 §A.1을 Phase 0 선출고 선례대로 선착수했습니다. 정리 Phase 1 잔여(칩 단일언어·카테고리색 텍스트 격리)·Phase 2(플랫화: 헤더 radial·HeroStrip 펄스/글로우·카드 해치·상세 백드롭 제거)·Phase 3(필터 3컬럼·통계 중립·상세 위계) 번호 큐 등재 부탁. 카테고리 4색이 JS 상수라 라이트 전용 정보색 분기는 CSS변수화 리팩토링 필요(별도 큐). 로컬 빌드 sandbox 제한 → Vercel 위임. QA님 라이브 카테고리 4색 톤다운·D-DAY/임박 단일 warm(오렌지·레드 잔존 0)·양 테마 가독성·콘솔 0 실측 부탁.
