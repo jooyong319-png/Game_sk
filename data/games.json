@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-10T21:10:00+09:00",
+  "last_updated": "2026-06-11T09:00:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1364,6 +1364,28 @@
       ],
       "image_url": null,
       "source_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2437758"
+    },
+    {
+      "id": "resonance-plague-tale-legacy-20260827",
+      "name_ko": "레조넌스: 어 플래그 테일 레거시",
+      "name_en": "Resonance: A Plague Tale Legacy",
+      "release_date": "2026-08-27",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "Asobo Studio",
+      "publisher": "Focus Entertainment",
+      "description": "'어 플래그 테일' 시리즈의 프리퀄. 새 주인공 소피아의 여정을 그린 액션 어드벤처. 출시 첫날 Xbox 게임패스 제공.",
+      "genres": [
+        "액션",
+        "어드벤처"
+      ],
+      "image_url": null,
+      "source_url": "https://www.focus-entmt.com/en/news/resonance-a-plague-tale-legacy-releases-august-27"
     }
   ]
 }
