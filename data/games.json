@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-12T09:12:00+09:00",
+  "last_updated": "2026-06-12T12:15:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1027,9 +1027,9 @@
     },
     {
       "id": "aion2-global-2026",
-      "name_ko": "아이온2 글로벌 (2026 하반기 예정)",
+      "name_ko": "아이온2 글로벌 (2026년 9월 출시)",
       "name_en": "AION 2 Global",
-      "release_date": "2026-12-31",
+      "release_date": "2026-09-30",
       "release_date_approx": true,
       "category": "pc_console_kr",
       "platforms": [
@@ -1037,12 +1037,12 @@
       ],
       "developer": "엔씨소프트",
       "publisher": "엔씨소프트",
-      "description": "아이온2 글로벌 버전. 스팀·퍼플 통한 PC 전용, 지역별 서버 운영, 10개 언어 지원. 2026년 하반기 출시 확정(날짜 미정).",
+      "description": "아이온2 글로벌 버전. 스팀·퍼플 통한 PC 전용, 지역별 서버 운영, 10개 언어 지원. SGF 2026에서 2026년 9월 글로벌 정식 출시 발표(정확한 일자 미정).",
       "genres": [
         "MMORPG"
       ],
       "image_url": null,
-      "source_url": "https://about.ncsoft.com/news/article/aion2_update_260422"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317153"
     },
     {
       "id": "lost-ark-mobile-2026",
@@ -1386,6 +1386,29 @@
       ],
       "image_url": null,
       "source_url": "https://www.focus-entmt.com/en/news/resonance-a-plague-tale-legacy-releases-august-27"
+    },
+    {
+      "id": "captain-tsubasa-2-world-fighters-20260827",
+      "name_ko": "캡틴 츠바사 2: 월드 파이터즈",
+      "name_en": "Captain Tsubasa 2: World Fighters",
+      "release_date": "2026-08-27",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "Switch",
+        "Xbox Series X/S",
+        "PC"
+      ],
+      "developer": "TAMSOFT",
+      "publisher": "반다이남코",
+      "description": "캡틴 츠바사 IP 기반 액션 축구 게임 신작. PS5·스위치·Xbox는 8월 27일, 스팀은 8월 28일 글로벌 출시.",
+      "genres": [
+        "스포츠",
+        "액션"
+      ],
+      "image_url": null,
+      "source_url": "https://www.bandainamcoent.com/news/captain-tsubasa-2-world-fighters-takes-to-the-field-on-august-28-with-preorders-available-now"
     }
   ]
 }
