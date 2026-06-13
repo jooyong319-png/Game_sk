@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-12T12:15:00+09:00",
+  "last_updated": "2026-06-13T09:30:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1409,6 +1409,49 @@
       ],
       "image_url": null,
       "source_url": "https://www.bandainamcoent.com/news/captain-tsubasa-2-world-fighters-takes-to-the-field-on-august-28-with-preorders-available-now"
+    },
+    {
+      "id": "halo-campaign-evolved-20260728",
+      "name_ko": "헤일로: 캠페인 에볼브드",
+      "name_en": "Halo: Campaign Evolved",
+      "release_date": "2026-07-28",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X/S"
+      ],
+      "developer": "Halo Studios",
+      "publisher": "Xbox Game Studios",
+      "description": "초대작 '헤일로: 컴뱃 에볼브드'의 풀 리메이크. 원작 1년 전을 다루는 신규 미션 '오퍼레이션: 메테오라이트' 3종 포함. 시리즈 최초로 PS5 동시 출시, 게임패스 1일차 제공. 프리미엄 에디션은 7/23 얼리 액세스.",
+      "genres": [
+        "FPS",
+        "액션"
+      ],
+      "image_url": null,
+      "source_url": "https://news.xbox.com/en-us/2026/06/07/halo-campaign-evolved-launch-preorder-xbox-games-showcase-2026/"
+    },
+    {
+      "id": "silent-hill-townfall-20260924",
+      "name_ko": "사일런트 힐: 타운폴",
+      "name_en": "Silent Hill: Townfall",
+      "release_date": "2026-09-24",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5"
+      ],
+      "developer": "Screen Burn",
+      "publisher": "코나미 / 안나푸르나 인터랙티브",
+      "description": "사일런트 힐 시리즈 신작. 스코틀랜드를 배경으로 한 1인칭 심리 호러로 전투보다 잠입·퍼즐에 집중. 휴대용 CRT TV로 위험을 감지하며 진행. PS5·Steam·에픽게임즈 출시.",
+      "genres": [
+        "심리 호러",
+        "어드벤처"
+      ],
+      "image_url": null,
+      "source_url": "https://blog.playstation.com/2026/06/02/silent-hill-townfall-launches-september-24-on-ps5/"
     }
   ]
 }
