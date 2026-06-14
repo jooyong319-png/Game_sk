@@ -4,6 +4,7 @@ import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
 import { buildGoogleCalendarUrl } from '@/lib/google-calendar';
+import { ShareButton } from './ShareButton';
 import styles from './GameModal.module.css';
 
 interface Props {
@@ -84,6 +85,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
           <a className={styles.detail} href={`/game/${game.id}`} target="_blank" rel="noopener">
             <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> 전체 페이지 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
+          <ShareButton url={`/game/${game.id}`} title={game.name_ko} className={styles.share} />
         </div>
       </div>
     </div>

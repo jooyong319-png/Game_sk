@@ -1,10 +1,23 @@
-/* 좌측 레일 위젯 '이달의 출시' — 패널 면(3컬럼 패널과 동일 톤) */
-.widget {
+/* 좌측 빈 여백 플로팅 '이달의 출시' — 콘텐츠(max 1400px) 왼쪽에 fixed */
+.float {
+  position: fixed;
+  /* 헤더(~53px) 바로 아래 + 콘텐츠 상단과 정렬 */
+  top: 4.5rem;
+  /* 1400px 콘텐츠 블록의 왼쪽 여백에, 콘텐츠 좌측 끝에서 1rem 떨어뜨려 배치 */
+  left: calc((100vw - 1400px) / 2 - 180px - 1rem);
+  width: 180px;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.9rem;
+  z-index: 10;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
 }
+/* 여백이 모자라 캘린더를 가릴 화면에선 숨김 */
+@media (max-width: 1799px) {
+  .float { display: none; }
+}
+
 .title {
   display: flex;
   align-items: center;
@@ -47,7 +60,6 @@
   height: 100%;
   border-radius: 4px;
   min-width: 2px;
-  transition: width 0.3s ease;
 }
 .num {
   flex: 0 0 auto;

@@ -10,10 +10,10 @@
   margin: 0 0 0.5rem;
 }
 
-/* ─── 데스크톱 3컬럼  ─── */
+/* ─── 데스크톱 2컬럼 (본문 + 우측 레일) ─── */
 .layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: 1.6rem;
   align-items: start;
 }
@@ -26,23 +26,20 @@
   gap: 1.25rem;
 }
 
-/* 좌·우 사이드 컬럼: 패널(레일+위젯+프로모)을 세로 적층 + sticky로 따라옴 */
-.leftCol,
+/* 우측 사이드 컬럼: 패널 세로 적층 + sticky로 따라옴 */
 .rightCol {
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
   position: sticky;
-  top: 1rem;
+  top: 4.5rem; /* 헤더(~53px) 아래에 멈춤 */
   align-self: start;
-  max-height: calc(100vh - 2rem);
+  max-height: calc(100vh - 5.5rem);
   overflow-y: auto;
   scrollbar-width: thin;
 }
-.leftCol::-webkit-scrollbar,
 .rightCol::-webkit-scrollbar { width: 6px; }
-.leftCol::-webkit-scrollbar-thumb,
 .rightCol::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 /* 검색 + 토글 한 줄 */
@@ -92,7 +89,7 @@
 /* ─── 태블릿: 우 사이드 컬럼 숨김 (2컬럼) ─── */
 @media (max-width: 1100px) {
   .layout {
-    grid-template-columns: 200px minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
   .rightCol {
     display: none;
@@ -108,18 +105,11 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  /* 스택 순서: 좌(필터+위젯) → 중 본문 → 우(임박+위젯) */
-  .leftCol {
-    order: 1;
-    position: static;
-    max-height: none;
-    overflow: visible;
-    gap: 1rem;
-  }
-  .main { order: 2; }
+  /* 스택 순서: 본문 → 우(임박+위젯) */
+  .main { order: 1; }
   .rightCol {
     display: flex;
-    order: 3;
+    order: 2;
     position: static;
     max-height: none;
     overflow: visible;

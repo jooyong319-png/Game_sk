@@ -4,6 +4,7 @@ import { getAllGames, getGameById, formatKoreanDate, getKoreanWeekday } from '@/
 import { CATEGORY_META } from '@/lib/types';
 import { GoogleCalendarButton } from '@/components/GoogleCalendarButton';
 import { DdayBadge } from '@/components/DdayBadge';
+import { ShareButton } from '@/components/ShareButton';
 import { ViewCounter } from '@/components/ViewCounter';
 import { Comments } from '@/components/Comments';
 import { PageShell } from '@/components/PageShell';
@@ -93,6 +94,7 @@ export default async function GamePage({ params }: Props) {
         </ul>
         <div className="detail-actions">
           <GoogleCalendarButton game={game} />
+          <ShareButton url={url} title={game.name_ko} className="detail-link" />
           {game.source_url && (
             <a className="detail-link" href={game.source_url} target="_blank" rel="noopener">공식 출처 →</a>
           )}

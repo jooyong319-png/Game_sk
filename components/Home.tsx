@@ -1,9 +1,7 @@
 'use client';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import type { Game, FilterState } from '@/lib/types';
-import { calcDayDiff, formatShortDate, kstDateOnly } from '@/lib/utils';
-import { HeroStrip } from './HeroStrip';
-import { MonthStats } from './MonthStats';
+import { formatShortDate, kstDateOnly } from '@/lib/utils';
 import { NextByCategory } from './NextByCategory';
 import { PromoBanner } from './PromoBanner';
 import { ViewToggle } from './ViewToggle';
@@ -131,26 +129,12 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
     return filteredGames.filter(g => new Date(g.release_date) >= today);
   }, [filteredGames, filters.days, now]);
 
-  const imminent = useMemo(() => {
-    const today = new Date(now);
-    today.setHours(0, 0, 0, 0);
-    return initialGames
-      .map(g => ({ g, diff: calcDayDiff(g.release_date, today) }))
-      .filter(x => x.diff >= 0 && x.diff <= 7)
-      .sort((a, b) => a.diff - b.diff)
-      .slice(0, 5);
-  }, [initialGames, now]);
 
   const openGame = openGameId ? initialGames.find(g => g.id === openGameId) ?? null : null;
 
   return (
     <div className={styles.home}>
       <div className={styles.layout}>
-        <div className={styles.leftCol}>
-          <MonthStats games={initialGames} now={now} />
-          <PromoBanner variant="calendar" />
-        </div>
-
         <div className={styles.main}>
           <div className={styles.topRow}>
             <input
@@ -203,7 +187,6 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
         </div>
 
         <aside className={styles.rightCol} aria-label="추천 일정">
-          {imminent.length > 0 && <HeroStrip items={imminent} />}
           <NextByCategory games={initialGames} now={now} />
           <PromoBanner variant="update" />
         </aside>
