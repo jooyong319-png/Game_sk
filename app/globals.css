@@ -184,8 +184,7 @@ textarea:focus-visible,
 
 /* ─── 게임 상세 페이지 (정적) ─── */
 .game-detail {
-  max-width: 700px;
-  margin: 1rem auto;
+  margin: 0 0 1rem;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -242,7 +241,7 @@ textarea:focus-visible,
 }
 
 /* ─── 상세 "같은 시기 출시" 관련 게임 그리드 ─── */
-.detail-related { max-width: 700px; margin: 1.5rem auto 0; }
+.detail-related { margin: 1.5rem 0 0; }
 .detail-related h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.8rem; color: var(--text); }
 .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .related-card { display: flex; flex-direction: column; gap: 0.3rem; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.8rem 1rem; transition: border-color 0.15s ease, transform 0.15s ease; }
@@ -256,9 +255,7 @@ textarea:focus-visible,
 
 /* ─── 랜딩 페이지 (SEO 키워드) ─── */
 .seo-landing {
-  max-width: 760px;
-  margin: 1rem auto;
-  padding: 0 1rem;
+  margin: 0;
 }
 .seo-landing h2 {
   font-size: var(--fs-title);
