@@ -183,6 +183,27 @@ textarea:focus-visible,
 .category-tag.cat-bg-new_server    { --cat-dot: #c08560; }
 
 /* ─── 게임 상세 페이지 (정적) ─── */
+/* 상세 빵부스러기(breadcrumb) */
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+  margin-bottom: 1rem;
+}
+.breadcrumb a { color: var(--text-faint); }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb [aria-current="page"] {
+  color: var(--text);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60vw;
+}
+
 .game-detail {
   margin: 0 0 1rem;
   background: var(--bg-elev);
@@ -190,7 +211,16 @@ textarea:focus-visible,
   border-radius: 12px;
   padding: 1.5rem 1.8rem 2rem;
 }
-.game-detail h2 { font-size: var(--fs-title); font-weight: 700; letter-spacing: -0.01em; margin: 0.5rem 0 0.3rem; }
+.game-detail .detail-cover {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.2rem;
+  background: var(--bg);
+}
+.game-detail h1 { font-size: var(--fs-title); font-weight: 700; letter-spacing: -0.01em; margin: 0.5rem 0 0.3rem; }
 .game-detail .name-en { color: var(--text-faint); font-size: 0.9rem; margin-bottom: 0.5rem; }
 .game-detail .detail-head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0.4rem 0 0; }
 .game-detail .detail-release-row { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin: 0.5rem 0 1rem; }
@@ -210,7 +240,7 @@ textarea:focus-visible,
 /* 상세 카드 모바일 압축 (≤480px) — base 규칙 뒤에 둬 cascade 우선 (QA 06-04 cascade 버그 수정) */
 @media (max-width: 480px) {
   .game-detail { padding: 1.2rem 1.1rem 1.6rem; }
-  .game-detail h2 { font-size: 1.5rem; }
+  .game-detail h1 { font-size: 1.5rem; }
   .game-detail .detail-meta { grid-template-columns: 1fr; }
   .detail-actions .gcal-link,
   .detail-actions .detail-link { flex: 1 1 auto; justify-content: center; }

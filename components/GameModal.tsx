@@ -37,7 +37,9 @@ export function GameModal({ game, onClose, wishlist }: Props) {
         <button type="button" className={styles.close} onClick={onClose} aria-label="닫기">×</button>
 
         <div className={`${styles.image} cat-bg-${game.category}`}>
-          <span className={styles.imageEmoji}>{cat.emoji}</span>
+          {game.image_url
+            ? <img src={game.image_url} alt={game.name_ko} className={styles.imageImg} loading="lazy" />
+            : <span className={styles.imageEmoji}>{cat.emoji}</span>}
         </div>
 
         <span className={`category-tag cat-bg-${game.category}`}>{cat.label}</span>

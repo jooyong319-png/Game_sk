@@ -42,6 +42,12 @@
   margin-bottom: 0.8rem;
   overflow: hidden;
 }
+.imageImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .imageEmoji {
   position: absolute;
   right: 1rem;
