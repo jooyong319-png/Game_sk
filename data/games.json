@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-14T09:10:00+09:00",
+  "last_updated": "2026-06-14T12:30:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -305,7 +305,7 @@
         "핵앤슬래시",
         "새 시즌"
       ],
-      "image_url": null,
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2694490/header.jpg",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=316222&site=poe"
     },
     {
@@ -456,7 +456,7 @@
         "전략",
         "RPG"
       ],
-      "image_url": null,
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1004640/header.jpg",
       "source_url": "https://bbs.ruliweb.com/news/read/224630"
     },
     {
@@ -1236,7 +1236,7 @@
         "액션RPG",
         "JRPG"
       ],
-      "image_url": null,
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2244210/header.jpg",
       "source_url": "https://www.bandainamcoent.com/news/echoes-of-aincrad-launching-this-july"
     },
     {
