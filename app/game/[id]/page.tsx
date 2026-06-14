@@ -117,7 +117,10 @@ export default async function GamePage({ params }: Props) {
 
         <article className="game-detail">
           {game.image_url && (
-            <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="detail-cover" loading="lazy" />
+            <div className="detail-cover">
+              <img src={game.image_url} alt="" aria-hidden="true" className="cover-bg" loading="lazy" />
+              <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="cover-fg" loading="lazy" />
+            </div>
           )}
           <div className="detail-head">
             <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>

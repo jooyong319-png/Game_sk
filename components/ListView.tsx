@@ -158,9 +158,9 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
                     <span className={styles.actLabel}>일정</span>
                   </a>
                   {g.source_url && (
-                    <a className={styles.actBtn} href={g.source_url} target="_blank" rel="noopener" aria-label="공식 홈페이지">
-                      <svg className="ic" aria-hidden="true"><use href="#ic-home" /></svg>
-                      <span className={styles.actLabel}>홈페이지</span>
+                    <a className={styles.actBtn} href={g.source_url} target="_blank" rel="noopener" aria-label="공식 출처">
+                      <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
+                      <span className={styles.actLabel}>출처</span>
                     </a>
                   )}
                   <button
