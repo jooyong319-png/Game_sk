@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-14T13:00:00+09:00",
+  "last_updated": "2026-06-15T09:15:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1041,7 +1041,7 @@
       "genres": [
         "MMORPG"
       ],
-      "image_url": null,
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3393110/header.jpg",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317153"
     },
     {
