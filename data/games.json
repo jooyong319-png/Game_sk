@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-15T09:15:00+09:00",
+  "last_updated": "2026-06-15T09:20:25+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1472,6 +1472,26 @@
       ],
       "image_url": null,
       "source_url": "https://maplestory.nexon.com/News/Event/Ongoing/1165"
+    },
+    {
+      "id": "lostark-loaon-summer-20260620",
+      "name_ko": "로스트아크 '2026 로아온 썸머' 온라인 쇼케이스",
+      "name_en": null,
+      "release_date": "2026-06-20",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "스마일게이트 RPG",
+      "publisher": "스마일게이트",
+      "description": "로스트아크 여름 업데이트 로드맵을 공개하는 온라인 프리뷰 '2026 로아온 썸머'. 6월 20일(토) 오후 4시 공식 유튜브 생중계, 여름 시즌 신규 클래스·레이드 등 대규모 업데이트 로드맵 공개.",
+      "genres": [
+        "MMORPG",
+        "쇼케이스"
+      ],
+      "image_url": null,
+      "source_url": "https://newsroom.smilegate.com/news/1780561197"
     }
   ]
 }
