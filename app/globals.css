@@ -366,6 +366,21 @@ textarea:focus-visible,
 }
 .seo-nav a:hover { color: var(--text); border-color: var(--accent); }
 
+/* ─── 약관/개인정보 등 법적 고지 페이지 ─── */
+.legal {
+  max-width: 760px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.legal h1 { font-size: var(--fs-title); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1.2rem; }
+.legal h2 { font-size: var(--fs-h3); font-weight: 700; margin: 1.6rem 0 0.6rem; }
+.legal p { font-size: var(--fs-base); margin-bottom: 0.6rem; }
+.legal ul { margin: 0 0 1rem 1.2rem; }
+.legal li { font-size: var(--fs-base); margin-bottom: 0.3rem; }
+.legal a { color: var(--accent); }
+.legal a:hover { text-decoration: underline; }
+.legal .legal-updated { color: var(--text-faint); font-size: var(--fs-sm); margin-top: 1.8rem; }
+
 /* 인라인 SVG 아이콘 (이모지→SVG 1단계) */
 .ic {
   width: 1em;

@@ -75,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
           <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a> · <a href="/blog">블로그</a></p>
+          <p><a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a></p>
         </footer>
       </body>
     </html>
