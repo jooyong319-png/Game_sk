@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-15T10:03:41+09:00",
+  "last_updated": "2026-06-15T21:12:59+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -674,7 +674,7 @@
         "액션 RPG",
         "확장판"
       ],
-      "image_url": null,
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/881020/header.jpg",
       "source_url": "https://www.cygames.co.jp/en/news/id-24753"
     },
     {
