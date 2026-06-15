@@ -47,6 +47,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
         />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8522919475398338"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
@@ -75,7 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
           <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a> · <a href="/blog">블로그</a></p>
-          <p><a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a></p>
+          <p><a href="/about">소개</a> · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a></p>
         </footer>
       </body>
     </html>
