@@ -18,7 +18,7 @@ const CATEGORY_LANDING: Record<Category, { url: string; label: string; releaseNo
   mobile_kr:     { url: '/mobile-games',      label: '모바일 게임',   releaseNoun: '출시일' },
   pc_console_kr: { url: '/pc-console-games',  label: 'PC·콘솔 게임',  releaseNoun: '출시일' },
   global_aaa:    { url: '/global-games',      label: '글로벌 게임',   releaseNoun: '출시일' },
-  new_server:    { url: '/new-servers',       label: '신규 서버',     releaseNoun: '오픈일' },
+  new_server:    { url: '/new-servers',       label: '신규 서버 · 이벤트', releaseNoun: '일정' },
 };
 
 // SSG: 모든 게임 ID로 정적 페이지 생성
