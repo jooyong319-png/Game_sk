@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-15T21:12:59+09:00",
+  "last_updated": "2026-06-16T09:11:08+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1515,6 +1515,50 @@
       ],
       "image_url": null,
       "source_url": "https://maple.land/board/notices/o4gxsdqu0fntw4epq2dgr99o"
+    },
+    {
+      "id": "gears-of-war-eday-20261006",
+      "name_ko": "기어스 오브 워: 이데이",
+      "name_en": "Gears of War: E-Day",
+      "release_date": "2026-10-06",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "Xbox Series X|S"
+      ],
+      "developer": "The Coalition",
+      "publisher": "Xbox Game Studios",
+      "description": "기어스 오브 워 프리퀄. 오리지널 3부작 14년 전, 로커스트 침공 첫 24시간을 다룬다. Xbox·PC 독점, 출시일 게임패스 데이원. 사전구매 베타 8월 6일.",
+      "genres": [
+        "TPS",
+        "액션"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3010850/header.jpg",
+      "source_url": "https://www.xbox.com/en-US/games/gears-of-war-eday"
+    },
+    {
+      "id": "hot-wheels-infinite-rush-20260924",
+      "name_ko": "핫휠 인피니트 러시",
+      "name_en": "HOT WHEELS Infinite Rush",
+      "release_date": "2026-09-24",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S",
+        "Switch 2"
+      ],
+      "developer": "Milestone",
+      "publisher": "Milestone",
+      "description": "핫휠 오픈월드 레이싱 신작. 4개 섬을 무대로 클래식 레이스·프리로밍 등 다양한 모드, 150종 이상 차량 수집. Summer Game Fest 2026 공개.",
+      "genres": [
+        "레이싱",
+        "오픈월드"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2821390/header.jpg",
+      "source_url": "https://store.steampowered.com/app/2821390/HOT_WHEELS_Infinite_Rush/"
     }
   ]
 }
