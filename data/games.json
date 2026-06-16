@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-16T09:11:08+09:00",
+  "last_updated": "2026-06-16T21:12:46+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1255,7 +1255,7 @@
       "genres": [
         "액션 RPG"
       ],
-      "image_url": null,
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg",
       "source_url": "https://en.bandainamcoent.eu/elden-ring/news/elden-ring-tarnished-edition-coming-nintendo-switch-2-august"
     },
     {
