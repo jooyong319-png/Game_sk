@@ -152,6 +152,8 @@ export default async function GamePage({ params }: Props) {
           </div>
         </article>
 
+        <Comments gameId={game.id} />
+
         {related.length > 0 && (
           <section className="detail-related">
             <h2>{landing.label} 더보기</h2>
@@ -167,8 +169,6 @@ export default async function GamePage({ params }: Props) {
             </div>
           </section>
         )}
-
-        <Comments gameId={game.id} />
       </div>
     </PageShell>
   );
