@@ -145,6 +145,55 @@ textarea:focus-visible,
   margin-top: 3rem;
 }
 
+/* ─── 하단 탭 바 (설치 앱 전용) ─── */
+/* 기본은 숨김 — 브라우저 웹에선 노출하지 않음 */
+.bottom-tabbar { display: none; }
+.bottom-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 52px;
+  padding: 6px 0;
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-tab:hover { text-decoration: none; }
+.bottom-tab .ic { width: 22px; height: 22px; }
+.bottom-tab[aria-current="page"] { color: var(--accent); }
+
+/* ─── 설치 앱(standalone) 화면 최적화 ─── */
+@media (display-mode: standalone) {
+  /* 하단 탭 바 노출 + 홈 제스처바(safe-area) 회피 */
+  .bottom-tabbar {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04);
+  }
+  /* 탭 바에 본문이 가리지 않도록 하단 여백 확보 */
+  body { padding-bottom: calc(52px + env(safe-area-inset-bottom)); }
+  /* 헤더는 상태바 노치 영역 회피 */
+  .site-header { padding-top: calc(0.7rem + env(safe-area-inset-top)); }
+  /* 앱에선 푸터 법적 링크/광고 숨김 (소개·약관은 가이드 메뉴로 충분) */
+  .site-footer { display: none; }
+  ins.adsbygoogle,
+  .adsbygoogle { display: none !important; }
+  /* 당겨서 새로고침/바운스 시 배경 노출 방지 */
+  body { overscroll-behavior-y: contain; }
+}
+
 /* ─── 카테고리 색 토큰 ─── */
 .cat-mobile_kr { color: #81c784; }
 .cat-pc_console_kr { color: #64b5f6; }

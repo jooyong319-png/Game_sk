@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { HeaderNav } from '@/components/HeaderNav';
 import { FloatingMonthStats } from '@/components/FloatingMonthStats';
+import { BottomTabBar } from '@/components/BottomTabBar';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gcalen.com'),
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: '#047857',
+  viewportFit: 'cover', // 설치 앱(노치/홈바)에서 safe-area-inset 사용 위해
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -82,6 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main id="main">{children}</main>
         <FloatingMonthStats />
+        <BottomTabBar />
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
           <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a> · <a href="/blog">신작 가이드</a></p>
