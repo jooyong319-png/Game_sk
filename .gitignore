@@ -24,3 +24,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# TWA(안드로이드 패키지) 프로젝트 — 키스토어 등 비밀키 포함, 커밋 금지
+gcalen-twa/
