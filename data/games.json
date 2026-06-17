@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-17T09:12:40+09:00",
+  "last_updated": "2026-06-17T15:05:11+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1454,8 +1454,8 @@
       "source_url": "https://blog.playstation.com/2026/06/02/silent-hill-townfall-launches-september-24-on-ps5/"
     },
     {
-      "id": "maplestory-challengers-world-s2-20260618",
-      "name_ko": "메이플스토리 챌린저스 월드 시즌2 오픈",
+      "id": "maplestory-challengers-world-s4-20260618",
+      "name_ko": "메이플스토리 챌린저스 월드 시즌4 오픈 (OVERDRIVE)",
       "name_en": null,
       "release_date": "2026-06-18",
       "release_date_approx": false,
@@ -1465,13 +1465,13 @@
       ],
       "developer": "넥슨",
       "publisher": "넥슨",
-      "description": "메이플스토리 시즌형 챌린저스 월드 시즌2 오픈(6/18 점검 후). 신규 직업 '레테' 육성, 하이퍼/테라 버닝 지원. 육성 기간 ~9/16, 보상 유효 9/17 오전 2시까지의 시즌 한정 서버.",
+      "description": "2026 여름 쇼케이스 'OVERDRIVE'(6/13) 공개. 6/18 점검 후 시즌형 챌린저스 월드 시즌4 오픈. 신규 직업 '레테' 육성 가능, 신규 시즌 보스 '메이린' 추가, 솔 야누스 등 성장 지원. 육성 기간 ~9/16.",
       "genres": [
         "MMORPG",
         "신규 서버"
       ],
       "image_url": null,
-      "source_url": "https://maplestory.nexon.com/News/Event/Ongoing/1165"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317443&site=maple"
     },
     {
       "id": "lostark-loaon-summer-20260620",
