@@ -37,7 +37,7 @@ export default async function HomePage() {
         <a href="/mobile-games">국내 신규 모바일 게임 출시 일정</a>
         <a href="/pc-console-games">신규 PC·콘솔 게임 출시 일정</a>
         <a href="/global-games">글로벌 대작 게임 출시 일정</a>
-        <a href="/blog">📰 게임 출시 블로그</a>
+        <a href="/blog">📰 게임 신작 가이드</a>
       </nav>
     </>
   );

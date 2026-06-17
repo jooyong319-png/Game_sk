@@ -5,13 +5,13 @@ import { PageShell } from '@/components/PageShell';
 import styles from './blog.module.css';
 
 export const metadata: Metadata = {
-  title: '게임 출시 블로그 | 신작·신규 서버 큐레이션',
-  description: '신규 게임 출시 정리, 신규 서버 일정, 추천 게임 큐레이션 등 게임 출시 캘린더가 직접 정리한 게임 정보 블로그.',
+  title: '게임 신작 가이드 | 신작 추천·출시 정리·TOP 정리',
+  description: '신작 게임 추천, 월간·하반기 출시 정리, 기대작 TOP 리스트, 신규 서버 일정 등 게임 출시 캘린더가 직접 큐레이션한 신작 가이드.',
   alternates: { canonical: 'https://gcalen.com/blog' },
   openGraph: {
     url: 'https://gcalen.com/blog',
     type: 'website',
-    title: '게임 출시 블로그',
+    title: '게임 신작 가이드',
   },
 };
 
@@ -22,9 +22,9 @@ export default async function BlogIndexPage() {
     <PageShell>
       <section className={styles.indexSection}>
         <header className={styles.header}>
-          <h2 className={styles.title}>📰 블로그</h2>
+          <h2 className={styles.title}>📰 신작 가이드</h2>
           <p className={styles.subtitle}>
-            신작·신규 서버 큐레이션, 추천 게임 정리, 출시 일정 요약
+            신작 추천, 기대작 TOP 정리, 월간·하반기 출시 정리, 신규 서버 일정
           </p>
         </header>
 

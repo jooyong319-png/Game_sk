@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: Props) {
     <PageShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }} />
       <article className={styles.post}>
-        <Link href="/blog" className={styles.backLink}>← 블로그 목록으로</Link>
+        <Link href="/blog" className={styles.backLink}>← 신작 가이드 목록으로</Link>
         <header className={styles.postHeader}>
           <time className={styles.postDate}>{formatPostDate(post.date)}</time>
           <h1 className={styles.postH1}>{post.title}</h1>

@@ -15,7 +15,7 @@ const NAV: NavItem[] = [
   { href: '/mobile-games', label: '모바일' },
   { href: '/pc-console-games', label: 'PC·콘솔' },
   { href: '/global-games', label: '글로벌' },
-  { href: '/blog', label: '블로그' },
+  { href: '/blog', label: '신작 가이드' },
 ];
 
 export function HeaderNav() {
