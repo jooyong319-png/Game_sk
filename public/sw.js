@@ -1,6 +1,5 @@
-// 게임 출시 캘린더 서비스워커 — PWA 설치/오프라인 폴백용.
-// 콘텐츠는 매일 갱신되므로 '네트워크 우선'. 오프라인일 때만 캐시된 홈 → 전용 오프라인 페이지 순으로 폴백.
-const CACHE = 'gcalen-v2';
+// 게임 출시 캘린더 서비스워커 — PWA 설치/오프라인 폴백 + 웹 푸시 알림.
+const CACHE = 'gcalen-v3';
 const OFFLINE_URL = '/offline.html';
 
 self.addEventListener('install', (e) => {
@@ -28,4 +27,32 @@ self.addEventListener('fetch', (e) => {
       )
     );
   }
+});
+
+// ── 웹 푸시 ──
+self.addEventListener('push', (e) => {
+  let data = {};
+  try { data = e.data ? e.data.json() : {}; } catch (_) { /* ignore */ }
+  const title = data.title || '게임 출시 캘린더';
+  const options = {
+    body: data.body || '',
+    icon: '/icons/icon-192.png',
+    badge: '/icons/icon-192.png',
+    tag: data.tag,
+    data: { url: data.url || '/' },
+  };
+  e.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || '/';
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+      for (const c of list) {
+        if ('focus' in c) { c.navigate(url); return c.focus(); }
+      }
+      return self.clients.openWindow(url);
+    })
+  );
 });

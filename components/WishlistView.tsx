@@ -4,6 +4,7 @@ import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
 import { useWishlist } from '@/hooks/useWishlist';
+import { NotifyToggle } from './NotifyToggle';
 import styles from './WishlistView.module.css';
 
 export function WishlistView({ games }: { games: Game[] }) {
@@ -22,6 +23,8 @@ export function WishlistView({ games }: { games: Game[] }) {
         </h1>
         <p className={styles.sub}>관심 게임의 출시 일정을 모아봤어요.</p>
       </header>
+
+      <NotifyToggle />
 
       {items.length === 0 ? (
         <div className={styles.empty}>
