@@ -259,3 +259,13 @@
   }
   .actLabel { display: inline; }
 }
+
+/* ─── 설치 앱: 카드 질감 + 누름 피드백 ─── */
+@media (display-mode: standalone) {
+  .rows { box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); }
+  .row { transition: background 0.15s, transform 0.1s ease; }
+  .row:active { background: var(--bg); transform: scale(0.994); }
+  .title { transition: transform 0.1s ease; }
+  .title:active, .actBtn:active { transform: scale(0.94); }
+  .tab:active, .yearBtn:active { transform: scale(0.92); }
+}

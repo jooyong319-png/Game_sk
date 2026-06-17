@@ -22,12 +22,17 @@ export function BottomTabBar() {
     <nav className="bottom-tabbar" aria-label="앱 하단 메뉴">
       {TABS.map(tab => {
         const active = tab.href === '/' ? pathname === '/' : pathname.startsWith(tab.href);
+        // 이미 그 탭이면 이동 대신 맨 위로 스크롤(앱 관습)
+        const onClick = active
+          ? (e: React.MouseEvent) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+          : undefined;
         return (
           <a
             key={tab.href}
             href={tab.href}
             className="bottom-tab"
             aria-current={active ? 'page' : undefined}
+            onClick={onClick}
           >
             <svg className="ic" aria-hidden="true"><use href={`#${tab.icon}`} /></svg>
             <span>{tab.label}</span>
