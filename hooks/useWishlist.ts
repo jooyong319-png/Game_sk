@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useSyncExternalStore } from 'react';
+import { showToast } from '@/lib/toast';
 
 const KEY = 'gcalen.wishlist.v1';
 
@@ -60,8 +61,9 @@ function getServerSnapshot(): Set<string> {
 
 function toggleId(id: string): void {
   const next = new Set(snapshot);
-  if (next.has(id)) next.delete(id);
-  else next.add(id);
+  let added: boolean;
+  if (next.has(id)) { next.delete(id); added = false; }
+  else { next.add(id); added = true; }
   snapshot = next; // 새 참조 → 구독자 리렌더 트리거
   try {
     localStorage.setItem(KEY, JSON.stringify([...next]));
@@ -69,6 +71,7 @@ function toggleId(id: string): void {
     /* quota 초과 등 무시 */
   }
   emit();
+  showToast(added ? '⭐ 즐겨찾기에 추가됨' : '즐겨찾기에서 제거됨');
 }
 
 export interface WishlistApi {

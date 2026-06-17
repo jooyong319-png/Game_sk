@@ -105,9 +105,13 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
       </div>
 
       {monthGames.length === 0 ? (
-        <p className={styles.empty}>
-          {activeMonth === 'approx' ? '출시일 미정 게임이 없어요.' : `${activeYear}년 ${activeMonth}월 출시 일정이 없어요.`}
-        </p>
+        <div className={styles.empty}>
+          <div className={styles.emptyIcon} aria-hidden="true">🎮</div>
+          <p className={styles.emptyText}>
+            {activeMonth === 'approx' ? '출시일 미정 게임이 없어요.' : `${activeYear}년 ${activeMonth}월 출시 일정이 없어요.`}
+          </p>
+          <p className={styles.emptyHint}>위 탭에서 다른 달을 골라보세요.</p>
+        </div>
       ) : (
         <ul className={styles.rows}>
           {monthGames.map(g => {

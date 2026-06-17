@@ -228,6 +228,9 @@
   padding: 3rem 1rem;
   color: var(--text-faint);
 }
+.emptyIcon { font-size: 2.6rem; line-height: 1; margin-bottom: 0.7rem; opacity: 0.85; }
+.emptyText { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+.emptyHint { font-size: 0.85rem; color: var(--text-faint); }
 
 /* ─── 태블릿: 액션 라벨 숨기고 아이콘만 ─── */
 @media (max-width: 900px) {

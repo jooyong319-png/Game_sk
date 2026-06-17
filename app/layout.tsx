@@ -4,6 +4,7 @@ import { HeaderNav } from '@/components/HeaderNav';
 import { FloatingMonthStats } from '@/components/FloatingMonthStats';
 import { BottomTabBar } from '@/components/BottomTabBar';
 import { HeaderScroll } from '@/components/HeaderScroll';
+import { Toaster } from '@/components/Toaster';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gcalen.com'),
@@ -47,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();",
+              "(function(){try{var t=localStorage.getItem('theme');if(!t){var s=window.matchMedia&&(window.matchMedia('(display-mode: standalone)').matches||navigator.standalone);t=(s&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();",
           }}
         />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <FloatingMonthStats />
         <BottomTabBar />
         <HeaderScroll />
+        <Toaster />
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
           <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a> · <a href="/blog">신작 가이드</a></p>

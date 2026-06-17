@@ -34,7 +34,9 @@ export function BottomTabBar() {
             aria-current={active ? 'page' : undefined}
             onClick={onClick}
           >
-            <svg className="ic" aria-hidden="true"><use href={`#${tab.icon}`} /></svg>
+            <span className="tab-ico">
+              <svg className="ic" aria-hidden="true"><use href={`#${tab.icon}`} /></svg>
+            </span>
             <span>{tab.label}</span>
           </a>
         );

@@ -168,7 +168,10 @@
   margin-left: 0.1rem;
 }
 
-.empty { text-align: center; color: var(--text-faint); padding: 1.5rem; }
+.empty { text-align: center; color: var(--text-faint); padding: 2.5rem 1.5rem; }
+.emptyIcon { font-size: 2.6rem; line-height: 1; margin-bottom: 0.7rem; opacity: 0.85; }
+.emptyText { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+.emptyHint { font-size: 0.85rem; color: var(--text-faint); }
 
 /* ─── Day Detail Panel (셀 클릭 시 하단 표시) ─── */
 .dayPanel {

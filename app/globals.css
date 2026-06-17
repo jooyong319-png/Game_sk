@@ -166,23 +166,22 @@ textarea:focus-visible,
   transition: transform 0.12s ease, color 0.15s ease;
 }
 .bottom-tab:hover { text-decoration: none; }
-.bottom-tab .ic { width: 22px; height: 22px; transition: transform 0.12s ease; }
-.bottom-tab[aria-current="page"] { color: var(--accent); }
-.bottom-tab[aria-current="page"] .ic { transform: translateY(-1px) scale(1.06); }
-/* 활성 탭 상단 액센트 바 */
-.bottom-tab::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 0;
-  height: 2.5px;
-  border-radius: 0 0 3px 3px;
-  background: var(--accent);
-  transform: translateX(-50%);
-  transition: width 0.18s ease;
+.bottom-tab .ic { width: 22px; height: 22px; }
+/* 활성 탭 "채움" 표시 — 아이콘 뒤 알약 배경(Material 톤) */
+.tab-ico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  transition: background 0.18s ease;
 }
-.bottom-tab[aria-current="page"]::before { width: 34px; }
+.bottom-tab[aria-current="page"] { color: var(--accent); }
+.bottom-tab[aria-current="page"] .tab-ico { background: rgba(4, 120, 87, 0.14); }
+@supports (background: color-mix(in srgb, red, blue)) {
+  .bottom-tab[aria-current="page"] .tab-ico { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+}
 /* 누름 피드백 */
 .bottom-tab:active { transform: scale(0.9); }
 
@@ -227,6 +226,46 @@ textarea:focus-visible,
   .adsbygoogle { display: none !important; }
   /* 당겨서 새로고침/바운스 시 배경 노출 방지 */
   body { overscroll-behavior-y: contain; }
+  /* 토스트는 하단 탭 바 위로 */
+  .toast-wrap { bottom: calc(64px + env(safe-area-inset-bottom)); }
+}
+
+/* ─── 토스트 (찜 등 피드백) ─── */
+.toast-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 1.5rem;
+  z-index: 1200;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  padding: 0 1rem;
+}
+.toast {
+  background: var(--text);
+  color: var(--bg-elev);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  max-width: 90vw;
+  text-align: center;
+  animation: toastIn 0.22s ease;
+}
+@keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ─── 라우트 전환 페이드 (template.tsx) — opacity만(고정요소 안전) ─── */
+.route-fade { animation: routeFade 0.22s ease; }
+@keyframes routeFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ─── 이미지 페이드인 (상세 커버 등) ─── */
+.cover-fg { animation: imgFade 0.4s ease; }
+@keyframes imgFade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .toast, .route-fade, .cover-fg { animation: none; }
 }
 
 /* ─── 페이지 전환 스켈레톤 (loading.tsx) ─── */

@@ -92,6 +92,26 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
   const next = () => { const d = new Date(cursor); d.setMonth(d.getMonth() + 1); onCursorChange(d); };
   const today = () => { const d = new Date(); d.setDate(1); onCursorChange(d); };
 
+  // 좌우 스와이프로 이전/다음 달 이동(앱·모바일 제스처)
+  const swipeRef = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    swipeRef.current = { x: t.clientX, y: t.clientY };
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const s = swipeRef.current;
+    swipeRef.current = null;
+    if (!s) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - s.x;
+    const dy = t.clientY - s.y;
+    // 충분히 가로로 움직였고 세로 스크롤이 아닐 때만
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx < 0) next();
+      else prev();
+    }
+  };
+
   function onCellClick(cell: Cell) {
     scrollOnSelect.current = true; // 사용자 클릭 → 패널로 스크롤 허용
     if (!cell.inMonth) {
@@ -123,7 +143,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
         <button type="button" className={styles.todayBtn} onClick={today}>오늘로</button>
       </header>
 
-      <div className={styles.grid}>
+      <div className={styles.grid} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {['일','월','화','수','목','금','토'].map((d, i) => (<div key={d} className={`${styles.dayHead} ${i === 0 ? styles.sun : i === 6 ? styles.sat : ''}`.trim()}>{d}</div>))}
         {cells.map((cell, i) => {
           const has = cell.games.length > 0;
@@ -189,7 +209,11 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
       </div>
 
       {cells.every(c => c.games.length === 0) && (
-        <p className={styles.empty}>이 달 출시 일정이 없어요. ‹ ›로 다른 달을 살펴보세요.</p>
+        <div className={styles.empty}>
+          <div className={styles.emptyIcon} aria-hidden="true">🗓️</div>
+          <p className={styles.emptyText}>이 달 출시 일정이 없어요.</p>
+          <p className={styles.emptyHint}>좌우로 밀거나 ‹ ›로 다른 달을 살펴보세요.</p>
+        </div>
       )}
 
       {/* day-detail-panel: 셀 클릭 시 그 날짜 이후 출시 게임 리스트 */}
