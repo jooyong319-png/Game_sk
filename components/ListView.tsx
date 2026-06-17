@@ -3,7 +3,6 @@ import { useMemo, useState, type CSSProperties } from 'react';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
-import { buildGoogleCalendarUrl } from '@/lib/google-calendar';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import styles from './ListView.module.css';
 
@@ -121,7 +120,6 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
             const isWished = wishlist.has(g.id);
             const mmdd = g.release_date_approx ? '미정' : g.release_date.slice(5).replace('-', '/');
             const weekday = g.release_date_approx ? '' : `(${getKoreanWeekday(g.release_date)})`;
-            const gcal = buildGoogleCalendarUrl(g);
             const tags = [...(g.genres ?? []), ...(g.platforms ?? [])].slice(0, 4);
 
             return (
@@ -153,10 +151,6 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
                 </div>
 
                 <div className={styles.actions}>
-                  <a className={styles.actBtn} href={gcal} target="_blank" rel="noopener" aria-label="구글 캘린더에 일정 추가">
-                    <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg>
-                    <span className={styles.actLabel}>일정</span>
-                  </a>
                   {g.source_url && (
                     <a className={styles.actBtn} href={g.source_url} target="_blank" rel="noopener" aria-label="공식 출처">
                       <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>

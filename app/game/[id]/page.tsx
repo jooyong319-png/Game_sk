@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllGames, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
 import { CATEGORY_META, type Category, type Game } from '@/lib/types';
-import { GoogleCalendarButton } from '@/components/GoogleCalendarButton';
+import { WishlistButton } from '@/components/WishlistButton';
 import { DdayBadge } from '@/components/DdayBadge';
 import { ShareButton } from '@/components/ShareButton';
 import { ViewCounter } from '@/components/ViewCounter';
@@ -144,7 +144,7 @@ export default async function GamePage({ params }: Props) {
             {game.genres.length > 0 && <li><strong>장르</strong>{game.genres.join(', ')}</li>}
           </ul>
           <div className="detail-actions">
-            <GoogleCalendarButton game={game} />
+            <WishlistButton id={game.id} className="detail-link" />
             <ShareButton url={url} title={game.name_ko} className="detail-link" />
             {game.source_url && (
               <a className="detail-link" href={game.source_url} target="_blank" rel="noopener">공식 출처 →</a>

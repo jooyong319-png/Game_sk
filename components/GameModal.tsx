@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
-import { buildGoogleCalendarUrl } from '@/lib/google-calendar';
 import { ShareButton } from './ShareButton';
 import styles from './GameModal.module.css';
 
@@ -49,15 +48,6 @@ export function GameModal({ game, onClose, wishlist }: Props) {
 
         <div className={styles.titleRow}>
           <h2 id="modal-title" className={styles.title}>{game.name_ko}</h2>
-          <button
-            type="button"
-            className={`${styles.wish} ${isWished ? styles.wishOn : ''}`}
-            onClick={() => wishlist.toggle(game.id)}
-            aria-pressed={isWished}
-            aria-label="위시리스트 토글"
-          >
-            <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
-          </button>
         </div>
 
         {game.name_en && game.name_en !== game.name_ko && (
@@ -84,9 +74,15 @@ export function GameModal({ game, onClose, wishlist }: Props) {
         )}
 
         <div className={styles.actions}>
-          <a className={styles.gcal} href={buildGoogleCalendarUrl(game)} target="_blank" rel="noopener">
-            <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 캘린더 추가
-          </a>
+          <button
+            type="button"
+            className={`${styles.fav} ${isWished ? styles.favOn : ''}`}
+            onClick={() => wishlist.toggle(game.id)}
+            aria-pressed={isWished}
+          >
+            <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
+            {isWished ? '즐겨찾기됨' : '즐겨찾기'}
+          </button>
           <a className={styles.detail} href={`/game/${game.id}`} target="_blank" rel="noopener">
             <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> 전체 페이지 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>

@@ -341,6 +341,9 @@ textarea:focus-visible,
   border-color: var(--accent);
   background: var(--bg-elev);
 }
+/* 즐겨찾기 토글 버튼(상세) — button 요소라 커서 보정 + 찜 상태 강조 */
+.detail-actions button.detail-link { cursor: pointer; }
+.detail-actions .detail-link.is-wished { color: var(--accent-warm); border-color: var(--accent-warm); }
 
 /* ─── 상세 "같은 시기 출시" 관련 게임 그리드 ─── */
 .detail-related { margin: 1.5rem 0 0; }

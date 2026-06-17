@@ -83,7 +83,7 @@
 .desc { color: var(--text); line-height: 1.6; margin: 0.8rem 0; font-size: 0.92rem; }
 .source { color: var(--accent); font-size: 0.9rem; display: inline-block; margin-top: 0.5rem; }
 .actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-.gcal, .detail, .share {
+.fav, .detail, .share {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
@@ -96,20 +96,12 @@
   cursor: pointer;
   border: 1px solid var(--border);
 }
-.gcal:hover { background: rgba(66,133,244,0.15); border-color: rgba(66,133,244,0.5); color: var(--text); }
+.fav { font-weight: 600; }
+.fav:hover { background: rgba(245,180,0,0.12); border-color: rgba(245,180,0,0.5); color: var(--text); }
+.favOn { color: var(--accent-warm); border-color: var(--accent-warm); }
+.favOn:hover { color: var(--accent-warm); }
 .detail:hover,
 .share:hover { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.5); color: var(--text); }
-.wish {
-  background: rgba(0,0,0,0.4);
-  border: none;
-  color: var(--text-faint);
-  font-size: 1.4rem;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.wishOn { color: #f5b400; }
 
 /* 모바일(≤480px): 좁은 폭에 모달 패딩/제목/이미지/액션 비례 정돈 (디자이너 06-03 모바일#1) */
 @media (max-width: 480px) {
