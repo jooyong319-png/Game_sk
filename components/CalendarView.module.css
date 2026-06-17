@@ -58,6 +58,12 @@
   border-radius: 8px;
   overflow: hidden;
 }
+/* 월 전환 슬라이드 */
+.slideNext { animation: calSlideNext 0.24s ease; }
+.slidePrev { animation: calSlidePrev 0.24s ease; }
+@keyframes calSlideNext { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+@keyframes calSlidePrev { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .slideNext, .slidePrev { animation: none; } }
 .dayHead {
   background: var(--bg);
   padding: 0.4rem;

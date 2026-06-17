@@ -88,9 +88,11 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
     scrollOnSelect.current = false;
   }, [selectedISO]);
 
-  const prev = () => { const d = new Date(cursor); d.setMonth(d.getMonth() - 1); onCursorChange(d); };
-  const next = () => { const d = new Date(cursor); d.setMonth(d.getMonth() + 1); onCursorChange(d); };
-  const today = () => { const d = new Date(); d.setDate(1); onCursorChange(d); };
+  // 월 전환 방향(슬라이드 애니메이션용)
+  const [slideDir, setSlideDir] = useState<'next' | 'prev'>('next');
+  const prev = () => { setSlideDir('prev'); const d = new Date(cursor); d.setMonth(d.getMonth() - 1); onCursorChange(d); };
+  const next = () => { setSlideDir('next'); const d = new Date(cursor); d.setMonth(d.getMonth() + 1); onCursorChange(d); };
+  const today = () => { const d = new Date(); d.setDate(1); setSlideDir(d < cursor ? 'prev' : 'next'); onCursorChange(d); };
 
   // 좌우 스와이프로 이전/다음 달 이동(앱·모바일 제스처)
   const swipeRef = useRef<{ x: number; y: number } | null>(null);
@@ -143,7 +145,12 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
         <button type="button" className={styles.todayBtn} onClick={today}>오늘로</button>
       </header>
 
-      <div className={styles.grid} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      <div
+        className={`${styles.grid} ${slideDir === 'prev' ? styles.slidePrev : styles.slideNext}`}
+        key={`${cursor.getFullYear()}-${cursor.getMonth()}`}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         {['일','월','화','수','목','금','토'].map((d, i) => (<div key={d} className={`${styles.dayHead} ${i === 0 ? styles.sun : i === 6 ? styles.sat : ''}`.trim()}>{d}</div>))}
         {cells.map((cell, i) => {
           const has = cell.games.length > 0;

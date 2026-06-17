@@ -11,7 +11,8 @@ interface Tab {
 const TABS: Tab[] = [
   { href: '/', label: '캘린더', icon: 'ic-calendar' },
   { href: '/upcoming-games', label: '출시예정', icon: 'ic-flame' },
-  { href: '/new-servers', label: '서버·이벤트', icon: 'ic-server' },
+  { href: '/new-servers', label: '서버', icon: 'ic-server' },
+  { href: '/wishlist', label: '찜', icon: 'ic-star' },
   { href: '/blog', label: '가이드', icon: 'ic-file' },
 ];
 
