@@ -56,8 +56,11 @@ export type SubscribeResult = 'ok' | 'denied' | 'unsupported' | 'error';
 
 export async function subscribePush(gameIds: string[]): Promise<SubscribeResult> {
   if (!pushSupported() || !VAPID_PUBLIC) return 'unsupported';
-  let perm: NotificationPermission;
-  try { perm = await Notification.requestPermission(); } catch { return 'error'; }
+  // 이미 허용된 경우 재요청하지 않음(중복 프롬프트 방지)
+  let perm: NotificationPermission = Notification.permission;
+  if (perm === 'default') {
+    try { perm = await Notification.requestPermission(); } catch { return 'error'; }
+  }
   if (perm !== 'granted') return 'denied';
   const reg = await getReg();
   if (!reg) return 'unsupported';
