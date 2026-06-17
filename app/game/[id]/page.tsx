@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getAllGames, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
+import { getAllGames, getUpcomingGamesByCategory, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
 import { CATEGORY_META, type Category, type Game } from '@/lib/types';
 import { WishlistButton } from '@/components/WishlistButton';
 import { DdayBadge } from '@/components/DdayBadge';
@@ -71,9 +71,9 @@ export default async function GamePage({ params }: Props) {
   const weekday = game.release_date_approx ? '' : ` (${getKoreanWeekday(game.release_date)})`;
   const url = `https://gcalen.com/game/${game.id}`;
 
-  // 같은 카테고리 다른 게임(내부 링크 + 콘텐츠) — 출시일 가까운 순 6개
-  const related: Game[] = games
-    .filter(g => g.category === game.category && g.id !== game.id)
+  // 같은 카테고리 '출시 예정'(지난 게임 제외) 게임 — 출시일 가까운 순 6개
+  const related: Game[] = (await getUpcomingGamesByCategory(game.category))
+    .filter(g => g.id !== game.id)
     .sort((a, b) => a.release_date.localeCompare(b.release_date))
     .slice(0, 6);
 
