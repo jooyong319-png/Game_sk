@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { HeaderNav } from '@/components/HeaderNav';
 import { FloatingMonthStats } from '@/components/FloatingMonthStats';
@@ -29,7 +29,12 @@ export const metadata: Metadata = {
       'naver-site-verification': '3ec567114e683e947e53e79a6f652d967c57231c',
     },
   },
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: '/favicon.svg', apple: '/icons/apple-touch-icon.png' },
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: '게임캘린더' },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#047857',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -82,6 +87,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a> · <a href="/blog">신작 가이드</a></p>
           <p><a href="/about">소개</a> · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a></p>
         </footer>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}",
+          }}
+        />
       </body>
     </html>
   );
