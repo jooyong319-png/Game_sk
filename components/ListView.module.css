@@ -98,9 +98,11 @@
   border-bottom: 1px solid var(--border);
   border-left: 3px solid var(--cat);
   transition: background 0.15s;
+  cursor: pointer;
 }
 .row:last-child { border-bottom: none; }
 .row:hover { background: var(--bg); }
+.row:hover .title { color: var(--accent); }
 .rowImminent { background: rgba(245, 166, 35, 0.06); }
 .rowReleased { opacity: 0.58; }
 .rowReleased:hover { opacity: 1; }
@@ -152,25 +154,26 @@
   line-height: 1.4;
 }
 .title {
-  min-width: 0;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  flex: 1 1 auto;
+  min-width: 3.5em;
   font-size: 0.96rem;
   font-weight: 600;
   color: var(--text);
-  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .title:hover { color: var(--accent); }
+/* 영어 원제는 보조정보 — 한글명을 밀어내지 않게 폭 제한 + 먼저 줄임표 */
 .nameEn {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 40%;
   font-size: 0.73rem;
   color: var(--text-faint);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .desc {
   font-size: 0.82rem;

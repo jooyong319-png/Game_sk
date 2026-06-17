@@ -131,6 +131,12 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
                 key={g.id}
                 className={`${styles.row} ${imminent ? styles.rowImminent : ''} ${released ? styles.rowReleased : ''}`}
                 style={{ '--cat': cat.color } as CSSProperties}
+                role="button"
+                tabIndex={0}
+                onClick={() => onPick(g.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(g.id); }
+                }}
               >
                 <div className={styles.dateCol}>
                   <span className={styles.dMmdd}>{mmdd}</span>
@@ -141,9 +147,7 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
                 <div className={styles.main}>
                   <div className={styles.titleRow}>
                     <span className={styles.badge} style={{ color: cat.color }}>{cat.short}</span>
-                    <button type="button" className={styles.title} onClick={() => onPick(g.id)}>
-                      {g.name_ko}
-                    </button>
+                    <span className={styles.title}>{g.name_ko}</span>
                     {g.name_en && g.name_en !== g.name_ko && <span className={styles.nameEn}>{g.name_en}</span>}
                   </div>
                   {g.description && <p className={styles.desc}>{g.description}</p>}
@@ -156,7 +160,14 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
 
                 <div className={styles.actions}>
                   {g.source_url && (
-                    <a className={styles.actBtn} href={g.source_url} target="_blank" rel="noopener" aria-label="공식 출처">
+                    <a
+                      className={styles.actBtn}
+                      href={g.source_url}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label="공식 출처"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
                       <span className={styles.actLabel}>출처</span>
                     </a>
@@ -164,7 +175,7 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
                   <button
                     type="button"
                     className={`${styles.actBtn} ${isWished ? styles.wishOn : ''}`}
-                    onClick={() => wishlist.toggle(g.id)}
+                    onClick={(e) => { e.stopPropagation(); wishlist.toggle(g.id); }}
                     aria-pressed={isWished}
                     aria-label="찜"
                   >

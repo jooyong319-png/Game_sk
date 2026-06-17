@@ -80,9 +80,9 @@ export function Comments({ gameId }: Props) {
   if (!isSupabaseReady()) return null;
 
   return (
-    <section className={styles.section} aria-label="한줄평">
+    <section className={styles.section} aria-label="댓글">
       <header className={styles.header}>
-        <h3 className={styles.title}>💬 한줄평</h3>
+        <h3 className={styles.title}><svg className="ic" aria-hidden="true"><use href="#ic-comment" /></svg> 댓글</h3>
         {comments.length > 0 && <span className={styles.count}>{comments.length}개</span>}
       </header>
 
@@ -98,7 +98,7 @@ export function Comments({ gameId }: Props) {
         />
         <textarea
           className={styles.contentInput}
-          placeholder="이 게임에 대한 한줄평 (최대 500자)"
+          placeholder="이 게임에 대한 댓글 (최대 500자)"
           value={content}
           onChange={e => setContent(e.target.value)}
           maxLength={500}
@@ -117,7 +117,7 @@ export function Comments({ gameId }: Props) {
         {loading ? (
           <p className={styles.empty}>불러오는 중…</p>
         ) : comments.length === 0 ? (
-          <p className={styles.empty}>첫 한줄평을 남겨보세요.</p>
+          <p className={styles.empty}>첫 댓글을 남겨보세요.</p>
         ) : comments.map(c => (
           <article key={c.id} className={styles.item}>
             <header className={styles.itemHeader}>
