@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-16T21:12:46+09:00",
+  "last_updated": "2026-06-17T09:12:40+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1559,6 +1559,49 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2821390/header.jpg",
       "source_url": "https://store.steampowered.com/app/2821390/HOT_WHEELS_Infinite_Rush/"
+    },
+    {
+      "id": "lineage-m-server-phoenix-20260624",
+      "name_ko": "리니지M: 'PHOENIX' 업데이트·신규 리부트 월드 오픈",
+      "name_en": null,
+      "release_date": "2026-06-24",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "엔씨소프트",
+      "publisher": "엔씨소프트",
+      "description": "서비스 9주년 'PHOENIX' 업데이트. '요정' 클래스 리부트와 함께 신규 리부트 월드 오픈, TJ 쿠폰 및 신규 콘텐츠 추가. 사전예약 6/10 시작(공식 보도자료 확인).",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": null,
+      "source_url": "https://about.ncsoft.com/news/article/lineagem_update_260610"
+    },
+    {
+      "id": "aion2-chapter1-sand-frost-20260701",
+      "name_ko": "아이온2: 챕터1 '모래와 서리의 땅' 업데이트",
+      "name_en": null,
+      "release_date": "2026-07-01",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "엔씨소프트",
+      "publisher": "엔씨소프트",
+      "description": "6/14 여름 쇼케이스에서 공개한 첫 대형 챕터 '모래와 서리의 땅' 적용. 최고 레벨 50 확장, 신규 클래스 '권성', 천족·마족 신규 지역(엘테넨·모르헤임) 추가(공식 쇼케이스/유튜브 확인).",
+      "genres": [
+        "MMORPG",
+        "대형 업데이트"
+      ],
+      "image_url": null,
+      "source_url": "https://www.youtube.com/watch?v=dujrQtmX_5k"
     }
   ]
 }
