@@ -3,6 +3,7 @@ import './globals.css';
 import { HeaderNav } from '@/components/HeaderNav';
 import { FloatingMonthStats } from '@/components/FloatingMonthStats';
 import { BottomTabBar } from '@/components/BottomTabBar';
+import { HeaderScroll } from '@/components/HeaderScroll';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gcalen.com'),
@@ -85,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <FloatingMonthStats />
         <BottomTabBar />
+        <HeaderScroll />
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
           <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a> · <a href="/blog">신작 가이드</a></p>
