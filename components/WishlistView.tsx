@@ -16,15 +16,18 @@ export function WishlistView({ games }: { games: Game[] }) {
   return (
     <section className={styles.section}>
       <header className={styles.head}>
-        <h1 className={styles.title}>⭐ 내 즐겨찾기{items.length > 0 ? ` (${items.length})` : ''}</h1>
+        <h1 className={styles.title}>
+          <svg className="ic ic-fill" aria-hidden="true" style={{ color: 'var(--accent-warm)' }}><use href="#ic-star" /></svg>
+          {' '}내 즐겨찾기{items.length > 0 ? ` (${items.length})` : ''}
+        </h1>
         <p className={styles.sub}>관심 게임의 출시 일정을 모아봤어요.</p>
       </header>
 
       {items.length === 0 ? (
         <div className={styles.empty}>
-          <div className={styles.emptyIcon} aria-hidden="true">⭐</div>
+          <div className={styles.emptyIcon} aria-hidden="true"><svg className="ic"><use href="#ic-star" /></svg></div>
           <p className={styles.emptyText}>아직 즐겨찾기한 게임이 없어요.</p>
-          <p className={styles.emptyHint}>게임을 누르고 ⭐ 즐겨찾기를 눌러보세요.</p>
+          <p className={styles.emptyHint}>게임 상세에서 즐겨찾기 버튼을 눌러 추가하세요.</p>
         </div>
       ) : (
         <ul className={styles.list}>

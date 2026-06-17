@@ -22,7 +22,7 @@ export default async function BlogIndexPage() {
     <PageShell>
       <section className={styles.indexSection}>
         <header className={styles.header}>
-          <h2 className={styles.title}>📰 신작 가이드</h2>
+          <h2 className={styles.title}><svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> 신작 가이드</h2>
           <p className={styles.subtitle}>
             신작 추천, 기대작 TOP 정리, 월간·하반기 출시 정리, 신규 서버 일정
           </p>

@@ -217,7 +217,7 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
 
       {cells.every(c => c.games.length === 0) && (
         <div className={styles.empty}>
-          <div className={styles.emptyIcon} aria-hidden="true">🗓️</div>
+          <div className={styles.emptyIcon} aria-hidden="true"><svg className="ic"><use href="#ic-calendar" /></svg></div>
           <p className={styles.emptyText}>이 달 출시 일정이 없어요.</p>
           <p className={styles.emptyHint}>좌우로 밀거나 ‹ ›로 다른 달을 살펴보세요.</p>
         </div>

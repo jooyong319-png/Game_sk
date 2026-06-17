@@ -41,7 +41,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
               <img src={game.image_url} alt="" aria-hidden="true" className={styles.imageBg} loading="lazy" />
               <img src={game.image_url} alt={game.name_ko} className={styles.imageFg} loading="lazy" />
             </>
-          ) : <span className={styles.imageEmoji}>{cat.emoji}</span>}
+          ) : <span className={styles.imageEmoji}><svg className="ic" aria-hidden="true"><use href={`#${cat.icon}`} /></svg></span>}
         </div>
 
         <span className={`category-tag cat-bg-${game.category}`}>{cat.label}</span>

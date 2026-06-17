@@ -106,7 +106,7 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
 
       {monthGames.length === 0 ? (
         <div className={styles.empty}>
-          <div className={styles.emptyIcon} aria-hidden="true">🎮</div>
+          <div className={styles.emptyIcon} aria-hidden="true"><svg className="ic"><use href="#ic-gamepad" /></svg></div>
           <p className={styles.emptyText}>
             {activeMonth === 'approx' ? '출시일 미정 게임이 없어요.' : `${activeYear}년 ${activeMonth}월 출시 일정이 없어요.`}
           </p>

@@ -40,15 +40,15 @@ export interface FilterState {
   wishlistOnly: boolean;
 }
 
-// 카테고리별 표기/색/이모지 단일 출처
+// 카테고리별 표기/색/아이콘(SVG 스프라이트 id) 단일 출처
 export const CATEGORY_META: Record<Category, {
   label: string;
   short: string;
-  emoji: string;
+  icon: string;
   color: string;
 }> = {
-  mobile_kr:     { label: '국내 모바일',     short: '모바일',  emoji: '📱', color: '#6f9c7a' },
-  pc_console_kr: { label: '국내 PC·콘솔',    short: 'PC·콘솔', emoji: '🎮', color: '#5f86b8' },
-  global_aaa:    { label: '글로벌 대작',     short: '글로벌',  emoji: '🌍', color: '#9a7bb0' },
-  new_server:    { label: '신규 서버 · 대규모 이벤트', short: '서버·이벤트', emoji: '🆕', color: '#c08560' },
+  mobile_kr:     { label: '국내 모바일',     short: '모바일',  icon: 'ic-mobile',  color: '#6f9c7a' },
+  pc_console_kr: { label: '국내 PC·콘솔',    short: 'PC·콘솔', icon: 'ic-gamepad', color: '#5f86b8' },
+  global_aaa:    { label: '글로벌 대작',     short: '글로벌',  icon: 'ic-globe',   color: '#9a7bb0' },
+  new_server:    { label: '신규 서버 · 대규모 이벤트', short: '서버·이벤트', icon: 'ic-server', color: '#c08560' },
 };
