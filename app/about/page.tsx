@@ -30,7 +30,7 @@ export default function AboutPage() {
         <ul>
           <li>월간 <strong>캘린더</strong> / <strong>리스트</strong> 뷰 전환</li>
           <li>카테고리·검색 필터, <strong>위시리스트</strong>(관심 게임 저장)</li>
-          <li><strong>구글 캘린더 추가</strong> · 게임별 <strong>한줄평</strong></li>
+          <li>게임 상세 페이지에서 <strong>즐겨찾기</strong> · <strong>댓글</strong> · <strong>공유</strong></li>
           <li>각 게임 상세 페이지(출시일·개발/배급사·플랫폼·장르·공식 출처)</li>
         </ul>
 

@@ -3,7 +3,7 @@ import { PageShell } from '@/components/PageShell';
 
 export const metadata: Metadata = {
   title: '이용약관',
-  description: '게임 출시 캘린더(gcalen.com) 이용약관 — 서비스 내용, 한줄평 운영 정책, 저작권 및 면책 안내.',
+  description: '게임 출시 캘린더(gcalen.com) 이용약관 — 서비스 내용, 댓글 운영 정책, 저작권 및 면책 안내.',
   alternates: { canonical: 'https://gcalen.com/terms' },
   openGraph: { url: 'https://gcalen.com/terms', type: 'website' },
 };
@@ -23,8 +23,8 @@ export default function TermsPage() {
           <li>게재된 출시일 등 정보는 변경될 수 있으며, 서비스는 정보의 정확성·완전성을 보장하지 않습니다. 최종 정보는 각 게임의 공식 출처를 확인하시기 바랍니다.</li>
         </ul>
 
-        <h2>제3조 (이용자 게시물 / 한줄평)</h2>
-        <p>이용자는 한줄평을 작성할 수 있으며, 다음 행위를 해서는 안 됩니다.</p>
+        <h2>제3조 (이용자 게시물 / 댓글)</h2>
+        <p>이용자는 댓글을 작성할 수 있으며, 다음 행위를 해서는 안 됩니다.</p>
         <ul>
           <li>욕설·비방·차별·혐오 표현</li>
           <li>음란·불법 정보, 광고·스팸, 도배</li>
