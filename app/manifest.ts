@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: '/',
     name: '게임 출시 캘린더',
     short_name: '게임캘린더',
     description: '국내외 게임 출시 일정, 신규 서버·대규모 이벤트를 한눈에. 매일 업데이트되는 게임 출시 캘린더.',
