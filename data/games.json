@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-17T21:11:02+09:00",
+  "last_updated": "2026-06-18T09:12:14+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1602,6 +1602,47 @@
       ],
       "image_url": null,
       "source_url": "https://www.youtube.com/watch?v=dujrQtmX_5k"
+    },
+    {
+      "id": "mabinogi-mobile-season2-light-dark-20260625",
+      "name_ko": "마비노기 모바일: 시즌2 '빛과 어둠' 업데이트",
+      "name_en": null,
+      "release_date": "2026-06-25",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "데브캣",
+      "publisher": "넥슨",
+      "description": "마비노기 모바일의 새로운 시즌 '빛과 어둠' 업데이트. 신규 스토리와 던전 등 대규모 콘텐츠 추가 (6/19 빅 캠프파이어로 공개).",
+      "genres": [
+        "MMORPG",
+        "대형 업데이트"
+      ],
+      "image_url": null,
+      "source_url": "https://mabinogimobile.nexon.com/Events2026/0611/PreReservation_Season2?channel=2103"
+    },
+    {
+      "id": "dnf-empire-knight-female-infighter-20260604",
+      "name_ko": "던전앤파이터: 신규 캐릭터 '제국기사'·전직 '여인파이터' 업데이트",
+      "name_en": null,
+      "release_date": "2026-06-04",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "네오플",
+      "publisher": "넥슨",
+      "description": "던전앤파이터 6월 대규모 업데이트. 신규 캐릭터 '제국기사'(첫 전직 브레이커)와 여프리스트 5번째 전직 '여인파이터' 추가. 썸머 페스티벌 이벤트 동반(~8/27).",
+      "genres": [
+        "액션 RPG",
+        "대형 업데이트"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316602"
     }
   ]
 }
