@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-18T09:12:14+09:00",
+  "last_updated": "2026-06-18T21:11:50+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1471,7 +1471,7 @@
         "신규 서버"
       ],
       "image_url": null,
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317443&site=maple"
+      "source_url": "https://maplestory.nexon.com/promotion/event/2026/20260618/intro"
     },
     {
       "id": "lostark-loaon-summer-20260620",
@@ -1643,6 +1643,29 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=316602"
+    },
+    {
+      "id": "genshin-6-7-luna-viii-20260701",
+      "name_ko": "원신 6.7 'Luna VIII' 업데이트",
+      "name_en": "Genshin Impact 6.7 Luna VIII",
+      "release_date": "2026-07-01",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS",
+        "PS5"
+      ],
+      "developer": "HoYoverse",
+      "publisher": "HoYoverse",
+      "description": "원신 6.7 'Luna VIII' 대형 업데이트. 신규 5성 캐릭터 '산드로네'(우인단 집행관 7위 꼭두각시) 추가. 6/18 공식 특별방송으로 공개, 글로벌 동시 적용(6주 주기). 8/11까지 진행 예정.",
+      "genres": [
+        "오픈월드 RPG",
+        "대형 업데이트"
+      ],
+      "image_url": null,
+      "source_url": "https://game8.co/games/Genshin-Impact/archives/602045"
     }
   ]
 }
