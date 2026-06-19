@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-19T09:13:00+09:00",
+  "last_updated": "2026-06-19T13:20:59+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1666,6 +1666,28 @@
       ],
       "image_url": null,
       "source_url": "https://game8.co/games/Genshin-Impact/archives/602045"
+    },
+    {
+      "id": "prasia-summer-festival-20260617",
+      "name_ko": "프라시아 전기: '2026 여름 감사제' 시작",
+      "name_en": null,
+      "release_date": "2026-06-17",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "넥슨",
+      "publisher": "넥슨",
+      "description": "넥슨 MMORPG '프라시아 전기'의 대규모 여름 시즌 이벤트. 7월 29일까지 진행되며 WP 쿠폰 6종·초월소환 선물·'빛나는 여름의 인장' 버프 아이템 지급, 8월 5일까지 매주 수요일 '부스트업 랠리', 7월 15일까지 '2026 여름 축제' 미션 등 운영.",
+      "genres": [
+        "MMORPG",
+        "시즌 이벤트"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317540"
     }
   ]
 }
