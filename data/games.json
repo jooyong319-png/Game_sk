@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-20T21:12:00+09:00",
+  "last_updated": "2026-06-21T09:15:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1709,6 +1709,29 @@
       ],
       "image_url": null,
       "source_url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/"
+    },
+    {
+      "id": "the-mound-omen-of-cthulhu-20260715",
+      "name_ko": "더 마운드: 오멘 오브 크툴루",
+      "name_en": "The Mound: Omen of Cthulhu",
+      "release_date": "2026-07-15",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "ACE Team",
+      "publisher": "Nacon",
+      "description": "H.P. 러브크래프트 세계관 기반 1~4인 협동 심리 호러 게임. 콩키스타도르 시대 탐험가가 되어 광기와 초자연 현상에 맞선다. PC·PS5·Xbox 글로벌 동시 출시.",
+      "genres": [
+        "호러",
+        "협동",
+        "FPS"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2569760/header.jpg",
+      "source_url": "https://store.steampowered.com/app/2569760/The_Mound_Omen_of_Cthulhu/"
     }
   ]
 }
