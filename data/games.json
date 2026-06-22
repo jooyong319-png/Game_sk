@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-21T21:10:00+09:00",
+  "last_updated": "2026-06-22T09:15:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1732,6 +1732,31 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2569760/header.jpg",
       "source_url": "https://store.steampowered.com/app/2569760/The_Mound_Omen_of_Cthulhu/"
+    },
+    {
+      "id": "moss-the-forgotten-relic-20260716",
+      "name_ko": "모스: 더 포가튼 렐릭",
+      "name_en": "Moss: The Forgotten Relic",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S",
+        "Switch",
+        "Switch 2"
+      ],
+      "developer": "Polyarc",
+      "publisher": "Polyarc",
+      "description": "VR 명작 '모스' 시리즈를 비VR로 재구성한 어드벤처. 생쥐 영웅 '퀼'의 모험을 담은 'Quill Saga'를 PC·콘솔에서 즐길 수 있게 이식, 비주얼·성능 개선 및 신규 콘텐츠 추가. 스팀 데모 6월 8일 선공개.",
+      "genres": [
+        "액션",
+        "어드벤처",
+        "퍼즐"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3914860/header.jpg",
+      "source_url": "https://store.steampowered.com/app/3914860/Moss_The_Forgotten_Relic/"
     }
   ]
 }
