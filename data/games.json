@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-22T09:15:00+09:00",
+  "last_updated": "2026-06-22T10:05:00+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1494,29 +1494,6 @@
       "source_url": "https://newsroom.smilegate.com/news/1780561197"
     },
     {
-      "id": "mapleland-2-0-open-20260630",
-      "name_ko": "메이플랜드 2.0 정식 오픈",
-      "name_en": null,
-      "release_date": "2026-06-30",
-      "release_date_approx": false,
-      "category": "new_server",
-      "platforms": [
-        "PC",
-        "Android",
-        "iOS"
-      ],
-      "developer": "엘릭서 스튜디오",
-      "publisher": "엘릭서 스튜디오 (넥슨코리아 IP 협업)",
-      "description": "클래식 메이플 '메이플랜드'의 전면 리빌드 버전 Mapleland 2.0 정식 오픈. 기존 1.0 월드는 6/19(금) 03:00 종료, 대규모 점검·데이터 이관 후 6/30(화) 09:00 2.0 적용. 자체 엔진 신규 월드, 넥슨코리아 협업으로 공식 클래식 메이플 승격.",
-      "genres": [
-        "MMORPG",
-        "클래식",
-        "신규 월드"
-      ],
-      "image_url": null,
-      "source_url": "https://maple.land/board/notices/o4gxsdqu0fntw4epq2dgr99o"
-    },
-    {
       "id": "gears-of-war-eday-20261006",
       "name_ko": "기어스 오브 워: 이데이",
       "name_en": "Gears of War: E-Day",
@@ -1757,6 +1734,29 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3914860/header.jpg",
       "source_url": "https://store.steampowered.com/app/3914860/Moss_The_Forgotten_Relic/"
+    },
+    {
+      "id": "mapleland-burning-world-20260619",
+      "name_ko": "메이플랜드 신규 월드 '버닝 월드' 오픈",
+      "name_en": null,
+      "release_date": "2026-06-19",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "메이플랜드",
+      "publisher": "메이플랜드",
+      "description": "클래식 메이플 '메이플랜드' 신규 한정 월드 '버닝 월드' 오픈(2026-06-19 12:00 ~ 09-11 05:59). 모험가(전사·마법사·궁수·도적·해적)·시그너스 직업군 지원, Lv120 미만 몬스터 경험치 상시 1.5배 및 공격력·마력 상시 버프 적용. 운영 종료 후 2026-09-25까지 본 월드로 캐릭터 이전(월드 리프) 지원.",
+      "genres": [
+        "MMORPG",
+        "클래식",
+        "신규 월드"
+      ],
+      "image_url": null,
+      "source_url": "https://maple.land/board/events/zrt6bke4vgf5ufb2lbqi8lyr"
     }
   ]
 }
