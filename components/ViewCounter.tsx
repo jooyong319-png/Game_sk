@@ -61,7 +61,7 @@ export function ViewCounter({ gameId }: Props) {
 
   return (
     <div className={styles.counter} aria-label="조회수">
-      <span className={styles.icon}>👁</span>
+      <span className={styles.icon}><svg className="ic" aria-hidden="true"><use href="#ic-eye" /></svg></span>
       <span className={styles.num}>{count.toLocaleString()}</span>
       <span className={styles.label}>회 조회</span>
     </div>

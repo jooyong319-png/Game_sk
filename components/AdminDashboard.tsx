@@ -58,8 +58,11 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
     }
     const yesterday = days[days.length - 2]?.count ?? 0;
     const last7 = days.slice(-7).reduce((s, d) => s + d.count, 0);
-    const topGames = [...byGame.entries()].sort((a, b) => b[1] - a[1]).slice(0, 25);
-    return { total: rows.length, today: byDay.get(today) ?? 0, yesterday, last7, days, topGames };
+    const entries = [...byGame.entries()].sort((a, b) => b[1] - a[1]);
+    const topGames = entries.filter(([id]) => !id.startsWith('blog:')).slice(0, 25);
+    const topGuides = entries.filter(([id]) => id.startsWith('blog:')).slice(0, 15);
+    const guideTotal = entries.filter(([id]) => id.startsWith('blog:')).reduce((s, [, n]) => s + n, 0);
+    return { total: rows.length, today: byDay.get(today) ?? 0, yesterday, last7, days, topGames, topGuides, guideTotal };
   }, [rows]);
 
   if (!unlocked) {
@@ -126,6 +129,24 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
           </li>
         ))}
       </ol>
+
+      <h2 className={styles.h2}>인기 신작 가이드 (누적 {stats.guideTotal.toLocaleString()}회)</h2>
+      {stats.topGuides.length === 0 ? (
+        <p className={styles.muted}>아직 가이드 조회 기록이 없어요.</p>
+      ) : (
+        <ol className={styles.topList}>
+          {stats.topGuides.map(([id, n], i) => {
+            const slug = id.slice(5); // 'blog:' 제거
+            return (
+              <li key={id} className={styles.topRow}>
+                <span className={styles.rank}>{i + 1}</span>
+                <a className={styles.topName} href={`/blog/${slug}`} target="_blank" rel="noopener">{nameMap[id] ?? slug}</a>
+                <span className={styles.topNum}>{n.toLocaleString()}</span>
+              </li>
+            );
+          })}
+        </ol>
+      )}
     </div>
   );
 }

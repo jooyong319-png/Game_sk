@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug, markdownToHtml, formatPostDate } from '@/lib/blog';
 import { PageShell } from '@/components/PageShell';
+import { ViewCounter } from '@/components/ViewCounter';
 import styles from '../blog.module.css';
 
 interface Props { params: { slug: string }; }
@@ -57,6 +58,7 @@ export default async function BlogPostPage({ params }: Props) {
         <header className={styles.postHeader}>
           <time className={styles.postDate}>{formatPostDate(post.date)}</time>
           <h1 className={styles.postH1}>{post.title}</h1>
+          <ViewCounter gameId={`blog:${post.slug}`} />
           {post.description && <p className={styles.postLead}>{post.description}</p>}
           {post.tags.length > 0 && (
             <div className={styles.postTags}>
