@@ -39,6 +39,32 @@ export async function GET(req: Request) {
   webpush.setVapidDetails(subject, vapidPublic, vapidPrivate);
   const supabase = createClient(url, serviceKey, { auth: { persistSession: false } });
 
+  // 테스트 모드: ?test=1 → 날짜 무관 구독자 전원에게 1발(파이프라인 검증용)
+  if (new URL(req.url).searchParams.get('test') === '1') {
+    const { data: subs, error: e } = await supabase
+      .from('push_subscriptions')
+      .select('endpoint, p256dh, auth');
+    if (e) return NextResponse.json({ error: e.message }, { status: 500 });
+    let sent = 0;
+    let pruned = 0;
+    for (const s of subs ?? []) {
+      try {
+        await webpush.sendNotification(
+          { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
+          JSON.stringify({ title: '테스트 알림 🔔', body: '푸시가 정상 작동해요!', url: '/wishlist' }),
+        );
+        sent++;
+      } catch (err: unknown) {
+        const code = (err as { statusCode?: number })?.statusCode;
+        if (code === 404 || code === 410) {
+          await supabase.from('push_subscriptions').delete().eq('endpoint', s.endpoint);
+          pruned++;
+        }
+      }
+    }
+    return NextResponse.json({ ok: true, test: true, sent, pruned, subs: subs?.length ?? 0 });
+  }
+
   const today = kstDateStr(0);
   const tomorrow = kstDateStr(1);
   const games = (gamesData as { games: GameLite[] }).games;
