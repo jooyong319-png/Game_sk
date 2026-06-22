@@ -26,11 +26,20 @@ webpush.setVapidDetails(
       await webpush.sendNotification(
         { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
         payload,
+        { TTL: 3600, urgency: 'high' },
       );
       sent++;
       console.log('SENT ->', s.endpoint.slice(0, 60));
     } catch (e) {
       console.log('FAIL', e.statusCode, (e.body || '').slice(0, 120));
+      if (e.statusCode === 404 || e.statusCode === 410) {
+        // 만료 구독 정리
+        await fetch(`${SUPA}/rest/v1/push_subscriptions?endpoint=eq.${encodeURIComponent(s.endpoint)}`, {
+          method: 'DELETE',
+          headers: { apikey: KEY, Authorization: `Bearer ${KEY}` },
+        });
+        console.log('  (만료 → 삭제)');
+      }
     }
   }
   console.log('총 발송:', sent);
