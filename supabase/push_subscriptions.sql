@@ -25,14 +25,18 @@ create table if not exists public.push_sent_log (
 alter table public.push_subscriptions enable row level security;
 alter table public.push_sent_log     enable row level security;
 
-drop policy if exists "anon insert sub" on public.push_subscriptions;
-drop policy if exists "anon update sub" on public.push_subscriptions;
-drop policy if exists "anon delete sub" on public.push_subscriptions;
+-- 역할 모호성 제거: to public (anon 포함 모든 클라 역할). upsert 위해 insert+update 필요.
+drop policy if exists "anon insert sub"  on public.push_subscriptions;
+drop policy if exists "anon update sub"  on public.push_subscriptions;
+drop policy if exists "anon delete sub"  on public.push_subscriptions;
+drop policy if exists "pub insert sub"   on public.push_subscriptions;
+drop policy if exists "pub update sub"   on public.push_subscriptions;
+drop policy if exists "pub delete sub"   on public.push_subscriptions;
 
-create policy "anon insert sub" on public.push_subscriptions
-  for insert to anon with check (true);
-create policy "anon update sub" on public.push_subscriptions
-  for update to anon using (true) with check (true);
-create policy "anon delete sub" on public.push_subscriptions
-  for delete to anon using (true);
--- push_sent_log 에는 anon 정책 없음 → service_role 만 접근(=cron 전용)
+create policy "pub insert sub" on public.push_subscriptions
+  for insert to public with check (true);
+create policy "pub update sub" on public.push_subscriptions
+  for update to public using (true) with check (true);
+create policy "pub delete sub" on public.push_subscriptions
+  for delete to public using (true);
+-- push_sent_log 에는 클라 정책 없음 → service_role 만 접근(=cron 전용)
