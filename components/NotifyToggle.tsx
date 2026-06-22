@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useWishlist } from '@/hooks/useWishlist';
 import { pushConfigured, pushSupported, getCurrentSubscription, subscribePush, unsubscribePush, getLastPushError } from '@/lib/push';
 import { showToast } from '@/lib/toast';
@@ -9,12 +9,28 @@ type State = 'loading' | 'on' | 'off' | 'denied' | 'hidden';
 
 export function NotifyToggle() {
   const wishlist = useWishlist();
+  const idsRef = useRef(wishlist.ids);
+  idsRef.current = wishlist.ids; // 항상 최신 찜 목록 유지(재구독 시 game_ids로 사용)
   const [state, setState] = useState<State>('loading');
 
   useEffect(() => {
     if (!pushConfigured() || !pushSupported()) { setState('hidden'); return; }
     if (Notification.permission === 'denied') { setState('denied'); return; }
-    getCurrentSubscription().then(sub => setState(sub ? 'on' : 'off')).catch(() => setState('off'));
+    (async () => {
+      try {
+        const sub = await getCurrentSubscription();
+        if (sub) { setState('on'); return; }
+        // 권한은 허용돼 있는데 구독이 유실됨(TWA 재시작 등) → 조용히 재구독해 ON 유지 + 410 방지
+        if (Notification.permission === 'granted') {
+          const r = await subscribePush([...idsRef.current]);
+          setState(r === 'ok' ? 'on' : 'off');
+        } else {
+          setState('off');
+        }
+      } catch {
+        setState('off');
+      }
+    })();
   }, []);
 
   if (state === 'hidden') return null;
