@@ -2,7 +2,12 @@
 // 웹 푸시 구독 클라이언트 헬퍼 — Supabase에 구독정보 + 찜 game_ids 저장.
 import { supabase, isSupabaseReady } from './supabase';
 
-const VAPID_PUBLIC = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+// env에 붙여넣을 때 따라온 공백/줄바꿈/따옴표 제거(있으면 subscribe 실패 원인)
+const VAPID_PUBLIC = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY?.trim().replace(/^["']|["']$/g, '');
+
+// 마지막 실패 사유(화면 토스트 진단용)
+let lastPushError: string | null = null;
+export function getLastPushError(): string | null { return lastPushError; }
 
 export function pushConfigured(): boolean {
   return !!VAPID_PUBLIC;
@@ -38,9 +43,9 @@ export async function getCurrentSubscription(): Promise<PushSubscription | null>
 }
 
 async function saveSubscription(sub: PushSubscription, gameIds: string[]): Promise<void> {
-  if (!isSupabaseReady() || !supabase) return;
+  if (!isSupabaseReady() || !supabase) throw new Error('Supabase 미설정');
   const json = sub.toJSON();
-  await supabase.from('push_subscriptions').upsert(
+  const { error } = await supabase.from('push_subscriptions').upsert(
     {
       endpoint: sub.endpoint,
       p256dh: json.keys?.p256dh ?? '',
@@ -50,6 +55,7 @@ async function saveSubscription(sub: PushSubscription, gameIds: string[]): Promi
     },
     { onConflict: 'endpoint' },
   );
+  if (error) throw new Error('DB ' + error.message);
 }
 
 export type SubscribeResult = 'ok' | 'denied' | 'unsupported' | 'error';
@@ -64,16 +70,26 @@ export async function subscribePush(gameIds: string[]): Promise<SubscribeResult>
   if (perm !== 'granted') return 'denied';
   const reg = await getReg();
   if (!reg) return 'unsupported';
+  lastPushError = null;
+  let sub: PushSubscription;
   try {
-    const sub = await reg.pushManager.subscribe({
+    sub = await reg.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC),
     });
-    await saveSubscription(sub, gameIds);
-    return 'ok';
-  } catch {
+  } catch (e) {
+    lastPushError = 'subscribe: ' + ((e as Error)?.message || String(e));
+    console.error('[push] subscribe 실패', e);
     return 'error';
   }
+  try {
+    await saveSubscription(sub, gameIds);
+  } catch (e) {
+    lastPushError = 'save: ' + ((e as Error)?.message || String(e));
+    console.error('[push] save 실패', e);
+    return 'error';
+  }
+  return 'ok';
 }
 
 export async function unsubscribePush(): Promise<void> {

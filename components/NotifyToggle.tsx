@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useWishlist } from '@/hooks/useWishlist';
-import { pushConfigured, pushSupported, getCurrentSubscription, subscribePush, unsubscribePush } from '@/lib/push';
+import { pushConfigured, pushSupported, getCurrentSubscription, subscribePush, unsubscribePush, getLastPushError } from '@/lib/push';
 import { showToast } from '@/lib/toast';
 import styles from './NotifyToggle.module.css';
 
@@ -31,7 +31,7 @@ export function NotifyToggle() {
     const r = await subscribePush([...wishlist.ids]);
     if (r === 'ok') { setState('on'); showToast('출시 알림을 켰어요'); }
     else if (r === 'denied') { setState('denied'); showToast('알림 권한이 거부됐어요'); }
-    else { setState('off'); showToast('알림 설정에 실패했어요'); }
+    else { setState('off'); showToast('알림 실패: ' + (getLastPushError() ?? '알 수 없음'), 5000); }
   };
 
   const disabled = state === 'loading' || state === 'denied';
