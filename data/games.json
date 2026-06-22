@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-22T10:05:00+09:00",
+  "last_updated": "2026-06-22T21:12:44+09:00",
   "last_researched_by": "리서처 Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1757,6 +1757,66 @@
       ],
       "image_url": null,
       "source_url": "https://maple.land/board/events/zrt6bke4vgf5ufb2lbqi8lyr"
+    },
+    {
+      "id": "lostark-class-dimensioner-20260708",
+      "name_ko": "로스트아크: 신규 클래스 '차원술사' 출시",
+      "name_en": null,
+      "release_date": "2026-07-08",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "스마일게이트 RPG",
+      "publisher": "스마일게이트",
+      "description": "'2026 로아온 썸머'(6/20)에서 공개된 남성 요즈 신규 클래스 '차원술사'. 시간 관리자/공간 검사 두 전투 스타일을 가진 오리지널 클래스로 7월 8일 정식 업데이트. 공식 트레일러 및 다수 매체 확인.",
+      "genres": [
+        "MMORPG",
+        "신규 클래스"
+      ],
+      "image_url": null,
+      "source_url": "https://www.etnews.com/20260621000067"
+    },
+    {
+      "id": "lostark-raid-belgardin-20260805",
+      "name_ko": "로스트아크: 8인 그림자 레이드 '벨가르딘' 업데이트",
+      "name_en": null,
+      "release_date": "2026-08-05",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "스마일게이트 RPG",
+      "publisher": "스마일게이트",
+      "description": "'2026 로아온 썸머' 로드맵에서 공개된 두 번째 그림자(8인) 레이드 '죽음의 계율자 벨가르딘'과 신규 장비 '완갑'. 8월 5일 업데이트 예정.",
+      "genres": [
+        "MMORPG",
+        "대형 업데이트"
+      ],
+      "image_url": null,
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305574"
+    },
+    {
+      "id": "maplestory-class-rethe-20260618",
+      "name_ko": "메이플스토리: 신규 직업 '레테' 출시 (여름 OVERDRIVE 1차)",
+      "name_en": null,
+      "release_date": "2026-06-18",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "넥슨",
+      "publisher": "넥슨",
+      "description": "메이플스토리 여름 업데이트(OVERDRIVE) 1차로 추가된 신규 직업 '서약의 지배자 레테'. 마스테리아 출신 마족 마법사로 소환수를 조종해 전투. 6월 18일 본섭 적용(테스트월드 6/13). 다수 매체 확인.",
+      "genres": [
+        "MMORPG",
+        "신규 직업"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317443"
     }
   ]
 }
