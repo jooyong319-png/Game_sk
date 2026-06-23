@@ -19,6 +19,7 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
   const [gateErr, setGateErr] = useState('');
   const [rows, setRows] = useState<Row[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   useEffect(() => {
     if (unlocked) return;
@@ -44,10 +45,14 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
     const today = kstDay(new Date().toISOString());
     const byDay = new Map<string, number>();
     const byGame = new Map<string, number>();
+    const byDayItem = new Map<string, Map<string, number>>(); // 날짜 → (콘텐츠 → 횟수)
     for (const r of rows) {
       const d = kstDay(r.created_at);
       byDay.set(d, (byDay.get(d) ?? 0) + 1);
       byGame.set(r.game_id, (byGame.get(r.game_id) ?? 0) + 1);
+      if (!byDayItem.has(d)) byDayItem.set(d, new Map());
+      const m = byDayItem.get(d)!;
+      m.set(r.game_id, (m.get(r.game_id) ?? 0) + 1);
     }
     const days: { date: string; count: number }[] = [];
     const base = new Date(Date.now() + 9 * 3600 * 1000);
@@ -62,7 +67,7 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
     const topGames = entries.filter(([id]) => !id.startsWith('blog:')).slice(0, 25);
     const topGuides = entries.filter(([id]) => id.startsWith('blog:')).slice(0, 15);
     const guideTotal = entries.filter(([id]) => id.startsWith('blog:')).reduce((s, [, n]) => s + n, 0);
-    return { total: rows.length, today: byDay.get(today) ?? 0, yesterday, last7, days, topGames, topGuides, guideTotal };
+    return { total: rows.length, today, today_count: byDay.get(today) ?? 0, yesterday, last7, days, topGames, topGuides, guideTotal, byDayItem };
   }, [rows]);
 
   if (!unlocked) {
@@ -102,22 +107,63 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
       <h1 className={styles.title}>조회수 대시보드</h1>
 
       <div className={styles.cards}>
-        <div className={styles.card}><span className={styles.cardLabel}>오늘</span><span className={styles.cardNum}>{stats.today.toLocaleString()}</span></div>
+        <div className={styles.card}><span className={styles.cardLabel}>오늘</span><span className={styles.cardNum}>{stats.today_count.toLocaleString()}</span></div>
         <div className={styles.card}><span className={styles.cardLabel}>어제</span><span className={styles.cardNum}>{stats.yesterday.toLocaleString()}</span></div>
         <div className={styles.card}><span className={styles.cardLabel}>최근 7일</span><span className={styles.cardNum}>{stats.last7.toLocaleString()}</span></div>
         <div className={styles.card}><span className={styles.cardLabel}>누적</span><span className={styles.cardNum}>{stats.total.toLocaleString()}</span></div>
       </div>
 
-      <h2 className={styles.h2}>최근 30일 일별 조회수</h2>
+      <h2 className={styles.h2}>최근 30일 일별 조회수 <span className={styles.hint}>(막대 클릭 → 그날 상세)</span></h2>
       <div className={styles.chart}>
-        {stats.days.map(d => (
-          <div key={d.date} className={styles.barWrap} title={`${d.date}: ${d.count}`}>
-            <div className={styles.barCount}>{d.count || ''}</div>
-            <div className={styles.bar} style={{ height: `${(d.count / maxDay) * 100}%` }} />
-            <div className={styles.barDate}>{d.date.slice(5)}</div>
-          </div>
-        ))}
+        {stats.days.map(d => {
+          const active = (selectedDate ?? stats.today) === d.date;
+          return (
+            <button
+              type="button"
+              key={d.date}
+              className={`${styles.barWrap} ${active ? styles.barActive : ''}`}
+              title={`${d.date}: ${d.count}`}
+              onClick={() => setSelectedDate(d.date)}
+            >
+              <span className={styles.barCount}>{d.count || ''}</span>
+              <span className={styles.bar} style={{ height: `${(d.count / maxDay) * 100}%` }} />
+              <span className={styles.barDate}>{d.date.slice(5)}</span>
+            </button>
+          );
+        })}
       </div>
+
+      {(() => {
+        const date = selectedDate ?? stats.today;
+        const items = [...(stats.byDayItem.get(date)?.entries() ?? [])].sort((a, b) => b[1] - a[1]);
+        const sum = items.reduce((s, [, n]) => s + n, 0);
+        return (
+          <>
+            <h2 className={styles.h2}>{date} 조회 상세 ({sum.toLocaleString()}건)</h2>
+            {items.length === 0 ? (
+              <p className={styles.muted}>이 날은 조회 기록이 없어요.</p>
+            ) : (
+              <ol className={styles.topList}>
+                {items.map(([id, n], i) => {
+                  const isBlog = id.startsWith('blog:');
+                  const slug = isBlog ? id.slice(5) : id;
+                  const href = isBlog ? `/blog/${slug}` : `/game/${id}`;
+                  return (
+                    <li key={id} className={styles.topRow}>
+                      <span className={styles.rank}>{i + 1}</span>
+                      <span className={styles.detailMain}>
+                        <span className={`${styles.kind} ${isBlog ? styles.kindGuide : styles.kindGame}`}>{isBlog ? '가이드' : '게임'}</span>
+                        <a className={styles.topName} href={href} target="_blank" rel="noopener">{nameMap[id] ?? slug}</a>
+                      </span>
+                      <span className={styles.topNum}>{n.toLocaleString()}</span>
+                    </li>
+                  );
+                })}
+              </ol>
+            )}
+          </>
+        );
+      })()}
 
       <h2 className={styles.h2}>인기 게임 (누적 조회 TOP 25)</h2>
       <ol className={styles.topList}>
