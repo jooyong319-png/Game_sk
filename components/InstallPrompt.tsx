@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styles from './InstallPrompt.module.css';
 
 const DISMISS_KEY = 'gcalen.installDismissed';
-const DISMISS_DAYS = 14;
+const DISMISS_DAYS = 1;
 
 interface BIPEvent extends Event {
   prompt: () => Promise<void>;
