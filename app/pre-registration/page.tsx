@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getUpcomingGamesByCategory } from '@/lib/games';
+import { getPreRegistrationGames } from '@/lib/games';
 import { SeoLanding } from '@/components/SeoLanding';
 
 export const metadata: Metadata = {
@@ -11,9 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  // 한국에서 사전예약 ≈ 출시 예정 모바일 신작. 출시 가까운 순으로.
-  const games = (await getUpcomingGamesByCategory('mobile_kr'))
-    .sort((a, b) => a.release_date.localeCompare(b.release_date));
+  // pre_registration=true 우선, 없으면 출시예정 모바일 신작 폴백
+  const games = await getPreRegistrationGames();
 
   return (
     <SeoLanding

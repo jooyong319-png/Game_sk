@@ -147,9 +147,16 @@ public/                       # Vercel 정적 자산 (필요 시 추가)
     genres: string[],
     image_url: string | null,
     source_url: string | null,
+    pre_registration?: boolean,       // 사전예약 진행 중이면 true (선택 필드)
   }>
 }
 ```
+
+**pre_registration 필드** (사전예약 페이지 `/pre-registration` 표면용):
+- 공식 출처에서 **현재 사전예약(사전등록)을 받는 중**인 게임에만 `true`.
+- 출시되면(release_date 지남) 자연히 빠지므로 별도 false 처리는 선택.
+- 모바일이 대부분이지만 PC/콘솔도 사전예약 받으면 `true` 가능.
+- 미설정(필드 없음)이면 false로 간주. 리서처가 0건 채운 동안엔 코드가 '출시예정 모바일'로 폴백.
 
 리서처는 스키마 임의 변경 금지. 변경 필요 시 기획자와 합의 후.
 new_server는 워치리스트(`data/server_watchlist.json`) 기반 + 공식 공지 확인 필수.

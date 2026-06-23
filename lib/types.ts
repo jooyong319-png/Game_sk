@@ -20,6 +20,7 @@ export interface Game {
   genres: string[];
   image_url: string | null;
   source_url: string | null;
+  pre_registration?: boolean;       // 사전예약 진행 중이면 true (리서처가 채움, 선택 필드)
 }
 
 export interface GamesData {
