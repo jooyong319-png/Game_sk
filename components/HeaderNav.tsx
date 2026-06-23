@@ -11,6 +11,7 @@ interface NavItem {
 const NAV: NavItem[] = [
   { href: '/', label: '캘린더' },
   { href: '/upcoming-games', label: '출시 예정' },
+  { href: '/pre-registration', label: '사전예약' },
   { href: '/new-servers', label: '서버·이벤트' },
   { href: '/mobile-games', label: '모바일' },
   { href: '/pc-console-games', label: 'PC·콘솔' },

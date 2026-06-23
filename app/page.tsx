@@ -33,6 +33,7 @@ export default async function HomePage() {
       <Home initialGames={games} lastUpdated={lastUpdated} serverNow={serverNow} />
       <nav className="seo-nav" aria-label="카테고리 바로가기">
         <a href="/upcoming-games">신규 게임 출시 예정 일정</a>
+        <a href="/pre-registration">모바일 게임 사전예약 일정</a>
         <a href="/new-servers">신규 서버·대규모 이벤트 일정</a>
         <a href="/mobile-games">국내 신규 모바일 게임 출시 일정</a>
         <a href="/pc-console-games">신규 PC·콘솔 게임 출시 일정</a>
