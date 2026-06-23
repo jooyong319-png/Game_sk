@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-24T00:47:24+09:00",
+  "last_updated": "2026-06-24T01:01:09+09:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1863,6 +1863,30 @@
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ff/14/6b/ff146b23-76d8-6651-a6ca-057db0f39463/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
       "source_url": "https://eos-black.com/#Newserver"
+    },
+    {
+      "id": "azur-promilia-2026",
+      "name_ko": "아주르 프로밀리아",
+      "name_en": "Azur Promilia",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "만쥬게임즈(Manjuu)",
+      "publisher": "넥슨",
+      "description": "벽람항로 개발사 만쥬게임즈의 PC·모바일 오픈월드 RPG. 넥슨 국내 퍼블리싱, 2026년 출시 예정(정확한 일자 미공개). 키보 동료와 함께 광활한 월드를 탐험·전투·생활.",
+      "genres": [
+        "오픈월드",
+        "RPG",
+        "서브컬처"
+      ],
+      "image_url": null,
+      "source_url": "https://azurpromilia.nexon.com/events/2025/12/preregistration",
+      "pre_registration": true
     }
   ]
 }
