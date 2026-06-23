@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-23T21:12:08+09:00",
+  "last_updated": "2026-06-23T10:05:00+09:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1840,6 +1840,28 @@
       ],
       "image_url": null,
       "source_url": "https://bbs.ruliweb.com/news/board/300001/read/2354001"
+    },
+    {
+      "id": "eos-black-server-maroon-ruth-camp-20260625",
+      "name_ko": "에오스 블랙: 2주년 부스팅 서버 '마룬캠프'·'루스캠프' 오픈",
+      "name_en": null,
+      "release_date": "2026-06-25",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "블로믹스",
+      "publisher": "블루포션게임즈",
+      "description": "2주년 기념 첫 부스팅 서버 '마룬캠프'·'루스캠프' 오픈(운영 06/25~08/20 점검 전). 경험치 222% 버프, 신화 영/패/신·전설 세트 지급, 클래스 체인지 상시 운영, 종료 후 기존 서버(마룬·루스)로 합류. 사전예약 6/2~6/23 정오 마감, 사전 다운로드 6/19.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ff/14/6b/ff146b23-76d8-6651-a6ca-057db0f39463/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+      "source_url": "https://eos-black.com/#Newserver"
     }
   ]
 }
