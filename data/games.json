@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-22T21:12:44+09:00",
-  "last_researched_by": "리서처 Claude",
+  "last_updated": "2026-06-23T09:11:46+09:00",
+  "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -1817,6 +1817,29 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317443"
+    },
+    {
+      "id": "hsr-fate-collab-holy-grail-20260724",
+      "name_ko": "붕괴: 스타레일 × Fate 2차 콜라보 '환조: 성배전쟁'",
+      "name_en": null,
+      "release_date": "2026-07-24",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS",
+        "PlayStation 5"
+      ],
+      "developer": "호요버스",
+      "publisher": "호요버스",
+      "description": "붕괴: 스타레일 × Fate/stay night [UBW] 2차 콜라보 '환조: 성배전쟁'. 7월 24일 13시(KST) 콜라보 워프 오픈, 한정 ★5 '토오사카 린' 등장, '길가메시'·'아처' 중 1명 무료 획득. 4.x 버전 여름 콜라보 이벤트.",
+      "genres": [
+        "RPG",
+        "콜라보 이벤트"
+      ],
+      "image_url": null,
+      "source_url": "https://bbs.ruliweb.com/news/board/300001/read/2354001"
     }
   ]
 }
