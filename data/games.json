@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-23T10:05:00+09:00",
+  "last_updated": "2026-06-24T00:47:24+09:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -565,7 +565,8 @@
         "다크판타지"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d3/18/df/d318dff7-4c96-cf32-6b64-8494e481f380/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.bloter.net/news/articleView.html?idxno=661778"
+      "source_url": "https://www.bloter.net/news/articleView.html?idxno=661778",
+      "pre_registration": true
     },
     {
       "id": "odin-q-2026",
