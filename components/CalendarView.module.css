@@ -247,14 +247,24 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.5rem 0.7rem;
+  padding: 0.55rem 0.7rem;
   background: var(--bg-elev);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--cat, var(--border));
   border-radius: 6px;
   cursor: pointer;
   text-align: left;
   color: var(--text);
   transition: background 0.12s, border-color 0.12s;
+}
+.dayBadge {
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.12rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid currentColor;
+  line-height: 1.4;
 }
 .dayRow:hover {
   background: rgba(16,185,129,0.08);

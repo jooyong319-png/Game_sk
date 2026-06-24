@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect, useRef, type CSSProperties } from 'react'
 import type { Game, CalEvent, FilterKey } from '@/lib/types';
 // (Category는 셀 색에 CATEGORY_META로만 사용)
 import { CATEGORY_META } from '@/lib/types';
-import { calcDayDiff, formatShortDate, getKoreanWeekday, kstDateOnly } from '@/lib/utils';
+import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import styles from './CalendarView.module.css';
 
@@ -76,12 +76,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
   // 직전 커서 연-월. 첫 실행(mount)·동일 월 갱신은 선택 유지, 실제 월 이동에만 해제
   const prevYMRef = useRef<string | null>(null);
 
-  // 진입(mount) 후 1회: 오늘(KST) 셀을 디폴트 선택 → day-detail 패널 '오늘 이후 출시' 자동 노출.
-  // 오늘 ISO는 mount 후 계산해 SSR에 출력하지 않음(날짜의존 하이드레이션 회피).
-  useEffect(() => {
-    const t = kstDateOnly(new Date().toISOString());
-    setSelectedISO(toISO(t));
-  }, []);
+  // (디폴트 자동선택 제거 — 사용자가 날짜를 클릭해야 그 날짜 패널이 뜸)
 
   // 달이 바뀌면 선택 해제 — 단 첫 실행과 '같은 월' 재갱신(Home mount의 이번 달 교체)은 유지
   useEffect(() => {
@@ -136,13 +131,12 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
     setSelectedISO(prev => prev === cell.iso ? null : cell.iso);
   }
 
-  // day-detail-panel: 선택 날짜 "이후" 출시 게임 목록
+  // day-detail-panel: 선택한 "그 날짜"의 출시 게임만
   const panelGames = useMemo(() => {
     if (!selectedISO) return [];
     return games
-      .filter(g => g.release_date >= selectedISO)
-      .sort((a, b) => a.release_date.localeCompare(b.release_date))
-      .slice(0, 20); // 최대 20개만 노출
+      .filter(g => g.release_date === selectedISO)
+      .sort((a, b) => a.name_ko.localeCompare(b.name_ko));
   }, [selectedISO, games]);
 
   return (
@@ -251,7 +245,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
         <div ref={panelRef} className={styles.dayPanel}>
           <header className={styles.dayPanelHeader}>
             <h3 className={styles.dayPanelTitle}>
-              {formatShortDate(selectedISO)} ({getKoreanWeekday(selectedISO)}) 이후 출시 {panelGames.length}건
+              {formatShortDate(selectedISO)} ({getKoreanWeekday(selectedISO)})
             </h3>
             <button
               type="button"
@@ -274,26 +268,26 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
                 {ev.url && <span className={styles.dayEventGo} aria-hidden="true">↗</span>}
               </a>
             ))}
-            {panelGames.length === 0 ? (
-              (eventsByDate.get(selectedISO) ?? []).length === 0 && (
-                <p className={styles.dayEmpty}>이 날짜 이후 출시 예정 게임이 없어요.</p>
-              )
-            ) : panelGames.map(g => {
+            {panelGames.length === 0 && (eventsByDate.get(selectedISO) ?? []).length === 0 && (
+              <p className={styles.dayEmpty}>이 날짜엔 일정이 없어요.</p>
+            )}
+            {panelGames.map(g => {
               const diff = calcDayDiff(g.release_date, now);
-              const dd = diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
+              const isToday = diff === 0;
+              const imminent = diff > 0 && diff <= 7;
+              const dd = diff < 0 ? '출시됨' : isToday ? 'D-DAY' : `D-${diff}`;
               const cat = CATEGORY_META[g.category];
-              const mmdd = g.release_date.slice(5).replace('-', '.');
               return (
                 <button
                   key={g.id}
                   type="button"
                   className={styles.dayRow}
                   onClick={() => onPick(g.id)}
+                  style={{ '--cat': cat.color } as CSSProperties}
                 >
-                  <span className={styles.dayRowDate}>{mmdd}</span>
-                  <span className={styles.dayRowDot} style={{ background: cat.color }} title={cat.label} />
+                  <span className={styles.dayBadge} style={{ color: cat.color }}>{cat.short}</span>
                   <span className={styles.dayRowName}>{g.name_ko}</span>
-                  <span className={`${styles.dayRowDday} ${diff === 0 ? styles.dayRowDdayToday : diff > 0 && diff <= 7 ? styles.dayRowDdaySoon : ''}`}>{dd}</span>
+                  <span className={`${styles.dayRowDday} ${isToday ? styles.dayRowDdayToday : imminent ? styles.dayRowDdaySoon : ''}`}>{dd}</span>
                 </button>
               );
             })}

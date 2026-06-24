@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import type { Game, FilterState, CalEvent } from '@/lib/types';
 import { EVENT_TYPE_META } from '@/lib/types';
 import { formatShortDate, kstDateOnly } from '@/lib/utils';
@@ -34,6 +34,15 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
     wishlistOnly: false,
   });
   const [view, setView] = useState<'calendar' | 'list'>('calendar');
+  // 기본 뷰: 모바일/앱은 리스트, PC는 캘린더 (사용자가 토글하면 그 선택 유지)
+  const viewInit = useRef(false);
+  useEffect(() => {
+    if (viewInit.current) return;
+    viewInit.current = true;
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 760px)').matches) {
+      setView('list');
+    }
+  }, []);
   const [calendarCursor, setCalendarCursor] = useState<Date>(() => {
     const d = kstDateOnly(serverNow);
     d.setDate(1);
