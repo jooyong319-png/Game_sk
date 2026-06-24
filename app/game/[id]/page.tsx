@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllGames, getUpcomingGamesByCategory, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
 import { CATEGORY_META, type Category, type Game } from '@/lib/types';
 import { WishlistButton } from '@/components/WishlistButton';
+import { GameReactions } from '@/components/GameReactions';
 import { DdayBadge } from '@/components/DdayBadge';
 import { ShareButton } from '@/components/ShareButton';
 import { ViewCounter } from '@/components/ViewCounter';
@@ -150,6 +151,7 @@ export default async function GamePage({ params }: Props) {
               <a className="detail-link" href={game.source_url} target="_blank" rel="noopener">공식 출처 →</a>
             )}
           </div>
+          <GameReactions gameId={game.id} />
         </article>
 
         <Comments gameId={game.id} />
