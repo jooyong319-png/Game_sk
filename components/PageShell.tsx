@@ -1,8 +1,11 @@
 import type { ReactNode } from 'react';
 import { getAllGames } from '@/lib/games';
 import { kstDateOnly } from '@/lib/utils';
+import type { Category } from '@/lib/types';
 import { NextByCategory } from './NextByCategory';
 import { PromoBanner } from './PromoBanner';
+import { PopularGames } from './PopularGames';
+import { CalendarSubscribe } from './CalendarSubscribe';
 import styles from './PageShell.module.css';
 
 interface Props {
@@ -14,6 +17,8 @@ interface Props {
 export async function PageShell({ children }: Props) {
   const games = await getAllGames();
   const now = kstDateOnly(new Date().toISOString());
+  const meta: Record<string, { name: string; category: Category }> = {};
+  for (const g of games) meta[g.id] = { name: g.name_ko, category: g.category };
 
   return (
     <div className={styles.layout}>
@@ -21,6 +26,8 @@ export async function PageShell({ children }: Props) {
 
       <aside className={styles.rightCol} aria-label="추천 일정">
         <NextByCategory games={games} now={now} />
+        <PopularGames meta={meta} />
+        <CalendarSubscribe />
         <PromoBanner variant="update" />
       </aside>
     </div>
