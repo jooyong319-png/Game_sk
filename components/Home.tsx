@@ -8,6 +8,7 @@ import { PromoBanner } from './PromoBanner';
 import { PopularGames } from './PopularGames';
 import { CalendarSubscribe } from './CalendarSubscribe';
 import { FreeGames } from './FreeGames';
+import { AdFit } from './AdFit';
 import { ViewToggle } from './ViewToggle';
 import { CalendarView } from './CalendarView';
 import { ListView } from './ListView';
@@ -235,6 +236,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
 
         <aside className={styles.rightCol} aria-label="추천 일정">
           <NextByCategory games={initialGames} now={now} />
+          <AdFit unit="DAN-OszywWckdPV6qhbX" width={300} height={250} />
           <FreeGames compact />
           <PopularGames meta={Object.fromEntries(initialGames.map(g => [g.id, { name: g.name_ko, category: g.category }]))} />
           <CalendarSubscribe />

@@ -7,6 +7,7 @@ import { PromoBanner } from './PromoBanner';
 import { PopularGames } from './PopularGames';
 import { CalendarSubscribe } from './CalendarSubscribe';
 import { FreeGames } from './FreeGames';
+import { AdFit } from './AdFit';
 import styles from './PageShell.module.css';
 
 interface Props {
@@ -27,6 +28,7 @@ export async function PageShell({ children }: Props) {
 
       <aside className={styles.rightCol} aria-label="추천 일정">
         <NextByCategory games={games} now={now} />
+        <AdFit unit="DAN-OszywWckdPV6qhbX" width={300} height={250} />
         <FreeGames compact />
         <PopularGames meta={meta} />
         <CalendarSubscribe />
