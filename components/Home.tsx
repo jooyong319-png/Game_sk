@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import type { Game, FilterState, CalEvent } from '@/lib/types';
+import { EVENT_TYPE_META } from '@/lib/types';
 import { formatShortDate, kstDateOnly } from '@/lib/utils';
 import { NextByCategory } from './NextByCategory';
 import { PromoBanner } from './PromoBanner';
@@ -53,8 +54,8 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
         if (cancelled) return;
         const evs: CalEvent[] = [];
         for (const g of (d.games ?? []) as { title: string; status: string; start?: string; end?: string; url?: string }[]) {
-          if (g.status === 'upcoming' && g.start) evs.push({ date: g.start.slice(0, 10), label: `${g.title} 무료 시작`, color: FREE_COLOR, url: g.url });
-          if (g.end) evs.push({ date: g.end.slice(0, 10), label: `${g.title} 무료 종료`, color: FREE_COLOR, url: g.url });
+          if (g.status === 'upcoming' && g.start) evs.push({ date: g.start.slice(0, 10), label: `${g.title} 무료 시작`, color: FREE_COLOR, type: 'free_game', url: g.url });
+          if (g.end) evs.push({ date: g.end.slice(0, 10), label: `${g.title} 무료 종료`, color: FREE_COLOR, type: 'free_game', url: g.url });
         }
         setFreeEvents(evs);
       })
@@ -63,6 +64,14 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
   }, []);
 
   const calEvents = useMemo(() => [...initialCalEvents, ...freeEvents], [initialCalEvents, freeEvents]);
+
+  // 필터가 이벤트 타입이면 그 타입만, 게임 카테고리면 이벤트 숨김, 없으면 전부
+  const displayEvents = useMemo(() => {
+    const f = filters.category;
+    if (!f) return calEvents;
+    if (f in EVENT_TYPE_META) return calEvents.filter(e => e.type === f);
+    return [];
+  }, [calEvents, filters.category]);
 
   const wishlist = useWishlist();
   const wishFilter = useWishlistFilter(); // 위시만 보기 토글 — 본문 상단행 ★(§F)
@@ -191,7 +200,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
           cursor={calendarCursor}
           onCursorChange={setCalendarCursor}
           games={filteredGames}
-          events={calEvents}
+          events={displayEvents}
           wishlist={wishlist}
           onPick={openModal}
           now={now}
@@ -201,6 +210,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
       ) : (
         <ListView
           games={listGames}
+          events={displayEvents}
           wishlist={wishlist}
           onPick={openModal}
           now={now}

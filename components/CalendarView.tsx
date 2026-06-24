@@ -1,6 +1,7 @@
 'use client';
 import { useMemo, useState, useEffect, useRef, type CSSProperties } from 'react';
-import type { Game, Category, CalEvent } from '@/lib/types';
+import type { Game, CalEvent, FilterKey } from '@/lib/types';
+// (Category는 셀 색에 CATEGORY_META로만 사용)
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday, kstDateOnly } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
@@ -14,8 +15,8 @@ interface Props {
   wishlist: { has: (id: string) => boolean };
   onPick: (id: string) => void;
   now: Date;
-  category: Category | null;
-  onCategory: (c: Category | null) => void;
+  category: FilterKey | null;
+  onCategory: (c: FilterKey | null) => void;
 }
 
 interface Cell {

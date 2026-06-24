@@ -1,8 +1,10 @@
 // server-only: fs 사용 → 서버 컴포넌트/route handler에서만 import
 import path from 'path';
 import { promises as fs } from 'fs';
+import type { EventType } from './types';
 
-export type EventType = 'game_show' | 'sale' | 'season' | 'free_game';
+export { EVENT_TYPE_META } from './types';
+export type { EventType } from './types';
 
 export interface GameEvent {
   id: string;
@@ -39,13 +41,6 @@ function todayKstStr(): string {
   const t = new Date(Date.now() + 9 * 3600 * 1000);
   return t.toISOString().slice(0, 10);
 }
-
-export const EVENT_TYPE_META: Record<EventType, { label: string; color: string }> = {
-  game_show: { label: '게임쇼', color: '#9a7bb0' },
-  sale:      { label: '할인',   color: '#c47a00' },
-  season:    { label: '새 시즌', color: '#5f86b8' },
-  free_game: { label: '무료배포', color: '#6f9c7a' },
-};
 
 // 아직 끝나지 않은 이벤트(진행 중 + 예정), 시작일 오름차순
 export async function getUpcomingEvents(): Promise<GameEvent[]> {

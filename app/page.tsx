@@ -22,9 +22,9 @@ export default async function HomePage() {
   const initialCalEvents: CalEvent[] = [];
   for (const e of events) {
     const color = EVENT_TYPE_META[e.type].color;
-    initialCalEvents.push({ date: e.start_date, label: e.title, color, url: e.source_url });
+    initialCalEvents.push({ date: e.start_date, label: e.title, color, type: e.type, url: e.source_url });
     if (e.end_date !== e.start_date) {
-      initialCalEvents.push({ date: e.end_date, label: `${e.title} 종료`, color, url: e.source_url });
+      initialCalEvents.push({ date: e.end_date, label: `${e.title} 종료`, color, type: e.type, url: e.source_url });
     }
   }
 

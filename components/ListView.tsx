@@ -1,18 +1,19 @@
 'use client';
 import { useMemo, useState, type CSSProperties } from 'react';
-import type { Game, Category } from '@/lib/types';
-import { CATEGORY_META } from '@/lib/types';
+import type { Game, CalEvent, FilterKey } from '@/lib/types';
+import { CATEGORY_META, EVENT_TYPE_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import styles from './ListView.module.css';
 
 interface Props {
   games: Game[];
+  events?: CalEvent[];
   wishlist: { has: (id: string) => boolean; toggle: (id: string) => void; ids: Set<string> };
   onPick: (id: string) => void;
   now: Date;
-  category: Category | null;              // 전역 카테고리 필터(캘린더 아이콘 줄과 공유)
-  onCategory: (c: Category | null) => void;
+  category: FilterKey | null;             // 전역 필터(캘린더 아이콘 줄과 공유)
+  onCategory: (c: FilterKey | null) => void;
 }
 
 type MonthSel = number | 'approx'; // 1~12 또는 '미정'
@@ -20,7 +21,7 @@ const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 function pad(n: number): string { return String(n).padStart(2, '0'); }
 
-export function ListView({ games, wishlist, onPick, now, category, onCategory }: Props) {
+export function ListView({ games, events = [], wishlist, onPick, now, category, onCategory }: Props) {
   // 사용자가 탭/연도를 고르기 전엔 null → now(현재 연·월)를 따름(빌드 정적이라도 mount 후 정확)
   const [picked, setPicked] = useState<{ year: number; month: MonthSel } | null>(null);
 
@@ -52,6 +53,14 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
     }
     return inMonth.slice().sort((a, b) => a.release_date.localeCompare(b.release_date));
   }, [games, activeYear, activeMonth, isCurrentMonth, now]);
+
+  // 선택한 달의 이벤트(게임쇼/할인/시즌/무료) — 날짜순
+  const monthEvents = useMemo(() => {
+    if (activeMonth === 'approx') return [];
+    return events
+      .filter(e => Number(e.date.slice(0, 4)) === activeYear && Number(e.date.slice(5, 7)) === activeMonth)
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }, [events, activeYear, activeMonth]);
 
   // 탭별 개수(해당 연도 기준)
   const monthCounts = useMemo(() => {
@@ -104,16 +113,42 @@ export function ListView({ games, wishlist, onPick, now, category, onCategory }:
         <CategoryFilterBar category={category} onCategory={onCategory} className={styles.catRow} />
       </div>
 
-      {monthGames.length === 0 ? (
+      {monthGames.length === 0 && monthEvents.length === 0 ? (
         <div className={styles.empty}>
           <div className={styles.emptyIcon} aria-hidden="true"><svg className="ic"><use href="#ic-gamepad" /></svg></div>
           <p className={styles.emptyText}>
-            {activeMonth === 'approx' ? '출시일 미정 게임이 없어요.' : `${activeYear}년 ${activeMonth}월 출시 일정이 없어요.`}
+            {activeMonth === 'approx' ? '출시일 미정 게임이 없어요.' : `${activeYear}년 ${activeMonth}월 일정이 없어요.`}
           </p>
           <p className={styles.emptyHint}>위 탭에서 다른 달을 골라보세요.</p>
         </div>
       ) : (
         <ul className={styles.rows}>
+          {monthEvents.map((e, i) => {
+            const mmdd = e.date.slice(5).replace('-', '/');
+            return (
+              <li key={`ev-${i}`} className={`${styles.row} ${styles.eventRow}`} style={{ '--cat': e.color } as CSSProperties}>
+                <div className={styles.dateCol}>
+                  <span className={styles.dMmdd}>{mmdd}</span>
+                </div>
+                <div className={styles.main}>
+                  <div className={styles.titleRow}>
+                    <span className={styles.badge} style={{ color: e.color }}>{EVENT_TYPE_META[e.type].label}</span>
+                    {e.url
+                      ? <a className={styles.title} href={e.url} target="_blank" rel="noopener">{e.label}</a>
+                      : <span className={styles.title}>{e.label}</span>}
+                  </div>
+                </div>
+                <div className={styles.actions}>
+                  {e.url && (
+                    <a className={styles.actBtn} href={e.url} target="_blank" rel="noopener" aria-label="이벤트 바로가기">
+                      <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
+                      <span className={styles.actLabel}>바로가기</span>
+                    </a>
+                  )}
+                </div>
+              </li>
+            );
+          })}
           {monthGames.map(g => {
             const diff = calcDayDiff(g.release_date, now);
             const released = diff < 0;

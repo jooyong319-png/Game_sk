@@ -103,6 +103,9 @@
 .row:last-child { border-bottom: none; }
 .row:hover { background: var(--bg); }
 .row:hover .title { color: var(--accent); }
+.eventRow { cursor: default; }
+.eventRow:hover { background: var(--bg-elev); }
+.eventRow:hover .title { color: var(--accent); }
 .rowImminent { background: rgba(245, 166, 35, 0.06); }
 .rowReleased { opacity: 0.58; }
 .rowReleased:hover { opacity: 1; }

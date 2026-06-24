@@ -33,16 +33,30 @@ export interface GamesData {
 
 // 메인 필터 상태 (좌 CategoryRail + 검색바가 사용). §F 3컬럼 이관 후
 // 가로 Filters 바는 제거됐고, 타입만 단일 출처로 보존한다.
-// 캘린더에 얹는 이벤트 마커(게임쇼/할인/시즌/무료배포) — 클라이언트 공유용
+// 이벤트(게임쇼/할인/시즌/무료배포) 타입 — 클라이언트/서버 공용
+export type EventType = 'game_show' | 'sale' | 'season' | 'free_game';
+
+export const EVENT_TYPE_META: Record<EventType, { label: string; color: string; icon: string }> = {
+  game_show: { label: '게임쇼',   color: '#9a7bb0', icon: 'ic-star' },
+  sale:      { label: '할인',     color: '#c47a00', icon: 'ic-tag' },
+  season:    { label: '새 시즌',  color: '#5f86b8', icon: 'ic-refresh' },
+  free_game: { label: '무료',     color: '#6f9c7a', icon: 'ic-gift' },
+};
+
+// 캘린더/리스트에 얹는 이벤트 마커 — 클라이언트 공유용
 export interface CalEvent {
   date: string;   // 'YYYY-MM-DD'
   label: string;
   color: string;
+  type: EventType;
   url?: string | null;
 }
 
+// 필터 단일 키 — 게임 카테고리 또는 이벤트 타입
+export type FilterKey = Category | EventType;
+
 export interface FilterState {
-  category: Category | null;
+  category: FilterKey | null;
   platform: string | null;
   days: number;
   search: string;
