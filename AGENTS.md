@@ -168,6 +168,22 @@ public/                       # Vercel 정적 자산 (필요 시 추가)
 리서처는 스키마 임의 변경 금지. 변경 필요 시 기획자와 합의 후.
 new_server는 워치리스트(`data/server_watchlist.json`) 기반 + 공식 공지 확인 필수.
 
+## 6-2. data/events.json (게임 이벤트 — 게임쇼/할인/시즌)
+출시 외 기간성 이벤트. `/events` 페이지·사이드바에 노출. 리서처가 관리.
+```ts
+{ id, type: "game_show"|"sale"|"season", title,
+  start_date, end_date: "YYYY-MM-DD",   // 단일이면 둘 다 동일
+  date_approx?: boolean,                 // 날짜 불확실하면 true → '예정' 표기
+  host?: string,                         // 게임쇼 장소 / 할인 플랫폼 / 시즌 게임명
+  description?, source_url?, image_url? }
+```
+- **game_show**: 게임스컴·도쿄게임쇼·지스타·TGA 등. 시드는 `date_approx:true`로 들어가 있으니 **공식 발표 나오면 정확한 날짜로 갱신 + approx 제거**.
+- **sale**: 스팀 계절세일·넥스트페스트, PSN·닌텐도 e숍 대규모 할인. 시작~종료 기간 필수.
+- **season**: 디아블로·PoE·오버워치2·에이펙스 등 시즌제 게임의 새 시즌 오픈일. host에 게임명.
+- **free_game(무료배포)는 여기 넣지 말 것** — 에픽은 `/api/free-games`가 실시간 자동 수집함.
+- end_date 지난 이벤트는 자동으로 안 보이므로, 끝난 건 주기적으로 정리.
+- 사실 검증 원칙 동일: 공식 출처 확인된 일정만.
+
 ---
 
 ## 7. 빌드 시스템
