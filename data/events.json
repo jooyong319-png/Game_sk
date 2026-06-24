@@ -46,6 +46,16 @@
       "host": "미국 로스앤젤레스",
       "description": "올해의 게임(GOTY)을 가리는 시상식이자 대형 신작 발표 무대. 굵직한 월드 프리미어 공개가 매년 화제가 됩니다.",
       "source_url": "https://thegameawards.com/"
+    },
+    {
+      "id": "steam-summer-sale-2026",
+      "type": "sale",
+      "title": "스팀 여름 할인 2026 (Steam Summer Sale)",
+      "start_date": "2026-06-25",
+      "end_date": "2026-07-09",
+      "host": "Steam",
+      "description": "밸브가 진행하는 연중 최대 규모의 스팀 정기 세일. 2주간 수천 종의 PC 게임이 할인되며, 한국 시간 기준 6월 26일 새벽부터 7월 10일 새벽까지 진행됩니다. (PT 기준 6/25 오전 10시 시작)",
+      "source_url": "https://store.steampowered.com/news/group/4145017/view/532102384016426891"
     }
   ]
 }

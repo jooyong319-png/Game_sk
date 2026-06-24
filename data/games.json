@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-24T01:07:06+09:00",
+  "last_updated": "2026-06-24T11:53:26+09:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -236,7 +236,7 @@
       ],
       "developer": "IO Interactive",
       "publisher": "IO Interactive",
-      "description": "히트맨 개발사가 만든 젊은 제임스 본드 액션 어드벤처.",
+      "description": "히트맨 시리즈로 잘 알려진 IO 인터랙티브가 개발하는 제임스 본드 액션 어드벤처. 베테랑이 아닌 갓 00 요원이 된 젊은 시절의 본드를 그린 오리지널 스토리로, 첩보 액션과 잠입 요소를 결합했다. IO가 처음 선보이는 자체 본드 IP 프로젝트로 시리즈의 기원을 새롭게 재해석한다.",
       "genres": [
         "액션",
         "어드벤처"
@@ -342,7 +342,7 @@
       ],
       "developer": "Square Enix",
       "publisher": "Square Enix",
-      "description": "파이널 판타지 7 리버스의 닌텐도 스위치 2 이식판.",
+      "description": "스퀘어 에닉스의 '파이널 판타지 7 리메이크' 프로젝트 2부작인 리버스의 닌텐도 스위치 2 이식판. PS5로 먼저 출시됐던 광활한 오픈 필드 RPG를 스위치 2로 옮겨, 클라우드 일행이 미드가르 바깥 대륙을 누비는 모험을 휴대용 환경에서도 즐길 수 있게 한다.",
       "genres": [
         "RPG",
         "액션"
@@ -406,7 +406,7 @@
       ],
       "developer": "Alkimia Interactive",
       "publisher": "THQ Nordic",
-      "description": "1세대 다크 판타지 RPG 명작 고딕 1의 풀 리메이크.",
+      "description": "2001년 출시된 1세대 다크 판타지 RPG 명작 '고딕'을 현대적으로 재구축한 풀 리메이크. THQ 노르딕 산하 알키미아 인터랙티브가 개발하며, 원작의 폐쇄적 유배지 콜로니 세계관과 자유도 높은 탐험을 최신 그래픽과 시스템으로 되살린다. 2026년 6월 출시 예정이다.",
       "genres": [
         "RPG",
         "액션"
@@ -798,7 +798,7 @@
       ],
       "developer": "Arc System Works",
       "publisher": "Sony Interactive Entertainment",
-      "description": "아크 시스템 웍스 개발 4vs4 태그 마블 격투 게임.",
+      "description": "길티기어·드래곤볼 파이터즈로 유명한 아크 시스템 웍스가 개발하는 4대4 태그 대전 격투 게임. 마블 슈퍼히어로들이 등장하며, 아크 시스템 웍스 특유의 화려한 2D풍 연출과 팀 기반 전투를 결합했다. PS5와 PC로 출시 예정이다.",
       "genres": [
         "격투",
         "대전"
