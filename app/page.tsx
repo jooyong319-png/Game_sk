@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { getAllGames, getLastUpdated } from '@/lib/games';
+import { getUpcomingEvents, EVENT_TYPE_META } from '@/lib/events';
+import type { CalEvent } from '@/lib/types';
 import { Home } from '@/components/Home';
 
 export const metadata: Metadata = {
@@ -14,6 +16,17 @@ export default async function HomePage() {
   const lastUpdated = await getLastUpdated();
   // 빌드(SSR) 시점의 '현재 시각' 기준값. 클라 첫 렌더도 이 값을 써서 하이드레이션 불일치 제거.
   const serverNow = new Date().toISOString();
+
+  // events.json(게임쇼/할인/시즌) → 캘린더 마커. 무료배포는 Home에서 클라로 추가.
+  const events = await getUpcomingEvents();
+  const initialCalEvents: CalEvent[] = [];
+  for (const e of events) {
+    const color = EVENT_TYPE_META[e.type].color;
+    initialCalEvents.push({ date: e.start_date, label: e.title, color, url: e.source_url });
+    if (e.end_date !== e.start_date) {
+      initialCalEvents.push({ date: e.end_date, label: `${e.title} 종료`, color, url: e.source_url });
+    }
+  }
 
   const websiteJsonLd = {
     '@context': 'https://schema.org',
@@ -30,7 +43,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
-      <Home initialGames={games} lastUpdated={lastUpdated} serverNow={serverNow} />
+      <Home initialGames={games} lastUpdated={lastUpdated} serverNow={serverNow} initialCalEvents={initialCalEvents} />
       <nav className="seo-nav" aria-label="카테고리 바로가기">
         <a href="/upcoming-games">신규 게임 출시 예정 일정</a>
         <a href="/pre-registration">모바일 게임 사전예약 일정</a>

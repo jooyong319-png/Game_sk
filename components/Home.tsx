@@ -1,6 +1,6 @@
 'use client';
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import type { Game, FilterState } from '@/lib/types';
+import type { Game, FilterState, CalEvent } from '@/lib/types';
 import { formatShortDate, kstDateOnly } from '@/lib/utils';
 import { NextByCategory } from './NextByCategory';
 import { PromoBanner } from './PromoBanner';
@@ -19,9 +19,12 @@ interface HomeProps {
   initialGames: Game[];
   lastUpdated: string;
   serverNow: string;
+  initialCalEvents?: CalEvent[];
 }
 
-export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
+const FREE_COLOR = '#6f9c7a';
+
+export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = [] }: HomeProps) {
   const [filters, setFilters] = useState<FilterState>({
     category: null,
     platform: null,
@@ -39,6 +42,27 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
   // mount 후 실제 현재 시각으로 교체 → D-day·오늘 셀이 클라에서 정확.
   const [now, setNow] = useState<Date>(() => kstDateOnly(serverNow));
   const [openGameId, setOpenGameId] = useState<string | null>(null);
+  const [freeEvents, setFreeEvents] = useState<CalEvent[]>([]);
+
+  // 에픽 무료배포 → 캘린더 마커(시작/종료). 클라에서 1회 로드.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/free-games')
+      .then(r => r.json())
+      .then(d => {
+        if (cancelled) return;
+        const evs: CalEvent[] = [];
+        for (const g of (d.games ?? []) as { title: string; status: string; start?: string; end?: string; url?: string }[]) {
+          if (g.status === 'upcoming' && g.start) evs.push({ date: g.start.slice(0, 10), label: `${g.title} 무료 시작`, color: FREE_COLOR, url: g.url });
+          if (g.end) evs.push({ date: g.end.slice(0, 10), label: `${g.title} 무료 종료`, color: FREE_COLOR, url: g.url });
+        }
+        setFreeEvents(evs);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const calEvents = useMemo(() => [...initialCalEvents, ...freeEvents], [initialCalEvents, freeEvents]);
 
   const wishlist = useWishlist();
   const wishFilter = useWishlistFilter(); // 위시만 보기 토글 — 본문 상단행 ★(§F)
@@ -167,6 +191,7 @@ export function Home({ initialGames, lastUpdated, serverNow }: HomeProps) {
           cursor={calendarCursor}
           onCursorChange={setCalendarCursor}
           games={filteredGames}
+          events={calEvents}
           wishlist={wishlist}
           onPick={openModal}
           now={now}

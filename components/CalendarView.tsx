@@ -1,6 +1,6 @@
 'use client';
 import { useMemo, useState, useEffect, useRef, type CSSProperties } from 'react';
-import type { Game, Category } from '@/lib/types';
+import type { Game, Category, CalEvent } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday, kstDateOnly } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
@@ -10,6 +10,7 @@ interface Props {
   cursor: Date;
   onCursorChange: (d: Date) => void;
   games: Game[];
+  events?: CalEvent[];
   wishlist: { has: (id: string) => boolean };
   onPick: (id: string) => void;
   now: Date;
@@ -56,7 +57,15 @@ function buildCells(cursor: Date, games: Game[], now: Date): Cell[] {
   return cells;
 }
 
-export function CalendarView({ cursor, onCursorChange, games, onPick, now, category, onCategory }: Props) {
+export function CalendarView({ cursor, onCursorChange, games, events = [], onPick, now, category, onCategory }: Props) {
+  const eventsByDate = useMemo(() => {
+    const m = new Map<string, CalEvent[]>();
+    for (const e of events) {
+      if (!m.has(e.date)) m.set(e.date, []);
+      m.get(e.date)!.push(e);
+    }
+    return m;
+  }, [events]);
   const cells = useMemo(() => buildCells(cursor, games, now), [cursor, games, now]);
   const monthLabel = `${cursor.getFullYear()}년 ${cursor.getMonth() + 1}월`;
   const [selectedISO, setSelectedISO] = useState<string | null>(null);
@@ -210,6 +219,19 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
                   {overflow > 0 && <span className={styles.cellDotMore}>+{overflow}</span>}
                 </div>
               )}
+
+              {eventsByDate.has(cell.iso) && cell.inMonth && (
+                <div className={styles.cellEvents}>
+                  {eventsByDate.get(cell.iso)!.slice(0, 2).map((ev, idx) => (
+                    <span key={idx} className={styles.cellEvent} style={{ '--ev': ev.color } as CSSProperties} title={ev.label}>
+                      {ev.label}
+                    </span>
+                  ))}
+                  {eventsByDate.get(cell.iso)!.length > 2 && (
+                    <span className={styles.cellEventMore}>+{eventsByDate.get(cell.iso)!.length - 2}</span>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}
@@ -238,8 +260,23 @@ export function CalendarView({ cursor, onCursorChange, games, onPick, now, categ
             >×</button>
           </header>
           <div className={styles.dayPanelList}>
+            {(eventsByDate.get(selectedISO) ?? []).map((ev, idx) => (
+              <a
+                key={`ev-${idx}`}
+                className={styles.dayEventRow}
+                href={ev.url || '#'}
+                target="_blank"
+                rel="noopener"
+              >
+                <span className={styles.dayRowDot} style={{ background: ev.color }} />
+                <span className={styles.dayEventName}>{ev.label}</span>
+                {ev.url && <span className={styles.dayEventGo} aria-hidden="true">↗</span>}
+              </a>
+            ))}
             {panelGames.length === 0 ? (
-              <p className={styles.dayEmpty}>이 날짜 이후 출시 예정 게임이 없어요.</p>
+              (eventsByDate.get(selectedISO) ?? []).length === 0 && (
+                <p className={styles.dayEmpty}>이 날짜 이후 출시 예정 게임이 없어요.</p>
+              )
             ) : panelGames.map(g => {
               const diff = calcDayDiff(g.release_date, now);
               const dd = diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;

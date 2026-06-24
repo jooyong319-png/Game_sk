@@ -33,6 +33,14 @@ export interface GamesData {
 
 // 메인 필터 상태 (좌 CategoryRail + 검색바가 사용). §F 3컬럼 이관 후
 // 가로 Filters 바는 제거됐고, 타입만 단일 출처로 보존한다.
+// 캘린더에 얹는 이벤트 마커(게임쇼/할인/시즌/무료배포) — 클라이언트 공유용
+export interface CalEvent {
+  date: string;   // 'YYYY-MM-DD'
+  label: string;
+  color: string;
+  url?: string | null;
+}
+
 export interface FilterState {
   category: Category | null;
   platform: string | null;
