@@ -305,7 +305,19 @@
     background: var(--bg);
   }
   .cellDot { width: 7px; height: 7px; }
+  /* 작은 칸에선 이벤트 칩 텍스트 대신 색점으로(넘침 방지) */
+  .cellEvents { flex-direction: row; flex-wrap: wrap; gap: 3px; margin-top: 2px; }
+  .cellEvent {
+    font-size: 0;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border-left: none;
+    border-radius: 50%;
+    background: var(--ev);
+  }
+  .cellEventMore { font-size: 0.55rem; }
   .dayPanel { padding: 0.7rem; }
   .dayRow { gap: 0.45rem; padding: 0.45rem 0.55rem; }
-  .dayRowDate { min-width: 3em; font-size: 0.72rem; }
+  .dayBadge { font-size: 0.66rem; padding: 0.1rem 0.4rem; }
 }
