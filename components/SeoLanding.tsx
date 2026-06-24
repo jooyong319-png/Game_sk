@@ -33,7 +33,7 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
       />
       <section className="seo-landing">
         <h2>{h1}</h2>
-        <p className="seo-intro">{intro}</p>
+        <div className="seo-intro">{intro}</div>
         <p className="seo-count">총 {games.length}개</p>
         <ul className="seo-list">
           {games.length === 0 ? (

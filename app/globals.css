@@ -452,8 +452,13 @@ textarea:focus-visible,
   color: var(--text);
   margin-bottom: 0.6rem;
 }
-.seo-intro { color: var(--text); line-height: 1.6; margin-bottom: 0.5rem; }
+.seo-intro { color: var(--text); line-height: 1.7; margin-bottom: 0.5rem; }
+.seo-intro p { margin-bottom: 0.7rem; }
+.seo-intro p:last-child { margin-bottom: 0; }
 .seo-intro strong { color: var(--accent); font-weight: 700; }
+.seo-intro h3 { font-size: var(--fs-h3); font-weight: 700; margin: 1.2rem 0 0.5rem; color: var(--text); }
+.seo-intro ul { margin: 0.4rem 0 0.7rem 1.1rem; }
+.seo-intro li { margin-bottom: 0.3rem; line-height: 1.6; }
 .seo-count { color: var(--text-faint); font-size: var(--fs-sm); margin-bottom: 1rem; }
 .seo-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .seo-list-item {
