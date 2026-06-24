@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "last_updated": "2026-06-24",
+  "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
+  "events": [
+    {
+      "id": "gamescom-2026",
+      "type": "game_show",
+      "title": "게임스컴 2026 (Gamescom)",
+      "start_date": "2026-08-26",
+      "end_date": "2026-08-30",
+      "date_approx": true,
+      "host": "독일 쾰른",
+      "description": "유럽 최대 규모의 게임 전시회. 글로벌 퍼블리셔들의 신작 발표와 시연이 집중되는 하반기 핵심 이벤트입니다.",
+      "source_url": "https://www.gamescom.global/"
+    },
+    {
+      "id": "tgs-2026",
+      "type": "game_show",
+      "title": "도쿄 게임쇼 2026 (TGS)",
+      "start_date": "2026-09-24",
+      "end_date": "2026-09-27",
+      "date_approx": true,
+      "host": "일본 치바 마쿠하리 멧세",
+      "description": "아시아 최대 게임쇼. 일본 콘솔·RPG 신작과 글로벌 대작의 아시아 공개가 이어집니다.",
+      "source_url": "https://tgs.cesa.or.jp/"
+    },
+    {
+      "id": "gstar-2026",
+      "type": "game_show",
+      "title": "지스타 2026 (G-STAR)",
+      "start_date": "2026-11-12",
+      "end_date": "2026-11-15",
+      "date_approx": true,
+      "host": "부산 벡스코",
+      "description": "국내 최대 게임 전시회. 국산 신작 시연과 출시 일정 발표가 집중되는, 한국 게이머라면 꼭 챙겨야 할 행사입니다.",
+      "source_url": "https://www.gstar.or.kr/"
+    },
+    {
+      "id": "tga-2026",
+      "type": "game_show",
+      "title": "더 게임 어워드 2026 (The Game Awards)",
+      "start_date": "2026-12-10",
+      "end_date": "2026-12-10",
+      "date_approx": true,
+      "host": "미국 로스앤젤레스",
+      "description": "올해의 게임(GOTY)을 가리는 시상식이자 대형 신작 발표 무대. 굵직한 월드 프리미어 공개가 매년 화제가 됩니다.",
+      "source_url": "https://thegameawards.com/"
+    }
+  ]
+}

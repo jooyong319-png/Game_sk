@@ -460,6 +460,24 @@ textarea:focus-visible,
 .seo-intro ul { margin: 0.4rem 0 0.7rem 1.1rem; }
 .seo-intro li { margin-bottom: 0.3rem; line-height: 1.6; }
 .seo-count { color: var(--text-faint); font-size: var(--fs-sm); margin-bottom: 1rem; }
+
+/* ─── 이벤트 페이지 (/events) ─── */
+.events-page h1 { font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+.events-intro { color: var(--text); line-height: 1.7; margin-bottom: 1.2rem; }
+.events-intro strong { color: var(--accent); font-weight: 700; }
+.events-group { margin-top: 1.6rem; }
+.events-group h2 { display: flex; align-items: center; gap: 0.5rem; font-size: var(--fs-h2); font-weight: 700; margin-bottom: 0.7rem; }
+.events-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+.events-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.events-item { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1.1rem; }
+.events-item-head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.events-name { font-size: 1.02rem; font-weight: 700; color: var(--text); }
+.events-host { font-size: 0.8rem; color: var(--text-faint); }
+.events-date { font-size: 0.9rem; font-weight: 600; color: var(--accent); margin: 0.2rem 0 0.4rem; font-variant-numeric: tabular-nums; }
+.events-desc { font-size: 0.9rem; color: var(--text); line-height: 1.6; margin: 0 0 0.5rem; }
+.events-src { font-size: 0.85rem; color: var(--text-faint); }
+.events-src:hover { color: var(--accent); }
+.events-foot { margin-top: 1.8rem; color: var(--text-faint); font-size: var(--fs-sm); line-height: 1.6; }
 .seo-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .seo-list-item {
   background: var(--bg-elev);
