@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-25",
+  "last_updated": "2026-06-29",
   "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
   "events": [
     {
@@ -27,11 +27,10 @@
       "id": "gstar-2026",
       "type": "game_show",
       "title": "지스타 2026 (G-STAR)",
-      "start_date": "2026-11-12",
-      "end_date": "2026-11-15",
-      "date_approx": true,
+      "start_date": "2026-11-19",
+      "end_date": "2026-11-22",
       "host": "부산 벡스코",
-      "description": "국내 최대 게임 전시회. 국산 신작 시연과 출시 일정 발표가 집중되는, 한국 게이머라면 꼭 챙겨야 할 행사입니다.",
+      "description": "국내 최대 게임 전시회. 2026년은 11월 19일부터 22일까지 부산 벡스코에서 나흘간 열린다. 국산 신작 시연과 출시 일정 발표, 콘퍼런스 '지콘(G-CON)', 대한민국 게임대상 시상식이 함께 진행된다.",
       "source_url": "https://www.gstar.or.kr/"
     },
     {
