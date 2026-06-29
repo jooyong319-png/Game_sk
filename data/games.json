@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-29T15:49:07.629694+00:00",
+  "last_updated": "2026-06-29T15:56:55.329469+00:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1928,6 +1928,115 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317005"
+    },
+    {
+      "id": "dave-the-diver-mobile-2026",
+      "name_ko": "데이브 더 다이버 (모바일)",
+      "name_en": "Dave the Diver (Mobile)",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "민트로켓",
+      "publisher": "넥슨",
+      "description": "2023년 PC로 출시돼 호평받은 하이브리드 해양 어드벤처 '데이브 더 다이버'를 모바일로 옮긴 이식작이다. 민트로켓이 개발하고 넥슨이 서비스한다. 낮에는 바다를 탐험하며 해양 생물을 사냥하고 밤에는 초밥집을 운영하는 독특한 구조를 그대로 살리되, 기울이기·터치 등 모바일 조작과 편의 기능을 더했다. 유료 패키지 형태이며 2026년 6월 29일 국내·글로벌 양대 마켓 사전예약을 시작했다.",
+      "genres": [
+        "어드벤처",
+        "시뮬레이션"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317953",
+      "pre_registration": true
+    },
+    {
+      "id": "yulhyeolgangho-next-2026",
+      "name_ko": "열혈강호: 넥스트",
+      "name_en": "Yulhyeolgangho: Next",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "펀게임즈",
+      "publisher": "킹넷",
+      "description": "연재 32주년을 맞은 국산 무협 만화 '열혈강호' IP를 기반으로 한 무협 MMORPG다. 펀게임즈가 개발하고 킹넷이 서비스한다. 원작의 청춘 무협 감성과 강호 세계관을 카툰 렌더링 그래픽으로 재해석했고, 도무사·검무사·창무사·궁무사·의원 5종 직업과 무공 조합 전투, PC·모바일 크로스플레이를 지원한다. 2026년 6월 29일 구글·앱스토어·원스토어 등에서 사전예약을 시작했다.",
+      "genres": [
+        "MMORPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317948",
+      "pre_registration": true
+    },
+    {
+      "id": "miresi-2026",
+      "name_ko": "미래시: 보이지 않는 미래",
+      "name_en": "MIRESI: The Unseen Future",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "컨트롤나인",
+      "publisher": "스마일게이트",
+      "description": "스마일게이트가 서비스하고 컨트롤나인이 개발하는 서브컬처 수집형 RPG다. 캐릭터 수집과 육성을 중심으로 한 세계관을 내세우며, PC와 모바일을 함께 지원하는 크로스 플랫폼으로 준비되고 있다. 2026년 6월 24일 STOVE를 통해 사전예약 페이지를 열었으며 정식 출시일은 추후 공개될 예정이다.",
+      "genres": [
+        "수집형 RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317762",
+      "pre_registration": true
+    },
+    {
+      "id": "solo-leveling-karma-2026",
+      "name_ko": "나 혼자만 레벨업: 카르마",
+      "name_en": "Solo Leveling: KARMA",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "넷마블네오",
+      "publisher": "넷마블",
+      "description": "글로벌 흥행 웹툰·애니메이션 '나 혼자만 레벨업' IP를 활용한 넷마블의 신작으로, 로그라이트 요소를 결합한 액션 RPG로 개발되고 있다. 넷마블네오가 개발을 맡았으며 모바일과 PC로 출시될 예정이다. 넷마블이 2026년 하반기 출시 라인업으로 공개했고, 7월 초 애니메 엑스포에서 추가 정보가 공개될 예정이다.",
+      "genres": [
+        "액션 RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316202",
+      "pre_registration": false
+    },
+    {
+      "id": "dnf-idle-2026",
+      "name_ko": "던전앤파이터 키우기",
+      "name_en": "DNF Idle",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": null,
+      "publisher": "넥슨",
+      "description": "넥슨의 대표 IP '던전앤파이터'를 방치형(키우기) 장르로 재해석한 신작 RPG다. 원작의 캐릭터와 액션 요소를 자동 성장 중심의 가벼운 플레이로 옮긴 것이 특징이다. 중국·일본을 제외한 글로벌 시장을 겨냥하며 2026년 연내 출시를 목표로 한다.",
+      "genres": [
+        "방치형 RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=314919",
+      "pre_registration": false
     }
   ]
 }
