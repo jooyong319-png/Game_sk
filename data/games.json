@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-29T15:56:55.329469+00:00",
+  "last_updated": "2026-06-29T16:17:34.356540+00:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -565,8 +565,7 @@
         "다크판타지"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d3/18/df/d318dff7-4c96-cf32-6b64-8494e481f380/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.bloter.net/news/articleView.html?idxno=661778",
-      "pre_registration": true
+      "source_url": "https://www.bloter.net/news/articleView.html?idxno=661778"
     },
     {
       "id": "odin-q-2026",
@@ -647,7 +646,7 @@
       ],
       "developer": "Ubisoft Singapore",
       "publisher": "Ubisoft",
-      "description": "어쌔신 크리드 IV 블랙 플래그의 풀 리메이크. 최신 Anvil 엔진으로 새로 개발, 신규 엔딩과 추가 콘텐츠 포함. 싱글 플레이 전용.",
+      "description": "유비소프트 싱가포르가 2013년작 '어쌔신 크리드 4: 블랙 플래그'를 최신 앤빌 엔진으로 새롭게 만든 리메이크다. 카리브해 해적 시대를 배경으로 패링 중심으로 개편된 전투와 강화된 잠입·파쿠르, 한층 깊어진 해상 전투를 선보인다. 신규 내러티브 콘텐츠도 더해져 2026년 7월 9일 PC·콘솔로 동시 출시된다.",
       "genres": [
         "액션",
         "어드벤처"
@@ -1232,7 +1231,7 @@
       ],
       "developer": "Game Studio",
       "publisher": "반다이남코",
-      "description": "SAO 시리즈 최초 플레이어 자신의 아바타로 아인크라드에 다이브하는 액션 RPG. 일본 7/9 콘솔, 글로벌·스팀 7/10 출시.",
+      "description": "반다이남코가 선보이는 '소드 아트 온라인' 신작 액션 RPG로, 시리즈의 출발점인 아인크라드 편을 새롭게 재해석한 작품이다. 거대한 부유성 아인크라드를 무대로 한 데스 게임 설정을 되살려 1·2층부터 다시 시작하는 모험을 그린다. PS5·Xbox는 7월 9일, 스팀판은 7월 10일 한국어로 발매된다.",
       "genres": [
         "액션RPG",
         "JRPG"
