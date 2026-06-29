@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-29T12:13:15.156165+00:00",
+  "last_updated": "2026-06-29T15:49:07.629694+00:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1908,6 +1908,26 @@
       "genres": [
         "MMORPG"
       ]
+    },
+    {
+      "id": "dokkaebi-world-2026",
+      "name_ko": "도깨비의세계",
+      "name_en": "Dokkaebi World",
+      "release_date": "2026-09-30",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "슈퍼캣",
+      "publisher": "카카오게임즈",
+      "description": "카카오게임즈가 퍼블리싱하고 슈퍼캣이 개발하는 K-판타지 모바일 MMORPG다. 인기 웹소설 '멸귀수도전' IP를 원작으로 한국 전통 설화와 도깨비 소재를 풀어낸다. 2D 도트 캐릭터와 3D 배경을 결합한 2.5D 그래픽, 직업 경계를 허문 스킬 덱 빌딩, 문파 중심 협력 콘텐츠를 특징으로 내세운다. 2026년 3분기 출시를 목표로 7월 사전등록과 8월 온라인 쇼케이스가 예정돼 있다.",
+      "genres": [
+        "MMORPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317005"
     }
   ]
 }
