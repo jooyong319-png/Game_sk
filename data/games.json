@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-28T23:36:35.970707+00:00",
+  "last_updated": "2026-06-29T00:10:55.257201+00:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1888,6 +1888,23 @@
       "image_url": null,
       "source_url": "https://azurpromilia.nexon.com/events/2025/12/preregistration",
       "pre_registration": true
+    },
+    {
+      "id": "zeus-god-of-arrogance-2026",
+      "name_ko": "제우스: 오만의 신",
+      "name_en": null,
+      "release_date": "2026-09-30",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "에이버튼",
+      "publisher": "컴투스",
+      "description": "그리스 신화 최고신 제우스의 절대 권력과 그로 인한 오만, 그 균열을 배경으로 삼은 모바일 MMORPG다. 컴투스가 퍼블리싱하고 에이버튼이 언리얼 엔진 5로 개발 중이며, 세력 간 협력·대립과 폭넓은 성장 체계를 핵심 재미로 내세운다. 2026년 3분기 출시를 목표로 7월 1일부터 공식 홈페이지와 양대 마켓에서 사전예약을 받는다.",
+      "image_url": null,
+      "source_url": "https://zdnet.co.kr/view/?no=20260626130701"
     }
   ]
 }
