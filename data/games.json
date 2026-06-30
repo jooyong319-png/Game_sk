@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-29T16:17:34.356540+00:00",
+  "last_updated": "2026-06-30T00:11:47.157434+00:00",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -418,8 +418,8 @@
       "id": "pokemon-champions-mobile-2026",
       "name_ko": "포켓몬 챔피언스 (모바일)",
       "name_en": "Pokemon Champions",
-      "release_date": "2026-06-15",
-      "release_date_approx": true,
+      "release_date": "2026-06-17",
+      "release_date_approx": false,
       "category": "mobile_kr",
       "platforms": [
         "Android",
@@ -427,13 +427,13 @@
       ],
       "developer": "The Pokemon Company",
       "publisher": "The Pokemon Company",
-      "description": "포켓몬 배틀 특화 멀티플랫폼 게임의 모바일 버전. 6월 출시 예정(정확 날짜 미정).",
+      "description": "포켓몬 배틀에 특화된 멀티플랫폼 대전 게임. 닌텐도 스위치판에 이어 모바일(iOS·안드로이드) 버전이 2026년 6월 17일 정식 출시됐다. 닌텐도 어카운트로 스위치판과 세이브·크로스플레이가 연동되며, 메인 시리즈 RPG와 달리 경쟁 배틀에 집중한 기본 무료(F2P) 모델로 운영된다.",
       "genres": [
         "대전",
         "수집형"
       ],
       "image_url": null,
-      "source_url": "https://pokemonkorea.co.kr/pokemon_champions"
+      "source_url": "https://www.gameple.co.kr/news/articleView.html?idxno=215861"
     },
     {
       "id": "ff-tactics-ivalice-chronicles-2026",
