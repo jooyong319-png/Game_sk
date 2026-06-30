@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-29",
+  "last_updated": "2026-06-30",
   "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
   "events": [
     {
@@ -52,6 +52,16 @@
       "host": "Steam",
       "description": "밸브가 진행하는 연중 최대 규모의 스팀 정기 세일. 2주간 수천 종의 PC 게임이 할인되며, 한국 시간 기준 6월 26일 새벽부터 7월 10일 새벽까지 진행됩니다. (PT 기준 6/25 오전 10시 시작)",
       "source_url": "https://store.steampowered.com/news/group/4145017/view/532102384016426891"
+    },
+    {
+      "id": "steam-next-fest-october-2026",
+      "type": "sale",
+      "title": "스팀 넥스트 페스트 2026년 10월 (Steam Next Fest)",
+      "start_date": "2026-10-19",
+      "end_date": "2026-10-26",
+      "host": "Steam",
+      "description": "밸브가 분기마다 여는 신작 데모 축제. 수천 종의 출시 예정 PC 게임 무료 플레이 데모와 개발자 라이브 방송이 1주간 진행된다. 2026년 마지막 회차로 한국 시간 기준 10월 20일 새벽부터 10월 27일 새벽까지(PT 10/19 오전 10시~10/26 오전 10시) 열린다.",
+      "source_url": "https://partner.steamgames.com/doc/marketing/upcoming_events/nextfest/2026june"
     }
   ]
 }
