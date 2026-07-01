@@ -1,5 +1,5 @@
 import { getAllGames } from '@/lib/games';
-import { kstDateOnly, calcDayDiff } from '@/lib/utils';
+import { kstDateOnly } from '@/lib/utils';
 import { CATEGORY_META, type Category } from '@/lib/types';
 import styles from './FloatingMonthStats.module.css';
 
@@ -71,18 +71,12 @@ export async function FloatingMonthStats() {
             지금 사전예약
           </h3>
           <div className={styles.preList}>
-            {preRegs.map(g => {
-              const rel = calcDayDiff(g.release_date, now);
-              const end = g.pre_registration_end_date ? calcDayDiff(g.pre_registration_end_date, now) : null;
-              const dd = end !== null && end >= 0 ? `마감 D-${end}` : rel > 0 ? `D-${rel}` : rel === 0 ? 'D-DAY' : '진행중';
-              return (
-                <a key={g.id} href={`/game/${g.id}`} className={styles.preRow}>
-                  <span className={styles.preDot} style={{ background: CATEGORY_META[g.category].color }} aria-hidden="true" />
-                  <span className={styles.preName}>{g.name_ko}</span>
-                  <span className={styles.preDday}>{dd}</span>
-                </a>
-              );
-            })}
+            {preRegs.map(g => (
+              <a key={g.id} href={`/game/${g.id}`} className={styles.preRow}>
+                <span className={styles.preDot} style={{ background: CATEGORY_META[g.category].color }} aria-hidden="true" />
+                <span className={styles.preName}>{g.name_ko}</span>
+              </a>
+            ))}
           </div>
           <a href="/pre-registration" className={styles.preMore}>전체 보기 →</a>
         </div>

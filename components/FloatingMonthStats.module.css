@@ -118,13 +118,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.preDday {
-  flex: 0 0 auto;
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: var(--accent-warm);
-  font-variant-numeric: tabular-nums;
-}
 .preMore {
   display: inline-block;
   margin-top: 0.5rem;
