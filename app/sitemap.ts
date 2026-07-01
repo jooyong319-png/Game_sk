@@ -1,10 +1,12 @@
 import type { MetadataRoute } from 'next';
-import { getAllGames } from '@/lib/games';
+import { getAllGames, getLastUpdated } from '@/lib/games';
 import { getAllPosts } from '@/lib/blog';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getAllGames();
   const now = new Date();
+  const dataUpdated = new Date(await getLastUpdated());
+  const todayStr = now.toISOString().slice(0, 10);
 
   const staticUrls: MetadataRoute.Sitemap = [
     { url: 'https://gcalen.com/', lastModified: now, changeFrequency: 'daily', priority: 1 },
@@ -21,12 +23,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: 'https://gcalen.com/terms', lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ];
 
-  const gameUrls: MetadataRoute.Sitemap = games.map(g => ({
-    url: `https://gcalen.com/game/${g.id}`,
-    lastModified: now,
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  }));
+  const gameUrls: MetadataRoute.Sitemap = games.map(g => {
+    const upcoming = g.release_date_approx || g.release_date >= todayStr;
+    // 사전예약/임박(출시예정) 게임을 상위 우선순위·잦은 갱신으로 신호
+    const priority = g.pre_registration ? 0.85 : upcoming ? 0.75 : 0.6;
+    return {
+      url: `https://gcalen.com/game/${g.id}`,
+      lastModified: dataUpdated,
+      changeFrequency: (g.pre_registration || upcoming ? 'daily' : 'weekly') as 'daily' | 'weekly',
+      priority,
+    };
+  });
 
   const posts = await getAllPosts();
   const blogUrls: MetadataRoute.Sitemap = posts.map(p => ({

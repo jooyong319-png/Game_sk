@@ -58,6 +58,13 @@ export function GameModal({ game, onClose, wishlist }: Props) {
           <strong>출시일</strong>
           {dateStr}{weekday}{game.release_date_approx ? ' (예정)' : ''} · <span className={styles.dday}>{dd}</span>
         </div>
+        {game.pre_registration && (
+          <div className={styles.row}>
+            <strong>사전예약</strong>
+            {game.pre_registration_date ? `${formatKoreanDate(game.pre_registration_date)} 시작` : '진행 중'}
+            {game.pre_registration_end_date ? ` ~ ${formatKoreanDate(game.pre_registration_end_date)} 마감` : (game.pre_registration_date ? ' (마감 미정)' : '')}
+          </div>
+        )}
         {game.platforms.length > 0 && <div className={styles.row}><strong>플랫폼</strong>{game.platforms.join(', ')}</div>}
         {game.genres.length > 0 && <div className={styles.row}><strong>장르</strong>{game.genres.join(', ')}</div>}
         {game.developer && <div className={styles.row}><strong>개발</strong>{game.developer}</div>}
@@ -70,6 +77,12 @@ export function GameModal({ game, onClose, wishlist }: Props) {
         {game.source_url && (
           <a className={styles.source} href={game.source_url} target="_blank" rel="noopener">
             출처 보기 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
+          </a>
+        )}
+
+        {game.pre_registration_url && (
+          <a className={styles.preRegCta} href={game.pre_registration_url} target="_blank" rel="noopener">
+            사전예약 하러 가기 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
         )}
 

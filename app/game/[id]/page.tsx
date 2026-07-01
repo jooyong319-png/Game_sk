@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getAllGames, getUpcomingGamesByCategory, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
+import { getAllGames, getUpcomingGamesByCategory, getLastUpdated, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
 import { CATEGORY_META, type Category, type Game } from '@/lib/types';
 import { WishlistButton } from '@/components/WishlistButton';
 import { GameReactions } from '@/components/GameReactions';
@@ -36,14 +36,41 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const landing = CATEGORY_LANDING[game.category];
   const dateStr = formatKoreanDate(game.release_date);
-  const title = `${game.name_ko} ${landing.releaseNoun} ${dateStr}`;
-  const desc = `${game.name_ko}${game.name_en ? ` (${game.name_en})` : ''} ${landing.releaseNoun}은 ${dateStr}입니다. ${game.developer ? `개발 ${game.developer}, ` : ''}${game.publisher ? `배급 ${game.publisher}. ` : ''}${game.description ?? ''}`.slice(0, 158);
   const url = `https://gcalen.com/game/${game.id}`;
+
+  // 사전예약 게임이면 '사전예약'을 제목·설명 전면에 노출(검색 노출용)
+  const isPreReg = !!game.pre_registration;
+  const preRegStr = game.pre_registration_date ? formatKoreanDate(game.pre_registration_date) : '';
+
+  // 제목: 템플릿(| 게임 출시 캘린더) 중복 방지 위해 absolute로 직접 제어 + 핵심 키워드 앞배치·짧게
+  const titleText = isPreReg
+    ? `${game.name_ko} 사전예약 일정`
+    : `${game.name_ko} ${landing.releaseNoun} ${dateStr}`;
+  const title = `${titleText} | 게임 출시 캘린더`;
+
+  const desc = (isPreReg
+    ? `${game.name_ko}${game.name_en ? ` (${game.name_en})` : ''} 사전예약${preRegStr ? `이 ${preRegStr}에 시작` : ' 진행 중'}됩니다. ${game.publisher ? `배급 ${game.publisher}. ` : ''}${game.description ?? ''}`
+    : `${game.name_ko}${game.name_en ? ` (${game.name_en})` : ''} ${landing.releaseNoun}은 ${dateStr}입니다. ${game.developer ? `개발 ${game.developer}, ` : ''}${game.publisher ? `배급 ${game.publisher}. ` : ''}${game.description ?? ''}`
+  ).slice(0, 158);
+
+  // 사전예약 검색어 변형 — 제목의 콜론·띄어쓰기 변형까지 커버(예: 제우스: 오만의 신 → 제우스 사전예약)
+  const preRegKeywords = isPreReg ? (() => {
+    const base = game.name_ko;                                              // '제우스: 오만의 신'
+    const noColon = base.replace(/[:：]/g, '').replace(/\s+/g, ' ').trim();  // '제우스 오만의 신'
+    const first = base.split(/[:：\s]/).filter(Boolean)[0];                 // '제우스'
+    return Array.from(new Set([
+      `${base} 사전예약`,
+      `${noColon} 사전예약`,
+      `${first} 사전예약`,
+      `${first} 사전예약 일정`,
+    ]));
+  })() : [];
 
   const keywords = [
     game.name_ko,
     ...(game.name_en ? [game.name_en] : []),
     `${game.name_ko} ${landing.releaseNoun}`,
+    ...preRegKeywords,
     landing.label,
     ...game.platforms,
     ...game.genres,
@@ -51,13 +78,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   ];
 
   const ogImage = game.image_url || '/og-image.png';
+  const lastUpdated = await getLastUpdated();
   return {
-    title,
+    title: { absolute: title },
     description: desc,
     keywords,
     alternates: { canonical: url },
-    openGraph: { title, description: desc, url, type: 'article', images: [ogImage] },
-    twitter: { card: 'summary_large_image', images: [ogImage] },
+    openGraph: {
+      title,
+      description: desc,
+      url,
+      type: 'article',
+      siteName: '게임 출시 캘린더',
+      locale: 'ko_KR',
+      publishedTime: lastUpdated,
+      modifiedTime: lastUpdated,
+      authors: ['게임 출시 캘린더'],
+      section: landing.label,
+      images: [{ url: ogImage, alt: `${game.name_ko} 대표 이미지` }],
+    },
+    twitter: { card: 'summary_large_image', title, description: desc, images: [ogImage] },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+    },
   };
 }
 
@@ -71,6 +116,18 @@ export default async function GamePage({ params }: Props) {
   const dateStr = formatKoreanDate(game.release_date);
   const weekday = game.release_date_approx ? '' : ` (${getKoreanWeekday(game.release_date)})`;
   const url = `https://gcalen.com/game/${game.id}`;
+  const preRegStr = game.pre_registration_date ? formatKoreanDate(game.pre_registration_date) : '';
+  const preRegEndStr = game.pre_registration_end_date ? formatKoreanDate(game.pre_registration_end_date) : '';
+  const isPreReg = !!game.pre_registration;
+  const lastUpdatedIso = await getLastUpdated();
+  const lastUpdatedStr = formatKoreanDate(lastUpdatedIso.slice(0, 10));
+
+  // 콜론 없는 표기 변형(엔티티 인식/검색 매칭용): '제우스: 오만의 신' → '제우스 오만의 신'
+  const noColonName = game.name_ko.replace(/[:：]/g, '').replace(/\s+/g, ' ').trim();
+  const altNames = Array.from(new Set([
+    ...(game.name_en ? [game.name_en] : []),
+    ...(noColonName !== game.name_ko ? [noColonName] : []),
+  ]));
 
   // 같은 카테고리 '출시 예정'(지난 게임 제외) 게임 — 출시일 가까운 순 6개
   const related: Game[] = (await getUpcomingGamesByCategory(game.category))
@@ -78,19 +135,70 @@ export default async function GamePage({ params }: Props) {
     .sort((a, b) => a.release_date.localeCompare(b.release_date))
     .slice(0, 6);
 
+  const ogImageAbs = game.image_url || 'https://gcalen.com/og-image.png';
   const videoGameLd = {
     '@context': 'https://schema.org',
     '@type': 'VideoGame',
     name: game.name_ko,
-    ...(game.name_en ? { alternateName: game.name_en } : {}),
-    ...(game.platforms.length ? { gamePlatform: game.platforms } : {}),
+    ...(altNames.length ? { alternateName: altNames } : {}),
+    image: ogImageAbs,
+    applicationCategory: 'GameApplication',
+    ...(game.platforms.length ? { gamePlatform: game.platforms, operatingSystem: game.platforms } : {}),
     ...(game.genres.length ? { genre: game.genres } : {}),
     ...(game.publisher ? { publisher: { '@type': 'Organization', name: game.publisher } } : {}),
     ...(game.developer ? { author: { '@type': 'Organization', name: game.developer } } : {}),
     datePublished: game.release_date,
+    dateModified: lastUpdatedIso,
     description: game.description ?? '',
     inLanguage: 'ko',
     url,
+    ...(isPreReg ? {
+      offers: {
+        '@type': 'Offer',
+        price: 0,
+        priceCurrency: 'KRW',
+        availability: 'https://schema.org/PreOrder',
+        ...(game.pre_registration_url ? { url: game.pre_registration_url } : {}),
+        ...(game.pre_registration_date ? { validFrom: game.pre_registration_date } : {}),
+      },
+    } : {}),
+  };
+
+  // 자주 묻는 질문 — 화면 노출 + FAQPage 구조화 데이터(둘이 일치해야 리치 결과 인정)
+  const faqs: { q: string; a: string }[] = [];
+  if (isPreReg) {
+    faqs.push({
+      q: `${game.name_ko} 사전예약은 언제 시작하나요?`,
+      a: preRegStr
+        ? `${game.name_ko} 사전예약은 ${preRegStr}에 시작됩니다${preRegEndStr ? ` (마감 ${preRegEndStr})` : game.pre_registration_date ? ' (마감일 미정)' : ''}.${game.pre_registration_url ? ' 공식 사전예약 페이지에서 신청할 수 있습니다.' : ''}`
+        : `${game.name_ko} 사전예약이 진행 중입니다.`,
+    });
+  }
+  faqs.push({
+    q: `${game.name_ko} 출시일은 언제인가요?`,
+    a: `${game.name_ko}${game.name_en ? ` (${game.name_en})` : ''}의 ${landing.releaseNoun}은 ${dateStr}${game.release_date_approx ? ' (예정, 정확한 날짜 미정)' : ''}입니다.`,
+  });
+  if (game.platforms.length) {
+    faqs.push({ q: `${game.name_ko}는 어떤 플랫폼으로 출시되나요?`, a: `${game.platforms.join(', ')}(으)로 출시됩니다.` });
+  }
+  if (game.developer || game.publisher) {
+    const parts: string[] = [];
+    if (game.developer) parts.push(`개발 ${game.developer}`);
+    if (game.publisher && game.publisher !== game.developer) parts.push(`배급 ${game.publisher}`);
+    faqs.push({ q: `${game.name_ko} 개발사·배급사는 어디인가요?`, a: `${parts.join(', ')}입니다.` });
+  }
+  if (game.genres.length) {
+    faqs.push({ q: `${game.name_ko}의 장르는 무엇인가요?`, a: `${game.genres.join(', ')} 장르입니다.` });
+  }
+
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   };
 
   const breadcrumbLd = {
@@ -107,6 +215,9 @@ export default async function GamePage({ params }: Props) {
     <PageShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoGameLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      {faqs.length > 0 && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      )}
       <div className="detail-backdrop">
         <nav className="breadcrumb" aria-label="위치">
           <a href="/">홈</a>
@@ -120,7 +231,7 @@ export default async function GamePage({ params }: Props) {
           {game.image_url && (
             <div className="detail-cover">
               <img src={game.image_url} alt="" aria-hidden="true" className="cover-bg" loading="lazy" />
-              <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="cover-fg" loading="lazy" />
+              <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="cover-fg" loading="eager" fetchPriority="high" />
             </div>
           )}
           <div className="detail-head">
@@ -137,6 +248,15 @@ export default async function GamePage({ params }: Props) {
             </p>
             <ViewCounter gameId={game.id} />
           </div>
+          {game.pre_registration && (
+            <p className="prereg-info">
+              <svg className="ic" aria-hidden="true"><use href="#ic-star" /></svg>
+              <strong>{game.name_ko} 사전예약</strong>
+              {preRegStr ? ` ${preRegStr} 시작` : ' 진행 중'}
+              {preRegEndStr ? ` ~ ${preRegEndStr} 마감` : (game.pre_registration_date ? ' · 마감 미정' : '')}
+              {' · '}<a href="/pre-registration">사전예약 신작 모아보기</a>
+            </p>
+          )}
           {game.description && <p className="desc">{game.description}</p>}
           <ul className="detail-meta">
             {game.developer && <li><strong>개발사</strong>{game.developer}</li>}
@@ -145,6 +265,11 @@ export default async function GamePage({ params }: Props) {
             {game.genres.length > 0 && <li><strong>장르</strong>{game.genres.join(', ')}</li>}
           </ul>
           <div className="detail-actions">
+            {game.pre_registration_url && (
+              <a className="detail-link prereg-cta" href={game.pre_registration_url} target="_blank" rel="noopener">
+                사전예약 하러 가기 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
+              </a>
+            )}
             <WishlistButton id={game.id} className="detail-link" />
             <ShareButton url={url} title={game.name_ko} className="detail-link" />
             {game.source_url && (
@@ -152,7 +277,24 @@ export default async function GamePage({ params }: Props) {
             )}
           </div>
           <GameReactions gameId={game.id} />
+          <p className="detail-updated">
+            <time dateTime={lastUpdatedIso}>마지막 업데이트: {lastUpdatedStr}</time>
+          </p>
         </article>
+
+        {faqs.length > 0 && (
+          <section className="detail-faq">
+            <h2>{game.name_ko} 자주 묻는 질문</h2>
+            <dl className="faq-list">
+              {faqs.map((f, i) => (
+                <div key={i} className="faq-item">
+                  <dt>{f.q}</dt>
+                  <dd>{f.a}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
 
         <Comments gameId={game.id} />
 

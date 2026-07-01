@@ -21,6 +21,9 @@ export interface Game {
   image_url: string | null;
   source_url: string | null;
   pre_registration?: boolean;       // 사전예약 진행 중이면 true (리서처가 채움, 선택 필드)
+  pre_registration_date?: string | null;     // 'YYYY-MM-DD' 사전예약 시작일 (있으면 캘린더에 별도 표시, 선택 필드)
+  pre_registration_end_date?: string | null; // 'YYYY-MM-DD' 사전예약 마감일 (있으면 캘린더에 별도 표시, 선택 필드)
+  pre_registration_url?: string | null;       // 공식 사전예약 페이지 URL (있으면 상세에 '사전예약 하러 가기' 버튼)
 }
 
 export interface GamesData {

@@ -1907,7 +1907,9 @@
       "genres": [
         "MMORPG"
       ],
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_date": "2026-07-01",
+      "pre_registration_url": "https://zeus.com2us.com/pre-registration/"
     },
     {
       "id": "dokkaebi-world-2026",

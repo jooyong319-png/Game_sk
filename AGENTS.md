@@ -147,16 +147,23 @@ public/                       # Vercel 정적 자산 (필요 시 추가)
     genres: string[],
     image_url: string | null,
     source_url: string | null,
-    pre_registration?: boolean,       // 사전예약 진행 중이면 true (선택 필드)
+    pre_registration?: boolean,           // 사전예약 진행 중이면 true (선택 필드)
+    pre_registration_date?: string | null,     // "YYYY-MM-DD" 사전예약 시작일 (선택)
+    pre_registration_end_date?: string | null, // "YYYY-MM-DD" 사전예약 마감일 (선택)
+    pre_registration_url?: string | null,      // 공식 사전예약 페이지 URL (선택)
   }>
 }
 ```
 
-**pre_registration 필드** (사전예약 페이지 `/pre-registration` 표면용):
-- 공식 출처에서 **현재 사전예약(사전등록)을 받는 중**인 게임에만 `true`.
-- 출시되면(release_date 지남) 자연히 빠지므로 별도 false 처리는 선택.
-- 모바일이 대부분이지만 PC/콘솔도 사전예약 받으면 `true` 가능.
-- 미설정(필드 없음)이면 false로 간주. 리서처가 0건 채운 동안엔 코드가 '출시예정 모바일'로 폴백.
+**사전예약 필드군** (사전예약 페이지 `/pre-registration` + 캘린더 + 상세 SEO 표면용):
+- `pre_registration`: 공식 출처에서 **현재/예정 사전예약(사전등록)을 받는** 게임에 `true`.
+  - 출시되면(release_date 지남) 자연히 빠지므로 별도 false 처리는 선택.
+  - 모바일이 대부분이지만 PC/콘솔도 사전예약 받으면 `true` 가능.
+  - 미설정(필드 없음)이면 false로 간주. 리서처가 0건 채운 동안엔 코드가 '출시예정 모바일'로 폴백.
+- `pre_registration_date`: 사전예약 **시작일**. 있으면 캘린더 해당 날짜에 '사전예약' 마커(속 빈 링)로 별도 표시됨. **확정 시 반드시 채울 것.**
+- `pre_registration_end_date`: 사전예약 **마감일**. 있으면 캘린더에 '마감' 마커로 표시. 미정이면 생략(null/미설정) — 나중에 확정되면 추가.
+- `pre_registration_url`: **공식 사전예약 페이지 URL**. 있으면 상세/모달에 '사전예약 하러 가기' CTA 버튼 노출. (예: `https://zeus.com2us.com/pre-registration/`) source_url(뉴스 출처)과 **별개** — 이건 실제 사전예약 신청 페이지.
+- ⚠️ SEO: `pre_registration=true`면 상세 페이지 제목·설명·FAQ·구조화 데이터가 자동으로 '사전예약' 중심으로 생성됨. 그래서 사전예약 게임은 **위 필드들을 최대한 채워야** 검색 노출이 강해짐(예: "제우스 사전예약").
 
 **description 작성 기준** (상세 페이지 콘텐츠 품질 = AdSense 저가치 판정 대응):
 - 한 줄 사실 나열 금지. **2~4문장, 한국어 80~250자**의 **원본 소개**로 작성.

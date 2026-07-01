@@ -19,11 +19,19 @@ interface Props {
   onCategory: (c: FilterKey | null) => void;
 }
 
+// 캘린더 셀 위의 한 개 표기 = 게임 1개 × 유형(출시 / 사전예약 시작 / 사전예약 마감)
+type CalKind = 'release' | 'prereg' | 'prereg_end';
+interface CalEntry { game: Game; kind: CalKind; }
+// 셀 소형 태그 · 상세 패널 배지 · 지난 날짜 라벨 (release는 태그/배지 없음)
+const KIND_TAG: Record<CalKind, string>   = { release: '', prereg: '사전예약',      prereg_end: '마감' };
+const KIND_BADGE: Record<CalKind, string> = { release: '', prereg: '사전예약 시작', prereg_end: '사전예약 마감' };
+const KIND_PAST: Record<CalKind, string>  = { release: '출시됨', prereg: '진행 중', prereg_end: '마감됨' };
+
 interface Cell {
   date: Date;
   iso: string;
   inMonth: boolean;
-  games: Game[];
+  entries: CalEntry[];
   isToday: boolean;
 }
 
@@ -37,10 +45,16 @@ function buildCells(cursor: Date, games: Game[], now: Date): Cell[] {
   const startWeekday = firstOfMonth.getDay();
   const start = new Date(year, month, 1 - startWeekday);
   const today = new Date(now); today.setHours(0,0,0,0);
-  const byDate = new Map<string, Game[]>();
+  const byDate = new Map<string, CalEntry[]>();
+  const addEntry = (date: string | null | undefined, game: Game, kind: CalKind) => {
+    if (!date) return;
+    if (!byDate.has(date)) byDate.set(date, []);
+    byDate.get(date)!.push({ game, kind });
+  };
   for (const g of games) {
-    if (!byDate.has(g.release_date)) byDate.set(g.release_date, []);
-    byDate.get(g.release_date)!.push(g);
+    addEntry(g.release_date, g, 'release');
+    addEntry(g.pre_registration_date, g, 'prereg');         // 사전예약 시작일
+    addEntry(g.pre_registration_end_date, g, 'prereg_end'); // 사전예약 마감일
   }
   const cells: Cell[] = [];
   for (let i = 0; i < 42; i++) {
@@ -51,7 +65,7 @@ function buildCells(cursor: Date, games: Game[], now: Date): Cell[] {
     cells.push({
       date: d, iso,
       inMonth: d.getMonth() === month,
-      games: byDate.get(iso) ?? [],
+      entries: byDate.get(iso) ?? [],
       isToday: d.getTime() === today.getTime(),
     });
   }
@@ -131,12 +145,16 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
     setSelectedISO(prev => prev === cell.iso ? null : cell.iso);
   }
 
-  // day-detail-panel: 선택한 "그 날짜"의 출시 게임만
-  const panelGames = useMemo(() => {
+  // day-detail-panel: 선택한 "그 날짜"의 출시 + 사전예약 시작 표기
+  const panelEntries = useMemo<CalEntry[]>(() => {
     if (!selectedISO) return [];
-    return games
-      .filter(g => g.release_date === selectedISO)
-      .sort((a, b) => a.name_ko.localeCompare(b.name_ko));
+    const out: CalEntry[] = [];
+    for (const g of games) {
+      if (g.release_date === selectedISO) out.push({ game: g, kind: 'release' });
+      if (g.pre_registration_date === selectedISO) out.push({ game: g, kind: 'prereg' });
+      if (g.pre_registration_end_date === selectedISO) out.push({ game: g, kind: 'prereg_end' });
+    }
+    return out.sort((a, b) => a.game.name_ko.localeCompare(b.game.name_ko));
   }, [selectedISO, games]);
 
   return (
@@ -157,11 +175,12 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
       >
         {['일','월','화','수','목','금','토'].map((d, i) => (<div key={d} className={`${styles.dayHead} ${i === 0 ? styles.sun : i === 6 ? styles.sat : ''}`.trim()}>{d}</div>))}
         {cells.map((cell, i) => {
-          const has = cell.games.length > 0;
+          const has = cell.entries.length > 0;
           const showName = has && cell.inMonth;
-          const firstGame = cell.games[0];
-          const dots = cell.games.slice(0, 3);
-          const overflow = cell.games.length - 3;
+          const firstEntry = cell.entries[0];
+          const firstGame = firstEntry?.game;
+          const dots = cell.entries.slice(0, 3);
+          const overflow = cell.entries.length - 3;
           const isSelected = selectedISO === cell.iso;
           const isClickable = true; // 모든 셀 클릭 가능 (출시 없는 날도 '이후 출시' 패널 표시)
 
@@ -186,7 +205,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
                   onCellClick(cell);
                 }
               }}
-              title={has ? cell.games.map(g => g.name_ko).join(', ') : undefined}
+              title={has ? cell.entries.map(e => KIND_TAG[e.kind] ? `${e.game.name_ko} (${KIND_TAG[e.kind]})` : e.game.name_ko).join(', ') : undefined}
             >
               <div className={`${styles.cellDate} ${cell.date.getDay() === 0 ? styles.sun : cell.date.getDay() === 6 ? styles.sat : ''}`.trim()}>
                 {cell.isToday
@@ -197,20 +216,26 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
               {showName && firstGame && (
                 <div className={styles.cellName}>
                   {firstGame.name_ko}
-                  {cell.games.length > 1 && <span className={styles.cellMore}>+{cell.games.length - 1}</span>}
+                  {KIND_TAG[firstEntry.kind] && <span className={styles.cellPreTag}>{KIND_TAG[firstEntry.kind]}</span>}
+                  {cell.entries.length > 1 && <span className={styles.cellMore}>+{cell.entries.length - 1}</span>}
                 </div>
               )}
 
               {has && (
                 <div className={styles.cellDots}>
-                  {dots.map((g, idx) => (
-                    <span
-                      key={`${g.id}-${idx}`}
-                      className={styles.cellDot}
-                      style={{ background: CATEGORY_META[g.category].color }}
-                      title={g.name_ko}
-                    />
-                  ))}
+                  {dots.map((e, idx) => {
+                    const c = CATEGORY_META[e.game.category].color;
+                    return (
+                      <span
+                        key={`${e.game.id}-${e.kind}-${idx}`}
+                        className={styles.cellDot}
+                        style={e.kind === 'release'
+                          ? { background: c }
+                          : { background: 'transparent', boxShadow: `inset 0 0 0 2px ${c}`, opacity: e.kind === 'prereg_end' ? 0.5 : 1 }} // 사전예약 = 속 빈 링(마감은 흐리게)
+                        title={KIND_TAG[e.kind] ? `${e.game.name_ko} (${KIND_TAG[e.kind]})` : e.game.name_ko}
+                      />
+                    );
+                  })}
                   {overflow > 0 && <span className={styles.cellDotMore}>+{overflow}</span>}
                 </div>
               )}
@@ -232,7 +257,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
         })}
       </div>
 
-      {cells.every(c => c.games.length === 0) && (
+      {cells.every(c => c.entries.length === 0) && (
         <div className={styles.empty}>
           <div className={styles.emptyIcon} aria-hidden="true"><svg className="ic"><use href="#ic-calendar" /></svg></div>
           <p className={styles.emptyText}>이 달 출시 일정이 없어요.</p>
@@ -268,18 +293,22 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
                 {ev.url && <span className={styles.dayEventGo} aria-hidden="true">↗</span>}
               </a>
             ))}
-            {panelGames.length === 0 && (eventsByDate.get(selectedISO) ?? []).length === 0 && (
+            {panelEntries.length === 0 && (eventsByDate.get(selectedISO) ?? []).length === 0 && (
               <p className={styles.dayEmpty}>이 날짜엔 일정이 없어요.</p>
             )}
-            {panelGames.map(g => {
-              const diff = calcDayDiff(g.release_date, now);
+            {panelEntries.map(({ game: g, kind }) => {
+              const refDate =
+                kind === 'prereg' ? (g.pre_registration_date ?? g.release_date)
+                : kind === 'prereg_end' ? (g.pre_registration_end_date ?? g.release_date)
+                : g.release_date;
+              const diff = calcDayDiff(refDate, now);
               const isToday = diff === 0;
               const imminent = diff > 0 && diff <= 7;
-              const dd = diff < 0 ? '출시됨' : isToday ? 'D-DAY' : `D-${diff}`;
+              const dd = diff < 0 ? KIND_PAST[kind] : isToday ? 'D-DAY' : `D-${diff}`;
               const cat = CATEGORY_META[g.category];
               return (
                 <button
-                  key={g.id}
+                  key={`${g.id}-${kind}`}
                   type="button"
                   className={styles.dayRow}
                   onClick={() => onPick(g.id)}
@@ -287,6 +316,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
                 >
                   <span className={styles.dayBadge} style={{ color: cat.color }}>{cat.short}</span>
                   <span className={styles.dayRowName}>{g.name_ko}</span>
+                  {KIND_BADGE[kind] && <span className={styles.dayRowPre}>{KIND_BADGE[kind]}</span>}
                   <span className={`${styles.dayRowDday} ${isToday ? styles.dayRowDdayToday : imminent ? styles.dayRowDdaySoon : ''}`}>{dd}</span>
                 </button>
               );
