@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-30T12:12:02.789921+00:00",
+  "last_updated": "2026-07-01T00:11:22.763731+00:00",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1906,7 +1906,8 @@
       "source_url": "https://zdnet.co.kr/view/?no=20260626130701",
       "genres": [
         "MMORPG"
-      ]
+      ],
+      "pre_registration": true
     },
     {
       "id": "dokkaebi-world-2026",
