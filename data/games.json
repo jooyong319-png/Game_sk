@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-01T00:11:22.763731+00:00",
+  "last_updated": "2026-07-01T23:04:55.294842+00:00",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2060,6 +2060,29 @@
       ],
       "image_url": null,
       "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305182"
+    },
+    {
+      "id": "palworld-1-0-20260710",
+      "name_ko": "팰월드 1.0 정식 출시",
+      "name_en": "Palworld 1.0",
+      "release_date": "2026-07-10",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "포켓페어",
+      "publisher": "포켓페어",
+      "description": "팰(펄) 수집·생존·제작 오픈월드 '팰월드'가 얼리 액세스를 마치고 1.0 정식 버전으로 출시된다. 서머 게임 페스트 2026에서 공개된 일정으로, 신규 지역 '세계수'와 추가 팰·콘텐츠가 더해진다. PC(스팀)·PS5·Xbox·게임패스에 동시 발매되며 기존 보유자는 무료로 업그레이드된다.",
+      "genres": [
+        "오픈월드",
+        "생존",
+        "크래프팅"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/header.jpg",
+      "source_url": "https://store.steampowered.com/app/1623730/Palworld/"
     }
   ]
 }
