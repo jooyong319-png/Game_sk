@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-06-30",
+  "last_updated": "2026-07-01",
   "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
   "events": [
     {
@@ -62,6 +62,17 @@
       "host": "Steam",
       "description": "밸브가 분기마다 여는 신작 데모 축제. 수천 종의 출시 예정 PC 게임 무료 플레이 데모와 개발자 라이브 방송이 1주간 진행된다. 2026년 마지막 회차로 한국 시간 기준 10월 20일 새벽부터 10월 27일 새벽까지(PT 10/19 오전 10시~10/26 오전 10시) 열린다.",
       "source_url": "https://partner.steamgames.com/doc/marketing/upcoming_events/nextfest/2026june"
+    },
+    {
+      "id": "diablo4-season14-death-awakening-2026",
+      "type": "season",
+      "title": "디아블로 IV 시즌 14 '죽음의 각성'",
+      "start_date": "2026-07-01",
+      "end_date": "2026-09-30",
+      "date_approx": true,
+      "host": "디아블로 IV",
+      "description": "블리자드 '디아블로 IV'의 열네 번째 시즌. 한국 시간 기준 7월 1일 오전 2시에 개막하며 신규 종반(엔드게임) 콘텐츠를 대폭 확장한다. 7월 1일부터 8일까지 악마술사 직업 무료 체험이 열리고 오버워치 협업 콘텐츠도 함께 진행된다. 종료일은 공식 미확정으로 통상 약 90일 시즌 관례에 따른 추정치다.",
+      "source_url": "https://diablo4.blizzard.com/ko-kr/upcoming"
     }
   ]
 }
