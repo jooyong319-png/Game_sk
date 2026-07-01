@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-01T23:13:38.866358+00:00",
+  "last_updated": "2026-07-02",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2128,6 +2128,28 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3282300/header.jpg",
       "source_url": "https://store.steampowered.com/app/3282300/Mistfall_Hunter/"
+    },
+    {
+      "id": "lordnine-2nd-anniv-hidden-forest-20260708",
+      "name_ko": "로드나인: 2주년 신규 지역 '숨겨진 결계의 숲'·던전 '화염의 성소' 오픈",
+      "name_en": null,
+      "release_date": "2026-07-08",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "로드나인",
+      "publisher": "스마일게이트",
+      "description": "서비스 2주년 대규모 업데이트의 2차 콘텐츠. 7월 8일 신규 지역 '숨겨진 결계의 숲'과 신규 던전 '화염의 성소'가 열린다. 필드 랜덤 위치에 NPC 가디언이 등장하고 숨겨진 포탈로 던전에 진입하며, '화염의 성소'에서는 듀펠게넌 레이드를 진행할 수 있다.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b6/23/5d/b6235d73-5607-1542-7682-98893eb2091b/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+      "source_url": "https://newsroom.smilegate.com/bbs/board.php?bo_table=news&wr_id=2275"
     }
   ]
 }
