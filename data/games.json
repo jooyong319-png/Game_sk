@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-01T23:04:55.294842+00:00",
+  "last_updated": "2026-07-01T23:13:38.866358+00:00",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2083,6 +2083,51 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/header.jpg",
       "source_url": "https://store.steampowered.com/app/1623730/Palworld/"
+    },
+    {
+      "id": "kusan-city-of-wolves-20260730",
+      "name_ko": "쿠산: 늑대들의 도시",
+      "name_en": "Kusan: City of Wolves",
+      "release_date": "2026-07-30",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S",
+        "Switch"
+      ],
+      "developer": "서클프롬닷",
+      "publisher": "서클프롬닷",
+      "description": "국내 개발사 서클프롬닷이 8년간 만든 하드코어 탑다운 슈터. '핫라인 마이애미'에서 영감을 받아 존 윅처럼 근접과 총격을 잇는 스타일리시한 전투를 구현했다. 미래지향적으로 재해석한 한국 전통 문화가 뒤섞인 도시를 배경으로 하며, 힙합 프로듀서 랍티미스트가 사운드트랙을 맡았다. PC·PS5·Xbox·스위치로 7월 30일 출시된다.",
+      "genres": [
+        "탑다운 슈터",
+        "액션"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1714510/header.jpg",
+      "source_url": "https://store.steampowered.com/app/1714510/Kusan_City_of_Wolves/"
+    },
+    {
+      "id": "mistfall-hunter-20260729",
+      "name_ko": "미스트폴 헌터",
+      "name_en": "Mistfall Hunter",
+      "release_date": "2026-07-29",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "벨링 게임즈",
+      "publisher": "스카이스톤 게임즈",
+      "description": "벨링 게임즈가 개발하고 스카이스톤 게임즈가 서비스하는 3인칭 PvPvE 추출(익스트랙션) 액션 RPG. 소울라이크 전투와 안개에 잠긴 세계 탐험을 결합했고 같은 서버 내 크로스플레이를 지원한다. 오픈 베타(6/14~22)를 거쳐 7월 29일 전 세계 동시 출시되며, 스팀 기준으로는 시차로 7월 30일 새벽에 열린다.",
+      "genres": [
+        "액션RPG",
+        "익스트랙션"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3282300/header.jpg",
+      "source_url": "https://store.steampowered.com/app/3282300/Mistfall_Hunter/"
     }
   ]
 }
