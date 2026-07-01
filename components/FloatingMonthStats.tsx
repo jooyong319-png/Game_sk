@@ -1,9 +1,13 @@
 import { getAllGames } from '@/lib/games';
-import { kstDateOnly } from '@/lib/utils';
+import { kstDateOnly, calcDayDiff } from '@/lib/utils';
 import { CATEGORY_META, type Category } from '@/lib/types';
 import styles from './FloatingMonthStats.module.css';
 
 const ORDER: Category[] = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
+
+function ymd(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
 
 // 전 페이지 공용 — 좌측 빈 여백에 떠 있는 '이달의 출시' 위젯(넓은 화면 전용, CSS로 숨김 처리).
 // 서버 컴포넌트, 빌드 시각(KST) 기준 — 데이터 일일 갱신 시 재배포로 신선도 유지.
@@ -27,6 +31,17 @@ export async function FloatingMonthStats() {
   }
   const max = Math.max(1, ...ORDER.map(c => counts[c]));
 
+  // 지금 가능한 사전예약: pre_registration=true · 시작됨 · 마감 전 · 미출시 → 출시 임박순 최대 5개
+  const today = ymd(now);
+  const preRegs = games
+    .filter(g => g.pre_registration === true
+      && g.category !== 'new_server' // 신규 서버·업데이트 이벤트는 게임 사전예약 아님 → 제외
+      && !(g.pre_registration_date && g.pre_registration_date > today)
+      && !(g.pre_registration_end_date && g.pre_registration_end_date < today)
+      && !(!g.release_date_approx && g.release_date < today))
+    .sort((a, b) => a.release_date.localeCompare(b.release_date))
+    .slice(0, 5);
+
   return (
     <aside className={styles.float} aria-label={`${month + 1}월 출시 통계`}>
       <h3 className={styles.title}>
@@ -48,6 +63,30 @@ export async function FloatingMonthStats() {
           </div>
         ))}
       </div>
+
+      {preRegs.length > 0 && (
+        <div className={styles.preSection}>
+          <h3 className={styles.subtitle}>
+            <svg className="ic" aria-hidden="true"><use href="#ic-star" /></svg>
+            지금 사전예약
+          </h3>
+          <div className={styles.preList}>
+            {preRegs.map(g => {
+              const rel = calcDayDiff(g.release_date, now);
+              const end = g.pre_registration_end_date ? calcDayDiff(g.pre_registration_end_date, now) : null;
+              const dd = end !== null && end >= 0 ? `마감 D-${end}` : rel > 0 ? `D-${rel}` : rel === 0 ? 'D-DAY' : '진행중';
+              return (
+                <a key={g.id} href={`/game/${g.id}`} className={styles.preRow}>
+                  <span className={styles.preDot} style={{ background: CATEGORY_META[g.category].color }} aria-hidden="true" />
+                  <span className={styles.preName}>{g.name_ko}</span>
+                  <span className={styles.preDday}>{dd}</span>
+                </a>
+              );
+            })}
+          </div>
+          <a href="/pre-registration" className={styles.preMore}>전체 보기 →</a>
+        </div>
+      )}
     </aside>
   );
 }

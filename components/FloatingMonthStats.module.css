@@ -70,3 +70,65 @@
   color: var(--text);
   font-variant-numeric: tabular-nums;
 }
+
+/* ─── 'N월 출시' 밑 사전예약 블록 ─── */
+.preSection {
+  margin-top: 0.9rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+}
+.subtitle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.55rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.subtitle .ic { width: 14px; height: 14px; color: var(--accent-warm); }
+.preList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.preRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.preRow:hover { background: var(--bg); text-decoration: none; }
+.preDot {
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.preName {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.preDday {
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent-warm);
+  font-variant-numeric: tabular-nums;
+}
+.preMore {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--accent);
+}
