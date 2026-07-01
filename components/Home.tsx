@@ -4,6 +4,7 @@ import type { Game, FilterState, CalEvent } from '@/lib/types';
 import { EVENT_TYPE_META } from '@/lib/types';
 import { formatShortDate, kstDateOnly } from '@/lib/utils';
 import { NextByCategory } from './NextByCategory';
+import { PreRegistration } from './PreRegistration';
 import { PromoBanner } from './PromoBanner';
 import { PopularGames } from './PopularGames';
 import { CalendarSubscribe } from './CalendarSubscribe';
@@ -181,6 +182,10 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
   return (
     <div className={styles.home}>
       <div className={styles.layout}>
+        <aside className={styles.leftCol} aria-label="지금 가능한 사전예약">
+          <PreRegistration games={initialGames} now={now} limit={5} />
+        </aside>
+
         <div className={styles.main}>
           <div className={styles.topRow}>
             <input
