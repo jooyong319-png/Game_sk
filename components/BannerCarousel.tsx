@@ -16,10 +16,11 @@ interface Banner {
 // 미설정·0건이면 아무것도 렌더하지 않음(우아한 폴백).
 export function BannerCarousel() {
   const [banners, setBanners] = useState<Banner[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    if (!isSupabaseReady() || !supabase) return;
+    if (!isSupabaseReady() || !supabase) { setLoaded(true); return; }
     let cancelled = false;
     supabase
       .from('banners')
@@ -27,8 +28,9 @@ export function BannerCarousel() {
       .eq('active', true)
       .order('sort', { ascending: true })
       .then(({ data, error }) => {
-        if (cancelled || error || !data) return;
-        setBanners(data as Banner[]);
+        if (cancelled) return;
+        if (!error && data) setBanners(data as Banner[]);
+        setLoaded(true);
       });
     return () => { cancelled = true; };
   }, []);
@@ -40,6 +42,8 @@ export function BannerCarousel() {
     return () => clearInterval(id);
   }, [banners.length]);
 
+  // 로딩 중(Supabase 설정된 경우)엔 스켈레톤으로 자리 유지 → 팝인 방지
+  if (!loaded) return isSupabaseReady() ? <div className={styles.skeleton} aria-hidden="true" /> : null;
   if (banners.length === 0) return null;
   const safeIdx = idx % banners.length;
   const b = banners[safeIdx];

@@ -100,6 +100,7 @@ function useCountdown(targetMs: number | null): { mounted: boolean; parts: Parts
 function FeaturedCard({ data }: { data: CardData }) {
   const { mounted, parts } = useCountdown(data.targetMs);
   const showTimer = data.targetMs != null && mounted && parts;
+  const showSkeleton = data.targetMs != null && !mounted; // 마운트 전(카운트다운 대상 있음) → 스켈레톤
 
   const inner = (
     <>
@@ -138,6 +139,8 @@ function FeaturedCard({ data }: { data: CardData }) {
             </Fragment>
           ))}
         </div>
+      ) : showSkeleton ? (
+        <div className={styles.timerSkeleton} aria-hidden="true" />
       ) : (
         <div className={styles.mijeong}>{data.fallbackText}</div>
       )}
