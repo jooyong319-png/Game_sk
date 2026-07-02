@@ -228,25 +228,35 @@ export default async function GamePage({ params }: Props) {
         </nav>
 
         <article className="game-detail">
-          {game.image_url && (
-            <div className="detail-cover">
-              <img src={game.image_url} alt="" aria-hidden="true" className="cover-bg" loading="lazy" />
-              <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="cover-fg" loading="eager" fetchPriority="high" />
+          <div className="detail-header">
+            <div className={`detail-thumb cat-bg-${game.category}`}>
+              {game.image_url ? (
+                <>
+                  <img src={game.image_url} alt="" aria-hidden="true" className="cover-bg" loading="lazy" />
+                  <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="cover-fg" loading="eager" fetchPriority="high" />
+                </>
+              ) : (
+                <span className="thumb-ph" aria-hidden="true" style={{ background: CATEGORY_META[game.category].color }}>
+                  <svg className="ph-icon" aria-hidden="true"><use href={`#${CATEGORY_META[game.category].icon}`} /></svg>
+                </span>
+              )}
             </div>
-          )}
-          <div className="detail-head">
-            <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
-            <DdayBadge releaseDate={game.release_date} approx={game.release_date_approx} />
-          </div>
-          <h1>{game.name_ko}</h1>
-          {game.name_en && game.name_en !== game.name_ko && (
-            <p className="name-en">{game.name_en}</p>
-          )}
-          <div className="detail-release-row">
-            <p className="release-date">
-              <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> {landing.releaseNoun}: {dateStr}{weekday}
-            </p>
-            <ViewCounter gameId={game.id} />
+            <div className="detail-header-info">
+              <div className="detail-head">
+                <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
+                <DdayBadge releaseDate={game.release_date} approx={game.release_date_approx} />
+              </div>
+              <h1>{game.name_ko}</h1>
+              {game.name_en && game.name_en !== game.name_ko && (
+                <p className="name-en">{game.name_en}</p>
+              )}
+              <div className="detail-release-row">
+                <p className="release-date">
+                  <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> {landing.releaseNoun}: {dateStr}{weekday}
+                </p>
+                <ViewCounter gameId={game.id} />
+              </div>
+            </div>
           </div>
           {game.pre_registration && (
             <p className="prereg-info">

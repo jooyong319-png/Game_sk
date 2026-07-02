@@ -35,24 +35,28 @@ export function GameModal({ game, onClose, wishlist }: Props) {
       <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={e => e.stopPropagation()}>
         <button type="button" className={styles.close} onClick={onClose} aria-label="닫기">×</button>
 
-        <div className={`${styles.image} cat-bg-${game.category}`}>
-          {game.image_url ? (
-            <>
-              <img src={game.image_url} alt="" aria-hidden="true" className={styles.imageBg} loading="lazy" />
-              <img src={game.image_url} alt={game.name_ko} className={styles.imageFg} loading="lazy" />
-            </>
-          ) : <span className={styles.imageEmoji}><svg className="ic" aria-hidden="true"><use href={`#${cat.icon}`} /></svg></span>}
+        <div className={styles.header}>
+          <div className={`${styles.image} cat-bg-${game.category}`}>
+            {game.image_url ? (
+              <>
+                <img src={game.image_url} alt="" aria-hidden="true" className={styles.imageBg} loading="lazy" />
+                <img src={game.image_url} alt={game.name_ko} className={styles.imageFg} loading="lazy" />
+              </>
+            ) : (
+              <span className={styles.imagePh} aria-hidden="true" style={{ background: cat.color }}>
+                <svg className={styles.phIcon} aria-hidden="true"><use href={`#${cat.icon}`} /></svg>
+              </span>
+            )}
+          </div>
+
+          <div className={styles.headerInfo}>
+            <span className={`category-tag cat-bg-${game.category}`}>{cat.label}</span>
+            <h2 id="modal-title" className={styles.title}>{game.name_ko}</h2>
+            {game.name_en && game.name_en !== game.name_ko && (
+              <div className={styles.nameEn}>{game.name_en}</div>
+            )}
+          </div>
         </div>
-
-        <span className={`category-tag cat-bg-${game.category}`}>{cat.label}</span>
-
-        <div className={styles.titleRow}>
-          <h2 id="modal-title" className={styles.title}>{game.name_ko}</h2>
-        </div>
-
-        {game.name_en && game.name_en !== game.name_ko && (
-          <div className={styles.nameEn}>{game.name_en}</div>
-        )}
 
         <div className={styles.row}>
           <strong>출시일</strong>
