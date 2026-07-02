@@ -3,13 +3,14 @@ import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import type { Game, FilterState, CalEvent } from '@/lib/types';
 import { EVENT_TYPE_META } from '@/lib/types';
 import { formatShortDate, kstDateOnly } from '@/lib/utils';
-import { NextByCategory } from './NextByCategory';
+// ── 사이드바 재작업 예정: 아래 import는 임시 주석(재사용 가능) ──
+// import { NextByCategory } from './NextByCategory';
 import { BannerCarousel } from './BannerCarousel';
-import { PromoBanner } from './PromoBanner';
-import { PopularGames } from './PopularGames';
-import { CalendarSubscribe } from './CalendarSubscribe';
-import { FreeGames } from './FreeGames';
-import { AdFit } from './AdFit';
+// import { PromoBanner } from './PromoBanner';
+// import { PopularGames } from './PopularGames';
+// import { CalendarSubscribe } from './CalendarSubscribe';
+// import { FreeGames } from './FreeGames';
+// import { AdFit } from './AdFit';
 import { ViewToggle } from './ViewToggle';
 import { CalendarView } from './CalendarView';
 import { ListView } from './ListView';
@@ -237,6 +238,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
           </p>
         </div>
 
+        {/* ── 오른쪽 사이드바: 재작업 예정, 임시 비활성 (재사용 가능) ──
         <aside className={styles.rightCol} aria-label="추천 일정">
           <NextByCategory games={initialGames} now={now} />
           <AdFit unit="DAN-OszywWckdPV6qhbX" width={300} height={250} />
@@ -245,6 +247,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
           <CalendarSubscribe />
           <PromoBanner variant="update" />
         </aside>
+        ──────────────────────────────────────────────────────── */}
       </div>
 
       {openGame && <GameModal game={openGame} onClose={() => closeModal()} wishlist={wishlist} />}

@@ -13,7 +13,8 @@
 /* ─── 데스크톱 2컬럼 (본문 + 우측 레일) ─── */
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  /* 사이드바 재작업 전 임시 1컬럼 — 원래: minmax(0, 1fr) 320px */
+  grid-template-columns: 1fr;
   gap: 1.6rem;
   align-items: start;
 }

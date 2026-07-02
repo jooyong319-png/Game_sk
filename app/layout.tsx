@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { HeaderNav } from '@/components/HeaderNav';
-import { FloatingMonthStats } from '@/components/FloatingMonthStats';
+// 왼쪽 플로팅 위젯(N월 출시/사전예약): 재작업 예정, 임시 주석 (재사용 가능)
+// import { FloatingMonthStats } from '@/components/FloatingMonthStats';
 import { BottomTabBar } from '@/components/BottomTabBar';
 import { HeaderScroll } from '@/components/HeaderScroll';
 import { Toaster } from '@/components/Toaster';
@@ -96,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <HeaderNav />
         </header>
         <main id="main">{children}</main>
-        <FloatingMonthStats />
+        {/* <FloatingMonthStats /> 재작업 예정, 임시 비활성 */}
         <BottomTabBar />
         <HeaderScroll />
         <Toaster />
