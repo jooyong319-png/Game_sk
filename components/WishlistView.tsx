@@ -37,7 +37,7 @@ export function WishlistView({ games }: { games: Game[] }) {
           {items.map(g => {
             const diff = calcDayDiff(g.release_date);
             const released = diff < 0;
-            const dd = g.release_date_approx ? '예정' : released ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
+            const dd = g.release_date_approx ? '미정' : released ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
             const soon = diff >= 0 && diff <= 7;
             const cat = CATEGORY_META[g.category];
             const date = g.release_date_approx

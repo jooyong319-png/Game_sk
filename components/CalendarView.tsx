@@ -304,7 +304,8 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
               const diff = calcDayDiff(refDate, now);
               const isToday = diff === 0;
               const imminent = diff > 0 && diff <= 7;
-              const dd = diff < 0 ? KIND_PAST[kind] : isToday ? 'D-DAY' : `D-${diff}`;
+              const dd = (kind === 'release' && g.release_date_approx) ? '미정'
+                : diff < 0 ? KIND_PAST[kind] : isToday ? 'D-DAY' : `D-${diff}`;
               const cat = CATEGORY_META[g.category];
               return (
                 <button

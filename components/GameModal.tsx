@@ -25,7 +25,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
   }, [onClose]);
 
   const diff = calcDayDiff(game.release_date);
-  const dd = diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
+  const dd = game.release_date_approx ? '미정' : diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
   const cat = CATEGORY_META[game.category];
   const dateStr = formatKoreanDate(game.release_date);
   const weekday = game.release_date_approx ? '' : ` (${getKoreanWeekday(game.release_date)})`;
@@ -62,7 +62,9 @@ export function GameModal({ game, onClose, wishlist }: Props) {
 
         <div className={styles.row}>
           <strong>출시일</strong>
-          {dateStr}{weekday}{game.release_date_approx ? ' (예정)' : ''} · <span className={styles.dday}>{dd}</span>
+          {game.release_date_approx
+            ? <span className={styles.dday}>미정</span>
+            : <>{dateStr}{weekday} · <span className={styles.dday}>{dd}</span></>}
         </div>
         {game.pre_registration && (
           <PreRegCountdown startDate={game.pre_registration_date} endDate={game.pre_registration_end_date} />

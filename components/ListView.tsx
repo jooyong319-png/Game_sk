@@ -154,7 +154,7 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
             const released = diff < 0;
             const isToday = diff === 0;
             const imminent = diff >= 0 && diff <= 7;
-            const dd = g.release_date_approx ? '예정' : released ? '출시됨' : isToday ? 'D-DAY' : `D-${diff}`;
+            const dd = g.release_date_approx ? '미정' : released ? '출시됨' : isToday ? 'D-DAY' : `D-${diff}`;
             const cat = CATEGORY_META[g.category];
             const isWished = wishlist.has(g.id);
             const mmdd = g.release_date_approx ? '미정' : g.release_date.slice(5).replace('-', '/');

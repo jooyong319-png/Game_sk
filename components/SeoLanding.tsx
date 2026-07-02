@@ -55,7 +55,7 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
                 </div>
                 <div className="seo-li-meta">
                   <span className="seo-date">
-                    {formatKoreanDate(g.release_date)}{g.release_date_approx ? ' (예정)' : ''}
+                    {g.release_date_approx ? '미정' : formatKoreanDate(g.release_date)}
                   </span>
                   {g.developer && <span className="seo-dev">· {g.developer}</span>}
                 </div>

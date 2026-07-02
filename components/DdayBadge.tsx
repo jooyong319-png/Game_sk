@@ -10,7 +10,7 @@ interface Props {
 interface Dday { text: string; stage: 'today' | 'soon' | 'far'; }
 
 function compute(releaseDate: string, approx: boolean): Dday {
-  if (approx) return { text: '(예정)', stage: 'far' };
+  if (approx) return { text: '미정', stage: 'far' };
   // calcDayDiff 기본값 now=new Date() → 클라(KST) 현재 시각 기준
   const diff = calcDayDiff(releaseDate);
   return {
@@ -23,7 +23,7 @@ function compute(releaseDate: string, approx: boolean): Dday {
 // 날짜 의존 값을 mount 후 클라에서 계산해 항상 방문 시각 기준으로 정확하게 표시한다.
 // 첫 페인트는 미정(approx 제외) → 하이드레이션 불일치 회피(ViewCounter와 동일 규약).
 export function DdayBadge({ releaseDate, approx }: Props) {
-  const [dd, setDd] = useState<Dday | null>(approx ? { text: '(예정)', stage: 'far' } : null);
+  const [dd, setDd] = useState<Dday | null>(approx ? { text: '미정', stage: 'far' } : null);
 
   useEffect(() => {
     setDd(compute(releaseDate, approx));

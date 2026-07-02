@@ -254,7 +254,7 @@ export default async function GamePage({ params }: Props) {
               )}
               <div className="detail-release-row">
                 <p className="release-date">
-                  <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> {landing.releaseNoun}: {dateStr}{weekday}
+                  <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> {landing.releaseNoun}: {game.release_date_approx ? '미정' : `${dateStr}${weekday}`}
                 </p>
                 <ViewCounter gameId={game.id} />
               </div>
@@ -312,7 +312,7 @@ export default async function GamePage({ params }: Props) {
                 <a key={r.id} href={`/game/${r.id}`} className="related-card">
                   <span className="related-name">{r.name_ko}</span>
                   <span className="related-date">
-                    {formatShortDate(r.release_date)}{r.release_date_approx ? ' (예정)' : ''}
+                    {r.release_date_approx ? '미정' : formatShortDate(r.release_date)}
                   </span>
                 </a>
               ))}

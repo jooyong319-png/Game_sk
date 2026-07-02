@@ -6,6 +6,7 @@ import { formatShortDate, kstDateOnly } from '@/lib/utils';
 // ── 사이드바 재작업 예정: 아래 import는 임시 주석(재사용 가능) ──
 // import { NextByCategory } from './NextByCategory';
 import { BannerCarousel } from './BannerCarousel';
+import { FeaturedCards } from './FeaturedCards';
 // import { PromoBanner } from './PromoBanner';
 // import { PopularGames } from './PopularGames';
 // import { CalendarSubscribe } from './CalendarSubscribe';
@@ -184,7 +185,10 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
     <div className={styles.home}>
       <div className={styles.layout}>
         <div className={styles.main}>
-          <BannerCarousel />
+          <div className={styles.hero}>
+            <BannerCarousel />
+            <FeaturedCards games={initialGames} now={now} />
+          </div>
 
           <div className={styles.topRow}>
             <input
