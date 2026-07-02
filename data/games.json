@@ -1886,7 +1886,8 @@
       ],
       "image_url": null,
       "source_url": "https://azurpromilia.nexon.com/events/2025/12/preregistration",
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_url": "https://azurpromilia.nexon.com/events/2025/12/preregistration"
     },
     {
       "id": "zeus-god-of-arrogance-2026",
@@ -1951,7 +1952,8 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317953",
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_url": "https://play.google.com/store/apps/details?id=com.mintrocket.drmobile"
     },
     {
       "id": "yulhyeolgangho-next-2026",
@@ -1973,7 +1975,8 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317948",
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_url": "https://yulgang-next.com/"
     },
     {
       "id": "miresi-2026",
@@ -1995,7 +1998,8 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317762",
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_url": "https://miresi.onstove.com/ko/home"
     },
     {
       "id": "solo-leveling-karma-2026",
