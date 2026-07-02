@@ -1,7 +1,7 @@
 'use client';
 import { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
-import type { Game } from '@/lib/types';
+import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import styles from './FeaturedCards.module.css';
 
@@ -92,7 +92,38 @@ function FeaturedCard({ game, badge, badgeColor }: { game: Game; badge: string; 
   );
 }
 
-// 상단 우측 카드 2개 — 위: 사전예약 최신, 아래: 그 외 최신 (출시 임박 순)
+const CATS: Category[] = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
+
+// 아래 카드 — 카테고리별 최신(임박) 게임 풀을 마운트 후 셔플해 자동 순환(리롤)
+function RerollCard({ pool }: { pool: Game[] }) {
+  const [order, setOrder] = useState<number[]>(() => pool.map((_, i) => i));
+  const [pos, setPos] = useState(0);
+
+  // 마운트 후 셔플(SSR 하이드레이션 불일치 회피 — 첫 렌더는 원래 순서)
+  useEffect(() => {
+    const arr = pool.map((_, i) => i);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    setOrder(arr);
+    setPos(0);
+  }, [pool.length]);
+
+  // 5초마다 다음 카테고리로 리롤
+  useEffect(() => {
+    if (pool.length <= 1) return;
+    const id = setInterval(() => setPos(p => (p + 1) % pool.length), 5000);
+    return () => clearInterval(id);
+  }, [pool.length]);
+
+  const game = pool[order[pos % order.length] ?? 0];
+  if (!game) return null;
+  const cat = CATEGORY_META[game.category];
+  return <FeaturedCard key={game.id} game={game} badge={cat.short} badgeColor={cat.color} />;
+}
+
+// 상단 우측 카드 2개 — 위: 사전예약 최신, 아래: 카테고리별 최신 랜덤 리롤
 export function FeaturedCards({ games, now }: Props) {
   const today = ymd(now);
   const notReleased = (g: Game) => g.release_date_approx || g.release_date >= today;
@@ -103,16 +134,19 @@ export function FeaturedCards({ games, now }: Props) {
       && !(g.pre_registration_end_date && g.pre_registration_end_date < today))
     .sort((a, b) => a.release_date.localeCompare(b.release_date))[0];
 
-  const other = games
-    .filter(g => notReleased(g) && g.pre_registration !== true && g.id !== preReg?.id)
-    .sort((a, b) => a.release_date.localeCompare(b.release_date))[0];
+  // 카테고리별 '가장 임박한 출시' 1개씩 → 리롤 풀 (상단 사전예약 카드와 중복 제외)
+  const pool = CATS
+    .map(c => games
+      .filter(g => notReleased(g) && g.category === c && g.id !== preReg?.id)
+      .sort((a, b) => a.release_date.localeCompare(b.release_date))[0])
+    .filter((g): g is Game => Boolean(g));
 
-  if (!preReg && !other) return null;
+  if (!preReg && pool.length === 0) return null;
 
   return (
     <div className={styles.cards}>
       {preReg && <FeaturedCard game={preReg} badge="사전예약" badgeColor="var(--accent-warm)" />}
-      {other && <FeaturedCard game={other} badge={CATEGORY_META[other.category].short} badgeColor={CATEGORY_META[other.category].color} />}
+      {pool.length > 0 && <RerollCard pool={pool} />}
     </div>
   );
 }

@@ -13,8 +13,11 @@
   color: var(--text);
   text-decoration: none;
   transition: border-color 0.15s;
+  animation: cardFade 0.4s ease;
 }
 .card:hover { border-color: var(--accent); text-decoration: none; }
+@keyframes cardFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .card { animation: none; } }
 
 /* 상단: 썸네일 + 정보 */
 .head { display: flex; gap: 0.8rem; align-items: flex-start; }
