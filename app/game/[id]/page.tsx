@@ -282,6 +282,8 @@ export default async function GamePage({ params }: Props) {
           </p>
         </article>
 
+        <Comments gameId={game.id} />
+
         {faqs.length > 0 && (
           <section className="detail-faq">
             <h2>{game.name_ko} 자주 묻는 질문</h2>
@@ -295,8 +297,6 @@ export default async function GamePage({ params }: Props) {
             </dl>
           </section>
         )}
-
-        <Comments gameId={game.id} />
 
         {related.length > 0 && (
           <section className="detail-related">
