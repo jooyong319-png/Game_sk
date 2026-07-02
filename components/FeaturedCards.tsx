@@ -5,7 +5,7 @@ import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import styles from './FeaturedCards.module.css';
 
-interface Props { games: Game[]; now: Date; }
+interface Props { games: Game[]; now: Date; variant?: 'hero' | 'list'; }
 
 interface FreeGame {
   title: string;
@@ -149,8 +149,8 @@ function FeaturedCard({ data }: { data: CardData }) {
     : <Link href={data.href} className={styles.card}>{inner}</Link>;
 }
 
-// 상단 우측 카드 2개 — 위: 사전예약 최신 / 아래: 카테고리별 최신 + 무료게임 중 진입 시 랜덤 1개
-export function FeaturedCards({ games, now }: Props) {
+// 카드 묶음 — hero(홈): 사전예약 + 리롤 1개 / list(서브페이지 사이드바): 사전예약 + 카테고리별 전부 + 무료게임
+export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
   const today = ymd(now);
   const notReleased = (g: Game) => g.release_date_approx || g.release_date >= today;
 
@@ -189,16 +189,31 @@ export function FeaturedCards({ games, now }: Props) {
 
   const pool = useMemo(() => [...categoryItems, ...freeItems], [categoryItems, freeItems]);
 
-  // 진입 시 1회 랜덤 선택 (무료게임 로드된 뒤 전체 풀에서)
+  // 진입 시 1회 랜덤 선택 (hero 전용, 무료게임 로드된 뒤 전체 풀에서)
   const [idx, setIdx] = useState(0);
   useEffect(() => {
-    if (!ready || pool.length === 0) return;
+    if (variant !== 'hero' || !ready || pool.length === 0) return;
     setIdx(Math.floor(Math.random() * pool.length));
-  }, [ready, pool.length]);
+  }, [variant, ready, pool.length]);
 
   if (!preReg && pool.length === 0) return null;
-  const bottom = pool.length > 0 ? pool[idx % pool.length] : null;
 
+  // list: 사전예약 + 카테고리별 전부 + 무료게임을 모두 세로로 나열
+  if (variant === 'list') {
+    const cards = [
+      ...(preReg ? [gameToCard(preReg, true)] : []),
+      ...categoryItems,
+      ...freeItems,
+    ];
+    return (
+      <div className={styles.cards}>
+        {cards.map(c => <FeaturedCard key={c.key} data={c} />)}
+      </div>
+    );
+  }
+
+  // hero: 위=사전예약, 아래=리롤 1개
+  const bottom = pool.length > 0 ? pool[idx % pool.length] : null;
   return (
     <div className={styles.cards}>
       {preReg && <FeaturedCard data={gameToCard(preReg, true)} />}
