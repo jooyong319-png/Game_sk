@@ -94,30 +94,14 @@ function FeaturedCard({ game, badge, badgeColor }: { game: Game; badge: string; 
 
 const CATS: Category[] = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
 
-// 아래 카드 — 카테고리별 최신(임박) 게임 풀을 마운트 후 셔플해 자동 순환(리롤)
+// 아래 카드 — 카테고리별 최신(임박) 게임 풀에서 페이지 진입 시 1개만 랜덤 선택(고정)
 function RerollCard({ pool }: { pool: Game[] }) {
-  const [order, setOrder] = useState<number[]>(() => pool.map((_, i) => i));
-  const [pos, setPos] = useState(0);
-
-  // 마운트 후 셔플(SSR 하이드레이션 불일치 회피 — 첫 렌더는 원래 순서)
+  const [idx, setIdx] = useState(0); // SSR: 0번(하이드레이션 일치), 마운트 후 랜덤 1회
   useEffect(() => {
-    const arr = pool.map((_, i) => i);
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    setOrder(arr);
-    setPos(0);
+    setIdx(Math.floor(Math.random() * pool.length));
   }, [pool.length]);
 
-  // 5초마다 다음 카테고리로 리롤
-  useEffect(() => {
-    if (pool.length <= 1) return;
-    const id = setInterval(() => setPos(p => (p + 1) % pool.length), 5000);
-    return () => clearInterval(id);
-  }, [pool.length]);
-
-  const game = pool[order[pos % order.length] ?? 0];
+  const game = pool[idx % pool.length];
   if (!game) return null;
   const cat = CATEGORY_META[game.category];
   return <FeaturedCard key={game.id} game={game} badge={cat.short} badgeColor={cat.color} />;
