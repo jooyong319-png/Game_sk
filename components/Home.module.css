@@ -37,9 +37,9 @@
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; }
 }
-/* 설치형 앱(standalone)에선 히어로(배너+카드) 숨김 — 캘린더에 집중 */
+/* 설치형 앱(standalone): 오른쪽 카드는 숨기고 배너만 전체 폭 (카드 숨김은 FeaturedCards.module.css) */
 @media (display-mode: standalone) {
-  .hero { display: none; }
+  .hero { grid-template-columns: 1fr; }
 }
 
 /* 우측 사이드 컬럼: 패널 세로 적층 + sticky로 따라옴 */
