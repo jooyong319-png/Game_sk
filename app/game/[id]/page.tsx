@@ -7,6 +7,7 @@ import { GameReactions } from '@/components/GameReactions';
 import { DdayBadge } from '@/components/DdayBadge';
 import { ShareButton } from '@/components/ShareButton';
 import { ViewCounter } from '@/components/ViewCounter';
+import { PreRegCountdown } from '@/components/PreRegCountdown';
 import { Comments } from '@/components/Comments';
 import { PageShell } from '@/components/PageShell';
 
@@ -260,13 +261,7 @@ export default async function GamePage({ params }: Props) {
             </div>
           </div>
           {game.pre_registration && (
-            <p className="prereg-info">
-              <svg className="ic" aria-hidden="true"><use href="#ic-star" /></svg>
-              <strong>{game.name_ko} 사전예약</strong>
-              {preRegStr ? ` ${preRegStr} 시작` : ' 진행 중'}
-              {preRegEndStr ? ` ~ ${preRegEndStr} 마감` : (game.pre_registration_date ? ' · 마감 미정' : '')}
-              {' · '}<a href="/pre-registration">사전예약 신작 모아보기</a>
-            </p>
+            <PreRegCountdown startDate={game.pre_registration_date} endDate={game.pre_registration_end_date} />
           )}
           {game.description && <p className="desc">{game.description}</p>}
           <ul className="detail-meta">

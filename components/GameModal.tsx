@@ -4,6 +4,7 @@ import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
 import { ShareButton } from './ShareButton';
+import { PreRegCountdown } from './PreRegCountdown';
 import styles from './GameModal.module.css';
 
 interface Props {
@@ -64,11 +65,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
           {dateStr}{weekday}{game.release_date_approx ? ' (예정)' : ''} · <span className={styles.dday}>{dd}</span>
         </div>
         {game.pre_registration && (
-          <div className={styles.row}>
-            <strong>사전예약</strong>
-            {game.pre_registration_date ? `${formatKoreanDate(game.pre_registration_date)} 시작` : '진행 중'}
-            {game.pre_registration_end_date ? ` ~ ${formatKoreanDate(game.pre_registration_end_date)} 마감` : (game.pre_registration_date ? ' (마감 미정)' : '')}
-          </div>
+          <PreRegCountdown startDate={game.pre_registration_date} endDate={game.pre_registration_end_date} />
         )}
         {game.platforms.length > 0 && <div className={styles.row}><strong>플랫폼</strong>{game.platforms.join(', ')}</div>}
         {game.genres.length > 0 && <div className={styles.row}><strong>장르</strong>{game.genres.join(', ')}</div>}

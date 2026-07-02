@@ -4,6 +4,7 @@ import type { Game, FilterState, CalEvent } from '@/lib/types';
 import { EVENT_TYPE_META } from '@/lib/types';
 import { formatShortDate, kstDateOnly } from '@/lib/utils';
 import { NextByCategory } from './NextByCategory';
+import { BannerCarousel } from './BannerCarousel';
 import { PromoBanner } from './PromoBanner';
 import { PopularGames } from './PopularGames';
 import { CalendarSubscribe } from './CalendarSubscribe';
@@ -182,6 +183,8 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
     <div className={styles.home}>
       <div className={styles.layout}>
         <div className={styles.main}>
+          <BannerCarousel />
+
           <div className={styles.topRow}>
             <input
               type="search"
