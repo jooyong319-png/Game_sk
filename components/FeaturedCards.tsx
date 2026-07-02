@@ -1,5 +1,5 @@
 'use client';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
@@ -7,27 +7,81 @@ import styles from './FeaturedCards.module.css';
 
 interface Props { games: Game[]; now: Date; }
 
+interface FreeGame {
+  title: string;
+  status: 'current' | 'upcoming';
+  start: string | null;
+  end: string | null;
+  image: string | null;
+  url: string | null;
+}
+
+// 카드 표시용 정규화 데이터 (게임/무료게임 공통)
+interface CardData {
+  key: string;
+  href: string;
+  external: boolean;
+  imageUrl: string | null;
+  badge: string;
+  badgeColor: string;
+  name: string;
+  dateText: string;
+  countdownLabel: string;
+  targetMs: number | null;   // null이면 카운트다운 없이 fallbackText 표시
+  fallbackText: string;
+}
+
+const CATS: Category[] = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
+const FREE_COLOR = '#6f9c7a';
+
+function pad(n: number): string { return String(n).padStart(2, '0'); }
+function shortDate(iso: string): string { const [, m, d] = iso.split('-'); return `${m}.${d}`; }
 function ymd(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
-function pad(n: number): string { return String(n).padStart(2, '0'); }
-function shortDate(iso: string): string {
-  const [, m, d] = iso.split('-');
-  return `${m}.${d}`;
+
+function gameToCard(game: Game, isPreReg: boolean): CardData {
+  const cat = CATEGORY_META[game.category];
+  return {
+    key: `game-${game.id}`,
+    href: `/game/${game.id}`,
+    external: false,
+    imageUrl: game.image_url,
+    badge: isPreReg ? '사전예약' : cat.short,
+    badgeColor: isPreReg ? 'var(--accent-warm)' : cat.color,
+    name: game.name_ko,
+    dateText: game.release_date_approx ? '미정' : shortDate(game.release_date),
+    countdownLabel: '출시까지 남은 시간',
+    targetMs: game.release_date_approx ? null : new Date(`${game.release_date}T00:00:00+09:00`).getTime(),
+    fallbackText: '미정',
+  };
+}
+
+function freeToCard(free: FreeGame): CardData {
+  return {
+    key: `free-${free.title}`,
+    href: free.url ?? '#',
+    external: true,
+    imageUrl: free.image,
+    badge: '무료',
+    badgeColor: FREE_COLOR,
+    name: free.title,
+    dateText: '에픽게임즈 무료 배포',
+    countdownLabel: '무료 종료까지 남은 시간',
+    targetMs: free.end ? new Date(free.end).getTime() : null,
+    fallbackText: '진행 중',
+  };
 }
 
 interface Parts { Days: number; Hours: number; Min: number; Sec: number; }
-
-// 출시까지 라이브 카운트다운 (approx면 미정)
-function useReleaseCountdown(releaseDate: string, approx: boolean): { mounted: boolean; parts: Parts | null } {
+function useCountdown(targetMs: number | null): { mounted: boolean; parts: Parts | null } {
   const [mounted, setMounted] = useState(false);
   const [parts, setParts] = useState<Parts | null>(null);
   useEffect(() => {
     setMounted(true);
-    if (approx) return;
-    const target = new Date(`${releaseDate}T00:00:00+09:00`).getTime();
+    if (targetMs == null) return;
     const tick = () => {
-      const diff = target - Date.now();
+      const diff = targetMs - Date.now();
       if (diff <= 0) { setParts(null); return; }
       setParts({
         Days: Math.floor(diff / 86400000),
@@ -39,23 +93,22 @@ function useReleaseCountdown(releaseDate: string, approx: boolean): { mounted: b
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [releaseDate, approx]);
+  }, [targetMs]);
   return { mounted, parts };
 }
 
-function FeaturedCard({ game, badge, badgeColor }: { game: Game; badge: string; badgeColor: string }) {
-  const { mounted, parts } = useReleaseCountdown(game.release_date, game.release_date_approx);
-  const cat = CATEGORY_META[game.category];
-  const showTimer = !game.release_date_approx && mounted && parts;
+function FeaturedCard({ data }: { data: CardData }) {
+  const { mounted, parts } = useCountdown(data.targetMs);
+  const showTimer = data.targetMs != null && mounted && parts;
 
-  return (
-    <Link href={`/game/${game.id}`} className={styles.card}>
+  const inner = (
+    <>
       <div className={styles.head}>
         <div className={styles.thumb}>
-          {game.image_url ? (
+          {data.imageUrl ? (
             <>
-              <img src={game.image_url} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
-              <img src={game.image_url} alt={game.name_ko} className={styles.thumbFg} loading="lazy" />
+              <img src={data.imageUrl} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
+              <img src={data.imageUrl} alt={data.name} className={styles.thumbFg} loading="lazy" />
             </>
           ) : (
             <div className={styles.thumbPh}>
@@ -64,14 +117,14 @@ function FeaturedCard({ game, badge, badgeColor }: { game: Game; badge: string; 
           )}
         </div>
         <div className={styles.info}>
-          <span className={styles.badge} style={{ color: badgeColor, borderColor: badgeColor }}>{badge}</span>
-          <span className={styles.name}>{game.name_ko}</span>
-          <span className={styles.date}>{game.release_date_approx ? '미정' : shortDate(game.release_date)}</span>
+          <span className={styles.badge} style={{ color: data.badgeColor, borderColor: data.badgeColor }}>{data.badge}</span>
+          <span className={styles.name}>{data.name}</span>
+          <span className={styles.date}>{data.dateText}</span>
         </div>
       </div>
 
       <div className={styles.timerLabel}>
-        <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> 출시까지 남은 시간
+        <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg> {data.countdownLabel}
       </div>
       {showTimer ? (
         <div className={styles.timer}>
@@ -86,51 +139,70 @@ function FeaturedCard({ game, badge, badgeColor }: { game: Game; badge: string; 
           ))}
         </div>
       ) : (
-        <div className={styles.mijeong}>미정</div>
+        <div className={styles.mijeong}>{data.fallbackText}</div>
       )}
-    </Link>
+    </>
   );
+
+  return data.external
+    ? <a href={data.href} target="_blank" rel="noopener" className={styles.card}>{inner}</a>
+    : <Link href={data.href} className={styles.card}>{inner}</Link>;
 }
 
-const CATS: Category[] = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
-
-// 아래 카드 — 카테고리별 최신(임박) 게임 풀에서 페이지 진입 시 1개만 랜덤 선택(고정)
-function RerollCard({ pool }: { pool: Game[] }) {
-  const [idx, setIdx] = useState(0); // SSR: 0번(하이드레이션 일치), 마운트 후 랜덤 1회
-  useEffect(() => {
-    setIdx(Math.floor(Math.random() * pool.length));
-  }, [pool.length]);
-
-  const game = pool[idx % pool.length];
-  if (!game) return null;
-  const cat = CATEGORY_META[game.category];
-  return <FeaturedCard key={game.id} game={game} badge={cat.short} badgeColor={cat.color} />;
-}
-
-// 상단 우측 카드 2개 — 위: 사전예약 최신, 아래: 카테고리별 최신 랜덤 리롤
+// 상단 우측 카드 2개 — 위: 사전예약 최신 / 아래: 카테고리별 최신 + 무료게임 중 진입 시 랜덤 1개
 export function FeaturedCards({ games, now }: Props) {
   const today = ymd(now);
   const notReleased = (g: Game) => g.release_date_approx || g.release_date >= today;
 
-  const preReg = games
+  const preReg = useMemo(() => games
     .filter(g => notReleased(g) && g.pre_registration === true && g.category !== 'new_server'
       && !(g.pre_registration_date && g.pre_registration_date > today)
       && !(g.pre_registration_end_date && g.pre_registration_end_date < today))
-    .sort((a, b) => a.release_date.localeCompare(b.release_date))[0];
+    .sort((a, b) => a.release_date.localeCompare(b.release_date))[0],
+    [games, today]);
 
-  // 카테고리별 '가장 임박한 출시' 1개씩 → 리롤 풀 (상단 사전예약 카드와 중복 제외)
-  const pool = CATS
+  // 카테고리별 '가장 임박한 출시' 1개씩 (상단 사전예약 카드와 중복 제외)
+  const categoryItems = useMemo(() => CATS
     .map(c => games
       .filter(g => notReleased(g) && g.category === c && g.id !== preReg?.id)
       .sort((a, b) => a.release_date.localeCompare(b.release_date))[0])
-    .filter((g): g is Game => Boolean(g));
+    .filter((g): g is Game => Boolean(g))
+    .map(g => gameToCard(g, false)),
+    [games, preReg?.id, today]);
+
+  // 현재 무료 배포 중인 게임 (에픽) — 클라에서 로드
+  const [freeItems, setFreeItems] = useState<CardData[]>([]);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/free-games')
+      .then(r => r.json())
+      .then(d => {
+        if (cancelled) return;
+        const cur: FreeGame[] = (d.games ?? []).filter((g: FreeGame) => g.status === 'current');
+        setFreeItems(cur.map(freeToCard));
+        setReady(true);
+      })
+      .catch(() => { if (!cancelled) setReady(true); });
+    return () => { cancelled = true; };
+  }, []);
+
+  const pool = useMemo(() => [...categoryItems, ...freeItems], [categoryItems, freeItems]);
+
+  // 진입 시 1회 랜덤 선택 (무료게임 로드된 뒤 전체 풀에서)
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (!ready || pool.length === 0) return;
+    setIdx(Math.floor(Math.random() * pool.length));
+  }, [ready, pool.length]);
 
   if (!preReg && pool.length === 0) return null;
+  const bottom = pool.length > 0 ? pool[idx % pool.length] : null;
 
   return (
     <div className={styles.cards}>
-      {preReg && <FeaturedCard game={preReg} badge="사전예약" badgeColor="var(--accent-warm)" />}
-      {pool.length > 0 && <RerollCard pool={pool} />}
+      {preReg && <FeaturedCard data={gameToCard(preReg, true)} />}
+      {bottom && <FeaturedCard key={bottom.key} data={bottom} />}
     </div>
   );
 }
