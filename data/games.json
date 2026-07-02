@@ -2170,6 +2170,73 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1627720/header.jpg",
       "source_url": "https://bbs.ruliweb.com/news/read/225616"
+    },
+    {
+      "id": "kyoto-xanadu-blooming-phantom-20260716",
+      "name_ko": "교토 재너두 -앵화환무-",
+      "name_en": "KYOTO XANADU -the Blooming Phantom-",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Switch",
+        "Switch2"
+      ],
+      "developer": "니혼 팔콤(Nihon Falcom)",
+      "publisher": "클라우디드 레오파드 엔터테인먼트(국내)",
+      "description": "니혼 팔콤의 '재너두' 시리즈 완전 신작. 교토를 무대로 이계 재너두를 둘러싼 이야기를 그린 액션 RPG로, 한국어 버전이 2026년 7월 16일 스팀·PS5·닌텐도 스위치/스위치2로 동시 발매된다. 일반판과 함께 특전을 담은 리미티드 에디션도 출시된다.",
+      "genres": [
+        "액션 RPG"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4449410/header.jpg",
+      "source_url": "https://www.cloudedleopardent.com/kr/news/9238/"
+    },
+    {
+      "id": "higan-eruthyll-kr-2026",
+      "name_ko": "히간: 이루실",
+      "name_en": "Higan: Eruthyll",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "빌리빌리(bilibili)",
+      "publisher": "넥슨",
+      "description": "빌리빌리가 개발한 서브컬처 수집형 3D RPG. 넥슨이 신규 퍼블리싱 브랜드 'select all'의 첫 타이틀로 국내 서비스하며, 게임성과 캐릭터를 개선한 2.0 리메이크 버전을 선보인다. 2026년 6월 30일 국내 사전등록을 시작했고 정식 출시일은 미공개다.",
+      "genres": [
+        "수집형 RPG",
+        "서브컬처"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317978",
+      "pre_registration": true
+    },
+    {
+      "id": "rf-online-next-lavaron-20260701",
+      "name_ko": "RF 온라인 넥스트 - 신규 지역 '라바론' 대규모 업데이트",
+      "name_en": null,
+      "release_date": "2026-07-01",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "넷마블",
+      "publisher": "넷마블",
+      "description": "넷마블 MMORPG 'RF 온라인 넥스트'의 대규모 업데이트로 신규 지역 '라바론'이 2026년 7월 1일 오픈했다. 104~117레벨 사냥터와 최상위 구역 '코르디스 분화구', 필드·월드 보스와 신화 등급 무기 형상, 신규 코스튬 등이 추가됐다.",
+      "genres": [
+        "MMORPG",
+        "대형 업데이트"
+      ],
+      "image_url": null,
+      "source_url": "https://www.betanews.net/article/view/beta202606240042"
     }
   ]
 }
