@@ -1,5 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 
 interface NavItem {
@@ -7,7 +8,7 @@ interface NavItem {
   label: string;
 }
 
-// 기존 SeoLanding 라우트 그대로 — 헤더 내부링크로 탐색성·SEO 보강(§E).
+// 기존 SeoLanding 라우트 — 메뉴 안 링크로 유지(탐색성·내부링크·SEO).
 const NAV: NavItem[] = [
   { href: '/', label: '캘린더' },
   { href: '/upcoming-games', label: '출시 예정' },
@@ -22,27 +23,55 @@ const NAV: NavItem[] = [
 
 export function HeaderNav() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // 바깥 클릭·Esc로 닫기
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
 
   return (
-    <>
-      <nav className="site-nav" aria-label="주요 메뉴">
+    <div className="header-utils" ref={ref}>
+      <ThemeToggle />
+      <button
+        type="button"
+        className="menu-btn"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
+      >
+        <svg className="ic" aria-hidden="true"><use href="#ic-menu" /></svg>
+      </button>
+
+      {/* 링크는 항상 DOM에 유지(크롤 가능) — 열림 상태만 CSS로 토글 */}
+      <nav className={`site-menu ${open ? 'site-menu-open' : ''}`} aria-label="주요 메뉴">
         {NAV.map(item => {
           const active = pathname === item.href;
           return (
             <a
               key={item.href}
               href={item.href}
-              className="nav-link"
+              className="menu-link"
               aria-current={active ? 'page' : undefined}
+              onClick={() => setOpen(false)}
             >
               {item.label}
             </a>
           );
         })}
       </nav>
-      <div className="header-utils">
-        <ThemeToggle />
-      </div>
-    </>
+    </div>
   );
 }

@@ -108,12 +108,63 @@ textarea:focus-visible,
   color: var(--text);
   border-bottom-color: var(--accent);
 }
-/* 우측 유틸리티 (테마토글) — 위시★는 본문 상단행으로 이관 */
+/* 우측 유틸리티 (테마토글 + 메뉴 버튼) — 헤더 오른쪽 끝으로 */
 .header-utils {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-left: auto;
+  position: relative;
 }
+/* 메뉴 버튼(☰) */
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-elev);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.menu-btn:hover { border-color: var(--accent); }
+.menu-btn .ic { width: 20px; height: 20px; }
+/* 드롭다운 메뉴 — 링크는 항상 DOM에 있고 열림만 토글(크롤 가능) */
+.site-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 190px;
+  padding: 0.4rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.site-menu-open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.menu-link {
+  padding: 0.55rem 0.7rem;
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+.menu-link:hover { background: var(--bg); text-decoration: none; }
+.menu-link[aria-current="page"] { color: var(--accent); font-weight: 700; }
 /* 모바일: 내비를 워드마크 행 아래 가로 스크롤 스트립으로(MonthTabs 톤) */
 @media (max-width: 480px) {
   .site-header {
