@@ -37,6 +37,10 @@
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; }
 }
+/* 설치형 앱(standalone)에선 히어로(배너+카드) 숨김 — 캘린더에 집중 */
+@media (display-mode: standalone) {
+  .hero { display: none; }
+}
 
 /* 우측 사이드 컬럼: 패널 세로 적층 + sticky로 따라옴 */
 .rightCol {
