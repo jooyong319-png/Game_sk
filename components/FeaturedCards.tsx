@@ -149,7 +149,28 @@ function FeaturedCard({ data }: { data: CardData }) {
     : <Link href={data.href} className={styles.card}>{inner}</Link>;
 }
 
-// 카드 묶음 — hero(홈): 사전예약 + 리롤 1개 / list(서브페이지 사이드바): 사전예약 + 카테고리별 전부 + 무료게임
+// 서브페이지 사이드바 — 풀에서 중복 없이 랜덤 count개(진입 시 셔플, 고정)
+function ListCards({ pool, count }: { pool: CardData[]; count: number }) {
+  const [order, setOrder] = useState<number[]>(() => pool.map((_, i) => i).slice(0, count));
+  useEffect(() => {
+    const arr = pool.map((_, i) => i);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    setOrder(arr.slice(0, count));
+  }, [pool.length, count]);
+
+  const picked = order.map(i => pool[i]).filter((c): c is CardData => Boolean(c));
+  if (picked.length === 0) return null;
+  return (
+    <div className={styles.cards}>
+      {picked.map(c => <FeaturedCard key={c.key} data={c} />)}
+    </div>
+  );
+}
+
+// 카드 묶음 — hero(홈): 사전예약 + 리롤 1개 / list(서브페이지 사이드바): 풀에서 랜덤 4장(중복 없이)
 export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
   const today = ymd(now);
   const notReleased = (g: Game) => g.release_date_approx || g.release_date >= today;
@@ -198,18 +219,14 @@ export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
 
   if (!preReg && pool.length === 0) return null;
 
-  // list: 사전예약 + 카테고리별 전부 + 무료게임을 모두 세로로 나열
+  // list: 풀(사전예약 + 카테고리별 + 무료게임)에서 중복 없이 랜덤 4장
   if (variant === 'list') {
-    const cards = [
+    const listPool = [
       ...(preReg ? [gameToCard(preReg, true)] : []),
       ...categoryItems,
       ...freeItems,
     ];
-    return (
-      <div className={styles.cards}>
-        {cards.map(c => <FeaturedCard key={c.key} data={c} />)}
-      </div>
-    );
+    return <ListCards pool={listPool} count={4} />;
   }
 
   // hero: 위=사전예약, 아래=리롤 1개
