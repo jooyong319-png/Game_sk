@@ -43,9 +43,10 @@ export function GameModal({ game, onClose, wishlist }: Props) {
                 <img src={game.image_url} alt={game.name_ko} className={styles.imageFg} loading="lazy" />
               </>
             ) : (
-              <span className={styles.imagePh} aria-hidden="true" style={{ background: cat.color }}>
-                <svg className={styles.phIcon} aria-hidden="true"><use href={`#${cat.icon}`} /></svg>
-              </span>
+              <div className={styles.imagePh}>
+                <svg className={styles.phIcon} aria-hidden="true"><use href="#ic-image" /></svg>
+                <span className={styles.phText}>이미지 없음</span>
+              </div>
             )}
           </div>
 

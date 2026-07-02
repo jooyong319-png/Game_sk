@@ -236,9 +236,10 @@ export default async function GamePage({ params }: Props) {
                   <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="cover-fg" loading="eager" fetchPriority="high" />
                 </>
               ) : (
-                <span className="thumb-ph" aria-hidden="true" style={{ background: CATEGORY_META[game.category].color }}>
-                  <svg className="ph-icon" aria-hidden="true"><use href={`#${CATEGORY_META[game.category].icon}`} /></svg>
-                </span>
+                <div className="thumb-ph">
+                  <svg className="ph-icon" aria-hidden="true"><use href="#ic-image" /></svg>
+                  <span className="ph-text">이미지 없음</span>
+                </div>
               )}
             </div>
             <div className="detail-header-info">

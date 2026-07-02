@@ -372,26 +372,28 @@ textarea:focus-visible,
   background: var(--bg);
 }
 .game-detail .detail-header-info { flex: 1 1 auto; min-width: 0; }
-/* 이미지 없을 때 카테고리 플레이스홀더 (색 배경 + 카테고리 아이콘) */
+/* 이미지 없을 때 통일 플레이스홀더 ('이미지 없음') */
 .detail-thumb .thumb-ph {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-.detail-thumb .thumb-ph::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.18));
+  gap: 0.4rem;
+  background: linear-gradient(135deg, var(--bg-elev), var(--bg));
+  color: var(--text-faint);
 }
 .detail-thumb .ph-icon {
-  position: relative;
-  z-index: 1;
-  width: 44%;
-  height: 44%;
-  color: rgba(255, 255, 255, 0.92);
+  width: 30%;
+  height: 30%;
+  max-width: 56px;
+  opacity: 0.5;
+}
+.detail-thumb .ph-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.85;
 }
 .cover-bg {
   position: absolute;
@@ -422,8 +424,7 @@ textarea:focus-visible,
 .game-detail .dday-badge.dday-far { color: var(--text-faint); background: var(--border); }
 .game-detail .desc { color: var(--text); margin-bottom: 1rem; line-height: 1.6; }
 .game-detail .detail-meta { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.6rem; margin: 1rem 0; }
-.game-detail .detail-meta li { display: flex; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; color: var(--text); }
-.game-detail .detail-meta li:last-child { border-bottom: none; }
+.game-detail .detail-meta li { display: flex; gap: 0.7rem; padding: 0.3rem 0; font-size: 0.92rem; color: var(--text); }
 .game-detail .detail-meta strong { flex: 0 0 4.5em; color: var(--text-faint); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0; }
 .game-detail .back-link { display: inline-block; margin-bottom: 1rem; color: var(--text-faint); }
 .game-detail .back-link:hover { color: var(--accent); }
@@ -447,7 +448,8 @@ textarea:focus-visible,
   margin: 0.6rem 0;
   padding: 0.55rem 0.8rem;
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--accent-warm) 12%, transparent);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-left: 3px solid var(--accent-warm);
   color: var(--text);
   font-size: 0.92rem;
