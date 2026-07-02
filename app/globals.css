@@ -389,6 +389,11 @@ textarea:focus-visible,
   height: 30%;
   max-width: 56px;
   opacity: 0.5;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .detail-thumb .ph-text {
   font-size: 0.78rem;

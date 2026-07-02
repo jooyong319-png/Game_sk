@@ -112,6 +112,11 @@
   height: 34%;
   max-width: 44px;
   opacity: 0.5;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .phText {
   font-size: 0.72rem;
