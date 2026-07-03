@@ -5,6 +5,7 @@ import { CATEGORY_META, EVENT_TYPE_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import { GameRow } from './GameRow';
+import { EventRow } from './EventRow';
 import styles from './ListView.module.css';
 
 interface Props {
@@ -62,6 +63,15 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
       .filter(e => Number(e.date.slice(0, 4)) === activeYear && Number(e.date.slice(5, 7)) === activeMonth)
       .sort((a, b) => a.date.localeCompare(b.date));
   }, [events, activeYear, activeMonth]);
+
+  // 게임 + 이벤트를 날짜순으로 병합 (이벤트가 위로 몰리지 않게 섞어서 정렬)
+  const monthItems = useMemo(() => {
+    const items = [
+      ...monthGames.map(g => ({ kind: 'game' as const, sort: g.release_date, game: g })),
+      ...monthEvents.map((e, i) => ({ kind: 'event' as const, sort: e.date, key: `${e.date}-${i}`, event: e })),
+    ];
+    return items.sort((a, b) => a.sort.localeCompare(b.sort));
+  }, [monthGames, monthEvents]);
 
   // 탭별 개수(해당 연도 기준)
   const monthCounts = useMemo(() => {
@@ -124,35 +134,10 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
         </div>
       ) : (
         <ul className={styles.rows}>
-          {monthEvents.map((e, i) => {
-            const mmdd = e.date.slice(5).replace('-', '/');
-            return (
-              <li key={`ev-${i}`} className={`${styles.row} ${styles.eventRow}`} style={{ '--cat': e.color } as CSSProperties}>
-                <div className={styles.dateCol}>
-                  <span className={styles.dMmdd}>{mmdd}</span>
-                </div>
-                <div className={styles.main}>
-                  <div className={styles.titleRow}>
-                    <span className={styles.badge} style={{ color: e.color }}>{EVENT_TYPE_META[e.type].label}</span>
-                    {e.url
-                      ? <a className={styles.title} href={e.url} target="_blank" rel="noopener">{e.label}</a>
-                      : <span className={styles.title}>{e.label}</span>}
-                  </div>
-                </div>
-                <div className={styles.actions}>
-                  {e.url && (
-                    <a className={styles.actBtn} href={e.url} target="_blank" rel="noopener" aria-label="이벤트 바로가기">
-                      <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
-                      <span className={styles.actLabel}>바로가기</span>
-                    </a>
-                  )}
-                </div>
-              </li>
-            );
-          })}
-          {monthGames.map(g => (
-            <GameRow key={g.id} game={g} now={now} wishlist={wishlist} onPick={onPick} />
-          ))}
+          {monthItems.map(it => it.kind === 'game'
+            ? <GameRow key={`g-${it.game.id}`} game={it.game} now={now} wishlist={wishlist} onPick={onPick} />
+            : <EventRow key={`e-${it.key}`} event={it.event} />
+          )}
         </ul>
       )}
     </div>

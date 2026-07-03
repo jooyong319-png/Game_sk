@@ -53,6 +53,7 @@ export interface CalEvent {
   color: string;
   type: EventType;
   url?: string | null;
+  image?: string | null;
 }
 
 // 필터 단일 키 — 게임 카테고리 또는 이벤트 타입

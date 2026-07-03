@@ -66,9 +66,9 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
       .then(d => {
         if (cancelled) return;
         const evs: CalEvent[] = [];
-        for (const g of (d.games ?? []) as { title: string; status: string; start?: string; end?: string; url?: string }[]) {
-          if (g.status === 'upcoming' && g.start) evs.push({ date: g.start.slice(0, 10), label: `${g.title} 무료 시작`, color: FREE_COLOR, type: 'free_game', url: g.url });
-          if (g.end) evs.push({ date: g.end.slice(0, 10), label: `${g.title} 무료 종료`, color: FREE_COLOR, type: 'free_game', url: g.url });
+        for (const g of (d.games ?? []) as { title: string; status: string; start?: string; end?: string; url?: string; image?: string }[]) {
+          if (g.status === 'upcoming' && g.start) evs.push({ date: g.start.slice(0, 10), label: `${g.title} 무료 시작`, color: FREE_COLOR, type: 'free_game', url: g.url, image: g.image ?? null });
+          if (g.end) evs.push({ date: g.end.slice(0, 10), label: `${g.title} 무료 종료`, color: FREE_COLOR, type: 'free_game', url: g.url, image: g.image ?? null });
         }
         setFreeEvents(evs);
       })

@@ -6,6 +6,7 @@ import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import { GameRow } from './GameRow';
+import { EventRow } from './EventRow';
 import styles from './CalendarView.module.css';
 
 interface Props {
@@ -90,8 +91,8 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
   const scrollOnSelect = useRef(false);
   // 직전 커서 연-월. 첫 실행(mount)·동일 월 갱신은 선택 유지, 실제 월 이동에만 해제
   const prevYMRef = useRef<string | null>(null);
-
-  // (디폴트 자동선택 제거 — 사용자가 날짜를 클릭해야 그 날짜 패널이 뜸)
+  // 사용자가 날짜를 직접 클릭했는지 — 클릭 전까진 '오늘' 자동 선택 유지
+  const userSelected = useRef(false);
 
   // 달이 바뀌면 선택 해제 — 단 첫 실행과 '같은 월' 재갱신(Home mount의 이번 달 교체)은 유지
   useEffect(() => {
@@ -99,6 +100,13 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
     if (prevYMRef.current === null) { prevYMRef.current = ym; return; }
     if (prevYMRef.current !== ym) { prevYMRef.current = ym; setSelectedISO(null); }
   }, [cursor]);
+
+  // 진입 시 기본으로 '오늘' 패널 열기 (사용자 클릭 전 + 오늘이 보고 있는 달에 있을 때, 스크롤 점프 없이)
+  useEffect(() => {
+    if (userSelected.current) return;
+    const inMonth = now.getFullYear() === cursor.getFullYear() && now.getMonth() === cursor.getMonth();
+    if (inMonth) setSelectedISO(toISO(now));
+  }, [now, cursor]);
 
   // 패널 표시 시 스크롤 — 사용자 클릭 선택에만(초기 자동선택 제외)
   useEffect(() => {
@@ -135,6 +143,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
   };
 
   function onCellClick(cell: Cell) {
+    userSelected.current = true; // 사용자가 직접 날짜 선택 → 자동 '오늘' 유지 해제
     scrollOnSelect.current = true; // 사용자 클릭 → 패널로 스크롤 허용
     if (!cell.inMonth) {
       // 인접월 셀: 그 달로 점프 + 그 날짜 선택
@@ -281,24 +290,13 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
             >×</button>
           </header>
           <div className={styles.dayPanelList}>
-            {(eventsByDate.get(selectedISO) ?? []).map((ev, idx) => (
-              <a
-                key={`ev-${idx}`}
-                className={styles.dayEventRow}
-                href={ev.url || '#'}
-                target="_blank"
-                rel="noopener"
-              >
-                <span className={styles.dayRowDot} style={{ background: ev.color }} />
-                <span className={styles.dayEventName}>{ev.label}</span>
-                {ev.url && <span className={styles.dayEventGo} aria-hidden="true">↗</span>}
-              </a>
-            ))}
-            {panelEntries.length === 0 && (eventsByDate.get(selectedISO) ?? []).length === 0 && (
+            {panelEntries.length === 0 && (eventsByDate.get(selectedISO) ?? []).length === 0 ? (
               <p className={styles.dayEmpty}>이 날짜엔 일정이 없어요.</p>
-            )}
-            {panelEntries.length > 0 && (
+            ) : (
               <ul className={styles.dayGameList}>
+                {(eventsByDate.get(selectedISO) ?? []).map((ev, idx) => (
+                  <EventRow key={`ev-${idx}`} event={ev} />
+                ))}
                 {panelEntries.map(({ game: g, kind }) => (
                   <GameRow
                     key={`${g.id}-${kind}`}
