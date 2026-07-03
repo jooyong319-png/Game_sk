@@ -132,6 +132,25 @@ textarea:focus-visible,
 }
 .menu-btn:hover { border-color: var(--accent); }
 .menu-btn .ic { width: 20px; height: 20px; }
+/* 자유게시판 상시 노출 링크(헤더) */
+.header-board-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 38px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.header-board-link:hover { background: var(--accent); color: #fff; }
+.header-board-link.header-board-active { background: var(--accent); color: #fff; }
+.header-board-link .ic { width: 17px; height: 17px; }
 /* 드롭다운 메뉴 — 링크는 항상 DOM에 있고 열림만 토글(크롤 가능) */
 .site-menu {
   position: absolute;
@@ -172,6 +191,8 @@ textarea:focus-visible,
     padding: 0.6rem 0.8rem;
   }
   .site-header .site-wordmark { font-size: 1.1rem; flex: 1; }
+  .header-board-label { display: none; }        /* 모바일: 아이콘만 */
+  .header-board-link { padding: 0 0.6rem; }
   .site-nav {
     order: 3;
     flex: 1 1 100%;
@@ -611,6 +632,11 @@ textarea:focus-visible,
 .seo-intro ul { margin: 0.4rem 0 0.7rem 1.1rem; }
 .seo-intro li { margin-bottom: 0.3rem; line-height: 1.6; }
 .seo-count { color: var(--text-faint); font-size: var(--fs-sm); margin-bottom: 1rem; }
+
+/* ─── 자유게시판 (/board) ─── */
+.board-page h1 { font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+.board-intro { color: var(--text-faint); line-height: 1.7; margin-bottom: 1.2rem; font-size: var(--fs-sm); }
+.board-intro strong { color: var(--accent); font-weight: 700; }
 
 /* ─── 이벤트 페이지 (/events) ─── */
 .events-page h1 { font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem; }

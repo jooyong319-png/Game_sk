@@ -43,6 +43,14 @@ export function HeaderNav() {
 
   return (
     <div className="header-utils" ref={ref}>
+      <a
+        href="/board"
+        className={`header-board-link ${pathname === '/board' ? 'header-board-active' : ''}`}
+        aria-current={pathname === '/board' ? 'page' : undefined}
+      >
+        <svg className="ic" aria-hidden="true"><use href="#ic-comment" /></svg>
+        <span className="header-board-label">자유게시판</span>
+      </a>
       <ThemeToggle />
       <button
         type="button"
