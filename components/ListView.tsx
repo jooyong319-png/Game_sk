@@ -64,14 +64,20 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
       .sort((a, b) => a.date.localeCompare(b.date));
   }, [events, activeYear, activeMonth]);
 
-  // 게임 + 이벤트를 날짜순으로 병합 (이벤트가 위로 몰리지 않게 섞어서 정렬)
+  // 게임 + 이벤트를 병합. 현재 달은 '오늘 이후 먼저(가까운 순) → 지난 건 아래(최근 순)', 그 외엔 날짜순.
   const monthItems = useMemo(() => {
     const items = [
-      ...monthGames.map(g => ({ kind: 'game' as const, sort: g.release_date, game: g })),
-      ...monthEvents.map((e, i) => ({ kind: 'event' as const, sort: e.date, key: `${e.date}-${i}`, event: e })),
+      ...monthGames.map(g => ({ kind: 'game' as const, date: g.release_date, game: g })),
+      ...monthEvents.map((e, i) => ({ kind: 'event' as const, date: e.date, key: `${e.date}-${i}`, event: e })),
     ];
-    return items.sort((a, b) => a.sort.localeCompare(b.sort));
-  }, [monthGames, monthEvents]);
+    if (isCurrentMonth) {
+      const todayStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      const upcoming = items.filter(it => it.date >= todayStr).sort((a, b) => a.date.localeCompare(b.date));
+      const past = items.filter(it => it.date < todayStr).sort((a, b) => b.date.localeCompare(a.date));
+      return [...upcoming, ...past];
+    }
+    return items.sort((a, b) => a.date.localeCompare(b.date));
+  }, [monthGames, monthEvents, isCurrentMonth, now]);
 
   // 탭별 개수(해당 연도 기준)
   const monthCounts = useMemo(() => {
