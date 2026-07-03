@@ -42,8 +42,8 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
             <img src={g.image_url} alt={g.name_ko} className={styles.thumbFg} loading="lazy" />
           </>
         ) : (
-          <div className={styles.thumbPh}>
-            <svg className={styles.thumbPhIcon} aria-hidden="true"><use href="#ic-image" /></svg>
+          <div className={styles.thumbPh} style={{ background: cat.color }}>
+            <span className={styles.thumbInitial}>{g.name_ko.trim()[0] ?? '?'}</span>
           </div>
         )}
       </div>
