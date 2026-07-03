@@ -13,7 +13,7 @@ const TABS: Tab[] = [
   { href: '/upcoming-games', label: '출시예정', icon: 'ic-flame' },
   { href: '/new-servers', label: '서버', icon: 'ic-server' },
   { href: '/wishlist', label: '찜', icon: 'ic-star' },
-  { href: '/blog', label: '가이드', icon: 'ic-file' },
+  { href: '/board', label: '커뮤니티', icon: 'ic-comment' },
 ];
 
 export function BottomTabBar() {
