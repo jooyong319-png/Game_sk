@@ -4,6 +4,7 @@ import type { Game, CalEvent, FilterKey } from '@/lib/types';
 import { CATEGORY_META, EVENT_TYPE_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
+import { GameRow } from './GameRow';
 import styles from './ListView.module.css';
 
 interface Props {
@@ -149,78 +150,9 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
               </li>
             );
           })}
-          {monthGames.map(g => {
-            const diff = calcDayDiff(g.release_date, now);
-            const released = diff < 0;
-            const isToday = diff === 0;
-            const imminent = diff >= 0 && diff <= 7;
-            const dd = g.release_date_approx ? '미정' : released ? '출시됨' : isToday ? 'D-DAY' : `D-${diff}`;
-            const cat = CATEGORY_META[g.category];
-            const isWished = wishlist.has(g.id);
-            const mmdd = g.release_date_approx ? '미정' : g.release_date.slice(5).replace('-', '/');
-            const weekday = g.release_date_approx ? '' : `(${getKoreanWeekday(g.release_date)})`;
-            const tags = [...(g.genres ?? []), ...(g.platforms ?? [])].slice(0, 4);
-
-            return (
-              <li
-                key={g.id}
-                className={`${styles.row} ${imminent ? styles.rowImminent : ''} ${released ? styles.rowReleased : ''}`}
-                style={{ '--cat': cat.color } as CSSProperties}
-                role="button"
-                tabIndex={0}
-                onClick={() => onPick(g.id)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(g.id); }
-                }}
-              >
-                <div className={styles.dateCol}>
-                  <span className={styles.dMmdd}>{mmdd}</span>
-                  {weekday && <span className={styles.dWeek}>{weekday}</span>}
-                  <span className={`${styles.dDday} ${isToday ? styles.ddayToday : imminent ? styles.ddaySoon : ''}`}>{dd}</span>
-                </div>
-
-                <div className={styles.main}>
-                  <div className={styles.titleRow}>
-                    <span className={styles.badge} style={{ color: cat.color }}>{cat.short}</span>
-                    <span className={styles.title}>{g.name_ko}</span>
-                    {g.name_en && g.name_en !== g.name_ko && <span className={styles.nameEn}>{g.name_en}</span>}
-                  </div>
-                  {g.description && <p className={styles.desc}>{g.description}</p>}
-                  {tags.length > 0 && (
-                    <div className={styles.tags}>
-                      {tags.map(t => <span key={t} className={styles.tag}>{t}</span>)}
-                    </div>
-                  )}
-                </div>
-
-                <div className={styles.actions}>
-                  {g.source_url && (
-                    <a
-                      className={styles.actBtn}
-                      href={g.source_url}
-                      target="_blank"
-                      rel="noopener"
-                      aria-label="공식 출처"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
-                      <span className={styles.actLabel}>출처</span>
-                    </a>
-                  )}
-                  <button
-                    type="button"
-                    className={`${styles.actBtn} ${isWished ? styles.wishOn : ''}`}
-                    onClick={(e) => { e.stopPropagation(); wishlist.toggle(g.id); }}
-                    aria-pressed={isWished}
-                    aria-label="찜"
-                  >
-                    <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
-                    <span className={styles.actLabel}>찜</span>
-                  </button>
-                </div>
-              </li>
-            );
-          })}
+          {monthGames.map(g => (
+            <GameRow key={g.id} game={g} now={now} wishlist={wishlist} onPick={onPick} />
+          ))}
         </ul>
       )}
     </div>

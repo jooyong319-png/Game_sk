@@ -5,6 +5,7 @@ import type { Game, CalEvent, FilterKey } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
+import { GameRow } from './GameRow';
 import styles from './CalendarView.module.css';
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
   onCursorChange: (d: Date) => void;
   games: Game[];
   events?: CalEvent[];
-  wishlist: { has: (id: string) => boolean };
+  wishlist: { has: (id: string) => boolean; toggle: (id: string) => void };
   onPick: (id: string) => void;
   now: Date;
   category: FilterKey | null;
@@ -72,7 +73,7 @@ function buildCells(cursor: Date, games: Game[], now: Date): Cell[] {
   return cells;
 }
 
-export function CalendarView({ cursor, onCursorChange, games, events = [], onPick, now, category, onCategory }: Props) {
+export function CalendarView({ cursor, onCursorChange, games, events = [], wishlist, onPick, now, category, onCategory }: Props) {
   const eventsByDate = useMemo(() => {
     const m = new Map<string, CalEvent[]>();
     for (const e of events) {
@@ -296,32 +297,20 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], onPic
             {panelEntries.length === 0 && (eventsByDate.get(selectedISO) ?? []).length === 0 && (
               <p className={styles.dayEmpty}>이 날짜엔 일정이 없어요.</p>
             )}
-            {panelEntries.map(({ game: g, kind }) => {
-              const refDate =
-                kind === 'prereg' ? (g.pre_registration_date ?? g.release_date)
-                : kind === 'prereg_end' ? (g.pre_registration_end_date ?? g.release_date)
-                : g.release_date;
-              const diff = calcDayDiff(refDate, now);
-              const isToday = diff === 0;
-              const imminent = diff > 0 && diff <= 7;
-              const dd = (kind === 'release' && g.release_date_approx) ? '미정'
-                : diff < 0 ? KIND_PAST[kind] : isToday ? 'D-DAY' : `D-${diff}`;
-              const cat = CATEGORY_META[g.category];
-              return (
-                <button
-                  key={`${g.id}-${kind}`}
-                  type="button"
-                  className={styles.dayRow}
-                  onClick={() => onPick(g.id)}
-                  style={{ '--cat': cat.color } as CSSProperties}
-                >
-                  <span className={styles.dayBadge} style={{ color: cat.color }}>{cat.short}</span>
-                  <span className={styles.dayRowName}>{g.name_ko}</span>
-                  {KIND_BADGE[kind] && <span className={styles.dayRowPre}>{KIND_BADGE[kind]}</span>}
-                  <span className={`${styles.dayRowDday} ${isToday ? styles.dayRowDdayToday : imminent ? styles.dayRowDdaySoon : ''}`}>{dd}</span>
-                </button>
-              );
-            })}
+            {panelEntries.length > 0 && (
+              <ul className={styles.dayGameList}>
+                {panelEntries.map(({ game: g, kind }) => (
+                  <GameRow
+                    key={`${g.id}-${kind}`}
+                    game={g}
+                    now={now}
+                    wishlist={wishlist}
+                    onPick={onPick}
+                    preBadge={KIND_BADGE[kind] || undefined}
+                  />
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       )}
