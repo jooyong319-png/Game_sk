@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import { CATEGORY_META, type Game } from '@/lib/types';
 import { formatKoreanDate } from '@/lib/utils';
 import { PageShell } from './PageShell';
+import { GameThumb } from './GameThumb';
 
 interface SeoLandingProps {
   h1: string;
@@ -49,15 +50,18 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
                 className="seo-list-item"
                 style={{ '--cat': CATEGORY_META[g.category]?.color } as CSSProperties}
               >
-                <div className="seo-li-main">
-                  <span className={`category-tag cat-bg-${g.category}`}>{catLabel}</span>
-                  <a href={`/game/${g.id}`} className="seo-name">{g.name_ko}</a>
-                </div>
-                <div className="seo-li-meta">
-                  <span className="seo-date">
-                    {g.release_date_approx ? '미정' : formatKoreanDate(g.release_date)}
-                  </span>
-                  {g.developer && <span className="seo-dev">· {g.developer}</span>}
+                <GameThumb src={g.image_url} alt={g.name_ko} />
+                <div className="seo-li-body">
+                  <div className="seo-li-main">
+                    <span className={`category-tag cat-bg-${g.category}`}>{catLabel}</span>
+                    <a href={`/game/${g.id}`} className="seo-name">{g.name_ko}</a>
+                  </div>
+                  <div className="seo-li-meta">
+                    <span className="seo-date">
+                      {g.release_date_approx ? '미정' : formatKoreanDate(g.release_date)}
+                    </span>
+                    {g.developer && <span className="seo-dev">· {g.developer}</span>}
+                  </div>
                 </div>
               </li>
             );

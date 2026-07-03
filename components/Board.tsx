@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, FormEvent } from 'react';
+import { useEffect, useRef, useState, FormEvent } from 'react';
 import { supabase, isSupabaseReady } from '@/lib/supabase';
 import styles from './Board.module.css';
 
@@ -9,9 +9,12 @@ interface Post {
   content: string;
   created_at: string;
   report_count: number;
+  image_url: string | null;
+  ip_prefix: string | null;
 }
 
-const PAGE = 20;
+const PAGE = 15;
+const MAX_DIM = 1280;
 
 export function Board() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -22,15 +25,17 @@ export function Board() {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
-  // 목록 불러오기 (RLS가 숨김 글은 자동 제외)
   async function loadPage(from: number, replace: boolean) {
     if (!supabase) return;
     const { data, error: e } = await supabase
       .from('posts')
-      .select('id,nickname,content,created_at,report_count')
+      .select('id,nickname,content,created_at,report_count,image_url,ip_prefix')
       .order('created_at', { ascending: false })
       .range(from, from + PAGE - 1);
     if (e) { setError('글을 불러올 수 없어요.'); return; }
@@ -46,6 +51,54 @@ export function Board() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 이미지 미리보기 URL 정리
+  useEffect(() => () => { if (imagePreview) URL.revokeObjectURL(imagePreview); }, [imagePreview]);
+
+  function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    if (!/^image\/(jpeg|png|webp)$/.test(f.type)) { setError('JPG·PNG·WEBP 이미지만 올릴 수 있어요.'); return; }
+    if (f.size > 10 * 1024 * 1024) { setError('이미지는 10MB 이하만 가능해요.'); return; }
+    setError(null);
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImageFile(f);
+    setImagePreview(URL.createObjectURL(f));
+  }
+
+  function clearImage() {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImageFile(null);
+    setImagePreview(null);
+    if (fileRef.current) fileRef.current.value = '';
+  }
+
+  // 브라우저에서 리사이즈·압축(webp) → Storage 업로드 → 공개 URL 반환
+  async function uploadImage(file: File): Promise<string> {
+    if (!supabase) throw new Error('no supabase');
+    const img = await new Promise<HTMLImageElement>((res, rej) => {
+      const el = new Image();
+      el.onload = () => res(el);
+      el.onerror = () => rej(new Error('load fail'));
+      el.src = URL.createObjectURL(file);
+    });
+    let { width, height } = img;
+    if (width > MAX_DIM || height > MAX_DIM) {
+      const r = Math.min(MAX_DIM / width, MAX_DIM / height);
+      width = Math.round(width * r); height = Math.round(height * r);
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = width; canvas.height = height;
+    canvas.getContext('2d')!.drawImage(img, 0, 0, width, height);
+    URL.revokeObjectURL(img.src);
+    const blob = await new Promise<Blob>((res, rej) =>
+      canvas.toBlob(b => (b ? res(b) : rej(new Error('encode fail'))), 'image/webp', 0.82));
+    const path = `${crypto.randomUUID()}.webp`;
+    const { error: upErr } = await supabase.storage.from('post-images')
+      .upload(path, blob, { contentType: 'image/webp', upsert: false });
+    if (upErr) throw upErr;
+    return supabase.storage.from('post-images').getPublicUrl(path).data.publicUrl;
+  }
+
   async function loadMore() {
     setLoadingMore(true);
     await loadPage(posts.length, false);
@@ -56,22 +109,29 @@ export function Board() {
     e.preventDefault();
     const nick = nickname.trim();
     const text = content.trim();
-    if (!nick || !text) { setError('닉네임과 내용을 입력해주세요.'); return; }
+    if (!nick) { setError('닉네임을 입력해주세요.'); return; }
     if (!/^\d{4}$/.test(password)) { setError('비밀번호는 숫자 4자리로 입력해주세요.'); return; }
+    if (!text && !imageFile) { setError('내용이나 사진을 넣어주세요.'); return; }
 
     setSubmitting(true);
     setError(null);
     try {
+      let image_url: string | null = null;
+      if (imageFile) {
+        try { image_url = await uploadImage(imageFile); }
+        catch { setError('이미지 업로드에 실패했어요. 잠시 후 다시 시도해주세요.'); setSubmitting(false); return; }
+      }
       const res = await fetch('/api/board', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname: nick, password, content: text }),
+        body: JSON.stringify({ nickname: nick, password, content: text, image_url }),
       });
       const out = await res.json();
       if (!res.ok) { setError(out.error ?? '등록에 실패했어요.'); return; }
       setPosts(prev => [out.post as Post, ...prev]);
       setContent('');
       setPassword('');
+      clearImage();
       try { localStorage.setItem('gcalen.nickname', nick); } catch { /* ignore */ }
     } catch {
       setError('네트워크 오류예요. 잠시 후 다시 시도해주세요.');
@@ -116,70 +176,74 @@ export function Board() {
 
   return (
     <div className={styles.board}>
-      {/* 글쓰기 */}
-      <form className={styles.form} onSubmit={onSubmit}>
-        <div className={styles.formTop}>
+      {/* 작성 (컴포저) */}
+      <form className={styles.composer} onSubmit={onSubmit}>
+        <div className={styles.composerTop}>
           <input
-            type="text"
-            className={styles.nick}
-            placeholder="닉네임"
-            value={nickname}
-            onChange={e => setNickname(e.target.value)}
-            maxLength={20}
-            disabled={submitting}
+            type="text" className={styles.nick} placeholder="닉네임"
+            value={nickname} onChange={e => setNickname(e.target.value)} maxLength={20} disabled={submitting}
           />
           <input
-            type="password"
-            className={styles.pw}
-            placeholder="비번(숫자4)"
-            value={password}
-            onChange={e => setPassword(e.target.value.replace(/\D/g, '').slice(0, 4))}
-            inputMode="numeric"
-            maxLength={4}
-            disabled={submitting}
-            aria-label="비밀번호 숫자 4자리"
+            type="password" className={styles.pw} placeholder="비번(숫자4)" inputMode="numeric" maxLength={4}
+            value={password} onChange={e => setPassword(e.target.value.replace(/\D/g, '').slice(0, 4))}
+            disabled={submitting} aria-label="비밀번호 숫자 4자리"
           />
         </div>
         <textarea
           className={styles.content}
-          placeholder="자유롭게 이야기를 남겨보세요. (링크·광고는 자동 차단, 최대 1000자)"
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          maxLength={1000}
-          rows={3}
-          disabled={submitting}
+          placeholder="지금 무슨 생각을 하고 있나요? (사진도 올릴 수 있어요 · 최대 1000자)"
+          value={content} onChange={e => setContent(e.target.value)} maxLength={1000} rows={3} disabled={submitting}
         />
-        <div className={styles.formRow}>
+
+        {imagePreview && (
+          <div className={styles.preview}>
+            <img src={imagePreview} alt="첨부 미리보기" />
+            <button type="button" className={styles.previewRemove} onClick={clearImage} aria-label="사진 제거">✕</button>
+          </div>
+        )}
+
+        <div className={styles.composerBottom}>
+          <label className={styles.attachBtn}>
+            <svg className="ic" aria-hidden="true"><use href="#ic-image" /></svg> 사진
+            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={onPickImage} disabled={submitting} />
+          </label>
           {error && <span className={styles.error}>{error}</span>}
           <span className={styles.counter}>{content.length}/1000</span>
-          <button
-            type="submit"
-            className={styles.submit}
-            disabled={submitting || !nickname.trim() || !content.trim() || password.length !== 4}
-          >
-            {submitting ? '등록 중…' : '글 남기기'}
+          <button type="submit" className={styles.submit} disabled={submitting || !nickname.trim() || password.length !== 4 || (!content.trim() && !imageFile)}>
+            {submitting ? '올리는 중…' : '게시'}
           </button>
         </div>
       </form>
 
-      {/* 목록 */}
-      <div className={styles.list}>
+      {/* 피드 */}
+      <div className={styles.feed}>
         {loading ? (
-          Array.from({ length: 4 }).map((_, i) => <div key={i} className={styles.skeleton} />)
+          Array.from({ length: 3 }).map((_, i) => <div key={i} className={styles.skeleton} />)
         ) : posts.length === 0 ? (
           <p className={styles.empty}>아직 글이 없어요. 첫 글을 남겨보세요!</p>
         ) : (
           posts.map(p => (
-            <article key={p.id} className={styles.item}>
-              <header className={styles.itemHead}>
-                <span className={styles.itemNick}>{p.nickname}</span>
-                <time className={styles.itemDate}>{formatRelative(p.created_at)}</time>
+            <article key={p.id} className={styles.card}>
+              <header className={styles.cardHead}>
+                <span className={styles.avatar} style={{ background: avatarColor(p.nickname) }}>{firstChar(p.nickname)}</span>
+                <div className={styles.cardMeta}>
+                  <span className={styles.cardNickRow}>
+                    <span className={styles.cardNick}>{p.nickname}</span>
+                    {p.ip_prefix && <span className={styles.cardIp}>({p.ip_prefix})</span>}
+                  </span>
+                  <time className={styles.cardDate}>{formatRelative(p.created_at)}</time>
+                </div>
               </header>
-              <p className={styles.itemContent}>{p.content}</p>
-              <div className={styles.itemActions}>
+              {p.image_url && (
+                <div className={styles.media}>
+                  <img src={p.image_url} alt="" loading="lazy" />
+                </div>
+              )}
+              {p.content && <p className={styles.cardBody}>{p.content}</p>}
+              <footer className={styles.cardActions}>
                 <button type="button" className={styles.act} onClick={() => onReport(p.id)}>신고</button>
                 <button type="button" className={styles.act} onClick={() => onDelete(p.id)}>삭제</button>
-              </div>
+              </footer>
             </article>
           ))
         )}
@@ -194,6 +258,14 @@ export function Board() {
   );
 }
 
+function firstChar(nick: string): string {
+  return (nick.trim()[0] ?? '?').toUpperCase();
+}
+function avatarColor(nick: string): string {
+  let h = 0;
+  for (let i = 0; i < nick.length; i++) h = (h * 31 + nick.charCodeAt(i)) % 360;
+  return `hsl(${h}, 55%, 55%)`;
+}
 function formatRelative(iso: string): string {
   const now = new Date();
   const t = new Date(iso);

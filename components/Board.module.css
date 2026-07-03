@@ -1,19 +1,18 @@
-/* 자유게시판 */
-.board { display: flex; flex-direction: column; gap: 1rem; }
-
+/* 자유게시판 — 피드형 */
+.board { display: flex; flex-direction: column; gap: 1rem; max-width: 620px; margin: 0 auto; width: 100%; }
 .offline { color: var(--text-faint); text-align: center; padding: 2rem 0; }
 
-/* 글쓰기 폼 */
-.form {
+/* ── 컴포저(작성) ── */
+.composer {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
   padding: 1rem;
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  border-radius: var(--radius, 12px);
+  border-radius: var(--radius, 14px);
 }
-.formTop { display: flex; gap: 0.6rem; }
+.composerTop { display: flex; gap: 0.6rem; }
 .nick, .pw, .content {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -23,82 +22,108 @@
   padding: 0.55rem 0.7rem;
 }
 .nick { flex: 1 1 auto; min-width: 0; }
-.pw { flex: 0 0 7.5rem; text-align: center; font-variant-numeric: tabular-nums; letter-spacing: 0.2em; }
-.content { resize: vertical; line-height: 1.5; }
+.pw { flex: 0 0 7rem; text-align: center; font-variant-numeric: tabular-nums; letter-spacing: 0.2em; }
+.content { resize: vertical; line-height: 1.5; min-height: 3.2rem; }
 .nick:focus, .pw:focus, .content:focus { outline: none; border-color: var(--accent); }
 
-.formRow { display: flex; align-items: center; gap: 0.7rem; }
-.error { color: var(--danger, #e5484d); font-size: 0.82rem; flex: 1 1 auto; }
-.counter { margin-left: auto; font-size: 0.75rem; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+.preview {
+  position: relative;
+  border-radius: var(--radius-sm, 10px);
+  overflow: hidden;
+  max-height: 340px;
+  background: var(--bg);
+}
+.preview img { display: block; width: 100%; max-height: 340px; object-fit: contain; }
+.previewRemove {
+  position: absolute; top: 0.5rem; right: 0.5rem;
+  width: 28px; height: 28px; border: none; border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6); color: #fff; cursor: pointer;
+  font-size: 0.85rem; line-height: 1;
+}
+.previewRemove:hover { background: rgba(0, 0, 0, 0.8); }
+
+.composerBottom { display: flex; align-items: center; gap: 0.7rem; }
+.attachBtn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border); border-radius: 999px;
+  color: var(--text-faint); font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; transition: color 0.15s, border-color 0.15s;
+}
+.attachBtn:hover { color: var(--accent); border-color: var(--accent); }
+.attachBtn .ic { width: 16px; height: 16px; }
+.error { color: var(--danger, #e5484d); font-size: 0.8rem; flex: 1 1 auto; min-width: 0; }
+.counter { margin-left: auto; font-size: 0.74rem; color: var(--text-faint); font-variant-numeric: tabular-nums; }
 .submit {
   flex: 0 0 auto;
-  padding: 0.5rem 1.1rem;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-sm, 8px);
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.15s;
+  padding: 0.5rem 1.2rem;
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 999px; font-weight: 700; cursor: pointer; transition: opacity 0.15s;
 }
 .submit:hover { opacity: 0.9; }
 .submit:disabled { opacity: 0.45; cursor: not-allowed; }
 
-/* 목록 */
-.list { display: flex; flex-direction: column; gap: 0.6rem; }
-.empty { color: var(--text-faint); text-align: center; padding: 2rem 0; }
+/* ── 피드 ── */
+.feed { display: flex; flex-direction: column; gap: 0.9rem; }
+.empty { color: var(--text-faint); text-align: center; padding: 2.5rem 0; }
 .skeleton {
-  height: 78px;
-  border-radius: var(--radius, 12px);
+  height: 130px;
+  border-radius: var(--radius, 14px);
   background: linear-gradient(90deg, var(--bg-elev) 25%, var(--bg) 50%, var(--bg-elev) 75%);
   background-size: 200% 100%;
   animation: boardShimmer 1.3s infinite;
 }
 @keyframes boardShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-.item {
-  padding: 0.85rem 1rem;
+.card {
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  border-radius: var(--radius, 12px);
+  border-radius: var(--radius, 14px);
+  overflow: hidden;
 }
-.itemHead { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.35rem; }
-.itemNick { font-weight: 700; color: var(--text); font-size: 0.92rem; }
-.itemDate { font-size: 0.75rem; color: var(--text-faint); }
-.itemContent {
+.cardHead { display: flex; align-items: center; gap: 0.6rem; padding: 0.85rem 1rem 0.6rem; }
+.avatar {
+  flex: 0 0 auto;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-size: 1rem;
+}
+.cardMeta { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.cardNickRow { display: flex; align-items: baseline; gap: 0.35rem; min-width: 0; }
+.cardNick { font-weight: 700; color: var(--text); font-size: 0.92rem; }
+.cardIp { font-size: 0.74rem; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+.cardDate { font-size: 0.74rem; color: var(--text-faint); }
+
+.media { background: #000; }
+.media img { display: block; width: 100%; max-height: 560px; object-fit: contain; margin: 0 auto; }
+
+.cardBody {
   margin: 0;
+  padding: 0.7rem 1rem;
   color: var(--text);
   line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-word;
 }
-.itemActions { display: flex; justify-content: flex-end; gap: 0.9rem; margin-top: 0.5rem; }
+.card .media + .cardBody { padding-top: 0.75rem; }
+
+.cardActions { display: flex; justify-content: flex-end; gap: 0.9rem; padding: 0.2rem 1rem 0.7rem; }
 .act {
-  background: none;
-  border: none;
-  color: var(--text-faint);
-  font-size: 0.76rem;
-  cursor: pointer;
-  padding: 0.1rem 0.2rem;
-  transition: color 0.15s;
+  background: none; border: none; color: var(--text-faint);
+  font-size: 0.76rem; cursor: pointer; padding: 0.1rem 0.2rem; transition: color 0.15s;
 }
 .act:hover { color: var(--text); }
 
 .more {
   align-self: center;
   padding: 0.55rem 1.4rem;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--text);
-  font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.15s;
+  background: var(--bg-elev); border: 1px solid var(--border);
+  border-radius: 999px; color: var(--text); font-weight: 600; cursor: pointer; transition: border-color 0.15s;
 }
 .more:hover { border-color: var(--accent); }
 .more:disabled { opacity: 0.5; cursor: default; }
 
 @media (max-width: 560px) {
-  .form { padding: 0.85rem; }
-  .pw { flex-basis: 6rem; }
+  .composer { padding: 0.85rem; }
+  .pw { flex-basis: 5.5rem; }
 }

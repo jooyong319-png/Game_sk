@@ -186,7 +186,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
       <div className={styles.layout}>
         <div className={styles.main}>
           <div className={styles.hero}>
-            <BannerCarousel />
+            <BannerCarousel games={initialGames} />
             <FeaturedCards games={initialGames} now={now} />
           </div>
 

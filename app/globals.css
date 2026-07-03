@@ -663,11 +663,13 @@ textarea:focus-visible,
   border-radius: var(--radius-sm);
   padding: 0.7rem 1rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
   transition: border-color 0.15s;
 }
 .seo-list-item:hover { border-color: var(--accent); }
+.seo-li-body { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; flex: 1 1 auto; }
 .seo-li-main { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .seo-name { font-size: var(--fs-base); font-weight: 600; color: var(--text); }
 .seo-name:hover { color: var(--accent); text-decoration: none; }
