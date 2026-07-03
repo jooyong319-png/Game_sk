@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-02",
+  "last_updated": "2026-07-03",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2218,7 +2218,9 @@
       ],
       "image_url": "https://play-lh.googleusercontent.com/Iz6llxr_4kPK-ALhQ9CTrO_b7_OBZOz2i_YZMaQJ7-q7CX1SqqZeJB1iIPTOmnpipO21sNwZm3qXWKwD-0cvGw=s512",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317978",
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_date": "2026-06-30",
+      "pre_registration_url": "https://higaneruthyll.nexon.com/pre-registration"
     },
     {
       "id": "rf-online-next-lavaron-20260701",
