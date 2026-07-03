@@ -1,5 +1,5 @@
 'use client';
-import type { CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
@@ -15,6 +15,8 @@ interface Props {
 
 // 게임 1행 — 리스트 뷰 + 캘린더 상세 패널 공용. (날짜칼럼 + 본문 + 액션)
 export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
+  const [imgError, setImgError] = useState(false);
+  const showImg = !!g.image_url && !imgError;
   const diff = calcDayDiff(g.release_date, now);
   const released = diff < 0;
   const isToday = diff === 0;
@@ -36,10 +38,16 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(g.id); } }}
     >
       <div className={styles.thumb}>
-        {g.image_url ? (
+        {showImg ? (
           <>
-            <img src={g.image_url} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
-            <img src={g.image_url} alt={g.name_ko} className={styles.thumbFg} loading="lazy" />
+            <img src={g.image_url!} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
+            <img
+              src={g.image_url!}
+              alt={g.name_ko}
+              className={styles.thumbFg}
+              loading="lazy"
+              onError={() => setImgError(true)}
+            />
           </>
         ) : (
           <div className={styles.thumbPh} style={{ background: cat.color }}>
