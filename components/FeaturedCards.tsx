@@ -179,12 +179,21 @@ export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
   const today = ymd(now);
   const notReleased = (g: Game) => g.release_date_approx || g.release_date >= today;
 
-  const preReg = useMemo(() => games
+  // 사전예약 진행 중인 게임 목록 → 진입 시 이 중 '랜덤 1개' 노출(고정 최신 아님)
+  const preRegList = useMemo(() => games
     .filter(g => notReleased(g) && g.pre_registration === true && g.category !== 'new_server'
       && !(g.pre_registration_date && g.pre_registration_date > today)
       && !(g.pre_registration_end_date && g.pre_registration_end_date < today))
-    .sort((a, b) => a.release_date.localeCompare(b.release_date))[0],
+    .sort((a, b) => a.release_date.localeCompare(b.release_date)),
     [games, today]);
+
+  // 진입 시 1회 랜덤(마운트 전엔 [0] → 서버/클라 동일, 하이드레이션 안전)
+  const [preRegIdx, setPreRegIdx] = useState(0);
+  useEffect(() => {
+    if (preRegList.length === 0) return;
+    setPreRegIdx(Math.floor(Math.random() * preRegList.length));
+  }, [preRegList.length]);
+  const preReg = preRegList.length > 0 ? preRegList[preRegIdx % preRegList.length] : undefined;
 
   // 카테고리별 '가장 임박한 출시' 1개씩 (상단 사전예약 카드와 중복 제외)
   const categoryItems = useMemo(() => CATS
