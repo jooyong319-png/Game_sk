@@ -1,16 +1,101 @@
-/* 자유게시판 — 피드형 */
-.board { display: flex; flex-direction: column; gap: 1rem; max-width: 620px; margin: 0 auto; width: 100%; }
+/* 커뮤니티 — 피드형 */
+.board { display: flex; flex-direction: column; gap: 1rem; max-width: 820px; margin: 0 auto; width: 100%; }
 .offline { color: var(--text-faint); text-align: center; padding: 2rem 0; }
 
-/* ── 컴포저(작성) ── */
+/* 툴바: 카테고리 탭 + 글쓰기 버튼 */
+.toolbar { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.tabs { display: flex; gap: 0.35rem; flex-wrap: wrap; flex: 1 1 auto; }
+.tab {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--bg-elev); color: var(--text-faint);
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.tab:hover { color: var(--text); }
+.tabOn { background: var(--accent); border-color: var(--accent); color: #fff; }
+.writeBtn {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.45rem 1rem;
+  border: none; border-radius: 999px;
+  background: var(--accent); color: #fff;
+  font-size: 0.88rem; font-weight: 700; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.writeBtn:hover { opacity: 0.9; }
+.writeBtn .ic { width: 15px; height: 15px; }
+
+/* 카테고리 뱃지(카드) */
+.catBadge {
+  flex: 0 0 auto;
+  font-size: 0.7rem; font-weight: 700;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+.backLink {
+  align-self: flex-start;
+  color: var(--text-faint);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.2rem 0;
+  transition: color 0.15s;
+}
+.backLink:hover { color: var(--accent); }
+
+/* ── 글쓰기 모달 ── */
+.modalOverlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 4vh 1rem;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  overflow-y: auto;
+  animation: modalFade 0.15s ease;
+}
+@keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  width: 100%; max-width: 560px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 16px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+.modalHead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+.modalTitle { font-size: 1rem; font-weight: 800; margin: 0; color: var(--text); }
+.modalClose {
+  background: none; border: none; color: var(--text-faint);
+  font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 0.2rem;
+}
+.modalClose:hover { color: var(--text); }
+
+/* 카테고리 선택 pill (모달) */
+.catPick { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.catPill {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--bg); color: var(--text-faint);
+  font-size: 0.83rem; font-weight: 600; cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.catPill:hover { color: var(--text); }
+.catPillOn { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ── 컴포저(작성, 모달 내부) ── */
 .composer {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
   padding: 1rem;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: var(--radius, 14px);
+  background: var(--bg);
 }
 .composerTop { display: flex; gap: 0.6rem; }
 .nick, .pw, .content {
@@ -81,18 +166,25 @@
   border-radius: var(--radius, 14px);
   overflow: hidden;
 }
-.cardHead { display: flex; align-items: center; gap: 0.6rem; padding: 0.85rem 1rem 0.6rem; }
-.avatar {
-  flex: 0 0 auto;
-  width: 38px; height: 38px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-weight: 800; font-size: 1rem;
+/* 제목 중심 헤더: [카테고리] 제목 / 메타(익명·IP·시간) */
+.cardHead { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.8rem 1rem 0.55rem; }
+.titleLink { display: flex; align-items: center; gap: 0.5rem; min-width: 0; color: inherit; }
+.postTitle {
+  min-width: 0;
+  margin: 0;
+  font-size: 1.05rem; font-weight: 700; color: var(--text);
+  line-height: 1.35;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.cardMeta { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
-.cardNickRow { display: flex; align-items: baseline; gap: 0.35rem; min-width: 0; }
-.cardNick { font-weight: 700; color: var(--text); font-size: 0.92rem; }
-.cardIp { font-size: 0.74rem; color: var(--text-faint); font-variant-numeric: tabular-nums; }
-.cardDate { font-size: 0.74rem; color: var(--text-faint); }
+a.titleLink:hover .postTitle { color: var(--accent); }
+.metaRow { display: flex; align-items: baseline; gap: 0.3rem; font-size: 0.74rem; color: var(--text-faint); }
+.metaAuthor { font-weight: 600; }
+.metaDot { opacity: 0.6; }
+.cardIp { color: var(--text-faint); font-variant-numeric: tabular-nums; }
+.cardDate { color: var(--text-faint); }
+
+.cardLink { display: block; color: inherit; cursor: pointer; }
+.cardLink:hover .cardBody { color: var(--accent); }
 
 .media { background: #000; }
 .media img { display: block; width: 100%; max-height: 560px; object-fit: contain; margin: 0 auto; }
@@ -122,6 +214,40 @@
 }
 .more:hover { border-color: var(--accent); }
 .more:disabled { opacity: 0.5; cursor: default; }
+
+/* ── 댓글 (상세페이지) ── */
+.comments {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 14px);
+  padding: 1rem 1.1rem 1.1rem;
+}
+.commentsTitle { font-size: 0.95rem; font-weight: 800; color: var(--text); margin: 0 0 0.7rem; }
+.commentsTitle span { color: var(--accent); margin-left: 0.15rem; }
+.commentList { list-style: none; margin: 0 0 0.9rem; padding: 0; display: flex; flex-direction: column; }
+.commentEmpty { color: var(--text-faint); font-size: 0.85rem; padding: 0.6rem 0; }
+.comment { padding: 0.6rem 0; border-top: 1px solid var(--border); }
+.comment:first-child { border-top: none; }
+.commentHead { display: flex; align-items: baseline; gap: 0.4rem; }
+.commentNick { font-weight: 700; font-size: 0.85rem; color: var(--text); }
+.commentDate { font-size: 0.72rem; color: var(--text-faint); }
+.commentDel {
+  margin-left: auto; background: none; border: none; color: var(--text-faint);
+  font-size: 0.72rem; cursor: pointer; padding: 0 0.1rem;
+}
+.commentDel:hover { color: var(--text); }
+.commentBody { margin: 0.2rem 0 0; font-size: 0.9rem; line-height: 1.55; color: var(--text); white-space: pre-wrap; word-break: break-word; }
+
+.commentForm { display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.8rem; }
+.commentFormTop { display: flex; gap: 0.5rem; }
+.commentFormTop .nick { flex: 1 1 auto; }
+.commentFormBottom { display: flex; gap: 0.5rem; }
+.commentInput {
+  flex: 1 1 auto; min-width: 0;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 8px);
+  color: var(--text); font: inherit; padding: 0.5rem 0.7rem;
+}
+.commentInput:focus { outline: none; border-color: var(--accent); }
 
 @media (max-width: 560px) {
   .composer { padding: 0.85rem; }

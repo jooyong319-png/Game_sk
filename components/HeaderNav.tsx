@@ -49,7 +49,7 @@ export function HeaderNav() {
         aria-current={pathname === '/board' ? 'page' : undefined}
       >
         <svg className="ic" aria-hidden="true"><use href="#ic-comment" /></svg>
-        <span className="header-board-label">자유게시판</span>
+        <span className="header-board-label">커뮤니티</span>
       </a>
       <ThemeToggle />
       <button

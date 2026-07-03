@@ -1,43 +1,37 @@
 'use client';
 import { useEffect, useRef, useState, FormEvent } from 'react';
 import { supabase, isSupabaseReady } from '@/lib/supabase';
+import { BOARD_CATEGORIES } from '@/lib/boardFormat';
+import { PostCard, type Post } from './PostCard';
 import styles from './Board.module.css';
-
-interface Post {
-  id: number;
-  nickname: string;
-  content: string;
-  created_at: string;
-  report_count: number;
-  image_url: string | null;
-  ip_prefix: string | null;
-}
 
 const PAGE = 15;
 const MAX_DIM = 1280;
+const SELECT = 'id,nickname,content,created_at,report_count,image_url,ip_prefix,category';
 
 export function Board() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
+  const [activeCat, setActiveCat] = useState<string | null>(null); // null = 전체
 
-  const [nickname, setNickname] = useState('');
+  const [writeOpen, setWriteOpen] = useState(false);
+  const [title, setTitle] = useState('');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
+  const [composeCat, setComposeCat] = useState<string>('chat');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  async function loadPage(from: number, replace: boolean) {
+  async function loadPage(from: number, replace: boolean, cat: string | null) {
     if (!supabase) return;
-    const { data, error: e } = await supabase
-      .from('posts')
-      .select('id,nickname,content,created_at,report_count,image_url,ip_prefix')
-      .order('created_at', { ascending: false })
-      .range(from, from + PAGE - 1);
+    let q = supabase.from('posts').select(SELECT).order('created_at', { ascending: false });
+    if (cat) q = q.eq('category', cat);
+    const { data, error: e } = await q.range(from, from + PAGE - 1);
     if (e) { setError('글을 불러올 수 없어요.'); return; }
     const rows = (data as Post[]) ?? [];
     setHasMore(rows.length === PAGE);
@@ -46,13 +40,26 @@ export function Board() {
 
   useEffect(() => {
     if (!isSupabaseReady()) { setLoading(false); return; }
-    loadPage(0, true).finally(() => setLoading(false));
-    try { const s = localStorage.getItem('gcalen.nickname'); if (s) setNickname(s); } catch { /* ignore */ }
+    loadPage(0, true, null).finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 이미지 미리보기 URL 정리
+  // 모달 열림 시 Esc 닫기 + 스크롤 잠금
+  useEffect(() => {
+    if (!writeOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setWriteOpen(false); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [writeOpen]);
+
   useEffect(() => () => { if (imagePreview) URL.revokeObjectURL(imagePreview); }, [imagePreview]);
+
+  function selectCat(cat: string | null) {
+    setActiveCat(cat);
+    setLoading(true);
+    loadPage(0, true, cat).finally(() => setLoading(false));
+  }
 
   function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
@@ -101,17 +108,16 @@ export function Board() {
 
   async function loadMore() {
     setLoadingMore(true);
-    await loadPage(posts.length, false);
+    await loadPage(posts.length, false, activeCat);
     setLoadingMore(false);
   }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    const nick = nickname.trim();
+    const ttl = title.trim();
     const text = content.trim();
-    if (!nick) { setError('닉네임을 입력해주세요.'); return; }
+    if (!ttl) { setError('제목을 입력해주세요.'); return; }
     if (!/^\d{4}$/.test(password)) { setError('비밀번호는 숫자 4자리로 입력해주세요.'); return; }
-    if (!text && !imageFile) { setError('내용이나 사진을 넣어주세요.'); return; }
 
     setSubmitting(true);
     setError(null);
@@ -124,15 +130,18 @@ export function Board() {
       const res = await fetch('/api/board', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname: nick, password, content: text, image_url }),
+        body: JSON.stringify({ title: ttl, password, content: text, image_url, category: composeCat }),
       });
       const out = await res.json();
       if (!res.ok) { setError(out.error ?? '등록에 실패했어요.'); return; }
-      setPosts(prev => [out.post as Post, ...prev]);
+      const newPost = out.post as Post;
+      // 현재 필터에 보일 글이면 피드 맨 위에 추가
+      if (!activeCat || activeCat === newPost.category) setPosts(prev => [newPost, ...prev]);
+      setTitle('');
       setContent('');
       setPassword('');
       clearImage();
-      try { localStorage.setItem('gcalen.nickname', nick); } catch { /* ignore */ }
+      setWriteOpen(false);
     } catch {
       setError('네트워크 오류예요. 잠시 후 다시 시도해주세요.');
     } finally {
@@ -171,49 +180,25 @@ export function Board() {
   }
 
   if (!isSupabaseReady()) {
-    return <p className={styles.offline}>게시판을 준비 중이에요. 잠시 후 다시 방문해주세요.</p>;
+    return <p className={styles.offline}>커뮤니티를 준비 중이에요. 잠시 후 다시 방문해주세요.</p>;
   }
 
   return (
     <div className={styles.board}>
-      {/* 작성 (컴포저) */}
-      <form className={styles.composer} onSubmit={onSubmit}>
-        <div className={styles.composerTop}>
-          <input
-            type="text" className={styles.nick} placeholder="닉네임"
-            value={nickname} onChange={e => setNickname(e.target.value)} maxLength={20} disabled={submitting}
-          />
-          <input
-            type="password" className={styles.pw} placeholder="비번(숫자4)" inputMode="numeric" maxLength={4}
-            value={password} onChange={e => setPassword(e.target.value.replace(/\D/g, '').slice(0, 4))}
-            disabled={submitting} aria-label="비밀번호 숫자 4자리"
-          />
+      {/* 카테고리 탭 + 글쓰기 버튼 */}
+      <div className={styles.toolbar}>
+        <div className={styles.tabs} role="tablist" aria-label="카테고리">
+          <button type="button" role="tab" aria-selected={activeCat === null}
+            className={`${styles.tab} ${activeCat === null ? styles.tabOn : ''}`} onClick={() => selectCat(null)}>전체</button>
+          {BOARD_CATEGORIES.map(c => (
+            <button key={c.key} type="button" role="tab" aria-selected={activeCat === c.key}
+              className={`${styles.tab} ${activeCat === c.key ? styles.tabOn : ''}`} onClick={() => selectCat(c.key)}>{c.label}</button>
+          ))}
         </div>
-        <textarea
-          className={styles.content}
-          placeholder="지금 무슨 생각을 하고 있나요? (사진도 올릴 수 있어요 · 최대 1000자)"
-          value={content} onChange={e => setContent(e.target.value)} maxLength={1000} rows={3} disabled={submitting}
-        />
-
-        {imagePreview && (
-          <div className={styles.preview}>
-            <img src={imagePreview} alt="첨부 미리보기" />
-            <button type="button" className={styles.previewRemove} onClick={clearImage} aria-label="사진 제거">✕</button>
-          </div>
-        )}
-
-        <div className={styles.composerBottom}>
-          <label className={styles.attachBtn}>
-            <svg className="ic" aria-hidden="true"><use href="#ic-image" /></svg> 사진
-            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={onPickImage} disabled={submitting} />
-          </label>
-          {error && <span className={styles.error}>{error}</span>}
-          <span className={styles.counter}>{content.length}/1000</span>
-          <button type="submit" className={styles.submit} disabled={submitting || !nickname.trim() || password.length !== 4 || (!content.trim() && !imageFile)}>
-            {submitting ? '올리는 중…' : '게시'}
-          </button>
-        </div>
-      </form>
+        <button type="button" className={styles.writeBtn} onClick={() => { setError(null); setWriteOpen(true); }}>
+          <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> 글쓰기
+        </button>
+      </div>
 
       {/* 피드 */}
       <div className={styles.feed}>
@@ -223,28 +208,7 @@ export function Board() {
           <p className={styles.empty}>아직 글이 없어요. 첫 글을 남겨보세요!</p>
         ) : (
           posts.map(p => (
-            <article key={p.id} className={styles.card}>
-              <header className={styles.cardHead}>
-                <span className={styles.avatar} style={{ background: avatarColor(p.nickname) }}>{firstChar(p.nickname)}</span>
-                <div className={styles.cardMeta}>
-                  <span className={styles.cardNickRow}>
-                    <span className={styles.cardNick}>{p.nickname}</span>
-                    {p.ip_prefix && <span className={styles.cardIp}>({p.ip_prefix})</span>}
-                  </span>
-                  <time className={styles.cardDate}>{formatRelative(p.created_at)}</time>
-                </div>
-              </header>
-              {p.image_url && (
-                <div className={styles.media}>
-                  <img src={p.image_url} alt="" loading="lazy" />
-                </div>
-              )}
-              {p.content && <p className={styles.cardBody}>{p.content}</p>}
-              <footer className={styles.cardActions}>
-                <button type="button" className={styles.act} onClick={() => onReport(p.id)}>신고</button>
-                <button type="button" className={styles.act} onClick={() => onDelete(p.id)}>삭제</button>
-              </footer>
-            </article>
+            <PostCard key={p.id} post={p} href={`/board/${p.id}`} onReport={onReport} onDelete={onDelete} />
           ))
         )}
       </div>
@@ -254,25 +218,60 @@ export function Board() {
           {loadingMore ? '불러오는 중…' : '더 보기'}
         </button>
       )}
+
+      {/* 글쓰기 모달 */}
+      {writeOpen && (
+        <div className={styles.modalOverlay} onClick={() => !submitting && setWriteOpen(false)}>
+          <div className={styles.modal} role="dialog" aria-modal="true" aria-label="글쓰기" onClick={e => e.stopPropagation()}>
+            <header className={styles.modalHead}>
+              <h2 className={styles.modalTitle}>글쓰기</h2>
+              <button type="button" className={styles.modalClose} onClick={() => setWriteOpen(false)} aria-label="닫기">✕</button>
+            </header>
+
+            <form className={styles.composer} onSubmit={onSubmit}>
+              <div className={styles.catPick} role="radiogroup" aria-label="카테고리 선택">
+                {BOARD_CATEGORIES.map(c => (
+                  <button key={c.key} type="button" role="radio" aria-checked={composeCat === c.key}
+                    className={`${styles.catPill} ${composeCat === c.key ? styles.catPillOn : ''}`}
+                    onClick={() => setComposeCat(c.key)}>{c.label}</button>
+                ))}
+              </div>
+
+              <div className={styles.composerTop}>
+                <input type="text" className={styles.nick} placeholder="제목" autoComplete="off"
+                  value={title} onChange={e => setTitle(e.target.value)} maxLength={60} disabled={submitting} />
+                <input type="password" className={styles.pw} placeholder="비번(숫자4)" inputMode="numeric" maxLength={4}
+                  autoComplete="new-password"
+                  value={password} onChange={e => setPassword(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                  disabled={submitting} aria-label="비밀번호 숫자 4자리" />
+              </div>
+              <textarea className={styles.content} autoComplete="off"
+                placeholder="지금 무슨 생각을 하고 있나요? (사진도 올릴 수 있어요 · 최대 1000자)"
+                value={content} onChange={e => setContent(e.target.value)} maxLength={1000} rows={4} disabled={submitting} />
+
+              {imagePreview && (
+                <div className={styles.preview}>
+                  <img src={imagePreview} alt="첨부 미리보기" />
+                  <button type="button" className={styles.previewRemove} onClick={clearImage} aria-label="사진 제거">✕</button>
+                </div>
+              )}
+
+              <div className={styles.composerBottom}>
+                <label className={styles.attachBtn}>
+                  <svg className="ic" aria-hidden="true"><use href="#ic-image" /></svg> 사진
+                  <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={onPickImage} disabled={submitting} />
+                </label>
+                {error && <span className={styles.error}>{error}</span>}
+                <span className={styles.counter}>{content.length}/1000</span>
+                <button type="submit" className={styles.submit}
+                  disabled={submitting || !title.trim() || password.length !== 4}>
+                  {submitting ? '올리는 중…' : '게시'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
-
-function firstChar(nick: string): string {
-  return (nick.trim()[0] ?? '?').toUpperCase();
-}
-function avatarColor(nick: string): string {
-  let h = 0;
-  for (let i = 0; i < nick.length; i++) h = (h * 31 + nick.charCodeAt(i)) % 360;
-  return `hsl(${h}, 55%, 55%)`;
-}
-function formatRelative(iso: string): string {
-  const now = new Date();
-  const t = new Date(iso);
-  const diff = Math.floor((now.getTime() - t.getTime()) / 1000);
-  if (diff < 60) return '방금 전';
-  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
-  if (diff < 86400 * 7) return `${Math.floor(diff / 86400)}일 전`;
-  return `${t.getFullYear()}.${String(t.getMonth() + 1).padStart(2, '0')}.${String(t.getDate()).padStart(2, '0')}`;
 }

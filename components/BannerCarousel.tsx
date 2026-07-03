@@ -31,7 +31,7 @@ const DEFAULT_BANNERS: Banner[] = [
     title: '새 서버 오픈 일정', subtitle: '새로 시작하기 딱 좋은 타이밍',
     c1: '#a3c9ec', c2: '#a7b2e6' },
   { id: 'd-board', image_url: null, link: '/board', tag: '커뮤니티',
-    title: '게이머 자유게시판 오픈', subtitle: '로그인 없이 자유롭게 수다 떨기',
+    title: '게이머 커뮤니티 오픈', subtitle: '잡담·유머·뉴스·정보를 한곳에서',
     c1: '#f0a6c4', c2: '#e7a1ad' },
 ];
 
