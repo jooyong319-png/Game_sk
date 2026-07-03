@@ -7,6 +7,7 @@ import { GameReactions } from '@/components/GameReactions';
 import { DdayBadge } from '@/components/DdayBadge';
 import { ShareButton } from '@/components/ShareButton';
 import { ViewCounter } from '@/components/ViewCounter';
+import { DetailCover } from '@/components/DetailCover';
 import { PreRegCountdown } from '@/components/PreRegCountdown';
 import { Comments } from '@/components/Comments';
 import { PageShell } from '@/components/PageShell';
@@ -230,19 +231,7 @@ export default async function GamePage({ params }: Props) {
 
         <article className="game-detail">
           <div className="detail-header">
-            <div className={`detail-thumb cat-bg-${game.category}`}>
-              {game.image_url ? (
-                <>
-                  <img src={game.image_url} alt="" aria-hidden="true" className="cover-bg" loading="lazy" />
-                  <img src={game.image_url} alt={`${game.name_ko} 대표 이미지`} className="cover-fg" loading="eager" fetchPriority="high" />
-                </>
-              ) : (
-                <div className="thumb-ph">
-                  <svg className="ph-icon" aria-hidden="true"><use href="#ic-image" /></svg>
-                  <span className="ph-text">이미지 없음</span>
-                </div>
-              )}
-            </div>
+            <DetailCover imageUrl={game.image_url} alt={`${game.name_ko} 대표 이미지`} category={game.category} />
             <div className="detail-header-info">
               <div className="detail-head">
                 <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>

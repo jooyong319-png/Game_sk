@@ -35,23 +35,21 @@
   width: 100%; height: 100%;
   object-fit: contain;
 }
-/* 이미지 없을 때: 카테고리 색 배경(인라인) + 게임명 첫 글자 */
+/* 이미지 없을 때: 중립 배경 + 아이콘 + '이미지 없음' */
 .thumbPh {
   position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.15rem;
+  background: linear-gradient(135deg, var(--bg-elev), var(--bg));
+  color: var(--text-faint);
 }
-.thumbPh::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0.2));
+.thumbPhIcon {
+  width: 34%; height: 34%; max-width: 20px;
+  fill: none; stroke: currentColor;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0.55;
 }
-.thumbInitial {
-  position: relative; z-index: 1;
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1;
-}
+.thumbPhText { font-size: 0.5rem; font-weight: 600; opacity: 0.8; line-height: 1; letter-spacing: -0.02em; }
 .row:last-child { border-bottom: none; }
 .row:hover { background: var(--bg); }
 .row:hover .title { color: var(--accent); }

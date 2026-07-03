@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
@@ -14,6 +14,7 @@ interface Props {
 }
 
 export function GameModal({ game, onClose, wishlist }: Props) {
+  const [imgError, setImgError] = useState(false);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
@@ -38,10 +39,10 @@ export function GameModal({ game, onClose, wishlist }: Props) {
 
         <div className={styles.header}>
           <div className={`${styles.image} cat-bg-${game.category}`}>
-            {game.image_url ? (
+            {game.image_url && !imgError ? (
               <>
                 <img src={game.image_url} alt="" aria-hidden="true" className={styles.imageBg} loading="lazy" />
-                <img src={game.image_url} alt={game.name_ko} className={styles.imageFg} loading="lazy" />
+                <img src={game.image_url} alt={game.name_ko} className={styles.imageFg} loading="lazy" onError={() => setImgError(true)} />
               </>
             ) : (
               <div className={styles.imagePh}>

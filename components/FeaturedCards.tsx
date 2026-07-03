@@ -99,6 +99,7 @@ function useCountdown(targetMs: number | null): { mounted: boolean; parts: Parts
 
 function FeaturedCard({ data }: { data: CardData }) {
   const { mounted, parts } = useCountdown(data.targetMs);
+  const [imgError, setImgError] = useState(false);
   const showTimer = data.targetMs != null && mounted && parts;
   const showSkeleton = data.targetMs != null && !mounted; // 마운트 전(카운트다운 대상 있음) → 스켈레톤
 
@@ -106,10 +107,10 @@ function FeaturedCard({ data }: { data: CardData }) {
     <>
       <div className={styles.head}>
         <div className={styles.thumb}>
-          {data.imageUrl ? (
+          {data.imageUrl && !imgError ? (
             <>
               <img src={data.imageUrl} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
-              <img src={data.imageUrl} alt={data.name} className={styles.thumbFg} loading="lazy" />
+              <img src={data.imageUrl} alt={data.name} className={styles.thumbFg} loading="lazy" onError={() => setImgError(true)} />
             </>
           ) : (
             <div className={styles.thumbPh}>

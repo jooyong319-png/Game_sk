@@ -50,8 +50,9 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
             />
           </>
         ) : (
-          <div className={styles.thumbPh} style={{ background: cat.color }}>
-            <span className={styles.thumbInitial}>{g.name_ko.trim()[0] ?? '?'}</span>
+          <div className={styles.thumbPh}>
+            <svg className={styles.thumbPhIcon} aria-hidden="true"><use href="#ic-image" /></svg>
+            <span className={styles.thumbPhText}>이미지 없음</span>
           </div>
         )}
       </div>
