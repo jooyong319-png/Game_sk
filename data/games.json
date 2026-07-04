@@ -1777,7 +1777,10 @@
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nCSqRx8E8W8yCJlBSckbAbTLKBNfCMbEGa4qdQE6r9hw=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://lostark.game.onstove.com/Promotion/Reservation/260624",
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_date": "2026-06-24",
+      "pre_registration_end_date": "2026-07-08",
+      "pre_registration_url": "https://lostark.game.onstove.com/Promotion/Reservation/260624"
     },
     {
       "id": "lostark-raid-belgardin-20260805",
