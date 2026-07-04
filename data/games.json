@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-03",
+  "last_updated": "2026-07-04",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2243,6 +2243,31 @@
       ],
       "image_url": "https://play-lh.googleusercontent.com/IkNZqliSHoIRoWo-SFO0b8pzt53n1Epi-Tf9p8LbwczkafXbMcuQTpmgpdU-DIKeamrQoyqgRQTars9qnpe0Gg=s512",
       "source_url": "https://www.betanews.net/article/view/beta202606240042"
+    },
+    {
+      "id": "windrunner-idle-2026",
+      "name_ko": "윈드러너 키우기",
+      "name_en": "WindRunner Idle",
+      "release_date": "2026-09-30",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "라이트컨",
+      "publisher": "위메이드맥스",
+      "description": "위메이드맥스의 자회사 라이트컨이 개발한 방치형 RPG로, 누적 6천만 다운로드를 기록한 캐주얼 IP '윈드러너'를 성장형 게임으로 재해석했다. 150여 종의 영웅과 소환수, 탈것을 조합해 성장 루트를 꾸미고, 콤보가 쌓일수록 추가 피해를 주는 콤보 시스템과 실시간 PvP '아레나'를 갖췄다. 한국·대만에서 사전예약을 진행 중이며 7월 정식 출시를 예고했다.",
+      "genres": [
+        "방치형",
+        "RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317510",
+      "pre_registration": true,
+      "pre_registration_date": "2026-06-16",
+      "pre_registration_end_date": null,
+      "pre_registration_url": null
     }
   ]
 }
