@@ -2271,6 +2271,30 @@
       "pre_registration_date": "2026-06-16",
       "pre_registration_end_date": null,
       "pre_registration_url": null
+    },
+    {
+      "id": "cookierun-crumble-20260729",
+      "name_ko": "쿠키런: 크럼블",
+      "name_en": "CookieRun: Crumble",
+      "release_date": "2026-07-29",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "스튜디오킹덤",
+      "publisher": "데브시스터즈",
+      "description": "데브시스터즈의 개발 스튜디오 스튜디오킹덤이 만드는 쿠키런 IP 기반 모바일 방치형 RPG. 흔히 '쿠키런 키우기'로도 불리며, 손대지 않아도 쿠키가 성장하는 키우기 장르의 편의성에 쿠키·펫을 전략적으로 조합하는 재미를 더했다. 6월 29일 구글플레이·앱스토어·갤럭시스토어·원스토어에서 글로벌 사전등록을 시작했고 7월 29일 정식 출시를 앞두고 있다.",
+      "genres": [
+        "방치형",
+        "RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317911",
+      "pre_registration": true,
+      "pre_registration_date": "2026-06-29",
+      "pre_registration_url": "https://pre.cookieruncrumble.com/ko"
     }
   ]
 }
