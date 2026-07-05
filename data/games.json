@@ -788,7 +788,7 @@
       "id": "marvel-tokon-2026",
       "name_ko": "마블 토콘: 파이팅 소울즈",
       "name_en": "MARVEL Tokon: Fighting Souls",
-      "release_date": "2026-08-06",
+      "release_date": "2026-08-07",
       "release_date_approx": false,
       "category": "global_aaa",
       "platforms": [
@@ -797,13 +797,13 @@
       ],
       "developer": "Arc System Works",
       "publisher": "Sony Interactive Entertainment",
-      "description": "길티기어·드래곤볼 파이터즈로 유명한 아크 시스템 웍스가 개발하는 4대4 태그 대전 격투 게임. 마블 슈퍼히어로들이 등장하며, 아크 시스템 웍스 특유의 화려한 2D풍 연출과 팀 기반 전투를 결합했다. PS5와 PC로 출시 예정이다.",
+      "description": "길티기어·드래곤볼 파이터즈로 유명한 아크 시스템 웍스가 개발하는 4대4 태그 대전 격투 게임. 마블 슈퍼히어로들이 등장하며, 아크 시스템 웍스 특유의 화려한 2D풍 연출과 팀 기반 전투를 결합했다. 글로벌은 8월 6일, 한국·일본·호주·뉴질랜드는 8월 7일 출시된다. PS5·PC 크로스플레이를 지원한다.",
       "genres": [
         "격투",
         "대전"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3787240/943fda32c11b3e3f451458ffa95a4adca1f316a4/header.jpg?t=1780942451",
-      "source_url": "https://en.wikipedia.org/wiki/Marvel_Tokon:_Fighting_Souls"
+      "source_url": "https://www.playstation.com/en-us/games/marvel-tokon-fighting-souls/"
     },
     {
       "id": "mgs-master-collection-vol2-2026",
@@ -876,7 +876,7 @@
       "id": "onimusha-way-of-the-sword-2026",
       "name_ko": "귀무자: 검의 길",
       "name_en": "Onimusha: Way of the Sword",
-      "release_date": "2026-09-25",
+      "release_date": "2026-09-04",
       "release_date_approx": false,
       "category": "global_aaa",
       "platforms": [
@@ -886,13 +886,13 @@
       ],
       "developer": "Capcom",
       "publisher": "Capcom",
-      "description": "캡콤 '귀무자' 시리즈의 20여 년 만의 정식 신작으로 2026년 9월 25일 출시 예정이다. 마성의 안개 '말리스'에 뒤덮인 에도 시대 교토를 배경으로, 검호 미야모토 무사시를 주인공 삼아 칼을 휘두르는 다크 판타지 검극 액션을 그린다. 발매에 앞서 체험판이 배포돼 사사키 간류와의 결투 등 검술 액션을 미리 체험할 수 있다. PS5·Xbox 시리즈·PC·스위치2로 출시된다.",
+      "description": "캡콤 '귀무자' 시리즈의 20여 년 만의 정식 신작. 당초 9월 25일 예정이었으나 캡콤이 공식 발표로 3주 앞당겨 2026년 9월 4일 출시로 확정했다. 마성의 안개 '말리스'에 뒤덮인 에도 시대 교토를 배경으로, 검호 미야모토 무사시를 주인공 삼아 칼을 휘두르는 다크 판타지 검극 액션을 그린다. PS5·Xbox 시리즈·PC·스위치2로 출시된다.",
       "genres": [
         "액션",
         "다크 판타지"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2638890/header.jpg",
-      "source_url": "https://www.capcom.co.jp/ir/english/news/html/e260603.html"
+      "source_url": "https://www.capcom.co.jp/ir/english/news/html/e260702.html"
     },
     {
       "id": "ace-combat-8-wings-of-theve-2026",
