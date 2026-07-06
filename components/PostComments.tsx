@@ -35,7 +35,6 @@ export function PostComments({ postId }: { postId: number }) {
   useEffect(() => {
     if (!isSupabaseReady()) { setLoading(false); return; }
     load();
-    try { const s = localStorage.getItem('gcalen.nickname'); if (s) setNickname(s); } catch { /* ignore */ }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
@@ -58,7 +57,6 @@ export function PostComments({ postId }: { postId: number }) {
       setComments(prev => [...prev, out.comment as Comment]);
       setContent('');
       setPassword('');
-      try { localStorage.setItem('gcalen.nickname', nick); } catch { /* ignore */ }
     } catch {
       setError('네트워크 오류예요.');
     } finally {
