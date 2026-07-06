@@ -16,9 +16,10 @@ create table if not exists public.posts (
   pw_hash      text        not null,
   ip_hash      text,
   ip_prefix    text,
-  report_count int         not null default 0,
-  views        int         not null default 0,
-  likes        int         not null default 0,
+  report_count  int        not null default 0,
+  views         int        not null default 0,
+  likes         int        not null default 0,
+  comment_count int        not null default 0,
   is_hidden    boolean     not null default false,
   created_at   timestamptz not null default now()
 );
@@ -29,6 +30,7 @@ alter table public.posts add column if not exists image_url text;
 alter table public.posts add column if not exists ip_prefix text;
 alter table public.posts add column if not exists views int not null default 0;
 alter table public.posts add column if not exists likes int not null default 0;
+alter table public.posts add column if not exists comment_count int not null default 0;
 alter table public.posts alter column nickname set default '익명';
 alter table public.posts alter column content set default '';
 alter table public.posts drop constraint if exists posts_category_chk;
@@ -43,7 +45,7 @@ drop policy if exists posts_select_public on public.posts;
 create policy posts_select_public on public.posts for select using (is_hidden = false);
 
 revoke all on public.posts from anon, authenticated;
-grant select (id, title, nickname, content, category, image_url, ip_prefix, report_count, views, likes, created_at)
+grant select (id, title, nickname, content, category, image_url, ip_prefix, report_count, views, likes, comment_count, created_at)
   on public.posts to anon, authenticated;
 
 -- ── post_comments ────────────────────────────────────────
@@ -163,6 +165,26 @@ declare n int; begin
   delete from public.post_comments where id=p_id and pw_hash=p_pw_hash;
   get diagnostics n = row_count; return n;
 end; $$;
+
+-- 댓글수 자동 집계(트리거) → posts.comment_count. 목록에서 임베드 없이 컬럼으로 바로 사용.
+create or replace function public.sync_comment_count()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if TG_OP = 'INSERT' then
+    update public.posts set comment_count = comment_count + 1 where id = NEW.post_id;
+  elsif TG_OP = 'DELETE' then
+    update public.posts set comment_count = greatest(comment_count - 1, 0) where id = OLD.post_id;
+  end if;
+  return null;
+end; $$;
+drop trigger if exists trg_comment_count on public.post_comments;
+create trigger trg_comment_count
+  after insert or delete on public.post_comments
+  for each row execute function public.sync_comment_count();
+
+-- 기존 댓글 수 백필(재실행해도 정확히 맞춰짐)
+update public.posts p
+  set comment_count = (select count(*) from public.post_comments c where c.post_id = p.id);
 
 grant execute on function public.create_post(text,text,text,text,text,text,text) to anon, authenticated;
 grant execute on function public.delete_post(bigint,text)                        to anon, authenticated;

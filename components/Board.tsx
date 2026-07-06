@@ -7,12 +7,7 @@ import styles from './Board.module.css';
 
 const PAGE = 15;
 const MAX_DIM = 1280;
-const SELECT = 'id,title,nickname,content,created_at,report_count,image_url,ip_prefix,category,views,likes,post_comments(count)';
-
-interface RawRow { post_comments?: { count: number }[]; [k: string]: unknown; }
-function normalize(rows: RawRow[]): Post[] {
-  return rows.map(r => ({ ...r, comment_count: r.post_comments?.[0]?.count ?? 0 })) as unknown as Post[];
-}
+const SELECT = 'id,title,nickname,content,created_at,report_count,image_url,ip_prefix,category,views,likes,comment_count';
 
 export function Board() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -39,7 +34,7 @@ export function Board() {
     if (cat) q = q.eq('category', cat);
     const { data, error: e } = await q.range(from, from + PAGE - 1);
     if (e) { setError('글을 불러올 수 없어요.'); return; }
-    const rows = normalize((data as RawRow[]) ?? []);
+    const rows = (data as Post[]) ?? [];
     setHasMore(rows.length === PAGE);
     setPosts(prev => (replace ? rows : [...prev, ...rows]));
   }
