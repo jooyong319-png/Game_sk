@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-05",
+  "last_updated": "2026-07-06",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2295,6 +2295,27 @@
       "pre_registration": true,
       "pre_registration_date": "2026-06-29",
       "pre_registration_url": "https://pre.cookieruncrumble.com/ko"
+    },
+    {
+      "id": "samgukji-chunhagyeoljeon-20260702",
+      "name_ko": "삼국지: 천하결전",
+      "name_en": "Three Kingdoms: Conquest",
+      "release_date": "2026-07-02",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "빌리빌리게임즈",
+      "publisher": "빌리빌리게임즈",
+      "description": "빌리빌리게임즈가 국내 서비스하는 삼국지 소재 대규모 전략 시뮬레이션(SLG). 진군·청낭·기좌·천공·신행·병참 6대 직업 시스템을 통한 전략적 부대 편성과 동맹 중심의 대규모 실시간 공성전이 특징이다. 자원·가속·VIP 판매를 배제한 과금 구조를 내세웠으며, 국내 사전예약 100만 명을 돌파해 2026년 7월 2일 정식 출시됐다.",
+      "genres": [
+        "전략",
+        "SLG"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/rG1RyXnhrSZk0-Huvu-x4lLJivzk5QgQ2w9-5LYFHGUsEJG2suk-SbLFT7Nkuz99Y56lXBkKfRudyoUWthbY=s512",
+      "source_url": "https://www.gamemeca.com/en/view.php?gid=1776429"
     }
   ]
 }
