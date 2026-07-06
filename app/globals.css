@@ -633,6 +633,20 @@ textarea:focus-visible,
 .seo-intro li { margin-bottom: 0.3rem; line-height: 1.6; }
 .seo-count { color: var(--text-faint); font-size: var(--fs-sm); margin-bottom: 1rem; }
 
+/* ─── 양옆 여백 고정 광고 (side rail) ─── */
+.side-rail { position: fixed; top: 110px; width: 160px; z-index: 5; }
+.side-rail-left  { left:  calc((100vw - 1260px) / 2 - 176px); }
+.side-rail-right { right: calc((100vw - 1260px) / 2 - 176px); }
+.side-rail-ph {
+  width: 160px; height: 600px;
+  display: flex; flex-direction: column; gap: 0.3rem;
+  align-items: center; justify-content: center;
+  color: var(--text-faint); font-size: 0.8rem; text-align: center; line-height: 1.4;
+  border: 1px dashed var(--border); border-radius: 10px; background: var(--bg-elev);
+}
+/* 여백이 부족한 화면에선 숨김(콘텐츠 안 가리게) */
+@media (max-width: 1649px) { .side-rail { display: none; } }
+
 /* ─── 자유게시판 (/board) ─── */
 .board-page h1 { font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
 .board-intro { color: var(--text-faint); line-height: 1.7; margin-bottom: 1.2rem; font-size: var(--fs-sm); }

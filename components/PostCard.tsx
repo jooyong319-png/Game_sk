@@ -13,17 +13,22 @@ export interface Post {
   image_url: string | null;
   ip_prefix: string | null;
   category: string | null;
+  views: number;
+  likes: number;
+  comment_count: number;
 }
 
 interface Props {
   post: Post;
   href?: string;                    // 있으면 제목·이미지·본문 클릭 시 상세로 이동
+  liked?: boolean;
+  onLike?: (id: number) => void;
   onReport?: (id: number) => void;
   onDelete?: (id: number) => void;
 }
 
 // 게시글 카드 — 피드/상세 공용. 제목 중심(작성자는 익명).
-export function PostCard({ post: p, href, onReport, onDelete }: Props) {
+export function PostCard({ post: p, href, liked, onLike, onReport, onDelete }: Props) {
   const [imgError, setImgError] = useState(false);
   const showImg = p.image_url && !imgError;
   const realTitle = p.title?.trim();
@@ -54,6 +59,8 @@ export function PostCard({ post: p, href, onReport, onDelete }: Props) {
           {p.ip_prefix && <span className={styles.cardIp}>({p.ip_prefix})</span>}
           <span className={styles.metaDot}>·</span>
           <time className={styles.cardDate}>{formatRelative(p.created_at)}</time>
+          <span className={styles.metaDot}>·</span>
+          <span>조회 {p.views}</span>
         </div>
       </header>
 
@@ -63,12 +70,19 @@ export function PostCard({ post: p, href, onReport, onDelete }: Props) {
         <>{media}{body}</>
       )}
 
-      {(onReport || onDelete) && (
-        <footer className={styles.cardActions}>
-          {onReport && <button type="button" className={styles.act} onClick={() => onReport(p.id)}>신고</button>}
-          {onDelete && <button type="button" className={styles.act} onClick={() => onDelete(p.id)}>삭제</button>}
-        </footer>
-      )}
+      <footer className={styles.cardActions}>
+        {onLike && (
+          <button type="button" className={`${styles.stat} ${liked ? styles.statOn : ''}`} onClick={() => onLike(p.id)}>
+            <svg className="ic" aria-hidden="true"><use href="#ic-thumbs-up" /></svg> {p.likes}
+          </button>
+        )}
+        <span className={styles.stat}>
+          <svg className="ic" aria-hidden="true"><use href="#ic-comment" /></svg> {p.comment_count}
+        </span>
+        <span className={styles.actSpacer} />
+        {onReport && <button type="button" className={styles.act} onClick={() => onReport(p.id)}>신고</button>}
+        {onDelete && <button type="button" className={styles.act} onClick={() => onDelete(p.id)}>삭제</button>}
+      </footer>
     </article>
   );
 }

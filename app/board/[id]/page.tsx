@@ -17,13 +17,15 @@ interface PostRow {
   image_url: string | null;
   ip_prefix: string | null;
   category: string | null;
+  views: number;
+  likes: number;
 }
 
 async function getPost(id: number): Promise<PostRow | null> {
   if (!supabase || !Number.isFinite(id)) return null;
   const { data } = await supabase
     .from('posts')
-    .select('id,title,nickname,content,created_at,image_url,ip_prefix,category')
+    .select('id,title,nickname,content,created_at,image_url,ip_prefix,category,views,likes')
     .eq('id', id)
     .maybeSingle(); // RLS가 숨김글은 자동 제외 → 없으면 null
   return (data as PostRow) ?? null;
@@ -97,13 +99,15 @@ export default async function BoardPostPage({ params }: { params: { id: string }
                     {post.ip_prefix && <span className={boardStyles.cardIp}>({post.ip_prefix})</span>}
                     <span className={boardStyles.metaDot}>·</span>
                     <time className={boardStyles.cardDate}>{formatRelative(post.created_at)}</time>
+                    <span className={boardStyles.metaDot}>·</span>
+                    <span>조회 {post.views}</span>
                   </div>
                 </header>
                 {post.image_url && (
                   <div className={boardStyles.media}><img src={post.image_url} alt={postTitle(post)} /></div>
                 )}
                 {post.title?.trim() && post.content && <p className={boardStyles.cardBody}>{post.content}</p>}
-                <PostActions postId={id} />
+                <PostActions postId={id} likes={post.likes} />
               </article>
 
               <PostComments postId={id} />

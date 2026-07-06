@@ -4,6 +4,7 @@ import { HeaderNav } from '@/components/HeaderNav';
 // 왼쪽 플로팅 위젯(N월 출시/사전예약): 재작업 예정, 임시 주석 (재사용 가능)
 // import { FloatingMonthStats } from '@/components/FloatingMonthStats';
 import { BottomTabBar } from '@/components/BottomTabBar';
+import { SideRailAds } from '@/components/SideRailAds';
 import { HeaderScroll } from '@/components/HeaderScroll';
 import { Toaster } from '@/components/Toaster';
 import { PushSync } from '@/components/PushSync';
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main id="main">{children}</main>
         {/* <FloatingMonthStats /> 재작업 예정, 임시 비활성 */}
+        <SideRailAds />
         <BottomTabBar />
         <HeaderScroll />
         <Toaster />

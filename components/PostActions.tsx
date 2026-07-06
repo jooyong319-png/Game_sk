@@ -1,11 +1,38 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import styles from './Board.module.css';
 
-// 상세페이지 게시글 신고/삭제 (서버 렌더된 글 아래 붙는 클라 액션바).
-export function PostActions({ postId }: { postId: number }) {
+// 상세페이지 좋아요/신고/삭제 + 진입 시 조회수 +1.
+export function PostActions({ postId, likes: initialLikes }: { postId: number; likes: number }) {
   const router = useRouter();
+  const [likes, setLikes] = useState(initialLikes);
+  const [liked, setLiked] = useState(false);
+
+  // 조회수 +1 (브라우저당 1회) + 좋아요 상태 복원
+  useEffect(() => {
+    try {
+      const viewed: number[] = JSON.parse(localStorage.getItem('gcalen.viewed') || '[]');
+      if (!viewed.includes(postId)) {
+        supabase?.rpc('bump_views', { p_id: postId });
+        localStorage.setItem('gcalen.viewed', JSON.stringify([...new Set([...viewed, postId])]));
+      }
+      const likedArr: number[] = JSON.parse(localStorage.getItem('gcalen.liked') || '[]');
+      setLiked(likedArr.includes(postId));
+    } catch { /* ignore */ }
+  }, [postId]);
+
+  async function onLike() {
+    if (liked || !supabase) return;
+    setLiked(true);
+    setLikes(n => n + 1);
+    try {
+      const arr: number[] = JSON.parse(localStorage.getItem('gcalen.liked') || '[]');
+      localStorage.setItem('gcalen.liked', JSON.stringify([...new Set([...arr, postId])]));
+    } catch { /* ignore */ }
+    await supabase.rpc('like_post', { p_id: postId });
+  }
 
   async function onReport() {
     const key = 'gcalen.reported';
@@ -39,6 +66,10 @@ export function PostActions({ postId }: { postId: number }) {
 
   return (
     <div className={styles.cardActions}>
+      <button type="button" className={`${styles.stat} ${liked ? styles.statOn : ''}`} onClick={onLike}>
+        <svg className="ic" aria-hidden="true"><use href="#ic-thumbs-up" /></svg> {likes}
+      </button>
+      <span className={styles.actSpacer} />
       <button type="button" className={styles.act} onClick={onReport}>신고</button>
       <button type="button" className={styles.act} onClick={onDelete}>삭제</button>
     </div>

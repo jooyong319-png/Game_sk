@@ -7,7 +7,12 @@ import styles from './Board.module.css';
 
 const PAGE = 15;
 const MAX_DIM = 1280;
-const SELECT = 'id,title,nickname,content,created_at,report_count,image_url,ip_prefix,category';
+const SELECT = 'id,title,nickname,content,created_at,report_count,image_url,ip_prefix,category,views,likes,post_comments(count)';
+
+interface RawRow { post_comments?: { count: number }[]; [k: string]: unknown; }
+function normalize(rows: RawRow[]): Post[] {
+  return rows.map(r => ({ ...r, comment_count: r.post_comments?.[0]?.count ?? 0 })) as unknown as Post[];
+}
 
 export function Board() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -15,6 +20,7 @@ export function Board() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [activeCat, setActiveCat] = useState<string | null>(null); // null = 전체
+  const [liked, setLiked] = useState<Set<number>>(new Set());
 
   const [writeOpen, setWriteOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -33,7 +39,7 @@ export function Board() {
     if (cat) q = q.eq('category', cat);
     const { data, error: e } = await q.range(from, from + PAGE - 1);
     if (e) { setError('글을 불러올 수 없어요.'); return; }
-    const rows = (data as Post[]) ?? [];
+    const rows = normalize((data as RawRow[]) ?? []);
     setHasMore(rows.length === PAGE);
     setPosts(prev => (replace ? rows : [...prev, ...rows]));
   }
@@ -41,8 +47,20 @@ export function Board() {
   useEffect(() => {
     if (!isSupabaseReady()) { setLoading(false); return; }
     loadPage(0, true, null).finally(() => setLoading(false));
+    try { setLiked(new Set(JSON.parse(localStorage.getItem('gcalen.liked') || '[]'))); } catch { /* ignore */ }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function onLike(id: number) {
+    if (liked.has(id) || !supabase) return;
+    setLiked(prev => new Set(prev).add(id));
+    setPosts(prev => prev.map(p => (p.id === id ? { ...p, likes: p.likes + 1 } : p)));
+    try {
+      const arr: number[] = JSON.parse(localStorage.getItem('gcalen.liked') || '[]');
+      localStorage.setItem('gcalen.liked', JSON.stringify([...new Set([...arr, id])]));
+    } catch { /* ignore */ }
+    await supabase.rpc('like_post', { p_id: id });
+  }
 
   // 모달 열림 시 Esc 닫기 + 스크롤 잠금
   useEffect(() => {
@@ -208,7 +226,8 @@ export function Board() {
           <p className={styles.empty}>아직 글이 없어요. 첫 글을 남겨보세요!</p>
         ) : (
           posts.map(p => (
-            <PostCard key={p.id} post={p} href={`/board/${p.id}`} onReport={onReport} onDelete={onDelete} />
+            <PostCard key={p.id} post={p} href={`/board/${p.id}`}
+              liked={liked.has(p.id)} onLike={onLike} onReport={onReport} onDelete={onDelete} />
           ))
         )}
       </div>

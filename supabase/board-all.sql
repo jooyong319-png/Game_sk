@@ -17,6 +17,8 @@ create table if not exists public.posts (
   ip_hash      text,
   ip_prefix    text,
   report_count int         not null default 0,
+  views        int         not null default 0,
+  likes        int         not null default 0,
   is_hidden    boolean     not null default false,
   created_at   timestamptz not null default now()
 );
@@ -25,6 +27,8 @@ alter table public.posts add column if not exists title text;
 alter table public.posts add column if not exists category text not null default 'chat';
 alter table public.posts add column if not exists image_url text;
 alter table public.posts add column if not exists ip_prefix text;
+alter table public.posts add column if not exists views int not null default 0;
+alter table public.posts add column if not exists likes int not null default 0;
 alter table public.posts alter column nickname set default '익명';
 alter table public.posts alter column content set default '';
 alter table public.posts drop constraint if exists posts_category_chk;
@@ -39,7 +43,7 @@ drop policy if exists posts_select_public on public.posts;
 create policy posts_select_public on public.posts for select using (is_hidden = false);
 
 revoke all on public.posts from anon, authenticated;
-grant select (id, title, nickname, content, category, image_url, ip_prefix, report_count, created_at)
+grant select (id, title, nickname, content, category, image_url, ip_prefix, report_count, views, likes, created_at)
   on public.posts to anon, authenticated;
 
 -- ── post_comments ────────────────────────────────────────
@@ -123,6 +127,20 @@ begin
     is_hidden = (report_count + 1 >= 8) or is_hidden where id = p_id;
 end; $$;
 
+-- 조회수 +1
+create or replace function public.bump_views(p_id bigint)
+returns void language sql security definer set search_path = public as $$
+  update public.posts set views = views + 1 where id = p_id;
+$$;
+
+-- 좋아요 +1 (새 likes 값 반환)
+create or replace function public.like_post(p_id bigint)
+returns int language plpgsql security definer set search_path = public as $$
+declare n int; begin
+  update public.posts set likes = likes + 1 where id = p_id returning likes into n;
+  return n;
+end; $$;
+
 create or replace function public.create_comment(
   p_post_id bigint, p_nickname text, p_content text, p_pw_hash text, p_ip_hash text, p_ip_prefix text
 ) returns public.post_comments
@@ -149,6 +167,8 @@ end; $$;
 grant execute on function public.create_post(text,text,text,text,text,text,text) to anon, authenticated;
 grant execute on function public.delete_post(bigint,text)                        to anon, authenticated;
 grant execute on function public.report_post(bigint)                             to anon, authenticated;
+grant execute on function public.bump_views(bigint)                              to anon, authenticated;
+grant execute on function public.like_post(bigint)                               to anon, authenticated;
 grant execute on function public.create_comment(bigint,text,text,text,text,text) to anon, authenticated;
 grant execute on function public.delete_comment(bigint,text)                     to anon, authenticated;
 

@@ -61,6 +61,9 @@ export async function POST(req: Request) {
       image_url: row.image_url ?? null,
       ip_prefix: row.ip_prefix ?? null,
       category: row.category ?? 'chat',
+      views: row.views ?? 0,
+      likes: row.likes ?? 0,
+      comment_count: 0,
     },
   });
 }

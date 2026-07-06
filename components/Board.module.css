@@ -207,12 +207,23 @@ a.titleLink:hover .postTitle { color: var(--accent); }
 }
 .card .media + .cardBody { padding-top: 0.75rem; }
 
-.cardActions { display: flex; justify-content: flex-end; gap: 0.9rem; padding: 0.2rem 1rem 0.7rem; }
+.cardActions { display: flex; align-items: center; gap: 0.8rem; padding: 0.35rem 1rem 0.7rem; }
 .act {
   background: none; border: none; color: var(--text-faint);
   font-size: 0.76rem; cursor: pointer; padding: 0.1rem 0.2rem; transition: color 0.15s;
 }
 .act:hover { color: var(--text); }
+.actSpacer { flex: 1 1 auto; }
+/* 좋아요·댓글수 지표 */
+.stat {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: none; border: none; padding: 0.15rem 0.2rem;
+  font-size: 0.8rem; font-weight: 600; color: var(--text-faint);
+  cursor: pointer; transition: color 0.15s;
+}
+.stat .ic { width: 15px; height: 15px; }
+button.stat:hover { color: var(--accent-warm); }
+.statOn { color: var(--accent-warm); }
 
 .more {
   align-self: center;
