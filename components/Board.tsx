@@ -7,7 +7,7 @@ import styles from './Board.module.css';
 
 const PAGE = 15;
 const MAX_DIM = 1280;
-const SELECT = 'id,nickname,content,created_at,report_count,image_url,ip_prefix,category';
+const SELECT = 'id,title,nickname,content,created_at,report_count,image_url,ip_prefix,category';
 
 export function Board() {
   const [posts, setPosts] = useState<Post[]>([]);

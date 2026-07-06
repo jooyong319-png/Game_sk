@@ -32,7 +32,7 @@ export function PostCard({ post: p, href, onReport, onDelete }: Props) {
   const showBody = !!(realTitle && p.content);
 
   const media = showImg ? (
-    <div className={styles.media}>
+    <div className={styles.mediaThumb}>
       <img src={p.image_url!} alt="" loading="lazy" onError={() => setImgError(true)} />
     </div>
   ) : null;
