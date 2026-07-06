@@ -2316,6 +2316,27 @@
       ],
       "image_url": "https://play-lh.googleusercontent.com/rG1RyXnhrSZk0-Huvu-x4lLJivzk5QgQ2w9-5LYFHGUsEJG2suk-SbLFT7Nkuz99Y56lXBkKfRudyoUWthbY=s512",
       "source_url": "https://www.gamemeca.com/en/view.php?gid=1776429"
+    },
+    {
+      "id": "arthdal-server-newworld-20260714",
+      "name_ko": "아스달 연대기: 세 개의 세력 - 신규 서버 'NEW WORLD' 오픈",
+      "name_en": null,
+      "release_date": "2026-07-14",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": null,
+      "publisher": "넷마블",
+      "description": "넷마블의 크로스플랫폼 MMORPG '아스달 연대기'가 여는 신규 서버. 유료 소환 뽑기 4종을 없앤 '파밍 중심' 서버로, 정령·탑승물·무기 외형 소환권을 필드 탐험과 콘텐츠 플레이만으로 획득하도록 운영 방식을 개편했다. 2026년 7월 14일 오픈하며, 이에 앞서 공식 사이트에서 사전등록을 진행한다.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a5/37/c5/a537c519-66d4-42d3-1b97-299176d5602c/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
+      "source_url": "https://www.betanews.net/article/view/beta202607030037"
     }
   ]
 }
