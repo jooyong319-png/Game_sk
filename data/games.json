@@ -2381,6 +2381,28 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=318032"
+    },
+    {
+      "id": "tower-of-god-3rd-anniv-20260722",
+      "name_ko": "신의 탑: 새로운 세계 - 서비스 3주년 대규모 업데이트",
+      "name_en": "Tower of God: NEW WORLD",
+      "release_date": "2026-07-22",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS",
+        "Windows"
+      ],
+      "developer": null,
+      "publisher": "넷마블",
+      "description": "넷마블의 수집형 RPG '신의 탑: 새로운 세계'가 진행하는 서비스 3주년 기념 대규모 업데이트. 신규 동료 '레펠리스타'(SSR+) 추가를 시작으로 3주년 콘텐츠와 접속 보상 이벤트가 준비되며, 업데이트에 앞서 사전 등록을 받는다. 2026년 7월 22일 적용 예정이다.",
+      "genres": [
+        "수집형 RPG",
+        "대규모 업데이트"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/0iNlsT9AMnxLalmfGIrDQor5kEkrG8NrY0lzxI-zLCOHRQdJkTUJXt3Ry4PudQxaRf6z4ofvw2AYPBuwyrkLMQ=s512",
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305676"
     }
   ]
 }
