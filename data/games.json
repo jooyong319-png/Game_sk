@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-06",
+  "last_updated": "2026-07-07",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2337,6 +2337,50 @@
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a5/37/c5/a537c519-66d4-42d3-1b97-299176d5602c/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
       "source_url": "https://www.betanews.net/article/view/beta202607030037"
+    },
+    {
+      "id": "doom-dark-ages-revelations-20260708",
+      "name_ko": "둠: 더 다크 에이지스 - 레벨레이션스 (DLC)",
+      "name_en": "DOOM: The Dark Ages - Revelations",
+      "release_date": "2026-07-08",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "id Software",
+      "publisher": "Bethesda Softworks",
+      "description": "'둠: 더 다크 에이지스'의 첫 캠페인 확장팩. 얼어붙은 지옥을 배경으로 슬레이어 전설의 새로운 장을 그리는 신규 캠페인을 담았다. XBOX 쇼케이스에서 공개됐으며 국내 기준 7월 8일 출시된다. 프리미엄 에디션·컬렉터즈 번들 구매자는 추가 비용 없이 이용할 수 있다.",
+      "genres": [
+        "FPS",
+        "액션",
+        "DLC"
+      ],
+      "image_url": null,
+      "source_url": "https://www.gamemeca.com/view.php?gid=1776165"
+    },
+    {
+      "id": "the-relic-first-guardian-20260731",
+      "name_ko": "더 렐릭: 퍼스트 가디언",
+      "name_en": "The Relic: First Guardian",
+      "release_date": "2026-07-31",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC",
+        "PS5"
+      ],
+      "developer": "프로젝트 클라우드 게임즈",
+      "publisher": "프로젝트 클라우드 게임즈",
+      "description": "한국 설화를 재해석해 녹여낸 다크 판타지 액션 RPG. 레벨 대신 장비와 유물로 자신만의 빌드를 구축하는 성장 방식이 특징이다. 약 6년의 개발을 거쳐 7월 31일 PS5와 PC(스팀)로 먼저 출시되며, Xbox Series X|S와 닌텐도 스위치2 버전은 여름 후반 출시가 예정돼 있다.",
+      "genres": [
+        "액션 RPG",
+        "다크 판타지"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=318032"
     }
   ]
 }
