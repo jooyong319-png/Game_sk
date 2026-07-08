@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug, getRelatedPosts, markdownToHtml, formatPostDate } from '@/lib/blog';
 import { PageShell } from '@/components/PageShell';
 import { ViewCounter } from '@/components/ViewCounter';
+import { BlogImg } from '@/components/BlogImg';
 import styles from '../blog.module.css';
 
 interface Props { params: { slug: string }; }
@@ -83,11 +84,7 @@ export default async function BlogPostPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <article className={styles.post}>
         <Link href="/blog" className={styles.backLink}>← 신작 가이드 목록으로</Link>
-        {post.heroImage && (
-          <div className={styles.hero}>
-            <img src={post.heroImage} alt={post.title} loading="eager" />
-          </div>
-        )}
+        {post.heroImage && <BlogImg src={post.heroImage} containerClassName={styles.hero} alt={post.title} eager />}
         <header className={styles.postHeader}>
           <time className={styles.postDate}>{formatPostDate(post.date)}</time>
           <h1 className={styles.postH1}>{post.title}</h1>
@@ -108,11 +105,7 @@ export default async function BlogPostPage({ params }: Props) {
               {related.map(r => (
                 <li key={r.slug} className={styles.relatedCard}>
                   <Link href={`/blog/${r.slug}`} className={styles.relatedLink}>
-                    {r.heroImage && (
-                      <div className={styles.relatedThumb}>
-                        <img src={r.heroImage} alt="" aria-hidden="true" loading="lazy" />
-                      </div>
-                    )}
+                    {r.heroImage && <BlogImg src={r.heroImage} containerClassName={styles.relatedThumb} />}
                     <div className={styles.relatedBody}>
                       <time className={styles.relatedDate}>{formatPostDate(r.date)}</time>
                       <span className={styles.relatedName}>{r.title}</span>

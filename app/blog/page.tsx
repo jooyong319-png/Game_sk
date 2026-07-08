@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllPosts, formatPostDate } from '@/lib/blog';
 import { PageShell } from '@/components/PageShell';
+import { BlogImg } from '@/components/BlogImg';
 import styles from './blog.module.css';
 
 export const metadata: Metadata = {
@@ -35,11 +36,7 @@ export default async function BlogIndexPage() {
             {posts.map(p => (
               <li key={p.slug} className={p.heroImage ? `${styles.postCard} ${styles.postCardThumb}` : styles.postCard}>
                 <Link href={`/blog/${p.slug}`} className={styles.postLink}>
-                  {p.heroImage && (
-                    <div className={styles.thumb}>
-                      <img src={p.heroImage} alt="" aria-hidden="true" loading="lazy" />
-                    </div>
-                  )}
+                  {p.heroImage && <BlogImg src={p.heroImage} containerClassName={styles.thumb} />}
                   <div className={styles.postCardBody}>
                     <time className={styles.postDate}>{formatPostDate(p.date)}</time>
                     <h3 className={styles.postTitle}>{p.title}</h3>
