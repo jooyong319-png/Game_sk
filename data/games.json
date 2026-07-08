@@ -2423,6 +2423,28 @@
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4570720/header.jpg",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317266",
       "pre_registration": false
+    },
+    {
+      "id": "architect-twisted-paradise-part1-20260701",
+      "name_ko": "아키텍트: 랜드 오브 엑자일 - 신규 지역 '뒤틀린 도원향' 파트1 업데이트",
+      "name_en": "Architect: Land of Exile",
+      "release_date": "2026-07-01",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "드림에이지",
+      "publisher": "드림에이지",
+      "description": "드림에이지가 서비스하는 언리얼 엔진 5 기반 오픈월드 MMORPG '아키텍트'의 다섯 번째 지역 대규모 업데이트다. 동양 설화 속 신수를 모티프로 한 '뒤틀린 도원향'이 파트1로 공개되며, 해당 지역에서만 적용되는 '침식' 디버프를 극복하는 성장 콘텐츠와 필드 보스 '혈흔 사냥꾼 다무라디드'가 등장한다. 7월 15일까지 처치 미션 등 출시 기념 이벤트가 진행된다.",
+      "genres": [
+        "MMORPG",
+        "대형 업데이트"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/14-XxuLjk7eu2EfkeJ41qz3dcSUgWdfE517sYAbmbQtK8czfG_FP7uiWAW6DGabyavmIRv9uG45xC-VQe3LuUw=s512",
+      "source_url": "https://www.betanews.net/article/view/beta202607010046"
     }
   ]
 }
