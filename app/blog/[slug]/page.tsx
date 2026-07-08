@@ -5,6 +5,7 @@ import { getAllPosts, getPostBySlug, getRelatedPosts, markdownToHtml, formatPost
 import { PageShell } from '@/components/PageShell';
 import { ViewCounter } from '@/components/ViewCounter';
 import { BlogImg } from '@/components/BlogImg';
+import { BlogHero } from '@/components/BlogHero';
 import styles from '../blog.module.css';
 
 interface Props { params: { slug: string }; }
@@ -84,7 +85,7 @@ export default async function BlogPostPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <article className={styles.post}>
         <Link href="/blog" className={styles.backLink}>← 신작 가이드 목록으로</Link>
-        {post.heroImage && <BlogImg src={post.heroImage} containerClassName={styles.hero} alt={post.title} eager />}
+        {post.heroImage && <BlogHero src={post.heroImage} alt={post.title} />}
         <header className={styles.postHeader}>
           <time className={styles.postDate}>{formatPostDate(post.date)}</time>
           <h1 className={styles.postH1}>{post.title}</h1>

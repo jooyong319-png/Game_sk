@@ -148,23 +148,7 @@
   .thumb img { height: 160px; min-height: 160px; }
 }
 
-/* ===== 상세 히어로 이미지 ===== */
-.hero {
-  margin: 0 0 1.5rem;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--bg-elev);
-}
-.hero img {
-  width: 100%;
-  height: 320px;
-  object-fit: contain;   /* 자르지 않고 비율 유지, 여백은 .hero 배경(카드색) */
-  display: block;
-}
-@media (max-width: 600px) {
-  .hero img { height: 200px; }
-}
+/* 상세 히어로 이미지는 components/BlogHero(블러 배경 + contain)로 분리 */
 
 /* ===== 관련 글 ===== */
 .related {
