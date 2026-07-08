@@ -19,6 +19,8 @@ tags: [닌텐도, 스위치2, 스타폭스, 스플래툰, 콘솔게임]
 - [디지몬 스토리: 타임 스트레인저](/game/digimon-time-stranger-switch-2026) (7월 10일 · Media.Vision) — '디지몬 스토리' 시리즈의 신작 RPG. 스위치·스위치2 양쪽을 지원합니다.
 - [모스: 더 포가튼 렐릭](/game/moss-the-forgotten-relic-20260716) (7월 16일 · Polyarc) — VR로 호평받은 '모스' 시리즈의 신작으로, 멀티플랫폼 출시 라인업에 스위치2가 포함됩니다.
 - [라타탄](/game/ratatan-2026) (7월 16일 · Ratata Arts) — '파타퐁' 제작진이 참여한 리듬 액션. 독특한 콘셉트로 마니아층의 기대를 모으고 있습니다.
+- [P의 거짓: 컴플리트 에디션](/game/lies-of-p-complete-edition-switch2-20260806) (8월 6일 · 네오위즈) — 국산 소울라이크 명작 'P의 거짓'이 DLC까지 담은 완전판으로 스위치2에 합류합니다.
+- [엘든 링 타니쉬드 에디션 (Switch 2)](/game/elden-ring-tarnished-edition-switch2-20260828) (8월 28일 · FromSoftware) — 소울라이크 대명사 '엘든 링'을 확장팩까지 묶어 휴대용으로 즐길 수 있는 스위치2 이식판입니다.
 
 ## 스위치2, 지금 주목할 이유
 
