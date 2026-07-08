@@ -1,6 +1,7 @@
 // server-only: 이 파일은 fs를 쓰므로 서버 컴포넌트에서만 import
 import path from 'path';
 import { promises as fs } from 'fs';
+import { getAllGames } from './games';
 
 export interface BlogPost {
   slug: string;
@@ -9,6 +10,8 @@ export interface BlogPost {
   date: string;             // 'YYYY-MM-DD'
   tags: string[];
   content: string;          // markdown 본문 (frontmatter 제외)
+  heroGameId: string | null;   // 본문 첫 /game/<id> 링크의 게임 id
+  heroImage: string | null;    // 위 게임의 대표 이미지 (없으면 null)
 }
 
 // 단순 frontmatter 파서 (gray-matter 없이)
@@ -34,6 +37,12 @@ function parseFrontmatter(raw: string): { meta: Record<string, string | string[]
   return { meta, body };
 }
 
+// 본문에서 첫 번째 내부 게임 링크(/game/<id>)의 id를 추출
+export function firstGameId(content: string): string | null {
+  const m = content.match(/\]\(\/game\/([^)\s#?]+)\)/);
+  return m ? m[1] : null;
+}
+
 async function readAllPosts(): Promise<BlogPost[]> {
   const dir = path.join(process.cwd(), 'content', 'blog');
   try {
@@ -51,8 +60,24 @@ async function readAllPosts(): Promise<BlogPost[]> {
         date: String(meta.date ?? '1970-01-01'),
         tags: Array.isArray(meta.tags) ? meta.tags : [],
         content: body,
+        heroGameId: null,
+        heroImage: null,
       });
     }
+
+    // 본문 첫 게임 링크 → 대표 이미지 자동 매핑 (게임 데이터 조인)
+    try {
+      const games = await getAllGames();
+      const imgById = new Map(games.map(g => [g.id, g.image_url]));
+      for (const p of posts) {
+        const gid = firstGameId(p.content);
+        p.heroGameId = gid;
+        p.heroImage = gid ? (imgById.get(gid) ?? null) : null;
+      }
+    } catch {
+      // 게임 데이터 로드 실패 시 이미지 없이 진행 (글은 정상 노출)
+    }
+
     // 날짜 내림차순 (최신 먼저)
     return posts.sort((a, b) => b.date.localeCompare(a.date));
   } catch (e) {
@@ -70,6 +95,19 @@ export function getAllPosts(): Promise<BlogPost[]> {
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const all = await getAllPosts();
   return all.find(p => p.slug === slug) ?? null;
+}
+
+// 관련 글 추천: 태그 겹침 수 desc → 최신 desc. 자기 자신 제외.
+export async function getRelatedPosts(slug: string, limit = 3): Promise<BlogPost[]> {
+  const all = await getAllPosts();
+  const current = all.find(p => p.slug === slug);
+  if (!current) return [];
+  const tagSet = new Set(current.tags);
+  const scored = all
+    .filter(p => p.slug !== slug)
+    .map(p => ({ p, overlap: p.tags.filter(t => tagSet.has(t)).length }))
+    .sort((a, b) => b.overlap - a.overlap || b.p.date.localeCompare(a.p.date));
+  return scored.slice(0, limit).map(s => s.p);
 }
 
 // 간단한 마크다운 → HTML 변환 (외부 라이브러리 없이)

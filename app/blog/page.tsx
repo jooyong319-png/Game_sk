@@ -33,18 +33,25 @@ export default async function BlogIndexPage() {
         ) : (
           <ul className={styles.postList}>
             {posts.map(p => (
-              <li key={p.slug} className={styles.postCard}>
+              <li key={p.slug} className={p.heroImage ? `${styles.postCard} ${styles.postCardThumb}` : styles.postCard}>
                 <Link href={`/blog/${p.slug}`} className={styles.postLink}>
-                  <time className={styles.postDate}>{formatPostDate(p.date)}</time>
-                  <h3 className={styles.postTitle}>{p.title}</h3>
-                  {p.description && <p className={styles.postDesc}>{p.description}</p>}
-                  {p.tags.length > 0 && (
-                    <div className={styles.postTags}>
-                      {p.tags.map(t => (
-                        <span key={t} className={styles.tag}>#{t}</span>
-                      ))}
+                  {p.heroImage && (
+                    <div className={styles.thumb}>
+                      <img src={p.heroImage} alt="" aria-hidden="true" loading="lazy" />
                     </div>
                   )}
+                  <div className={styles.postCardBody}>
+                    <time className={styles.postDate}>{formatPostDate(p.date)}</time>
+                    <h3 className={styles.postTitle}>{p.title}</h3>
+                    {p.description && <p className={styles.postDesc}>{p.description}</p>}
+                    {p.tags.length > 0 && (
+                      <div className={styles.postTags}>
+                        {p.tags.map(t => (
+                          <span key={t} className={styles.tag}>#{t}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </Link>
               </li>
             ))}

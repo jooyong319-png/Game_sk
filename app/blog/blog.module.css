@@ -120,3 +120,79 @@
   .title { font-size: 1.6rem; }
   .postH1 { font-size: 1.5rem; }
 }
+
+/* ===== 목록 썸네일 (대표 이미지 자동) ===== */
+.postCardThumb { overflow: hidden; }
+.postCardThumb .postLink {
+  display: flex;
+  gap: 0;
+  padding: 0;
+  align-items: stretch;
+}
+.postCardBody { padding: 1.2rem 1.4rem; min-width: 0; flex: 1 1 auto; }
+.thumb {
+  flex: 0 0 200px;
+  overflow: hidden;
+  background: var(--bg-elev);
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  min-height: 130px;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 640px) {
+  .postCardThumb .postLink { flex-direction: column; }
+  .thumb { flex-basis: auto; width: 100%; }
+  .thumb img { height: 160px; min-height: 160px; }
+}
+
+/* ===== 상세 히어로 이미지 ===== */
+.hero {
+  margin: 0 0 1.5rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+}
+.hero img {
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== 관련 글 ===== */
+.related {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.relatedTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.relatedList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+.relatedCard {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.relatedCard:hover { border-color: var(--accent); transform: translateY(-2px); }
+.relatedLink { display: flex; gap: 0; color: inherit; text-decoration: none; align-items: stretch; }
+.relatedThumb { flex: 0 0 96px; overflow: hidden; background: var(--bg-elev); }
+.relatedThumb img { width: 100%; height: 100%; min-height: 72px; object-fit: cover; display: block; }
+.relatedBody { padding: 0.7rem 0.9rem; min-width: 0; }
+.relatedDate { color: var(--accent); font-size: 0.72rem; font-weight: 600; display: block; margin-bottom: 0.25rem; }
+.relatedName { font-size: 0.95rem; font-weight: 600; color: var(--text); line-height: 1.35; }
