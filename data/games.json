@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-07",
+  "last_updated": "2026-07-08",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -1777,9 +1777,8 @@
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nCSqRx8E8W8yCJlBSckbAbTLKBNfCMbEGa4qdQE6r9hw=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://lostark.game.onstove.com/Promotion/Reservation/260624",
-      "pre_registration": true,
+      "pre_registration": false,
       "pre_registration_date": "2026-06-24",
-      "pre_registration_end_date": "2026-07-08",
       "pre_registration_url": "https://lostark.game.onstove.com/Promotion/Reservation/260624"
     },
     {
@@ -2403,6 +2402,27 @@
       ],
       "image_url": "https://play-lh.googleusercontent.com/0iNlsT9AMnxLalmfGIrDQor5kEkrG8NrY0lzxI-zLCOHRQdJkTUJXt3Ry4PudQxaRf6z4ofvw2AYPBuwyrkLMQ=s512",
       "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305676"
+    },
+    {
+      "id": "dragonsword-awakening-20260723",
+      "name_ko": "드래곤소드: 어웨이크닝",
+      "name_en": "Dragonsword: Awakening",
+      "release_date": "2026-07-23",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "하운드13",
+      "publisher": "하운드13",
+      "description": "하운드13이 개발·자체 서비스하는 애니메이션풍 오픈월드 액션 RPG. 기존 웹젠 퍼블리싱 계약을 정리하고, 뽑기 없는 싱글플레이 패키지(B2P) 게임으로 방향을 바꿔 스팀을 통해 글로벌 출시한다. 개성 있는 동료를 영입해 화려한 태그 액션을 펼치며 '오르비스' 대륙을 탐험하는 구성으로, 7월 23일 오전 7시(KST) 정식 출시된다.",
+      "genres": [
+        "액션 RPG",
+        "오픈월드"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4570720/header.jpg",
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317266",
+      "pre_registration": false
     }
   ]
 }
