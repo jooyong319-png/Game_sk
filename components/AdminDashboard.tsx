@@ -18,6 +18,7 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
   const [pw, setPw] = useState('');
   const [gateErr, setGateErr] = useState('');
   const [rows, setRows] = useState<Row[] | null>(null);
+  const [total, setTotal] = useState<number | null>(null); // 실제 누적(정확한 count)
   const [err, setErr] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
@@ -30,13 +31,29 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
     if (!unlocked) return;
     if (!isSupabaseReady() || !supabase) { setErr('Supabase 미설정'); return; }
     (async () => {
-      const { data, error } = await supabase!
+      // 1) 정확한 누적: head+count 는 PostgREST max-rows(기본 1000) 영향 안 받음
+      const { count, error: cErr } = await supabase!
         .from('page_views')
-        .select('created_at,game_id')
-        .order('created_at', { ascending: false })
-        .limit(10000);
-      if (error) { setErr(error.message); return; }
-      setRows((data as Row[]) ?? []);
+        .select('*', { count: 'exact', head: true });
+      if (cErr) { setErr(cErr.message); return; }
+      setTotal(count ?? 0);
+
+      // 2) 상세 집계용 행: 서버가 페이지당 1000행으로 잘라서, range 로 끝까지 페이지네이션
+      const PAGE = 1000;
+      const MAX_ROWS = 60000; // 안전 상한(그 이상은 상세 집계에서만 생략, 누적은 위 count가 정확)
+      const all: Row[] = [];
+      for (let from = 0; from < MAX_ROWS; from += PAGE) {
+        const { data, error } = await supabase!
+          .from('page_views')
+          .select('created_at,game_id')
+          .order('created_at', { ascending: false })
+          .range(from, from + PAGE - 1);
+        if (error) { setErr(error.message); return; }
+        const batch = (data as Row[]) ?? [];
+        all.push(...batch);
+        if (batch.length < PAGE) break; // 마지막 페이지
+      }
+      setRows(all);
     })();
   }, [unlocked]);
 
@@ -67,8 +84,9 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
     const topGames = entries.filter(([id]) => !id.startsWith('blog:')).slice(0, 25);
     const topGuides = entries.filter(([id]) => id.startsWith('blog:')).slice(0, 15);
     const guideTotal = entries.filter(([id]) => id.startsWith('blog:')).reduce((s, [, n]) => s + n, 0);
-    return { total: rows.length, today, today_count: byDay.get(today) ?? 0, yesterday, last7, days, topGames, topGuides, guideTotal, byDayItem };
-  }, [rows]);
+    // 누적은 정확한 count(total) 우선, 아직 안 왔으면 로드된 행 수로 폴백
+    return { total: total ?? rows.length, today, today_count: byDay.get(today) ?? 0, yesterday, last7, days, topGames, topGuides, guideTotal, byDayItem };
+  }, [rows, total]);
 
   if (!unlocked) {
     return (
