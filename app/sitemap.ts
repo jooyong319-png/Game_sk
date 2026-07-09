@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getAllGames, getLastUpdated } from '@/lib/games';
 import { getAllPosts } from '@/lib/blog';
+import { getAllNews } from '@/lib/news';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getAllGames();
@@ -17,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: 'https://gcalen.com/mobile-games', lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: 'https://gcalen.com/pc-console-games', lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: 'https://gcalen.com/global-games', lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    { url: 'https://gcalen.com/news', lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: 'https://gcalen.com/guide', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://gcalen.com/about', lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: 'https://gcalen.com/privacy', lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
@@ -43,5 +45,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
-  return [...staticUrls, ...blogUrls, ...gameUrls];
+  const news = await getAllNews();
+  const newsUrls: MetadataRoute.Sitemap = news.map(it => ({
+    url: `https://gcalen.com/news/${it.slug}`,
+    lastModified: new Date(it.date),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }));
+
+  return [...staticUrls, ...blogUrls, ...newsUrls, ...gameUrls];
 }

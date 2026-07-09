@@ -51,6 +51,14 @@ export function HeaderNav() {
         <span className="header-cal-label">캘린더</span>
       </a>
       <a
+        href="/news"
+        className={`header-news-link ${pathname.startsWith('/news') ? 'header-news-active' : ''}`}
+        aria-current={pathname.startsWith('/news') ? 'page' : undefined}
+      >
+        <svg className="ic" aria-hidden="true"><use href="#ic-flame" /></svg>
+        <span className="header-news-label">뉴스</span>
+      </a>
+      <a
         href="/blog"
         className={`header-guide-link ${pathname.startsWith('/blog') ? 'header-guide-active' : ''}`}
         aria-current={pathname.startsWith('/blog') ? 'page' : undefined}
