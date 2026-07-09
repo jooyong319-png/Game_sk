@@ -50,7 +50,8 @@ async function readAllNews(): Promise<NewsItem[]> {
     for (const file of files) {
       if (!file.endsWith('.md')) continue;
       if (file.startsWith('_') || file.startsWith('.')) continue; // 템플릿/숨김 파일 제외
-      const slug = file.replace(/\.md$/, '');
+      // 슬러그는 항상 NFC로 정규화 — 한글 파일명이 파일시스템/URL 간 NFD로 어긋나 매칭 실패하는 것 방지
+      const slug = file.replace(/\.md$/, '').normalize('NFC');
       const raw = await fs.readFile(path.join(dir, file), 'utf-8');
       const { meta, body } = parseFrontmatter(raw);
       items.push({
@@ -96,7 +97,9 @@ export function getAllNews(): Promise<NewsItem[]> {
 
 export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
   const all = await getAllNews();
-  return all.find(n => n.slug === slug) ?? null;
+  // URL 파라미터도 NFC로 정규화해 비교(NFC/NFD 불일치로 인한 404 방지)
+  const target = slug.normalize('NFC');
+  return all.find(n => n.slug === target) ?? null;
 }
 
 // 관련 뉴스: 태그 겹침 desc → 최신 desc. 자기 자신 제외.
