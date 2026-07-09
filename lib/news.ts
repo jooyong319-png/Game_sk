@@ -52,7 +52,8 @@ async function readAllNews(): Promise<NewsItem[]> {
       if (file.startsWith('_') || file.startsWith('.')) continue; // 템플릿/숨김 파일 제외
       // 슬러그는 항상 NFC로 정규화 — 한글 파일명이 파일시스템/URL 간 NFD로 어긋나 매칭 실패하는 것 방지
       const slug = file.replace(/\.md$/, '').normalize('NFC');
-      const raw = await fs.readFile(path.join(dir, file), 'utf-8');
+      // CRLF 정규화 — Windows 체크아웃 시 frontmatter 파서(^---\n)가 깨지는 것 방지
+      const raw = (await fs.readFile(path.join(dir, file), 'utf-8')).replace(/\r\n/g, '\n');
       const { meta, body } = parseFrontmatter(raw);
       items.push({
         slug,
@@ -95,11 +96,16 @@ export function getAllNews(): Promise<NewsItem[]> {
   return cached;
 }
 
+function safeDecode(s: string): string {
+  try { return decodeURIComponent(s); } catch { return s; }
+}
+
 export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
   const all = await getAllNews();
-  // URL 파라미터도 NFC로 정규화해 비교(NFC/NFD 불일치로 인한 404 방지)
-  const target = slug.normalize('NFC');
-  return all.find(n => n.slug === target) ?? null;
+  // Next는 한글(비ASCII) 동적 세그먼트를 퍼센트 인코딩된 채로 넘길 수 있음 → 디코딩 후 NFC 비교.
+  // 인코딩/디코딩·정규화 어느 조합이 와도 매칭되도록 후보 셋으로 비교.
+  const candidates = new Set([slug, safeDecode(slug)].map(s => s.normalize('NFC')));
+  return all.find(n => candidates.has(n.slug)) ?? null;
 }
 
 // 관련 뉴스: 태그 겹침 desc → 최신 desc. 자기 자신 제외.
