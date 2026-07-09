@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-07",
+  "last_updated": "2026-07-09",
   "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
   "events": [
     {
@@ -73,6 +73,26 @@
       "host": "디아블로 IV",
       "description": "블리자드 '디아블로 IV'의 열네 번째 시즌. 한국 시간 기준 7월 1일 오전 2시에 개막하며 신규 종반(엔드게임) 콘텐츠를 대폭 확장한다. 7월 1일부터 8일까지 악마술사 직업 무료 체험이 열리고 오버워치 협업 콘텐츠도 함께 진행된다. 종료일은 공식 미확정으로 통상 약 90일 시즌 관례에 따른 추정치다.",
       "source_url": "https://diablo4.blizzard.com/ko-kr/upcoming"
+    },
+    {
+      "id": "steam-autumn-sale-2026",
+      "type": "sale",
+      "title": "스팀 가을 할인 2026 (Steam Autumn Sale)",
+      "start_date": "2026-10-01",
+      "end_date": "2026-10-08",
+      "host": "Steam",
+      "description": "밸브가 발표한 2026년 하반기 스팀 일정에 포함된 가을 정기 세일. 예년의 11월 말이 아니라 10월 1일부터 8일까지 1주간 열리며, 한국 시간 기준 10월 2일 새벽(PT 10/1 오전 10시)에 시작된다. 이후 겨울 할인까지 간격이 길어진 점이 특징이다.",
+      "source_url": "https://steamcommunity.com/groups/steamworks/announcements/detail/493837645658461608"
+    },
+    {
+      "id": "steam-winter-sale-2026",
+      "type": "sale",
+      "title": "스팀 겨울 할인 2026 (Steam Winter Sale)",
+      "start_date": "2026-12-17",
+      "end_date": "2027-01-04",
+      "host": "Steam",
+      "description": "연말을 관통하는 스팀 최대 규모 세일 중 하나. 밸브 공식 하반기 일정 기준 12월 17일 시작해 2027년 1월 4일에 종료되며, 한국 시간으로는 12월 18일 새벽부터다. 기간 중 스팀 어워드 투표도 함께 진행된다.",
+      "source_url": "https://steamcommunity.com/groups/steamworks/announcements/detail/493837645658461608"
     }
   ]
 }
