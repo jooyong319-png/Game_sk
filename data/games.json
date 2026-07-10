@@ -1912,7 +1912,7 @@
       ],
       "pre_registration": true,
       "pre_registration_date": "2026-07-01",
-      "pre_registration_url": "https://zeus.com2us.com/pre-registration/"
+      "pre_registration_url": "https://zeus.com2us.com/"
     },
     {
       "id": "dokkaebi-world-2026",
@@ -2567,6 +2567,96 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2584270/header.jpg",
       "source_url": "https://www.gematsu.com/2026/07/mortal-shell-ii-launches-august-20"
+    },
+    {
+      "id": "minecraft-dungeons-2-20260929",
+      "name_ko": "마인크래프트 던전스 II",
+      "name_en": "Minecraft Dungeons II",
+      "release_date": "2026-09-29",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S",
+        "Nintendo Switch",
+        "Nintendo Switch 2"
+      ],
+      "developer": "모장 스튜디오(Mojang Studios)",
+      "publisher": "엑스박스 게임 스튜디오(Xbox Game Studios)",
+      "description": "2020년 던전 크롤러 '마인크래프트 던전스'의 후속작. 마인크래프트 세계관을 유지한 채 최대 4인 협동으로 절차적 던전을 공략하는 핵앤슬래시 액션 RPG다. 전작보다 넓어진 탐험 구간과 새 장비·전리품 체계를 내세웠고, 2026년 9월 29일 PC·콘솔 전 기종으로 출시되며 게임패스에 첫날 포함된다.",
+      "genres": [
+        "액션 RPG",
+        "던전 크롤러"
+      ],
+      "image_url": "https://yt3.googleusercontent.com/2gEQWk9ws0NNWIOva0M7NwU9LtIDHfNvY0nLGdhqNvDUn3Sk4kNsTZQZ_ILl70CQrjKSZjhqAP0=s512-c-k-c0x00ffffff-no-rj",
+      "source_url": "https://www.minecraft.net/en-us/article/minecraft-dungeons-ii-date-announce"
+    },
+    {
+      "id": "hellraiser-revival-20261008",
+      "name_ko": "클라이브 바커의 헬레이저: 리바이벌",
+      "name_en": "Clive Barker's Hellraiser: Revival",
+      "release_date": "2026-10-08",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "보스 팀 게임즈(Boss Team Games)",
+      "publisher": "보스 팀 게임즈(Boss Team Games)",
+      "description": "호러 거장 클라이브 바커가 직접 감수한 1인칭 서바이벌 호러. 주인공 에이든이 '제네시스 컨피규레이션' 상자를 통해 미궁에 갇힌 서니를 구하러 들어가는 이야기를 다룬다. 원작 영화의 핀헤드 배우 더그 브래들리가 목소리로 복귀했으며, 2026년 10월 8일 PC·PS5·Xbox 시리즈로 출시된다.",
+      "genres": [
+        "서바이벌 호러",
+        "1인칭 액션"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1551980/header.jpg",
+      "source_url": "https://www.gematsu.com/2026/06/clive-barkers-hellraiser-revival-launches-october-8"
+    },
+    {
+      "id": "persona-4-revival-20270218",
+      "name_ko": "페르소나 4 리바이벌",
+      "name_en": "Persona 4 Revival",
+      "release_date": "2027-02-18",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "아틀라스(ATLUS)",
+      "publisher": "세가(SEGA)",
+      "description": "2008년작 '페르소나 4'를 현세대 기준으로 다시 만든 리메이크. '페르소나 3 리로드'와 같은 수준으로 그래픽과 편의 기능을 끌어올렸고, 상태 이상을 퍼뜨리는 '날려버리기'와 소비 없이 스킬을 쓰는 '프라임 타임' 같은 전투 요소가 새로 들어갔다. 2027년 2월 18일 PC·PS5·Xbox 시리즈로 출시되며 게임패스 첫날 대응이다.",
+      "genres": [
+        "JRPG",
+        "턴제 RPG"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2963950/header.jpg",
+      "source_url": "https://www.gematsu.com/2026/06/persona-4-revival-launches-february-18-2027"
+    },
+    {
+      "id": "fable-20270223",
+      "name_ko": "페이블",
+      "name_en": "Fable",
+      "release_date": "2027-02-23",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "플레이그라운드 게임즈(Playground Games)",
+      "publisher": "엑스박스 게임 스튜디오(Xbox Game Studios)",
+      "description": "동명의 판타지 RPG 시리즈를 처음부터 다시 세우는 리부트작. '포르자 호라이즌'을 만든 플레이그라운드 게임즈가 개발하고 에이도스 몬트리올이 협업하며, 배우 헤일리 앳웰이 주요 배역으로 참여한다. 여러 차례 연기 끝에 2027년 2월 23일 PC·PS5·Xbox 시리즈로 출시되고(얼리 액세스 2월 18일), 게임패스 첫날 대응이다.",
+      "genres": [
+        "액션 RPG",
+        "오픈월드"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2769570/header.jpg",
+      "source_url": "https://www.xbox.com/en-US/games/fable"
     }
   ]
 }
