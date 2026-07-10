@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-09",
+  "last_updated": "2026-07-10",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2289,7 +2289,7 @@
         "방치형",
         "RPG"
       ],
-      "image_url": null,
+      "image_url": "https://play-lh.googleusercontent.com/nH4gayvv0-dHdjwjxUIKY9QWr_6dYnNeqFNHPwckQ3dgvJgrsJPdkIEyevgE09j0IGUiAIwpniaoAZ7Xn0PH=s512",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317911",
       "pre_registration": true,
       "pre_registration_date": "2026-06-29",
@@ -2357,7 +2357,7 @@
         "액션",
         "DLC"
       ],
-      "image_url": null,
+      "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nOSXVCnVUpxMHW5w00je-E2ZkRMmdD1Sfi2CfClLfh1Q=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.gamemeca.com/view.php?gid=1776165"
     },
     {
@@ -2525,6 +2525,48 @@
       ],
       "image_url": "https://yt3.googleusercontent.com/HNg_MA3lYwk6JCHxftRxRUAcMFK0334jI3-G-ERWMnTe5vIT1fORQ2er531XI_eCnMl4v_Wtk38=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317312"
+    },
+    {
+      "id": "mabinogi-reaction-1st-arcana-awakening-20260709",
+      "name_ko": "마비노기: 여름 캠페인 RE:ACTION 1차 대규모 업데이트",
+      "name_en": null,
+      "release_date": "2026-07-09",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "데브캣",
+      "publisher": "넥슨",
+      "description": "22주년을 맞은 마비노기의 여름 캠페인 'RE:ACTION' 첫 번째 대규모 업데이트. 아르카나 성장 한계를 30레벨까지 여는 '아르카나 각성'과 고대 문자를 조합해 스킬 효과를 바꾸는 '오검 워드'가 도입됐다. 던전 입장에 쓰이던 네아르 시스템을 통행증 방식으로 바꾸고 계승 비용을 무료화하는 등 파밍 구조도 손봤으며, 신규·복귀 이용자를 위한 '피버 시즌' 이벤트가 함께 시작됐다. 아르카나 각성 상한 50레벨 확장은 2차 업데이트로 예정돼 있다.",
+      "genres": [
+        "MMORPG",
+        "대규모 업데이트"
+      ],
+      "image_url": "https://yt3.googleusercontent.com/xT5oTmdL-NJj2Axb4Y5dIERZr9wou5ypBRo5f-VTkQgqVdBIzmN2KyCRKvH-EWejTA9c2UE-Lg=s512-c-k-c0x00ffffff-no-rj",
+      "source_url": "https://mabinogi.nexon.com/page/event/2026/0709_update/index.asp"
+    },
+    {
+      "id": "mortal-shell-2-20260820",
+      "name_ko": "모탈 셸 2",
+      "name_en": "Mortal Shell II",
+      "release_date": "2026-08-20",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "콜드 시메트리(Cold Symmetry)",
+      "publisher": "플레이스택(Playstack)",
+      "description": "2020년 소울라이크 '모탈 셸'의 정식 후속작. 여덟 종의 '셸'을 갈아입으며 싸우는 전작 구조를 유지하되 전투 속도를 끌어올리고 무기 강화 폭과 탐험 자유도를 크게 넓혔다. PC(스팀)·PS5·Xbox 시리즈 X|S로 2026년 8월 20일 동시 출시되며, 선행 접속과 스킨을 포함한 상위 에디션도 함께 판매된다.",
+      "genres": [
+        "소울라이크",
+        "액션 RPG"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2584270/header.jpg",
+      "source_url": "https://www.gematsu.com/2026/07/mortal-shell-ii-launches-august-20"
     }
   ]
 }
