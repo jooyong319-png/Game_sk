@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "last_updated": "2026-07-11",
-  "last_researched_by": "researcher-claude",
+  "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
     "pc_console_kr": "국내 PC/콘솔",
@@ -2657,6 +2657,25 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2769570/header.jpg",
       "source_url": "https://www.xbox.com/en-US/games/fable"
+    },
+    {
+      "id": "lostark-belgardin-shadow-raid-20260805",
+      "name_ko": "로스트아크: 그림자 레이드 '벨가르딘' 업데이트",
+      "name_en": "Lost Ark: Shadow Raid Belgardin Update",
+      "release_date": "2026-08-05",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "스마일게이트 RPG(Smilegate RPG)",
+      "publisher": "스마일게이트(Smilegate)",
+      "description": "2026 로아온 썸머에서 공개된 여름 대규모 업데이트다. 카다룸 제도 이후의 이야기를 다루는 8인 공격대 '벨가르딘'이 노말·하드·나이트메어 세 난이도로 추가되며, 아이템 레벨에는 영향을 주지 않는 신규 특수 장비 '완갑'도 함께 도입된다. 업데이트 직후 6주간 '벨가르딘 정복전' 이벤트가 진행된다.",
+      "genres": [
+        "MMORPG"
+      ],
+      "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nCSqRx8E8W8yCJlBSckbAbTLKBNfCMbEGa4qdQE6r9hw=s512-c-k-c0x00ffffff-no-rj",
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317640"
     }
   ]
 }
