@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-10",
+  "last_updated": "2026-07-11",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2378,7 +2378,7 @@
         "액션 RPG",
         "다크 판타지"
       ],
-      "image_url": null,
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2827820/header.jpg",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=318032"
     },
     {
