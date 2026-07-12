@@ -2718,6 +2718,30 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2825860/header.jpg",
       "source_url": "https://www.gematsu.com/2026/06/the-sinking-city-2-launches-august-18"
+    },
+    {
+      "id": "freestyle-reboot-2026",
+      "name_ko": "프리스타일 리부트",
+      "name_en": "FreeStyle: Reboot",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "조이시티",
+      "publisher": "조이시티",
+      "description": "조이시티의 대표 온라인 농구 IP '프리스타일'을 새 엔진으로 재구축한 리부트작이다. 원작의 3대3 실시간 스트리트 농구 감성을 이어가면서 아트 리소스와 시스템을 현행 서비스 환경에 맞춰 개편했다. 앞서 대만·홍콩 등 중화권에 먼저 출시됐고, 국내에는 2026년 7월 22일 사전예약을 시작하며 이후 정식 출시가 예정돼 있다.",
+      "genres": [
+        "스포츠",
+        "MMO"
+      ],
+      "image_url": null,
+      "source_url": "https://zdnet.co.kr/view/?no=20260701152321",
+      "pre_registration": false,
+      "pre_registration_date": "2026-07-22"
     }
   ]
 }
