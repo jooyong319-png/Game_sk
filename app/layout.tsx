@@ -4,7 +4,7 @@ import { HeaderNav } from '@/components/HeaderNav';
 // 왼쪽 플로팅 위젯(N월 출시/사전예약): 재작업 예정, 임시 주석 (재사용 가능)
 // import { FloatingMonthStats } from '@/components/FloatingMonthStats';
 import { BottomTabBar } from '@/components/BottomTabBar';
-import { SideRailAds } from '@/components/SideRailAds';
+// import { SideRailAds } from '@/components/SideRailAds'; // AdSense 심사 중 비활성(콘텐츠 우선) — 애드핏 수익 낮아 제거
 import { HeaderScroll } from '@/components/HeaderScroll';
 import { Toaster } from '@/components/Toaster';
 import { PushSync } from '@/components/PushSync';
@@ -108,7 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main id="main">{children}</main>
         {/* <FloatingMonthStats /> 재작업 예정, 임시 비활성 */}
-        <SideRailAds />
+        {/* <SideRailAds /> — AdSense 심사 중 비활성(콘텐츠 우선), 애드핏 수익 낮음 */}
         <BottomTabBar />
         <HeaderScroll />
         <Toaster />
@@ -117,7 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="site-footer">
           <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
           <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a> · <a href="/blog">신작 가이드</a></p>
-          <p><a href="/about">소개</a> · <a href="/guide">이용 가이드</a> · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a></p>
+          <p><a href="/about">소개</a> · <a href="/contact">문의하기</a> · <a href="/guide">이용 가이드</a> · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a></p>
           <p className="footer-disclaimer">게임명·이미지·상표 등은 각 게임사(권리자)의 자산이며, 본 사이트는 출시 일정 정보 제공을 목적으로 합니다. 권리자의 요청 시 해당 콘텐츠를 수정·삭제합니다.</p>
         </footer>
         <script
