@@ -2809,6 +2809,31 @@
       ],
       "image_url": "https://yt3.googleusercontent.com/VuFYKBA-FTYK2OnAWYNBZ4NPEg_vifHyl4LAHamaxoh7T4l1_Ix3p7uzvT_HOdAzX0QlI5QxEw=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317970"
+    },
+    {
+      "id": "honkai-nexus-anima-2026",
+      "name_ko": "붕괴: 넥서스 아니마",
+      "name_en": "Honkai: Nexus Anima",
+      "release_date": "2026-12-31",
+      "release_date_approx": true,
+      "category": "mobile_kr",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "호요버스(HoYoverse)",
+      "publisher": "호요버스(HoYoverse)",
+      "description": "호요버스가 붕괴 IP를 기반으로 선보이는 아니마 육성 어드벤처 전략 게임. '넥서스 아니마'라 불리는 생명체를 수집·육성해 전략 배틀과 탐험을 즐기는 오토배틀러형 RPG로, 국내에서 사전예약을 받고 있다. PC와 모바일(iOS·안드로이드)로 출시 예정이며 정식 출시일은 미정이다. 2026년 7월 9일 비공개 '진화 테스트'를 진행했다.",
+      "genres": [
+        "전략 RPG",
+        "수집형",
+        "서브컬처"
+      ],
+      "image_url": null,
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317670",
+      "pre_registration": true,
+      "pre_registration_url": "https://hna.hoyoverse.com/ko-kr"
     }
   ]
 }
