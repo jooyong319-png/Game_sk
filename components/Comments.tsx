@@ -11,9 +11,9 @@ interface Comment {
   created_at: string;
 }
 
-interface Props { gameId: string; }
+interface Props { gameId: string; placeholder?: string }
 
-export function Comments({ gameId }: Props) {
+export function Comments({ gameId, placeholder }: Props) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [nickname, setNickname] = useState('');
@@ -98,7 +98,7 @@ export function Comments({ gameId }: Props) {
         />
         <textarea
           className={styles.contentInput}
-          placeholder="이 게임에 대한 댓글 (최대 500자)"
+          placeholder={placeholder ?? '이 게임에 대한 댓글 (최대 500자)'}
           value={content}
           onChange={e => setContent(e.target.value)}
           maxLength={500}

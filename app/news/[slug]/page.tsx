@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getAllNews, getNewsBySlug, getRelatedNews, markdownToHtml, formatPostDate } from '@/lib/news';
 import { PageShell } from '@/components/PageShell';
 import { ViewCounter } from '@/components/ViewCounter';
+import { Comments } from '@/components/Comments';
 import { BlogImg } from '@/components/BlogImg';
 import { BlogHero } from '@/components/BlogHero';
 import styles from '../../blog/blog.module.css';
@@ -115,6 +116,8 @@ export default async function NewsDetailPage({ params }: Props) {
             </span>
           </div>
         )}
+
+        <Comments gameId={`news:${item.slug}`} placeholder="이 뉴스에 대한 댓글 (최대 500자)" />
 
         {related.length > 0 && (
           <nav className={styles.related} aria-label="관련 뉴스">
