@@ -2786,7 +2786,29 @@
       ],
       "image_url": "https://play-lh.googleusercontent.com/O3AtBJqCPmOHow-d2tskDjwXGWpYpgz2bPEJC5s-FQ1BzmtxnFTQ4h6OTTJ74pyih8KBs78UsTk7w6PAHkbt=s512",
       "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=306206",
-      "pre_registration": false
+      "pre_registration": true
+    },
+    {
+      "id": "eclipse-awakening-showcase-20260723",
+      "name_ko": "이클립스: 더 어웨이크닝 - 라이브 쇼케이스",
+      "name_en": null,
+      "release_date": "2026-07-23",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "엔픽셀",
+      "publisher": "스마일게이트",
+      "description": "스마일게이트가 퍼블리싱하는 엔픽셀의 언리얼5 크로스플랫폼 MMORPG '이클립스: 더 어웨이크닝'이 2026년 7월 23일 온라인 라이브 쇼케이스를 연다. 핵심 성장지원 시스템 '성소' 등 주요 콘텐츠와 서비스 방향을 공개할 예정으로, 공식 홈페이지에서 카운트다운이 진행 중이다.",
+      "genres": [
+        "MMORPG",
+        "쇼케이스"
+      ],
+      "image_url": "https://yt3.googleusercontent.com/VuFYKBA-FTYK2OnAWYNBZ4NPEg_vifHyl4LAHamaxoh7T4l1_Ix3p7uzvT_HOdAzX0QlI5QxEw=s512-c-k-c0x00ffffff-no-rj",
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317970"
     }
   ]
 }
