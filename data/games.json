@@ -2742,6 +2742,51 @@
       "source_url": "https://zdnet.co.kr/view/?no=20260701152321",
       "pre_registration": false,
       "pre_registration_date": "2026-07-22"
+    },
+    {
+      "id": "ragnarok-m-classic-20260716",
+      "name_ko": "라그나로크M: 클래식",
+      "name_en": "Ragnarok M: Classic",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "그라비티",
+      "publisher": "그라비티",
+      "description": "그라비티의 '라그나로크M: 이터널 러브'를 잇는 클래식 버전 MMORPG다. 기본 재화 '제니'를 중심으로 한 경제 구조를 재현해 몬스터 사냥과 아이템 파밍의 순수한 재미에 집중했고, 소드맨·매지션·씨프·아처·어콜라이트·머천트 근본 직업 6종으로 구성된다. 동남아·대만·홍콩·마카오 선출시 후 2026년 7월 16일 국내 PC·모바일 버전으로 정식 출시된다.",
+      "genres": [
+        "MMORPG"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/5SFBw-txEgmxfiD8J5DcHchCZFvLCo1jZsalnlDHYjv5nddS-8oLSRIwGHmqKF0NLaZJ9Gmbx6wEMGxlNtFe=s512",
+      "source_url": "https://zdnet.co.kr/view/?no=20260706145311",
+      "pre_registration": true,
+      "pre_registration_date": null
+    },
+    {
+      "id": "vampir-global2-region-20260722",
+      "name_ko": "뱀피르: 글로벌2 리전 오픈",
+      "name_en": null,
+      "release_date": "2026-07-22",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "넷마블",
+      "publisher": "넷마블",
+      "description": "넷마블 MMORPG '뱀피르'가 2026년 7월 22일 신규 리전 '글로벌2'를 연다. 기존 글로벌 서버와 분리 운영되는 별도 리전으로, 한국·대만·홍콩·마카오에 이어 일본 이용자까지 같은 리전에서 경쟁한다. 출시 1주년 기념 '레드문 페스타'와 함께 진행되며, 사전등록 참여자에게 영웅 탈것과 1억 골드 등 초반 성장 지원 보상이 지급된다.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/O3AtBJqCPmOHow-d2tskDjwXGWpYpgz2bPEJC5s-FQ1BzmtxnFTQ4h6OTTJ74pyih8KBs78UsTk7w6PAHkbt=s512",
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=306206",
+      "pre_registration": false
     }
   ]
 }
