@@ -310,9 +310,14 @@ export default async function GamePage({ params }: Props) {
               </>
             )}
             {coupons && (
-              <Link href={`/coupons/${coupons.key}`} className="detail-coupons-more">
-                {couponName} {couponTermStr} 전용 페이지 (사용법·지난 코드 전체) →
-              </Link>
+              <span className="detail-coupons-links">
+                <Link href={`/coupons/${coupons.key}`} className="detail-coupons-more">
+                  {couponName} {couponTermStr} 전용 페이지 →
+                </Link>
+                <Link href={`/games/${coupons.key}`} className="detail-coupons-more">
+                  {couponName} 게임 허브 (쿠폰·일정) →
+                </Link>
+              </span>
             )}
           </section>
         )}

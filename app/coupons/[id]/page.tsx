@@ -134,6 +134,9 @@ export default async function GameCouponPage({ params }: Props) {
         </div>
 
         <div className={styles.related}>
+          <Link href={`/games/${key}`} className={styles.relatedLink}>
+            {name} 게임 허브 (쿠폰·일정 전체) →
+          </Link>
           {game_id && (
             <Link href={`/game/${game_id}`} className={styles.relatedLink}>
               {name} 출시일·게임 정보 보기 →

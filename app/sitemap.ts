@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getAllGames, getLastUpdated } from '@/lib/games';
 import { getAllPosts } from '@/lib/blog';
 import { getAllNews } from '@/lib/news';
-import { getCouponPageKeys } from '@/lib/coupons';
+import { getCouponPageKeys, getAllCouponKeys } from '@/lib/coupons';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getAllGames();
@@ -64,5 +64,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticUrls, ...blogUrls, ...newsUrls, ...couponUrls, ...gameUrls];
+  const hubKeys = await getAllCouponKeys();
+  const hubUrls: MetadataRoute.Sitemap = hubKeys.map(key => ({
+    url: `https://gcalen.com/games/${key}`,
+    lastModified: now,
+    changeFrequency: 'daily',
+    priority: 0.7,
+  }));
+
+  return [...staticUrls, ...blogUrls, ...newsUrls, ...couponUrls, ...hubUrls, ...gameUrls];
 }

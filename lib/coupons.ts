@@ -14,13 +14,17 @@ export interface Coupon {
   added?: string;            // 'YYYY-MM-DD' 등록일
 }
 
-// coupons.json 의 게임 1개 항목(자체 완결형)
+// coupons.json 의 게임 1개 항목(자체 완결형) — '게임 카탈로그(마스터)'의 한 항목이기도 하다.
 export interface CouponGame {
   name_ko: string;
   name_en?: string | null;
   image_url?: string | null;
   game_id?: string | null;   // 대응하는 games.json id(있으면). 상세 상호링크·게임 상세 노출용
   term?: '리딤코드' | '쿠폰'; // 주 용어 강제(없으면 이름으로 자동 판별)
+  // 게임 허브(/games/[key])가 캘린더(games.json) 항목을 이 게임에 묶을 때 쓰는 별칭.
+  // games.json 항목명이 이 별칭으로 '시작'하면 이 게임의 일정으로 간주(startsWith, 안전).
+  // 없으면 [정리된 name_ko, name_en]로 자동 유도. 예: "원신" → "원신 6.7 업데이트" 매칭.
+  aliases?: string[];
   codes: Coupon[];
 }
 
@@ -133,23 +137,31 @@ function split(codes: Coupon[], expiredWindowDays: number): { active: Coupon[]; 
 
 // 화면 표기용으로 정리된 쿠폰 게임 뷰
 export interface CouponGameView {
-  key: string;               // coupons.json 키 = URL 슬러그(/coupons/{key})
+  key: string;               // coupons.json 키 = URL 슬러그(/coupons/{key}, /games/{key})
   name: string;              // 정리된 표기 게임명
+  name_en: string | null;
   term: '리딤코드' | '쿠폰';
   image_url: string | null;
   game_id: string | null;    // 연결된 games.json id(있으면)
+  aliases: string[];         // 캘린더 항목 매칭용(유도 포함)
   active: Coupon[];
   expired: Coupon[];
 }
 
 function toView(key: string, g: CouponGame, expiredWindowDays: number): CouponGameView {
   const { active, expired } = split(g.codes, expiredWindowDays);
+  const name = couponDisplayName(g.name_ko);
+  const aliases = g.aliases && g.aliases.length
+    ? g.aliases
+    : [name, ...(g.name_en ? [g.name_en] : [])];
   return {
     key,
-    name: couponDisplayName(g.name_ko),
+    name,
+    name_en: g.name_en ?? null,
     term: g.term ?? couponTerm(g.name_ko, g.name_en),
     image_url: g.image_url ?? null,
     game_id: g.game_id ?? null,
+    aliases,
     active,
     expired,
   };
@@ -189,6 +201,12 @@ export async function getCouponPageKeys(expiredWindowDays = 90): Promise<string[
       return active.length > 0 || expired.length > 0;
     })
     .map(([key]) => key);
+}
+
+// 게임 허브(/games/[key])용: 마스터에 등록된 모든 게임 키(쿠폰 유무 무관).
+export async function getAllCouponKeys(): Promise<string[]> {
+  const { games } = await getData();
+  return Object.keys(games);
 }
 
 export async function getCouponsLastUpdated(): Promise<string | undefined> {
