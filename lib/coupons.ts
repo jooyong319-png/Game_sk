@@ -75,6 +75,19 @@ export async function getGameIdsWithCoupons(): Promise<string[]> {
   return Object.keys(coupons).filter(id => (coupons[id] ?? []).some(c => isActive(c, today)));
 }
 
+// 쿠폰 전용 페이지(/coupons/[id])를 만들 게임 id — 유효 또는 최근(기본 90일) 만료 쿠폰이 있는 게임.
+// 만료만 남은 게임도 콘텐츠·SEO가 있으므로 전용 페이지 유지(허브 목록엔 유효만 노출).
+export async function getCouponPageGameIds(expiredWindowDays = 90): Promise<string[]> {
+  const { coupons } = await getData();
+  const today = kstToday();
+  const cutoff = new Date(Date.now() + 9 * 3600 * 1000 - expiredWindowDays * 86400 * 1000)
+    .toISOString()
+    .slice(0, 10);
+  return Object.keys(coupons).filter(id =>
+    (coupons[id] ?? []).some(c => isActive(c, today) || (c.expires && c.expires >= cutoff)),
+  );
+}
+
 // 허브용: 유효 쿠폰이 있는 게임 → 쿠폰 배열 맵
 export async function getAllActiveCoupons(): Promise<Record<string, Coupon[]>> {
   const { coupons } = await getData();

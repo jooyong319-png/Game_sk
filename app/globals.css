@@ -582,6 +582,14 @@ textarea:focus-visible,
   font-size: 0.95rem;
   color: var(--muted);
 }
+.detail-coupons-more {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.detail-coupons-more:hover { text-decoration: underline; }
 .detail-faq {
   margin-top: 1.5rem;
   padding: 1.2rem 1.4rem;

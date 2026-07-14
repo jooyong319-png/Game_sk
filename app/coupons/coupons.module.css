@@ -50,9 +50,60 @@
   font-weight: 600;
   color: var(--accent);
 }
+.moreLink {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.moreLink:hover { text-decoration: underline; }
 .note {
   margin-top: 1.5rem;
   font-size: 0.82rem;
   color: var(--muted);
   line-height: 1.6;
 }
+
+/* ── 게임별 쿠폰 상세(/coupons/[id]) ── */
+.crumb {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.crumb a { color: var(--muted); }
+.crumb a:hover { color: var(--accent); }
+.crumb span { margin: 0 0.35rem; }
+.sectionTitle {
+  font-size: 1.1rem;
+  margin: 1.6rem 0 0.8rem;
+}
+.usage {
+  margin-top: 1.8rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.usage .sectionTitle { margin-top: 0; }
+.steps {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+.steps li { margin-bottom: 0.4rem; }
+.steps li:last-child { margin-bottom: 0; }
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  margin-top: 1.6rem;
+}
+.relatedLink {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.relatedLink:hover { text-decoration: underline; }

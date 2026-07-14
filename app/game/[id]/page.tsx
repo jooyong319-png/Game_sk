@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllGames, getUpcomingGamesByCategory, getLastUpdated, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
 import { CATEGORY_META, type Category, type Game } from '@/lib/types';
@@ -303,6 +304,9 @@ export default async function GamePage({ params }: Props) {
                 <CouponList coupons={expiredCoupons} expired />
               </>
             )}
+            <Link href={`/coupons/${game.id}`} className="detail-coupons-more">
+              {game.name_ko} 쿠폰 전용 페이지 (사용법·지난 쿠폰 전체) →
+            </Link>
           </section>
         )}
 

@@ -41,10 +41,13 @@ export default async function CouponsPage() {
             {entries.map(([id, list]) => (
               <section key={id} className={styles.gameCard}>
                 <h2 className={styles.gameName}>
-                  <Link href={`/game/${id}`}>{nameById.get(id) ?? id}</Link>
+                  <Link href={`/coupons/${id}`}>{nameById.get(id) ?? id} 쿠폰</Link>
                   <span className={styles.count}>{list.length}개</span>
                 </h2>
                 <CouponList coupons={list} />
+                <Link href={`/coupons/${id}`} className={styles.moreLink}>
+                  {nameById.get(id) ?? id} 쿠폰 전용 페이지 (사용법·지난 쿠폰) →
+                </Link>
               </section>
             ))}
           </div>
