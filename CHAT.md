@@ -1,3 +1,11 @@
+## [2026-07-14 12:26] [리서처] — 사용자 요청 (서브컬처 쿠폰 대량 등록, v2)
+- v2(게임 독립) 활용해 캘린더 미등록 게임도 등록. 4게임·14코드 신규.
+- ⚠️명조(wuthering-waves): WUTHERINGGIFT(상시)·WUWA4PC(PC상시). Fandom Redemption Code 'Active'에서 상시만 채택(3.5 방송코드 만료). 이미지=구글플레이 아이콘.
+- ⚠️젠존제(zenless-zone-zero): ZENLESSGIFT·ZZZSEASON3·ZZZ30BANGBOO·CBW0884678(상시/장기) + ZZZSTEAM·ROSCAELIFER0617(~07/29)·ZZZSUSHIRO(아시아,~07/28). Fandom ZZZ 위키 활성 전량.
+- ⚠️이환(neverness-to-everness): NTEGIFT·DRAGONGIRL·NTENENE. nte.wiki(07/12 갱신) 활성 + game8 교차. 구버전 코드(999NIGHTS·SHINKU0708 등)는 만료 확인→제외.
+- ⚠️엔드필드(arknights-endfield, game_id 연결): ENDFIELDGIFT·ENDFIELD4PC(PC). Pocket Tactics+gamesradar+game8 교차. 방송 단발(ZAU2...)은 1소스→제외.
+- 전 코드 Fandom/전용위키/정리사이트 2+ 교차, 상시(indefinite)·명시 유효기간만. 이미지 4종 구글플레이 og:image(=s512).
+- 쿠폰 3→7게임 / 10→24코드. games.json·events.json 변동 없음.
 ## [2026-07-14 12:06] [리서처] — 사용자 요청 (프롬프트 v2 반영: 워치리스트 갱신)
 - coupons.json은 개발자가 이미 schema v2(게임 카탈로그, games={슬러그→객체})로 마이그레이션 완료(커밋 625657e). 기존 쿠폰 3게임(라그M·원신·HSR)·10코드 전량 보존 확인, lib/coupons.ts는 v2 우선+v1 폴백.
 - PROJECT_STATUS.md 쿠폰 워치리스트를 v2 의미로 수정: (1) v2 구조 설명 추가(games.json 독립·슬러그 키·game_id 선택) (2) '게임 미등록→등록 불가' 규칙 제거 (3) 명조(wuthering-waves)·이환(neverness-to-everness)·ZZZ(zenless-zone-zero)를 '✅ 등록 가능(game_id 없이)'로 전환, 슬러그 키 부여 (4) 검증규칙·표 헤더 v2화.

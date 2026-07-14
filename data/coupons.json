@@ -87,6 +87,144 @@
           "added": "2026-07-14"
         }
       ]
+    },
+    "wuthering-waves": {
+      "name_ko": "명조",
+      "name_en": "Wuthering Waves",
+      "term": "리딤코드",
+      "image_url": "https://play-lh.googleusercontent.com/kP-iYZI3TL5GzvDKjtjtu2P_POG8sz7NZaP3hOw3WqDcZeZ7YcAQuY-aH8C_4tAPOk7W9rhi4OSZCWIK_e3FA0s=s512",
+      "aliases": [
+        "명조",
+        "Wuthering Waves",
+        "워더링 웨이브즈"
+      ],
+      "codes": [
+        {
+          "code": "WUTHERINGGIFT",
+          "reward": "아스트라이트 50, 프리미엄 공명 물약 2, 중형 소생 흡입기 2, 셸 크레딧 10,000",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "WUWA4PC",
+          "reward": "아스트라이트 50, 셸 크레딧 20,000 (PC 전용)",
+          "expires": null,
+          "added": "2026-07-14"
+        }
+      ]
+    },
+    "zenless-zone-zero": {
+      "name_ko": "젠레스 존 제로",
+      "name_en": "Zenless Zone Zero",
+      "term": "리딤코드",
+      "image_url": "https://play-lh.googleusercontent.com/8jEmEvTsNIRW1vLlrDXXCcDlKkQrNb8NzccOXrln4G_DOUZpcBPbN9ssjuwBWz7_yZQ=s512",
+      "aliases": [
+        "젠레스 존 제로",
+        "ZZZ",
+        "Zenless Zone Zero",
+        "젠존제"
+      ],
+      "codes": [
+        {
+          "code": "ZENLESSGIFT",
+          "reward": "폴리크롬 50, 공식 조사원 기록 2, W-엔진 전력 공급 3, 봉붕 알고리즘 모듈 1",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "ZZZSEASON3",
+          "reward": "폴리크롬 50",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "ZZZ30BANGBOO",
+          "reward": "폴리크롬 60, 데니 6,666",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "ZZZSTEAM",
+          "reward": "폴리크롬 60, 선임 조사원 기록 2, W-엔진 에너지 모듈 2, 데니 6,666",
+          "expires": "2026-07-29",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "ROSCAELIFER0617",
+          "reward": "폴리크롬 30",
+          "expires": "2026-07-29",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "ZZZSUSHIRO",
+          "reward": "선임 조사원 기록 3, 데니 30,000 (아시아 서버 전용)",
+          "expires": "2026-07-28",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "CBW0884678",
+          "reward": "데니 20,000 (아시아 서버 전용)",
+          "expires": null,
+          "added": "2026-07-14"
+        }
+      ]
+    },
+    "neverness-to-everness": {
+      "name_ko": "이환",
+      "name_en": "Neverness to Everness",
+      "term": "리딤코드",
+      "image_url": "https://play-lh.googleusercontent.com/TGl3DdDbi4hty6ooOhEvv_2s5tkpGLbL6derP8y5hK-_Bw--Ve375b08ba9HHQ9ueRpoQ9oye1T_T24BJriLUmw=s512",
+      "aliases": [
+        "이환",
+        "NTE",
+        "Neverness to Everness"
+      ],
+      "codes": [
+        {
+          "code": "NTEGIFT",
+          "reward": "애뉼리스 50, 라이징 헌터 가이드 5, 라이트 염료 5",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "DRAGONGIRL",
+          "reward": "애뉼리스 30, 폰즈 20,000, 푸카 초코아 엘리 투어 스페셜 1",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "NTENENE",
+          "reward": "폰즈 10,000, 다이나믹 제로 10, 클리키 프라이 10",
+          "expires": null,
+          "added": "2026-07-14"
+        }
+      ]
+    },
+    "arknights-endfield": {
+      "name_ko": "명일방주: 엔드필드",
+      "name_en": "Arknights: Endfield",
+      "term": "리딤코드",
+      "game_id": "arknights-endfield-20260122",
+      "image_url": "https://play-lh.googleusercontent.com/l6FVNa293RykBWy88TqEhUakIcGSC8bRygSnKOBgztln48JX-WzMWnrBAETrKZsxDNC4HhwCsvfle_UI7rBE=s512",
+      "aliases": [
+        "명일방주: 엔드필드",
+        "명일방주 엔드필드",
+        "Arknights Endfield"
+      ],
+      "codes": [
+        {
+          "code": "ENDFIELDGIFT",
+          "reward": "오로베릴 150, 중급 전투 기록 20, 아츠 INSP 키트 20, T-크레드 10,000",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "ENDFIELD4PC",
+          "reward": "고급 전투 기록 2, 아츠 INSP 키트 2, T-크레드 13,000 (PC 전용)",
+          "expires": null,
+          "added": "2026-07-14"
+        }
+      ]
     }
   }
 }
