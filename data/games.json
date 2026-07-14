@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-13",
+  "last_updated": "2026-07-14",
   "last_researched_by": "researcher-claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -2834,6 +2834,27 @@
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317670",
       "pre_registration": true,
       "pre_registration_url": "https://hna.hoyoverse.com/ko-kr"
+    },
+    {
+      "id": "dinoblade-20260723",
+      "name_ko": "디노블레이드",
+      "name_en": "Dinoblade",
+      "release_date": "2026-07-23",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "Team Spino LLC",
+      "publisher": "Team Spino LLC, Boltray Games",
+      "description": "대재앙으로 변해버린 태고의 세계를 배경으로 한 액션 RPG. 플레이어는 젊은 스피노사우루스가 되어 거대한 대검을 휘두르며 흉포한 알파 공룡들과 싸운다. 회피·구르기·패리로 콤보를 잇는 소울라이크풍 전투가 특징이며, 한국어 자막을 지원한다. 스팀에서 2026년 7월 23일 출시된다.",
+      "genres": [
+        "액션 RPG",
+        "소울라이크",
+        "인디"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3440070/header.jpg",
+      "source_url": "https://store.steampowered.com/app/3440070/Dinoblade/"
     }
   ]
 }
