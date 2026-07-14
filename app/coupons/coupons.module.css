@@ -25,43 +25,58 @@
   border-radius: var(--radius);
   line-height: 1.6;
 }
-.games {
+/* ── 게임 목록 스타일 카드 그리드(게임 목록 페이지와 동일) ── */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
 }
-.gameCard {
-  padding: 1.2rem 1.4rem;
-  background: var(--bg-elev);
+.card {
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg-elev);
 }
-@media (max-width: 560px) {
-  .games { grid-template-columns: 1fr; }
-}
-.gameName {
+.cardLink {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  font-size: 1.12rem;
-  margin: 0 0 0.9rem;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  color: var(--text);
 }
-.gameName a { color: var(--text); }
-.gameName a:hover { color: var(--accent); }
-.count {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--accent);
+.cardLink:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.thumb {
+  width: 52px; height: 52px; border-radius: 12px; object-fit: cover; flex-shrink: 0;
+  border: 1px solid var(--border);
 }
-.moreLink {
-  display: inline-block;
-  margin-top: 0.9rem;
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: var(--accent);
+.thumbPlaceholder {
+  width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
 }
-.moreLink:hover { text-decoration: underline; }
+.body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.name {
+  font-weight: 600; font-size: 1rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.meta { display: flex; flex-wrap: wrap; gap: 5px; }
+.tagCoupon {
+  font-size: 0.74rem; font-weight: 700; border-radius: 999px; padding: 2px 8px;
+  white-space: nowrap;
+  color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  margin-top: 1.6rem;
+}
+.link { font-size: 0.92rem; font-weight: 600; color: var(--accent); }
+.link:hover { text-decoration: underline; }
 .note {
   margin-top: 1.5rem;
   font-size: 0.82rem;
