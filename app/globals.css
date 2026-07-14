@@ -152,15 +152,14 @@ textarea:focus-visible,
   align-items: center;
   gap: 0.4rem;
   height: 38px;
-  padding: 0 0.85rem;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-  color: var(--accent);
+  padding: 0 0.55rem;
+  border: none;
+  background: none;
+  color: var(--text);
   font-size: 0.88rem;
   font-weight: 700;
   white-space: nowrap;
-  transition: background 0.15s, color 0.15s;
+  transition: color 0.15s;
 }
 .header-cal-link:hover, .header-guide-link:hover, .header-board-link:hover, .header-news-link:hover, .header-coupon-link:hover, .header-games-link:hover,
 .header-cal-link.header-cal-active,
@@ -168,7 +167,7 @@ textarea:focus-visible,
 .header-board-link.header-board-active,
 .header-news-link.header-news-active,
 .header-coupon-link.header-coupon-active,
-.header-games-link.header-games-active { background: var(--accent); color: #fff; }
+.header-games-link.header-games-active { color: var(--accent); background: none; }
 .header-cal-link .ic, .header-guide-link .ic, .header-board-link .ic, .header-news-link .ic, .header-coupon-link .ic, .header-games-link .ic { width: 17px; height: 17px; }
 /* 드롭다운 메뉴 — 링크는 항상 DOM에 있고 열림만 토글(크롤 가능) */
 .site-menu {
@@ -203,34 +202,42 @@ textarea:focus-visible,
 }
 .menu-link:hover { background: var(--bg); text-decoration: none; }
 .menu-link[aria-current="page"] { color: var(--accent); font-weight: 700; }
-/* 모바일: 내비를 워드마크 행 아래 가로 스크롤 스트립으로(MonthTabs 톤) */
-@media (max-width: 480px) {
+/* ─── 모바일 웹: 설치 앱과 동일한 크롬(하단 탭바 + accent 링크는 ☰ 메뉴로) ───
+   ⚠️ 광고·푸터는 그대로 유지(standalone 블록과 다름 → AdSense·법적 링크 보호) */
+@media (max-width: 640px) {
   .site-header {
     flex-wrap: wrap;
     padding: 0.6rem 0.8rem;
   }
   .site-header .site-wordmark { font-size: 1.1rem; flex: 1; }
-  .header-board-label, .header-guide-label, .header-cal-label, .header-news-label, .header-coupon-label, .header-games-label { display: none; }  /* 모바일: 아이콘만 */
-  .header-board-link, .header-news-link, .header-coupon-link, .header-games-link { padding: 0 0.6rem; }
-  /* 모바일: 워드마크는 위 줄, accent 아이콘 링크 + 테마/메뉴는 아래 줄 */
-  .header-utils {
-    order: 3;
-    flex: 1 1 100%;
-    margin-left: 0;
-    margin-top: 0.5rem;
+
+  /* 상단 accent 링크(캘린더~커뮤니티)는 ☰ 메뉴 안으로 → 헤더 = 워드마크 + 테마 + ☰ */
+  .header-primary-nav { display: none; }
+  .site-menu .menu-primary { display: flex; }
+
+  /* 하단 탭 바 노출(설치 앱과 동일) */
+  .bottom-tabbar {
+    display: flex;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 100;
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.06);
   }
-  .header-primary-nav {
-    flex: 1;
-    min-width: 0;
-    gap: 0.4rem;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12px, #000 calc(100% - 12px), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 12px, #000 calc(100% - 12px), transparent);
+  body { padding-bottom: calc(52px + env(safe-area-inset-bottom)); }
+  .toast-wrap { bottom: calc(64px + env(safe-area-inset-bottom)); }
+}
+/* 프로스티드(반투명) — 지원 시에만 */
+@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+  @media (max-width: 640px) {
+    .bottom-tabbar {
+      background: color-mix(in srgb, var(--bg-elev) 72%, transparent);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+      backdrop-filter: blur(14px) saturate(1.3);
+    }
   }
-  .header-primary-nav > a { scroll-snap-align: start; flex-shrink: 0; }
 }
 .site-footer {
   text-align: center;
