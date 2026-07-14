@@ -1,3 +1,9 @@
+## [2026-07-14 10:51] [리서처] — 사용자 요청 (원신 CODENAMEK 추가 + Fandom 소스화)
+- 사용자 인게임 리딤 확인: EZSB8889C2BZ·LEGEDILJKSGM·CODENAMEK·PFY1S40I88T9 모두 작동 확인(가장 강한 검증).
+- ⚠️쿠폰 신규 1개: CODENAMEK — 가면무도회 초대장 1개(아시아 서버 전용), expires 2026-07-31(Fandom Duration 'Valid until: July 31, 2026'). 기존 3개는 만료일 표기 없어 null 유지.
+- 소스 업그레이드: 사용자 제공 Fandom 위키(genshin-impact.fandom.com/wiki/Promotional_Code)를 원신 1순위 검증 소스로 채택 — 서버별·Duration/만료일 명시라 aggregator보다 신뢰도 높음. 워치리스트 갱신.
+- 보류: NMI20MAJGIBP(Fandom 활성 vs Pocket Tactics 만료 → 소스 불일치, 미등록). GENSHINGIFT(간헐).
+- 원신 쿠폰 4개(EZSB/LEGEDIL/CODENAMEK/PFY). 쿠폰 총 2게임·5코드.
 ## [2026-07-14 10:48] [리서처] — 사용자 요청 (원신 쿠폰 교차확인 3건 등록)
 - 사용자 지정 소스(DCInside 원신갤 리딤코드 공지, 크롬 열람) × Pocket Tactics(07/10 갱신) 교차확인. 두 소스 모두 활성인 코드만 등록.
 - ⚠️쿠폰 신규 3개(genshin-6-7-luna-viii-20260701): EZSB8889C2BZ(모라 1만+재료), LEGEDILJKSGM(원석 60), PFY1S40I88T9(원석 60). 
