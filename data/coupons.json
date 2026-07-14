@@ -1,72 +1,92 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "last_updated": "2026-07-14",
-  "coupons": {
-    "ragnarok-m-classic-20260716": [
-      {
-        "code": "ROMC3DAYS",
-        "reward": "에르늄x20, 오리데오콘x20, 미스릴x20",
-        "expires": "2026-09-30",
-        "added": "2026-07-14"
-      }
-    ],
-    "genshin-6-7-luna-viii-20260701": [
-      {
-        "code": "EZSB8889C2BZ",
-        "reward": "모라 10,000, 모험 경험치 10, 정제된 광석 5, 쥐운 고추닭 5, 볶음 생선면 5",
-        "expires": null,
-        "added": "2026-07-14"
-      },
-      {
-        "code": "LEGEDILJKSGM",
-        "reward": "원석 60, 모험 경험치 5",
-        "expires": null,
-        "added": "2026-07-14"
-      },
-      {
-        "code": "PFY1S40I88T9",
-        "reward": "원석 60, 모험 경험치 5",
-        "expires": null,
-        "added": "2026-07-14"
-      },
-      {
-        "code": "CODENAMEK",
-        "reward": "가면무도회 초대장 1개 (아시아 서버 전용)",
-        "expires": "2026-07-31",
-        "added": "2026-07-14"
-      }
-    ],
-    "hsr-fate-collab-holy-grail-20260724": [
-      {
-        "code": "STARRAILGIFT",
-        "reward": "성옥 50, 신용점수 10,000",
-        "expires": null,
-        "added": "2026-07-14"
-      },
-      {
-        "code": "OMEGA",
-        "reward": "성옥 60, 연료 1",
-        "expires": null,
-        "added": "2026-07-14"
-      },
-      {
-        "code": "FAREWELL",
-        "reward": "성옥 60, 연료 1",
-        "expires": null,
-        "added": "2026-07-14"
-      },
-      {
-        "code": "IFYOUAREREADINGTHIS",
-        "reward": "성옥 60, 연료 1",
-        "expires": null,
-        "added": "2026-07-14"
-      },
-      {
-        "code": "CREATIONNYMPH",
-        "reward": "성옥 60, 연료 1, 영웅의 변수 1",
-        "expires": null,
-        "added": "2026-07-14"
-      }
-    ]
+  "games": {
+    "ragnarok-m-classic": {
+      "name_ko": "라그나로크M: 클래식",
+      "name_en": "Ragnarok M: Classic",
+      "image_url": "https://play-lh.googleusercontent.com/5SFBw-txEgmxfiD8J5DcHchCZFvLCo1jZsalnlDHYjv5nddS-8oLSRIwGHmqKF0NLaZJ9Gmbx6wEMGxlNtFe=s512",
+      "game_id": "ragnarok-m-classic-20260716",
+      "codes": [
+        {
+          "code": "ROMC3DAYS",
+          "reward": "에르늄x20, 오리데오콘x20, 미스릴x20",
+          "expires": "2026-09-30",
+          "added": "2026-07-14"
+        }
+      ]
+    },
+    "genshin-impact": {
+      "name_ko": "원신",
+      "name_en": "Genshin Impact",
+      "image_url": "https://play-lh.googleusercontent.com/YQqyKaXX-63krqsfIzUEJWUWLINxcb5tbS6QVySdxbS7eZV7YB2dUjUvX27xA0TIGtfxQ5v-tQjwlT5tTB-O=s512",
+      "game_id": "genshin-6-7-luna-viii-20260701",
+      "term": "리딤코드",
+      "codes": [
+        {
+          "code": "EZSB8889C2BZ",
+          "reward": "모라 10,000, 모험 경험치 10, 정제된 광석 5, 쥐운 고추닭 5, 볶음 생선면 5",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "LEGEDILJKSGM",
+          "reward": "원석 60, 모험 경험치 5",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "PFY1S40I88T9",
+          "reward": "원석 60, 모험 경험치 5",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "CODENAMEK",
+          "reward": "가면무도회 초대장 1개 (아시아 서버 전용)",
+          "expires": "2026-07-31",
+          "added": "2026-07-14"
+        }
+      ]
+    },
+    "honkai-star-rail": {
+      "name_ko": "붕괴: 스타레일",
+      "name_en": "Honkai: Star Rail",
+      "image_url": "https://play-lh.googleusercontent.com/aWrGocSA7hEuk1qAPe7L4T57LvLKrwwH26cK2_LOqxRQMQX7j3uHYojC-EKWgYEV2PdrmE0ahqvvhLhXrAGk6Q=s512",
+      "game_id": "hsr-fate-collab-holy-grail-20260724",
+      "term": "리딤코드",
+      "codes": [
+        {
+          "code": "STARRAILGIFT",
+          "reward": "성옥 50, 신용점수 10,000",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "OMEGA",
+          "reward": "성옥 60, 연료 1",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "FAREWELL",
+          "reward": "성옥 60, 연료 1",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "IFYOUAREREADINGTHIS",
+          "reward": "성옥 60, 연료 1",
+          "expires": null,
+          "added": "2026-07-14"
+        },
+        {
+          "code": "CREATIONNYMPH",
+          "reward": "성옥 60, 연료 1, 영웅의 변수 1",
+          "expires": null,
+          "added": "2026-07-14"
+        }
+      ]
+    }
   }
 }

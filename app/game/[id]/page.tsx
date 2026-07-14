@@ -12,7 +12,7 @@ import { DetailCover } from '@/components/DetailCover';
 import { PreRegCountdown } from '@/components/PreRegCountdown';
 import { Comments } from '@/components/Comments';
 import { CouponList } from '@/components/CouponList';
-import { getGameCoupons, couponDisplayName, couponTerm, couponKeywords } from '@/lib/coupons';
+import { getCouponsByGameId, couponKeywords } from '@/lib/coupons';
 import { PageShell } from '@/components/PageShell';
 
 interface Props {
@@ -43,10 +43,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dateStr = formatKoreanDate(game.release_date);
   const url = `https://gcalen.com/game/${game.id}`;
 
-  // 쿠폰 있으면 "게임명 쿠폰/기프트코드" 검색 키워드 강화
-  const gc = await getGameCoupons(game.id);
-  const hasCoupons = gc.active.length > 0 || gc.expired.length > 0;
-  const couponKw = hasCoupons ? couponKeywords(game.name_ko, game.name_en) : [];
+  // 쿠폰 있으면 "게임명 쿠폰/리딤코드" 검색 키워드 강화 (coupons.json에서 game.id로 역조회)
+  const gc = await getCouponsByGameId(game.id);
+  const hasCoupons = !!gc && (gc.active.length > 0 || gc.expired.length > 0);
+  const couponKw = hasCoupons ? couponKeywords(gc!.name, game.name_en) : [];
 
   // 사전예약 게임이면 '사전예약'을 제목·설명 전면에 노출(검색 노출용)
   const isPreReg = !!game.pre_registration;
@@ -122,9 +122,11 @@ export default async function GamePage({ params }: Props) {
   const game = games.find(g => g.id === params.id);
   if (!game) notFound();
 
-  const { active: activeCoupons, expired: expiredCoupons } = await getGameCoupons(game.id);
-  const couponName = couponDisplayName(game.name_ko);
-  const couponTermStr = couponTerm(game.name_ko, game.name_en);              // '리딤코드' | '쿠폰'
+  const coupons = await getCouponsByGameId(game.id);         // 연결된 쿠폰(없으면 null)
+  const activeCoupons = coupons?.active ?? [];
+  const expiredCoupons = coupons?.expired ?? [];
+  const couponName = coupons?.name ?? game.name_ko;
+  const couponTermStr = coupons?.term ?? '쿠폰';             // '리딤코드' | '쿠폰'
   const couponHeading = couponTermStr === '리딤코드'
     ? `${couponName} 리딤코드 (쿠폰·기프트코드)`
     : `${couponName} 쿠폰 번호 (기프트코드)`;
@@ -307,9 +309,11 @@ export default async function GamePage({ params }: Props) {
                 <CouponList coupons={expiredCoupons} expired />
               </>
             )}
-            <Link href={`/coupons/${game.id}`} className="detail-coupons-more">
-              {couponName} {couponTermStr} 전용 페이지 (사용법·지난 코드 전체) →
-            </Link>
+            {coupons && (
+              <Link href={`/coupons/${coupons.key}`} className="detail-coupons-more">
+                {couponName} {couponTermStr} 전용 페이지 (사용법·지난 코드 전체) →
+              </Link>
+            )}
           </section>
         )}
 

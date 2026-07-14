@@ -2,35 +2,31 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
-  getGameCoupons, getCouponPageGameIds, getCouponsLastUpdated,
-  couponDisplayName, couponTerm, couponKeywords,
+  getCouponGame, getCouponPageKeys, getCouponsLastUpdated, couponKeywords,
 } from '@/lib/coupons';
-import { getGameById, formatKoreanDate } from '@/lib/games';
+import { formatKoreanDate } from '@/lib/games';
 import { CouponList } from '@/components/CouponList';
 import { PageShell } from '@/components/PageShell';
 import styles from '../coupons.module.css';
 
 interface Props {
-  params: { id: string };
+  params: { id: string }; // coupons.json 키(= 슬러그)
 }
 
 export const dynamic = 'force-dynamic';
 
-// 쿠폰이 있는 게임만 정적 경로로 생성(나머지는 dynamicParams로 온디맨드 → 없으면 404)
+// 쿠폰이 있는 게임 키만 정적 경로로 생성(나머지는 dynamicParams로 온디맨드 → 없으면 404)
 export async function generateStaticParams() {
-  const ids = await getCouponPageGameIds();
-  return ids.map(id => ({ id }));
+  const keys = await getCouponPageKeys();
+  return keys.map(id => ({ id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const game = await getGameById(params.id);
-  if (!game) return { title: '쿠폰을 찾을 수 없어요' };
-  const { active, expired } = await getGameCoupons(game.id);
-  if (active.length === 0 && expired.length === 0) return { title: '쿠폰을 찾을 수 없어요' };
+  const g = await getCouponGame(params.id);
+  if (!g || (g.active.length === 0 && g.expired.length === 0)) return { title: '쿠폰을 찾을 수 없어요' };
 
-  const name = couponDisplayName(game.name_ko);
-  const term = couponTerm(game.name_ko, game.name_en); // '리딤코드' | '쿠폰'
-  const url = `https://gcalen.com/coupons/${game.id}`;
+  const { name, term, active } = g;
+  const url = `https://gcalen.com/coupons/${g.key}`;
   const title = term === '리딤코드'
     ? `${name} 리딤코드·쿠폰 최신 정리`
     : `${name} 쿠폰 번호·기프트코드 최신 정리`;
@@ -42,29 +38,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: { absolute: `${title} | Gcalen` },
     description: desc,
-    keywords: [...couponKeywords(game.name_ko, game.name_en), '게임 리딤코드', '게임 쿠폰', '기프트코드', '쿠폰번호 모음'],
+    keywords: [...couponKeywords(name), '게임 리딤코드', '게임 쿠폰', '기프트코드', '쿠폰번호 모음'],
     alternates: { canonical: url },
     openGraph: {
       title, description: desc, url, type: 'article', siteName: '게임 출시 캘린더', locale: 'ko_KR',
-      images: [{ url: game.image_url || '/og-image.png', alt: `${name} ${term}` }],
+      images: [{ url: g.image_url || '/og-image.png', alt: `${name} ${term}` }],
     },
-    twitter: { card: 'summary_large_image', title, description: desc, images: [game.image_url || '/og-image.png'] },
+    twitter: { card: 'summary_large_image', title, description: desc, images: [g.image_url || '/og-image.png'] },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
   };
 }
 
 export default async function GameCouponPage({ params }: Props) {
-  const game = await getGameById(params.id);
-  if (!game) notFound();
+  const g = await getCouponGame(params.id);
+  if (!g || (g.active.length === 0 && g.expired.length === 0)) notFound();
 
-  const { active, expired } = await getGameCoupons(game.id);
-  if (active.length === 0 && expired.length === 0) notFound();
-
-  const name = couponDisplayName(game.name_ko);
-  const term = couponTerm(game.name_ko, game.name_en);          // '리딤코드' | '쿠폰'
+  const { key, name, term, active, expired, game_id } = g;
   const paren = term === '리딤코드' ? '쿠폰·기프트코드' : '기프트코드';
   const heading = term === '리딤코드' ? `${name} 리딤코드` : `${name} 쿠폰 번호`;
-  const url = `https://gcalen.com/coupons/${game.id}`;
+  const url = `https://gcalen.com/coupons/${key}`;
   const lastUpdated = await getCouponsLastUpdated();
   const lastUpdatedStr = lastUpdated ? formatKoreanDate(lastUpdated.slice(0, 10)) : null;
 
@@ -142,9 +134,11 @@ export default async function GameCouponPage({ params }: Props) {
         </div>
 
         <div className={styles.related}>
-          <Link href={`/game/${game.id}`} className={styles.relatedLink}>
-            {name} 출시일·게임 정보 보기 →
-          </Link>
+          {game_id && (
+            <Link href={`/game/${game_id}`} className={styles.relatedLink}>
+              {name} 출시일·게임 정보 보기 →
+            </Link>
+          )}
           <Link href="/coupons" className={styles.relatedLink}>다른 게임 쿠폰 모음 →</Link>
         </div>
 
