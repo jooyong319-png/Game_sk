@@ -1,3 +1,8 @@
+## [2026-07-14 12:06] [리서처] — 사용자 요청 (프롬프트 v2 반영: 워치리스트 갱신)
+- coupons.json은 개발자가 이미 schema v2(게임 카탈로그, games={슬러그→객체})로 마이그레이션 완료(커밋 625657e). 기존 쿠폰 3게임(라그M·원신·HSR)·10코드 전량 보존 확인, lib/coupons.ts는 v2 우선+v1 폴백.
+- PROJECT_STATUS.md 쿠폰 워치리스트를 v2 의미로 수정: (1) v2 구조 설명 추가(games.json 독립·슬러그 키·game_id 선택) (2) '게임 미등록→등록 불가' 규칙 제거 (3) 명조(wuthering-waves)·이환(neverness-to-everness)·ZZZ(zenless-zone-zero)를 '✅ 등록 가능(game_id 없이)'로 전환, 슬러그 키 부여 (4) 검증규칙·표 헤더 v2화.
+- 데이터 변동: coupons.json 무변경(이미 v2 정합), games.json·events.json 무변경. 문서(PROJECT_STATUS.md)만 갱신.
+- 참고: 명조·이환·ZZZ는 이제 캘린더 엔트리 없이도 쿠폰 등록 가능 → 다음 사이클 후보.
 ## [2026-07-14 11:13] [리서처] — 사용자 요청 (서브컬처 Fandom 소스화 + HSR 상시쿠폰 5건)
 - 명조·스타레일·이환 신뢰 소스 조사. HSR/원신/명조는 Fandom Redemption/Promotional Code 위키(서버·Duration 명시) 확보, 이환은 Fandom 없어 game8/GameWith/PCGamer로 대체.
 - ⚠️쿠폰 신규 5개(hsr-fate-collab-holy-grail-20260724): STARRAILGIFT(성옥50)·OMEGA·FAREWELL·IFYOUAREREADINGTHIS·CREATIONNYMPH(각 성옥60±). Fandom 'Valid:(indefinite)' 상시코드만 채택, 7/3 방송코드(XTJ9MV38DL3X 등)는 7/4 만료 확인→미등록. expires=null(상시), revoke 가능성으로 매 사이클 재확인.
