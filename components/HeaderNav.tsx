@@ -14,6 +14,7 @@ const PRIMARY: NavItem[] = [
   { href: '/news', label: '게임 뉴스' },
   { href: '/blog', label: '신작 가이드' },
   { href: '/coupons', label: '게임 쿠폰' },
+  { href: '/games', label: '게임 목록' },
   { href: '/board', label: '커뮤니티' },
 ];
 
@@ -82,6 +83,14 @@ export function HeaderNav() {
       >
         <svg className="ic" aria-hidden="true"><use href="#ic-gift" /></svg>
         <span className="header-coupon-label">게임 쿠폰</span>
+      </a>
+      <a
+        href="/games"
+        className={`header-games-link ${pathname.startsWith('/games') ? 'header-games-active' : ''}`}
+        aria-current={pathname.startsWith('/games') ? 'page' : undefined}
+      >
+        <svg className="ic" aria-hidden="true"><use href="#ic-gamepad" /></svg>
+        <span className="header-games-label">게임 목록</span>
       </a>
       <a
         href="/board"
