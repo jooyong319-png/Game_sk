@@ -14,7 +14,6 @@ const NAV: NavItem[] = [
   { href: '/pre-registration', label: '사전예약' },
   { href: '/new-servers', label: '신규 서버' },
   { href: '/events', label: '이벤트' },
-  { href: '/coupons', label: '게임 쿠폰' },
   { href: '/mobile-games', label: '모바일' },
   { href: '/pc-console-games', label: 'PC·콘솔' },
   { href: '/global-games', label: '글로벌' },
@@ -66,6 +65,14 @@ export function HeaderNav() {
       >
         <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg>
         <span className="header-guide-label">신작 가이드</span>
+      </a>
+      <a
+        href="/coupons"
+        className={`header-coupon-link ${pathname.startsWith('/coupons') ? 'header-coupon-active' : ''}`}
+        aria-current={pathname.startsWith('/coupons') ? 'page' : undefined}
+      >
+        <svg className="ic" aria-hidden="true"><use href="#ic-gift" /></svg>
+        <span className="header-coupon-label">게임 쿠폰</span>
       </a>
       <a
         href="/board"
