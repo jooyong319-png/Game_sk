@@ -1,3 +1,8 @@
+## [2026-07-14 15:14] [리서처] — 사용자 요청 (로드나인 공식 쿠폰 8건)
+- 사용자 제공 onstove 공식 게시판(page.onstove.com/L9/global, OFFICIAL LORDNINE 2주년 쿠폰 공지) 크롬 열람·확인. 구글플레이 페이지에서 해당 보드가 로드나인(스마일게이트) 공식 커뮤니티임 교차 확인.
+- ⚠️쿠폰 신규 8개(lord-nine, game_id=lordnine-server-dinapheri-20260327 연결): THANKS2LORD0624·3000LORDSLIVES2·LORDNINE5OOOAIR·7000EVERYLORDS2·2YEARTHANKS2L0RD·LORD9ASKME1·S2QNAS2LORD·QNA4ALLS2LORDS. 전부 사용기간 ~2026-07-15 23:59(공지 연장분). 이미지=구글플레이 로드나인 아이콘.
+- 주의: 공지 원문 O/0 표기 그대로 등록(LORDNINE5OOOAIR=대문자 O 3개, 2YEARTHANKS2L0RD=숫자 0). 7/15 만료 임박(등록 후 90일 만료됨 노출).
+- 쿠폰 7→8게임 / 24→32코드. onstove는 크롬 접근 가능(네이버와 달리 허용) → 워치리스트 소스 후보.
 ## [2026-07-14 12:26] [리서처] — 사용자 요청 (서브컬처 쿠폰 대량 등록, v2)
 - v2(게임 독립) 활용해 캘린더 미등록 게임도 등록. 4게임·14코드 신규.
 - ⚠️명조(wuthering-waves): WUTHERINGGIFT(상시)·WUWA4PC(PC상시). Fandom Redemption Code 'Active'에서 상시만 채택(3.5 방송코드 만료). 이미지=구글플레이 아이콘.
