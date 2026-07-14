@@ -5,6 +5,7 @@ import { getGameHub, getGameHubKeys } from '@/lib/game-hub';
 import { getCouponsLastUpdated, couponKeywords } from '@/lib/coupons';
 import { formatKoreanDate } from '@/lib/games';
 import { CouponList } from '@/components/CouponList';
+import { ViewCounter } from '@/components/ViewCounter';
 import { PageShell } from '@/components/PageShell';
 import styles from './games.module.css';
 
@@ -91,6 +92,7 @@ export default async function GameHubPage({ params }: Props) {
             <p className={styles.lead}>
               {name}의 최신 {term}과 다가오는 업데이트·이벤트·출시 일정을 모았습니다.
             </p>
+            <ViewCounter gameId={`hub:${key}`} />
           </div>
         </header>
 

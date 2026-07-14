@@ -6,6 +6,7 @@ import {
 } from '@/lib/coupons';
 import { formatKoreanDate } from '@/lib/games';
 import { CouponList } from '@/components/CouponList';
+import { ViewCounter } from '@/components/ViewCounter';
 import { PageShell } from '@/components/PageShell';
 import styles from '../coupons.module.css';
 
@@ -113,6 +114,7 @@ export default async function GameCouponPage({ params }: Props) {
               ? `현재 사용 가능한 ${name} ${term}(기프트코드) ${active.length}개입니다. 아래 코드를 복사해 게임 내 ${term} 입력란 또는 공식 등록 페이지에 넣으면 무료 보상을 받을 수 있어요. 코드는 게임사 사정에 따라 만료되거나 조기 소진될 수 있습니다.`
               : `현재 사용 가능한 ${name} ${term}는 없습니다. 아래는 최근 만료된 코드이며, 새 코드가 나오면 이 페이지에 가장 먼저 업데이트됩니다.`}
           </p>
+          <ViewCounter gameId={`coupon:${key}`} />
         </header>
 
         {active.length > 0 && <CouponList coupons={active} />}
