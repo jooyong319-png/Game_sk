@@ -390,3 +390,14 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 - 네이버 도메인은 fetch·크롬 모두 하드 차단(우회 불가) → 사용자 제공 파이프라인 유지.
 
 _(리서처가 게임 추가/출시에 따라 이 표를 갱신. 콘솔 AAA는 쿠폰 거의 없음 → 목록 제외.)_
+
+## 🧩 서브컬처 가챠 쿠폰 신뢰 소스 (Fandom 계열 — 서버·Duration 표기)
+Fandom Redemption/Promotional Code 위키는 서버(글로벌/아시아)·Duration(만료일)·활성/만료 구분이 명확해 1순위 검증 소스로 사용. 방송 단발코드는 대개 1~3일 만료 → 지양하고, 'Valid: (indefinite)' 상시 코드 위주로 등록.
+| 게임 | games.json id | 1순위 소스(Fandom) | 보조 | 상태 |
+|---|---|---|---|---|
+| 붕괴: 스타레일 | hsr-fate-collab-holy-grail-20260724 | https://honkai-star-rail.fandom.com/wiki/Redemption_Code | Pocket Tactics, game8, hoyolab | ✅ 등록됨(상시코드 5종) |
+| 원신 | genshin-6-7-luna-viii-20260701 | https://genshin-impact.fandom.com/wiki/Promotional_Code | DCInside 원신갤, Pocket Tactics | ✅ 등록됨 |
+| 명조(Wuthering Waves) | (게임 미등록) | https://wutheringwaves.fandom.com/wiki/Redemption_Code | game8, Pocket Tactics. 상시코드 WUTHERINGGIFT 존재 | ⚠️ 게임 엔트리 생기면 등록(업데이트/콜라보 시) |
+| 이환(NTE, Neverness to Everness) | (게임 미등록) | Fandom 미확인 → game8 https://game8.co/games/Neverness-to-Everness/archives/593718 · GameWith · PC Gamer | 상시코드 NTEGIFT 등 존재 | ⚠️ 게임 엔트리 생기면 등록 |
+| 젠레스 존 제로(ZZZ) | (게임 미등록) | https://zenless.hoyoverse.com/redemption + hoyolab | game8 | ⚠️ 게임 엔트리 생기면 등록 |
+_(명조·이환·ZZZ는 games.json에 해당 id가 없어 지금은 쿠폰 노출 불가. 향후 이들 게임의 업데이트/콜라보/신규 콘텐츠가 캘린더에 등록되면 그 id로 쿠폰 활성화. HSR 상시코드는 revoke 가능성 있어 매 사이클 Fandom 재확인.)_

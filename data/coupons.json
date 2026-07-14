@@ -35,6 +35,38 @@
         "expires": "2026-07-31",
         "added": "2026-07-14"
       }
+    ],
+    "hsr-fate-collab-holy-grail-20260724": [
+      {
+        "code": "STARRAILGIFT",
+        "reward": "성옥 50, 신용점수 10,000",
+        "expires": null,
+        "added": "2026-07-14"
+      },
+      {
+        "code": "OMEGA",
+        "reward": "성옥 60, 연료 1",
+        "expires": null,
+        "added": "2026-07-14"
+      },
+      {
+        "code": "FAREWELL",
+        "reward": "성옥 60, 연료 1",
+        "expires": null,
+        "added": "2026-07-14"
+      },
+      {
+        "code": "IFYOUAREREADINGTHIS",
+        "reward": "성옥 60, 연료 1",
+        "expires": null,
+        "added": "2026-07-14"
+      },
+      {
+        "code": "CREATIONNYMPH",
+        "reward": "성옥 60, 연료 1, 영웅의 변수 1",
+        "expires": null,
+        "added": "2026-07-14"
+      }
     ]
   }
 }

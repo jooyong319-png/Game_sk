@@ -1,3 +1,8 @@
+## [2026-07-14 11:13] [리서처] — 사용자 요청 (서브컬처 Fandom 소스화 + HSR 상시쿠폰 5건)
+- 명조·스타레일·이환 신뢰 소스 조사. HSR/원신/명조는 Fandom Redemption/Promotional Code 위키(서버·Duration 명시) 확보, 이환은 Fandom 없어 game8/GameWith/PCGamer로 대체.
+- ⚠️쿠폰 신규 5개(hsr-fate-collab-holy-grail-20260724): STARRAILGIFT(성옥50)·OMEGA·FAREWELL·IFYOUAREREADINGTHIS·CREATIONNYMPH(각 성옥60±). Fandom 'Valid:(indefinite)' 상시코드만 채택, 7/3 방송코드(XTJ9MV38DL3X 등)는 7/4 만료 확인→미등록. expires=null(상시), revoke 가능성으로 매 사이클 재확인.
+- 명조(WUTHERINGGIFT)·이환(NTEGIFT 등)·ZZZ: 상시코드 존재하나 games.json에 게임 id 없어 등록 불가 → 워치리스트에 '게임 미등록, 엔트리 생기면 등록'으로 기록.
+- 쿠폰 3게임(라그M·원신·스타레일)·총 10코드. games.json·events.json 변동 없음.
 ## [2026-07-14 10:51] [리서처] — 사용자 요청 (원신 CODENAMEK 추가 + Fandom 소스화)
 - 사용자 인게임 리딤 확인: EZSB8889C2BZ·LEGEDILJKSGM·CODENAMEK·PFY1S40I88T9 모두 작동 확인(가장 강한 검증).
 - ⚠️쿠폰 신규 1개: CODENAMEK — 가면무도회 초대장 1개(아시아 서버 전용), expires 2026-07-31(Fandom Duration 'Valid until: July 31, 2026'). 기존 3개는 만료일 표기 없어 null 유지.
