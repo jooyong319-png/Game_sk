@@ -12,7 +12,7 @@ import { DetailCover } from '@/components/DetailCover';
 import { PreRegCountdown } from '@/components/PreRegCountdown';
 import { Comments } from '@/components/Comments';
 import { CouponList } from '@/components/CouponList';
-import { getGameCoupons, couponDisplayName } from '@/lib/coupons';
+import { getGameCoupons, couponDisplayName, couponTerm, couponKeywords } from '@/lib/coupons';
 import { PageShell } from '@/components/PageShell';
 
 interface Props {
@@ -46,10 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // 쿠폰 있으면 "게임명 쿠폰/기프트코드" 검색 키워드 강화
   const gc = await getGameCoupons(game.id);
   const hasCoupons = gc.active.length > 0 || gc.expired.length > 0;
-  const couponName = couponDisplayName(game.name_ko);
-  const couponKeywords = hasCoupons
-    ? [`${couponName} 쿠폰`, `${couponName} 쿠폰번호`, `${couponName} 기프트코드`, `${couponName} 쿠폰코드`]
-    : [];
+  const couponKw = hasCoupons ? couponKeywords(game.name_ko, game.name_en) : [];
 
   // 사전예약 게임이면 '사전예약'을 제목·설명 전면에 노출(검색 노출용)
   const isPreReg = !!game.pre_registration;
@@ -84,7 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ...(game.name_en ? [game.name_en] : []),
     `${game.name_ko} ${landing.releaseNoun}`,
     ...preRegKeywords,
-    ...couponKeywords,
+    ...couponKw,
     landing.label,
     ...game.platforms,
     ...game.genres,
@@ -127,6 +124,10 @@ export default async function GamePage({ params }: Props) {
 
   const { active: activeCoupons, expired: expiredCoupons } = await getGameCoupons(game.id);
   const couponName = couponDisplayName(game.name_ko);
+  const couponTermStr = couponTerm(game.name_ko, game.name_en);              // '리딤코드' | '쿠폰'
+  const couponHeading = couponTermStr === '리딤코드'
+    ? `${couponName} 리딤코드 (쿠폰·기프트코드)`
+    : `${couponName} 쿠폰 번호 (기프트코드)`;
   const landing = CATEGORY_LANDING[game.category];
   const catLabel = CATEGORY_META[game.category]?.label ?? game.category;
   const dateStr = formatKoreanDate(game.release_date);
@@ -293,21 +294,21 @@ export default async function GamePage({ params }: Props) {
 
         {(activeCoupons.length > 0 || expiredCoupons.length > 0) && (
           <section className="detail-coupons">
-            <h2>{couponName} 쿠폰 번호 (기프트코드)</h2>
+            <h2>{couponHeading}</h2>
             <p className="detail-coupons-intro">
               {activeCoupons.length > 0
-                ? `현재 사용 가능한 ${couponName} 쿠폰(기프트코드)입니다. 코드를 복사해 게임 내 쿠폰 입력란 또는 공식 쿠폰 등록 페이지에 입력하면 보상을 받을 수 있어요. 코드는 만료되거나 조기 소진될 수 있습니다.`
-                : `현재 사용 가능한 ${couponName} 쿠폰은 없습니다. 아래는 최근 만료된 쿠폰이며, 새 쿠폰이 나오면 이곳에 업데이트됩니다.`}
+                ? `현재 사용 가능한 ${couponName} ${couponTermStr}(기프트코드)입니다. 코드를 복사해 게임 내 ${couponTermStr} 입력란 또는 공식 등록 페이지에 입력하면 보상을 받을 수 있어요. 코드는 만료되거나 조기 소진될 수 있습니다.`
+                : `현재 사용 가능한 ${couponName} ${couponTermStr}는 없습니다. 아래는 최근 만료된 코드이며, 새 코드가 나오면 이곳에 업데이트됩니다.`}
             </p>
             {activeCoupons.length > 0 && <CouponList coupons={activeCoupons} />}
             {expiredCoupons.length > 0 && (
               <>
-                <h3 className="detail-coupons-expired-title">지난 쿠폰 (만료)</h3>
+                <h3 className="detail-coupons-expired-title">지난 {couponTermStr} (만료)</h3>
                 <CouponList coupons={expiredCoupons} expired />
               </>
             )}
             <Link href={`/coupons/${game.id}`} className="detail-coupons-more">
-              {couponName} 쿠폰 전용 페이지 (사용법·지난 쿠폰 전체) →
+              {couponName} {couponTermStr} 전용 페이지 (사용법·지난 코드 전체) →
             </Link>
           </section>
         )}

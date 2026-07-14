@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getAllActiveCoupons, couponDisplayName } from '@/lib/coupons';
+import { getAllActiveCoupons, couponDisplayName, couponTerm } from '@/lib/coupons';
 import { getAllGames } from '@/lib/games';
 import { CouponList } from '@/components/CouponList';
 import { PageShell } from '@/components/PageShell';
@@ -17,7 +17,10 @@ export const dynamic = 'force-dynamic';
 
 export default async function CouponsPage() {
   const [active, games] = await Promise.all([getAllActiveCoupons(), getAllGames()]);
-  const nameById = new Map(games.map(g => [g.id, couponDisplayName(g.name_ko)]));
+  const metaById = new Map(games.map(g => [g.id, {
+    name: couponDisplayName(g.name_ko),
+    term: couponTerm(g.name_ko, g.name_en),
+  }]));
   const entries = Object.entries(active).sort((a, b) => b[1].length - a[1].length);
   const totalCodes = entries.reduce((s, [, list]) => s + list.length, 0);
 
@@ -38,18 +41,23 @@ export default async function CouponsPage() {
           </p>
         ) : (
           <div className={styles.games}>
-            {entries.map(([id, list]) => (
-              <section key={id} className={styles.gameCard}>
-                <h2 className={styles.gameName}>
-                  <Link href={`/coupons/${id}`}>{nameById.get(id) ?? id} 쿠폰</Link>
-                  <span className={styles.count}>{list.length}개</span>
-                </h2>
-                <CouponList coupons={list} />
-                <Link href={`/coupons/${id}`} className={styles.moreLink}>
-                  {nameById.get(id) ?? id} 쿠폰 전용 페이지 (사용법·지난 쿠폰) →
-                </Link>
-              </section>
-            ))}
+            {entries.map(([id, list]) => {
+              const m = metaById.get(id);
+              const label = m?.name ?? id;
+              const term = m?.term ?? '쿠폰';
+              return (
+                <section key={id} className={styles.gameCard}>
+                  <h2 className={styles.gameName}>
+                    <Link href={`/coupons/${id}`}>{label} {term}</Link>
+                    <span className={styles.count}>{list.length}개</span>
+                  </h2>
+                  <CouponList coupons={list} />
+                  <Link href={`/coupons/${id}`} className={styles.moreLink}>
+                    {label} {term} 전용 페이지 (사용법·지난 코드) →
+                  </Link>
+                </section>
+              );
+            })}
           </div>
         )}
 

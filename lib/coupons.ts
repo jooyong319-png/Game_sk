@@ -48,6 +48,28 @@ export function couponDisplayName(nameKo: string): string {
   return base || nameKo;
 }
 
+// 게임별 '쿠폰'을 부르는 주요 용어. 호요버스류(원신·붕괴·스타레일·젠레스)는 유저가
+// '쿠폰'보다 '리딤코드'로 훨씬 많이 검색 → SEO상 주 키워드. 그 외는 '쿠폰'.
+const REDEEM_CODE_GAMES = /원신|붕괴|스타\s*레일|스타레일|젠레스|genshin|honkai|star\s*rail|zenless/i;
+export function couponTerm(nameKo: string, nameEn?: string | null): '리딤코드' | '쿠폰' {
+  return REDEEM_CODE_GAMES.test(`${nameKo} ${nameEn ?? ''}`) ? '리딤코드' : '쿠폰';
+}
+
+// SEO 키워드: "게임명 + (리딤코드/쿠폰/쿠폰번호/기프트코드)" 변형(콜론·첫 단어 표기까지 커버).
+// 리딤코드 게임은 리딤코드를 앞세우되, 어느 쪽이든 쿠폰·기프트코드 변형을 함께 포함해 전부 커버.
+export function couponKeywords(nameKo: string, nameEn?: string | null): string[] {
+  const base = couponDisplayName(nameKo);
+  const noColon = base.replace(/[:：]/g, '').replace(/\s+/g, ' ').trim();
+  const first = base.split(/[:：\s]/).filter(Boolean)[0];
+  const names = Array.from(new Set([base, noColon, first].filter(Boolean)));
+  const nouns = couponTerm(nameKo, nameEn) === '리딤코드'
+    ? ['리딤코드', '리딤 코드', '쿠폰', '쿠폰번호', '기프트코드']
+    : ['쿠폰', '쿠폰번호', '기프트코드', '쿠폰코드'];
+  const out: string[] = [];
+  for (const n of names) for (const noun of nouns) out.push(`${n} ${noun}`);
+  return Array.from(new Set(out));
+}
+
 // KST(UTC+9) 오늘
 function kstToday(): string {
   return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
