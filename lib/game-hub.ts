@@ -30,3 +30,31 @@ export async function getGameHub(key: string): Promise<GameHub | null> {
 export async function getGameHubKeys(): Promise<string[]> {
   return getAllCouponKeys();
 }
+
+// 게임 목록(/games) 인덱스용 요약 — 카탈로그의 모든 게임 + 쿠폰/일정 개수.
+export interface GameHubSummary {
+  key: string;
+  name: string;
+  term: '리딤코드' | '쿠폰';
+  image_url: string | null;
+  activeCount: number;   // 유효 코드 수
+  expiredCount: number;  // 최근 만료 코드 수
+  relatedCount: number;  // 연결된 캘린더 일정 수
+}
+
+export async function getAllGameHubs(): Promise<GameHubSummary[]> {
+  const [keys, all] = await Promise.all([getAllCouponKeys(), getAllGames()]);
+  const views = await Promise.all(keys.map(k => getCouponGame(k)));
+  return views
+    .filter((v): v is CouponGameView => !!v)
+    .map(v => ({
+      key: v.key,
+      name: v.name,
+      term: v.term,
+      image_url: v.image_url,
+      activeCount: v.active.length,
+      expiredCount: v.expired.length,
+      relatedCount: all.filter(g => belongs(g, v)).length,
+    }))
+    .sort((a, b) => b.activeCount - a.activeCount || b.relatedCount - a.relatedCount || a.name.localeCompare(b.name));
+}

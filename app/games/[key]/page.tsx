@@ -135,6 +135,7 @@ export default async function GameHubPage({ params }: Props) {
         )}
 
         <div className={styles.related}>
+          <Link href="/games" className={styles.relatedLink}>전체 게임 목록 →</Link>
           <Link href="/coupons" className={styles.relatedLink}>다른 게임 쿠폰 모음 →</Link>
           <Link href="/" className={styles.relatedLink}>게임 출시 캘린더 →</Link>
         </div>

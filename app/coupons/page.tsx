@@ -52,6 +52,7 @@ export default async function CouponsPage() {
 
         <p className={styles.note}>
           코드는 게임사 사정에 따라 만료되거나 조기 소진될 수 있습니다. 사용법과 최신 일정은 각 게임 전용 페이지 또는 공식 채널을 확인해 주세요.
+          {' '}<Link href="/games" className={styles.moreLink}>전체 게임 목록 보기 →</Link>
         </p>
       </section>
     </PageShell>
