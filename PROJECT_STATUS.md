@@ -370,7 +370,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 |---|---|---|---|
 | 왕좌의 게임: 킹스로드 | got-kingsroad-20260514 | https://forum.netmarble.com/got_kr (공식 포럼 '쿠폰 등록/공지') | 넷마블 공식 포럼 = 자동 확인 O |
 | 명일방주: 엔드필드 | arknights-endfield-20260122 | 인게임 교환 + 그리프라인 공식; 후보는 gamesradar/game8/mobalytics | 공식 웹 코드페이지 없음(방송發) → 정리사이트 후보→가능시 공식 크로스 |
-| 원신(업데이트 엔트리) | genshin-6-7-luna-viii-20260701 | https://www.hoyolab.com (공식) + https://genshin.hoyoverse.com/gift | 방송코드 24~72h 만료 주의, 장기코드만 |
+| 원신(업데이트 엔트리) | genshin-6-7-luna-viii-20260701 | 후보(커뮤니티·단서): DCInside 원신갤 리딤코드 공지 https://gall.dcinside.com/mgallery/board/view/?id=onshinproject&no=12079960 (크롬 열람 가능, 상시 갱신) → 공식 크로스: https://www.hoyolab.com + https://genshin.hoyoverse.com/ko/gift?code=CODE | 방송코드 24~72h 만료 주의, 장기코드만. 공식 gift 페이지는 로그인월이라 리딤 실검증 불가 → 커뮤니티 유효기간+공식 gift 링크 형식으로 판단 |
 | 붕괴: 스타레일(콜라보 엔트리) | hsr-fate-collab-holy-grail-20260724 | https://www.hoyolab.com + https://hsr.hoyoverse.com/gift | 동일(단발 방송코드 지양) |
 | 젠레스 존 제로 | (게임 엔트리 미등록) | https://zenless.hoyoverse.com/redemption + hoyolab | 게임 id 없으면 등록 불가 |
 | 라그나로크M: Classic | ragnarok-m-classic-20260716 | https://romc.gnjoy.com/news (공식) | 쿠폰은 네이버 라운지 선공개 경향 → 아래 ⚠️ 참조 |
