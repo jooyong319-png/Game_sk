@@ -554,6 +554,20 @@ textarea:focus-visible,
   color: var(--text-faint);
 }
 /* 자주 묻는 질문(FAQ) 섹션 — FAQPage 구조화 데이터와 1:1 대응 */
+.detail-coupons {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.detail-coupons > h2 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+.detail-coupons-intro {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
 .detail-faq {
   margin-top: 1.5rem;
   padding: 1.2rem 1.4rem;

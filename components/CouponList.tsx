@@ -1,0 +1,57 @@
+'use client';
+import { useState } from 'react';
+import styles from './CouponList.module.css';
+
+export interface Coupon {
+  code: string;
+  reward: string;
+  expires?: string | null;
+}
+
+function fmtExpires(iso?: string | null): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return `${d.getMonth() + 1}월 ${d.getDate()}일까지`;
+}
+
+export function CouponList({ coupons }: { coupons: Coupon[] }) {
+  const [copied, setCopied] = useState<string | null>(null);
+
+  async function copy(code: string) {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(code);
+      setTimeout(() => setCopied(c => (c === code ? null : c)), 1600);
+    } catch {
+      /* 클립보드 미지원 시 무시 (코드는 화면에 노출돼 있음) */
+    }
+  }
+
+  if (coupons.length === 0) return null;
+
+  return (
+    <ul className={styles.list}>
+      {coupons.map((c, i) => {
+        const exp = fmtExpires(c.expires);
+        return (
+          <li key={`${c.code}-${i}`} className={styles.item}>
+            <div className={styles.top}>
+              <code className={styles.code}>{c.code}</code>
+              <button
+                type="button"
+                className={styles.copyBtn}
+                onClick={() => copy(c.code)}
+                aria-label={`${c.code} 복사`}
+              >
+                {copied === c.code ? '복사됨 ✓' : '복사'}
+              </button>
+            </div>
+            <p className={styles.reward}>{c.reward}</p>
+            {exp && <span className={styles.expires}>{exp}</span>}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}

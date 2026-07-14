@@ -10,6 +10,8 @@ import { ViewCounter } from '@/components/ViewCounter';
 import { DetailCover } from '@/components/DetailCover';
 import { PreRegCountdown } from '@/components/PreRegCountdown';
 import { Comments } from '@/components/Comments';
+import { CouponList } from '@/components/CouponList';
+import { getCouponsForGame } from '@/lib/coupons';
 import { PageShell } from '@/components/PageShell';
 
 interface Props {
@@ -39,6 +41,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const landing = CATEGORY_LANDING[game.category];
   const dateStr = formatKoreanDate(game.release_date);
   const url = `https://gcalen.com/game/${game.id}`;
+
+  // 쿠폰 있으면 "게임명 쿠폰/기프트코드" 검색 키워드 강화
+  const hasCoupons = (await getCouponsForGame(game.id)).length > 0;
+  const couponKeywords = hasCoupons
+    ? [`${game.name_ko} 쿠폰`, `${game.name_ko} 쿠폰번호`, `${game.name_ko} 기프트코드`, `${game.name_ko} 쿠폰코드`]
+    : [];
 
   // 사전예약 게임이면 '사전예약'을 제목·설명 전면에 노출(검색 노출용)
   const isPreReg = !!game.pre_registration;
@@ -73,6 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ...(game.name_en ? [game.name_en] : []),
     `${game.name_ko} ${landing.releaseNoun}`,
     ...preRegKeywords,
+    ...couponKeywords,
     landing.label,
     ...game.platforms,
     ...game.genres,
@@ -113,6 +122,7 @@ export default async function GamePage({ params }: Props) {
   const game = games.find(g => g.id === params.id);
   if (!game) notFound();
 
+  const coupons = await getCouponsForGame(game.id);
   const landing = CATEGORY_LANDING[game.category];
   const catLabel = CATEGORY_META[game.category]?.label ?? game.category;
   const dateStr = formatKoreanDate(game.release_date);
@@ -276,6 +286,16 @@ export default async function GamePage({ params }: Props) {
             <time dateTime={lastUpdatedIso}>마지막 업데이트: {lastUpdatedStr}</time>
           </p>
         </article>
+
+        {coupons.length > 0 && (
+          <section className="detail-coupons">
+            <h2>{game.name_ko} 쿠폰 번호 (기프트코드)</h2>
+            <p className="detail-coupons-intro">
+              현재 사용 가능한 {game.name_ko} 쿠폰(기프트코드)입니다. 코드를 복사해 게임 내 쿠폰 입력란 또는 공식 쿠폰 등록 페이지에 입력하면 보상을 받을 수 있어요. 코드는 만료되거나 조기 소진될 수 있습니다.
+            </p>
+            <CouponList coupons={coupons} />
+          </section>
+        )}
 
         <Comments gameId={game.id} />
 

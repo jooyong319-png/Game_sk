@@ -14,6 +14,7 @@ const NAV: NavItem[] = [
   { href: '/pre-registration', label: '사전예약' },
   { href: '/new-servers', label: '신규 서버' },
   { href: '/events', label: '이벤트' },
+  { href: '/coupons', label: '게임 쿠폰' },
   { href: '/mobile-games', label: '모바일' },
   { href: '/pc-console-games', label: 'PC·콘솔' },
   { href: '/global-games', label: '글로벌' },
