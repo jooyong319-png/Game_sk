@@ -2899,6 +2899,27 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4210580/header.jpg",
       "source_url": "https://store.steampowered.com/app/4210580/Ore_Factory_Squad/"
+    },
+    {
+      "id": "ascend-to-zero-20260713",
+      "name_ko": "어센드투제로",
+      "name_en": "Ascend to ZERO",
+      "release_date": "2026-07-13",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC",
+        "Xbox Series X|S"
+      ],
+      "developer": "플라이웨이게임즈 (Flyway Games)",
+      "publisher": "크래프톤 (플라이웨이게임즈)",
+      "description": "크래프톤 산하 크리에이티브 스튜디오 플라이웨이게임즈가 개발·서비스하는 액션 로그라이크. 시간을 멈추는 능력을 전략적으로 활용해 몰려드는 적을 상대하며, 반복 플레이로 다양한 능력과 전투 스타일을 조합해 성장하는 재미가 핵심이다. 2026년 7월 13일 PC(스팀)와 Xbox 시리즈 X/S로 글로벌 정식 출시했고, 출시와 동시에 Xbox 게임패스 데이 원 타이틀로 제공된다. 한국어를 지원하며 국내 판매가는 1만 3천 원이다.",
+      "genres": [
+        "액션 로그라이크",
+        "인디"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2697940/header.jpg",
+      "source_url": "https://store.steampowered.com/app/2697940/Ascend_to_ZERO/?l=koreana"
     }
   ]
 }
