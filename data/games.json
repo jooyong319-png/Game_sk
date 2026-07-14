@@ -2855,6 +2855,50 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3440070/header.jpg",
       "source_url": "https://store.steampowered.com/app/3440070/Dinoblade/"
+    },
+    {
+      "id": "digimon-up-20260715",
+      "name_ko": "디지몬 UP",
+      "name_en": "DIGIMON UP",
+      "release_date": "2026-07-15",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "반다이 남코 엔터테인먼트",
+      "publisher": "반다이 남코 엔터테인먼트",
+      "description": "반다이 남코가 서비스하는 디지몬 IP 기반 모바일 육성 RPG로, iOS·안드로이드에서 무료로 즐길 수 있다. 새롭게 그려진 2D 픽셀 아트의 디지몬을 파트너로 삼아 현실과 디지털 세계를 오가며 모험하고, 전략적인 턴제 전투로 디지몬을 성장·진화시키는 것이 핵심이다. 사전예약 캠페인과 함께 2026년 7월 15일 글로벌 정식 출시가 확정됐으며, 국내에서도 같은 시기 이용할 수 있다.",
+      "genres": [
+        "육성 RPG",
+        "수집형"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/WC1AVEJf1u9_0WkRdzRHBaOcV9UOr4PpnWA5dWi5itaBn0oUz3MOXgXLgQ2f-2PuWrk27Wv5FmB0qaeIq_F8Xw=s512",
+      "source_url": "https://dgup.bn-ent.net/en/",
+      "pre_registration": false,
+      "pre_registration_date": null
+    },
+    {
+      "id": "ore-factory-squad-20260716",
+      "name_ko": "오어 팩토리 스쿼드",
+      "name_en": "Ore Factory Squad",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "threeW",
+      "publisher": "PlayWay",
+      "description": "PlayWay가 퍼블리싱하고 threeW가 개발한 협동 채굴·공장 건설 시뮬레이션 게임이다. 혼자 또는 친구들과 함께 부지를 매입해 깊은 지하로 파고들어 광물을 채굴하고, 생산 라인을 자동화·업그레이드하며 공장을 키워 계약을 완수하는 것이 핵심 재미다. PC(스팀)로 2026년 7월 16일 정식 출시되며 한국어 인터페이스·자막을 지원한다. 앞서 2026년 3월에는 데모 버전이 공개된 바 있다.",
+      "genres": [
+        "시뮬레이션",
+        "협동",
+        "공장 건설"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4210580/header.jpg",
+      "source_url": "https://store.steampowered.com/app/4210580/Ore_Factory_Squad/"
     }
   ]
 }
