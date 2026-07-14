@@ -9,6 +9,26 @@
         "expires": "2026-09-30",
         "added": "2026-07-14"
       }
+    ],
+    "genshin-6-7-luna-viii-20260701": [
+      {
+        "code": "EZSB8889C2BZ",
+        "reward": "모라 10,000, 모험 경험치 10, 정제된 광석 5, 쥐운 고추닭 5, 볶음 생선면 5",
+        "expires": null,
+        "added": "2026-07-14"
+      },
+      {
+        "code": "LEGEDILJKSGM",
+        "reward": "원석 60, 모험 경험치 5",
+        "expires": null,
+        "added": "2026-07-14"
+      },
+      {
+        "code": "PFY1S40I88T9",
+        "reward": "원석 60, 모험 경험치 5",
+        "expires": null,
+        "added": "2026-07-14"
+      }
     ]
   }
 }
