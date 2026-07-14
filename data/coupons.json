@@ -1,5 +1,14 @@
 {
   "schema_version": 1,
   "last_updated": "2026-07-14",
-  "coupons": {}
+  "coupons": {
+    "ragnarok-m-classic-20260716": [
+      {
+        "code": "ROMC3DAYS",
+        "reward": "에르늄x20, 오리데오콘x20, 미스릴x20",
+        "expires": "2026-09-30",
+        "added": "2026-07-14"
+      }
+    ]
+  }
 }
