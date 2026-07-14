@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getAllActiveCoupons } from '@/lib/coupons';
+import { getAllActiveCoupons, couponDisplayName } from '@/lib/coupons';
 import { getAllGames } from '@/lib/games';
 import { CouponList } from '@/components/CouponList';
 import { PageShell } from '@/components/PageShell';
@@ -17,7 +17,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function CouponsPage() {
   const [active, games] = await Promise.all([getAllActiveCoupons(), getAllGames()]);
-  const nameById = new Map(games.map(g => [g.id, g.name_ko]));
+  const nameById = new Map(games.map(g => [g.id, couponDisplayName(g.name_ko)]));
   const entries = Object.entries(active).sort((a, b) => b[1].length - a[1].length);
   const totalCodes = entries.reduce((s, [, list]) => s + list.length, 0);
 

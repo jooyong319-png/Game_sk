@@ -31,6 +31,23 @@ function getData(): Promise<CouponData> {
   return cached;
 }
 
+// 쿠폰 표기용 기본 게임명 — 리서처가 쿠폰을 '패치/업데이트 엔트리'에 걸어두면
+// name_ko가 "원신 6.7 'Luna VIII' 업데이트"처럼 길어진다. 쿠폰은 사실상 그 게임(원신) 쿠폰이므로
+// 업데이트/시즌/패치 '마커가 있을 때만' 버전·꼬리표를 떼어 기본 게임명으로 정리한다.
+// (마커 없는 정식 시퀄명 "파이널 판타지 7 리버스" 등은 절대 건드리지 않음.)
+const COUPON_NAME_MARK = /(대형\s*)?(업데이트|패치|시즌|버전)/;
+export function couponDisplayName(nameKo: string): string {
+  if (!COUPON_NAME_MARK.test(nameKo)) return nameKo;
+  const tokens = nameKo.split(/\s+/);
+  let cut = tokens.length;
+  tokens.forEach((t, i) => {
+    // 첫 '버전 토큰'(6.7·30·v2 …) 또는 '마커 단어'(업데이트/시즌 …) 위치에서 자른다
+    if (i < cut && (/^v?\d+(\.\d+)?$/i.test(t) || COUPON_NAME_MARK.test(t))) cut = i;
+  });
+  const base = tokens.slice(0, Math.max(cut, 1)).join(' ').trim();
+  return base || nameKo;
+}
+
 // KST(UTC+9) 오늘
 function kstToday(): string {
   return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
