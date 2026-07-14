@@ -311,7 +311,15 @@ textarea:focus-visible,
   body { overscroll-behavior-y: contain; }
   /* 토스트는 하단 탭 바 위로 */
   .toast-wrap { bottom: calc(64px + env(safe-area-inset-bottom)); }
+  /* 앱: 상단 accent 링크(캘린더~커뮤니티)는 ☰ 메뉴로 이동 → 상단바에선 숨김 */
+  .header-cal-link, .header-guide-link, .header-board-link, .header-news-link, .header-coupon-link { display: none; }
+  .site-menu .menu-primary { display: flex; }  /* 구체적 선택자로 아래 base(display:none)를 이김 */
 }
+
+/* 메뉴 안 상단 링크 묶음 — 웹에선 숨김(상단 accent 링크가 있음), 앱에서만 노출 */
+.menu-primary { display: none; flex-direction: column; }
+.menu-link-primary { font-weight: 700; }
+.menu-divider { height: 1px; background: var(--border); margin: 0.35rem 0; }
 
 /* ─── 토스트 (찜 등 피드백) ─── */
 .toast-wrap {

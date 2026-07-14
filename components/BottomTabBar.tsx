@@ -10,8 +10,8 @@ interface Tab {
 // 설치 앱(standalone) 전용 하단 내비. 웹(브라우저)에선 CSS로 숨김.
 const TABS: Tab[] = [
   { href: '/', label: '캘린더', icon: 'ic-calendar' },
-  { href: '/upcoming-games', label: '출시예정', icon: 'ic-flame' },
-  { href: '/new-servers', label: '서버', icon: 'ic-server' },
+  { href: '/news', label: '게임뉴스', icon: 'ic-flame' },
+  { href: '/coupons', label: '게임 쿠폰', icon: 'ic-gift' },
   { href: '/wishlist', label: '찜', icon: 'ic-star' },
   { href: '/board', label: '커뮤니티', icon: 'ic-comment' },
 ];

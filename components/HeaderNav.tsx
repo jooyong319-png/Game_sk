@@ -8,6 +8,15 @@ interface NavItem {
   label: string;
 }
 
+// 상단 accent 링크(캘린더~커뮤니티). 앱(standalone)에선 상단바에서 숨기고 ☰ 메뉴 안에 노출.
+const PRIMARY: NavItem[] = [
+  { href: '/', label: '캘린더' },
+  { href: '/news', label: '게임 뉴스' },
+  { href: '/blog', label: '신작 가이드' },
+  { href: '/coupons', label: '게임 쿠폰' },
+  { href: '/board', label: '커뮤니티' },
+];
+
 // 기존 SeoLanding 라우트 — 메뉴 안 링크로 유지(탐색성·내부링크·SEO).
 const NAV: NavItem[] = [
   { href: '/upcoming-games', label: '출시 예정' },
@@ -96,6 +105,24 @@ export function HeaderNav() {
 
       {/* 링크는 항상 DOM에 유지(크롤 가능) — 열림 상태만 CSS로 토글 */}
       <nav className={`site-menu ${open ? 'site-menu-open' : ''}`} aria-label="주요 메뉴">
+        {/* 앱(standalone) 전용: 상단 accent 링크를 메뉴 안에 노출(웹에선 CSS로 숨김) */}
+        <div className="menu-primary">
+          {PRIMARY.map(item => {
+            const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className="menu-link menu-link-primary"
+                aria-current={active ? 'page' : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+          <div className="menu-divider" />
+        </div>
         {NAV.map(item => {
           const active = pathname === item.href;
           return (
