@@ -14,6 +14,8 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
+const PREVIEW = 3; // 허브에선 게임당 코드 미리보기 개수(나머지는 전용 페이지로)
+
 export default async function CouponsPage() {
   const games = await getActiveCouponGames();
   const totalCodes = games.reduce((s, g) => s + g.active.length, 0);
@@ -35,18 +37,24 @@ export default async function CouponsPage() {
           </p>
         ) : (
           <div className={styles.games}>
-            {games.map(g => (
-              <section key={g.key} className={styles.gameCard}>
-                <h2 className={styles.gameName}>
-                  <Link href={`/coupons/${g.key}`}>{g.name} {g.term}</Link>
-                  <span className={styles.count}>{g.active.length}개</span>
-                </h2>
-                <CouponList coupons={g.active} />
-                <Link href={`/coupons/${g.key}`} className={styles.moreLink}>
-                  {g.name} {g.term} 전용 페이지 (사용법·지난 코드) →
-                </Link>
-              </section>
-            ))}
+            {games.map(g => {
+              const shown = g.active.slice(0, PREVIEW);
+              const more = g.active.length - shown.length;
+              return (
+                <section key={g.key} className={styles.gameCard}>
+                  <h2 className={styles.gameName}>
+                    <Link href={`/coupons/${g.key}`}>{g.name} {g.term}</Link>
+                    <span className={styles.count}>{g.active.length}개</span>
+                  </h2>
+                  <CouponList coupons={shown} />
+                  <Link href={`/coupons/${g.key}`} className={styles.moreLink}>
+                    {more > 0
+                      ? `${g.term} ${more}개 더 + 사용법·지난 코드 →`
+                      : `${g.name} ${g.term} 전용 페이지 →`}
+                  </Link>
+                </section>
+              );
+            })}
           </div>
         )}
 

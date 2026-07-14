@@ -26,15 +26,19 @@
   line-height: 1.6;
 }
 .games {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1rem;
+  align-items: start;
 }
 .gameCard {
   padding: 1.2rem 1.4rem;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+}
+@media (max-width: 560px) {
+  .games { grid-template-columns: 1fr; }
 }
 .gameName {
   display: flex;
