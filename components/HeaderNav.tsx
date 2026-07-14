@@ -51,7 +51,8 @@ export function HeaderNav() {
 
   return (
     <div className="header-utils" ref={ref}>
-      {/* 캘린더 · 신작 가이드 · 커뮤니티 상시 노출 링크 */}
+      {/* 좌측: 상시 노출 accent 링크(캘린더~커뮤니티) */}
+      <nav className="header-primary-nav" aria-label="주요 메뉴">
       <a
         href="/"
         className={`header-cal-link ${pathname === '/' ? 'header-cal-active' : ''}`}
@@ -100,6 +101,10 @@ export function HeaderNav() {
         <svg className="ic" aria-hidden="true"><use href="#ic-comment" /></svg>
         <span className="header-board-label">커뮤니티</span>
       </a>
+      </nav>
+
+      {/* 우측: 테마 토글 + ☰ 메뉴 */}
+      <div className="header-right">
       <ThemeToggle />
       <button
         type="button"
@@ -147,6 +152,7 @@ export function HeaderNav() {
           );
         })}
       </nav>
+      </div>
     </div>
   );
 }
