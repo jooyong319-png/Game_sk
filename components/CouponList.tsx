@@ -15,7 +15,7 @@ function fmtExpires(iso?: string | null): string | null {
   return `${d.getMonth() + 1}월 ${d.getDate()}일까지`;
 }
 
-export function CouponList({ coupons }: { coupons: Coupon[] }) {
+export function CouponList({ coupons, expired = false }: { coupons: Coupon[]; expired?: boolean }) {
   const [copied, setCopied] = useState<string | null>(null);
 
   async function copy(code: string) {
@@ -35,20 +35,24 @@ export function CouponList({ coupons }: { coupons: Coupon[] }) {
       {coupons.map((c, i) => {
         const exp = fmtExpires(c.expires);
         return (
-          <li key={`${c.code}-${i}`} className={styles.item}>
+          <li key={`${c.code}-${i}`} className={`${styles.item} ${expired ? styles.itemExpired : ''}`}>
             <div className={styles.top}>
               <code className={styles.code}>{c.code}</code>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => copy(c.code)}
-                aria-label={`${c.code} 복사`}
-              >
-                {copied === c.code ? '복사됨 ✓' : '복사'}
-              </button>
+              {expired ? (
+                <span className={styles.expiredTag}>만료됨</span>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.copyBtn}
+                  onClick={() => copy(c.code)}
+                  aria-label={`${c.code} 복사`}
+                >
+                  {copied === c.code ? '복사됨 ✓' : '복사'}
+                </button>
+              )}
             </div>
             <p className={styles.reward}>{c.reward}</p>
-            {exp && <span className={styles.expires}>{exp}</span>}
+            {exp && <span className={styles.expires}>{expired ? `${exp} · 만료` : exp}</span>}
           </li>
         );
       })}

@@ -577,6 +577,11 @@ textarea:focus-visible,
   color: var(--muted);
   line-height: 1.6;
 }
+.detail-coupons-expired-title {
+  margin: 1.2rem 0 0.6rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
 .detail-faq {
   margin-top: 1.5rem;
   padding: 1.2rem 1.4rem;
@@ -750,7 +755,6 @@ textarea:focus-visible,
 
 /* ─── 약관/개인정보 등 법적 고지 페이지 ─── */
 .legal {
-  max-width: 760px;
   line-height: 1.7;
   color: var(--text);
 }

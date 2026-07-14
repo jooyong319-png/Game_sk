@@ -46,6 +46,28 @@ export async function getCouponsForGame(id: string): Promise<Coupon[]> {
   return (coupons[id] ?? []).filter(c => isActive(c, today));
 }
 
+// 상세 페이지용: 유효 + 만료 분리(만료도 노출하되 '만료됨'으로 표시 → 콘텐츠/SEO 유지, 사용자엔 명확).
+// 만료는 최근(기본 90일 이내)만 노출해 과도한 누적 방지, 최근 만료 순.
+export async function getGameCoupons(
+  id: string,
+  expiredWindowDays = 90,
+): Promise<{ active: Coupon[]; expired: Coupon[] }> {
+  const { coupons } = await getData();
+  const today = kstToday();
+  const cutoff = new Date(Date.now() + 9 * 3600 * 1000 - expiredWindowDays * 86400 * 1000)
+    .toISOString()
+    .slice(0, 10);
+  const list = coupons[id] ?? [];
+  const active: Coupon[] = [];
+  const expired: Coupon[] = [];
+  for (const c of list) {
+    if (isActive(c, today)) active.push(c);
+    else if (c.expires && c.expires >= cutoff) expired.push(c);
+  }
+  expired.sort((a, b) => (b.expires ?? '').localeCompare(a.expires ?? ''));
+  return { active, expired };
+}
+
 // 유효 쿠폰이 하나라도 있는 게임 id 목록
 export async function getGameIdsWithCoupons(): Promise<string[]> {
   const { coupons } = await getData();
