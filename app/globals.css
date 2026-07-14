@@ -202,43 +202,8 @@ textarea:focus-visible,
 }
 .menu-link:hover { background: var(--bg); text-decoration: none; }
 .menu-link[aria-current="page"] { color: var(--accent); font-weight: 700; }
-/* ─── 모바일 웹: 설치 앱과 동일한 크롬(하단 탭바 + accent 링크는 ☰ 메뉴로) ───
-   ⚠️ 광고·푸터는 그대로 유지(standalone 블록과 다름 → AdSense·법적 링크 보호) */
-@media (max-width: 640px) {
-  .site-header {
-    flex-wrap: wrap;
-    padding: 0.6rem 0.8rem;
-  }
-  .site-header .site-wordmark { font-size: 1.1rem; flex: 1; }
-
-  /* 상단 accent 링크(캘린더~커뮤니티)는 ☰ 메뉴 안으로 → 헤더 = 워드마크 + 테마 + ☰ */
-  .header-primary-nav { display: none; }
-  .site-menu .menu-primary { display: flex; }
-
-  /* 하단 탭 바 노출(설치 앱과 동일) */
-  .bottom-tabbar {
-    display: flex;
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    z-index: 100;
-    background: var(--bg-elev);
-    border-top: 1px solid var(--border);
-    padding-bottom: env(safe-area-inset-bottom);
-    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.06);
-  }
-  body { padding-bottom: calc(52px + env(safe-area-inset-bottom)); }
-  .toast-wrap { bottom: calc(64px + env(safe-area-inset-bottom)); }
-}
-/* 프로스티드(반투명) — 지원 시에만 */
-@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
-  @media (max-width: 640px) {
-    .bottom-tabbar {
-      background: color-mix(in srgb, var(--bg-elev) 72%, transparent);
-      -webkit-backdrop-filter: blur(14px) saturate(1.3);
-      backdrop-filter: blur(14px) saturate(1.3);
-    }
-  }
-}
+/* 모바일 웹 헤더/탭바 규칙은 base .bottom-tabbar(display:none) 뒤에 위치해야
+   순서상 이김 → 파일 하단(standalone 블록 뒤)에 정의. */
 .site-footer {
   text-align: center;
   padding: 2rem 1rem;
@@ -347,6 +312,41 @@ textarea:focus-visible,
 .menu-primary { display: none; flex-direction: column; }
 .menu-link-primary { font-weight: 700; }
 .menu-divider { height: 1px; background: var(--border); margin: 0.35rem 0; }
+
+/* ─── 모바일 웹: 설치 앱과 동일한 크롬(하단 탭바 + accent 링크는 ☰ 메뉴로) ───
+   base .bottom-tabbar(display:none)·standalone 블록 뒤에 둬서 순서상 이김.
+   ⚠️ 광고·푸터는 유지(standalone과 다름 → AdSense·법적 링크 보호). */
+@media (max-width: 640px) {
+  .site-header { flex-wrap: wrap; padding: 0.6rem 0.8rem; }
+  .site-header .site-wordmark { font-size: 1.1rem; flex: 1; }
+
+  /* 상단 accent 링크(캘린더~커뮤니티)는 ☰ 메뉴 안으로 → 헤더 = 워드마크 + 테마 + ☰ */
+  .header-primary-nav { display: none; }
+  .site-menu .menu-primary { display: flex; }
+
+  /* 하단 탭 바 노출(설치 앱과 동일) */
+  .bottom-tabbar {
+    display: flex;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 100;
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.06);
+  }
+  body { padding-bottom: calc(52px + env(safe-area-inset-bottom)); }
+  .toast-wrap { bottom: calc(64px + env(safe-area-inset-bottom)); }
+}
+@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+  @media (max-width: 640px) {
+    .bottom-tabbar {
+      background: color-mix(in srgb, var(--bg-elev) 72%, transparent);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+      backdrop-filter: blur(14px) saturate(1.3);
+    }
+  }
+}
 
 /* ─── 토스트 (찜 등 피드백) ─── */
 .toast-wrap {
