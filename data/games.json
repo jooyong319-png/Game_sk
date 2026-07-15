@@ -2920,6 +2920,26 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2697940/header.jpg",
       "source_url": "https://store.steampowered.com/app/2697940/Ascend_to_ZERO/?l=koreana"
+    },
+    {
+      "id": "samgukji-classic-20260702",
+      "name_ko": "삼국지 클래식",
+      "name_en": "Three Kingdoms Classic",
+      "release_date": "2026-07-02",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "SEEAT",
+      "publisher": "SEEAT",
+      "description": "국내 1인 개발사 SEEAT가 만든 턴제 대전략 게임. 정사 기록을 바탕으로 후한 말 반동탁연합부터 촉한 멸망전까지 여러 시나리오를 다룬다. 도시 내정·병참·치안·외교·인사에 공성전·야전·산악전 같은 턴제 전투를 결합해, 눈앞의 승리보다 장기적 판단을 중시하는 전략을 요구한다. 한국어를 지원하며 2026년 7월 2일 스팀으로 출시됐다.",
+      "genres": [
+        "전략",
+        "시뮬레이션"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4818580/header.jpg",
+      "source_url": "https://store.steampowered.com/app/4818580/_/"
     }
   ]
 }
