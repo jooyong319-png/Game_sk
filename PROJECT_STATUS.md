@@ -360,6 +360,7 @@ Phase 1 — 정적 JSON 기반 게임 출시 캘린더 (3개 카테고리)
 **목적:** 매 사이클 쿠폰(기프트코드)을 *공식 채널*에서 확인하기 위한 소스 목록.
 **핵심 제약:** 네이버(라운지·카페)·X(트위터)·디스코드는 도구 차단/로그인월로 직접 열람 불가 → 해당 게임은 사용자 캡처/텍스트 제공 필요. 그 외 채널은 크롬/web_fetch로 매 사이클 순회 가능.
 **스키마 v2(중요):** coupons.json은 games.json과 **독립된 게임 카탈로그**다. 최상위 `games`={슬러그 키→게임객체(name_ko·image_url·term·aliases·codes)}. games.json에 캘린더 엔트리가 **없어도** 쿠폰 등록 가능(원신·명조·이환·ZZZ 등 라이브 게임). 키는 게임당 1개 안정 슬러그, `game_id`는 대응 캘린더 항목이 있을 때만 선택 연결.
+**redeem_url(선택):** 공식 웹 쿠폰/리딤 등록 페이지가 *확인된* 게임만 기입(상세 CTA·SEO). 확인된 것: 원신 genshin.hoyoverse.com/ko/gift · 스타레일 hsr.hoyoverse.com/gift · ZZZ zenless.hoyoverse.com/redemption · 로드나인 l9.onstove.com/ko/customer/coupon. 인게임 전용(웹 없음): 명조·이환·엔드필드·라그M 클래식 → null. 추측 URL 금지.
 
 **워크플로(2단계 유지):**
 1. 후보 발굴 — 영어권 정리사이트(game8·gamesradar·mobalytics 등)·검색으로 "현재 유효 코드 + 유효기간" 수집(단서일 뿐).
