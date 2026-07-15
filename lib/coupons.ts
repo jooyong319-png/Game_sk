@@ -21,6 +21,7 @@ export interface CouponGame {
   image_url?: string | null;
   game_id?: string | null;   // 대응하는 games.json id(있으면). 상세 상호링크·게임 상세 노출용
   term?: '리딤코드' | '쿠폰'; // 주 용어 강제(없으면 이름으로 자동 판별)
+  redeem_url?: string | null; // 공식 쿠폰/리딤 등록 페이지(있으면 CTA 버튼). 확인된 공식 URL만
   // 게임 허브(/games/[key])가 캘린더(games.json) 항목을 이 게임에 묶을 때 쓰는 별칭.
   // games.json 항목명이 이 별칭으로 '시작'하면 이 게임의 일정으로 간주(startsWith, 안전).
   // 없으면 [정리된 name_ko, name_en]로 자동 유도. 예: "원신" → "원신 6.7 업데이트" 매칭.
@@ -143,6 +144,7 @@ export interface CouponGameView {
   term: '리딤코드' | '쿠폰';
   image_url: string | null;
   game_id: string | null;    // 연결된 games.json id(있으면)
+  redeem_url: string | null; // 공식 쿠폰/리딤 등록 페이지(있으면)
   aliases: string[];         // 캘린더 항목 매칭용(유도 포함)
   active: Coupon[];
   expired: Coupon[];
@@ -161,6 +163,7 @@ function toView(key: string, g: CouponGame, expiredWindowDays: number): CouponGa
     term: g.term ?? couponTerm(g.name_ko, g.name_en),
     image_url: g.image_url ?? null,
     game_id: g.game_id ?? null,
+    redeem_url: g.redeem_url ?? null,
     aliases,
     active,
     expired,
