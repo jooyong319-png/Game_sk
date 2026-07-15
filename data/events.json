@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-10",
+  "last_updated": "2026-07-15",
   "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
   "events": [
     {
@@ -101,7 +101,7 @@
       "start_date": "2026-07-25",
       "end_date": "2026-07-25",
       "host": "패스 오브 엑자일",
-      "description": "GGG의 핵앤슬래시 ARPG '패스 오브 엑자일'의 3.29 확장과 신규 챌린지 리그 '커스 오브 더 올플레임'이 시작된다. 현지 기준 7월 24일 오후 1시(PDT), 한국 시간으로는 7월 25일 오전 5시에 PC와 콘솔에서 동시 오픈하며, 리그 상세 내용은 7월 16일 GGG Live 방송에서 공개된다.",
+      "description": "GGG의 핵앤슬래시 ARPG '패스 오브 엑자일'의 3.29 확장과 신규 챌린지 리그 '커스 오브 더 올플레임'이 시작된다. 현지 기준 7월 24일 오후 1시(PDT), 한국 시간으로는 7월 25일 오전 5시에 PC와 콘솔에서 동시 오픈하며, 리그 상세 내용은 7월 17일 GGG Live 방송에서 공개된다.",
       "source_url": "https://maxroll.gg/poe/news/3-29-release-curse-of-the-allflame-on-july-24"
     }
   ]
