@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-07-14",
+  "last_updated": "2026-07-15",
   "games": {
     "ragnarok-m-classic": {
       "name_ko": "라그나로크M: 클래식",
@@ -291,6 +291,26 @@
         }
       ],
       "redeem_url": "https://l9.onstove.com/ko/customer/coupon"
+    },
+    "nightcrows": {
+      "name_ko": "나이트 크로우",
+      "name_en": "Night Crows",
+      "term": "쿠폰",
+      "game_id": "nightcrows-5th-class-20260716",
+      "image_url": "https://play-lh.googleusercontent.com/TjjQk-u1yoZ-9pWHa6vMqY46rN7NhyVGVrb9yZ54nJdzj8U1LwsWj91KzJFKwRliFg=s512",
+      "aliases": [
+        "나이트 크로우",
+        "나이트크로우",
+        "Night Crows"
+      ],
+      "codes": [
+        {
+          "code": "Summercrows",
+          "reward": "크로우 바캉스 감사 선물: 전설 탈것/무기 외형 도전권 선택 상자(귀속), 영웅 글라이더 상자(귀속)",
+          "expires": "2026-08-31",
+          "added": "2026-07-15"
+        }
+      ]
     }
   }
 }
