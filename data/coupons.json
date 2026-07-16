@@ -229,6 +229,69 @@
         }
       ]
     },
+    "lord-nine": {
+      "name_ko": "로드나인",
+      "name_en": "Lord Nine",
+      "term": "쿠폰",
+      "game_id": "lordnine-server-dinapheri-20260327",
+      "image_url": "https://play-lh.googleusercontent.com/7VGaNidtXrOeVI-1tWjE--VVboIroW0eXmXMq3wTL3HGnUv5AS9-UQghKCBQ05GxQHZsAcoaW3qUJ3ti9Aus=s512",
+      "aliases": [
+        "로드나인",
+        "Lord Nine",
+        "L9"
+      ],
+      "codes": [
+        {
+          "code": "THANKS2LORD0624",
+          "reward": "2주년 기념: 자수정 룬/아티팩트/아바타 소환권 각 1, 마스터 승급서 1, 운명의 아바타·아티팩트 소환권 11회 각 10, 상급 성장 부스터 50, 숫돌 선택 상자 200 등",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "3000LORDSLIVES2",
+          "reward": "운명의 아바타 소환권 11회 3, 전문가 승급서 3, 찬란한 생명의 핵 3, 골드 꾸러미 상자 5",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "LORDNINE5OOOAIR",
+          "reward": "운명의 아바타 소환권 11회 5, 운명의 아티팩트 소환권 11회 3, 영광의 룬 소환권 11회 5, 화려한 탈것 장비 선택 상자 3",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "7000EVERYLORDS2",
+          "reward": "운명의 아바타·아티팩트 소환권 11회 각 2, 장인 승급서 3, 영웅 재련석 선택 상자 10",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "2YEARTHANKS2L0RD",
+          "reward": "모두 완료 보상: 소환 부스팅 상자 5, 골드 꾸러미 상자 5, 마스터 승급서 1, 빛나는 시간의 조각 상자 5",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "LORD9ASKME1",
+          "reward": "상급 성장 부스터 선택 상자 30, 장인 옵션 강화석 선택 상자 20, 빛나는 승급서 상자 2",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "S2QNAS2LORD",
+          "reward": "장인 승급서 2, 골드 꾸러미 상자 10, 빛나는 시간의 조각 상자 3",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        },
+        {
+          "code": "QNA4ALLS2LORDS",
+          "reward": "운명의 아바타·아티팩트 소환권 11회 각 5, 마스터 승급서 1",
+          "expires": "2026-07-15",
+          "added": "2026-07-14"
+        }
+      ],
+      "redeem_url": "https://l9.onstove.com/ko/customer/coupon"
+    },
     "nightcrows": {
       "name_ko": "나이트 크로우",
       "name_en": "Night Crows",
