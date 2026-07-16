@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-15",
+  "last_updated": "2026-07-16",
   "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
   "events": [
     {
