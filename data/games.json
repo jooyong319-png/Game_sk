@@ -2786,7 +2786,9 @@
       ],
       "image_url": "https://play-lh.googleusercontent.com/O3AtBJqCPmOHow-d2tskDjwXGWpYpgz2bPEJC5s-FQ1BzmtxnFTQ4h6OTTJ74pyih8KBs78UsTk7w6PAHkbt=s512",
       "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=306206",
-      "pre_registration": true
+      "pre_registration": true,
+      "pre_registration_end_date": "2026-07-22",
+      "pre_registration_url": "https://vampir.netmarble.com/landing"
     },
     {
       "id": "eclipse-awakening-showcase-20260723",
@@ -3145,6 +3147,29 @@
       "pre_registration_date": "2026-07-14",
       "pre_registration_end_date": "2026-08-03",
       "pre_registration_url": "https://pre.cabalred.com/"
+    },
+    {
+      "id": "lineage-classic-server-antaras-forgotten-island-20260722",
+      "name_ko": "리니지 클래식: 신규 서버 '안타라스' 오픈 · 신규 에피소드 '잊혀진 섬'",
+      "name_en": null,
+      "release_date": "2026-07-22",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "엔씨소프트",
+      "publisher": "엔씨소프트",
+      "description": "엔씨의 PC MMORPG 리니지 클래식이 신규 에피소드 '거대한 운명의 서막: 잊혀진 섬'과 함께 신규 서버 '안타라스'를 연다. 아덴 대륙 남동쪽에 자리한 신규 사냥터 '잊혀진 섬'에는 미노타우르스와 드레이크, 그리폰, 크로코다일 등 한층 강해진 필드 몬스터가 등장한다. 서비스 이후 처음으로 서버 이전 시스템도 도입돼 7월 22일부터 8월 4일까지 개인 또는 혈맹 단위로 신청할 수 있으며, 대규모 이전 수요에 대비한 신규 서버 '글루디오'도 추가 개설될 예정이다. 사전예약 참여자는 기존 서버와 신규 서버에 따라 각각 다른 성장 지원 보상을 받는다.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": "https://yt3.googleusercontent.com/vuTar4KHFBtGc4lumZ4AqJ00Ya-NU57BtYQrkG8FuNrKkSAyAuUNzWmyZ6YXZ9HvyMJ78vuP6eI=s512-c-k-c0x00ffffff-no-rj",
+      "source_url": "https://www.gametoc.co.kr/news/articleView.html?idxno=109965",
+      "pre_registration": true,
+      "pre_registration_date": "2026-07-15",
+      "pre_registration_end_date": "2026-08-19"
     }
   ]
 }
