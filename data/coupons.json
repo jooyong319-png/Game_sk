@@ -322,13 +322,31 @@
       "codes": [
         {
           "code": "WAVETOYOU2026",
-          "reward": "여름 특별 방송 기념 보상",
+          "reward": "쥬얼 (뽑기 재화) — 여름 특별 방송 기념",
           "expires": "2026-07-22",
           "added": "2026-07-16"
         },
         {
           "code": "TTSTARINLONDON",
-          "reward": "T.T. STAR 런던 특별 감사 공연 기념 보상",
+          "reward": "쥬얼 (뽑기 재화) — T.T. STAR 런던 특별 감사 공연 기념",
+          "expires": null,
+          "added": "2026-07-16"
+        },
+        {
+          "code": "UNBREAKABLEMEMORIES",
+          "reward": "쥬얼 (뽑기 재화) — 오케스트라 공연 기념",
+          "expires": null,
+          "added": "2026-07-16"
+        },
+        {
+          "code": "NIKKEGIFT",
+          "reward": "성장 재화 (뽑기 불가)",
+          "expires": null,
+          "added": "2026-07-16"
+        },
+        {
+          "code": "NIKKE1104",
+          "reward": "성장 재화 (뽑기 불가)",
           "expires": null,
           "added": "2026-07-16"
         }
