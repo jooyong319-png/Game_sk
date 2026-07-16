@@ -55,12 +55,12 @@ export async function getUpcomingGamesByCategory(category: Category): Promise<Ga
   return (await getGamesByCategory(category)).filter(g => g.release_date_approx || g.release_date >= today);
 }
 
-// 사전예약 표면용: pre_registration=true인 출시예정 게임만.
-// 리서처가 플래그를 아직 안 채웠으면(0건) 출시예정 모바일 신작으로 폴백(빈 페이지 방지).
+// 사전예약 표면용: pre_registration=true인 출시예정 게임(전 카테고리 — 모바일·PC·콘솔·글로벌).
+// 리서처가 플래그를 아직 안 채웠으면(0건) 출시예정 전체로 폴백(빈 페이지 방지, 모바일 한정 아님).
 export async function getPreRegistrationGames(): Promise<Game[]> {
   const upcoming = await getUpcomingGames();
   const flagged = upcoming.filter(g => g.pre_registration === true);
-  const list = flagged.length > 0 ? flagged : upcoming.filter(g => g.category === 'mobile_kr');
+  const list = flagged.length > 0 ? flagged : upcoming;
   return list.sort((a, b) => a.release_date.localeCompare(b.release_date));
 }
 
