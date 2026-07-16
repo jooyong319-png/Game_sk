@@ -3119,6 +3119,28 @@
       ],
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317317"
+    },
+    {
+      "id": "cabalred-server-saturn-force-gunner-20260804",
+      "name_ko": "카발RED 신규 서버 '새턴' 오픈 · 신규 클래스 '포스 거너'",
+      "name_en": null,
+      "release_date": "2026-08-04",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "Android",
+        "iOS"
+      ],
+      "developer": "이스트게임즈",
+      "publisher": "이스트게임즈",
+      "description": "이스트게임즈의 액션 MMORPG 카발RED에 열리는 신규 서버 '새턴'이다. 2026년 5월 15일 문을 연 직전 신규 서버 '넵튠' 이후 늘어난 이용자 유입과 신규 서버 수요를 반영해 마련됐다. 같은 날 정식 서비스 이후 첫 신규 클래스인 '포스 거너'도 함께 추가되는데, 마력탄을 쓰는 원거리 공격형 클래스로 빠른 이동과 연속 공격을 활용한 전투가 특징이다. 사전예약은 7월 14일부터 8월 3일 23시 59분까지 진행되며 참가자에게 희귀 등급 소환 카드 3종 등 성장 보상이 지급된다.",
+      "genres": [
+        "MMORPG",
+        "신규 서버"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/u7AtKbtkSonuGOyzDkY2ki4_H_mzf-mxgr-E9KVZxmqoMPsCtATZJzyp76N2SSCXyKrcniMa2i9-38AYVTur=s512",
+      "source_url": "https://forum.cabalred.com/posts/1/view/4754?bp=0"
     }
   ]
 }

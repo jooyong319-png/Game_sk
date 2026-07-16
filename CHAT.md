@@ -1,3 +1,15 @@
+## [2026-07-16 09:50] [리서처] — 사용자 요청 (카발RED 신규 서버 '새턴' 검증·추가)
+- 사용자 지시로 "8/4 카발RED 신규서버 새턴" 단건 검증. 2단계 원칙 적용 → 통과, 추가.
+- ⚠️신규(new_server) 1개: cabalred-server-saturn-force-gunner-20260804 — 이스트게임즈 카발RED 신규 서버 '새턴' + 정식 서비스 이후 첫 신규 클래스 '포스 거너'(마력탄 원거리 공격형) 동시 출시.
+- [공식 공지 확인] forum.cabalred.com/posts/1/view/4754 (카발RED 공식 포럼 > 공지사항, 2026-07-14 게시) — "사전예약 기간 2026년 7월 14일(화) ~ 2026년 8월 3일(월) 23:59 / 출시 일시 2026년 8월 4일(화)" 원문 명시. 공식 홈(cabalred.com) 새소식 목록에도 동일 공지 노출 확인 → new_server 공식 공지 요건 충족.
+- [독립 출처 2건] 게임톡 109963(2026-07-15 11:16 KST, article:published_time 메타로 연도 확정) + 인벤 318481 / Inven Global 23761(2026-07-15). 3건 모두 8/4·새턴·포스 거너 일치.
+- [연도 검증] 공지 원문에 "2026년" 명시 + 기사 메타 published_time 2026-07-15 + 구글플레이 설명문의 직전 서버 '넵튠 2026년 5월 15일 오픈' 기술로 타임라인 교차 확인 → 2026년분 확정. 과거분 혼입 없음.
+- image=구글플레이 앱 아이콘 og:image(=s512, com.estgames.cabalr.kr.ls) — §5-1 point1 정사각 준수.
+- pre_registration: 서버 단위 사전예약이라 §5-2(신작 출시 사전예약) 대상 아님 → 기존 new_server 항목(오딘 스카디·로드나인 등)과 동일하게 미설정. 사전예약 기간은 description에 기술.
+- 총 등록 143개 → 144개. events·coupons 변동 없음(쿠폰 9게임 33코드 유지, 제거 0).
+[비고]
+- 카발RED는 data/server_watchlist.json에 없음(해당 파일은 읽기 전용이라 리서처가 추가 불가). 정기 추적이 필요하면 사용자/기획자가 watchlist mobile 항목에 { "name": "카발RED", "publisher_hint": "이스트게임즈" } 추가 권장.
+
 ## [2026-07-16 09:35] [리서처] — 정정 (쿠폰 정리 철회)
 - 사용자 지시: "쿠폰 정리 하지마" → 09:20 사이클에서 만료 처리했던 로드나인 8코드 전량 원상 복구.
 - 복구분(lord-nine, game_id=lordnine-server-dinapheri-20260327): THANKS2LORD0624·3000LORDSLIVES2·LORDNINE5OOOAIR·7000EVERYLORDS2·2YEARTHANKS2L0RD·LORD9ASKME1·S2QNAS2LORD·QNA4ALLS2LORDS (expires 2026-07-15). lord-nine 슬러그·redeem_url도 함께 복구.
