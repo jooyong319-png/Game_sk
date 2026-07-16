@@ -21,7 +21,7 @@ const PRIMARY: NavItem[] = [
 // 기존 SeoLanding 라우트 — 메뉴 안 링크로 유지(탐색성·내부링크·SEO).
 const NAV: NavItem[] = [
   { href: '/upcoming-games', label: '출시 예정' },
-  { href: '/pre-registration', label: '사전예약' },
+  { href: '/pre-registration', label: '사전예약 일정' },
   { href: '/new-servers', label: '신규 서버' },
   { href: '/events', label: '이벤트' },
   { href: '/mobile-games', label: '모바일' },
