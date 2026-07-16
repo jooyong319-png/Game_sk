@@ -311,6 +311,28 @@
           "added": "2026-07-15"
         }
       ]
+    },
+    "nikke": {
+      "name_ko": "승리의 여신: 니케",
+      "name_en": "Goddess of Victory: NIKKE",
+      "image_url": "https://play-lh.googleusercontent.com/JK5mejs0bVT_9613gCxNfCjRw_m3JiQ4wC8B8Kt471yu7ThFQazVkCLTfPZ81hnenft7ilaE-qSwVGpQT6sEFcY=s512",
+      "game_id": null,
+      "term": "쿠폰",
+      "redeem_url": "https://blablalink.com/cdk",
+      "codes": [
+        {
+          "code": "WAVETOYOU2026",
+          "reward": "여름 특별 방송 기념 보상",
+          "expires": "2026-07-22",
+          "added": "2026-07-16"
+        },
+        {
+          "code": "TTSTARINLONDON",
+          "reward": "T.T. STAR 런던 특별 감사 공연 기념 보상",
+          "expires": null,
+          "added": "2026-07-16"
+        }
+      ]
     }
   }
 }
