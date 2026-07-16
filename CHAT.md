@@ -1,3 +1,18 @@
+## [2026-07-16 10:05] [리서처] — 정정 (new_server 사전예약 필드 정책)
+- ⚠️리서처 오판 정정: 직전 보고에서 "pre_registration은 §5-2상 신작 출시 사전예약 전용이라 new_server는 대상 아님"이라고 했으나 **사실이 아님**. 근거 재확인 결과:
+  · lib/games.ts getPreRegistrationGames()는 `upcoming.filter(g => g.pre_registration === true)`뿐 — 카테고리 필터 없음. new_server도 그대로 /pre-registration에 노출된다.
+  · AGENTS.md §6-2: "공식 출처에서 현재/예정 사전예약을 받는 게임에 true. 모바일이 대부분이지만 PC/콘솔도 사전예약 받으면 true 가능" — 신작 한정 문구 없음. 오히려 "true면 공식 사전등록 페이지 URL을 적극적으로 찾아 반드시 채울 것"이라 지시.
+  · 선례: vampir-global2-region-20260722(category=new_server)이 이미 pre_registration=true로 등록돼 있었음. 기존 데이터가 리서처 주장을 반박.
+  → "기존 new_server가 이 필드를 안 쓴다"는 단순 관찰을 규칙으로 착각한 것. 재발 금지.
+- [사용자 결정 2026-07-16] new_server 포함 전 카테고리에서 공식 사전예약 확인 시 pre_registration=true로 채운다.
+- ⚠️갱신 1개: cabalred-server-saturn-force-gunner-20260804 — pre_registration=true / pre_registration_date=2026-07-14 / pre_registration_end_date=2026-08-03 / pre_registration_url=https://pre.cabalred.com/
+  · URL 검증: pre.cabalred.com은 공식 홈(cabalred.com) 내 링크로 연결되는 이스트게임즈 공식 사전예약 페이지. 페이지 원문 "2026. 8. 4. UPDATE / 신규 클래스 포스 거너와 신규 서버 새턴 / 사전예약 기간 2026. 7. 14.(화) 정기점검 이후 ~ 2026. 8. 3.(월) 23:59" 확인. 검색에 뜬 preorder.cabalred.com은 2025년 정식 출시 사전예약분으로 판단해 미채택(추측 금지).
+- 사전예약 10개 → 11개 (추가 +1 / 해제 0).
+- 총 등록 144개 유지. events·coupons 변동 없음(쿠폰 9게임 33코드, 제거 0).
+[다음 사이클 TODO]
+- 미래 날짜 new_server 항목의 공식 사전예약 진행 여부 일괄 재확인 후 해당분 pre_registration 채울 것: nightcrows-5th-class-20260716 / tower-of-god-3rd-anniv-20260722 / maplestory-summer-2nd-6th-skill-core-20260723 / eclipse-awakening-showcase-20260723 / hsr-fate-collab-holy-grail-20260724 / lineage-m-void-temple-renewal-20260729 / lostark-raid-belgardin-20260805 / lostark-belgardin-shadow-raid-20260805 / maplestory-summer-3rd-boss-bellona-20260820. (공식 사전예약 페이지 확인된 것만, 추측 금지)
+- 기존 pre_registration=true 11개의 pre_registration_url 미기입분도 AGENTS.md §6-2 지시대로 공식 페이지 탐색해 채울 것.
+
 ## [2026-07-16 09:50] [리서처] — 사용자 요청 (카발RED 신규 서버 '새턴' 검증·추가)
 - 사용자 지시로 "8/4 카발RED 신규서버 새턴" 단건 검증. 2단계 원칙 적용 → 통과, 추가.
 - ⚠️신규(new_server) 1개: cabalred-server-saturn-force-gunner-20260804 — 이스트게임즈 카발RED 신규 서버 '새턴' + 정식 서비스 이후 첫 신규 클래스 '포스 거너'(마력탄 원거리 공격형) 동시 출시.

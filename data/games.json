@@ -3140,7 +3140,11 @@
         "신규 서버"
       ],
       "image_url": "https://play-lh.googleusercontent.com/u7AtKbtkSonuGOyzDkY2ki4_H_mzf-mxgr-E9KVZxmqoMPsCtATZJzyp76N2SSCXyKrcniMa2i9-38AYVTur=s512",
-      "source_url": "https://forum.cabalred.com/posts/1/view/4754?bp=0"
+      "source_url": "https://forum.cabalred.com/posts/1/view/4754?bp=0",
+      "pre_registration": true,
+      "pre_registration_date": "2026-07-14",
+      "pre_registration_end_date": "2026-08-03",
+      "pre_registration_url": "https://pre.cabalred.com/"
     }
   ]
 }
