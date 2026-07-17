@@ -5,13 +5,13 @@ import styles from './ThemeToggle.module.css';
 type Theme = 'light' | 'dark';
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     const cur = document.documentElement.getAttribute('data-theme');
-    setTheme(cur === 'dark' ? 'dark' : 'light');
+    setTheme(cur === 'light' ? 'light' : 'dark');
   }, []);
 
   const toggle = (): void => {
@@ -25,8 +25,8 @@ export function ThemeToggle() {
     }
   };
 
-  // mount 전엔 고정 렌더(달 아이콘)로 SSR/CSR 일치 → 하이드레이션 #418/#423/#425 가드
-  const isDark = mounted && theme === 'dark';
+  // mount 전엔 고정 렌더(해 아이콘, 기본 다크 테마 가정)로 SSR/CSR 일치 → 하이드레이션 #418/#423/#425 가드
+  const isDark = mounted ? theme === 'dark' : true;
 
   return (
     <button
