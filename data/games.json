@@ -3217,6 +3217,70 @@
       ],
       "image_url": "https://play-lh.googleusercontent.com/0-94hjDsVyTjm0Jic6AP8wVbuSb4SCrrxcZnQDJ5YgNHukFjG-g6C1yMlGmuYDsJW3Pdva4Iqrp9ox5GPFpj-HU=s512",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=318329"
+    },
+    {
+      "id": "prinny-board-battle-20261112",
+      "name_ko": "다 함께 즐기자! 프리니 보드 배틀",
+      "name_en": "Prinny Party: Going Overboard",
+      "release_date": "2026-11-12",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "Nintendo Switch 2",
+        "Nintendo Switch",
+        "PS5"
+      ],
+      "developer": "Nippon Ichi Software",
+      "publisher": "클라우디드 레오파드 엔터테인먼트",
+      "description": "니폰이치 소프트웨어의 마스코트 프리니를 앞세운 파티 게임으로, 보드게임 판 위를 이동하며 커맨드 RPG식 전투를 벌이는 구조가 특징이다. 보스를 쓰러뜨리는 것으로 끝나지 않고 쓰러진 보스를 시작 지점까지 데려간 사람이 승리하기 때문에, 협력하다 막판에 배신하는 심리전이 핵심 재미로 설계됐다. 시설 쌓기와 '보드게임 의회' 같은 역전 요소도 들어간다. 한국어 자막을 지원하며 일본어·북미·유럽판과 같은 날 발매된다.",
+      "genres": [
+        "파티",
+        "보드게임",
+        "RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://www.cloudedleopardent.com/kr/news/10861/"
+    },
+    {
+      "id": "octopath-traveler-1-2-switch2-20261001",
+      "name_ko": "옥토패스 트래블러 / 옥토패스 트래블러 II (NS2판)",
+      "name_en": "OCTOPATH TRAVELER / OCTOPATH TRAVELER II (Nintendo Switch 2)",
+      "release_date": "2026-10-01",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "Nintendo Switch 2"
+      ],
+      "developer": "SQUARE ENIX",
+      "publisher": "SQUARE ENIX",
+      "description": "도트와 3D를 섞은 'HD-2D' 비주얼로 알려진 스퀘어에닉스 RPG 두 편의 닌텐도 스위치 2 다운로드판이다. 각 작품마다 8명의 여행자 중 한 명을 골라 출신과 목적이 다른 이야기를 자유로운 순서로 풀어가는 구성을 그대로 담았다. 두 타이틀을 묶은 번들 버전도 함께 나오며, 시리즈 누적 판매량은 전 세계 700만 장을 넘어섰다. 예약 판매는 7월 13일부터 지역별로 순차 진행 중이다.",
+      "genres": [
+        "RPG"
+      ],
+      "image_url": null,
+      "source_url": "https://bbs.ruliweb.com/news/read/226907"
+    },
+    {
+      "id": "godok-broadcast-sim-20260814",
+      "name_ko": "고독방송: 심",
+      "name_en": "heXtreaming: Deep",
+      "release_date": "2026-08-14",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "PC"
+      ],
+      "developer": "라퓨타게임즈",
+      "publisher": "이그노스트",
+      "description": "인터넷 방송을 소재로 한 국산 인디 공포 게임 '고독방송'의 후속작이다. 귀신을 믿지 않는 스트리머 수지를 따라 폐업한 워터파크를 탐사하는 2D 호러 어드벤처로, RPG 만들기 MV 엔진으로 제작됐다. 비주얼 노벨 형식의 연출과 어드벤처 탐색을 섞어 전작의 무서우면서도 가벼운 방송 콘셉트를 이어간다. PC로 스팀과 스토브에서 동시 출시되며 한국어를 지원한다.",
+      "genres": [
+        "공포",
+        "어드벤처",
+        "인디",
+        "비주얼 노벨"
+      ],
+      "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2106050/header.jpg",
+      "source_url": "https://bbs.ruliweb.com/news/read/227061"
     }
   ]
 }
