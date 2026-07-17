@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-17",
+  "last_updated": "2026-07-18",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -3281,6 +3281,75 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2106050/header.jpg",
       "source_url": "https://bbs.ruliweb.com/news/read/227061"
+    },
+    {
+      "id": "obakeidoro-2-chase-seek-20260806",
+      "name_ko": "오바케이도로 2: 체이스 & 시크 (도깨비 술래잡기2)",
+      "name_en": "OBAKEIDORO 2: Chase & Seek",
+      "release_date": "2026-08-06",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "Nintendo Switch 2",
+        "Nintendo Switch"
+      ],
+      "developer": "프리스타일",
+      "publisher": "프리스타일",
+      "description": "인기 비대칭 술래잡기 액션 '오바케이도로'의 후속작으로, 사람 편과 유령(오바케) 편으로 나뉘어 3분 남짓한 짧은 승부를 벌인다. 최대 8명이 온라인·로컬로 함께 즐기며, 유령은 벽 통과·고속 이동 같은 스킬로 인간을 붙잡고 인간은 랜턴으로 유령을 잠시 기절시켜 도망친다. 닌텐도 스위치와 스위치 2로 8월 6일 전 세계 동시 출시되며 한국어 자막을 지원한다.",
+      "genres": [
+        "파티",
+        "액션",
+        "멀티플레이"
+      ],
+      "image_url": null,
+      "source_url": "https://bbs.ruliweb.com/news/read/227086"
+    },
+    {
+      "id": "reverse1999-atomic-heart-collab-20260723",
+      "name_ko": "리버스: 1999 × 아토믹 하트 콜라보 업데이트",
+      "name_en": "Reverse: 1999 x Atomic Heart Collaboration",
+      "release_date": "2026-07-23",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS",
+        "PC"
+      ],
+      "developer": "Bluepoch",
+      "publisher": "Bluepoch",
+      "description": "턴제 서브컬처 RPG '리버스: 1999'가 러시아를 배경으로 한 액션 게임 '아토믹 하트'와의 콜라보 업데이트를 진행한다. 7월 23일 버전 업데이트와 함께 시작해 8월 13일까지 이어지며, 신규 마도학자 '쌍둥이'가 은빛 드라마투르기 모집으로 등장한다. 접속 시 콜라보 4성 캐릭터 '노라'와 무료 뽑기 10회, 월간 카드 등 다양한 보상을 함께 지급한다.",
+      "genres": [
+        "서브컬처",
+        "RPG",
+        "대규모 업데이트"
+      ],
+      "image_url": null,
+      "source_url": "https://bbs.ruliweb.com/news/board/1004/read/2291378"
+    },
+    {
+      "id": "arknights-endfield-abyss-update-20260716",
+      "name_ko": "명일방주: 엔드필드 반주년 업데이트 '심연으로'",
+      "name_en": "Arknights: Endfield - Into the Abyss",
+      "release_date": "2026-07-16",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Android",
+        "iOS"
+      ],
+      "developer": "하이퍼그리프",
+      "publisher": "그리프라인",
+      "description": "'명일방주: 엔드필드'의 출시 반주년을 기념하는 대규모 업데이트로 7월 16일 적용됐다. 재해 이후 10년 만에 열린 '응룡 관문'과 독기로 뒤덮인 '북쪽 금지 구역' 등 메인 스토리 지역이 확장되고, 신규 플레이어블 오퍼레이터로 첫 캐스터 '결'과 전기 속성 서포터 아이돌 '리노'가 추가된다. 통합 공업(AIC) 시스템 확장과 여러 편의성 개선도 함께 이뤄진다.",
+      "genres": [
+        "서브컬처",
+        "RPG",
+        "대규모 업데이트"
+      ],
+      "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/0c/0a/f0/0c0af0d2-123e-adc9-780b-cb1e2d8393af/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+      "source_url": "https://www.betanews.net/article/view/beta202607130012"
     }
   ]
 }
