@@ -194,7 +194,7 @@ export function AdminDashboard({ nameMap }: { nameMap: Record<string, string> })
         ))}
       </ol>
 
-      <h2 className={styles.h2}>인기 신작 가이드 (누적 {stats.guideTotal.toLocaleString()}회)</h2>
+      <h2 className={styles.h2}>인기 신작 총정리 (누적 {stats.guideTotal.toLocaleString()}회)</h2>
       {stats.topGuides.length === 0 ? (
         <p className={styles.muted}>아직 가이드 조회 기록이 없어요.</p>
       ) : (

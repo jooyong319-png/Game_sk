@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }: Props) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: '홈', item: 'https://gcalen.com/' },
-      { '@type': 'ListItem', position: 2, name: '신작 가이드', item: 'https://gcalen.com/blog' },
+      { '@type': 'ListItem', position: 2, name: '신작 총정리', item: 'https://gcalen.com/blog' },
       { '@type': 'ListItem', position: 3, name: post.title, item: url },
     ],
   };
@@ -84,7 +84,7 @@ export default async function BlogPostPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonld) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <article className={styles.post}>
-        <Link href="/blog" className={styles.backLink}>← 신작 가이드 목록으로</Link>
+        <Link href="/blog" className={styles.backLink}>← 신작 총정리 목록으로</Link>
         {post.heroImage && <BlogHero src={post.heroImage} alt={post.title} />}
         <header className={styles.postHeader}>
           <time className={styles.postDate}>{formatPostDate(post.date)}</time>
@@ -100,8 +100,8 @@ export default async function BlogPostPage({ params }: Props) {
         <div className={styles.postBody} dangerouslySetInnerHTML={{ __html: html }} />
 
         {related.length > 0 && (
-          <nav className={styles.related} aria-label="관련 가이드">
-            <h2 className={styles.relatedTitle}>함께 보면 좋은 가이드</h2>
+          <nav className={styles.related} aria-label="관련 총정리">
+            <h2 className={styles.relatedTitle}>함께 보면 좋은 총정리</h2>
             <ul className={styles.relatedList}>
               {related.map(r => (
                 <li key={r.slug} className={styles.relatedCard}>

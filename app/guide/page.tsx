@@ -58,7 +58,7 @@ export default async function GuidePage() {
         <h1>게임 사전예약·신규 서버 가이드</h1>
         <p>
           게임 출시·사전예약·신규 서버를 챙기다 보면 헷갈리는 용어와 궁금증이 많습니다. 게이머가 자주 묻는
-          질문을 한곳에 정리했습니다. 더 자세한 신작 분석은 <a href="/blog">신작 가이드</a>에서, 실제 일정은
+          질문을 한곳에 정리했습니다. 더 자세한 신작 분석은 <a href="/blog">신작 총정리</a>에서, 실제 일정은
           {' '}<a href="/upcoming-games">출시 예정</a>·<a href="/pre-registration">사전예약</a>·
           <a href="/new-servers">신규 서버</a> 페이지에서 확인하세요.
         </p>

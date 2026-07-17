@@ -38,7 +38,7 @@ export default function AboutPage() {
         <p>본 서비스는 정보 제공(에디토리얼) 목적이며, 게임명·이미지 등의 저작권은 각 게임사·권리자에게 있습니다. 출시일 등 정보는 변경될 수 있으니 최종 확인은 공식 출처를 참고해 주세요.</p>
 
         <h2>문의</h2>
-        <p>제휴·정정·삭제 요청 등: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a></p>
+        <p>제휴·정정·삭제 요청 등: <a href="mailto:devju546@gmail.com">devju546@gmail.com</a></p>
       </article>
     </PageShell>
   );

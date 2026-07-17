@@ -4,7 +4,7 @@ const SUPA = 'https://celnyjkunzmxvjjxqoel.supabase.co';
 const KEY = 'sb_publishable_IPQiEc05JWTnU4B_jfRgzg_OeO314jx';
 
 webpush.setVapidDetails(
-  'mailto:jooyco319@gmail.com',
+  'mailto:devju546@gmail.com',
   'BCXLBtU0zdL2tWw5yNXd3Ge0tfUvR10GTzbLpwi2mpXs7belTbaHDgkv8CA-TrfUB_SGR4toANPWHBfWJuZPJe0',
   'itdFMt_mYzKifogXgRTHglspzovolWyck7SIPF3ozFw',
 );

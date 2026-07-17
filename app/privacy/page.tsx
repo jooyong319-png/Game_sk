@@ -61,7 +61,7 @@ export default function PrivacyPage() {
         </ul>
 
         <h2>7. 문의처</h2>
-        <p>개인정보 및 데이터 삭제 관련 문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a></p>
+        <p>개인정보 및 데이터 삭제 관련 문의: <a href="mailto:devju546@gmail.com">devju546@gmail.com</a></p>
 
         <p className="legal-updated">시행일: 2026년 6월 16일</p>
       </article>

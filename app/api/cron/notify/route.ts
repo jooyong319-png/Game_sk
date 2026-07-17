@@ -31,7 +31,7 @@ export async function GET(req: Request) {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const vapidPublic = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT || 'mailto:jooyco319@gmail.com';
+  const subject = process.env.VAPID_SUBJECT || 'mailto:devju546@gmail.com';
   if (!url || !serviceKey || !vapidPublic || !vapidPrivate) {
     return NextResponse.json({ error: 'missing env' }, { status: 500 });
   }

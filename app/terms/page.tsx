@@ -48,7 +48,7 @@ export default function TermsPage() {
         <p>본 약관은 필요 시 변경될 수 있으며, 변경 시 본 페이지에 게시합니다.</p>
 
         <h2>제7조 (문의)</h2>
-        <p>문의: <a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a></p>
+        <p>문의: <a href="mailto:devju546@gmail.com">devju546@gmail.com</a></p>
 
         <p className="legal-updated">시행일: 2026년 6월 16일</p>
       </article>

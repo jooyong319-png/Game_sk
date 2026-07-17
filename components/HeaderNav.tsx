@@ -12,7 +12,7 @@ interface NavItem {
 const PRIMARY: NavItem[] = [
   { href: '/', label: '캘린더' },
   { href: '/news', label: '게임 뉴스' },
-  { href: '/blog', label: '신작 가이드' },
+  { href: '/blog', label: '신작 총정리' },
   { href: '/coupons', label: '게임 쿠폰' },
   { href: '/games', label: '게임 목록' },
 ];
@@ -74,7 +74,7 @@ export function HeaderNav() {
         aria-current={pathname.startsWith('/blog') ? 'page' : undefined}
       >
         <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg>
-        <span className="header-guide-label">신작 가이드</span>
+        <span className="header-guide-label">신작 총정리</span>
       </a>
       <a
         href="/coupons"

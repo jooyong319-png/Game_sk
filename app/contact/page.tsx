@@ -24,7 +24,7 @@ export default function ContactPage() {
         </ul>
 
         <h2>이메일</h2>
-        <p><a href="mailto:jooyco319@gmail.com">jooyco319@gmail.com</a></p>
+        <p><a href="mailto:devju546@gmail.com">devju546@gmail.com</a></p>
         <p>보내실 때 관련 페이지 링크나 구체적인 내용을 함께 적어주시면 더 빠르게 처리할 수 있습니다. 영업일 기준으로 순차 확인하며, 정정·삭제 요청은 확인되는 대로 반영합니다.</p>
 
         <h2>참고</h2>
