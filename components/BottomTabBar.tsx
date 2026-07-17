@@ -13,7 +13,6 @@ const TABS: Tab[] = [
   { href: '/news', label: '게임뉴스', icon: 'ic-flame' },
   { href: '/coupons', label: '게임 쿠폰', icon: 'ic-gift' },
   { href: '/wishlist', label: '찜', icon: 'ic-star' },
-  { href: '/board', label: '커뮤니티', icon: 'ic-comment' },
 ];
 
 export function BottomTabBar() {

@@ -8,14 +8,13 @@ interface NavItem {
   label: string;
 }
 
-// 상단 accent 링크(캘린더~커뮤니티). 앱(standalone)에선 상단바에서 숨기고 ☰ 메뉴 안에 노출.
+// 상단 accent 링크(캘린더~게임 목록). 앱(standalone)에선 상단바에서 숨기고 ☰ 메뉴 안에 노출.
 const PRIMARY: NavItem[] = [
   { href: '/', label: '캘린더' },
   { href: '/news', label: '게임 뉴스' },
   { href: '/blog', label: '신작 가이드' },
   { href: '/coupons', label: '게임 쿠폰' },
   { href: '/games', label: '게임 목록' },
-  { href: '/board', label: '커뮤니티' },
 ];
 
 // 기존 SeoLanding 라우트 — 메뉴 안 링크로 유지(탐색성·내부링크·SEO).
@@ -51,7 +50,7 @@ export function HeaderNav() {
 
   return (
     <div className="header-utils" ref={ref}>
-      {/* 좌측: 상시 노출 accent 링크(캘린더~커뮤니티) */}
+      {/* 좌측: 상시 노출 accent 링크(캘린더~게임 목록) */}
       <nav className="header-primary-nav" aria-label="주요 메뉴">
       <a
         href="/"
@@ -92,14 +91,6 @@ export function HeaderNav() {
       >
         <svg className="ic" aria-hidden="true"><use href="#ic-gamepad" /></svg>
         <span className="header-games-label">게임 목록</span>
-      </a>
-      <a
-        href="/board"
-        className={`header-board-link ${pathname === '/board' ? 'header-board-active' : ''}`}
-        aria-current={pathname === '/board' ? 'page' : undefined}
-      >
-        <svg className="ic" aria-hidden="true"><use href="#ic-comment" /></svg>
-        <span className="header-board-label">커뮤니티</span>
       </a>
       </nav>
 

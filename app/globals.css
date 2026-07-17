@@ -116,7 +116,7 @@ textarea:focus-visible,
   gap: 0.5rem;
   margin-left: 0.75rem;
 }
-/* 좌측: accent 링크(캘린더~커뮤니티) — 워드마크 옆 */
+/* 좌측: accent 링크(캘린더~게임 목록) — 워드마크 옆 */
 .header-primary-nav {
   display: flex;
   align-items: center;
@@ -146,8 +146,8 @@ textarea:focus-visible,
 }
 .menu-btn:hover { border-color: var(--accent); }
 .menu-btn .ic { width: 20px; height: 20px; }
-/* 헤더 상시 노출 링크 3종(캘린더·신작가이드·커뮤니티) — 동일 사각형 */
-.header-cal-link, .header-guide-link, .header-board-link, .header-news-link, .header-coupon-link, .header-games-link {
+/* 헤더 상시 노출 링크 — 동일 사각형 */
+.header-cal-link, .header-guide-link, .header-news-link, .header-coupon-link, .header-games-link {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -161,14 +161,13 @@ textarea:focus-visible,
   white-space: nowrap;
   transition: color 0.15s;
 }
-.header-cal-link:hover, .header-guide-link:hover, .header-board-link:hover, .header-news-link:hover, .header-coupon-link:hover, .header-games-link:hover,
+.header-cal-link:hover, .header-guide-link:hover, .header-news-link:hover, .header-coupon-link:hover, .header-games-link:hover,
 .header-cal-link.header-cal-active,
 .header-guide-link.header-guide-active,
-.header-board-link.header-board-active,
 .header-news-link.header-news-active,
 .header-coupon-link.header-coupon-active,
 .header-games-link.header-games-active { color: var(--accent); background: none; }
-.header-cal-link .ic, .header-guide-link .ic, .header-board-link .ic, .header-news-link .ic, .header-coupon-link .ic, .header-games-link .ic { width: 17px; height: 17px; }
+.header-cal-link .ic, .header-guide-link .ic, .header-news-link .ic, .header-coupon-link .ic, .header-games-link .ic { width: 17px; height: 17px; }
 /* 드롭다운 메뉴 — 링크는 항상 DOM에 있고 열림만 토글(크롤 가능) */
 .site-menu {
   position: absolute;
@@ -303,7 +302,7 @@ textarea:focus-visible,
   body { overscroll-behavior-y: contain; }
   /* 토스트는 하단 탭 바 위로 */
   .toast-wrap { bottom: calc(64px + env(safe-area-inset-bottom)); }
-  /* 앱: 상단 accent 링크(캘린더~커뮤니티)는 ☰ 메뉴로 이동 → 상단바에선 숨김 */
+  /* 앱: 상단 accent 링크(캘린더~게임 목록)는 ☰ 메뉴로 이동 → 상단바에선 숨김 */
   .header-primary-nav { display: none; }  /* 앱: 상단 accent 링크 그룹은 ☰ 메뉴로 이동 */
   .site-menu .menu-primary { display: flex; }  /* 구체적 선택자로 아래 base(display:none)를 이김 */
 }
@@ -320,7 +319,7 @@ textarea:focus-visible,
   .site-header { flex-wrap: wrap; padding: 0.6rem 0.8rem; }
   .site-header .site-wordmark { font-size: 1.1rem; flex: 1; }
 
-  /* 상단 accent 링크(캘린더~커뮤니티)는 ☰ 메뉴 안으로 → 헤더 = 워드마크 + 테마 + ☰ */
+  /* 상단 accent 링크(캘린더~게임 목록)는 ☰ 메뉴 안으로 → 헤더 = 워드마크 + 테마 + ☰ */
   .header-primary-nav { display: none; }
   .site-menu .menu-primary { display: flex; }
 
@@ -717,11 +716,6 @@ textarea:focus-visible,
 }
 /* 여백이 부족한 화면에선 숨김(콘텐츠 안 가리게) */
 @media (max-width: 1649px) { .side-rail { display: none; } }
-
-/* ─── 자유게시판 (/board) ─── */
-.board-page h1 { font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
-.board-intro { color: var(--text-faint); line-height: 1.7; margin-bottom: 1.2rem; font-size: var(--fs-sm); }
-.board-intro strong { color: var(--accent); font-weight: 700; }
 
 /* ─── 이벤트 페이지 (/events) ─── */
 .events-page h1 { font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem; }

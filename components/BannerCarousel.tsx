@@ -30,9 +30,6 @@ const DEFAULT_BANNERS: Banner[] = [
   { id: 'd-newserver', image_url: null, link: '/new-servers', tag: '신규 서버',
     title: '새 서버 오픈 일정', subtitle: '새로 시작하기 딱 좋은 타이밍',
     c1: '#a3c9ec', c2: '#a7b2e6' },
-  { id: 'd-board', image_url: null, link: '/board', tag: '커뮤니티',
-    title: '게이머 커뮤니티 오픈', subtitle: '잡담·유머·뉴스·정보를 한곳에서',
-    c1: '#f0a6c4', c2: '#e7a1ad' },
 ];
 
 // 코드 배너 배경에 실제 게임 이미지를 (겹치지 않게) 하나씩 배정 — 결정적(하이드레이션 안전).
