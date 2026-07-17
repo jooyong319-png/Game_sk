@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-16",
+  "last_updated": "2026-07-17",
   "note": "게임쇼/할인/시즌 등 기간성 이벤트. free_game(무료배포)은 /api/free-games에서 에픽 API 실시간 수집하므로 여기엔 보통 넣지 않음. 날짜 불확실하면 date_approx:true.",
   "events": [
     {
@@ -103,6 +103,56 @@
       "host": "패스 오브 엑자일",
       "description": "GGG의 핵앤슬래시 ARPG '패스 오브 엑자일'의 3.29 확장과 신규 챌린지 리그 '커스 오브 더 올플레임'이 시작된다. 현지 기준 7월 24일 오후 1시(PDT), 한국 시간으로는 7월 25일 오전 5시에 PC와 콘솔에서 동시 오픈하며, 리그 상세 내용은 7월 17일 GGG Live 방송에서 공개된다.",
       "source_url": "https://maxroll.gg/poe/news/3-29-release-curse-of-the-allflame-on-july-24"
+    },
+    {
+      "id": "fatalfury-cotw-season3-20260723",
+      "type": "season",
+      "title": "아랑전설 CotW 시즌 3 'DESTINED FOR REVENGE'",
+      "start_date": "2026-07-23",
+      "end_date": "2026-07-23",
+      "host": "아랑전설 시티 오브 더 울브스",
+      "description": "SNK의 대전 격투 게임 '아랑전설 시티 오브 더 울브스' 시즌 3가 'DESTINED FOR REVENGE'를 테마로 시작된다. 7월 릭 스트라우드를 시작으로 덕 킹(8월)·김갑환(9월)·라오콘(11월) 등 신규 캐릭터가 매월 순차 배포되며, 10월과 12월에는 미공개 캐릭터가 예정돼 있다. 시즌 3 개막과 함께 기존 시즌 패스 DLC 캐릭터의 단독 판매도 시작된다.",
+      "source_url": "https://bbs.ruliweb.com/news/read/227077"
+    },
+    {
+      "id": "steam-next-fest-february-2027",
+      "type": "sale",
+      "title": "스팀 넥스트 페스트 2027년 2월 (Steam Next Fest)",
+      "start_date": "2027-02-22",
+      "end_date": "2027-03-01",
+      "host": "Steam",
+      "description": "밸브가 공개한 2027년 상반기 스팀 이벤트 일정에 포함된 넥스트 페스트 2월 에디션. 출시 예정 게임의 무료 데모를 한자리에서 체험할 수 있는 축제다.",
+      "source_url": "https://www.gamemeca.com/view.php?gid=1777887"
+    },
+    {
+      "id": "steam-spring-sale-2027",
+      "type": "sale",
+      "title": "스팀 봄 할인 2027 (Steam Spring Sale)",
+      "start_date": "2027-03-18",
+      "end_date": "2027-03-25",
+      "host": "Steam",
+      "description": "밸브가 사전 공개한 2027년 상반기 일정 중 첫 번째 계절 할인. 스팀 스토어 전반을 대상으로 하는 대규모 세일이다.",
+      "source_url": "https://www.gamemeca.com/view.php?gid=1777887"
+    },
+    {
+      "id": "steam-next-fest-june-2027",
+      "type": "sale",
+      "title": "스팀 넥스트 페스트 2027년 6월 (Steam Next Fest)",
+      "start_date": "2027-06-14",
+      "end_date": "2027-06-21",
+      "host": "Steam",
+      "description": "밸브가 공개한 2027년 상반기 스팀 이벤트 일정에 포함된 넥스트 페스트 6월 에디션. 여름 할인 직전에 열려 신작 데모를 미리 체험하기 좋다.",
+      "source_url": "https://www.gamemeca.com/view.php?gid=1777887"
+    },
+    {
+      "id": "steam-summer-sale-2027",
+      "type": "sale",
+      "title": "스팀 여름 할인 2027 (Steam Summer Sale)",
+      "start_date": "2027-06-24",
+      "end_date": "2027-07-08",
+      "host": "Steam",
+      "description": "밸브가 사전 공개한 2027년 스팀 여름 계절 할인. 6월 24일 시작해 7월 8일까지 약 2주간 진행된다.",
+      "source_url": "https://www.gamemeca.com/view.php?gid=1777887"
     }
   ]
 }

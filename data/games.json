@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-16",
+  "last_updated": "2026-07-17",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -3170,6 +3170,53 @@
       "pre_registration": true,
       "pre_registration_date": "2026-07-15",
       "pre_registration_end_date": "2026-08-19"
+    },
+    {
+      "id": "nba-dunk-city-20260806",
+      "name_ko": "NBA 덩크 시티",
+      "name_en": "NBA Dunk City",
+      "release_date": "2026-08-06",
+      "release_date_approx": false,
+      "category": "mobile_kr",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "넷이즈게임즈",
+      "publisher": "넷이즈게임즈",
+      "description": "NBA 공식 라이선스를 받은 스트리트 농구 모바일 게임으로, 30개 현역 구단과 르브론 제임스·스테판 커리 등 40명 이상의 NBA 선수가 실명으로 등장한다. 일반 스포츠 게임과 달리 MOBA식 육성·전술 조합 요소를 넣어 선수를 키우고 스킬을 조합하는 방식으로 승부가 갈리는 점이 특징이다. 11점 매치와 풀코트 5대5, 랭크전 등 짧게 끊어 즐기는 모드를 갖췄고 코트·농구화 커스터마이징도 지원한다. 국내 정식 출시는 8월 6일이며 현재 사전예약이 진행 중이다.",
+      "genres": [
+        "스포츠",
+        "농구",
+        "MOBA"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/5YBer2TCaAxpRZTcWV-F0JulQjpmuEsy5TehNNK2Wr_SGQXBDavzjkzYVdn_jCrZdC7yiriOP4RXQgmM09WY2zo=s512",
+      "source_url": "https://www.betanews.net/article/view/beta202607100036",
+      "pre_registration": true,
+      "pre_registration_date": "2026-05-28",
+      "pre_registration_url": "https://play.google.com/store/apps/details?id=com.netease.dunkcdjp"
+    },
+    {
+      "id": "once-human-console-20260826",
+      "name_ko": "원스 휴먼 (콘솔 버전)",
+      "name_en": "Once Human (Console)",
+      "release_date": "2026-08-26",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "Xbox Series X|S"
+      ],
+      "developer": "스타리 스튜디오",
+      "publisher": "넷이즈게임즈",
+      "description": "별가루(스타더스트)에 오염된 종말 이후 세계를 무대로 한 멀티플레이 오픈월드 생존 게임 '원스 휴먼'의 콘솔 이식판이다. PC·모바일에 이어 PS5와 Xbox 시리즈 X|S로 무료 출시되며, 콘솔에 맞춘 1인칭 시점과 크로스플레이를 지원한다. 출시 시점부터 6개 시나리오와 PvP 스핀오프를 포함한 분량을 제공하고, 4K 해상도 모드와 120프레임 퍼포먼스 모드를 함께 지원한다. 기지 건설과 데비언트 수집 등 기존 재미 요소는 그대로 이어진다.",
+      "genres": [
+        "생존",
+        "오픈월드",
+        "슈팅"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/0-94hjDsVyTjm0Jic6AP8wVbuSb4SCrrxcZnQDJ5YgNHukFjG-g6C1yMlGmuYDsJW3Pdva4Iqrp9ox5GPFpj-HU=s512",
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=318329"
     }
   ]
 }
