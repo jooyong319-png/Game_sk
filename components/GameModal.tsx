@@ -6,7 +6,7 @@ import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
 import { ShareButton } from './ShareButton';
 import { PreRegCountdown } from './PreRegCountdown';
 import { useLocale } from '@/hooks/useLocale';
-import { UI, CAL, CATEGORY_LABELS } from '@/lib/i18nLabels';
+import { UI, CAL, CATEGORY_LABELS, gameName, gameDescription } from '@/lib/i18nLabels';
 import styles from './GameModal.module.css';
 
 interface Props {
@@ -42,6 +42,8 @@ export function GameModal({ game, onClose, wishlist }: Props) {
   const weekdayName = lang ? t!.weekdays[new Date(game.release_date).getDay()] : getKoreanWeekday(game.release_date);
   const weekday = game.release_date_approx ? '' : ` (${weekdayName})`;
   const isWished = wishlist.has(game.id);
+  const displayName = gameName(game, lang);
+  const displayDesc = gameDescription(game, lang);
 
   return (
     <div className={styles.overlay} onClick={onClose} role="presentation">
@@ -53,7 +55,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
             {game.image_url && !imgError ? (
               <>
                 <img src={game.image_url} alt="" aria-hidden="true" className={styles.imageBg} loading="lazy" />
-                <img src={game.image_url} alt={game.name_ko} className={styles.imageFg} loading="lazy" onError={() => setImgError(true)} />
+                <img src={game.image_url} alt={displayName} className={styles.imageFg} loading="lazy" onError={() => setImgError(true)} />
               </>
             ) : (
               <div className={styles.imagePh}>
@@ -65,9 +67,11 @@ export function GameModal({ game, onClose, wishlist }: Props) {
 
           <div className={styles.headerInfo}>
             <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
-            <h2 id="modal-title" className={styles.title}>{game.name_ko}</h2>
-            {game.name_en && game.name_en !== game.name_ko && (
-              <div className={styles.nameEn}>{game.name_en}</div>
+            <h2 id="modal-title" className={styles.title}>{displayName}</h2>
+            {lang ? (
+              displayName !== game.name_ko && <div className={styles.nameEn}>{game.name_ko}</div>
+            ) : (
+              game.name_en && game.name_en !== game.name_ko && <div className={styles.nameEn}>{game.name_en}</div>
             )}
           </div>
         </div>
@@ -88,7 +92,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
           <div className={styles.row}><strong>{ui ? ui.publisher : '퍼블리셔'}</strong>{game.publisher}</div>
         )}
 
-        {game.description && <p className={styles.desc}>{game.description}</p>}
+        {displayDesc && <p className={styles.desc}>{displayDesc}</p>}
 
         {game.source_url && (
           <a className={styles.source} href={game.source_url} target="_blank" rel="noopener">
@@ -115,7 +119,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
           <a className={styles.detail} href={`/game/${game.id}`} target="_blank" rel="noopener">
             <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> {t ? t.fullPage : '전체 페이지'} <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
-          <ShareButton url={`/game/${game.id}`} title={game.name_ko} className={styles.share} />
+          <ShareButton url={`/game/${game.id}`} title={displayName} className={styles.share} />
         </div>
       </div>
     </div>

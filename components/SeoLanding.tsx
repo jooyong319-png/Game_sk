@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { CATEGORY_META, type Game } from '@/lib/types';
 import { formatKoreanDate } from '@/lib/utils';
-import { UI, CAL, CATEGORY_LABELS, type Locale } from '@/lib/i18nLabels';
+import { UI, CAL, CATEGORY_LABELS, gameName, type Locale } from '@/lib/i18nLabels';
 import { PageShell } from './PageShell';
 import { GameThumb } from './GameThumb';
 
@@ -25,7 +25,7 @@ export function SeoLanding({ h1, intro, games, slug, lang }: SeoLandingProps) {
     itemListElement: games.map((g, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      name: g.name_ko,
+      name: gameName(g, lang ?? null),
       url: `https://gcalen.com/game/${g.id}`,
     })),
   };
@@ -47,6 +47,7 @@ export function SeoLanding({ h1, intro, games, slug, lang }: SeoLandingProps) {
               <span>{t ? t.noScheduleRegistered : '아직 등록된 일정이 없어요.'}</span>
             </li>
           ) : games.map(g => {
+            const displayName = gameName(g, lang ?? null);
             const catLabel = lang ? CATEGORY_LABELS[lang][g.category] : (CATEGORY_META[g.category]?.label ?? g.category);
             const dateStr = g.release_date_approx
               ? (ui ? ui.tba : '미정')
@@ -59,11 +60,11 @@ export function SeoLanding({ h1, intro, games, slug, lang }: SeoLandingProps) {
                 className="seo-list-item"
                 style={{ '--cat': CATEGORY_META[g.category]?.color } as CSSProperties}
               >
-                <GameThumb src={g.image_url} alt={g.name_ko} />
+                <GameThumb src={g.image_url} alt={displayName} />
                 <div className="seo-li-body">
                   <div className="seo-li-main">
                     <span className={`category-tag cat-bg-${g.category}`}>{catLabel}</span>
-                    <a href={`/game/${g.id}`} className="seo-name">{g.name_ko}</a>
+                    <a href={`/game/${g.id}`} className="seo-name">{displayName}</a>
                   </div>
                   <div className="seo-li-meta">
                     <span className="seo-date">{dateStr}</span>

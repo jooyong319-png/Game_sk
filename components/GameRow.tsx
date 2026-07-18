@@ -4,7 +4,7 @@ import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
 import { useLocale } from '@/hooks/useLocale';
-import { UI, CAL } from '@/lib/i18nLabels';
+import { UI, CAL, gameName, gameDescription } from '@/lib/i18nLabels';
 import styles from './GameRow.module.css';
 
 interface Props {
@@ -35,6 +35,8 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
   const weekdayName = lang ? t!.weekdays[new Date(g.release_date).getDay()] : getKoreanWeekday(g.release_date);
   const weekday = g.release_date_approx ? '' : `(${weekdayName})`;
   const tags = [...(g.genres ?? []), ...(g.platforms ?? [])].slice(0, 4);
+  const displayName = gameName(g, lang);
+  const displayDesc = gameDescription(g, lang);
 
   return (
     <li
@@ -51,7 +53,7 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
             <img src={g.image_url!} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
             <img
               src={g.image_url!}
-              alt={g.name_ko}
+              alt={displayName}
               className={styles.thumbFg}
               loading="lazy"
               onError={() => setImgError(true)}
@@ -74,11 +76,15 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
       <div className={styles.main}>
         <div className={styles.titleRow}>
           <span className={styles.badge} style={{ color: cat.color }}>{cat.short}</span>
-          <span className={styles.title}>{g.name_ko}</span>
+          <span className={styles.title}>{displayName}</span>
           {preBadge && <span className={styles.preBadge}>{preBadge}</span>}
-          {g.name_en && g.name_en !== g.name_ko && <span className={styles.nameEn}>{g.name_en}</span>}
+          {lang ? (
+            displayName !== g.name_ko && <span className={styles.nameEn}>{g.name_ko}</span>
+          ) : (
+            g.name_en && g.name_en !== g.name_ko && <span className={styles.nameEn}>{g.name_en}</span>
+          )}
         </div>
-        {g.description && <p className={styles.desc}>{g.description}</p>}
+        {displayDesc && <p className={styles.desc}>{displayDesc}</p>}
         {tags.length > 0 && (
           <div className={styles.tags}>
             {tags.map(t => <span key={t} className={styles.tag}>{t}</span>)}

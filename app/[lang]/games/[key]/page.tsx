@@ -5,7 +5,7 @@ import { getCouponsLastUpdated, couponKeywords } from '@/lib/coupons';
 import { CouponList } from '@/components/CouponList';
 import { ViewCounter } from '@/components/ViewCounter';
 import { PageShell } from '@/components/PageShell';
-import { LOCALES, UI, CAL, termLabel, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, UI, CAL, termLabel, gameName, type Locale } from '@/lib/i18nLabels';
 import styles from '@/app/games/list.module.css';
 
 interface Props {
@@ -132,7 +132,7 @@ export default async function LocaleGameHubPage({ params }: Props) {
                     <a href={`/game/${g.id}`} className={styles.schedLink}>
                       {g.image_url && <img className={styles.schedThumb} src={g.image_url} alt="" loading="lazy" />}
                       <span className={styles.schedText}>
-                        <span className={styles.schedName}>{g.name_ko}</span>
+                        <span className={styles.schedName}>{gameName(g, lang)}</span>
                         <span className={styles.schedMeta}>
                           <span className={upcoming ? styles.schedDateUp : styles.schedDate}>{dateStr}</span>
                           {upcoming && <span className={styles.schedTag}>{t.upcomingTag}</span>}

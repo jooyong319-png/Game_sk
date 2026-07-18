@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { useLocale } from '@/hooks/useLocale';
-import { CAL, UI, type Locale } from '@/lib/i18nLabels';
+import { CAL, UI, gameName, type Locale } from '@/lib/i18nLabels';
 import styles from './FeaturedCards.module.css';
 
 interface Props { games: Game[]; now: Date; variant?: 'hero' | 'list'; }
@@ -52,7 +52,7 @@ function gameToCard(game: Game, isPreReg: boolean, lang: Locale | null): CardDat
     imageUrl: game.image_url,
     badge: isPreReg ? (lang ? CAL[lang].preRegTag : '사전예약') : cat.short,
     badgeColor: isPreReg ? 'var(--accent-warm)' : cat.color,
-    name: game.name_ko,
+    name: gameName(game, lang),
     dateText: game.release_date_approx ? tba : shortDate(game.release_date),
     countdownLabel: lang ? `${lang === 'en' ? 'Time until release' : '発売までの時間'}` : '출시까지 남은 시간',
     targetMs: game.release_date_approx ? null : new Date(`${game.release_date}T00:00:00+09:00`).getTime(),

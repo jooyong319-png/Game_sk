@@ -4,6 +4,23 @@ import type { Category } from './types';
 export type Locale = 'en' | 'ja';
 export const LOCALES: Locale[] = ['en', 'ja'];
 
+// 게임명/설명 — 리서처가 채운 name_en/name_ja, description_en/ja가 있으면 그걸, 없으면 한국어로 폴백.
+// 캘린더·리스트·모달 등 게임 데이터를 보여주는 모든 곳에서 공용으로 사용.
+interface LocalizableGameName { name_ko: string; name_en?: string | null; name_ja?: string | null; }
+interface LocalizableGameDesc { description: string | null; description_en?: string | null; description_ja?: string | null; }
+
+export function gameName(g: LocalizableGameName, lang: Locale | null): string {
+  if (!lang) return g.name_ko;
+  if (lang === 'ja') return g.name_ja || g.name_en || g.name_ko;
+  return g.name_en || g.name_ko;
+}
+
+export function gameDescription(g: LocalizableGameDesc, lang: Locale | null): string | null {
+  if (!lang) return g.description;
+  const d = lang === 'en' ? g.description_en : g.description_ja;
+  return d || g.description;
+}
+
 // coupons.json의 term 필드('쿠폰'|'리딤코드') 표시용 번역 — 데이터 자체는 안 바꾸고 화면 표기만.
 export const TERM_LABELS: Record<Locale, Record<string, string>> = {
   en: { '쿠폰': 'coupon codes', '리딤코드': 'redeem codes' },

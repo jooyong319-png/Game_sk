@@ -8,7 +8,7 @@ import { CategoryFilterBar } from './CategoryFilterBar';
 import { GameRow } from './GameRow';
 import { EventRow } from './EventRow';
 import { useLocale } from '@/hooks/useLocale';
-import { CAL, type Locale } from '@/lib/i18nLabels';
+import { CAL, gameName, type Locale } from '@/lib/i18nLabels';
 import styles from './CalendarView.module.css';
 
 interface Props {
@@ -179,7 +179,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
       if (g.pre_registration_date === selectedISO) out.push({ game: g, kind: 'prereg' });
       if (g.pre_registration_end_date === selectedISO) out.push({ game: g, kind: 'prereg_end' });
     }
-    return out.sort((a, b) => a.game.name_ko.localeCompare(b.game.name_ko));
+    return out.sort((a, b) => gameName(a.game, lang).localeCompare(gameName(b.game, lang)));
   }, [selectedISO, games]);
 
   return (
@@ -230,7 +230,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
                   onCellClick(cell);
                 }
               }}
-              title={has ? cell.entries.map(e => KIND_TAG[e.kind] ? `${e.game.name_ko} (${KIND_TAG[e.kind]})` : e.game.name_ko).join(', ') : undefined}
+              title={has ? cell.entries.map(e => KIND_TAG[e.kind] ? `${gameName(e.game, lang)} (${KIND_TAG[e.kind]})` : gameName(e.game, lang)).join(', ') : undefined}
             >
               <div className={`${styles.cellDate} ${cell.date.getDay() === 0 ? styles.sun : cell.date.getDay() === 6 ? styles.sat : ''}`.trim()}>
                 {cell.isToday
@@ -240,7 +240,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
 
               {showName && firstGame && (
                 <div className={styles.cellName}>
-                  {firstGame.name_ko}
+                  {gameName(firstGame, lang)}
                   {KIND_TAG[firstEntry.kind] && <span className={styles.cellPreTag}>{KIND_TAG[firstEntry.kind]}</span>}
                   {cell.entries.length > 1 && <span className={styles.cellMore}>+{cell.entries.length - 1}</span>}
                 </div>
@@ -257,7 +257,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
                         style={e.kind === 'release'
                           ? { background: c }
                           : { background: 'transparent', boxShadow: `inset 0 0 0 2px ${c}`, opacity: e.kind === 'prereg_end' ? 0.5 : 1 }} // 사전예약 = 속 빈 링(마감은 흐리게)
-                        title={KIND_TAG[e.kind] ? `${e.game.name_ko} (${KIND_TAG[e.kind]})` : e.game.name_ko}
+                        title={KIND_TAG[e.kind] ? `${gameName(e.game, lang)} (${KIND_TAG[e.kind]})` : gameName(e.game, lang)}
                       />
                     );
                   })}
