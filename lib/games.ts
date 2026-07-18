@@ -76,5 +76,25 @@ export async function getLastUpdated(): Promise<string> {
   return data.last_updated;
 }
 
+// 영/일 번역 조회 — games.json의 description_en/description_ja 필드(리서처가 신규 등록 시 채움).
+// 없으면 null(그 언어 /[lang]/game/[id] 페이지 미생성 — data/games.json 자체가 소스, 별도 파일 없음).
+export async function getGameTranslation(
+  id: string,
+  lang: 'en' | 'ja'
+): Promise<{ name: string; description: string } | null> {
+  const game = await getGameById(id);
+  if (!game) return null;
+  const description = lang === 'en' ? game.description_en : game.description_ja;
+  if (!description) return null;
+  const name = (lang === 'en' ? game.name_en : game.name_ja) ?? game.name_en ?? game.name_ko;
+  return { name, description };
+}
+
+// 특정 언어로 번역된 게임들의 id 목록(generateStaticParams용).
+export async function getTranslatedGameIds(lang: 'en' | 'ja'): Promise<string[]> {
+  const all = await getAllGames();
+  return all.filter(g => (lang === 'en' ? g.description_en : g.description_ja)).map(g => g.id);
+}
+
 // 순수 헬퍼는 lib/utils.ts로 분리됨. 기존 import 호환용 re-export.
 export { calcDayDiff, formatKoreanDate, formatShortDate, getKoreanWeekday } from './utils';

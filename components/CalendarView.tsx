@@ -7,6 +7,8 @@ import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import { GameRow } from './GameRow';
 import { EventRow } from './EventRow';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL, type Locale } from '@/lib/i18nLabels';
 import styles from './CalendarView.module.css';
 
 interface Props {
@@ -25,9 +27,16 @@ interface Props {
 type CalKind = 'release' | 'prereg' | 'prereg_end';
 interface CalEntry { game: Game; kind: CalKind; }
 // 셀 소형 태그 · 상세 패널 배지 · 지난 날짜 라벨 (release는 태그/배지 없음)
-const KIND_TAG: Record<CalKind, string>   = { release: '', prereg: '사전예약',      prereg_end: '마감' };
-const KIND_BADGE: Record<CalKind, string> = { release: '', prereg: '사전예약 시작', prereg_end: '사전예약 마감' };
-const KIND_PAST: Record<CalKind, string>  = { release: '출시됨', prereg: '진행 중', prereg_end: '마감됨' };
+function kindTag(lang: Locale | null): Record<CalKind, string> {
+  if (!lang) return { release: '', prereg: '사전예약', prereg_end: '마감' };
+  const t = CAL[lang];
+  return { release: '', prereg: t.preRegTag, prereg_end: t.deadlineTag };
+}
+function kindBadge(lang: Locale | null): Record<CalKind, string> {
+  if (!lang) return { release: '', prereg: '사전예약 시작', prereg_end: '사전예약 마감' };
+  const t = CAL[lang];
+  return { release: '', prereg: t.preRegStartBadge, prereg_end: t.preRegEndBadge };
+}
 
 interface Cell {
   date: Date;
@@ -75,6 +84,10 @@ function buildCells(cursor: Date, games: Game[], now: Date): Cell[] {
 }
 
 export function CalendarView({ cursor, onCursorChange, games, events = [], wishlist, onPick, now, category, onCategory }: Props) {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
+  const KIND_TAG = useMemo(() => kindTag(lang), [lang]);
+  const KIND_BADGE = useMemo(() => kindBadge(lang), [lang]);
   const eventsByDate = useMemo(() => {
     const m = new Map<string, CalEvent[]>();
     for (const e of events) {
@@ -84,7 +97,9 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
     return m;
   }, [events]);
   const cells = useMemo(() => buildCells(cursor, games, now), [cursor, games, now]);
-  const monthLabel = `${cursor.getFullYear()}년 ${cursor.getMonth() + 1}월`;
+  const monthLabel = lang
+    ? new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'long' }).format(cursor)
+    : `${cursor.getFullYear()}년 ${cursor.getMonth() + 1}월`;
   const [selectedISO, setSelectedISO] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
   // 사용자 클릭 선택에만 패널로 스크롤(진입 자동선택은 점프 안 함)
@@ -171,10 +186,10 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
     <section className={styles.view}>
       <CategoryFilterBar category={category} onCategory={onCategory} className={styles.calCatBar} />
       <header className={styles.header}>
-        <button type="button" className={styles.navBtn} onClick={prev} aria-label="이전 달">‹</button>
+        <button type="button" className={styles.navBtn} onClick={prev} aria-label={t ? t.prevMonth : '이전 달'}>‹</button>
         <h2 className={styles.label}>{monthLabel}</h2>
-        <button type="button" className={styles.navBtn} onClick={next} aria-label="다음 달">›</button>
-        <button type="button" className={styles.todayBtn} onClick={today}>오늘로</button>
+        <button type="button" className={styles.navBtn} onClick={next} aria-label={t ? t.nextMonth : '다음 달'}>›</button>
+        <button type="button" className={styles.todayBtn} onClick={today}>{t ? t.goToToday : '오늘로'}</button>
       </header>
 
       <div
@@ -183,7 +198,7 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {['일','월','화','수','목','금','토'].map((d, i) => (<div key={d} className={`${styles.dayHead} ${i === 0 ? styles.sun : i === 6 ? styles.sat : ''}`.trim()}>{d}</div>))}
+        {(t ? t.weekdays : ['일','월','화','수','목','금','토']).map((d, i) => (<div key={d} className={`${styles.dayHead} ${i === 0 ? styles.sun : i === 6 ? styles.sat : ''}`.trim()}>{d}</div>))}
         {cells.map((cell, i) => {
           const has = cell.entries.length > 0;
           const showName = has && cell.inMonth;
@@ -270,8 +285,8 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
       {cells.every(c => c.entries.length === 0) && (
         <div className={styles.empty}>
           <div className={styles.emptyIcon} aria-hidden="true"><svg className="ic"><use href="#ic-calendar" /></svg></div>
-          <p className={styles.emptyText}>이 달 출시 일정이 없어요.</p>
-          <p className={styles.emptyHint}>좌우로 밀거나 ‹ ›로 다른 달을 살펴보세요.</p>
+          <p className={styles.emptyText}>{t ? t.noReleaseThisMonth : '이 달 출시 일정이 없어요.'}</p>
+          <p className={styles.emptyHint}>{t ? t.swipeHint : '좌우로 밀거나 ‹ ›로 다른 달을 살펴보세요.'}</p>
         </div>
       )}
 
@@ -280,18 +295,18 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
         <div ref={panelRef} className={styles.dayPanel}>
           <header className={styles.dayPanelHeader}>
             <h3 className={styles.dayPanelTitle}>
-              {formatShortDate(selectedISO)} ({getKoreanWeekday(selectedISO)})
+              {formatShortDate(selectedISO)} ({lang ? t!.weekdays[new Date(selectedISO).getDay()] : getKoreanWeekday(selectedISO)})
             </h3>
             <button
               type="button"
               className={styles.dayPanelClose}
               onClick={() => setSelectedISO(null)}
-              aria-label="패널 닫기"
+              aria-label={t ? t.closePanel : '패널 닫기'}
             >×</button>
           </header>
           <div className={styles.dayPanelList}>
             {panelEntries.length === 0 && (eventsByDate.get(selectedISO) ?? []).length === 0 ? (
-              <p className={styles.dayEmpty}>이 날짜엔 일정이 없어요.</p>
+              <p className={styles.dayEmpty}>{t ? t.noScheduleThisDate : '이 날짜엔 일정이 없어요.'}</p>
             ) : (
               <ul className={styles.dayGameList}>
                 {(eventsByDate.get(selectedISO) ?? []).map((ev, idx) => (

@@ -104,7 +104,8 @@ public/                       # Vercel 정적 자산 (필요 시 추가)
 - **주기**: 주 1회 — 주차별 주제 로테이션(BLOG_AUTHORING.md §7). 데이터 빈약 주는 스킵.
 - **수정 가능**: `content/blog/*.md`(신규 글만), `CHAT.md`
 - **본업**: 검색 유입용 "신작 총정리" 글 발행 → 게임 상세(/game/[id]) 내부 링크로 회유
-- **필독**: `BLOG_AUTHORING.md`(글 형식·지원 마크다운·주제 로테이션·내부링크 규격). 어기면 글이 깨진다.
+- **필독**: `BLOG_AUTHORING.md`(글 형식·지원 마크다운·주제 로테이션·내부링크 규격·**§9 다국어 발행**). 어기면 글이 깨진다.
+- **다국어(2026-07-18 도입, 가능하면)**: 원본(`<slug>.md`, 한국어) 발행 시 같은 사이클에 `<slug>.en.md`·`<slug>.ja.md`도 같이 — 번역이 아니라 그 언어로 **새로 쓰기**(BLOG_AUTHORING.md §9). 여력 없으면 한국어만 먼저 내고 다음 사이클에 추가해도 됨(필수 아님).
 - **금지**: `content/blog/`에 글 아닌 파일 두기(전부 자동 발행됨), `data/**`·코드 수정
 
 ### 🧹 로그청소 봇
@@ -140,6 +141,7 @@ public/                       # Vercel 정적 자산 (필요 시 추가)
     id: string,                       // slug-2026 형식
     name_ko: string,
     name_en: string | null,
+    name_ja?: string | null,          // 일본어 표기명 (선택 — 없으면 name_en/name_ko로 폴백)
     release_date: "YYYY-MM-DD",
     release_date_approx: boolean,
     category: "mobile_kr" | "pc_console_kr" | "global_aaa" | "new_server",
@@ -147,6 +149,8 @@ public/                       # Vercel 정적 자산 (필요 시 추가)
     developer: string | null,
     publisher: string | null,
     description: string | null,
+    description_en?: string | null,   // 영어 설명 (선택 — §6-4)
+    description_ja?: string | null,   // 일본어 설명 (선택 — §6-4)
     genres: string[],
     image_url: string | null,
     source_url: string | null,
@@ -177,6 +181,13 @@ public/                       # Vercel 정적 자산 (필요 시 추가)
 - 공식 마케팅 문구 **그대로 복붙 금지** → 직접 요약·재서술(원본성 확보).
 - **사실만**: 검증 안 된 추측·과장·수치 창작 금지. 모르면 확인된 범위까지만(허위 정보는 AdSense에 더 치명적).
 - **신규 게임은 처음부터 130자+로 작성**. 130자 미만 설명이 하나라도 생기지 않게 관리(과거 얇은 설명이 저품질 판정 원인이었음).
+
+## 6-4. 다국어 필드 (description_en / description_ja / name_ja) — 2026-07-18 도입
+`/en/game/[id]`, `/ja/game/[id]` 페이지는 **해당 언어 필드가 있는 게임만** 정적 생성된다(없으면 그 언어 페이지 자체가 안 생김 — 얇은/중복 콘텐츠로 SEO 감점 방지).
+- 리서처가 신규 게임 등록 시 **가능하면 함께 채움**(필수는 아님 — 확신 없으면 null, §17 "의심스러우면 추가 안 함" 동일 적용).
+- **기계번역이 아니라 같은 사실관계를 그 언어로 자연스럽게 재서술**(한국어 description을 그대로 번역기 돌리지 말 것). 1~3문장, 한국어만큼 길 필요 없음.
+- name_ja는 공식 일본어 표기가 확실할 때만(모르면 생략 → 프론트가 name_en/name_ko로 자동 폴백).
+- 기존 등록된 게임(130+개)은 **소급 작성 대상 아님** — 신규 등록분부터 적용, 기존분은 나중에 별도 작업.
 
 리서처는 스키마 임의 변경 금지. 변경 필요 시 기획자와 합의 후.
 - 여기서 '스키마 변경'은 **위 목록에 없는 완전히 새로운 key를 추가/삭제/개명**하는 것을 말한다. `pre_registration_url`처럼 **위에 이미 정의된 선택 필드를 값으로 채우는 것은 스키마 변경이 아니다** — 오히려 반드시 채워야 하는 정상 작업이다. (선택 필드 = "값이 없을 수도 있음"이지 "존재하지 않는 필드"가 아님)

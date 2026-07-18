@@ -18,6 +18,8 @@ import { ListView } from './ListView';
 import { GameModal } from './GameModal';
 import { useWishlist } from '@/hooks/useWishlist';
 import { useWishlistFilter } from '@/hooks/useWishlistFilter';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL } from '@/lib/i18nLabels';
 import styles from './Home.module.css';
 
 interface HomeProps {
@@ -30,6 +32,8 @@ interface HomeProps {
 const FREE_COLOR = '#6f9c7a';
 
 export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = [] }: HomeProps) {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
   const [filters, setFilters] = useState<FilterState>({
     category: null,
     platform: null,
@@ -193,22 +197,22 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
           <div className={styles.topRow}>
             <input
               type="search"
-              placeholder="게임명 검색…"
+              placeholder={t ? t.searchPlaceholder : '게임명 검색…'}
               value={filters.search}
               onChange={e => setFilters({ ...filters, search: e.target.value })}
               className={styles.topSearch}
-              aria-label="게임명 검색"
+              aria-label={t ? t.searchPlaceholder : '게임명 검색'}
             />
             <button
               type="button"
               className={`${styles.wishToggle} ${wishlistOnly ? styles.wishToggleOn : ''}`}
               onClick={wishFilter.toggle}
               aria-pressed={wishlistOnly}
-              aria-label="위시리스트만 보기"
-              title="위시리스트만 보기"
+              aria-label={t ? t.wishlistOnly : '위시리스트만 보기'}
+              title={t ? t.wishlistOnly : '위시리스트만 보기'}
             >
               <svg className={wishlistOnly ? 'ic ic-fill' : 'ic'} aria-hidden="true"><use href="#ic-star" /></svg>
-              <span className={styles.wishToggleLabel}>위시</span>
+              <span className={styles.wishToggleLabel}>{t ? t.wishlist : '위시'}</span>
             </button>
             <ViewToggle value={view} onChange={setView} />
           </div>
@@ -238,7 +242,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
       )}
 
           <p className={styles.lastUpdated}>
-            데이터 마지막 갱신: {formatShortDate(lastUpdated.slice(0, 10))}
+            {t ? t.lastUpdated : '데이터 마지막 갱신'}: {formatShortDate(lastUpdated.slice(0, 10))}
           </p>
         </div>
 

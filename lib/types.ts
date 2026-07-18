@@ -10,13 +10,16 @@ export interface Game {
   id: string;
   name_ko: string;
   name_en: string | null;
+  name_ja?: string | null;          // 일본어 표기명 (선택 필드 — 없으면 name_en 또는 name_ko 폴백)
   release_date: string;             // 'YYYY-MM-DD'
   release_date_approx: boolean;
   category: Category;
   platforms: string[];
   developer: string | null;
   publisher: string | null;
-  description: string | null;
+  description: string | null;       // 한국어 설명 (필수 — 사이트 기본 언어)
+  description_en?: string | null;   // 영어 설명 (선택 필드 — 리서처가 신규 등록 시 함께 채움, 없으면 /en 페이지 미생성)
+  description_ja?: string | null;   // 일본어 설명 (선택 필드 — 위와 동일)
   genres: string[];
   image_url: string | null;
   source_url: string | null;

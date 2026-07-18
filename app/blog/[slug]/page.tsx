@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getAllPosts, getPostBySlug, getRelatedPosts, markdownToHtml, formatPostDate } from '@/lib/blog';
+import { getAllPosts, getPostBySlug, getPostTranslation, getRelatedPosts, markdownToHtml, formatPostDate } from '@/lib/blog';
 import { PageShell } from '@/components/PageShell';
 import { ViewCounter } from '@/components/ViewCounter';
 import { BlogImg } from '@/components/BlogImg';
@@ -20,10 +20,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: '게시글을 찾을 수 없음' };
   const url = `https://gcalen.com/blog/${post.slug}`;
   const ogImage = post.heroImage ?? 'https://gcalen.com/og-image.png';
+
+  const [enT, jaT] = await Promise.all([
+    getPostTranslation(post.slug, 'en'),
+    getPostTranslation(post.slug, 'ja'),
+  ]);
+  const languages: Record<string, string> = { ko: url };
+  if (enT) languages.en = `https://gcalen.com/en/blog/${post.slug}`;
+  if (jaT) languages.ja = `https://gcalen.com/ja/blog/${post.slug}`;
+
   return {
     title: post.title,
     description: post.description.slice(0, 158),
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages },
     openGraph: {
       title: post.title,
       description: post.description,

@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next';
-import { getAllGames, getLastUpdated } from '@/lib/games';
-import { getAllPosts } from '@/lib/blog';
-import { getAllNews } from '@/lib/news';
+import { getAllGames, getLastUpdated, getTranslatedGameIds } from '@/lib/games';
+import { getAllPosts, getTranslatedSlugs } from '@/lib/blog';
+import { getAllNews, getTranslatedNewsSlugs } from '@/lib/news';
 import { getCouponPageKeys, getAllCouponKeys } from '@/lib/coupons';
+import { LOCALES } from '@/lib/i18nLabels';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getAllGames();
@@ -73,5 +74,45 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticUrls, ...blogUrls, ...newsUrls, ...couponUrls, ...hubUrls, ...gameUrls];
+  // 다국어(/en, /ja) — 콘텐츠(게임/블로그/뉴스)는 번역이 실제로 존재하는 항목만(빈 페이지 방지)
+  const localeUrls: MetadataRoute.Sitemap = [];
+  for (const lang of LOCALES) {
+    const [gameIds, blogSlugs, newsSlugs] = await Promise.all([
+      getTranslatedGameIds(lang),
+      getTranslatedSlugs(lang),
+      getTranslatedNewsSlugs(lang),
+    ]);
+    for (const id of gameIds) {
+      localeUrls.push({ url: `https://gcalen.com/${lang}/game/${id}`, lastModified: dataUpdated, changeFrequency: 'weekly', priority: 0.6 });
+    }
+    for (const slug of blogSlugs) {
+      localeUrls.push({ url: `https://gcalen.com/${lang}/blog/${slug}`, lastModified: now, changeFrequency: 'monthly', priority: 0.65 });
+    }
+    for (const slug of newsSlugs) {
+      localeUrls.push({ url: `https://gcalen.com/${lang}/news/${slug}`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 });
+    }
+    // 사이트 전체 UI 번역이 있는 고정 페이지 — 항상 존재
+    const p = `https://gcalen.com/${lang}`;
+    localeUrls.push(
+      { url: p, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+      { url: `${p}/upcoming-games`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+      { url: `${p}/pre-registration`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+      { url: `${p}/new-servers`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+      { url: `${p}/events`, lastModified: now, changeFrequency: 'daily', priority: 0.75 },
+      { url: `${p}/mobile-games`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+      { url: `${p}/pc-console-games`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+      { url: `${p}/global-games`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+      { url: `${p}/news`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+      { url: `${p}/blog`, lastModified: now, changeFrequency: 'daily', priority: 0.65 },
+      { url: `${p}/coupons`, lastModified: now, changeFrequency: 'daily', priority: 0.65 },
+      { url: `${p}/games`, lastModified: now, changeFrequency: 'daily', priority: 0.65 },
+      { url: `${p}/guide`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+      { url: `${p}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.45 },
+      { url: `${p}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.35 },
+      { url: `${p}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.25 },
+      { url: `${p}/terms`, lastModified: now, changeFrequency: 'yearly', priority: 0.25 }
+    );
+  }
+
+  return [...staticUrls, ...blogUrls, ...newsUrls, ...couponUrls, ...hubUrls, ...gameUrls, ...localeUrls];
 }

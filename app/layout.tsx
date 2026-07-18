@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { HeaderNav } from '@/components/HeaderNav';
+import { SiteWordmark } from '@/components/SiteWordmark';
+import { SiteFooter } from '@/components/SiteFooter';
 // 왼쪽 플로팅 위젯(N월 출시/사전예약): 재작업 예정, 임시 주석 (재사용 가능)
 // import { FloatingMonthStats } from '@/components/FloatingMonthStats';
 import { BottomTabBar } from '@/components/BottomTabBar';
@@ -52,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();",
+              "(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}try{var m=location.pathname.match(/^\\/(en|ja)(\\/|$)/);if(m)document.documentElement.lang=m[1];}catch(e){}})();",
           }}
         />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
@@ -103,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <symbol id="ic-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></symbol>
         </svg>
         <header className="site-header">
-          <h1 className="site-wordmark"><a href="/"><svg className="ic ic-gamepad" aria-hidden="true"><use href="#ic-gamepad" /></svg> 게임 출시 캘린더</a></h1>
+          <SiteWordmark />
           <HeaderNav />
         </header>
         <main id="main">{children}</main>
@@ -114,12 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Toaster />
         <PushSync />
         <InstallPrompt />
-        <footer className="site-footer">
-          <p>© 2026 게임 출시 캘린더 (gcalen.com)</p>
-          <p>문의: <a href="mailto:devju546@gmail.com">devju546@gmail.com</a> · <a href="/blog">신작 총정리</a></p>
-          <p><a href="/about">소개</a> · <a href="/contact">문의하기</a> · <a href="/guide">이용 가이드</a> · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a></p>
-          <p className="footer-disclaimer">게임명·이미지·상표 등은 각 게임사(권리자)의 자산이며, 본 사이트는 출시 일정 정보 제공을 목적으로 합니다. 권리자의 요청 시 해당 콘텐츠를 수정·삭제합니다.</p>
-        </footer>
+        <SiteFooter />
         <script
           dangerouslySetInnerHTML={{
             __html:

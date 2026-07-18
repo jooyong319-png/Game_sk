@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getAllNews, getNewsBySlug, getRelatedNews, markdownToHtml, formatPostDate } from '@/lib/news';
+import { getAllNews, getNewsBySlug, getNewsTranslation, getRelatedNews, markdownToHtml, formatPostDate } from '@/lib/news';
 import { PageShell } from '@/components/PageShell';
-import { ViewCounter } from '@/components/ViewCounter';
 import { Comments } from '@/components/Comments';
 import { BlogImg } from '@/components/BlogImg';
 import { BlogHero } from '@/components/BlogHero';
+import { NewsTranslatable } from '@/components/NewsTranslatable';
 import styles from '../../blog/blog.module.css';
 import n from '../news.module.css';
 
@@ -22,10 +22,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!item) return { title: '뉴스를 찾을 수 없음' };
   const url = `https://gcalen.com/news/${item.slug}`;
   const ogImage = item.heroImage ?? 'https://gcalen.com/og-image.png';
+
+  const [enT, jaT] = await Promise.all([
+    getNewsTranslation(item.slug, 'en'),
+    getNewsTranslation(item.slug, 'ja'),
+  ]);
+  const languages: Record<string, string> = { ko: url };
+  if (enT) languages.en = `https://gcalen.com/en/news/${item.slug}`;
+  if (jaT) languages.ja = `https://gcalen.com/ja/news/${item.slug}`;
+
   return {
     title: item.title,
     description: item.description.slice(0, 158),
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages },
     openGraph: {
       title: item.title,
       description: item.description,
@@ -90,21 +99,13 @@ export default async function NewsDetailPage({ params }: Props) {
       <article className={styles.post}>
         <Link href="/news" className={styles.backLink}>← 게임 뉴스 목록으로</Link>
         {item.heroImage && <BlogHero src={item.heroImage} alt={item.title} />}
-        <header className={styles.postHeader}>
-          <time className={styles.postDate}>
-            {formatPostDate(item.date)}
-            {item.source && <span className={n.sourceBadge}>{item.source}</span>}
-          </time>
-          <h1 className={styles.postH1}>{item.title}</h1>
-          <ViewCounter gameId={`news:${item.slug}`} />
-          {item.description && <p className={styles.postLead}>{item.description}</p>}
-          {item.tags.length > 0 && (
-            <div className={styles.postTags}>
-              {item.tags.map(t => <span key={t} className={styles.tag}>#{t}</span>)}
-            </div>
-          )}
-        </header>
-        <div className={styles.postBody} dangerouslySetInnerHTML={{ __html: html }} />
+        <NewsTranslatable
+          slug={item.slug}
+          date={formatPostDate(item.date)}
+          source={item.source}
+          tags={item.tags}
+          original={{ title: item.title, description: item.description, bodyHtml: html }}
+        />
 
         {/* 출처 박스 — 원문 링크 명시 (저작권/애드센스 안전판) */}
         {item.sourceUrl && (

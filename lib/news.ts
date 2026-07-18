@@ -6,6 +6,8 @@ import { firstGameId } from './blog';
 
 // 마크다운/날짜 유틸은 blog에서 재사용 (동일 포맷)
 export { markdownToHtml, formatPostDate } from './blog';
+import type { ContentLang, ContentTranslation } from './blog';
+export type { ContentLang, ContentTranslation };
 
 export interface NewsItem {
   slug: string;
@@ -50,6 +52,7 @@ async function readAllNews(): Promise<NewsItem[]> {
     for (const file of files) {
       if (!file.endsWith('.md')) continue;
       if (file.startsWith('_') || file.startsWith('.')) continue; // 템플릿/숨김 파일 제외
+      if (/\.(en|ja)\.md$/.test(file)) continue; // 언어 변형 파일은 목록에서 제외(별도 조회)
       // 슬러그는 항상 NFC로 정규화 — 한글 파일명이 파일시스템/URL 간 NFD로 어긋나 매칭 실패하는 것 방지
       const slug = file.replace(/\.md$/, '').normalize('NFC');
       // CRLF 정규화 — Windows 체크아웃 시 frontmatter 파서(^---\n)가 깨지는 것 방지
@@ -106,6 +109,39 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
   // 인코딩/디코딩·정규화 어느 조합이 와도 매칭되도록 후보 셋으로 비교.
   const candidates = new Set([slug, safeDecode(slug)].map(s => s.normalize('NFC')));
   return all.find(n => candidates.has(n.slug)) ?? null;
+}
+
+// 번역본 조회 — content/news/<slug>.<lang>.md. 없으면 null(그 언어 페이지 미생성).
+export async function getNewsTranslation(slug: string, lang: ContentLang): Promise<ContentTranslation | null> {
+  const file = path.join(process.cwd(), 'content', 'news', `${slug}.${lang}.md`);
+  try {
+    const raw = (await fs.readFile(file, 'utf-8')).replace(/\r\n/g, '\n');
+    const { meta, body } = parseFrontmatter(raw);
+    return {
+      title: String(meta.title ?? slug),
+      description: String(meta.description ?? ''),
+      content: body,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// 특정 언어로 번역된 뉴스들의 slug 목록(generateStaticParams용) — 원본 있는 것만.
+export async function getTranslatedNewsSlugs(lang: ContentLang): Promise<string[]> {
+  const dir = path.join(process.cwd(), 'content', 'news');
+  try {
+    const files = await fs.readdir(dir);
+    const suffix = `.${lang}.md`;
+    const all = await getAllNews();
+    const known = new Set(all.map(n => n.slug));
+    return files
+      .filter(f => f.endsWith(suffix))
+      .map(f => f.slice(0, -suffix.length).normalize('NFC'))
+      .filter(slug => known.has(slug));
+  } catch {
+    return [];
+  }
 }
 
 // 관련 뉴스: 태그 겹침 desc → 최신 desc. 자기 자신 제외.

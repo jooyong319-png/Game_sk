@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getAllGames, getUpcomingGamesByCategory, getLastUpdated, formatKoreanDate, formatShortDate, getKoreanWeekday } from '@/lib/games';
+import { getAllGames, getUpcomingGamesByCategory, getLastUpdated, formatKoreanDate, formatShortDate, getKoreanWeekday, getGameTranslation } from '@/lib/games';
 import { CATEGORY_META, type Category, type Game } from '@/lib/types';
 import { WishlistButton } from '@/components/WishlistButton';
 import { GameReactions } from '@/components/GameReactions';
@@ -90,11 +90,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const ogImage = game.image_url || '/og-image.png';
   const lastUpdated = await getLastUpdated();
+
+  // 영/일 번역이 있으면 hreflang으로 상호 링크(둘 다 없으면 canonical만)
+  const [enT, jaT] = await Promise.all([
+    getGameTranslation(game.id, 'en'),
+    getGameTranslation(game.id, 'ja'),
+  ]);
+  const languages: Record<string, string> = { ko: url };
+  if (enT) languages.en = `https://gcalen.com/en/game/${game.id}`;
+  if (jaT) languages.ja = `https://gcalen.com/ja/game/${game.id}`;
+
   return {
     title: { absolute: title },
     description: desc,
     keywords,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages },
     openGraph: {
       title,
       description: desc,

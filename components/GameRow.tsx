@@ -3,6 +3,8 @@ import { useState, type CSSProperties } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
+import { useLocale } from '@/hooks/useLocale';
+import { UI, CAL } from '@/lib/i18nLabels';
 import styles from './GameRow.module.css';
 
 interface Props {
@@ -15,17 +17,23 @@ interface Props {
 
 // 게임 1행 — 리스트 뷰 + 캘린더 상세 패널 공용. (날짜칼럼 + 본문 + 액션)
 export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
+  const lang = useLocale();
+  const ui = lang ? UI[lang] : null;
+  const t = lang ? CAL[lang] : null;
   const [imgError, setImgError] = useState(false);
   const showImg = !!g.image_url && !imgError;
   const diff = calcDayDiff(g.release_date, now);
   const released = diff < 0;
   const isToday = diff === 0;
   const imminent = diff >= 0 && diff <= 7;
-  const dd = g.release_date_approx ? '미정' : released ? '출시됨' : isToday ? 'D-DAY' : `D-${diff}`;
+  const tba = ui ? ui.tba : '미정';
+  const releasedText = t ? t.released : '출시됨';
+  const dd = g.release_date_approx ? tba : released ? releasedText : isToday ? 'D-DAY' : `D-${diff}`;
   const cat = CATEGORY_META[g.category];
   const isWished = wishlist.has(g.id);
-  const mmdd = g.release_date_approx ? '미정' : g.release_date.slice(5).replace('-', '/');
-  const weekday = g.release_date_approx ? '' : `(${getKoreanWeekday(g.release_date)})`;
+  const mmdd = g.release_date_approx ? tba : g.release_date.slice(5).replace('-', '/');
+  const weekdayName = lang ? t!.weekdays[new Date(g.release_date).getDay()] : getKoreanWeekday(g.release_date);
+  const weekday = g.release_date_approx ? '' : `(${weekdayName})`;
   const tags = [...(g.genres ?? []), ...(g.platforms ?? [])].slice(0, 4);
 
   return (
@@ -52,7 +60,7 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
         ) : (
           <div className={styles.thumbPh}>
             <svg className={styles.thumbPhIcon} aria-hidden="true"><use href="#ic-image" /></svg>
-            <span className={styles.thumbPhText}>이미지 없음</span>
+            <span className={styles.thumbPhText}>{t ? t.noImage : '이미지 없음'}</span>
           </div>
         )}
       </div>
@@ -85,11 +93,11 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
             href={g.source_url}
             target="_blank"
             rel="noopener"
-            aria-label="공식 출처"
+            aria-label={t ? t.official : '공식 출처'}
             onClick={(e) => e.stopPropagation()}
           >
             <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
-            <span className={styles.actLabel}>출처</span>
+            <span className={styles.actLabel}>{ui ? ui.source : '출처'}</span>
           </a>
         )}
         <button
@@ -97,10 +105,10 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
           className={`${styles.actBtn} ${isWished ? styles.wishOn : ''}`}
           onClick={(e) => { e.stopPropagation(); wishlist.toggle(g.id); }}
           aria-pressed={isWished}
-          aria-label="찜"
+          aria-label={t ? (isWished ? t.removeFromWishlist : t.addToWishlist) : '찜'}
         >
           <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
-          <span className={styles.actLabel}>찜</span>
+          <span className={styles.actLabel}>{t ? t.wishlist : '찜'}</span>
         </button>
       </div>
     </li>

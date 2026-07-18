@@ -6,6 +6,8 @@ import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import { GameRow } from './GameRow';
 import { EventRow } from './EventRow';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL } from '@/lib/i18nLabels';
 import styles from './ListView.module.css';
 
 interface Props {
@@ -24,6 +26,8 @@ const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 function pad(n: number): string { return String(n).padStart(2, '0'); }
 
 export function ListView({ games, events = [], wishlist, onPick, now, category, onCategory }: Props) {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
   // 사용자가 탭/연도를 고르기 전엔 null → now(현재 연·월)를 따름(빌드 정적이라도 mount 후 정확)
   const [picked, setPicked] = useState<{ year: number; month: MonthSel } | null>(null);
 
@@ -99,11 +103,11 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
     <div className={styles.listView}>
       <div className={styles.monthNav}>
         <div className={styles.yearRow}>
-          <button type="button" className={styles.yearBtn} onClick={() => shiftYear(-1)} aria-label="이전 해">‹</button>
-          <span className={styles.yearLabel}>{activeYear}년</span>
-          <button type="button" className={styles.yearBtn} onClick={() => shiftYear(1)} aria-label="다음 해">›</button>
+          <button type="button" className={styles.yearBtn} onClick={() => shiftYear(-1)} aria-label={t ? t.prevYear : '이전 해'}>‹</button>
+          <span className={styles.yearLabel}>{activeYear}{lang ? '' : '년'}</span>
+          <button type="button" className={styles.yearBtn} onClick={() => shiftYear(1)} aria-label={t ? t.nextYear : '다음 해'}>›</button>
         </div>
-        <div className={styles.tabs} role="tablist" aria-label="월 선택">
+        <div className={styles.tabs} role="tablist" aria-label={t ? t.monthSelect : '월 선택'}>
           {MONTHS.map(m => (
             <button
               key={m}
@@ -113,7 +117,7 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
               className={`${styles.tab} ${activeMonth === m ? styles.tabActive : ''} ${(monthCounts[m] ?? 0) === 0 ? styles.tabEmpty : ''}`}
               onClick={() => pick(m)}
             >
-              {m}월
+              {t ? t.months[m - 1] : `${m}월`}
             </button>
           ))}
           <button
@@ -123,7 +127,7 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
             className={`${styles.tab} ${activeMonth === 'approx' ? styles.tabActive : ''} ${(monthCounts['approx'] ?? 0) === 0 ? styles.tabEmpty : ''}`}
             onClick={() => pick('approx')}
           >
-            미정
+            {t ? t.noDateSet : '미정'}
           </button>
         </div>
 
@@ -134,9 +138,15 @@ export function ListView({ games, events = [], wishlist, onPick, now, category, 
         <div className={styles.empty}>
           <div className={styles.emptyIcon} aria-hidden="true"><svg className="ic"><use href="#ic-gamepad" /></svg></div>
           <p className={styles.emptyText}>
-            {activeMonth === 'approx' ? '출시일 미정 게임이 없어요.' : `${activeYear}년 ${activeMonth}월 일정이 없어요.`}
+            {activeMonth === 'approx'
+              ? (t ? t.noApproxGames : '출시일 미정 게임이 없어요.')
+              : (t
+                  ? t.noReleaseThisMonthYear(
+                      new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'long' }).format(new Date(activeYear, (activeMonth as number) - 1))
+                    )
+                  : `${activeYear}년 ${activeMonth}월 일정이 없어요.`)}
           </p>
-          <p className={styles.emptyHint}>위 탭에서 다른 달을 골라보세요.</p>
+          <p className={styles.emptyHint}>{t ? t.pickOtherMonth : '위 탭에서 다른 달을 골라보세요.'}</p>
         </div>
       ) : (
         <ul className={styles.rows}>

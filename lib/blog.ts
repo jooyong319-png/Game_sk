@@ -14,6 +14,15 @@ export interface BlogPost {
   heroImage: string | null;    // 위 게임의 대표 이미지 (없으면 null)
 }
 
+// 다국어 번역 — content/blog/<slug>.en.md · <slug>.ja.md (원본과 별도 파일, 없으면 미번역)
+export type ContentLang = 'en' | 'ja';
+
+export interface ContentTranslation {
+  title: string;
+  description: string;
+  content: string; // markdown 본문
+}
+
 // 단순 frontmatter 파서 (gray-matter 없이)
 function parseFrontmatter(raw: string): { meta: Record<string, string | string[]>; body: string } {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
@@ -50,6 +59,7 @@ async function readAllPosts(): Promise<BlogPost[]> {
     const posts: BlogPost[] = [];
     for (const file of files) {
       if (!file.endsWith('.md')) continue;
+      if (/\.(en|ja)\.md$/.test(file)) continue; // 언어 변형 파일은 목록에서 제외(별도 조회)
       const slug = file.replace(/\.md$/, '');
       const raw = await fs.readFile(path.join(dir, file), 'utf-8');
       const { meta, body } = parseFrontmatter(raw);
@@ -95,6 +105,39 @@ export function getAllPosts(): Promise<BlogPost[]> {
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const all = await getAllPosts();
   return all.find(p => p.slug === slug) ?? null;
+}
+
+// 번역본 조회 — content/blog/<slug>.<lang>.md. 없으면 null(그 언어 페이지 미생성).
+export async function getPostTranslation(slug: string, lang: ContentLang): Promise<ContentTranslation | null> {
+  const file = path.join(process.cwd(), 'content', 'blog', `${slug}.${lang}.md`);
+  try {
+    const raw = await fs.readFile(file, 'utf-8');
+    const { meta, body } = parseFrontmatter(raw);
+    return {
+      title: String(meta.title ?? slug),
+      description: String(meta.description ?? ''),
+      content: body,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// 특정 언어로 번역된 글들의 slug 목록(generateStaticParams용) — 원본 있는 것만.
+export async function getTranslatedSlugs(lang: ContentLang): Promise<string[]> {
+  const dir = path.join(process.cwd(), 'content', 'blog');
+  try {
+    const files = await fs.readdir(dir);
+    const suffix = `.${lang}.md`;
+    const all = await getAllPosts();
+    const known = new Set(all.map(p => p.slug));
+    return files
+      .filter(f => f.endsWith(suffix))
+      .map(f => f.slice(0, -suffix.length))
+      .filter(slug => known.has(slug));
+  } catch {
+    return [];
+  }
 }
 
 // 관련 글 추천: 태그 겹침 수 desc → 최신 desc. 자기 자신 제외.

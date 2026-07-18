@@ -5,6 +5,8 @@ import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
 import { ShareButton } from './ShareButton';
 import { PreRegCountdown } from './PreRegCountdown';
+import { useLocale } from '@/hooks/useLocale';
+import { UI, CAL, CATEGORY_LABELS } from '@/lib/i18nLabels';
 import styles from './GameModal.module.css';
 
 interface Props {
@@ -14,6 +16,9 @@ interface Props {
 }
 
 export function GameModal({ game, onClose, wishlist }: Props) {
+  const lang = useLocale();
+  const ui = lang ? UI[lang] : null;
+  const t = lang ? CAL[lang] : null;
   const [imgError, setImgError] = useState(false);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -26,16 +31,22 @@ export function GameModal({ game, onClose, wishlist }: Props) {
   }, [onClose]);
 
   const diff = calcDayDiff(game.release_date);
-  const dd = game.release_date_approx ? '미정' : diff < 0 ? '출시됨' : diff === 0 ? 'D-DAY' : `D-${diff}`;
+  const tba = ui ? ui.tba : '미정';
+  const releasedText = t ? t.released : '출시됨';
+  const dd = game.release_date_approx ? tba : diff < 0 ? releasedText : diff === 0 ? 'D-DAY' : `D-${diff}`;
   const cat = CATEGORY_META[game.category];
-  const dateStr = formatKoreanDate(game.release_date);
-  const weekday = game.release_date_approx ? '' : ` (${getKoreanWeekday(game.release_date)})`;
+  const catLabel = lang ? CATEGORY_LABELS[lang][game.category] : cat.label;
+  const dateStr = lang
+    ? new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(game.release_date))
+    : formatKoreanDate(game.release_date);
+  const weekdayName = lang ? t!.weekdays[new Date(game.release_date).getDay()] : getKoreanWeekday(game.release_date);
+  const weekday = game.release_date_approx ? '' : ` (${weekdayName})`;
   const isWished = wishlist.has(game.id);
 
   return (
     <div className={styles.overlay} onClick={onClose} role="presentation">
       <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={e => e.stopPropagation()}>
-        <button type="button" className={styles.close} onClick={onClose} aria-label="닫기">×</button>
+        <button type="button" className={styles.close} onClick={onClose} aria-label={t ? t.close : '닫기'}>×</button>
 
         <div className={styles.header}>
           <div className={`${styles.image} cat-bg-${game.category}`}>
@@ -47,13 +58,13 @@ export function GameModal({ game, onClose, wishlist }: Props) {
             ) : (
               <div className={styles.imagePh}>
                 <svg className={styles.phIcon} aria-hidden="true"><use href="#ic-image" /></svg>
-                <span className={styles.phText}>이미지 없음</span>
+                <span className={styles.phText}>{t ? t.noImage : '이미지 없음'}</span>
               </div>
             )}
           </div>
 
           <div className={styles.headerInfo}>
-            <span className={`category-tag cat-bg-${game.category}`}>{cat.label}</span>
+            <span className={`category-tag cat-bg-${game.category}`}>{catLabel}</span>
             <h2 id="modal-title" className={styles.title}>{game.name_ko}</h2>
             {game.name_en && game.name_en !== game.name_ko && (
               <div className={styles.nameEn}>{game.name_en}</div>
@@ -62,32 +73,32 @@ export function GameModal({ game, onClose, wishlist }: Props) {
         </div>
 
         <div className={styles.row}>
-          <strong>출시일</strong>
+          <strong>{ui ? ui.releaseDate : '출시일'}</strong>
           {game.release_date_approx
-            ? <span className={styles.dday}>미정</span>
+            ? <span className={styles.dday}>{tba}</span>
             : <>{dateStr}{weekday} · <span className={styles.dday}>{dd}</span></>}
         </div>
         {game.pre_registration && (
           <PreRegCountdown startDate={game.pre_registration_date} endDate={game.pre_registration_end_date} />
         )}
-        {game.platforms.length > 0 && <div className={styles.row}><strong>플랫폼</strong>{game.platforms.join(', ')}</div>}
-        {game.genres.length > 0 && <div className={styles.row}><strong>장르</strong>{game.genres.join(', ')}</div>}
-        {game.developer && <div className={styles.row}><strong>개발</strong>{game.developer}</div>}
+        {game.platforms.length > 0 && <div className={styles.row}><strong>{ui ? ui.platforms : '플랫폼'}</strong>{game.platforms.join(', ')}</div>}
+        {game.genres.length > 0 && <div className={styles.row}><strong>{ui ? ui.genres : '장르'}</strong>{game.genres.join(', ')}</div>}
+        {game.developer && <div className={styles.row}><strong>{ui ? ui.developer : '개발'}</strong>{game.developer}</div>}
         {game.publisher && game.publisher !== game.developer && (
-          <div className={styles.row}><strong>퍼블리셔</strong>{game.publisher}</div>
+          <div className={styles.row}><strong>{ui ? ui.publisher : '퍼블리셔'}</strong>{game.publisher}</div>
         )}
 
         {game.description && <p className={styles.desc}>{game.description}</p>}
 
         {game.source_url && (
           <a className={styles.source} href={game.source_url} target="_blank" rel="noopener">
-            출처 보기 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
+            {t ? t.viewSource : '출처 보기'} <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
         )}
 
         {game.pre_registration_url && (
           <a className={styles.preRegCta} href={game.pre_registration_url} target="_blank" rel="noopener">
-            사전예약 하러 가기 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
+            {t ? t.goToPreReg : '사전예약 하러 가기'} <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
         )}
 
@@ -99,10 +110,10 @@ export function GameModal({ game, onClose, wishlist }: Props) {
             aria-pressed={isWished}
           >
             <svg className={`ic ${isWished ? 'ic-fill' : ''}`} aria-hidden="true"><use href="#ic-star" /></svg>
-            {isWished ? '즐겨찾기됨' : '즐겨찾기'}
+            {t ? (isWished ? t.favorited : t.favorite) : (isWished ? '즐겨찾기됨' : '즐겨찾기')}
           </button>
           <a className={styles.detail} href={`/game/${game.id}`} target="_blank" rel="noopener">
-            <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> 전체 페이지 <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
+            <svg className="ic" aria-hidden="true"><use href="#ic-file" /></svg> {t ? t.fullPage : '전체 페이지'} <svg className="ic" aria-hidden="true"><use href="#ic-arrow-ur" /></svg>
           </a>
           <ShareButton url={`/game/${game.id}`} title={game.name_ko} className={styles.share} />
         </div>

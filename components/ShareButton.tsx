@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL } from '@/lib/i18nLabels';
 
 interface Props {
   /** 공유할 경로 또는 절대 URL (예: '/game/abc') */
@@ -10,6 +12,8 @@ interface Props {
 
 // 공유 버튼 — 모바일은 Web Share API(navigator.share), 데스크톱은 링크 클립보드 복사로 폴백.
 export function ShareButton({ url, title, className }: Props) {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
   const [copied, setCopied] = useState(false);
 
   const onShare = async () => {
@@ -34,9 +38,9 @@ export function ShareButton({ url, title, className }: Props) {
   };
 
   return (
-    <button type="button" className={className} onClick={onShare} aria-label="공유">
+    <button type="button" className={className} onClick={onShare} aria-label={t ? t.share : '공유'}>
       <svg className="ic" aria-hidden="true"><use href="#ic-share" /></svg>
-      {copied ? '복사됨' : '공유'}
+      {copied ? (t ? t.copied : '복사됨') : (t ? t.share : '공유')}
     </button>
   );
 }

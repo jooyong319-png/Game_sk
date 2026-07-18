@@ -3,6 +3,8 @@ import { Fragment, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL, UI, type Locale } from '@/lib/i18nLabels';
 import styles from './FeaturedCards.module.css';
 
 interface Props { games: Game[]; now: Date; variant?: 'hero' | 'list'; }
@@ -40,36 +42,37 @@ function ymd(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-function gameToCard(game: Game, isPreReg: boolean): CardData {
+function gameToCard(game: Game, isPreReg: boolean, lang: Locale | null): CardData {
   const cat = CATEGORY_META[game.category];
+  const tba = lang ? UI[lang].tba : '미정';
   return {
     key: `game-${game.id}`,
     href: `/game/${game.id}`,
     external: false,
     imageUrl: game.image_url,
-    badge: isPreReg ? '사전예약' : cat.short,
+    badge: isPreReg ? (lang ? CAL[lang].preRegTag : '사전예약') : cat.short,
     badgeColor: isPreReg ? 'var(--accent-warm)' : cat.color,
     name: game.name_ko,
-    dateText: game.release_date_approx ? '미정' : shortDate(game.release_date),
-    countdownLabel: '출시까지 남은 시간',
+    dateText: game.release_date_approx ? tba : shortDate(game.release_date),
+    countdownLabel: lang ? `${lang === 'en' ? 'Time until release' : '発売までの時間'}` : '출시까지 남은 시간',
     targetMs: game.release_date_approx ? null : new Date(`${game.release_date}T00:00:00+09:00`).getTime(),
-    fallbackText: '미정',
+    fallbackText: tba,
   };
 }
 
-function freeToCard(free: FreeGame): CardData {
+function freeToCard(free: FreeGame, lang: Locale | null): CardData {
   return {
     key: `free-${free.title}`,
     href: free.url ?? '#',
     external: true,
     imageUrl: free.image,
-    badge: '무료',
+    badge: lang ? CAL[lang].free : '무료',
     badgeColor: FREE_COLOR,
     name: free.title,
-    dateText: '에픽게임즈 무료 배포',
-    countdownLabel: '무료 종료까지 남은 시간',
+    dateText: lang ? (lang === 'en' ? 'Free on Epic Games' : 'Epic Games無料配布') : '에픽게임즈 무료 배포',
+    countdownLabel: lang ? (lang === 'en' ? 'Time until free ends' : '無料終了までの時間') : '무료 종료까지 남은 시간',
     targetMs: free.end ? new Date(free.end).getTime() : null,
-    fallbackText: '진행 중',
+    fallbackText: lang ? CAL[lang].ongoing : '진행 중',
   };
 }
 
@@ -176,6 +179,7 @@ function ListCards({ pool, count }: { pool: CardData[]; count: number }) {
 
 // 카드 묶음 — hero(홈): 사전예약 + 리롤 1개 / list(서브페이지 사이드바): 풀에서 랜덤 4장(중복 없이)
 export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
+  const lang = useLocale();
   const today = ymd(now);
   const notReleased = (g: Game) => g.release_date_approx || g.release_date >= today;
 
@@ -201,8 +205,8 @@ export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
       .filter(g => notReleased(g) && g.category === c && g.id !== preReg?.id)
       .sort((a, b) => a.release_date.localeCompare(b.release_date))[0])
     .filter((g): g is Game => Boolean(g))
-    .map(g => gameToCard(g, false)),
-    [games, preReg?.id, today]);
+    .map(g => gameToCard(g, false, lang)),
+    [games, preReg?.id, today, lang]);
 
   // 현재 무료 배포 중인 게임 (에픽) — 클라에서 로드
   const [freeItems, setFreeItems] = useState<CardData[]>([]);
@@ -214,12 +218,12 @@ export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
       .then(d => {
         if (cancelled) return;
         const cur: FreeGame[] = (d.games ?? []).filter((g: FreeGame) => g.status === 'current');
-        setFreeItems(cur.map(freeToCard));
+        setFreeItems(cur.map(g => freeToCard(g, lang)));
         setReady(true);
       })
       .catch(() => { if (!cancelled) setReady(true); });
     return () => { cancelled = true; };
-  }, []);
+  }, [lang]);
 
   const pool = useMemo(() => [...categoryItems, ...freeItems], [categoryItems, freeItems]);
 
@@ -235,7 +239,7 @@ export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
   // list: 풀(사전예약 + 카테고리별 + 무료게임)에서 중복 없이 랜덤 4장
   if (variant === 'list') {
     const listPool = [
-      ...(preReg ? [gameToCard(preReg, true)] : []),
+      ...(preReg ? [gameToCard(preReg, true, lang)] : []),
       ...categoryItems,
       ...freeItems,
     ];
@@ -246,7 +250,7 @@ export function FeaturedCards({ games, now, variant = 'hero' }: Props) {
   const bottom = pool.length > 0 ? pool[idx % pool.length] : null;
   return (
     <div className={styles.cards}>
-      {preReg && <FeaturedCard data={gameToCard(preReg, true)} />}
+      {preReg && <FeaturedCard data={gameToCard(preReg, true, lang)} />}
       {bottom && <FeaturedCard key={bottom.key} data={bottom} />}
     </div>
   );

@@ -1,0 +1,22 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 8px);
+  background: var(--bg-elev);
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.btn:hover { color: var(--text); border-color: var(--accent); }
+.active { color: var(--text); border-color: var(--accent); background: rgba(91, 157, 255, 0.08); }
