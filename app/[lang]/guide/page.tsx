@@ -136,7 +136,7 @@ export default async function Page({ params }: Props) {
   };
 
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <article className="legal">
         <h1>{H1[lang]}</h1>

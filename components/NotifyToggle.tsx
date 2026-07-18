@@ -3,11 +3,15 @@ import { useEffect, useRef, useState } from 'react';
 import { useWishlist } from '@/hooks/useWishlist';
 import { pushConfigured, pushSupported, getCurrentSubscription, subscribePush, unsubscribePush, getLastPushError } from '@/lib/push';
 import { showToast } from '@/lib/toast';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL } from '@/lib/i18nLabels';
 import styles from './NotifyToggle.module.css';
 
 type State = 'loading' | 'on' | 'off' | 'denied' | 'hidden';
 
 export function NotifyToggle() {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
   const wishlist = useWishlist();
   const idsRef = useRef(wishlist.ids);
   idsRef.current = wishlist.ids; // 항상 최신 찜 목록 유지(재구독 시 game_ids로 사용)
@@ -40,14 +44,18 @@ export function NotifyToggle() {
       setState('loading');
       await unsubscribePush();
       setState('off');
-      showToast('출시 알림을 껐어요');
+      showToast(t ? t.notifyOffToast : '출시 알림을 껐어요');
       return;
     }
     setState('loading');
     const r = await subscribePush([...wishlist.ids]);
-    if (r === 'ok') { setState('on'); showToast('출시 알림을 켰어요'); }
-    else if (r === 'denied') { setState('denied'); showToast('알림 권한이 거부됐어요'); }
-    else { setState('off'); showToast('알림 실패: ' + (getLastPushError() ?? '알 수 없음'), 5000); }
+    if (r === 'ok') { setState('on'); showToast(t ? t.notifyOnToast : '출시 알림을 켰어요'); }
+    else if (r === 'denied') { setState('denied'); showToast(t ? t.notifyDeniedToast : '알림 권한이 거부됐어요'); }
+    else {
+      setState('off');
+      const reason = getLastPushError() ?? (t ? t.notifyUnknownError : '알 수 없음');
+      showToast(t ? t.notifyFailToast(reason) : `알림 실패: ${reason}`, 5000);
+    }
   };
 
   const disabled = state === 'loading' || state === 'denied';
@@ -58,11 +66,11 @@ export function NotifyToggle() {
         <svg className="ic"><use href="#ic-bell" /></svg>
       </span>
       <div className={styles.text}>
-        <strong>출시 알림</strong>
+        <strong>{t ? t.notifyTitle : '출시 알림'}</strong>
         <span className={styles.sub}>
           {state === 'denied'
-            ? '브라우저 설정에서 알림을 허용해 주세요.'
-            : '찜한 게임 출시 하루 전·당일에 알려드려요.'}
+            ? (t ? t.notifyDeniedSub : '브라우저 설정에서 알림을 허용해 주세요.')
+            : (t ? t.notifyNormalSub : '찜한 게임 출시 하루 전·당일에 알려드려요.')}
         </span>
       </div>
       <button
@@ -71,7 +79,7 @@ export function NotifyToggle() {
         onClick={onToggle}
         disabled={disabled}
         aria-pressed={state === 'on'}
-        aria-label="출시 알림 토글"
+        aria-label={t ? t.notifyToggleAria : '출시 알림 토글'}
       >
         <span className={styles.knob} />
       </button>

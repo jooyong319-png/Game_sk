@@ -53,7 +53,7 @@ export default async function Page({ params }: Props) {
   const games = await getActiveCouponGames();
 
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <section className={styles.wrap}>
         <header className={styles.header}>
           <h1 className={styles.title}><svg className="ic" aria-hidden="true"><use href="#ic-gift" /></svg> {H1[lang]}</h1>

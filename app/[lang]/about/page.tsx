@@ -99,7 +99,7 @@ function JaBody() {
 export default async function Page({ params }: Props) {
   if (!isLocale(params.lang)) notFound();
   return (
-    <PageShell>
+    <PageShell lang={params.lang}>
       <article className="legal">
         {params.lang === 'en' ? <EnBody /> : <JaBody />}
       </article>

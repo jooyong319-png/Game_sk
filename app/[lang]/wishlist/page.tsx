@@ -32,7 +32,7 @@ export default async function Page({ params }: Props) {
   const lang = params.lang;
   const games = await getAllGames();
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <p style={{ padding: '0.8rem 1rem 0', fontSize: '0.85rem', color: 'var(--text-faint)' }}>{NOTICE[lang]}</p>
       <WishlistView games={games} />
     </PageShell>

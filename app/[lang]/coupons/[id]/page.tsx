@@ -130,7 +130,7 @@ export default async function LocaleCouponPage({ params }: Props) {
   };
 
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className={styles.wrap}>
         <header className={styles.detailHead}>

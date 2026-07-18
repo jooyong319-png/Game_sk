@@ -59,7 +59,7 @@ export default async function LocaleBlogPage({ params }: Props) {
   // redirect()는 이 라우트의 정적 캐싱과 충돌해 신뢰할 수 없이 동작해 일반 조건부 렌더로 대체.
   if (!t) {
     return (
-      <PageShell>
+      <PageShell lang={lang}>
         <article className={styles.post}>
           <h1 className={styles.postH1}>{post.title}</h1>
           <p>{ui.notTranslated}</p>
@@ -72,9 +72,9 @@ export default async function LocaleBlogPage({ params }: Props) {
   const html = markdownToHtml(t.content);
 
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <article className={styles.post}>
-        <a href="/blog" className={styles.backLink}>{ui.backToList}</a>
+        <a href={`/${lang}/blog`} className={styles.backLink}>{ui.backToList}</a>
         {post.heroImage && <BlogHero src={post.heroImage} alt={t.title} />}
         <header className={styles.postHeader}>
           <time className={styles.postDate}>{formatPostDate(post.date)}</time>

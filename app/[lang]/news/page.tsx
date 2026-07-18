@@ -61,7 +61,7 @@ export default async function Page({ params }: Props) {
   }));
 
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <section className={styles.indexSection}>
         <header className={styles.header}>
           <h2 className={styles.title}><svg className="ic" aria-hidden="true"><use href="#ic-flame" /></svg> {H2[lang]}</h2>

@@ -1,10 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL } from '@/lib/i18nLabels';
 import styles from './ThemeToggle.module.css';
 
 type Theme = 'light' | 'dark';
 
 export function ThemeToggle() {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
   const [theme, setTheme] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
@@ -33,8 +37,8 @@ export function ThemeToggle() {
       type="button"
       className={styles.toggle}
       onClick={toggle}
-      aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
-      title={isDark ? '라이트 모드' : '다크 모드'}
+      aria-label={t ? (isDark ? t.switchToLight : t.switchToDark) : (isDark ? '라이트 모드로 전환' : '다크 모드로 전환')}
+      title={t ? (isDark ? t.switchToLight : t.switchToDark) : (isDark ? '라이트 모드' : '다크 모드')}
     >
       <svg className="ic" aria-hidden="true"><use href={isDark ? '#ic-sun' : '#ic-moon'} /></svg>
     </button>

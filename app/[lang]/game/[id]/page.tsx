@@ -61,7 +61,7 @@ export default async function LocaleGamePage({ params }: Props) {
   // 신뢰할 수 없이 동작해(첫 요청 결과가 영구 캐시됨) 일반 조건부 렌더로 대체(404/리다이렉트 아님).
   if (!t) {
     return (
-      <PageShell>
+      <PageShell lang={lang}>
         <article className="game-detail">
           <h1>{game.name_en ?? game.name_ko}</h1>
           <p>{ui.notTranslated}</p>
@@ -95,7 +95,7 @@ export default async function LocaleGamePage({ params }: Props) {
   };
 
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoGameLd) }} />
       <article className="game-detail">
         <div className="detail-head">

@@ -264,6 +264,30 @@ interface CalUiStrings {
   noValidCodesShort: string;
   hubLastUpdatedNote: (dateLabel: string) => string;
   couponFor: (name: string, term: string) => string;
+  myWishlist: string;
+  myWishlistSub: string;
+  wishlistEmptyText: string;
+  wishlistEmptyHint: string;
+  releaseDateTba: string;
+  removeFromWishlistAria: (name: string) => string;
+  notifyTitle: string;
+  notifyToggleAria: string;
+  notifyDeniedSub: string;
+  notifyNormalSub: string;
+  notifyOnToast: string;
+  notifyOffToast: string;
+  notifyDeniedToast: string;
+  notifyFailToast: (reason: string) => string;
+  notifyUnknownError: string;
+  freeGamesAria: string;
+  freeGamesTitle: string;
+  freeGamesTag: string;
+  freeDaysLeft: (days: number) => string;
+  freeFromDate: (mmdd: string) => string;
+  appBottomNavAria: string;
+  switchToLight: string;
+  switchToDark: string;
+  recommendedSchedule: string;
 }
 
 export const CAL: Record<Locale, CalUiStrings> = {
@@ -358,6 +382,30 @@ export const CAL: Record<Locale, CalUiStrings> = {
     noValidCodesShort: 'No active codes right now. See the dedicated page for recently expired codes and how to redeem.',
     hubLastUpdatedNote: (dateLabel) => `Last updated: ${dateLabel}. Codes and schedules are verified against official channels.`,
     couponFor: (name, term) => `${name} ${term}`,
+    myWishlist: 'My Wishlist',
+    myWishlistSub: 'Release schedules for games you’re watching.',
+    wishlistEmptyText: 'No games in your wishlist yet.',
+    wishlistEmptyHint: 'Tap the star button on a game’s page to add it.',
+    releaseDateTba: 'Release date TBA',
+    removeFromWishlistAria: (name) => `Remove ${name} from wishlist`,
+    notifyTitle: 'Release notifications',
+    notifyToggleAria: 'Toggle release notifications',
+    notifyDeniedSub: 'Please allow notifications in your browser settings.',
+    notifyNormalSub: 'We’ll notify you the day before and on the day your wishlisted games release.',
+    notifyOnToast: 'Release notifications turned on',
+    notifyOffToast: 'Release notifications turned off',
+    notifyDeniedToast: 'Notification permission was denied',
+    notifyFailToast: (reason) => `Notification setup failed: ${reason}`,
+    notifyUnknownError: 'Unknown error',
+    freeGamesAria: 'Free game giveaways',
+    freeGamesTitle: 'Free right now',
+    freeGamesTag: 'Epic Games',
+    freeDaysLeft: (days) => `Free · ${days} day${days === 1 ? '' : 's'} left`,
+    freeFromDate: (mmdd) => `Free from ${mmdd}`,
+    appBottomNavAria: 'App bottom menu',
+    switchToLight: 'Switch to light mode',
+    switchToDark: 'Switch to dark mode',
+    recommendedSchedule: 'Recommended schedule',
   },
   ja: {
     searchPlaceholder: 'ゲームを検索…',
@@ -450,5 +498,29 @@ export const CAL: Record<Locale, CalUiStrings> = {
     noValidCodesShort: '現在有効なコードはありません。専用ページで最近期限切れのコードと使い方を確認できます。',
     hubLastUpdatedNote: (dateLabel) => `最終更新: ${dateLabel}。コード・日程は公式チャンネルを基に確認しています。`,
     couponFor: (name, term) => `${name} ${term}`,
+    myWishlist: 'マイお気に入り',
+    myWishlistSub: '気になるゲームの発売日程をまとめました。',
+    wishlistEmptyText: 'まだお気に入りに追加したゲームがありません。',
+    wishlistEmptyHint: 'ゲーム詳細ページのお気に入りボタンから追加できます。',
+    releaseDateTba: '発売日未定',
+    removeFromWishlistAria: (name) => `${name}をお気に入りから削除`,
+    notifyTitle: '発売通知',
+    notifyToggleAria: '発売通知の切り替え',
+    notifyDeniedSub: 'ブラウザの設定で通知を許可してください。',
+    notifyNormalSub: 'お気に入りゲームの発売前日と当日にお知らせします。',
+    notifyOnToast: '発売通知をオンにしました',
+    notifyOffToast: '発売通知をオフにしました',
+    notifyDeniedToast: '通知の許可が拒否されました',
+    notifyFailToast: (reason) => `通知の設定に失敗しました: ${reason}`,
+    notifyUnknownError: '不明なエラー',
+    freeGamesAria: '無料ゲーム配布',
+    freeGamesTitle: '今すぐ無料',
+    freeGamesTag: 'Epic Games',
+    freeDaysLeft: (days) => `無料 · 残り${days}日`,
+    freeFromDate: (mmdd) => `${mmdd}から無料`,
+    appBottomNavAria: 'アプリ下部メニュー',
+    switchToLight: 'ライトモードに切り替え',
+    switchToDark: 'ダークモードに切り替え',
+    recommendedSchedule: 'おすすめの日程',
   },
 };

@@ -72,7 +72,7 @@ export default async function Page({ params }: Props) {
   const byType = (t: EventType) => events.filter(e => e.type === t);
 
   return (
-    <PageShell>
+    <PageShell lang={lang}>
       <section className="events-page">
         <h1>{H1[lang]}</h1>
         <p className="events-intro">{INTRO[lang]}</p>

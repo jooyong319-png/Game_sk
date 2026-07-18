@@ -1,5 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL } from '@/lib/i18nLabels';
 import styles from './FreeGames.module.css';
 
 interface FreeGame {
@@ -23,6 +25,8 @@ function mmdd(iso: string | null): string {
 }
 
 export function FreeGames({ compact = false }: { compact?: boolean }) {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
   const [games, setGames] = useState<FreeGame[] | null>(null);
 
   useEffect(() => {
@@ -41,10 +45,10 @@ export function FreeGames({ compact = false }: { compact?: boolean }) {
   const list = compact ? current.slice(0, 4) : [...current, ...upcoming];
 
   return (
-    <aside className={`${styles.box} ${compact ? styles.compact : ''}`} aria-label="무료 게임 배포">
+    <aside className={`${styles.box} ${compact ? styles.compact : ''}`} aria-label={t ? t.freeGamesAria : '무료 게임 배포'}>
       <div className={styles.head}>
-        <h2 className={styles.h}>지금 무료 게임</h2>
-        <span className={styles.epic}>에픽게임즈</span>
+        <h2 className={styles.h}>{t ? t.freeGamesTitle : '지금 무료 게임'}</h2>
+        <span className={styles.epic}>{t ? t.freeGamesTag : '에픽게임즈'}</span>
       </div>
       <ul className={styles.list}>
         {list.map((g, i) => {
@@ -57,10 +61,12 @@ export function FreeGames({ compact = false }: { compact?: boolean }) {
                   <span className={styles.title}>{g.title}</span>
                   {g.status === 'current' ? (
                     <span className={`${styles.badge} ${left !== null && left <= 2 ? styles.urgent : ''}`}>
-                      무료 · {left !== null ? `${left}일 남음` : '진행 중'}
+                      {left !== null
+                        ? (t ? t.freeDaysLeft(left) : `무료 · ${left}일 남음`)
+                        : (t ? `${t.free} · ${t.ongoing}` : '무료 · 진행 중')}
                     </span>
                   ) : (
-                    <span className={styles.badgeSoon}>{mmdd(g.start)}부터 무료</span>
+                    <span className={styles.badgeSoon}>{t ? t.freeFromDate(mmdd(g.start)) : `${mmdd(g.start)}부터 무료`}</span>
                   )}
                 </span>
               </a>
