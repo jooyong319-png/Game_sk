@@ -197,6 +197,7 @@ new_server는 워치리스트(`data/server_watchlist.json`) 기반 + 공식 공�
 출시 외 기간성 이벤트. `/events` 페이지·사이드바에 노출. 리서처가 관리.
 ```ts
 { id, type: "game_show"|"sale"|"season", title,
+  title_en?: string, title_ja?: string,  // /en, /ja 캘린더·이벤트 페이지용(없으면 title로 자동 폴백)
   start_date, end_date: "YYYY-MM-DD",   // 단일이면 둘 다 동일
   date_approx?: boolean,                 // 날짜 불확실하면 true → '예정' 표기
   host?: string,                         // 게임쇼 장소 / 할인 플랫폼 / 시즌 게임명

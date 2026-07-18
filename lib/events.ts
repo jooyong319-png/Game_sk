@@ -10,6 +10,8 @@ export interface GameEvent {
   id: string;
   type: EventType;
   title: string;
+  title_en?: string | null;
+  title_ja?: string | null;
   start_date: string;        // 'YYYY-MM-DD'
   end_date: string;          // 'YYYY-MM-DD' (단일 일정이면 start와 동일)
   date_approx?: boolean;

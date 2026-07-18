@@ -21,6 +21,14 @@ export function gameDescription(g: LocalizableGameDesc, lang: Locale | null): st
   return d || g.description;
 }
 
+// 게임쇼/할인/시즌 등 data/events.json 이벤트 제목 — 리서처가 채운 title_en/ja가 있으면 그걸, 없으면 한국어로 폴백.
+interface LocalizableEventTitle { title: string; title_en?: string | null; title_ja?: string | null; }
+export function eventTitle(e: LocalizableEventTitle, lang: Locale | null): string {
+  if (!lang) return e.title;
+  if (lang === 'ja') return e.title_ja || e.title_en || e.title;
+  return e.title_en || e.title;
+}
+
 // coupons.json의 term 필드('쿠폰'|'리딤코드') 표시용 번역 — 데이터 자체는 안 바꾸고 화면 표기만.
 export const TERM_LABELS: Record<Locale, Record<string, string>> = {
   en: { '쿠폰': 'coupon codes', '리딤코드': 'redeem codes' },
@@ -288,6 +296,9 @@ interface CalUiStrings {
   switchToLight: string;
   switchToDark: string;
   recommendedSchedule: string;
+  eventEnds: (title: string) => string;
+  freeStarts: (title: string) => string;
+  freeEnds: (title: string) => string;
 }
 
 export const CAL: Record<Locale, CalUiStrings> = {
@@ -406,6 +417,9 @@ export const CAL: Record<Locale, CalUiStrings> = {
     switchToLight: 'Switch to light mode',
     switchToDark: 'Switch to dark mode',
     recommendedSchedule: 'Recommended schedule',
+    eventEnds: (title) => `${title} ends`,
+    freeStarts: (title) => `${title} free starts`,
+    freeEnds: (title) => `${title} free ends`,
   },
   ja: {
     searchPlaceholder: 'ゲームを検索…',
@@ -522,5 +536,8 @@ export const CAL: Record<Locale, CalUiStrings> = {
     switchToLight: 'ライトモードに切り替え',
     switchToDark: 'ダークモードに切り替え',
     recommendedSchedule: 'おすすめの日程',
+    eventEnds: (title) => `${title} 終了`,
+    freeStarts: (title) => `${title} 無料開始`,
+    freeEnds: (title) => `${title} 無料終了`,
   },
 };

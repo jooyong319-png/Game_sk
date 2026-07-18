@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getUpcomingEvents, EVENT_TYPE_META, type EventType, type GameEvent } from '@/lib/events';
 import { PageShell } from '@/components/PageShell';
 import { FreeGames } from '@/components/FreeGames';
-import { LOCALES, EVENT_TYPE_LABELS, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, EVENT_TYPE_LABELS, eventTitle, type Locale } from '@/lib/i18nLabels';
 
 interface Props { params: { lang: string }; }
 function isLocale(v: string): v is Locale { return (LOCALES as string[]).includes(v); }
@@ -47,14 +47,14 @@ const INTRO: Record<Locale, React.ReactNode> = {
     <>
       There&rsquo;s more to track than just releases — <strong>Epic Games free giveaways</strong>,{' '}
       <strong>Steam sales</strong>, <strong>game shows</strong> like Gamescom and G-Star, and{' '}
-      <strong>new-season launches</strong> for live-service games. Event names and descriptions below are shown in Korean (this site&rsquo;s primary data language).
+      <strong>new-season launches</strong> for live-service games. Event descriptions below are shown in Korean (this site&rsquo;s primary data language).
     </>
   ),
   ja: (
     <>
       発売情報以外にも押さえておきたい予定はたくさんあります。<strong>Epic Games無料配布</strong>、
       {' '}<strong>Steamセール</strong>、ゲームズコムやG-STARなどの<strong>ゲームショー</strong>、
-      {' '}ライブサービスゲームの<strong>新シーズン開幕</strong>まで。以下のイベント名・説明は韓国語(本サイトの基本データ言語)で表示されます。
+      {' '}ライブサービスゲームの<strong>新シーズン開幕</strong>まで。以下のイベントの説明は韓国語(本サイトの基本データ言語)で表示されます。
     </>
   ),
 };
@@ -92,7 +92,7 @@ export default async function Page({ params }: Props) {
                 {list.map(e => (
                   <li key={e.id} className="events-item">
                     <div className="events-item-head">
-                      <span className="events-name">{e.title}</span>
+                      <span className="events-name">{eventTitle(e, lang)}</span>
                       {e.host && <span className="events-host">{e.host}</span>}
                     </div>
                     <div className="events-date">{fmtRange(e, APPROX[lang])}</div>

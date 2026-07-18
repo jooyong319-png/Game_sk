@@ -4,7 +4,7 @@ import { getAllGames, getLastUpdated } from '@/lib/games';
 import { getUpcomingEvents, EVENT_TYPE_META } from '@/lib/events';
 import type { CalEvent } from '@/lib/types';
 import { Home } from '@/components/Home';
-import { UI, LOCALES, type Locale } from '@/lib/i18nLabels';
+import { UI, CAL, LOCALES, eventTitle, type Locale } from '@/lib/i18nLabels';
 
 interface Props {
   params: { lang: string };
@@ -46,9 +46,10 @@ export default async function LocaleHomePage({ params }: Props) {
   const initialCalEvents: CalEvent[] = [];
   for (const e of events) {
     const color = EVENT_TYPE_META[e.type].color;
-    initialCalEvents.push({ date: e.start_date, label: e.title, color, type: e.type, url: e.source_url, image: e.image_url ?? null });
+    const title = eventTitle(e, lang);
+    initialCalEvents.push({ date: e.start_date, label: title, color, type: e.type, url: e.source_url, image: e.image_url ?? null });
     if (e.end_date !== e.start_date) {
-      initialCalEvents.push({ date: e.end_date, label: `${e.title} 종료`, color, type: e.type, url: e.source_url, image: e.image_url ?? null });
+      initialCalEvents.push({ date: e.end_date, label: CAL[lang].eventEnds(title), color, type: e.type, url: e.source_url, image: e.image_url ?? null });
     }
   }
 
