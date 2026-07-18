@@ -3350,6 +3350,52 @@
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/0c/0a/f0/0c0af0d2-123e-adc9-780b-cb1e2d8393af/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
       "source_url": "https://www.betanews.net/article/view/beta202607130012"
+    },
+    {
+      "id": "rhythm-heaven-miracle-stars-20260702",
+      "name_ko": "리듬 천국 미라클 스타즈",
+      "name_en": "Rhythm Heaven Miracle Stars",
+      "release_date": "2026-07-02",
+      "release_date_approx": false,
+      "category": "pc_console_kr",
+      "platforms": [
+        "Nintendo Switch",
+        "Nintendo Switch 2"
+      ],
+      "developer": "Nintendo",
+      "publisher": "한국닌텐도",
+      "description": "간단한 버튼 조작만으로 박자를 맞추는 닌텐도의 간판 리듬 게임 시리즈가 약 11년 만에 내놓은 신작이다. 일본 프로듀서 츤쿠♂가 다시 참여해 짧고 개성 강한 리듬 미니게임을 다수 수록했고, 여럿이 함께 즐기는 멀티플레이 모드와 육성 요소를 가미한 RPG 모드가 새로 추가됐다. 한국어를 공식 지원하며 스위치 2에서도 하위 호환으로 구동된다.",
+      "genres": [
+        "리듬",
+        "액션"
+      ],
+      "image_url": null,
+      "source_url": "https://www.nintendo.com/kr/news/article/2y13ExLonrYR1x5OzAWnhW"
+    },
+    {
+      "id": "steins-gate-reboot-20260820",
+      "name_ko": "슈타인즈 게이트 리부트",
+      "name_en": "STEINS;GATE RE:BOOT",
+      "release_date": "2026-08-20",
+      "release_date_approx": false,
+      "category": "global_aaa",
+      "platforms": [
+        "PS5",
+        "PS4",
+        "Xbox Series X|S",
+        "Nintendo Switch 2",
+        "Nintendo Switch",
+        "PC"
+      ],
+      "developer": "MAGES.",
+      "publisher": "Spike Chunsoft",
+      "description": "2009년 발매돼 시간 이동 소재 비주얼 노벨의 대표작으로 자리 잡은 '슈타인즈 게이트'의 전면 리메이크판이다. 기존 시나리오에 새로운 세계선과 엔딩이 추가됐고 전 음성이 새로 녹음됐으며, 인물 일러스트에 E-mote 모션 기술을 적용해 표정과 호흡까지 움직이도록 연출을 손봤다. 다만 음성은 일본어, 자막은 일본어·영어·중국어만 지원해 공식 한국어 자막은 포함되지 않는다.",
+      "genres": [
+        "비주얼 노벨",
+        "어드벤처"
+      ],
+      "image_url": null,
+      "source_url": "https://gematsu.com/2026/05/steinsgate-reboot-launches-august-20-for-ps5-xbox-series-switch-2-ps4-switch-and-pc"
     }
   ]
 }
