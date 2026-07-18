@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { CATEGORY_META, type Game } from '@/lib/types';
 import { formatKoreanDate } from '@/lib/utils';
+import { UI, CAL, CATEGORY_LABELS, type Locale } from '@/lib/i18nLabels';
 import { PageShell } from './PageShell';
 import { GameThumb } from './GameThumb';
 
@@ -9,9 +10,12 @@ interface SeoLandingProps {
   intro: React.ReactNode;
   games: Game[];
   slug: string;
+  lang?: Locale;
 }
 
-export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
+export function SeoLanding({ h1, intro, games, slug, lang }: SeoLandingProps) {
+  const ui = lang ? UI[lang] : null;
+  const t = lang ? CAL[lang] : null;
   const url = `https://gcalen.com/${slug}`;
   const itemList = {
     '@context': 'https://schema.org',
@@ -35,15 +39,20 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
       <section className="seo-landing">
         <h2>{h1}</h2>
         <div className="seo-intro">{intro}</div>
-        <p className="seo-count">총 {games.length}개</p>
+        <p className="seo-count">{t ? t.totalItems(games.length) : `총 ${games.length}개`}</p>
         <ul className="seo-list">
           {games.length === 0 ? (
             <li className="seo-empty">
               <svg className="ic" aria-hidden="true"><use href="#ic-calendar" /></svg>
-              <span>아직 등록된 일정이 없어요.</span>
+              <span>{t ? t.noScheduleRegistered : '아직 등록된 일정이 없어요.'}</span>
             </li>
           ) : games.map(g => {
-            const catLabel = CATEGORY_META[g.category]?.label ?? g.category;
+            const catLabel = lang ? CATEGORY_LABELS[lang][g.category] : (CATEGORY_META[g.category]?.label ?? g.category);
+            const dateStr = g.release_date_approx
+              ? (ui ? ui.tba : '미정')
+              : (lang
+                  ? new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(g.release_date))
+                  : formatKoreanDate(g.release_date));
             return (
               <li
                 key={g.id}
@@ -57,9 +66,7 @@ export function SeoLanding({ h1, intro, games, slug }: SeoLandingProps) {
                     <a href={`/game/${g.id}`} className="seo-name">{g.name_ko}</a>
                   </div>
                   <div className="seo-li-meta">
-                    <span className="seo-date">
-                      {g.release_date_approx ? '미정' : formatKoreanDate(g.release_date)}
-                    </span>
+                    <span className="seo-date">{dateStr}</span>
                     {g.developer && <span className="seo-dev">· {g.developer}</span>}
                   </div>
                 </div>

@@ -4,6 +4,16 @@ import type { Category } from './types';
 export type Locale = 'en' | 'ja';
 export const LOCALES: Locale[] = ['en', 'ja'];
 
+// coupons.json의 term 필드('쿠폰'|'리딤코드') 표시용 번역 — 데이터 자체는 안 바꾸고 화면 표기만.
+export const TERM_LABELS: Record<Locale, Record<string, string>> = {
+  en: { '쿠폰': 'coupon codes', '리딤코드': 'redeem codes' },
+  ja: { '쿠폰': 'クーポン', '리딤코드': 'リディームコード' },
+};
+export function termLabel(term: string, lang: Locale | null): string {
+  if (!lang) return term;
+  return TERM_LABELS[lang][term] ?? term;
+}
+
 // events.json 이벤트 타입(game_show/sale/season/free_game) 라벨
 export const EVENT_TYPE_LABELS: Record<Locale, Record<'game_show' | 'sale' | 'season' | 'free_game', string>> = {
   en: { game_show: 'Game Show', sale: 'Sale', season: 'New Season', free_game: 'Free' },
@@ -209,6 +219,34 @@ interface CalUiStrings {
   preRegDeadlineTba: string;
   preRegInfo: string;
   startsOn: (label: string) => string;
+  totalItems: (count: number) => string;
+  noScheduleRegistered: string;
+  copy: string;
+  copiedCheck: string;
+  expiredTag: string;
+  expiredUntil: (label: string) => string;
+  copyAria: (code: string) => string;
+  noActiveCoupons: string;
+  officialRedeemPage: (name: string, term: string) => string;
+  pastCoupons: (term: string) => string;
+  couponIntro: (name: string, term: string) => string;
+  howToUse: (name: string, term: string) => string;
+  faqTitle: (name: string, term: string) => string;
+  otherGameCoupons: (term: string) => string;
+  gameHub: (name: string) => string;
+  releaseInfo: (name: string) => string;
+  allCoupons: string;
+  lastUpdatedCouponNote: (dateLabel: string) => string;
+  gameCoupons: string;
+  scheduleCount: (count: number) => string;
+  scheduleTitle: (name: string) => string;
+  upcomingTag: string;
+  fullGameList: string;
+  otherGameCouponsShort: string;
+  gcalenHome: string;
+  noValidCodesShort: string;
+  hubLastUpdatedNote: (dateLabel: string) => string;
+  couponFor: (name: string, term: string) => string;
 }
 
 export const CAL: Record<Locale, CalUiStrings> = {
@@ -274,6 +312,35 @@ export const CAL: Record<Locale, CalUiStrings> = {
     preRegDeadlineTba: 'Pre-registration deadline TBA',
     preRegInfo: 'Pre-registration info',
     startsOn: (label) => `Starts ${label}`,
+    totalItems: (count) => `${count} total`,
+    noScheduleRegistered: 'No games scheduled here yet.',
+    copy: 'Copy',
+    copiedCheck: 'Copied ✓',
+    expiredTag: 'Expired',
+    expiredUntil: (label) => `${label} · expired`,
+    copyAria: (code) => `Copy ${code}`,
+    noActiveCoupons: 'No active codes right now. Check the recently-expired codes and how to redeem below.',
+    officialRedeemPage: (name, term) => `Open ${name} official ${term} redemption page →`,
+    pastCoupons: (term) => `Past ${term} (expired)`,
+    couponIntro: (name, term) =>
+      `${name} ${term} codes are free reward codes the publisher gives out during official broadcasts, major updates, and anniversary events. This page collects only codes verified on official channels and refreshes daily; expired codes stay visible for 90 days for reference. Codes are often first-come, first-served or time-limited, so redeem them as soon as they appear — some may require a specific server or account condition, so check each code's reward description.`,
+    howToUse: (name, term) => `How to redeem ${name} ${term}`,
+    faqTitle: (name, term) => `${name} ${term} FAQ`,
+    otherGameCoupons: (term) => `Other games' ${term}`,
+    gameHub: (name) => `${name} hub (coupons & schedule) →`,
+    releaseInfo: (name) => `${name} release info →`,
+    allCoupons: 'All game coupons →',
+    lastUpdatedCouponNote: (dateLabel) => `Last updated: ${dateLabel}. Codes are verified against official channels and status changes when expired or exhausted.`,
+    gameCoupons: 'Game Coupons',
+    scheduleCount: (count) => `${count} scheduled`,
+    scheduleTitle: (name) => `${name} release, update & event schedule`,
+    upcomingTag: 'Upcoming',
+    fullGameList: 'Full game list →',
+    otherGameCouponsShort: 'Other game coupons →',
+    gcalenHome: 'Game release calendar →',
+    noValidCodesShort: 'No active codes right now. See the dedicated page for recently expired codes and how to redeem.',
+    hubLastUpdatedNote: (dateLabel) => `Last updated: ${dateLabel}. Codes and schedules are verified against official channels.`,
+    couponFor: (name, term) => `${name} ${term}`,
   },
   ja: {
     searchPlaceholder: 'ゲームを検索…',
@@ -337,5 +404,34 @@ export const CAL: Record<Locale, CalUiStrings> = {
     preRegDeadlineTba: '事前予約締切日は未定',
     preRegInfo: '事前予約情報',
     startsOn: (label) => `${label}開始`,
+    totalItems: (count) => `合計${count}件`,
+    noScheduleRegistered: 'まだ登録されている予定がありません。',
+    copy: 'コピー',
+    copiedCheck: 'コピーしました ✓',
+    expiredTag: '期限切れ',
+    expiredUntil: (label) => `${label}・期限切れ`,
+    copyAria: (code) => `${code}をコピー`,
+    noActiveCoupons: '現在有効なコードはありません。下記の最近期限切れになったコードと使い方をご確認ください。',
+    officialRedeemPage: (name, term) => `${name}公式${term}登録ページを開く →`,
+    pastCoupons: (term) => `過去の${term}(期限切れ)`,
+    couponIntro: (name, term) =>
+      `${name}の${term}は、公式配信や大型アップデート、記念イベントの際に配布される無料報酬コードです。このページは公式チャンネルで確認できたコードのみを毎日更新して掲載し、期限切れのコードも参考用に90日間表示します。コードは先着順・期間限定のことが多いため、公開されたらすぐに登録するのがおすすめです。サーバーやアカウントの条件が必要な場合もあるため、各コードの報酬内容をご確認ください。`,
+    howToUse: (name, term) => `${name} ${term}の使い方`,
+    faqTitle: (name, term) => `${name} ${term}によくある質問`,
+    otherGameCoupons: (term) => `他のゲームの${term}`,
+    gameHub: (name) => `${name}ハブ(クーポン・日程) →`,
+    releaseInfo: (name) => `${name}の発売情報 →`,
+    allCoupons: 'ゲームクーポン一覧 →',
+    lastUpdatedCouponNote: (dateLabel) => `最終更新: ${dateLabel}。コードは公式チャンネルを基に確認しており、期限切れ・終了時は表示が変わります。`,
+    gameCoupons: 'ゲームクーポン',
+    scheduleCount: (count) => `${count}件の予定`,
+    scheduleTitle: (name) => `${name}の発売・アップデート・イベント情報`,
+    upcomingTag: '予定',
+    fullGameList: 'ゲーム一覧を見る →',
+    otherGameCouponsShort: '他のゲームクーポン →',
+    gcalenHome: 'ゲーム発売カレンダー →',
+    noValidCodesShort: '現在有効なコードはありません。専用ページで最近期限切れのコードと使い方を確認できます。',
+    hubLastUpdatedNote: (dateLabel) => `最終更新: ${dateLabel}。コード・日程は公式チャンネルを基に確認しています。`,
+    couponFor: (name, term) => `${name} ${term}`,
   },
 };

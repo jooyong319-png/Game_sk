@@ -91,6 +91,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const slug of newsSlugs) {
       localeUrls.push({ url: `https://gcalen.com/${lang}/news/${slug}`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 });
     }
+    // 쿠폰 상세·게임 허브는 항상 en/ja 생성됨(원본 데이터 유무만으로 필터, 번역 조건 없음)
+    for (const key of couponKeys) {
+      localeUrls.push({ url: `https://gcalen.com/${lang}/coupons/${key}`, lastModified: now, changeFrequency: 'daily', priority: 0.55 });
+    }
+    for (const key of hubKeys) {
+      localeUrls.push({ url: `https://gcalen.com/${lang}/games/${key}`, lastModified: now, changeFrequency: 'daily', priority: 0.55 });
+    }
     // 사이트 전체 UI 번역이 있는 고정 페이지 — 항상 존재
     const p = `https://gcalen.com/${lang}`;
     localeUrls.push(

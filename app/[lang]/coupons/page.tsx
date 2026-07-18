@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getActiveCouponGames } from '@/lib/coupons';
 import { PageShell } from '@/components/PageShell';
-import { LOCALES, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, termLabel, type Locale } from '@/lib/i18nLabels';
 import styles from '@/app/coupons/coupons.module.css';
 
 interface Props { params: { lang: string }; }
@@ -43,8 +43,8 @@ const EMPTY: Record<Locale, string> = {
 };
 const ALL_GAMES: Record<Locale, string> = { en: 'Full game list →', ja: 'ゲーム一覧を見る →' };
 const NOTE: Record<Locale, string> = {
-  en: 'Game names below are shown in Korean (this site’s primary data language). Codes may expire or run out depending on the publisher.',
-  ja: '以下のゲーム名は韓国語(本サイトの基本データ言語)で表示されます。コードはゲームメーカーの都合により期限切れ・早期終了する場合があります。',
+  en: 'Codes may expire or run out depending on the publisher.',
+  ja: 'コードはゲームメーカーの都合により期限切れ・早期終了する場合があります。',
 };
 
 export default async function Page({ params }: Props) {
@@ -66,14 +66,14 @@ export default async function Page({ params }: Props) {
           <ul className={styles.grid}>
             {games.map(g => (
               <li key={g.key} className={styles.card}>
-                <a href={`/coupons/${g.key}`} className={styles.cardLink}>
+                <a href={`/${lang}/coupons/${g.key}`} className={styles.cardLink}>
                   {g.image_url
                     ? <img className={styles.thumb} src={g.image_url} alt="" loading="lazy" />
                     : <span className={styles.thumbPlaceholder} aria-hidden="true">🎮</span>}
                   <span className={styles.body}>
                     <span className={styles.name}>{g.name}</span>
                     <span className={styles.meta}>
-                      <span className={styles.tagCoupon}>{g.term} {g.active.length}</span>
+                      <span className={styles.tagCoupon}>{termLabel(g.term, lang)} {g.active.length}</span>
                     </span>
                   </span>
                 </a>

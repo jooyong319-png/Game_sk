@@ -50,5 +50,5 @@ export default async function Page({ params }: Props) {
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const games = await getPreRegistrationGames();
-  return <SeoLanding slug={`${lang}/pre-registration`} h1={H1[lang]} intro={INTRO[lang]} games={games} />;
+  return <SeoLanding slug={`${lang}/pre-registration`} h1={H1[lang]} intro={INTRO[lang]} games={games} lang={lang} />;
 }

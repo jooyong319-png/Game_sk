@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import { useLocale } from '@/hooks/useLocale';
+import { CAL } from '@/lib/i18nLabels';
 import styles from './GameThumb.module.css';
 
 // 게임 썸네일(정사각) — 비율 다양 대응(블러 배경 + contain), 없거나 깨지면 '이미지 없음'.
@@ -7,6 +9,8 @@ import styles from './GameThumb.module.css';
 interface Props { src: string | null; alt: string; }
 
 export function GameThumb({ src, alt }: Props) {
+  const lang = useLocale();
+  const t = lang ? CAL[lang] : null;
   const [err, setErr] = useState(false);
   const ok = src && !err;
   return (
@@ -19,7 +23,7 @@ export function GameThumb({ src, alt }: Props) {
       ) : (
         <div className={styles.ph}>
           <svg className={styles.phIcon} aria-hidden="true"><use href="#ic-image" /></svg>
-          <span className={styles.phText}>이미지 없음</span>
+          <span className={styles.phText}>{t ? t.noImage : '이미지 없음'}</span>
         </div>
       )}
     </div>

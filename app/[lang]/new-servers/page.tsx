@@ -50,5 +50,5 @@ export default async function Page({ params }: Props) {
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const games = await getUpcomingGamesByCategory('new_server');
-  return <SeoLanding slug={`${lang}/new-servers`} h1={H1[lang]} intro={INTRO[lang]} games={games} />;
+  return <SeoLanding slug={`${lang}/new-servers`} h1={H1[lang]} intro={INTRO[lang]} games={games} lang={lang} />;
 }

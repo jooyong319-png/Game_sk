@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllGameHubs } from '@/lib/game-hub';
 import { PageShell } from '@/components/PageShell';
-import { LOCALES, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, termLabel, type Locale } from '@/lib/i18nLabels';
 import styles from '@/app/games/list.module.css';
 
 interface Props { params: { lang: string }; }
@@ -42,10 +42,6 @@ const COUPONS_LINK: Record<Locale, string> = { en: 'Game coupons →', ja: 'ゲ�
 const CALENDAR_LINK: Record<Locale, string> = { en: 'Release calendar →', ja: 'ゲーム発売カレンダー →' };
 const SCHED: Record<Locale, string> = { en: 'schedule', ja: '日程' };
 const EXPIRED: Record<Locale, string> = { en: 'past codes', ja: '過去のコード' };
-const NOTE: Record<Locale, string> = {
-  en: 'Game names below are shown in Korean (this site’s primary data language).',
-  ja: '以下のゲーム名は韓国語(本サイトの基本データ言語)で表示されます。',
-};
 
 export default async function Page({ params }: Props) {
   if (!isLocale(params.lang)) notFound();
@@ -63,30 +59,27 @@ export default async function Page({ params }: Props) {
         {games.length === 0 ? (
           <p className={styles.empty}>{EMPTY[lang]}</p>
         ) : (
-          <>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-faint)', marginBottom: '0.8rem' }}>{NOTE[lang]}</p>
-            <ul className={styles.grid}>
-              {games.map(g => (
-                <li key={g.key} className={styles.card}>
-                  <a href={`/games/${g.key}`} className={styles.cardLink}>
-                    {g.image_url
-                      ? <img className={styles.thumb} src={g.image_url} alt="" loading="lazy" />
-                      : <span className={styles.thumbPlaceholder} aria-hidden="true">🎮</span>}
-                    <span className={styles.body}>
-                      <span className={styles.name}>{g.name}</span>
-                      <span className={styles.meta}>
-                        {g.activeCount > 0 && <span className={styles.tagCoupon}>{g.term} {g.activeCount}</span>}
-                        {g.relatedCount > 0 && <span className={styles.tagSched}>{SCHED[lang]} {g.relatedCount}</span>}
-                        {g.activeCount === 0 && g.relatedCount === 0 && g.expiredCount > 0 && (
-                          <span className={styles.tagMuted}>{EXPIRED[lang]} {g.expiredCount}</span>
-                        )}
-                      </span>
+          <ul className={styles.grid}>
+            {games.map(g => (
+              <li key={g.key} className={styles.card}>
+                <a href={`/${lang}/games/${g.key}`} className={styles.cardLink}>
+                  {g.image_url
+                    ? <img className={styles.thumb} src={g.image_url} alt="" loading="lazy" />
+                    : <span className={styles.thumbPlaceholder} aria-hidden="true">🎮</span>}
+                  <span className={styles.body}>
+                    <span className={styles.name}>{g.name}</span>
+                    <span className={styles.meta}>
+                      {g.activeCount > 0 && <span className={styles.tagCoupon}>{termLabel(g.term, lang)} {g.activeCount}</span>}
+                      {g.relatedCount > 0 && <span className={styles.tagSched}>{SCHED[lang]} {g.relatedCount}</span>}
+                      {g.activeCount === 0 && g.relatedCount === 0 && g.expiredCount > 0 && (
+                        <span className={styles.tagMuted}>{EXPIRED[lang]} {g.expiredCount}</span>
+                      )}
                     </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         )}
 
         <div className={styles.links}>

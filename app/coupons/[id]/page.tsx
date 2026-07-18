@@ -49,7 +49,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `${name} ${term} 오늘`, `${name} ${term} ${ym}`, `${name} ${term} 최신`,
       '게임 리딤코드', '게임 쿠폰', '기프트코드',
     ],
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: { ko: url, en: `https://gcalen.com/en/coupons/${g.key}`, ja: `https://gcalen.com/ja/coupons/${g.key}` },
+    },
     openGraph: {
       title, description: desc, url, type: 'article', siteName: '게임 출시 캘린더', locale: 'ko_KR',
       images: [{ url: g.image_url || '/og-image.png', alt: `${name} ${term}` }],

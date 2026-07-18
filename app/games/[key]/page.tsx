@@ -33,7 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: { absolute: `${title} | Gcalen` },
     description: desc,
     keywords: [...couponKeywords(name), `${name} 일정`, `${name} 이벤트`, `${name} 업데이트`, `${name} 신규 이벤트`],
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: { ko: url, en: `https://gcalen.com/en/games/${view.key}`, ja: `https://gcalen.com/ja/games/${view.key}` },
+    },
     openGraph: {
       title, description: desc, url, type: 'article', siteName: '게임 출시 캘린더', locale: 'ko_KR',
       images: [{ url: view.image_url || '/og-image.png', alt: name }],
