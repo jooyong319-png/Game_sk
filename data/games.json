@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-18",
+  "last_updated": "2026-07-19",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -27,7 +27,9 @@
         "신규 서버"
       ],
       "image_url": "https://yt3.googleusercontent.com/vuTar4KHFBtGc4lumZ4AqJ00Ya-NU57BtYQrkG8FuNrKkSAyAuUNzWmyZ6YXZ9HvyMJ78vuP6eI=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://about.ncsoft.com/news/article/lc_update_260115"
+      "source_url": "https://about.ncsoft.com/news/article/lc_update_260115",
+      "description_en": "Two new servers, Haine and Loengrin, opened on NCSoft's PC MMORPG Lineage Classic alongside the Haine region update. After the game's February 2026 relaunch drew heavy traffic and long login queues, NCSoft added these servers to ease congestion. Both start everyone from the same line, so new and returning players can join the early race without falling behind. They went live on March 11, 2026.",
+      "description_ja": "NCSoftのPC向けMMORPG『リネージュ クラシック』に、新地域「ハイネ」アップデートと同時に開設された2つの新サーバー(ハイネ・ロエングリン)です。2026年2月のサービス開始後に利用者が集中し待機列が長くなったため、混雑緩和を目的に追加されました。既存サーバーと同じスタートラインから始まるため、新規・復帰プレイヤーでも序盤の競争に参加しやすくなっています。2026年3月11日オープン。"
     },
     {
       "id": "lineage-m-server-kent-oren-20260318",
@@ -48,7 +50,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/25/b9/ce/25b9ce2f-4587-bfef-e3a5-118d4c1e625a/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://sports.news.nate.com/view/20260228n02916"
+      "source_url": "https://sports.news.nate.com/view/20260228n02916",
+      "description_en": "Kent and Oren are two new servers added to the Reboot world of NCSoft's mobile MMORPG Lineage M as part of the ContiNew update. The Reboot world runs separately from the Legacy world, and the update also brought the Elmore Legion Annihilation dungeon and a reworked Holy Knight class. Because the economy and competition are isolated from established servers, they are a clean place to start over — advance character creation filled up within 30 minutes of opening. Launched March 18, 2026.",
+      "description_ja": "NCSoftのモバイルMMORPG『リネージュM』で、「ContiNew」アップデートによりレガシーワールドと分離運営されるリブートワールドに開設された2つの新サーバー(ケント・オレン)です。特殊ダンジョン「エルモア軍団殲滅作戦」と「神聖騎士」クラスのリブートも同時に実装されました。既存ユーザーと経済・競争が分離されているため新規に始めやすく、事前キャラクター作成は開始30分で締め切られるほどの注目を集めました。2026年3月18日オープン。"
     },
     {
       "id": "crimson-desert-2026",
@@ -71,7 +75,9 @@
         "어드벤처"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/header.jpg",
-      "source_url": "https://biz.heraldcorp.com/article/10698973"
+      "source_url": "https://biz.heraldcorp.com/article/10698973",
+      "description_en": "An open-world action adventure developed over roughly seven years by Pearl Abyss on its in-house BlackSpace Engine. Set across the vast continent of Pywel, it pairs intricate melee combat with free-form exploration, and launched simultaneously worldwide on PC, PS5 and Xbox Series X|S. Strong presentation and polished action drew attention immediately, and the game passed three million copies sold within four days. It stands as one of the flagship Korean-made console titles.",
+      "description_ja": "Pearl Abyssが自社開発のBlackSpaceエンジンで約7年をかけて制作したオープンワールドアクションアドベンチャーです。広大なパイウェル大陸を舞台に、緻密な近接戦闘と自由な探索を組み合わせており、PC・PS5・Xbox Series X|Sで全世界同時に発売されました。発売直後から高い評価を受け、4日間で300万本の販売を突破しています。韓国発のコンソール大作を代表する一本です。"
     },
     {
       "id": "dissidia-duellum-ff-20260324",
@@ -92,7 +98,9 @@
         "팀배틀"
       ],
       "image_url": "https://yt3.googleusercontent.com/aQ5uIVM9ZTToiI1uaFxVmYZrUvJMTYd8oIvRFNP7OF6Vfq51ZsgVvebiygFIpem4cjA394ST=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=314812"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=314812",
+      "description_en": "The first new entry in Square Enix's Dissidia fighting series in nine years, developed as a mobile action game by NHN PlayArt. Matches are 3-on-3 team battles where the first side to defeat the opposing boss wins, and one-handed controls keep it suited to phones. Popular Final Fantasy characters make up the roster. It launched globally on Android and iOS on March 24, 2026.",
+      "description_ja": "スクウェア・エニックスの対戦アクションシリーズ『ディシディア』の9年ぶりの新作で、NHN PlayArtが開発したモバイルアクションゲームです。3対3のチームバトルで相手のボスを先に倒したチームが勝利する方式を採用し、片手操作にも対応しています。ファイナルファンタジーシリーズの人気キャラクターが多数登場します。2026年3月24日にAndroid・iOSで全世界配信が開始されました。"
     },
     {
       "id": "mabinogi-mobile-server-molli-20260326",
@@ -112,7 +120,10 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b8/b9/fa/b8b9fac5-9252-9b38-612e-82ccb60da346/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://mabinogimobile.nexon.com/News/Notice"
+      "source_url": "https://mabinogimobile.nexon.com/News/Notice",
+      "description_en": "The eighth server for Mabinogi Mobile, operated by Nexon's devCAT studio, opened to mark the game's first anniversary. It came with the Molli Burning Challenge to speed up new-player progression and a server-wide on-time event running March 26 to April 22. The growth support makes it a good place to start even now, since newcomers can close the gap with established players. It opened March 26, 2026.",
+      "description_ja": "ネクソンのdevCATが運営する『マビノギモバイル』のリリース1周年を記念して開設された8番目の新サーバーです。新規プレイヤーの育成を支援する「モリ バーニングチャレンジ」と、全サーバー共通のオンタイムイベント(3/26～4/22)が実施されました。既存プレイヤーに追いつきやすい育成支援が用意されており、新規・復帰勢に有利なサーバーです。2026年3月26日オープン。",
+      "name_ja": "マビノギモバイル"
     },
     {
       "id": "lordnine-server-dinapheri-20260327",
@@ -134,7 +145,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b6/23/5d/b6235d73-5607-1542-7682-98893eb2091b/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://l9.onstove.com/ko/promotion/dinapheri/260327"
+      "source_url": "https://l9.onstove.com/ko/promotion/dinapheri/260327",
+      "description_en": "A growth-accelerated server for Smilegate's cross-platform MMORPG Lord Nine, the first in roughly six months since Garbana. It combines fast leveling support with improved field and world boss rewards and reduced PvP penalties, so new and returning players can settle in without pressure. The game is playable on PC and mobile (Android and iOS). The server opened March 27, 2026.",
+      "description_ja": "SmilegateのクロスプラットフォームMMORPG『ロードナイン』に、「ガルバナ」以来およそ6か月ぶりに開設された成長加速サーバーです。育成支援に加えてフィールドボス・ワールドボスの報酬を改善し、PvPペナルティを緩和することで、新規・復帰プレイヤーが定着しやすい設計になっています。PCとモバイル(Android・iOS)の両方でプレイできます。2026年3月27日オープン。"
     },
     {
       "id": "nightcrows-server-philippus-20260423",
@@ -156,7 +169,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/67/56/a8/6756a882-518d-4fe2-e94f-483ddadb0151/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=315487"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=315487",
+      "description_en": "An independent server opened by Wemade's MMORPG Night Crows alongside its third-anniversary major update. It runs separately from existing servers for at least a year, and arrived together with the new Gauntlet class and the new Talasion region. Completing guide missions grants up to 150,000 Mystic Diamonds among other rewards, making it a strong entry point. The game supports PC and mobile cross-play; the server opened April 23, 2026.",
+      "description_ja": "WemadeのMMORPG『ナイトクロウ』がサービス3周年の大型アップデートと同時に開設した独立サーバーです。既存サーバーとは1年以上分離して運営され、新クラス「拳甲」と新地域「タラシオン」も同時に追加されました。ガイドミッションを達成すると最大15万ミスティックダイヤなどの報酬が得られ、新規開始に適したタイミングです。PC・モバイルのクロスプレイに対応し、2026年4月23日にオープンしました。"
     },
     {
       "id": "eos-black-server-sambaek-v-20260423",
@@ -177,7 +192,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ff/14/6b/ff146b23-76d8-6651-a6ca-057db0f39463/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.betanews.net/article/view/beta202604230056"
+      "source_url": "https://www.betanews.net/article/view/beta202604230056",
+      "description_en": "A new server for Bluepotion Games' mobile MMORPG EOS Black, opened with the Reboot update. Its defining feature is a monthly spending cap of three million won, meant to curb runaway competition, and it hands out items and gold to support early progression. The update also added a new boss dungeon, the Tomb of Septuph. Available on Android and iOS; the server opened April 23, 2026.",
+      "description_ja": "ブルーポーションゲームズのモバイルMMORPG『エオスブラック』にリブートアップデートと同時に開設された新サーバーです。月300万ウォンの課金制限を設けて過度な競争を抑えている点が特徴で、序盤の育成を助けるアイテムやゴールドが配布されます。新ボスダンジョン「セプトゥフの墓」なども併せて追加されました。Android・iOSでプレイでき、2026年4月23日オープン。"
     },
     {
       "id": "arthdal-server-kravon-20260506",
@@ -198,7 +215,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a5/37/c5/a537c519-66d4-42d3-1b97-299176d5602c/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
-      "source_url": "https://www.betanews.net/article/view/beta202605060040"
+      "source_url": "https://www.betanews.net/article/view/beta202605060040",
+      "description_en": "A new server for Netmarble's mobile MMORPG Arthdal Chronicles: Three Powers, opened for the game's second anniversary. It leans on pass-based monetization and fast-growth rewards, including the chance to obtain up to four legendary mounts within a month. A large update landed alongside it, adding the Trial Dungeon and new relics. Playable on Android and iOS; opened May 6, 2026.",
+      "description_ja": "ネットマーブルのモバイルMMORPG『アスダル年代記:三つの勢力』がリリース2周年を記念して開設した新サーバーです。パス中心の商品構成とともに、1か月で伝説の騎乗物を最大4種まで入手できるなど、育成を後押しする報酬が用意されています。「試練ダンジョン」や新遺物などの大型アップデートも同時に実施されました。Android・iOSでプレイでき、2026年5月6日オープン。"
     },
     {
       "id": "overgeared-hero-20260526",
@@ -220,7 +239,9 @@
         "전략"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/85/d5/17/85d5179e-de42-693d-4e7f-3fcf4b094ce9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=316298"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316298",
+      "description_en": "A collectible strategy RPG based on the popular web novel and webtoon Overgeared, published by Krafton and developed by 5minlab. Its core hook is roguelike depth: how you place and combine items dramatically changes the outcome of a fight. Global pre-registrations passed 500,000, and it launched on Android and iOS on May 26, 2026 in markets including Korea, the US, Japan and Taiwan.",
+      "description_ja": "人気ウェブ小説・ウェブトゥーン『テムパル』を原作とする収集型ストラテジーRPGで、KRAFTONが配信し5minlabが開発しました。アイテムの配置と組み合わせ次第で戦闘結果が大きく変わるローグライク要素が最大の魅力です。全世界事前登録50万人を突破し、韓国・アメリカ・日本・台湾などでAndroid・iOS向けに2026年5月26日に正式リリースされました。"
     },
     {
       "id": "007-first-light-2026",
@@ -242,7 +263,10 @@
         "어드벤처"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3768760/dbe86ebd2edb4c77d113e9e2feefeb90189fabc9/header.jpg?t=1780990824",
-      "source_url": "https://en.wikipedia.org/wiki/007_First_Light"
+      "source_url": "https://en.wikipedia.org/wiki/007_First_Light",
+      "description_en": "A James Bond action adventure from IO Interactive, the studio behind the Hitman series. It tells an original story about a young Bond newly promoted to 00 status rather than the seasoned agent, blending espionage action with stealth. As IO's first original Bond project it reinterprets the character's origins, and it arrives on PS5, Xbox Series X|S and PC on May 27, 2026.",
+      "description_ja": "『ヒットマン』シリーズで知られるIO Interactiveが開発するジェームズ・ボンドのアクションアドベンチャーです。ベテランではなく、00要員になったばかりの若き日のボンドを描くオリジナルストーリーで、スパイアクションとステルス要素を融合させています。IOが初めて手がける独自のボンドIPとしてシリーズの原点を新たに解釈しており、PS5・Xbox Series X|S・PCで2026年5月27日に発売されます。",
+      "name_ja": "007 ファースト・ライト"
     },
     {
       "id": "raven2-server-zero-20260527",
@@ -263,7 +287,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/29/65/f129657d-9d9a-c217-487d-95b027df5ab4/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=316867"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316867",
+      "description_en": "ZERO is the first specialized server for Netmarble's mobile MMORPG Raven 2, opened for the game's second anniversary. It applies newcomer-friendly rules such as boosted experience and drop rates and a ban on PK, so starting now carries little penalty. It opened simultaneously in Korea, Taiwan and Japan and is playable on Android and iOS. Launched May 27, 2026.",
+      "description_ja": "ネットマーブルのモバイルMMORPG『レイヴン2』がリリース2周年を記念して開設した初の特化サーバー「ZERO」です。経験値・ドロップ率の上昇やPK禁止など新規プレイヤーに配慮したルールを適用しており、今から始めても負担なく育成できます。韓国・台湾・日本で同時にオープンし、Android・iOSでプレイ可能です。2026年5月27日オープン。"
     },
     {
       "id": "bns-revolution-server-yuilmui-20260528",
@@ -285,7 +311,9 @@
         "신규 서버"
       ],
       "image_url": "https://play-lh.googleusercontent.com/Hsa5Laxf7iXxPeMsjKEPt1KCMzCdnvq-jOP6Rk5Cb_NrNx4td_pGgYPVlfVMaE8atp5rtHDZTUAxHfxyJ0MMIA=s512",
-      "source_url": "http://www.1conomynews.co.kr/news/articleView.html?idxno=31591"
+      "source_url": "http://www.1conomynews.co.kr/news/articleView.html?idxno=31591",
+      "description_en": "A new server for Netmarble's Blade & Soul Revolution, opened alongside the NEXT update that moved the game to Unreal Engine 5. Settlement benefits include progression support up to Hongmun level 70 and mythic gear, helping new and returning players catch up quickly. The update also added the Illusionist class. Cross-play is supported across PC, Android and iOS; the server opened May 28, 2026.",
+      "description_ja": "ネットマーブルの『ブレイド&ソウル レボリューション』が、Unreal Engine 5へ移行する「NEXT」アップデートと同時に開設した新サーバーです。洪門70レベルまでの育成支援や神話装備などの定着特典が用意され、新規・復帰プレイヤーが素早く適応できます。新職業「幻術士」も同時に追加されました。PC・Android・iOSのクロスプレイに対応し、2026年5月28日オープン。"
     },
     {
       "id": "poe2-season-return-of-ancients-20260530",
@@ -306,7 +334,9 @@
         "새 시즌"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2694490/header.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=316222&site=poe"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316222&site=poe",
+      "description_en": "Return of the Ancients is the new league that began with the 0.5.0 major content update for Grinding Gear Games' hack-and-slash ARPG Path of Exile 2. It adds six endgame storylines, two new ascendancies (Martial Artist and Spiritwalker), a new final boss and a challenge league. Because every character starts fresh in a new league, it is a natural entry point for returning and first-time players. It began in Korea at 5:00 AM on Saturday, May 30, 2026.",
+      "description_ja": "Grinding Gear Gamesのハック&スラッシュARPG『Path of Exile 2』の0.5.0大型コンテンツアップデートとともに開始された新リーグ「古代の帰還」です。6つのエンドゲームストーリーライン、2種の新アセンダンシー(マーシャルアーティスト・スピリットウォーカー)、新たな最終ボスとチャレンジリーグが追加されました。新リーグは全キャラクターがゼロから競う仕組みのため、復帰・新規プレイヤーにとって絶好の参入時期です。韓国では2026年5月30日(土)午前5時に開始しました。"
     },
     {
       "id": "raven2-server-zero2-20260601",
@@ -328,7 +358,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/29/65/f129657d-9d9a-c217-487d-95b027df5ab4/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=304931"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=304931",
+      "description_en": "ZERO2 is an additional specialized server for Netmarble's Raven 2, opened after the strong response to the original ZERO server. It raises experience gain and equipment drop rates, introduces farming crystals, and bans PK in hunting grounds for a smoother growth environment. War content followed in stages, with Ancient Fortress on June 13 and Contested Battle on June 20. The server opened June 1, 2026.",
+      "description_ja": "ネットマーブル『レイヴン2』の特化サーバー「ZERO」が好評だったことを受けて追加開設された新特化サーバー「ZERO2」です。経験値獲得量と装備ドロップ率を引き上げ、ファーミングクリスタルを導入したほか、狩場でのPKを禁止して快適な育成環境を提供します。6月13日「古代城塞」、6月20日「争奪戦」など戦争コンテンツも順次公開されました。2026年6月1日オープン。"
     },
     {
       "id": "ff7-rebirth-switch2-2026",
@@ -348,7 +380,10 @@
         "액션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2909400/header.jpg",
-      "source_url": "https://www.nintendolife.com/news/2026/02/final-fantasy-vii-rebirth-gets-a-release-date-for-switch-2"
+      "source_url": "https://www.nintendolife.com/news/2026/02/final-fantasy-vii-rebirth-gets-a-release-date-for-switch-2",
+      "description_en": "The Nintendo Switch 2 port of Rebirth, the second entry in Square Enix's Final Fantasy VII Remake project. It brings the sprawling open-field RPG that debuted on PS5 to a handheld-capable platform, letting players follow Cloud and company across the continents beyond Midgar on the go. The port keeps the original's enormous scope and fast-paced action combat intact, and releases June 3, 2026.",
+      "description_ja": "スクウェア・エニックスの『ファイナルファンタジーVII リメイク』プロジェクト第2作『リバース』のNintendo Switch 2移植版です。PS5で先行して発売された広大なオープンフィールドRPGをSwitch 2に移植し、クラウドたちがミッドガル外の大陸を巡る壮大な冒険を携帯環境でも楽しめるようになりました。原作の膨大なボリュームと爽快なアクションバトルをそのまま収録し、2026年6月3日に発売されます。",
+      "name_ja": "ファイナルファンタジーVII リバース"
     },
     {
       "id": "mir-legend-jin-20260604",
@@ -369,7 +404,9 @@
         "무협"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/63/c3/41/63c341a1-ea26-b8fd-b156-5e9909aff435/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=304803"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=304803",
+      "description_en": "A pixel-art wuxia mobile MMORPG that reinterprets Actoz Soft's Legend of Mir 1 IP, developed by V5 Games. It offers three classes — Warrior, Sorcerer and Taoist — and a player economy that allows direct one-to-one trading, preserving the tactile combat and community play the classic Mir games were known for. It launched on Android and iOS on June 4, 2026.",
+      "description_ja": "アクトズソフトの『ミルの伝説1』IPを再解釈したドット絵の武侠モバイルMMORPGで、V5 Gamesが開発しました。戦士・術士・道士の3職業と、ユーザー間の1対1取引が可能な経済システムを備え、往年のミルらしい手応えのある戦闘とコミュニティプレイを再現しています。2026年6月4日にAndroid・iOSで正式リリースされました。"
     },
     {
       "id": "make-drama-mad-20260604",
@@ -390,7 +427,9 @@
         "수집형RPG"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/cf/a9/d0/cfa9d029-b06f-0db9-f3c9-a6c20a7c4db9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=316934"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316934",
+      "description_en": "A subculture-style collectible RPG from Wemade Connect built around gathering and raising distinctive bishojo characters. Pre-registrations passed 500,000, and it released early on Google Play and ONE Store with an adults-only rating. It launched on Android and iOS on June 4, 2026.",
+      "description_ja": "ウィメイドコネクトが手がけるサブカルチャー系の収集型RPGで、個性豊かな美少女キャラクターを集めて育成する楽しさが中心です。事前登録50万人を突破し、青少年利用不可レーティングでGoogle Play・ONE Storeに先行配信されました。2026年6月4日にAndroid・iOSでリリースされました。"
     },
     {
       "id": "gothic-1-remake-2026",
@@ -412,7 +451,9 @@
         "액션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1297900/header.jpg",
-      "source_url": "https://thqnordic.com/news/colony-calling-gothic-1-remake-drops-june-2026"
+      "source_url": "https://thqnordic.com/news/colony-calling-gothic-1-remake-drops-june-2026",
+      "description_en": "A full remake that rebuilds Gothic, the landmark 2001 dark fantasy RPG, for modern hardware. Developed by THQ Nordic's Alkimia Interactive, it revives the original's closed-off penal colony setting and open-ended exploration with current-generation visuals and systems. It is scheduled for PC, PS5 and Xbox Series X|S in June 2026.",
+      "description_ja": "2001年に登場した第一世代ダークファンタジーRPGの名作『ゴシック』を現代的に作り直したフルリメイクです。THQ Nordic傘下のAlkimia Interactiveが開発し、原作の閉ざされた流刑地コロニーの世界観と自由度の高い探索を最新のグラフィックとシステムで蘇らせます。PC・PS5・Xbox Series X|Sで2026年6月に発売予定です。"
     },
     {
       "id": "pokemon-champions-mobile-2026",
@@ -433,7 +474,10 @@
         "수집형"
       ],
       "image_url": "https://play-lh.googleusercontent.com/CpBUPy9eZPB-lVJzVtVtwE6IPvNbr6hvxwcLDkcw4_LXJd6HYh0nBl37AwjZOWB4IecEM3PcPoYcvd-T6JYldz4=s512",
-      "source_url": "https://www.gameple.co.kr/news/articleView.html?idxno=215861"
+      "source_url": "https://www.gameple.co.kr/news/articleView.html?idxno=215861",
+      "description_en": "A multiplatform competitive game built specifically around Pokemon battles. Following the Nintendo Switch version, the mobile release for iOS and Android arrived on June 17, 2026. Save data and cross-play link with the Switch version through a Nintendo Account, and unlike the mainline RPGs it runs on a free-to-play model focused purely on competitive battling.",
+      "description_ja": "ポケモンバトルに特化したマルチプラットフォームの対戦ゲームです。Nintendo Switch版に続き、モバイル(iOS・Android)版が2026年6月17日に正式配信されました。ニンテンドーアカウントでSwitch版とセーブデータ・クロスプレイが連携し、本編RPGとは異なり対戦に集中した基本プレイ無料モデルで運営されます。",
+      "name_ja": "ポケモン チャンピオンズ"
     },
     {
       "id": "ff-tactics-ivalice-chronicles-2026",
@@ -457,7 +501,10 @@
         "RPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1004640/header.jpg",
-      "source_url": "https://bbs.ruliweb.com/news/read/224630"
+      "source_url": "https://bbs.ruliweb.com/news/read/224630",
+      "description_en": "Square Enix's remaster of the 1997 tactical RPG classic Final Fantasy Tactics. It bundles an Enhanced version with refreshed visuals and, for the first time in the series, full voice acting in major scenes, alongside a Classic version that preserves the original's look and feel. It releases across PC, PlayStation, Xbox and Switch, with Korean subtitles and a physical edition.",
+      "description_ja": "1997年の名作シミュレーションRPG『ファイナルファンタジータクティクス』をスクウェア・エニックスがリマスターした作品です。グラフィックを刷新しシリーズ初となる主要シーンのフルボイスを収録した「強化版」と、原作のグラフィックと操作感を残した「クラシック版」を同梱しています。PC・PlayStation・Xbox・Switchなど幅広い機種で発売され、韓国語字幕とパッケージ版にも対応します。",
+      "name_ja": "ファイナルファンタジータクティクス イヴァリース クロニクルズ"
     },
     {
       "id": "hell-let-loose-vietnam-2026",
@@ -479,7 +526,9 @@
         "밀리터리"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3079210/2e52f99e70e827b57a2205469dc5d529e8e0490a/header.jpg?t=1781191950",
-      "source_url": "https://www.hellletloose.com/blog/hell-let-loose-vietnam-release-date-update"
+      "source_url": "https://www.hellletloose.com/blog/hell-let-loose-vietnam-release-date-update",
+      "description_en": "A hardcore 50-vs-50 large-scale multiplayer military FPS set during the Vietnam War, published by Team17 and developed by Expression Games. Across sprawling battlefields, victory hinges on cooperation between roles plus supply lines and objective capture rather than individual gunplay. Originally slated for June 18, it was delayed to August 13 for additional polish, and releases on PC, PS5 and Xbox Series X|S.",
+      "description_ja": "Team17が販売し、Expression Gamesが開発するベトナム戦争を舞台とした50対50の大規模マルチプレイヤーミリタリーFPSです。広大な戦場で兵科同士の連携や補給・拠点確保が勝敗を分ける、硬派な戦闘を志向しています。当初は6月18日発売予定でしたが完成度向上のため8月13日に延期され、PC・PS5・Xbox Series X|Sで発売されます。"
     },
     {
       "id": "sol-enchant-20260618",
@@ -500,7 +549,9 @@
         "MMORPG"
       ],
       "image_url": "https://play-lh.googleusercontent.com/eRGPrWXzheZvTiTRBDBuaysX8ptDH5xasKV8rzWmuEKA9WsXfftcybnz9zQB89Iiqx7WKa_naS_WK5DdT1KB=s512",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=315261"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=315261",
+      "description_en": "A new MMORPG from Netmarble built around the concept of gods. Combat and progression revolve around wielding divine powers, and it can be played on both PC and mobile (Android and iOS). Originally planned for April, it was pushed back for further polish and confirmed for release on June 18, 2026.",
+      "description_ja": "ネットマーブルが手がける「神」をコンセプトにした新作MMORPGです。神の権能を活用した戦闘と育成が特徴で、PCとモバイル(Android・iOS)の両方でプレイできます。当初は4月の予定でしたが完成度を高めるため延期され、2026年6月18日の発売が確定しました。"
     },
     {
       "id": "adventures-of-elliot-millennium-tales-2026",
@@ -523,7 +574,9 @@
         "HD-2D"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3483510/3c96b19255b69aa9b2e131dda3e19d622b0d6562/header.jpg?t=1779674534",
-      "source_url": "https://www.gamechosun.co.kr/webzine/article/view.php?no=219993"
+      "source_url": "https://www.gamechosun.co.kr/webzine/article/view.php?no=219993",
+      "description_en": "A brand-new HD-2D action RPG from Square Enix. It follows the adventurer Elliot and the fairy Fay as they travel across four eras to confront a destiny spanning a thousand years. Its signature strength is the HD-2D presentation that fuses pixel art with 3D environments. Console versions arrive June 18 and the Steam release follows June 19, with Korean subtitles supported.",
+      "description_ja": "スクウェア・エニックスによるHD-2Dの完全新作アクションRPGです。冒険家エリオットが妖精フェイとともに4つの時代を渡り歩き、千年にわたる宿命に立ち向かう物語を描きます。ドット絵と3Dを融合させた独特のHD-2Dビジュアルが最大の魅力で、コンソール版は6月18日、Steam版は6月19日に発売されます。韓国語字幕に対応しています。"
     },
     {
       "id": "ea-sports-ufc-6-2026",
@@ -544,7 +597,9 @@
         "격투"
       ],
       "image_url": "https://yt3.googleusercontent.com/0hyT1kyONpHYC0FOtmrIK9DDMfOyoLvEIAkzo_a4dIxYYK3IOUmppkBFUdSx8cN3z1ayEn7B=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://news.ea.com/press-releases/press-releases-details/2026/Fight-Your-Fight-EA-SPORTS-UFC-6-Arrives-June-19-Delivering-Next-Level-Fighter-Individuality-and-Gameplay-Depth/default.aspx"
+      "source_url": "https://news.ea.com/press-releases/press-releases-details/2026/Fight-Your-Fight-EA-SPORTS-UFC-6-Arrives-June-19-Delivering-Next-Level-Fighter-Individuality-and-Gameplay-Depth/default.aspx",
+      "description_en": "EA Sports' next-generation UFC fighting game, developed by EA Vancouver. It uses Markerless Capture and the next-gen Sapien technology to make fighter movement and strike impact noticeably more lifelike. It releases on PS5 and Xbox Series X|S, with Ultimate Edition buyers getting early access starting June 12.",
+      "description_ja": "EA Vancouverが開発したEA SPORTSの次世代UFC格闘ゲームです。Markerless Captureと次世代Sapien技術を活用し、選手の動きや打撃の手応えをより写実的に再現しています。PS5・Xbox Series X|Sで発売され、Ultimate Editionを購入すると6月12日から先行プレイが可能です。"
     },
     {
       "id": "requiem-m-2026",
@@ -565,7 +620,9 @@
         "다크판타지"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d3/18/df/d318dff7-4c96-cf32-6b64-8494e481f380/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.bloter.net/news/articleView.html?idxno=661778"
+      "source_url": "https://www.bloter.net/news/articleView.html?idxno=661778",
+      "description_en": "A dark fantasy mobile MMORPG from Gravity that carries on its own Requiem Online IP. It leans into gory visuals heavy on blood and darkness, paired with hardcore combat presentation. Domestic pre-registration opened April 8, and the game launches on Android and iOS on June 30, 2026.",
+      "description_ja": "Gravityが自社IP『レクイエム オンライン』を継承したダークファンタジーのモバイルMMORPGです。血や闇を強調したゴアなビジュアルと、ハードコアな戦闘演出を前面に押し出しています。4月8日に韓国国内の事前登録を開始し、Android・iOSで2026年6月30日に正式リリースされます。"
     },
     {
       "id": "odin-q-2026",
@@ -586,7 +643,9 @@
         "MMORPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/BrKi5SzFd7nylwNDkxVTE7A8mGsMQVcl51RiFQsZlWwWgWrh6R5UJkuXVTqAuF12Uw0oCznS=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=240409"
+      "source_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=240409",
+      "description_en": "A cross-platform MMORPG built on Unreal Engine 5 that carries forward the ODIN universe, developed by Lionheart Studio and published by Kakao Games. It is being built as a single global build spanning PC, Android and iOS, and that shift moved the target window from Q2 to Q3. An exact release date has not been confirmed (per the company's February 2026 earnings call).",
+      "description_ja": "Lionheart Studioが開発しKakao Gamesが配信する『オーディン』の世界観を継承したUnreal Engine 5ベースのクロスプラットフォームMMORPGです。PC・Android・iOSを横断するグローバルワンビルドとして開発が進められており、その過程で発売目標が第2四半期から第3四半期へ変更されました。正確な発売日はまだ確定していません(2026年2月の決算説明会での公式発表)。"
     },
     {
       "id": "star-fox-switch2-2026",
@@ -606,7 +665,10 @@
         "액션"
       ],
       "image_url": "https://yt3.googleusercontent.com/HNg_MA3lYwk6JCHxftRxRUAcMFK0334jI3-G-ERWMnTe5vIT1fORQ2er531XI_eCnMl4v_Wtk38=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.nintendo.com/us/store/products/star-fox-switch-2/"
+      "source_url": "https://www.nintendo.com/us/store/products/star-fox-switch-2/",
+      "description_en": "A cinematic reimagining of Nintendo's classic shooter Star Fox 64 (1997), exclusive to Switch 2. Revealed as a surprise during the May Nintendo Direct, it features full voice acting, an orchestral soundtrack and Joy-Con 2 mouse controls. It launches worldwide on June 25 and in Korea on July 2.",
+      "description_ja": "任天堂の名作シューティング『スターフォックス64』(1997年)をシネマティックに作り直したSwitch 2専用タイトルです。5月のNintendo Directでサプライズ発表され、フルボイスとオーケストラのサウンドトラック、ジョイコン2のマウス操作に対応します。全世界で6月25日、韓国では7月2日に発売されます。",
+      "name_ja": "スターフォックス"
     },
     {
       "id": "avatar-legends-fighting-game-2026",
@@ -630,7 +692,9 @@
         "액션"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2424420/4c6170c42e43867a13b16b2d7431f30434d420bb/header.jpg?t=1780775353",
-      "source_url": "https://www.gematsu.com/2026/03/avatar-legends-the-fighting-game-launches-july-2"
+      "source_url": "https://www.gematsu.com/2026/03/avatar-legends-the-fighting-game-launches-july-2",
+      "description_en": "A one-on-one fighting game based on the Avatar: The Last Airbender and The Legend of Korra franchises. It ships with twelve playable characters and a canon story mode, and supports rollback netcode plus full cross-play to strengthen online matches. It releases simultaneously on PS5, Xbox, Switch, Switch 2 and PC on July 2 (Standard $29.99, Deluxe $49.99).",
+      "description_ja": "『アバター 伝説の少年アン』と『レジェンド・オブ・コーラ』のIPを基にした1対1の対戦格闘ゲームです。発売時点で12体のプレイアブルキャラクターとカノンストーリーモードを収録し、ロールバックネットコードとフルクロスプレイに対応してオンライン対戦環境を強化しています。PS5・Xbox・Switch・Switch 2・PCの全プラットフォームで7月2日に同時発売されます(スタンダード29.99ドル/デラックス49.99ドル)。"
     },
     {
       "id": "ac-black-flag-resynced-2026",
@@ -652,7 +716,9 @@
         "어드벤처"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/9b046115b1663a4be2b252712328e4f6c162da68/header.jpg?t=1781197729",
-      "source_url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/3pdOduSqqhRaxjaGYP4QP7/assassins-creed-black-flag-resynced-out-july-9-everything-you-need-to-know"
+      "source_url": "https://www.ubisoft.com/en-us/game/assassins-creed/news/3pdOduSqqhRaxjaGYP4QP7/assassins-creed-black-flag-resynced-out-july-9-everything-you-need-to-know",
+      "description_en": "Ubisoft Singapore's remake of 2013's Assassin's Creed IV: Black Flag, rebuilt on the current Anvil engine. Set in the Caribbean during the golden age of piracy, it reworks combat around parrying and strengthens stealth, parkour and naval battles. New narrative content has been added as well, and it launches on PC and consoles on July 9, 2026.",
+      "description_ja": "Ubisoft Singaporeが2013年の『アサシン クリードIV ブラック フラッグ』を最新のAnvilエンジンで作り直したリメイクです。カリブ海の海賊時代を舞台に、パリィ中心へ刷新された戦闘や強化された潜入・パルクール、より深みを増した海戦が楽しめます。新規のナラティブコンテンツも追加され、2026年7月9日にPC・コンソールで同時発売されます。"
     },
     {
       "id": "granblue-relink-endless-ragnarok-2026",
@@ -675,7 +741,10 @@
         "확장판"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/881020/header.jpg",
-      "source_url": "https://www.cygames.co.jp/en/news/id-24753"
+      "source_url": "https://www.cygames.co.jp/en/news/id-24753",
+      "description_en": "A major expansion for Cygames' action RPG Granblue Fantasy: Relink. It adds a new story and characters, a summon system, and cross-play multiplayer. Newcomers can buy it standalone while existing owners can access the expansion content through an upgrade kit. It releases on PS5, PS4, Switch 2 and PC.",
+      "description_ja": "CygamesのアクションRPG『グランブルーファンタジー リリンク』の大型拡張版です。新規ストーリーとキャラクター、召喚システム、クロスプレイのマルチプレイが追加されました。新規プレイヤーは単体で購入でき、既存の所有者はアップグレードキットで拡張コンテンツを楽しめます。PS5・PS4・Switch 2・PCで発売されます。",
+      "name_ja": "グランブルーファンタジー リリンク"
     },
     {
       "id": "digimon-time-stranger-switch-2026",
@@ -696,7 +765,10 @@
         "턴제"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1984270/header.jpg",
-      "source_url": "https://www.gematsu.com/2026/02/digimon-story-time-stranger-coming-to-switch-2-switch-on-july-9-in-japan-july-10-worldwide"
+      "source_url": "https://www.gematsu.com/2026/02/digimon-story-time-stranger-coming-to-switch-2-switch-on-july-9-in-japan-july-10-worldwide",
+      "description_en": "A new RPG in the Digimon Story series developed by Media.Vision and published by Bandai Namco; this is the Nintendo Switch and Switch 2 port of the main release that came to PS5, Xbox and PC in 2025. The Switch 2 version offers a 4K 30fps quality mode and a 1080p 60fps performance mode. The game centers on a story about time alongside extensive Digimon raising and combat, and the console lineup expands on July 10.",
+      "description_ja": "メディア・ビジョンが開発しバンダイナムコが展開する『デジモンストーリー』シリーズのRPG新作で、2025年にPS5・Xbox・PCで先行発売された本編をNintendo SwitchおよびSwitch 2へ移植した版です。Switch 2版は4K30fpsの画質モードと1080p60fpsのパフォーマンスモードに対応します。時間をめぐる物語と、膨大なデジモンの育成・バトルが中心で、7月10日にコンソールのラインナップに加わります。",
+      "name_ja": "デジモンストーリー タイムストレンジャー"
     },
     {
       "id": "pro-spirit-2026",
@@ -717,7 +789,9 @@
         "야구"
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_l69Fpcktv0EgP7H7dj9WUSYoUGiWc2SQmGfaGDdjrF9Y0=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.konami.com/games/prospi/2026/us/en-us/"
+      "source_url": "https://www.konami.com/games/prospi/2026/us/en-us/",
+      "description_en": "The latest entry in Konami's Pro Yakyuu Spirits baseball simulation series. For the first time in the series it supports Korean subtitles, applied via an update shortly after launch, and it introduces a 2026 WBC mode and an active draft system. It releases on PS5 and PC on July 16, 2026.",
+      "description_ja": "コナミの野球シミュレーション『プロ野球スピリッツ』シリーズの最新作です。シリーズで初めて韓国語字幕に対応し(発売直後のアップデートで適用)、2026 WBCモードとアクティブドラフトシステムが新たに導入されました。PS5・PCで2026年7月16日に発売されます。"
     },
     {
       "id": "ratatan-2026",
@@ -741,7 +815,10 @@
         "액션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2949320/header.jpg",
-      "source_url": "https://www.gematsu.com/2026/03/ratatan-launches-july-16-for-ps5-xbox-series-switch-2-and-pc"
+      "source_url": "https://www.gematsu.com/2026/03/ratatan-launches-july-16-for-ps5-xbox-series-switch-2-and-pc",
+      "description_en": "A rhythm roguelite action game from the team behind the Patapon series, reunited for a new project. The core appeal is its unusual control scheme: you issue commands in time with the beat to lead an army of customizable Cobun into battle. After refining the game through early access, it releases in full on PS5, Xbox Series X|S, Switch 2 and PC.",
+      "description_ja": "『パタポン』シリーズの開発陣が再結集して制作したリズムローグライトアクションゲームです。ビートに合わせてコマンドを入力し、カスタマイズしたコブンの軍団を率いて戦う独特の操作感が最大の魅力です。アーリーアクセスで完成度を高めたうえで、PS5・Xbox Series X|S・Switch 2・PCで正式発売されます。",
+      "name_ja": "ラタタン"
     },
     {
       "id": "splatoon-raiders-2026",
@@ -761,7 +838,9 @@
         "슈팅"
       ],
       "image_url": "https://yt3.googleusercontent.com/HNg_MA3lYwk6JCHxftRxRUAcMFK0334jI3-G-ERWMnTe5vIT1fORQ2er531XI_eCnMl4v_Wtk38=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://en.wikipedia.org/wiki/Splatoon_Raiders"
+      "source_url": "https://en.wikipedia.org/wiki/Splatoon_Raiders",
+      "description_en": "The first single-player-focused spin-off in Nintendo's Splatoon series, released exclusively on Nintendo Switch 2. Players explore the mysterious Spirhalite Islands with the popular band Deep Cut, hunting for treasure and fending off Salmonid hordes using various ink weapons and machinery. It also supports online and local co-op for up to four players, and is slated for July 23.",
+      "description_ja": "任天堂『スプラトゥーン』シリーズ初となるシングルプレイ中心のスピンオフで、Nintendo Switch 2専用タイトルとして発売されます。プレイヤーは人気バンド「すりみ連合」とともに謎のスピルハライト諸島を探検し、さまざまなインク武器や機械を駆使してサーモニッドの群れに立ち向かいながら宝を探します。最大4人のオンライン・ローカル協力プレイにも対応し、7月23日発売予定です。"
     },
     {
       "id": "beast-of-reincarnation-2026",
@@ -782,7 +861,9 @@
         "액션 RPG"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2001760/d068139fe039e26a6a9d9f57ac5d89785b984d33/header.jpg?t=1780945395",
-      "source_url": "https://en.wikipedia.org/wiki/Beast_of_Reincarnation"
+      "source_url": "https://en.wikipedia.org/wiki/Beast_of_Reincarnation",
+      "description_en": "The first large-scale non-Pokemon action RPG from Game Freak, the studio known for the Pokemon series. Set in a post-apocalyptic Japan after civilization's collapse, it centers on action combat that combines swordplay with spirit beasts. Positioned as a new direction for the studio, it releases on PC, PS5 and Xbox Series X|S on August 4, 2026.",
+      "description_ja": "『ポケモン』シリーズで知られるゲームフリークが初めて手がける非ポケモンの大型アクションRPGです。滅亡後の日本を舞台にしたポストアポカリプスの世界で、剣と霊獣を用いたアクション戦闘を繰り広げます。ゲームフリークの新たな挑戦作として、PC・PS5・Xbox Series X|Sで2026年8月4日に発売されます。"
     },
     {
       "id": "marvel-tokon-2026",
@@ -803,7 +884,9 @@
         "대전"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3787240/943fda32c11b3e3f451458ffa95a4adca1f316a4/header.jpg?t=1780942451",
-      "source_url": "https://www.playstation.com/en-us/games/marvel-tokon-fighting-souls/"
+      "source_url": "https://www.playstation.com/en-us/games/marvel-tokon-fighting-souls/",
+      "description_en": "A 4-on-4 tag fighting game developed by Arc System Works, the studio behind Guilty Gear and Dragon Ball FighterZ. It features Marvel superheroes and pairs the studio's signature flashy 2D-style presentation with team-based combat. It launches August 6 globally and August 7 in Korea, Japan, Australia and New Zealand, with cross-play between PS5 and PC.",
+      "description_ja": "『ギルティギア』『ドラゴンボール ファイターズ』で知られるアークシステムワークスが開発する4対4のタッグ対戦格闘ゲームです。マーベルのスーパーヒーローが登場し、アークシステムワークスならではの華やかな2D風演出とチームバトルを融合させています。全世界では8月6日、韓国・日本・オーストラリア・ニュージーランドでは8月7日に発売され、PS5とPCのクロスプレイに対応します。"
     },
     {
       "id": "mgs-master-collection-vol2-2026",
@@ -827,7 +910,9 @@
         "스텔스"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3859630/31d5f5ef4a143bf915429e307f37cab6e2939678/header.jpg?t=1771200990",
-      "source_url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/"
+      "source_url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/",
+      "description_en": "The second Metal Gear Solid Master Collection compilation from Konami, bundling Metal Gear Solid 4: Guns of the Patriots, Peace Walker and the Game Boy Color title Metal Gear: Ghost Babel. It arrives August 27 on Switch, Switch 2, PS5, PC and Xbox Series, and includes supplementary material such as screenplay books, digital soundtracks and a database covering the series' lore.",
+      "description_ja": "コナミの『メタルギア ソリッド マスターコレクション』第2弾で、『メタルギア ソリッド4 ガンズ・オブ・ザ・パトリオット』『ピースウォーカー』、そしてゲームボーイカラー用タイトル『メタルギア ゴーストバベル』を収録しています。Switch・Switch 2・PS5・PC・Xbox Seriesで8月27日に発売され、脚本集やデジタルサウンドトラック、シリーズの世界観をまとめたデータベースなどの付属資料も同梱されます。"
     },
     {
       "id": "marvels-wolverine-2026",
@@ -847,7 +932,9 @@
         "어드벤처"
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_l_e-6XQnYDdtdJZvLO91r_5oE9iNAnsU2WKiloVMlF7wc=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://blog.playstation.com/2026/06/02/marvels-wolverine-new-gameplay-story-details-from-state-of-play/"
+      "source_url": "https://blog.playstation.com/2026/06/02/marvels-wolverine-new-gameplay-story-details-from-state-of-play/",
+      "description_en": "A standalone Wolverine action adventure from Insomniac Games, the studio praised for its Marvel's Spider-Man series. Combat is built around his immortal healing factor and adamantium claws for a raw, brutal feel, wrapped in a dark, adult-oriented tone. Gameplay and the release date were revealed at the June State of Play, and it launches exclusively on PS5.",
+      "description_ja": "『Marvel's Spider-Man』シリーズで高い評価を得たInsomniac Gamesが制作するウルヴァリン単独のアクションアドベンチャーです。不死の治癒能力とアダマンチウムの爪を活かした荒々しく激しい戦闘が特徴で、成人向けの暗い雰囲気を打ち出しています。6月のState of Playでゲームプレイと発売日が公開され、PS5独占で発売されます。"
     },
     {
       "id": "control-resonant-2026",
@@ -870,7 +957,9 @@
         "초자연"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3669870/1e0c76e4253d347bb1304c3f213570251d924edf/header.jpg?t=1781070125",
-      "source_url": "https://store.steampowered.com/news/app/3669870/view/680751612361182415"
+      "source_url": "https://store.steampowered.com/news/app/3669870/view/680751612361182415",
+      "description_en": "The official sequel to Control, the supernatural action adventure from Remedy Entertainment, the studio behind Control and Alan Wake. It carries over the reality-bending powers and enigmatic setting while pushing the original's dreamlike presentation further. The release date was announced at the June 2 State of Play, and it launches worldwide on PS5, Xbox, PC and macOS on September 24, 2026.",
+      "description_ja": "『Control』『Alan Wake』で知られるRemedy Entertainmentによる超常アクションアドベンチャー『Control』の正式な続編です。現実をねじ曲げる超能力と謎に満ちた世界観を継承しつつ、前作の幻想的な演出をさらに発展させています。6月2日のState of Playで発売日が公開され、PS5・Xbox・PC・macOSで2026年9月24日に全世界同時発売されます。"
     },
     {
       "id": "onimusha-way-of-the-sword-2026",
@@ -892,7 +981,10 @@
         "다크 판타지"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2638890/header.jpg",
-      "source_url": "https://www.capcom.co.jp/ir/english/news/html/e260702.html"
+      "source_url": "https://www.capcom.co.jp/ir/english/news/html/e260702.html",
+      "description_en": "The first proper new entry in Capcom's Onimusha series in over two decades. Originally set for September 25, Capcom officially moved it three weeks earlier to September 4, 2026. Set in an Edo-period Kyoto shrouded in a demonic mist called Malice, it casts swordsman Miyamoto Musashi as the protagonist in a dark fantasy blade-action tale. It releases on PS5, Xbox Series, PC and Switch 2.",
+      "description_ja": "カプコンの『鬼武者』シリーズにとって約20年ぶりとなる正統新作です。当初は9月25日発売予定でしたが、カプコンの公式発表により3週間前倒しとなり2026年9月4日発売が確定しました。魔性の霧「マリス」に覆われた江戸時代の京都を舞台に、剣豪・宮本武蔵を主人公としたダークファンタジー剣戟アクションを描きます。PS5・Xbox Series・PC・Switch 2で発売されます。",
+      "name_ja": "鬼武者 Way of the Sword"
     },
     {
       "id": "ace-combat-8-wings-of-theve-2026",
@@ -914,7 +1006,9 @@
         "액션"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2288340/13dea8084135fd130605b78189c82e39bf944c35/header.jpg?t=1780645313",
-      "source_url": "https://blog.playstation.com/2026/06/02/ace-combat-8-wings-of-theve-launches-globally-october-2-on-ps5/"
+      "source_url": "https://blog.playstation.com/2026/06/02/ace-combat-8-wings-of-theve-launches-globally-october-2-on-ps5/",
+      "description_en": "The first mainline entry in Bandai Namco's flagship flight-shooter series Ace Combat in seven years. Built on Unreal Engine 5, it delivers more spectacular aerial combat and heightened cinematic presentation. Deluxe Edition buyers get early access starting September 28, and it releases on PS5, Xbox Series X|S and PC.",
+      "description_ja": "バンダイナムコを代表するフライトシューティングシリーズ『エースコンバット』の7年ぶりとなるナンバリング新作です。Unreal Engine 5を基盤に、より華やかな空中戦と没入感のある演出を実現しています。デラックスエディションを購入すると9月28日から先行プレイができ、PS5・Xbox Series X|S・PCで発売されます。"
     },
     {
       "id": "cod-modern-warfare-4-2026",
@@ -937,7 +1031,9 @@
         "밀리터리"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4435490/0c492be3204835d71e8b454b6eb1817f8ff68c0d/header.jpg?t=1781283725",
-      "source_url": "https://www.callofduty.com/ko/blog/2026/05/call-of-duty-modern-warfare-4-announcement"
+      "source_url": "https://www.callofduty.com/ko/blog/2026/05/call-of-duty-modern-warfare-4-announcement",
+      "description_en": "A new FPS in the Call of Duty: Modern Warfare reboot line, developed by Infinity Ward. Its campaign is set largely on the Korean peninsula and includes segments played from the perspective of a South Korean soldier, Private Park, which drew considerable attention in Korea. It packages the series' trademark intense single-player campaign with multiplayer, releasing October 23 on PS5, Xbox, PC and Switch 2.",
+      "description_ja": "Infinity Wardが開発する『Call of Duty: Modern Warfare』リブートシリーズの新作FPSです。朝鮮半島での戦争を主な舞台とし、韓国軍兵士「パク二等兵」視点のキャンペーンが含まれることで韓国のプレイヤーの関心を集めました。シリーズならではの緊迫したシングルキャンペーンとマルチプレイを収録し、PS5・Xbox・PC・Switch 2で10月23日に発売されます。"
     },
     {
       "id": "phantom-blade-zero-2026",
@@ -958,7 +1054,9 @@
         "무협"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4115450/5930310dc5f043a1df400d9dc70ddb43843480fc/header.jpg?t=1780474298",
-      "source_url": "https://www.gematsu.com/2026/06/phantom-blade-zero-delayed-to-october-29"
+      "source_url": "https://www.gematsu.com/2026/06/phantom-blade-zero-delayed-to-october-29",
+      "description_en": "A hardcore action RPG with a wuxia flavor developed by China's S-GAME. Its strengths are fast, flamboyant swordplay and a distinctive setting the studio calls Kung Fu Punk, which caught the attention of soulslike fans from its reveal. Originally planned for September 9, it was delayed to October 29 for additional polish, and releases on PS5 and PC.",
+      "description_ja": "中国のS-GAMEが開発する武侠色の強いハードコアアクションRPGです。速く華麗な剣戟戦闘と、「カンフーパンク」を標榜する独特の世界観が持ち味で、発表当初からソウルライク好きの注目を集めました。当初は9月9日発売予定でしたが完成度向上のため10月29日に延期され、PS5・PCで発売されます。"
     },
     {
       "id": "archeage-chronicles-2026",
@@ -980,7 +1078,9 @@
         "오픈월드"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3218230/header.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=313514"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=313514",
+      "description_en": "An online action RPG in development at XLGAMES that inherits the ArcheAge IP, with Kakao Games handling global service on PC and consoles (PS5 and Xbox Series). Original director Jake Song is involved and the game is built on Unreal Engine 5, set on the continent of Auroria roughly fifty years after the original. Kakao Games has stated it will exclude pay-to-win elements, and the target is Q4 2026.",
+      "description_ja": "XLGAMESが『アーキエイジ』IPを継承して開発中のオンラインアクションRPGで、Kakao GamesがPCおよびコンソール(PS5・Xbox Series)向けにグローバル展開します。原作ディレクターのソン・ジェギョンが参加しUnreal Engine 5で制作されており、原作から約50年後の大陸「オーロリア」を舞台とします。Kakao Gamesはペイ・トゥ・ウィン要素を排除する方針を明らかにしており、2026年第4四半期の発売を目指しています。"
     },
     {
       "id": "chrono-odyssey-2026",
@@ -1002,7 +1102,9 @@
         "MMORPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2873440/header.jpg",
-      "source_url": "https://www.gamemeca.com/view.php?gid=1764420"
+      "source_url": "https://www.gamemeca.com/view.php?gid=1764420",
+      "description_en": "A dark fantasy open-world action RPG developed by NPIXEL and published by Kakao Games. Its defining feature is a time-manipulation system — stopping and rewinding time — woven into both combat and exploration. Leaning on strong Unreal Engine 5 visuals, it targets a Q4 2026 release on PC, PS5 and Xbox Series X|S.",
+      "description_ja": "NPIXELが開発しKakao Gamesが配信するダークファンタジーのオープンワールドアクションRPGです。時間を止めたり巻き戻したりする「時間操作」システムを戦闘と探索の両方に組み込んでいる点が最大の特徴です。Unreal Engine 5による高品質なビジュアルを武器に、PC・PS5・Xbox Series X|Sで2026年第4四半期の発売を目指しています。"
     },
     {
       "id": "eclipse-awakening-2026",
@@ -1023,7 +1125,9 @@
         "MMORPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/VuFYKBA-FTYK2OnAWYNBZ4NPEg_vifHyl4LAHamaxoh7T4l1_Ix3p7uzvT_HOdAzX0QlI5QxEw=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=312884"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=312884",
+      "description_en": "A cross-platform MMORPG developed by NPIXEL and published by Smilegate. It aims to differentiate itself from existing MMORPGs by adding strategic elements that make use of terrain, and it leads with high-quality Unreal Engine 5 graphics. Targeted for a 2026 release on PC, Android and iOS, with an exact date still undecided.",
+      "description_ja": "NPIXELが開発しSmilegateが配信するクロスプラットフォームMMORPGです。地形を活用する戦略要素を導入して既存のMMORPGとの差別化を図っており、Unreal Engine 5による高品質なグラフィックを前面に押し出しています。PC・Android・iOS向けに2026年の発売を目指していますが、正確な日付はまだ未定です。"
     },
     {
       "id": "aion2-global-2026",
@@ -1042,7 +1146,9 @@
         "MMORPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3393110/header.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317153"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317153",
+      "description_en": "The global version of NCSoft's highly anticipated AION 2. It runs as a PC-only release distributed through Steam and NCSoft's own Purple platform, with regional servers and support for ten languages. A September 2026 global launch was announced at Summer Game Fest 2026, though the exact date has not been finalized.",
+      "description_ja": "NCSoftの期待作『アイオン2』のグローバル版です。Steamおよび自社プラットフォーム「PURPLE」を通じたPC専用として展開され、地域別のサーバー運営と10言語に対応します。Summer Game Fest 2026で2026年9月のグローバル正式サービス開始が発表されましたが、正確な日付はまだ確定していません。"
     },
     {
       "id": "lost-ark-mobile-2026",
@@ -1063,7 +1169,9 @@
         "MMORPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/sDHBDB2A2cGfubq8AeiUGSDQwUmo-UZaU6VKEviMYVrI9zRk8NZfWRLixtkzzCIpo0KqviCOmg=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.startuptoday.co.kr/news/articleView.html?idxno=610192"
+      "source_url": "https://www.startuptoday.co.kr/news/articleView.html?idxno=610192",
+      "description_en": "A mobile and PC cross-play version of the globally popular hack-and-slash MMORPG Lost Ark, rebuilt on Unreal Engine 5. The goal is to carry the original's fluid action and vast content library over to mobile hardware. Smilegate RPG is developing it for a 2026 release, with the exact date still undecided.",
+      "description_ja": "世界的に人気のハック&スラッシュMMORPG『ロストアーク』をUnreal Engine 5で再構築した、モバイル・PCクロスプレイ対応版です。原作の爽快なアクションと膨大なコンテンツをモバイル環境に合わせて移植することを目標としています。Smilegate RPGが2026年の発売を目指して開発中で、正確な日付はまだ未定です。"
     },
     {
       "id": "nightcrow2-2026",
@@ -1084,7 +1192,9 @@
         "MMORPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/LNSIjCfNbzGqoPaf8Y1Hby8xg38Saf1TtVbtp6aeU4xOUwDCVR1qL_Z0E8Uqg7dKtmR8LYrE=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.techm.kr/news/articleView.html?idxno=130008"
+      "source_url": "https://www.techm.kr/news/articleView.html?idxno=130008",
+      "description_en": "A sequel MMORPG to the global hit Night Crows, developed by MADNGINE and serviced by Wemade. It is expected to inherit and expand the predecessor's cross-platform large-scale battles. Originally targeted for March 2026, the schedule slipped, and Wemade stated on an earnings call that it plans to launch within the year (exact date undecided).",
+      "description_ja": "グローバルヒット作『ナイトクロウ』の続編MMORPGで、MADNGINEが開発しWemadeが配信します。前作のクロスプラットフォーム大規模戦闘を継承・発展させた作品として期待されています。当初は2026年3月を目標としていましたがスケジュールが後ろ倒しとなり、Wemadeは決算説明会で年内の発売計画を明らかにしています(正確な日付は未定)。"
     },
     {
       "id": "mir5-2026",
@@ -1104,7 +1214,9 @@
         "오픈월드"
       ],
       "image_url": "https://yt3.googleusercontent.com/kKiz_jj4e0kOznZQptVbSGAq_8NGLB72r4xRGgsaYP170OgONliWm21cuRPDtUmbRvB_xqFc=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=240585"
+      "source_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=240585",
+      "description_en": "An open-world PC MMORPG developed by Wemade Next on Unreal Engine 5. It drew attention at reveal for technical experiments such as AI-driven bosses built in collaboration with NVIDIA. It carries on the MIR IP's setting while emphasizing open-world exploration and large-scale battles. Wemade has stated a within-year launch plan, though the schedule remains somewhat fluid due to development rebuilding.",
+      "description_ja": "Wemade NextがUnreal Engine 5で開発するオープンワールドのPC向けMMORPGです。NVIDIAと協力したAIボスなど、新しい技術的な試みで発表当時から注目を集めました。『ミル』IPの世界観を継承しつつ、オープンワールドの探索と大規模戦闘を強調しています。Wemadeは年内の発売計画を示していますが、開発のリビルドにより日程はやや流動的です。"
     },
     {
       "id": "doa6-last-round-20260625",
@@ -1125,7 +1237,9 @@
         "격투"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4144680/e94fe79e24de4c1488f1967f13144c6df66b5b51/header.jpg?t=1780551414",
-      "source_url": "https://blog.playstation.com/2026/02/12/dead-or-alive-6-last-round-launches-on-ps5-june-25-new-game-also-in-development/"
+      "source_url": "https://blog.playstation.com/2026/02/12/dead-or-alive-6-last-round-launches-on-ps5-june-25-new-game-also-in-development/",
+      "description_en": "Effectively the complete edition of Team Ninja's 3D fighting game Dead or Alive 6. It compiles the content released so far, including a 29-fighter roster with five DLC characters and a photo mode, and a free-to-play version arrives the same day. Koei Tecmo also officially confirmed that a new Dead or Alive entry is in development. It releases on PS5, Xbox Series X|S and PC.",
+      "description_ja": "Team Ninjaの3D対戦格闘『DEAD OR ALIVE 6』の完全版にあたる作品です。DLCキャラクター5人を含む29人のロスターやフォトモードなど、これまでのコンテンツを網羅しており、発売日には基本無料版も同時に提供されます。コーエーテクモは併せて次期『DEAD OR ALIVE』新作の開発も公式に認めています。PS5・Xbox Series X|S・PCで発売されます。"
     },
     {
       "id": "got-kingsroad-20260514",
@@ -1147,7 +1261,9 @@
         "오픈월드"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c4/91/a3/c491a32f-0ba6-9fa7-54c7-4521fea7288b/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=316207"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316207",
+      "description_en": "An open-world action RPG set in the world of HBO's Game of Thrones, developed by Netmarble. Set in Westeros at the point of season four, it supports fully manual combat and notably adopts a pass-centered monetization model with no gacha. The PC version launched early on May 14, with the mobile version following on May 21.",
+      "description_ja": "HBOのドラマ『ゲーム・オブ・スローンズ』の世界観を舞台にしたオープンワールドアクションRPGで、ネットマーブルが開発しました。シーズン4時点のウェスタロスを舞台にフルマニュアル戦闘に対応し、ガチャを排してパス中心の課金モデルを採用している点が特徴です。PC版を5月14日に先行リリースし、モバイル版は5月21日に配信されました。"
     },
     {
       "id": "arknights-endfield-20260122",
@@ -1170,7 +1286,10 @@
         "RPG"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/0c/0a/f0/0c0af0d2-123e-adc9-780b-cb1e2d8393af/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=312085"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=312085",
+      "description_en": "A 3D real-time strategy RPG that carries on the popular subculture IP Arknights. It expands the original's setting into 3D, combining base building and automation with real-time combat. It launched globally on January 22 and performed strongly, reaching first place in Japan and third in Korea by revenue within 24 hours. Supported on PC, PS5, Android and iOS.",
+      "description_ja": "人気サブカルチャーIP『アークナイツ』を継承した3Dリアルタイムストラテジー RPGです。原作の世界観を3Dへ拡張し、基地建設や自動化とリアルタイム戦闘を組み合わせています。1月22日に全世界同時配信され、配信24時間の売上で日本1位・韓国3位を記録するヒットとなりました。PC・PS5・Android・iOSに対応しています。",
+      "name_ja": "アークナイツ:エンドフィールド"
     },
     {
       "id": "seven-deadly-sins-origin-20260324",
@@ -1193,7 +1312,9 @@
         "오픈월드"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3679080/86b4734355e3e43b8323426e69d127ce79bab888/header.jpg?t=1778661305",
-      "source_url": "https://www.ajunews.com/view/20260324102010158"
+      "source_url": "https://www.ajunews.com/view/20260324102010158",
+      "description_en": "An open-world action RPG based on the popular manga The Seven Deadly Sins. It is notable as Netmarble's first title with full cross-play across PC, mobile and PS5. After an early release on PS5 and Steam on March 17, it launched globally on March 24 and reached the top six in global Steam revenue.",
+      "description_ja": "人気漫画『七つの大罪』を原作とするオープンワールドアクションRPGです。ネットマーブル初となるPC・モバイル・PS5の完全クロスプレイに対応している点が特徴です。3月17日にPS5・Steamで先行公開された後、3月24日に全世界で正式リリースされ、Steamのグローバル売上トップ6に入る成果を上げました。"
     },
     {
       "id": "mongil-star-dive-20260415",
@@ -1215,7 +1336,9 @@
         "수집형"
       ],
       "image_url": "https://play-lh.googleusercontent.com/cjDSyrhTFt_cq5wO3GOtDOWoiGO2vfxKxRcSUT66Cx8eo-JhYC6FAdvreQIFTXjN9--gWGA46LMJZ9kPRFjFiA=s512",
-      "source_url": "https://zdnet.co.kr/view/?no=20260415102440"
+      "source_url": "https://zdnet.co.kr/view/?no=20260415102440",
+      "description_en": "The official sequel to Netmarble's hit Monster Taming. Built on Unreal Engine 5, it combines monster collection and raising with real-time three-character tag action. It launched globally on mobile and PC (Epic Games Store) simultaneously, with console versions planned within the year.",
+      "description_ja": "ネットマーブルの人気作『モンスター討伐』の公式続編です。Unreal Engine 5を基盤に、モンスターの収集・育成と3人パーティのリアルタイムタッグアクションを組み合わせています。モバイルとPC(Epic Games Store)で全世界同時に配信され、コンソール版も年内の発売が予定されています。"
     },
     {
       "id": "sao-echoes-of-aincrad-20260710",
@@ -1237,7 +1360,9 @@
         "JRPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2244210/header.jpg",
-      "source_url": "https://www.bandainamcoent.com/news/echoes-of-aincrad-launching-this-july"
+      "source_url": "https://www.bandainamcoent.com/news/echoes-of-aincrad-launching-this-july",
+      "description_en": "A new Sword Art Online action RPG from Bandai Namco that reinterprets the Aincrad arc where the series began. It revives the death-game premise aboard the vast floating castle of Aincrad, restarting the adventure from the first and second floors. It releases with Korean language support on July 9 for PS5 and Xbox and July 10 on Steam.",
+      "description_ja": "バンダイナムコが手がける『ソードアート・オンライン』の新作アクションRPGで、シリーズの原点であるアインクラッド編を新たに再解釈した作品です。巨大な浮遊城アインクラッドを舞台としたデスゲームの設定を蘇らせ、第1層・第2層から再び始まる冒険を描きます。PS5・Xboxは7月9日、Steam版は7月10日に韓国語対応で発売されます。"
     },
     {
       "id": "elden-ring-tarnished-edition-switch2-20260828",
@@ -1256,7 +1381,9 @@
         "액션 RPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg",
-      "source_url": "https://en.bandainamcoent.eu/elden-ring/news/elden-ring-tarnished-edition-coming-nintendo-switch-2-august"
+      "source_url": "https://en.bandainamcoent.eu/elden-ring/news/elden-ring-tarnished-edition-coming-nintendo-switch-2-august",
+      "description_en": "A Nintendo Switch 2 exclusive edition that bundles Elden Ring, the definitive soulslike, together with its Shadow of the Erdtree expansion. It adds two new starting classes, new armor sets and customization for the spectral steed Torrent. Bandai Namco has confirmed August 28 as the release date, bringing the sprawling open world to a portable format.",
+      "description_ja": "ソウルライクの代名詞『ELDEN RING』と拡張版『SHADOW OF THE ERDTREE』を一つにまとめたNintendo Switch 2専用版です。新たな開始クラス2種と新規防具、霊馬トレントのカスタマイズなどが追加されています。バンダイナムコが発売日を8月28日と公式に確定しており、広大なオープンワールドを携帯環境でも楽しめます。"
     },
     {
       "id": "star-wars-zero-company-20260827",
@@ -1278,7 +1405,9 @@
         "턴제 택틱스"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2075800/5da4e18b40484133a9f5a45953a2539638f5b29d/header.jpg?t=1780930784",
-      "source_url": "https://ir.ea.com/press-releases/press-release-details/2026/Command-the-Clone-Wars-Most-Cunning-Operatives-in-Star-Wars-Zero-Company-Launching-August-27/default.aspx"
+      "source_url": "https://ir.ea.com/press-releases/press-release-details/2026/Command-the-Clone-Wars-Most-Cunning-Operatives-in-Star-Wars-Zero-Company-Launching-August-27/default.aspx",
+      "description_en": "A single-player turn-based tactics game in the XCOM mold, set during the Clone Wars. Players command a squad through missions, and familiar characters such as Anakin Skywalker appear. Produced by Respawn and EA, it launches globally on PC, PS5 and Xbox Series X|S on August 27, 2026 ($49.99).",
+      "description_ja": "クローン大戦を舞台としたシングルプレイのターン制ストラテジー(XCOM系)です。プレイヤーは分隊を指揮して任務を遂行し、アナキン・スカイウォーカーなど馴染みのあるキャラクターも登場します。RespawnとEAが共同で手がけ、PC・PS5・Xbox Series X|Sで2026年8月27日に全世界同時発売されます(49.99ドル)。"
     },
     {
       "id": "blood-of-dawnwalker-20260903",
@@ -1300,7 +1429,9 @@
         "다크 판타지"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751260/a7062f3b59d491c2678e3fd7ce2672858e480641/header.jpg?t=1780740503",
-      "source_url": "https://www.bandainamcoent.com/news/the-blood-of-dawnwalker-will-launch-september-3-rebel-wolves-revealed-key-details"
+      "source_url": "https://www.bandainamcoent.com/news/the-blood-of-dawnwalker-will-launch-september-3-rebel-wolves-revealed-key-details",
+      "description_en": "The first dark fantasy action RPG from Rebel Wolves, a new studio founded by core developers of The Witcher 3. Set in 14th-century southeastern Europe, it follows Coen, a Dawnwalker caught between human and vampire, who confronts his fate across a day-and-night cycle. Its September 3 release date was confirmed at Summer Game Fest 2026, for PC, PS5 and Xbox Series X|S.",
+      "description_ja": "『ウィッチャー3』の中核開発者が設立した新スタジオRebel Wolvesによる初のダークファンタジーアクションRPGです。14世紀の中世東南ヨーロッパを舞台に、人間と吸血鬼の境界に立つ「ドーンウォーカー」コーエンが昼と夜を行き来しながら運命に立ち向かいます。Summer Game Fest 2026で9月3日の発売日が確定し、PC・PS5・Xbox Series X|Sで発売されます。"
     },
     {
       "id": "dune-awakening-console-20260922",
@@ -1321,7 +1452,9 @@
         "서바이벌 MMO"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1172710/da994ea756677c3d1d9a77accb8596a8661f4cad/header.jpg?t=1780435742",
-      "source_url": "https://www.gematsu.com/2026/06/dune-awakening-for-ps5-xbox-series-launches-september-22"
+      "source_url": "https://www.gematsu.com/2026/06/dune-awakening-for-ps5-xbox-series-launches-september-22",
+      "description_en": "The PS5 and Xbox console version of the open-world survival MMO Dune: Awakening. Set on the desert planet Arrakis, it centers on resource gathering, survival and large-scale cooperation and competition. Announced at the June 2 State of Play for a September 22 release, the same day a single-player mode arrives on all platforms and the game joins Xbox Game Pass on day one.",
+      "description_ja": "オープンワールドサバイバルMMO『Dune: Awakening』のPS5・Xboxコンソール版です。砂の惑星アラキスを舞台に、資源採取と生存、大規模な協力・競争を楽しめます。6月2日のState of Playで発表され9月22日に発売、同日に全プラットフォームへシングルプレイモードが追加され、Xbox Game Passにも初日から対応します。"
     },
     {
       "id": "lineage-classic-server-oren-20260604",
@@ -1341,7 +1474,9 @@
         "신규 서버"
       ],
       "image_url": "https://yt3.googleusercontent.com/vuTar4KHFBtGc4lumZ4AqJ00Ya-NU57BtYQrkG8FuNrKkSAyAuUNzWmyZ6YXZ9HvyMJ78vuP6eI=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://about.ncsoft.com/news/article/lc_update_260527"
+      "source_url": "https://about.ncsoft.com/news/article/lc_update_260527",
+      "description_en": "Oren is a new PvP server for NCSoft's PC MMORPG Lineage Classic, opened alongside the episode update The Cruel Snow Village, Oren. The update added the new Oren region featuring the Ice Queen boss and the magical sanctuary Ivory Tower. As a PvP-focused server it suits players who enjoy competitive content. It opened June 4, 2026.",
+      "description_ja": "NCSoftのPC向けMMORPG『リネージュ クラシック』に、エピソードアップデート「残酷な雪の村、オレン」と同時に開設された新PvPサーバー「オレン」です。ボス「氷の女王」が登場する新地域オレンと、魔法の聖地「象牙の塔」も併せて追加されました。PvPに特化したサーバーのため競争コンテンツを好むプレイヤーに向いています。2026年6月4日オープン。"
     },
     {
       "id": "odin-server-skadi-20260624",
@@ -1363,7 +1498,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c3/c8/0a/c3c80a26-6916-73f4-a338-32573bfb63ee/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
-      "source_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2437758"
+      "source_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2437758",
+      "description_en": "Skadi is a new server opened by Lionheart Studio's cross-platform MMORPG ODIN: Valhalla Rising to mark five years of service. It arrived with the new Sorceress advancement Alchemist and World Stronghold Siege content. Pre-registration ran through June 23, and the game supports cross-play on PC, Android and iOS. The server opened June 24, 2026.",
+      "description_ja": "Lionheart StudioのクロスプラットフォームMMORPG『オーディン:ヴァルハラ ライジング』がサービス5周年を記念して開設した新サーバー「スカディ」です。ソーサレスの新転職「アルケミスト」と「ワールド拠点占領戦」も同時に追加されました。事前登録は6月23日まで実施され、PC・Android・iOSのクロスプレイでプレイできます。2026年6月24日オープン。"
     },
     {
       "id": "resonance-plague-tale-legacy-20260827",
@@ -1385,7 +1522,9 @@
         "어드벤처"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2713000/fd497979801c646561040243e1aa64a73d11f13a/header.jpg?t=1781007567",
-      "source_url": "https://www.focus-entmt.com/en/news/resonance-a-plague-tale-legacy-releases-august-27"
+      "source_url": "https://www.focus-entmt.com/en/news/resonance-a-plague-tale-legacy-releases-august-27",
+      "description_en": "A prequel to the A Plague Tale series, an action adventure developed by Asobo Studio. It carries on the medieval plague setting of the previous games while following a new protagonist, Sofia, on her journey. Emotive storytelling and distinctive presentation are its strengths. It releases on PC, PS5 and Xbox Series X|S, and is available on Xbox Game Pass from day one.",
+      "description_ja": "『A Plague Tale』シリーズの前日譚にあたる、Asobo Studio開発のアクションアドベンチャーです。前作までの中世黒死病の世界観を継承しつつ、新たな主人公ソフィアの旅路を描きます。情感豊かなストーリーテリングと独自の演出が持ち味で、PC・PS5・Xbox Series X|Sで発売され、初日からXbox Game Passでも提供されます。"
     },
     {
       "id": "captain-tsubasa-2-world-fighters-20260827",
@@ -1408,7 +1547,9 @@
         "액션"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2172910/714df3514b1166414caef8c31b092f5786e8245d/header.jpg?t=1780655545",
-      "source_url": "https://www.bandainamcoent.com/news/captain-tsubasa-2-world-fighters-takes-to-the-field-on-august-28-with-preorders-available-now"
+      "source_url": "https://www.bandainamcoent.com/news/captain-tsubasa-2-world-fighters-takes-to-the-field-on-august-28-with-preorders-available-now",
+      "description_en": "A new action soccer game based on the popular football manga Captain Tsubasa. It leans on arcade-style play that recreates the original's signature special shots and dramatic staging. It launches globally on August 27 for PS5, Switch and Xbox Series X|S, with the Steam version following on August 28.",
+      "description_ja": "人気サッカー漫画『キャプテン翼』のIPを基にしたアクションサッカーゲームの新作です。原作の必殺シュートや派手な演出を再現したアーケード感覚のプレイが特徴です。PS5・Switch・Xbox Series X|Sは8月27日、Steam版は8月28日に全世界で発売されます。"
     },
     {
       "id": "halo-campaign-evolved-20260728",
@@ -1430,7 +1571,9 @@
         "액션"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2806050/30d8542d35d7919b34e5f5dbe955d04c3f99e6da/header.jpg?t=1781134451",
-      "source_url": "https://news.xbox.com/en-us/2026/06/07/halo-campaign-evolved-launch-preorder-xbox-games-showcase-2026/"
+      "source_url": "https://news.xbox.com/en-us/2026/06/07/halo-campaign-evolved-launch-preorder-xbox-games-showcase-2026/",
+      "description_en": "A full remake that modernizes the original Halo: Combat Evolved. The story is expanded with three new missions called Operation: Meteorite, set one year before the original. For the first time in the series it also launches on PS5, and it is on Xbox Game Pass from day one. Premium Edition buyers get early access starting July 23.",
+      "description_ja": "初代『Halo: Combat Evolved』を現代的に蘇らせたフルリメイクです。原作の1年前を描く新規ミッション「Operation: Meteorite」3種が追加され、ストーリーが拡張されました。Haloシリーズとして初めてPS5にも同時発売され、Xbox Game Passにも初日から対応します。プレミアムエディションを購入すると7月23日から先行プレイが可能です。"
     },
     {
       "id": "silent-hill-townfall-20260924",
@@ -1451,7 +1594,10 @@
         "어드벤처"
       ],
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/0ed1cb4bc30631f95b92f7f13bb06c15d49b4afa/header.jpg?t=1780437869",
-      "source_url": "https://blog.playstation.com/2026/06/02/silent-hill-townfall-launches-september-24-on-ps5/"
+      "source_url": "https://blog.playstation.com/2026/06/02/silent-hill-townfall-launches-september-24-on-ps5/",
+      "description_en": "A new entry in Konami's flagship horror series Silent Hill, presented together with Annapurna Interactive. It is a first-person psychological horror game set in Scotland that emphasizes stealth and puzzles over combat. It introduces an unusual device: a portable CRT television used to detect nearby danger. It releases on PS5, Steam and Epic Games Store.",
+      "description_ja": "コナミを代表するホラーシリーズ『サイレントヒル』の新作で、Annapurna Interactiveと共同で展開されます。スコットランドを舞台とした一人称視点の心理ホラーで、戦闘よりも潜入とパズルに重点を置いている点が特徴です。携帯型のブラウン管テレビで周囲の危険を察知しながら進む独特の仕掛けを導入しています。PS5・Steam・Epic Games Storeで発売されます。",
+      "name_ja": "サイレントヒル タウンフォール"
     },
     {
       "id": "maplestory-challengers-world-s4-20260618",
@@ -1471,7 +1617,9 @@
         "신규 서버"
       ],
       "image_url": "https://yt3.googleusercontent.com/5Ft_OkHKiP9mz83nczLPgSnGdULpgqVOV1v2Tg7MVMtNd9eCifcdr_MftRf0M1xdOCAjmPNDVW8=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://maplestory.nexon.com/promotion/event/2026/20260618/intro"
+      "source_url": "https://maplestory.nexon.com/promotion/event/2026/20260618/intro",
+      "description_en": "OVERDRIVE is the fourth season of Challengers World, the seasonal server for Nexon's MapleStory. Revealed at the 2026 summer showcase on June 13, it opened after maintenance on June 18. Players can level the new class Lethe, a new season boss named Mayrin was added, and progression support such as Sol Janus is provided. The leveling period runs through September 16.",
+      "description_ja": "ネクソン『メイプルストーリー』のシーズン制サーバー「チャレンジャーズワールド」の第4シーズン「OVERDRIVE」です。2026年夏のショーケース(6/13)で公開され、6月18日のメンテナンス後にオープンしました。新職業「レテ」を育成でき、新シーズンボス「メイリン」が追加されたほか、ソル・ヤヌスなどの育成支援も提供されます。育成期間は9月16日までです。"
     },
     {
       "id": "lostark-loaon-summer-20260620",
@@ -1491,7 +1639,9 @@
         "쇼케이스"
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nCSqRx8E8W8yCJlBSckbAbTLKBNfCMbEGa4qdQE6r9hw=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://newsroom.smilegate.com/news/1780561197"
+      "source_url": "https://newsroom.smilegate.com/news/1780561197",
+      "description_en": "LOA ON Summer 2026 is the online preview event where Smilegate RPG's MMORPG Lost Ark unveils its summer update roadmap. It was streamed live on the official YouTube channel at 4:00 PM on Saturday, June 20, announcing a large update roadmap including a new summer-season class and raids. It gives players an early look at the direction of second-half content.",
+      "description_ja": "Smilegate RPGのMMORPG『ロストアーク』が夏のアップデートロードマップを公開するオンラインプレビュー「2026 ロアオン サマー」です。6月20日(土)午後4時に公式YouTubeで生配信され、夏シーズンの新クラスやレイドなど大規模アップデートのロードマップが発表されました。プレイヤーが下半期のコンテンツの方向性を事前に確認できる場となっています。"
     },
     {
       "id": "gears-of-war-eday-20261006",
@@ -1512,7 +1662,9 @@
         "액션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3010850/header.jpg",
-      "source_url": "https://www.xbox.com/en-US/games/gears-of-war-eday"
+      "source_url": "https://www.xbox.com/en-US/games/gears-of-war-eday",
+      "description_en": "A prequel to the Gears of War series, set fourteen years before the original trilogy. It depicts the first 24 hours of the Locust Horde's invasion of humanity, known as Emergence Day. It is exclusive to Xbox and PC and arrives on Game Pass day one, with a beta for pre-order customers running from August 6.",
+      "description_ja": "『Gears of War』シリーズの前日譚で、オリジナル三部作より14年前を舞台としています。ローカスト軍団が人類に侵攻した「E-Day(Emergence Day)」最初の24時間の死闘を描きます。Xbox・PC独占で発売され、発売日からGame Passにも対応するほか、予約購入者向けのベータが8月6日に実施されます。"
     },
     {
       "id": "hot-wheels-infinite-rush-20260924",
@@ -1535,7 +1687,9 @@
         "오픈월드"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2821390/header.jpg",
-      "source_url": "https://store.steampowered.com/app/2821390/HOT_WHEELS_Infinite_Rush/"
+      "source_url": "https://store.steampowered.com/app/2821390/HOT_WHEELS_Infinite_Rush/",
+      "description_en": "A new open-world racing game built around the popular Hot Wheels toy brand. Set across four islands, it offers modes ranging from classic races to free roaming, with more than 150 collectible vehicles. Revealed at Summer Game Fest 2026, it releases on PC, PS5, Xbox Series X|S and Switch 2.",
+      "description_ja": "人気玩具ブランド「ホットウィール」を題材にしたオープンワールドレーシングの新作です。4つの島を舞台にクラシックレースやフリーローミングなど多彩なモードを備え、150種類以上の車両を収集できます。Summer Game Fest 2026で公開され、PC・PS5・Xbox Series X|S・Switch 2で発売されます。"
     },
     {
       "id": "lineage-m-server-phoenix-20260624",
@@ -1556,7 +1710,9 @@
         "신규 서버"
       ],
       "image_url": "https://play-lh.googleusercontent.com/TSJx_-ml28RDZAN1popUnr2G0AKJS8xeoCh975QKOeF21FQl5J5lNCuJmaOi_7ufCYI=s512",
-      "source_url": "https://about.ncsoft.com/news/article/lineagem_update_260610"
+      "source_url": "https://about.ncsoft.com/news/article/lineagem_update_260610",
+      "description_en": "PHOENIX is the update NCSoft's mobile MMORPG Lineage M is running for its ninth anniversary of service. It reboots the Elf class and opens a new Reboot world, along with various benefits such as TJ coupons and new content. Pre-registration began June 10, and the game is playable on Android and iOS.",
+      "description_ja": "NCSoftのモバイルMMORPG『リネージュM』がサービス9周年を迎えて実施する「PHOENIX」アップデートです。「妖精」クラスのリブートとともに新しいリブートワールドが開設され、TJクーポンなどの各種特典や新コンテンツが追加されました。事前予約は6月10日に開始され、Android・iOSでプレイできます。"
     },
     {
       "id": "aion2-chapter1-sand-frost-20260701",
@@ -1578,7 +1734,9 @@
         "대형 업데이트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/aqqsbPuYk-dU9f0qnyEkHje_IIchFrOhDQfDXozQbD5_n_Hxi18ja4GyEbNYuFD9inoFBUYfZFWK4zSOjsy8Aw=s512",
-      "source_url": "https://www.youtube.com/watch?v=dujrQtmX_5k"
+      "source_url": "https://www.youtube.com/watch?v=dujrQtmX_5k",
+      "description_en": "The Land of Sand and Frost is the first major chapter update for NCSoft's MMORPG AION 2, revealed at the summer showcase on June 14. It raises the level cap to 50 and adds the new Gladiator-style Kwonseong class, while opening new regions for each faction — Eltnen for the Elyos and Morheim for the Asmodians. It supports cross-play on PC, Android and iOS.",
+      "description_ja": "NCSoftのMMORPG『アイオン2』が6月14日の夏のショーケースで公開した初の大型チャプター「砂と霜の地」アップデートです。最高レベルが50に拡張され新クラス「拳聖」が追加されたほか、天族と魔族それぞれの新地域(エルテネン・モルヘイム)が開放されました。PC・Android・iOSのクロスプレイでプレイできます。"
     },
     {
       "id": "mabinogi-mobile-season2-light-dark-20260625",
@@ -1599,7 +1757,9 @@
         "대형 업데이트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/ljE3Q4kOQj0UEjbJoANQpgQ4rxdDvI1h1wARGv6jFgel-5oDIFjfTx2S0nINT8agCEOB_V3C9y61RZFoyLZ4=s512",
-      "source_url": "https://mabinogimobile.nexon.com/Events2026/0611/PreReservation_Season2?channel=2103"
+      "source_url": "https://mabinogimobile.nexon.com/Events2026/0611/PreReservation_Season2?channel=2103",
+      "description_en": "Light and Darkness is the new season update for Nexon devCAT's Mabinogi Mobile. It adds large-scale content including a new story and dungeons, with details revealed through the Big Campfire broadcast on June 19. The update extends the main narrative following season one, and participation rewards were announced via a pre-registration page. Playable on Android and iOS.",
+      "description_ja": "ネクソンdevCATの『マビノギモバイル』が展開する新シーズン「光と闇」アップデートです。新規ストーリーやダンジョンなど大規模なコンテンツが追加され、6月19日の「ビッグキャンプファイア」配信で詳細が公開されました。シーズン1に続く本編の物語を拡張する更新で、事前予約ページを通じて参加報酬も案内されました。Android・iOSでプレイできます。"
     },
     {
       "id": "dnf-empire-knight-female-infighter-20260604",
@@ -1619,7 +1779,9 @@
         "대형 업데이트"
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_mNNiuZVVQsyp4mOY-DWhvKoSxxavyl5QOUUbEZV2NM-Ic=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=316602"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=316602",
+      "description_en": "The June major update for Neople's action RPG Dungeon & Fighter. It adds the new character Imperial Knight, whose first advancement is Breaker, alongside Female Infighter, the fifth advancement for Female Priest. A Summer Festival event running through August 27 accompanies the update.",
+      "description_ja": "NeopleのアクションRPG『ダンジョン&ファイター』の6月の大型アップデートです。最初の転職が「ブレイカー」となる新キャラクター「帝国騎士」と、女プリーストの5番目の転職「女インファイター」が同時に追加されました。夏に合わせて8月27日まで続くサマーフェスティバルイベントも併せて実施されます。"
     },
     {
       "id": "genshin-6-7-luna-viii-20260701",
@@ -1642,7 +1804,10 @@
         "대형 업데이트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/YQqyKaXX-63krqsfIzUEJWUWLINxcb5tbS6QVySdxbS7eZV7YB2dUjUvX27xA0TIGtfxQ5v-tQjwlT5tTB-O=s512",
-      "source_url": "https://game8.co/games/Genshin-Impact/archives/602045"
+      "source_url": "https://game8.co/games/Genshin-Impact/archives/602045",
+      "description_en": "The 6.7 Luna VIII major update for HoYoverse's open-world RPG Genshin Impact. It adds Sandrone, the Marionette and seventh of the Fatui Harbingers, as a new five-star character. Revealed in an official special program on June 18, it rolls out globally on the usual six-week cadence and runs through August 11. Playable on PC, mobile and PS5.",
+      "description_ja": "HoYoverseのオープンワールドRPG『原神』の6.7「Luna VIII」大型アップデートです。ファトゥスの執行官第7位「傀儡」サンドローネが新たな星5キャラクターとして追加されます。6月18日の公式特別番組で公開され、6週間周期で全世界同時に適用、8月11日まで実施されます。PC・モバイル・PS5でプレイできます。",
+      "name_ja": "原神"
     },
     {
       "id": "prasia-summer-festival-20260617",
@@ -1664,7 +1829,9 @@
         "시즌 이벤트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/lylKl6s50qzh2kyfCs544S-vGZvInNhOncJflLv_sxesL4l-qQnVQFYaNRVHEdFbN5cOW5PDtoSVscZrKmW7=s512",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317540"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317540",
+      "description_en": "A large-scale summer season event for Nexon's MMORPG Prasia Chronicle. Running through July 29, it distributes six kinds of WP coupons, transcendence summon gifts and the Shining Summer Seal buff item, alongside a weekly Wednesday Boost-Up Rally through August 5 and 2026 Summer Festival missions through July 15.",
+      "description_ja": "ネクソンのMMORPG『プラシア戦記』の大規模な夏シーズンイベントです。7月29日まで実施され、WPクーポン6種や超越召喚プレゼント、「輝く夏の印章」バフアイテムが配布されるほか、8月5日まで毎週水曜日の「ブーストアップラリー」、7月15日までの「2026 夏祭り」ミッションなどが運営されます。"
     },
     {
       "id": "gta-6-20261119",
@@ -1685,7 +1852,9 @@
         "액션"
       ],
       "image_url": "https://yt3.googleusercontent.com/f0PgbUq0tAdrt_rQxprZdPfgg96y54Ge-LCagXvPzc6gnMiw42w-J-wAZ2n-TfXgB3ASkxk2=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/"
+      "source_url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/",
+      "description_en": "Rockstar Games' blockbuster open-world action adventure, set in Vice City. Its November 19, 2026 release on PS5 and Xbox Series X|S is confirmed, with pre-orders opening June 25. The date was reaffirmed in Rockstar's official announcement and Take-Two's May 21 earnings report. A PC version has yet to be detailed.",
+      "description_ja": "Rockstar Gamesの大作オープンワールドアクションアドベンチャーで、舞台はバイスシティです。2026年11月19日にPS5・Xbox Series X|Sでの発売が確定しており、予約は6月25日に開始されました。Rockstarの公式発表およびTake-Twoの決算発表(5/21)で日程が再確認されています。PC版については後日発表とされています。"
     },
     {
       "id": "the-mound-omen-of-cthulhu-20260715",
@@ -1708,7 +1877,9 @@
         "FPS"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2569760/header.jpg",
-      "source_url": "https://store.steampowered.com/app/2569760/The_Mound_Omen_of_Cthulhu/"
+      "source_url": "https://store.steampowered.com/app/2569760/The_Mound_Omen_of_Cthulhu/",
+      "description_en": "A one-to-four-player cooperative psychological horror game set in H.P. Lovecraft's Cthulhu mythos. Players take on the role of conquistador-era explorers investigating unknown ruins while confronting madness and supernatural phenomena. It emphasizes co-op survival and horror staging, releasing globally on PC, PS5 and Xbox Series X|S.",
+      "description_ja": "H.P.ラヴクラフトのクトゥルフ神話を題材とした1～4人協力プレイの心理ホラーゲームです。コンキスタドール時代の探検家となって未知の遺跡を調査し、狂気や超自然現象に立ち向かいます。協力サバイバルと恐怖演出を重視しており、PC・PS5・Xbox Series X|Sで全世界同時に発売されます。"
     },
     {
       "id": "moss-the-forgotten-relic-20260716",
@@ -1733,7 +1904,9 @@
         "퍼즐"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3914860/header.jpg",
-      "source_url": "https://store.steampowered.com/app/3914860/Moss_The_Forgotten_Relic/"
+      "source_url": "https://store.steampowered.com/app/3914860/Moss_The_Forgotten_Relic/",
+      "description_en": "A reworking of the acclaimed VR adventure series Moss so that it can be played without a VR headset. It brings the Quill Saga, chronicling the adventures of the mouse hero Quill, to PC and consoles with improved visuals and performance plus new content. A Steam demo went live on June 8, and the game releases on PC, PS5, Xbox, Switch and Switch 2.",
+      "description_ja": "VRの名作アドベンチャー『Moss』シリーズをVRなしで楽しめるよう再構成した作品です。ネズミの英雄クイルの冒険を描く「Quill Saga」をPC・コンソールへ移植し、ビジュアルと性能を改善したうえで新規コンテンツを追加しています。Steamのデモが6月8日に先行公開され、PC・PS5・Xbox・Switch・Switch 2で発売されます。"
     },
     {
       "id": "mapleland-burning-world-20260619",
@@ -1756,7 +1929,9 @@
         "신규 월드"
       ],
       "image_url": "https://yt3.googleusercontent.com/5Ft_OkHKiP9mz83nczLPgSnGdULpgqVOV1v2Tg7MVMtNd9eCifcdr_MftRf0M1xdOCAjmPNDVW8=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://maple.land/board/events/zrt6bke4vgf5ufb2lbqi8lyr"
+      "source_url": "https://maple.land/board/events/zrt6bke4vgf5ufb2lbqi8lyr",
+      "description_en": "Burning World is a new limited-time world for MapleLand, the classic MapleStory service, running from June 19, 2026 at 12:00 to September 11 at 05:59. It supports the Adventurer job branches (Warrior, Magician, Bowman, Thief, Pirate) and the Cygnus Knights, and applies a permanent 1.5x experience bonus against monsters below level 120 plus standing attack and magic buffs. After the world closes, character transfers to the main world are supported through September 25, 2026.",
+      "description_ja": "クラシックメイプル『メイプルランド』の新たな期間限定ワールド「バーニングワールド」です(2026年6月19日12:00～9月11日05:59)。冒険家(戦士・魔法使い・弓使い・盗賊・海賊)とシグナス職業群に対応し、Lv120未満のモンスターからの経験値が常時1.5倍になるほか、攻撃力・魔力の常時バフが適用されます。運営終了後は2026年9月25日まで本ワールドへのキャラクター移転(ワールドリープ)が可能です。"
     },
     {
       "id": "lostark-class-dimensioner-20260708",
@@ -1779,7 +1954,9 @@
       "source_url": "https://lostark.game.onstove.com/Promotion/Reservation/260624",
       "pre_registration": false,
       "pre_registration_date": "2026-06-24",
-      "pre_registration_url": "https://lostark.game.onstove.com/Promotion/Reservation/260624"
+      "pre_registration_url": "https://lostark.game.onstove.com/Promotion/Reservation/260624",
+      "description_en": "Dimensioner is a new male Specialist class for Lost Ark, revealed at LOA ON Summer 2026 on June 20. An original class that crosses space and time through illusion magic, it wields the hour and minute hands of a dimensional clock as weapons, and arrives in the official update on July 8. Pre-registration runs June 24 through July 8, rewarding participants with a limited weapon avatar and title.",
+      "description_ja": "『ロストアーク』の新クラス「次元術士」で、6月20日の「2026 ロアオン サマー」で公開された男性スペシャリスト系の職業です。幻影術で時空を行き来し、次元時計の時針・分針を武器として扱うオリジナルクラスで、7月8日に正式アップデートされます。6月24日から7月8日まで事前登録が実施され、参加者には限定武器アバターと称号が贈られます。"
     },
     {
       "id": "lostark-raid-belgardin-20260805",
@@ -1799,7 +1976,9 @@
         "대형 업데이트"
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nCSqRx8E8W8yCJlBSckbAbTLKBNfCMbEGa4qdQE6r9hw=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305574"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305574",
+      "description_en": "Belgardin, Arbiter of Death is the second Shadow (eight-player) raid for Lost Ark, revealed in the LOA ON Summer 2026 roadmap. A new armor slot, gauntlets, is added alongside it, widening character progression. The update is scheduled for August 5 and is high-difficulty content aimed at the game's most advanced players.",
+      "description_ja": "「2026 ロアオン サマー」のロードマップで公開された『ロストアーク』2つ目のシャドウ(8人)レイド「死の戒律者ベルガルディン」です。新たな防具部位「腕甲」も同時に追加され、キャラクター育成の幅が広がります。8月5日のアップデートが予定されており、最上位プレイヤー向けの高難度コンテンツです。"
     },
     {
       "id": "maplestory-class-rethe-20260618",
@@ -1819,7 +1998,9 @@
         "신규 직업"
       ],
       "image_url": "https://yt3.googleusercontent.com/5Ft_OkHKiP9mz83nczLPgSnGdULpgqVOV1v2Tg7MVMtNd9eCifcdr_MftRf0M1xdOCAjmPNDVW8=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317443"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317443",
+      "description_en": "Lethe, Ruler of Oaths, is the new class added in the first wave of MapleStory's summer OVERDRIVE update. A demon mage hailing from Masteria, Lethe plays distinctively by commanding summons in battle. After a test world period beginning June 13, the class went live on the main servers on June 18.",
+      "description_ja": "『メイプルストーリー』の夏アップデート「OVERDRIVE」第1弾として追加された新職業「誓約の支配者レテ」です。マスタリア出身の魔族の魔法使いで、召喚獣を操って戦う独特のプレイスタイルが特徴です。6月13日のテストワールドを経て、6月18日に本サーバーへ適用されました。"
     },
     {
       "id": "hsr-fate-collab-holy-grail-20260724",
@@ -1842,7 +2023,10 @@
         "콜라보 이벤트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/aWrGocSA7hEuk1qAPe7L4T57LvLKrwwH26cK2_LOqxRQMQX7j3uHYojC-EKWgYEV2PdrmE0ahqvvhLhXrAGk6Q=s512",
-      "source_url": "https://bbs.ruliweb.com/news/board/300001/read/2354001"
+      "source_url": "https://bbs.ruliweb.com/news/board/300001/read/2354001",
+      "description_en": "The second Honkai: Star Rail collaboration with Fate/stay night [Unlimited Blade Works], titled Phantom Tide: Holy Grail War. The collaboration warp opens July 24 at 13:00 KST, featuring limited five-star Rin Tohsaka, with one of Gilgamesh or Archer obtainable for free. It runs as the summer collaboration event of the 4.x version cycle.",
+      "description_ja": "『崩壊:スターレイル』と『Fate/stay night [Unlimited Blade Works]』の第2弾コラボ「幻潮:聖杯戦争」です。7月24日13時(KST)にコラボ限定ワープが開放され、限定★5「遠坂凛」が登場するほか、「ギルガメッシュ」「アーチャー」のいずれか1人を無料で入手できます。4.xバージョンの夏のコラボイベントとして実施されます。",
+      "name_ja": "崩壊:スターレイル"
     },
     {
       "id": "eos-black-server-maroon-ruth-camp-20260625",
@@ -1864,7 +2048,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ff/14/6b/ff146b23-76d8-6651-a6ca-057db0f39463/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://eos-black.com/#Newserver"
+      "source_url": "https://eos-black.com/#Newserver",
+      "description_en": "Maroon Camp and Ruth Camp are the first boosting servers opened for EOS Black's second anniversary, operating from June 25 until maintenance on August 20. They apply a 222% experience buff, hand out mythic and legendary gear sets, and keep class change permanently available; when they close, characters merge into the existing Maroon and Ruth servers. Pre-registration ran June 2 to noon on June 23, with pre-download on June 19.",
+      "description_ja": "『エオスブラック』2周年を記念した初のブースティングサーバー「マルーンキャンプ」「ルースキャンプ」です(運営期間:6/25～8/20のメンテナンス前)。経験値222%バフを適用し、神話・伝説セット装備を配布、クラスチェンジを常時開放しており、終了後は既存サーバー(マルーン・ルース)へ合流します。事前予約は6/2から6/23正午まで、事前ダウンロードは6/19に実施されました。"
     },
     {
       "id": "azur-promilia-2026",
@@ -1889,7 +2075,9 @@
       "image_url": "https://yt3.googleusercontent.com/4ECqQSFLWeAOl22FQh89sXWhL3hw7ox6MjvW47hMYw9XXZ7f6SwdL9Lr4a6rbO-HnfHEYjg=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://azurpromilia.nexon.com/events/2025/12/preregistration",
       "pre_registration": true,
-      "pre_registration_url": "https://azurpromilia.nexon.com/events/2025/12/preregistration"
+      "pre_registration_url": "https://azurpromilia.nexon.com/events/2025/12/preregistration",
+      "description_en": "A PC and mobile open-world RPG developed by Manjuu, the studio behind Azur Lane, with Nexon handling service in Korea. Players explore a wide open world alongside spirit-like companions called Kibo, taking part in life content such as gathering and building in addition to combat. Its appealing anime-style visuals and subculture sensibility have driven anticipation. A 2026 release is targeted, but no exact date has been announced.",
+      "description_ja": "『アズールレーン』で知られるManjuu Gamesが開発するPC・モバイル向けオープンワールドRPGで、韓国国内の配信はネクソンが担当します。精霊のような仲間「キボ」とともに広大なオープンワールドを探索し、戦闘だけでなく採集や建築といった生活コンテンツも楽しめる点が特徴です。美しいアニメ調のビジュアルとサブカルチャー的な感性で期待を集めており、2026年の発売を目指していますが正確な日付はまだ公開されていません。"
     },
     {
       "id": "zeus-god-of-arrogance-2026",
@@ -1912,7 +2100,9 @@
       ],
       "pre_registration": true,
       "pre_registration_date": "2026-07-01",
-      "pre_registration_url": "https://zeus.com2us.com/"
+      "pre_registration_url": "https://zeus.com2us.com/",
+      "description_en": "A mobile MMORPG built around the absolute power of Zeus, chief god of Greek myth, the arrogance it breeds, and the cracks that follow. Com2uS is publishing while Averton develops on Unreal Engine 5, with cooperation and conflict between factions and a broad progression system as the core draw. Targeting a Q3 2026 release, pre-registration opens July 1 on the official site and both app stores.",
+      "description_ja": "ギリシャ神話の主神ゼウスの絶対的な権力と、そこから生まれる傲慢、そしてその亀裂を題材にしたモバイルMMORPGです。Com2uSが配信し、AvertonがUnreal Engine 5で開発中で、勢力間の協力・対立と幅広い育成システムを中心的な魅力として掲げています。2026年第3四半期の発売を目指し、7月1日から公式サイトと両アプリストアで事前予約を受け付けます。"
     },
     {
       "id": "dokkaebi-world-2026",
@@ -1932,7 +2122,9 @@
         "MMORPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/3YwmjCsSI8oN_W6N8D4zi5AtY0ZzBaWN-OedH82hcyFhS1OzevYxIq1bv9lLRIs0rjS77eIP=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317005"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317005",
+      "description_en": "A K-fantasy mobile MMORPG published by Kakao Games and developed by SuperCat. Based on the popular web novel Myeolgwisudojeon, it draws on Korean folklore and dokkaebi mythology. Its signature features are 2.5D graphics that pair 2D pixel characters with 3D backgrounds, skill deck building that dissolves rigid class boundaries, and clan-centered cooperative content. Targeting Q3 2026, with pre-registration in July and an online showcase in August.",
+      "description_ja": "Kakao Gamesが配信しSuperCatが開発するKファンタジーのモバイルMMORPGです。人気ウェブ小説『滅鬼修道伝』のIPを原作に、韓国の伝統説話とトッケビの題材を展開します。2Dドット絵のキャラクターと3D背景を組み合わせた2.5Dグラフィック、職業の境界を取り払ったスキルデッキビルディング、門派中心の協力コンテンツを特徴としています。2026年第3四半期の発売を目指し、7月の事前登録と8月のオンラインショーケースが予定されています。"
     },
     {
       "id": "dave-the-diver-mobile-2026",
@@ -1955,7 +2147,10 @@
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_k8ZeI5eV_JDhME9IMb_u6j_P9_64O-689b6ty1n601rQ=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317953",
       "pre_registration": true,
-      "pre_registration_url": "https://play.google.com/store/apps/details?id=com.mintrocket.drmobile"
+      "pre_registration_url": "https://play.google.com/store/apps/details?id=com.mintrocket.drmobile",
+      "description_en": "A mobile port of Dave the Diver, the hybrid ocean adventure that launched on PC in 2023 to strong reviews. MINTROCKET develops and Nexon services it. It keeps the game's unusual structure — diving and hunting sea life by day, running a sushi restaurant by night — while adding mobile controls such as tilt and touch input plus quality-of-life features. It is sold as a paid package, and pre-registration opened on both stores in Korea and globally on June 29, 2026.",
+      "description_ja": "2023年にPCで発売され高い評価を得たハイブリッド海洋アドベンチャー『デイヴ・ザ・ダイバー』のモバイル移植版です。MINTROCKETが開発しネクソンが配信します。昼は海を探索して海洋生物を狩り、夜は寿司屋を経営するという独特の構造をそのままに、傾け操作やタッチなどモバイル向けの操作と利便機能を追加しています。有料パッケージ形式で、2026年6月29日に韓国および全世界の両ストアで事前予約が開始されました。",
+      "name_ja": "デイヴ・ザ・ダイバー"
     },
     {
       "id": "yulhyeolgangho-next-2026",
@@ -1978,7 +2173,9 @@
       "image_url": "https://yt3.googleusercontent.com/lwyQDbl9mONAbQt0t9UnD8vHSZBwR37v9rA98LGFHOXT5isNvSig5QxzqByjm_pcdPf-Bm0jTA=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317948",
       "pre_registration": true,
-      "pre_registration_url": "https://yulgang-next.com/"
+      "pre_registration_url": "https://yulgang-next.com/",
+      "description_en": "A wuxia MMORPG based on Yulhyeolgangho, the Korean martial-arts comic marking its 32nd year of serialization. FunGames develops and Kingnet services it. It reinterprets the original's youthful wuxia tone and jianghu setting through cel-shaded graphics, offering five classes — Blade, Sword, Spear, Bow and Physician — martial-arts combo combat, and PC-mobile cross-play. Pre-registration opened on Google Play, the App Store and ONE Store on June 29, 2026.",
+      "description_ja": "連載32周年を迎えた韓国の武侠漫画『熱血江湖』のIPを基にした武侠MMORPGです。FunGamesが開発しKingnetが配信します。原作の青春武侠らしい雰囲気と江湖の世界観をカートゥーンレンダリングのグラフィックで再解釈し、刀武士・剣武士・槍武士・弓武士・医員の5職業と武功の組み合わせによる戦闘、PC・モバイルのクロスプレイに対応します。2026年6月29日にGoogle Play・App Store・ONE Storeなどで事前予約が始まりました。"
     },
     {
       "id": "miresi-2026",
@@ -2001,7 +2198,9 @@
       "image_url": "https://yt3.googleusercontent.com/6GlPK0hdH8XoSHG4smWp9q1esOFlniaFq7o-8eWoYy8xxwIrV8rPGyrvwpA0Xin2TNE55QPOHj0=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317762",
       "pre_registration": true,
-      "pre_registration_url": "https://miresi.onstove.com/ko/home"
+      "pre_registration_url": "https://miresi.onstove.com/ko/home",
+      "description_en": "A subculture collectible RPG serviced by Smilegate and developed by Control Nine. Its setting revolves around collecting and raising characters, and it is being prepared as a cross-platform title supporting both PC and mobile. A pre-registration page opened through STOVE on June 24, 2026, with the official release date to be announced later.",
+      "description_ja": "Smilegateが配信しControl Nineが開発するサブカルチャー系の収集型RPGです。キャラクターの収集と育成を中心とした世界観を掲げており、PCとモバイルの両方に対応するクロスプラットフォームタイトルとして準備が進められています。2026年6月24日にSTOVEを通じて事前予約ページが開設され、正式な発売日は後日公開予定です。"
     },
     {
       "id": "solo-leveling-karma-2026",
@@ -2023,7 +2222,9 @@
       ],
       "image_url": "https://yt3.googleusercontent.com/kA4hDpIA7xYvmG7tSrdDYRIaIs5r5vCvxfqH1IleVM4Ujj2i9IqthXuutOV8E5waw8ur2MyJYg=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=316202",
-      "pre_registration": false
+      "pre_registration": false,
+      "description_en": "A new Netmarble title using the globally successful Solo Leveling webtoon and anime IP, in development as an action RPG with roguelite elements. Netmarble Neo is handling development, and the game is planned for mobile and PC. Netmarble listed it in its second-half 2026 lineup, with further details due at Anime Expo in early July.",
+      "description_ja": "世界的にヒットしたウェブトゥーン・アニメ『俺だけレベルアップな件』のIPを活用したネットマーブルの新作で、ローグライト要素を取り入れたアクションRPGとして開発されています。開発はネットマーブルネオが担当し、モバイルとPCでの発売が予定されています。ネットマーブルが2026年下半期のラインナップとして公開しており、7月初旬のAnime Expoで追加情報が公開される予定です。"
     },
     {
       "id": "dnf-idle-2026",
@@ -2044,7 +2245,9 @@
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_mNNiuZVVQsyp4mOY-DWhvKoSxxavyl5QOUUbEZV2NM-Ic=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=314919",
-      "pre_registration": false
+      "pre_registration": false,
+      "description_en": "A new RPG that reinterprets Nexon's flagship Dungeon & Fighter IP as an idle progression game. It carries the original's characters and action elements into lighter play centered on automatic growth. It targets global markets excluding China and Japan, aiming for a release within 2026.",
+      "description_ja": "ネクソンの代表的IP『ダンジョン&ファイター』を放置型(育成)ジャンルとして再解釈した新作RPGです。原作のキャラクターとアクション要素を、自動成長を中心とした手軽なプレイに落とし込んでいる点が特徴です。中国・日本を除くグローバル市場を狙い、2026年内の発売を目指しています。"
     },
     {
       "id": "nightcrows-5th-class-20260716",
@@ -2065,7 +2268,9 @@
         "MMORPG"
       ],
       "image_url": "https://play-lh.googleusercontent.com/TjjQk-u1yoZ-9pWHa6vMqY46rN7NhyVGVrb9yZ54nJdzj8U1LwsWj91KzJFKwRliFg=s512",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305182"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305182",
+      "description_en": "A major second-half update for Wemade's MMORPG Night Crows, going live July 16. It adds the fifth advancement, a new progression tier for top-end characters who have completed fourth awakening, along with the guild-exclusive Guild Hideout space, the higher-grade Immortal Elements, new party content that tackles bosses in sequence, and a reworked PvP ranking system.",
+      "description_ja": "WemadeのMMORPG『ナイトクロウ』が7月16日に実施する下半期の大型アップデートです。4次覚醒を終えた最上位キャラクター向けの新たな育成段階「5次転職」が追加されるほか、ギルド専用空間「ギルドアジト」、上位等級の「不滅元素」、ボスを順に攻略する新パーティコンテンツ、PvPランキングの刷新が同時に適用されます。"
     },
     {
       "id": "palworld-1-0-20260710",
@@ -2088,7 +2293,10 @@
         "크래프팅"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/header.jpg",
-      "source_url": "https://store.steampowered.com/app/1623730/Palworld/"
+      "source_url": "https://store.steampowered.com/app/1623730/Palworld/",
+      "description_en": "Palworld, the Pal-collecting survival and crafting open-world game, leaves early access for its 1.0 release. Announced at Summer Game Fest 2026, the update adds a new region called the World Tree along with additional Pals and content. It launches simultaneously on PC (Steam), PS5, Xbox and Game Pass, and existing owners upgrade for free.",
+      "description_ja": "パルの収集・生存・製作を軸としたオープンワールド『パルワールド』が、アーリーアクセスを終えて1.0正式版として発売されます。Summer Game Fest 2026で公開された日程で、新地域「世界樹」や追加のパル・コンテンツが加わります。PC(Steam)・PS5・Xbox・Game Passで同時に配信され、既存の所有者は無料でアップグレードされます。",
+      "name_ja": "パルワールド"
     },
     {
       "id": "kusan-city-of-wolves-20260730",
@@ -2111,7 +2319,9 @@
         "액션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1714510/header.jpg",
-      "source_url": "https://store.steampowered.com/app/1714510/Kusan_City_of_Wolves/"
+      "source_url": "https://store.steampowered.com/app/1714510/Kusan_City_of_Wolves/",
+      "description_en": "A hardcore top-down shooter built over eight years by Korean studio Circle From Dot. Inspired by Hotline Miami, it delivers stylish combat that chains melee and gunplay in the vein of John Wick. It is set in a city where Korean traditional culture is reimagined through a futuristic lens, with hip-hop producer Loptimist handling the soundtrack. It releases July 30 on PC, PS5, Xbox and Switch.",
+      "description_ja": "韓国のデベロッパーCircle From Dotが8年をかけて制作したハードコアなトップダウンシューターです。『Hotline Miami』に着想を得ており、ジョン・ウィックのように近接と銃撃をつなぐスタイリッシュな戦闘を実現しています。韓国の伝統文化を未来志向に再解釈した都市を舞台とし、ヒップホッププロデューサーのLoptimistがサウンドトラックを手がけました。PC・PS5・Xbox・Switchで7月30日に発売されます。"
     },
     {
       "id": "mistfall-hunter-20260729",
@@ -2133,7 +2343,9 @@
         "익스트랙션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3282300/header.jpg",
-      "source_url": "https://store.steampowered.com/app/3282300/Mistfall_Hunter/"
+      "source_url": "https://store.steampowered.com/app/3282300/Mistfall_Hunter/",
+      "description_en": "A third-person PvPvE extraction action RPG developed by Veiled Games and serviced by Skystone Games. It combines soulslike combat with exploration of a mist-shrouded world and supports cross-play within the same server. Following an open beta from June 14 to 22, it launches worldwide on July 29; on Steam the time difference puts the opening in the early hours of July 30.",
+      "description_ja": "Veiled Gamesが開発しSkystone Gamesが配信する三人称視点のPvPvE抽出(エクストラクション)アクションRPGです。ソウルライクの戦闘と霧に沈んだ世界の探索を組み合わせ、同一サーバー内でのクロスプレイに対応します。オープンベータ(6/14～22)を経て7月29日に全世界同時発売され、Steamでは時差の関係で7月30日未明に開始されます。"
     },
     {
       "id": "lordnine-2nd-anniv-5th-relic-20260708",
@@ -2155,7 +2367,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b6/23/5d/b6235d73-5607-1542-7682-98893eb2091b/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305684"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305684",
+      "description_en": "The second update revealed at the June 23 online showcase marking two years of Lord Nine's service. In July it adds the fifth relic, Stigma of Silence, which reduces incoming skill damage and can be raised to a certain level by any player, along with an awakened Void Destroyer boss expanding on existing Destroyer raids, and a guild-level server transfer feature. New mounts and ability books are provided as rewards.",
+      "description_ja": "サービス2周年を記念した6月23日のオンラインショーケースで公開された第2弾アップデートです。7月には5つ目の聖物「静寂の聖痕」(スキルダメージを軽減し、一定水準までは誰でも育成可能)と、既存の破壊者討伐を拡張した覚醒(虚空の)破壊者ボス、ギルド単位でのサーバー移転機能が追加されます。新規の騎乗物やアビリティブックなどの報酬も併せて提供されます。"
     },
     {
       "id": "lies-of-p-complete-edition-switch2-20260806",
@@ -2175,7 +2389,9 @@
         "소울라이크"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1627720/header.jpg",
-      "source_url": "https://bbs.ruliweb.com/news/read/225616"
+      "source_url": "https://bbs.ruliweb.com/news/read/225616",
+      "description_en": "Neowiz's soulslike action RPG Lies of P comes to Nintendo Switch 2. Set in the Belle Epoque-styled city of Krat, it tells an unusual story in which the puppet Pinocchio grows closer to humanity by telling lies. This digital bundle combines the base game with the Overture expansion, releasing August 6 with pre-orders open on the Nintendo eShop. A physical edition is planned separately for October 2.",
+      "description_ja": "ネオウィズのソウルライクアクションRPG『Lies of P』がNintendo Switch 2で発売されます。ベル・エポック風の都市「クラット」を舞台に、人形ピノキオが嘘を重ねることで人間に近づいていく独特の物語を描きます。本編と拡張DLC「序曲」をまとめたデジタル同梱版で、8月6日に正式発売され、ニンテンドーeショップで予約を受け付けます。パッケージ版は10月2日に別途発売予定です。"
     },
     {
       "id": "kyoto-xanadu-blooming-phantom-20260716",
@@ -2197,7 +2413,9 @@
         "액션 RPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4449410/header.jpg",
-      "source_url": "https://www.cloudedleopardent.com/kr/news/9238/"
+      "source_url": "https://www.cloudedleopardent.com/kr/news/9238/",
+      "description_en": "A brand-new entry in Nihon Falcom's Xanadu series. An action RPG set in Kyoto that revolves around the otherworldly realm of Xanadu, its Korean version releases simultaneously on Steam, PS5 and Nintendo Switch/Switch 2 on July 16, 2026. A Limited Edition with bonus items is available alongside the standard release.",
+      "description_ja": "日本ファルコムの『ザナドゥ』シリーズの完全新作です。京都を舞台に異界ザナドゥをめぐる物語を描くアクションRPGで、韓国語版が2026年7月16日にSteam・PS5・Nintendo Switch/Switch 2で同時発売されます。通常版に加えて特典を収録したリミテッドエディションも発売されます。"
     },
     {
       "id": "higan-eruthyll-kr-2026",
@@ -2222,7 +2440,9 @@
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317978",
       "pre_registration": true,
       "pre_registration_date": "2026-06-30",
-      "pre_registration_url": "https://higaneruthyll.nexon.com/pre-registration"
+      "pre_registration_url": "https://higaneruthyll.nexon.com/pre-registration",
+      "description_en": "A subculture collectible 3D RPG developed by bilibili. Nexon is servicing it in Korea as the first title under its new publishing brand select all, presenting a 2.0 remake version with substantially reworked gameplay and characters. Appealing character collection and raising plus strategic combat are the core, and it supports both PC and mobile. Domestic pre-registration opened June 30, 2026, with the release date not yet announced.",
+      "description_ja": "bilibiliが開発したサブカルチャー系の収集型3D RPGです。ネクソンが新しいパブリッシングブランド「select all」の第1弾タイトルとして韓国国内で配信し、ゲーム性とキャラクターを大幅に改善した2.0リメイク版を展開します。魅力的なキャラクターの収集・育成と戦略的な戦闘が中心で、PCとモバイルの両方に対応します。2026年6月30日に韓国国内の事前登録が開始され、正式な発売日はまだ公開されていません。"
     },
     {
       "id": "rf-online-next-lavaron-20260701",
@@ -2244,7 +2464,9 @@
         "대형 업데이트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/IkNZqliSHoIRoWo-SFO0b8pzt53n1Epi-Tf9p8LbwczkafXbMcuQTpmgpdU-DIKeamrQoyqgRQTars9qnpe0Gg=s512",
-      "source_url": "https://www.betanews.net/article/view/beta202606240042"
+      "source_url": "https://www.betanews.net/article/view/beta202606240042",
+      "description_en": "A major update for Netmarble's sci-fi MMORPG RF Online Next, opening the new region Lavaron on July 1, 2026. It adds hunting grounds for levels 104 to 117 and the top-tier Cordis Crater zone, along with field and world bosses, mythic-grade weapon skins and new costumes. It supports cross-play on PC, Android and iOS.",
+      "description_ja": "ネットマーブルのSF MMORPG『RFオンライン ネクスト』の大規模アップデートで、新地域「ラバロン」が2026年7月1日に開放されました。104～117レベルの狩場と最上位区域「コルディス噴火口」が追加され、フィールドボス・ワールドボスや神話等級の武器形状、新規コスチュームなども併せて導入されました。PC・Android・iOSのクロスプレイでプレイできます。"
     },
     {
       "id": "windrunner-idle-2026",
@@ -2269,7 +2491,9 @@
       "pre_registration": true,
       "pre_registration_date": "2026-06-16",
       "pre_registration_end_date": null,
-      "pre_registration_url": null
+      "pre_registration_url": null,
+      "description_en": "An idle RPG developed by Lightcon, a subsidiary of Wemade Max, reinterpreting the casual WindRunner IP — which has topped 60 million cumulative downloads — as a progression game. Players build growth routes by combining around 150 heroes, summons and mounts, with a combo system that adds damage as chains build and a real-time PvP Arena. Pre-registration is underway in Korea and Taiwan, with a July release announced.",
+      "description_ja": "ウィメイドマックスの子会社Lightconが開発した放置型RPGで、累計6000万ダウンロードを記録したカジュアルIP『ウィンドランナー』を育成型ゲームとして再解釈した作品です。150種類ほどの英雄・召喚獣・騎乗物を組み合わせて育成ルートを構築でき、コンボが重なるほど追加ダメージを与えるコンボシステムとリアルタイムPvP「アリーナ」を備えています。韓国・台湾で事前予約が進行中で、7月の正式リリースが予告されています。"
     },
     {
       "id": "cookierun-crumble-20260729",
@@ -2293,7 +2517,9 @@
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317911",
       "pre_registration": true,
       "pre_registration_date": "2026-06-29",
-      "pre_registration_url": "https://pre.cookieruncrumble.com/ko"
+      "pre_registration_url": "https://pre.cookieruncrumble.com/ko",
+      "description_en": "A CookieRun IP mobile idle RPG from Studio Kingdom, a development studio under Devsisters. Often referred to as CookieRun Idle, it pairs the convenience of the idle genre — cookies grow without constant input — with the fun of combining cookies and pets strategically. Global pre-registration opened June 29 on Google Play, the App Store, Galaxy Store and ONE Store, ahead of the July 29 release.",
+      "description_ja": "デブシスターズの開発スタジオStudio Kingdomが手がけるクッキーランIPのモバイル放置型RPGです。「クッキーラン育成」とも呼ばれ、手をかけなくてもクッキーが成長する放置ジャンルの手軽さに、クッキーやペットを戦略的に組み合わせる面白さを加えています。6月29日にGoogle Play・App Store・Galaxy Store・ONE Storeでグローバル事前登録が始まり、7月29日の正式リリースを控えています。"
     },
     {
       "id": "samgukji-chunhagyeoljeon-20260702",
@@ -2314,7 +2540,9 @@
         "SLG"
       ],
       "image_url": "https://play-lh.googleusercontent.com/rG1RyXnhrSZk0-Huvu-x4lLJivzk5QgQ2w9-5LYFHGUsEJG2suk-SbLFT7Nkuz99Y56lXBkKfRudyoUWthbY=s512",
-      "source_url": "https://www.gamemeca.com/en/view.php?gid=1776429"
+      "source_url": "https://www.gamemeca.com/en/view.php?gid=1776429",
+      "description_en": "A large-scale Three Kingdoms strategy simulation (SLG) serviced in Korea by bilibili Games. It features strategic unit composition through six role systems — Advance, Healing, Cavalry, Artillery, Scouting and Logistics — and alliance-driven real-time siege warfare at scale. It promotes a monetization structure that excludes resource, acceleration and VIP sales, and after passing one million domestic pre-registrations it launched on July 2, 2026.",
+      "description_ja": "bilibili Gamesが韓国国内で配信する三国志題材の大規模ストラテジーシミュレーション(SLG)です。進軍・青嚢・騎佐・穿空・神行・兵站の6大職業システムによる戦略的な部隊編成と、同盟中心の大規模リアルタイム攻城戦が特徴です。資源・加速・VIP販売を排した課金構造を掲げており、韓国国内の事前予約100万人を突破して2026年7月2日に正式リリースされました。"
     },
     {
       "id": "arthdal-server-newworld-20260714",
@@ -2335,7 +2563,9 @@
         "신규 서버"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a5/37/c5/a537c519-66d4-42d3-1b97-299176d5602c/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg",
-      "source_url": "https://www.betanews.net/article/view/beta202607030037"
+      "source_url": "https://www.betanews.net/article/view/beta202607030037",
+      "description_en": "A new server for Netmarble's cross-platform MMORPG Arthdal Chronicles. Built as a farming-focused server that removes four kinds of paid summon gacha, it reworks operations so that spirit, mount and weapon-skin summon tickets are obtained purely through field exploration and content play. It opens July 14, 2026, with pre-registration running beforehand on the official site.",
+      "description_ja": "ネットマーブルのクロスプラットフォームMMORPG『アスダル年代記』が開設する新サーバーです。有料召喚ガチャ4種を廃した「ファーミング中心」のサーバーで、精霊・騎乗物・武器外形の召喚券をフィールド探索とコンテンツプレイのみで獲得できるよう運営方式を刷新しました。2026年7月14日にオープンし、それに先立って公式サイトで事前登録が実施されます。"
     },
     {
       "id": "doom-dark-ages-revelations-20260708",
@@ -2358,7 +2588,9 @@
         "DLC"
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nOSXVCnVUpxMHW5w00je-E2ZkRMmdD1Sfi2CfClLfh1Q=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.gamemeca.com/view.php?gid=1776165"
+      "source_url": "https://www.gamemeca.com/view.php?gid=1776165",
+      "description_en": "The first campaign expansion for DOOM: The Dark Ages. Set in a frozen hell, it delivers a new campaign that opens another chapter in the Slayer's legend. Announced at the Xbox showcase, it releases July 8 in Korea. Premium Edition and Collector's Bundle owners can play it at no additional cost.",
+      "description_ja": "『DOOM: The Dark Ages』初のキャンペーン拡張パックです。凍てついた地獄を舞台に、スレイヤーの伝説の新たな章を描く新規キャンペーンを収録しています。Xboxショーケースで公開され、韓国では7月8日に発売されます。プレミアムエディションおよびコレクターズバンドルの購入者は追加費用なしでプレイできます。"
     },
     {
       "id": "the-relic-first-guardian-20260731",
@@ -2379,7 +2611,9 @@
         "다크 판타지"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2827820/header.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=318032"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=318032",
+      "description_en": "A dark fantasy action RPG that reinterprets and weaves in Korean folklore. Rather than levels, progression comes from building your own build out of equipment and relics. After roughly six years of development it launches first on PS5 and PC (Steam) on July 31, with Xbox Series X|S and Nintendo Switch 2 versions planned for later in the summer.",
+      "description_ja": "韓国の説話を再解釈して取り込んだダークファンタジーのアクションRPGです。レベルの代わりに装備と遺物で自分だけのビルドを構築する育成方式が特徴です。約6年の開発期間を経て7月31日にPS5とPC(Steam)で先行発売され、Xbox Series X|SおよびNintendo Switch 2版は夏の後半に発売が予定されています。"
     },
     {
       "id": "tower-of-god-3rd-anniv-20260722",
@@ -2401,7 +2635,9 @@
         "대규모 업데이트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/0iNlsT9AMnxLalmfGIrDQor5kEkrG8NrY0lzxI-zLCOHRQdJkTUJXt3Ry4PudQxaRf6z4ofvw2AYPBuwyrkLMQ=s512",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305676"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305676",
+      "description_en": "A major update marking three years of service for Netmarble's collectible RPG Tower of God: NEW WORLD. Beginning with the addition of the new SSR+ companion Repellista, it brings anniversary content and login reward events, with pre-registration opening ahead of the update. It is scheduled to go live on July 22, 2026.",
+      "description_ja": "ネットマーブルの収集型RPG『神之塔:NEW WORLD』が実施するサービス3周年記念の大型アップデートです。新規仲間「レペリスタ」(SSR+)の追加を皮切りに、3周年コンテンツやログイン報酬イベントが用意され、アップデートに先立って事前登録を受け付けます。2026年7月22日の適用が予定されています。"
     },
     {
       "id": "dragonsword-awakening-20260723",
@@ -2422,7 +2658,9 @@
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4570720/header.jpg",
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317266",
-      "pre_registration": false
+      "pre_registration": false,
+      "description_en": "An anime-styled open-world action RPG developed and self-published by HOUND13. The studio ended its previous publishing deal with Webzen and shifted direction to a gacha-free single-player buy-to-play package released globally through Steam. Players recruit distinctive companions for flashy tag-based action while exploring the continent of Orbis. It launches July 23 at 7:00 AM KST.",
+      "description_ja": "HOUND13が開発し自社配信するアニメ調のオープンワールドアクションRPGです。既存のWebzenとのパブリッシング契約を解消し、ガチャのないシングルプレイのパッケージ(B2P)ゲームへと方針を転換してSteamで全世界に発売します。個性豊かな仲間を加えて華やかなタッグアクションを繰り広げながら大陸「オルビス」を探索する構成で、7月23日午前7時(KST)に正式リリースされます。"
     },
     {
       "id": "architect-twisted-paradise-part1-20260701",
@@ -2444,7 +2682,9 @@
         "대형 업데이트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/14-XxuLjk7eu2EfkeJ41qz3dcSUgWdfE517sYAbmbQtK8czfG_FP7uiWAW6DGabyavmIRv9uG45xC-VQe3LuUw=s512",
-      "source_url": "https://www.betanews.net/article/view/beta202607010046"
+      "source_url": "https://www.betanews.net/article/view/beta202607010046",
+      "description_en": "A major update adding the fifth region to Architect: Land of Exile, the Unreal Engine 5 open-world MMORPG serviced by DreamAge. Twisted Paradise, themed around divine beasts from East Asian folklore, arrives as Part 1, bringing progression content built around overcoming an Erosion debuff unique to the region and the field boss Damuradid, the Bloodstain Hunter. Launch commemoration events including hunt missions run through July 15.",
+      "description_ja": "DreamAgeが配信するUnreal Engine 5ベースのオープンワールドMMORPG『アーキテクト:ランド オブ エグザイル』の5つ目の地域を追加する大型アップデートです。東洋説話の神獣をモチーフとした「歪んだ桃源郷」がパート1として公開され、この地域だけに適用される「侵食」デバフを克服する育成コンテンツと、フィールドボス「血痕の狩人ダムラディド」が登場します。7月15日まで討伐ミッションなどのリリース記念イベントが実施されます。"
     },
     {
       "id": "maplestory-summer-2nd-6th-skill-core-20260723",
@@ -2464,7 +2704,9 @@
         "대규모 업데이트"
       ],
       "image_url": "https://yt3.googleusercontent.com/5Ft_OkHKiP9mz83nczLPgSnGdULpgqVOV1v2Tg7MVMtNd9eCifcdr_MftRf0M1xdOCAjmPNDVW8=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.gameple.co.kr/news/articleView.html?idxno=215985"
+      "source_url": "https://www.gameple.co.kr/news/articleView.html?idxno=215985",
+      "description_en": "The second wave of MapleStory's summer OVERDRIVE update. A third sixth-job skill core is added for every class, designed differently per class to match each one's combat structure, unlike Origin and Ascent. The same day also begins the first advance World Leap, moving Challengers World season 4 characters to regular worlds. After test world periods on July 9 and 16, it goes live on the main servers July 23.",
+      "description_ja": "夏の「OVERDRIVE」第2弾アップデートです。全職業に3つ目の6次スキルコアが追加され、オリジンやアセントとは異なり職業ごとの戦闘構造に合わせてそれぞれ別の形で設計されています。同日にはチャレンジャーズワールドシーズン4のキャラクターを通常ワールドへ移す第1次の事前ワールドリープも開始されます。7月9日・16日のテストワールドを経て、7月23日に本サーバーへ適用されます。"
     },
     {
       "id": "xenoblade-chronicles-2-switch2-20260730",
@@ -2484,7 +2726,10 @@
         "액션 RPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/HNg_MA3lYwk6JCHxftRxRUAcMFK0334jI3-G-ERWMnTe5vIT1fORQ2er531XI_eCnMl4v_Wtk38=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.nintendo.com/us/store/products/xenoblade-chronicles-2-nintendo-switch-2-edition-switch-2/"
+      "source_url": "https://www.nintendo.com/us/store/products/xenoblade-chronicles-2-nintendo-switch-2-edition-switch-2/",
+      "description_en": "The Switch 2 enhanced edition of the JRPG set in a world where people live on the backs of colossal Titans above a sea of clouds. It runs at 60fps in 4K in TV mode and FHD in handheld mode, with improved cutscene quality. It adds new rare Blades and dedicated quests, a mercenary battle mode that lets you control Blades directly, and exclusive equipment designs for Pyra and Mythra. Korean is supported, and the download version arrives first on July 30.",
+      "description_ja": "雲海の上、巨神獣の背で人々が暮らす世界を舞台にしたJRPGのSwitch 2強化版です。TVモードで4K、携帯モードでFHDの60フレームで動作し、カットシーンの画質も改善されています。新たなレアブレイドと専用クエスト、ブレイドを直接操作する傭兵団バトルモード、ホムラ・ヒカリ専用の装備デザインが追加されます。韓国語に対応し、ダウンロード版が7月30日に先行して発売されます。",
+      "name_ja": "ゼノブレイド2 Nintendo Switch 2 Edition"
     },
     {
       "id": "fire-emblem-fortunes-weave-20260917",
@@ -2504,7 +2749,9 @@
         "RPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/HNg_MA3lYwk6JCHxftRxRUAcMFK0334jI3-G-ERWMnTe5vIT1fORQ2er531XI_eCnMl4v_Wtk38=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.nintendo.com/kr/games/switch2/aacsa/index.html"
+      "source_url": "https://www.nintendo.com/kr/games/switch2/aacsa/index.html",
+      "description_en": "A new Fire Emblem entry revealed at a Nintendo Direct, releasing exclusively for Switch 2. Set around a grand gladiatorial tournament held in the capital of the Dagda Empire, it is structured so players choose among four different protagonists and follow their stories. It carries on the series' signature turn-based tactical combat built on class and weapon matchups. Korean is supported, and it releases September 17.",
+      "description_ja": "Nintendo Directで公開された『ファイアーエムブレム』シリーズの新作で、Switch 2専用タイトルとして発売されます。ダグダ帝国の首都で開かれる大剣闘祭を舞台に、異なる4人の主人公の物語を選んで進める構成が特徴です。兵種と武器の相性を活用するシリーズならではのターン制シミュレーション戦闘を継承しています。韓国語に対応し、9月17日に発売されます。"
     },
     {
       "id": "xenoblade-chronicles-3-switch2-20261203",
@@ -2524,7 +2771,10 @@
         "액션 RPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/HNg_MA3lYwk6JCHxftRxRUAcMFK0334jI3-G-ERWMnTe5vIT1fORQ2er531XI_eCnMl4v_Wtk38=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317312"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317312",
+      "description_en": "The Switch 2 enhanced edition of the series' third entry, following six protagonists who meet amid an endless war between two nations. It runs at 60fps in 4K in TV mode and FHD in handheld mode with higher-resolution event scenes, and includes extra elements exclusive to the Switch 2 Edition. Switch 2 Editions of the first three games were announced together at the June Nintendo Direct, with the third arriving December 3.",
+      "description_ja": "二つの国の終わりなき戦争の中で出会った6人の主人公の旅路を描いたシリーズ第3作のSwitch 2強化版です。TVモードで4K、携帯モードでFHDの60フレーム動作と高解像度のイベントシーンに対応し、Switch 2 Edition専用の追加要素も収録されています。6月のNintendo Directで1・2・3作のSwitch 2 Editionが同時に発表され、第3作は12月3日に発売されます。",
+      "name_ja": "ゼノブレイド3 Nintendo Switch 2 Edition"
     },
     {
       "id": "mabinogi-reaction-1st-arcana-awakening-20260709",
@@ -2544,7 +2794,9 @@
         "대규모 업데이트"
       ],
       "image_url": "https://yt3.googleusercontent.com/xT5oTmdL-NJj2Axb4Y5dIERZr9wou5ypBRo5f-VTkQgqVdBIzmN2KyCRKvH-EWejTA9c2UE-Lg=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://mabinogi.nexon.com/page/event/2026/0709_update/index.asp"
+      "source_url": "https://mabinogi.nexon.com/page/event/2026/0709_update/index.asp",
+      "description_en": "The first major update of RE:ACTION, the summer campaign for Mabinogi in its 22nd year. It introduces Arcana Awakening, raising the Arcana growth cap to level 30, and Ogham Words, which combine ancient letters to alter skill effects. Farming structures were also reworked — the Near system used for dungeon entry became a pass-based model and inheritance costs were made free — and a Fever Season event for new and returning players began alongside it. Raising the Arcana Awakening cap to level 50 is planned for the second update.",
+      "description_ja": "22周年を迎えた『マビノギ』の夏のキャンペーン「RE:ACTION」の第1弾大型アップデートです。アルカナの成長上限を30レベルまで開放する「アルカナ覚醒」と、古代文字を組み合わせてスキル効果を変える「オガム・ワード」が導入されました。ダンジョン入場に使われていたネアルシステムを通行証方式に変更し継承費用を無料化するなどファーミング構造も見直され、新規・復帰プレイヤー向けの「フィーバーシーズン」イベントも同時に始まりました。アルカナ覚醒の上限50レベル拡張は第2弾アップデートで予定されています。"
     },
     {
       "id": "mortal-shell-2-20260820",
@@ -2566,7 +2818,9 @@
         "액션 RPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2584270/header.jpg",
-      "source_url": "https://www.gematsu.com/2026/07/mortal-shell-ii-launches-august-20"
+      "source_url": "https://www.gematsu.com/2026/07/mortal-shell-ii-launches-august-20",
+      "description_en": "The official sequel to the 2020 soulslike Mortal Shell. It keeps the predecessor's structure of swapping between eight Shells while raising combat speed and substantially widening weapon upgrade options and exploration freedom. It releases simultaneously on PC (Steam), PS5 and Xbox Series X|S on August 20, 2026, with higher-tier editions including early access and skins also on sale.",
+      "description_ja": "2020年のソウルライク『Mortal Shell』の正統な続編です。8種類の「シェル」を着替えながら戦う前作の構造を維持しつつ、戦闘速度を引き上げ、武器強化の幅と探索の自由度を大きく広げています。PC(Steam)・PS5・Xbox Series X|Sで2026年8月20日に同時発売され、先行アクセスやスキンを含む上位エディションも販売されます。"
     },
     {
       "id": "minecraft-dungeons-2-20260929",
@@ -2590,7 +2844,9 @@
         "던전 크롤러"
       ],
       "image_url": "https://yt3.googleusercontent.com/2gEQWk9ws0NNWIOva0M7NwU9LtIDHfNvY0nLGdhqNvDUn3Sk4kNsTZQZ_ILl70CQrjKSZjhqAP0=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.minecraft.net/en-us/article/minecraft-dungeons-ii-date-announce"
+      "source_url": "https://www.minecraft.net/en-us/article/minecraft-dungeons-ii-date-announce",
+      "description_en": "The sequel to the 2020 dungeon crawler Minecraft Dungeons. It remains a hack-and-slash action RPG in which up to four players cooperate through procedurally generated dungeons within the Minecraft universe. It leads with wider exploration segments than the original plus new equipment and loot systems, releasing September 29, 2026 across PC and all consoles, and joining Game Pass on day one.",
+      "description_ja": "2020年のダンジョンクローラー『Minecraft Dungeons』の続編です。マインクラフトの世界観を保ったまま、最大4人の協力プレイで手続き生成のダンジョンを攻略するハック&スラッシュのアクションRPGです。前作より広くなった探索区間と新しい装備・戦利品システムを打ち出しており、2026年9月29日にPC・コンソール全機種で発売され、初日からGame Passに含まれます。"
     },
     {
       "id": "hellraiser-revival-20261008",
@@ -2612,7 +2868,9 @@
         "1인칭 액션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/1551980/header.jpg",
-      "source_url": "https://www.gematsu.com/2026/06/clive-barkers-hellraiser-revival-launches-october-8"
+      "source_url": "https://www.gematsu.com/2026/06/clive-barkers-hellraiser-revival-launches-october-8",
+      "description_en": "A first-person survival horror game supervised directly by horror auteur Clive Barker. It follows protagonist Aiden, who enters a labyrinth through the Genesis Configuration box to rescue Sunny, who is trapped inside. Doug Bradley, who played Pinhead in the original films, returns in a voice role. It releases October 8, 2026 on PC, PS5 and Xbox Series.",
+      "description_ja": "ホラーの巨匠クライヴ・バーカーが自ら監修した一人称視点のサバイバルホラーです。主人公エイデンが「ジェネシス・コンフィギュレーション」の箱を通じて、迷宮に囚われたサニーを救いに向かう物語を描きます。原作映画でピンヘッドを演じたダグ・ブラッドリーが声で復帰しており、2026年10月8日にPC・PS5・Xbox Seriesで発売されます。"
     },
     {
       "id": "persona-4-revival-20270218",
@@ -2634,7 +2892,10 @@
         "턴제 RPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2963950/header.jpg",
-      "source_url": "https://www.gematsu.com/2026/06/persona-4-revival-launches-february-18-2027"
+      "source_url": "https://www.gematsu.com/2026/06/persona-4-revival-launches-february-18-2027",
+      "description_en": "A remake that rebuilds the 2008 title Persona 4 to current-generation standards. Visuals and quality-of-life features are raised to the level of Persona 3 Reload, and new combat elements are added, such as Blowaway for spreading ailments and Prime Time for using skills without cost. It releases February 18, 2027 on PC, PS5 and Xbox Series, with Game Pass support on day one.",
+      "description_ja": "2008年の『ペルソナ4』を現行世代の基準で作り直したリメイクです。『ペルソナ3 リロード』と同水準までグラフィックと利便機能を引き上げ、状態異常を拡散させる「吹き飛ばし」やコストなしでスキルを使える「プライムタイム」といった新たな戦闘要素が加わっています。2027年2月18日にPC・PS5・Xbox Seriesで発売され、Game Passにも初日から対応します。",
+      "name_ja": "ペルソナ4 リバイバル"
     },
     {
       "id": "fable-20270223",
@@ -2656,7 +2917,9 @@
         "오픈월드"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2769570/header.jpg",
-      "source_url": "https://www.xbox.com/en-US/games/fable"
+      "source_url": "https://www.xbox.com/en-US/games/fable",
+      "description_en": "A ground-up reboot of the Fable fantasy RPG series. Playground Games, the studio behind Forza Horizon, is developing it in collaboration with Eidos-Montreal, and actor Hayley Atwell appears in a major role. After several delays it releases February 23, 2027 on PC, PS5 and Xbox Series (early access February 18), with Game Pass support on day one.",
+      "description_ja": "同名のファンタジーRPGシリーズを一から作り直したリブート作です。『Forza Horizon』を手がけたPlayground Gamesが開発し、Eidos-Montrealが協力、俳優のヘイリー・アトウェルが主要な役どころで参加しています。度重なる延期を経て2027年2月23日にPC・PS5・Xbox Seriesで発売され(先行アクセスは2月18日)、Game Passにも初日から対応します。"
     },
     {
       "id": "lostark-belgardin-shadow-raid-20260805",
@@ -2675,7 +2938,9 @@
         "MMORPG"
       ],
       "image_url": "https://yt3.googleusercontent.com/ytc/AIdro_nCSqRx8E8W8yCJlBSckbAbTLKBNfCMbEGa4qdQE6r9hw=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317640"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317640",
+      "description_en": "The major summer update for Lost Ark revealed at LOA ON Summer 2026. Belgardin, an eight-player raid continuing the story after the Kadarum Islands, is added across three difficulties — Normal, Hard and Nightmare — along with a new special equipment slot, gauntlets, that does not affect item level. A six-week Belgardin Conquest event runs immediately after the update.",
+      "description_ja": "2026 ロアオン サマーで公開された『ロストアーク』の夏の大型アップデートです。カダルム諸島以降の物語を扱う8人レイド「ベルガルディン」がノーマル・ハード・ナイトメアの3難易度で追加され、アイテムレベルに影響しない新たな特殊装備「腕甲」も同時に導入されます。アップデート直後から6週間にわたり「ベルガルディン征服戦」イベントが実施されます。"
     },
     {
       "id": "lineage-m-void-temple-renewal-20260729",
@@ -2695,7 +2960,9 @@
         "대규모 업데이트"
       ],
       "image_url": "https://play-lh.googleusercontent.com/TSJx_-ml28RDZAN1popUnr2G0AKJS8xeoCh975QKOeF21FQl5J5lNCuJmaOi_7ufCYI=s512",
-      "source_url": "https://lineagem.plaync.com/conts/260610_update"
+      "source_url": "https://lineagem.plaync.com/conts/260610_update",
+      "description_en": "A follow-up major update to the ninth-anniversary PHOENIX season for Lineage M, renewing the master server content Temple of the Void. Crafting recipes open for twelve unique-grade Girtas weapons, and a new hunting ground, Forest of the Hidden Barrier, and a new dungeon, Sanctuary of Flame, are added as material sources. The way Void Girtas appears changes to a Combat Zone format, and strategic elements such as artifacts and dimensional statues rework the Girtas raid as a whole.",
+      "description_ja": "9周年「PHOENIX」シーズンに続く大型アップデートで、マスターサーバーのコンテンツ「虚空の寺院」がリニューアルされます。唯一等級「ギルタス武器」12種の製作式が開放され、素材を入手する新狩場「隠された結界の森」と新ダンジョン「炎の聖所」が追加されます。虚空のギルタスの出現方式が「Combat Zone」に変更され、アーティファクトや次元の石像といった戦略要素が加わることで、ギルタスレイド全体が刷新されます。"
     },
     {
       "id": "sinking-city-2-20260818",
@@ -2717,7 +2984,9 @@
         "액션 어드벤처"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2825860/header.jpg",
-      "source_url": "https://www.gematsu.com/2026/06/the-sinking-city-2-launches-august-18"
+      "source_url": "https://www.gematsu.com/2026/06/the-sinking-city-2-launches-august-18",
+      "description_en": "The sequel to the Lovecraftian detective game The Sinking City, this time weighted toward survival horror. Playing as occult adventurer Calvin Rafferty, you explore the flooded back alleys of Arkham while being hunted by resurrected entities. It releases August 18, 2026 on PC (Steam, Epic, GOG), PS5 and Xbox Series X|S with Korean language support. An opening demo is available on Steam.",
+      "description_ja": "ラヴクラフト風の探偵ゲーム『The Sinking City』の続編で、今作はサバイバルホラーに比重を置いています。オカルト冒険家カルヴィン・ラファティとなって水没したアーカムの裏路地を探索し、蘇った存在たちに追われます。PC(Steam・Epic・GOG)・PS5・Xbox Series X|Sで2026年8月18日に発売され、韓国語に対応します。Steamには序盤の体験版が公開されています。"
     },
     {
       "id": "freestyle-reboot-2026",
@@ -2741,7 +3010,9 @@
       "image_url": null,
       "source_url": "https://zdnet.co.kr/view/?no=20260701152321",
       "pre_registration": false,
-      "pre_registration_date": "2026-07-22"
+      "pre_registration_date": "2026-07-22",
+      "description_en": "A reboot that rebuilds Joycity's flagship online basketball IP FreeStyle on a new engine. It carries over the original's 3-on-3 real-time street basketball feel while reworking art assets and systems for current service standards. It launched earlier in Greater China markets including Taiwan and Hong Kong, and domestic pre-registration begins July 22, 2026 ahead of a full release.",
+      "description_ja": "ジョイシティの代表的なオンラインバスケットボールIP『フリースタイル』を新しいエンジンで再構築したリブート作です。原作の3対3リアルタイムストリートバスケットボールの感覚を受け継ぎつつ、アートリソースとシステムを現在のサービス環境に合わせて刷新しました。先に台湾・香港など中華圏で発売されており、韓国では2026年7月22日に事前予約が始まり、その後の正式リリースが予定されています。"
     },
     {
       "id": "ragnarok-m-classic-20260716",
@@ -2764,7 +3035,9 @@
       "image_url": "https://play-lh.googleusercontent.com/5SFBw-txEgmxfiD8J5DcHchCZFvLCo1jZsalnlDHYjv5nddS-8oLSRIwGHmqKF0NLaZJ9Gmbx6wEMGxlNtFe=s512",
       "source_url": "https://zdnet.co.kr/view/?no=20260706145311",
       "pre_registration": false,
-      "pre_registration_date": null
+      "pre_registration_date": null,
+      "description_en": "A classic-style MMORPG succeeding Gravity's Ragnarok M: Eternal Love. It recreates an economy centered on the base currency Zeny to focus on the pure enjoyment of monster hunting and item farming, and is built around six foundational classes: Swordman, Magician, Thief, Archer, Acolyte and Merchant. After an early release in Southeast Asia, Taiwan, Hong Kong and Macau, it launches domestically in PC and mobile versions on July 16, 2026.",
+      "description_ja": "Gravityの『ラグナロクM:エターナルラブ』を継ぐクラシック版MMORPGです。基本通貨「ゼニー」を中心とした経済構造を再現し、モンスター狩りとアイテムファーミングの純粋な楽しさに焦点を当てており、ソードマン・マジシャン・シーフ・アーチャー・アコライト・マーチャントの基本6職業で構成されます。東南アジア・台湾・香港・マカオでの先行リリースを経て、2026年7月16日に韓国国内でPC・モバイル版が正式リリースされます。"
     },
     {
       "id": "vampir-global2-region-20260722",
@@ -2788,7 +3061,9 @@
       "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=306206",
       "pre_registration": true,
       "pre_registration_end_date": "2026-07-22",
-      "pre_registration_url": "https://vampir.netmarble.com/landing"
+      "pre_registration_url": "https://vampir.netmarble.com/landing",
+      "description_en": "Netmarble's MMORPG Vampir opens a new region, Global 2, on July 22, 2026. Operated separately from the existing global server, it brings Japanese players into the same region alongside Korea, Taiwan, Hong Kong and Macau. It runs alongside the first-anniversary Red Moon Festa, and pre-registration participants receive early progression support such as a hero mount and 100 million gold.",
+      "description_ja": "ネットマーブルのMMORPG『ヴァンピル』が2026年7月22日に新リージョン「グローバル2」を開設します。既存のグローバルサーバーとは分離して運営される別リージョンで、韓国・台湾・香港・マカオに加えて日本のプレイヤーも同じリージョンで競い合います。リリース1周年記念の「レッドムーンフェスタ」と併せて実施され、事前登録の参加者には英雄騎乗物や1億ゴールドなど序盤の育成支援報酬が贈られます。"
     },
     {
       "id": "eclipse-awakening-showcase-20260723",
@@ -2810,7 +3085,9 @@
         "쇼케이스"
       ],
       "image_url": "https://yt3.googleusercontent.com/VuFYKBA-FTYK2OnAWYNBZ4NPEg_vifHyl4LAHamaxoh7T4l1_Ix3p7uzvT_HOdAzX0QlI5QxEw=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317970"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317970",
+      "description_en": "Eclipse: The Awakening, NPIXEL's Unreal Engine 5 cross-platform MMORPG published by Smilegate, holds an online live showcase on July 23, 2026. It plans to reveal major content and service direction, including the core progression support system Sanctum, and a countdown is running on the official website.",
+      "description_ja": "Smilegateが配信するNPIXELのUnreal Engine 5製クロスプラットフォームMMORPG『エクリプス:ジ・アウェイクニング』が、2026年7月23日にオンラインライブショーケースを開催します。中核となる育成支援システム「聖所」など主要コンテンツとサービスの方向性を公開する予定で、公式サイトではカウントダウンが実施されています。"
     },
     {
       "id": "honkai-nexus-anima-2026",
@@ -2835,7 +3112,9 @@
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317670",
       "pre_registration": true,
-      "pre_registration_url": "https://hna.hoyoverse.com/ko-kr"
+      "pre_registration_url": "https://hna.hoyoverse.com/ko-kr",
+      "description_en": "An anima-raising adventure strategy game from HoYoverse built on the Honkai IP. It is an auto-battler-style RPG in which players collect and raise creatures called Nexus Anima for strategic battles and exploration, and pre-registration is open in Korea. It is planned for PC and mobile (iOS and Android), with the release date undecided. A closed Evolution Test was held on July 9, 2026.",
+      "description_ja": "HoYoverseが崩壊IPを基に展開するアニマ育成アドベンチャーストラテジーゲームです。「ネクサスアニマ」と呼ばれる生命体を収集・育成して戦略バトルと探索を楽しむオートバトラー型RPGで、韓国国内では事前予約を受け付けています。PCとモバイル(iOS・Android)での発売が予定されていますが、正式な発売日は未定です。2026年7月9日に非公開の「進化テスト」が実施されました。"
     },
     {
       "id": "dinoblade-20260723",
@@ -2856,7 +3135,9 @@
         "인디"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3440070/header.jpg",
-      "source_url": "https://store.steampowered.com/app/3440070/Dinoblade/"
+      "source_url": "https://store.steampowered.com/app/3440070/Dinoblade/",
+      "description_en": "An action RPG set in a primeval world transformed by catastrophe. Players take the role of a young Spinosaurus wielding a massive greatsword against ferocious alpha dinosaurs. Its combat is soulslike, chaining combos through dodges, rolls and parries, and it supports Korean subtitles. It releases on Steam on July 23, 2026.",
+      "description_ja": "大災厄によって姿を変えた太古の世界を舞台としたアクションRPGです。プレイヤーは若きスピノサウルスとなり、巨大な大剣を振るって獰猛なアルファ恐竜たちと戦います。回避・ローリング・パリィでコンボをつなぐソウルライク風の戦闘が特徴で、韓国語字幕に対応しています。Steamで2026年7月23日に発売されます。"
     },
     {
       "id": "digimon-up-20260715",
@@ -2879,7 +3160,9 @@
       "image_url": "https://play-lh.googleusercontent.com/WC1AVEJf1u9_0WkRdzRHBaOcV9UOr4PpnWA5dWi5itaBn0oUz3MOXgXLgQ2f-2PuWrk27Wv5FmB0qaeIq_F8Xw=s512",
       "source_url": "https://dgup.bn-ent.net/en/",
       "pre_registration": false,
-      "pre_registration_date": null
+      "pre_registration_date": null,
+      "description_en": "A Digimon IP mobile raising RPG serviced by Bandai Namco, free to play on iOS and Android. Players partner with newly drawn 2D pixel-art Digimon, adventuring between the real and digital worlds, and raise and evolve them through strategic turn-based combat. A global launch on July 15, 2026 was confirmed alongside a pre-registration campaign, and it is available in Korea at the same time.",
+      "description_ja": "バンダイナムコが配信するデジモンIPのモバイル育成RPGで、iOS・Androidで無料で楽しめます。新たに描き起こされた2Dピクセルアートのデジモンをパートナーに現実とデジタルワールドを行き来して冒険し、戦略的なターン制バトルでデジモンを育成・進化させることが中心です。事前登録キャンペーンとともに2026年7月15日の全世界正式リリースが確定しており、韓国でも同時期に利用できます。"
     },
     {
       "id": "ore-factory-squad-20260716",
@@ -2900,7 +3183,9 @@
         "공장 건설"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4210580/header.jpg",
-      "source_url": "https://store.steampowered.com/app/4210580/Ore_Factory_Squad/"
+      "source_url": "https://store.steampowered.com/app/4210580/Ore_Factory_Squad/",
+      "description_en": "A cooperative mining and factory-building simulation published by PlayWay and developed by threeW. Alone or with friends, you buy plots of land, dig deep underground to extract minerals, and automate and upgrade production lines to grow your factory and fulfill contracts. It releases on PC (Steam) on July 16, 2026 with Korean interface and subtitles. A demo version was made available in March 2026.",
+      "description_ja": "PlayWayが販売しthreeWが開発した協力型の採掘・工場建設シミュレーションゲームです。一人または友人と一緒に土地を購入し、地下深くまで掘り進めて鉱物を採掘し、生産ラインを自動化・アップグレードして工場を成長させ契約を達成することが中心的な楽しさです。PC(Steam)で2026年7月16日に正式発売され、韓国語のインターフェース・字幕に対応します。2026年3月にはデモ版が公開されていました。"
     },
     {
       "id": "ascend-to-zero-20260713",
@@ -2921,7 +3206,9 @@
         "인디"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2697940/header.jpg",
-      "source_url": "https://store.steampowered.com/app/2697940/Ascend_to_ZERO/?l=koreana"
+      "source_url": "https://store.steampowered.com/app/2697940/Ascend_to_ZERO/?l=koreana",
+      "description_en": "An action roguelike developed and serviced by Flyway Games, a creative studio under Krafton. Players strategically use the ability to stop time against swarms of enemies, with the core appeal being repeated runs that combine varied abilities and combat styles. It launched globally on PC (Steam) and Xbox Series X|S on July 13, 2026, arriving on Xbox Game Pass as a day-one title. Korean is supported and the domestic price is 13,000 won.",
+      "description_ja": "KRAFTON傘下のクリエイティブスタジオFlyway Gamesが開発・配信するアクションローグライクです。時間を止める能力を戦略的に活用して押し寄せる敵に立ち向かい、繰り返しのプレイでさまざまな能力と戦闘スタイルを組み合わせて成長していく点が中心的な楽しさです。2026年7月13日にPC(Steam)とXbox Series X/Sで全世界に正式リリースされ、発売と同時にXbox Game Passのデイワンタイトルとして提供されます。韓国語に対応し、韓国での価格は1万3千ウォンです。"
     },
     {
       "id": "samgukji-classic-20260702",
@@ -2941,7 +3228,9 @@
         "시뮬레이션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4818580/header.jpg",
-      "source_url": "https://store.steampowered.com/app/4818580/_/"
+      "source_url": "https://store.steampowered.com/app/4818580/_/",
+      "description_en": "A turn-based grand strategy game made by SEEAT, a Korean solo developer. Based on official historical records, it covers scenarios from the anti-Dong Zhuo coalition at the end of the Later Han through the fall of Shu Han. It combines city administration, logistics, public order, diplomacy and personnel management with turn-based battles such as sieges, field engagements and mountain warfare, demanding long-term judgment over immediate victories. It supports Korean and released on Steam on July 2, 2026.",
+      "description_ja": "韓国の個人開発者SEEATが制作したターン制の大戦略ゲームです。正史の記録を基に、後漢末の反董卓連合から蜀漢滅亡戦まで複数のシナリオを扱います。都市の内政・兵站・治安・外交・人事に、攻城戦・野戦・山岳戦といったターン制の戦闘を組み合わせており、目先の勝利よりも長期的な判断を重視する戦略が求められます。韓国語に対応し、2026年7月2日にSteamで発売されました。"
     },
     {
       "id": "maplestory-summer-3rd-boss-bellona-20260820",
@@ -2961,7 +3250,9 @@
         "대규모 업데이트"
       ],
       "image_url": "https://yt3.googleusercontent.com/5Ft_OkHKiP9mz83nczLPgSnGdULpgqVOV1v2Tg7MVMtNd9eCifcdr_MftRf0M1xdOCAjmPNDVW8=s512-c-k-c0x00ffffff-no-rj",
-      "source_url": "https://zdnet.co.kr/view/?no=20260613195819"
+      "source_url": "https://zdnet.co.kr/view/?no=20260613195819",
+      "description_en": "The third and final update in MapleStory's summer OVERDRIVE roadmap. It adds a new boss, Bellona, conceived as a berserker of the High Lef race, which characters level 280 and above can challenge in parties of up to three across Easy, Normal and Hard difficulties. Hard difficulty rewards the new Radiance boss accessory, Starving Bloodred Spirit (eye decoration), enabling a six-piece Radiance accessory set effect. The same day also begins the second advance World Leap for Challengers World season 4.",
+      "description_ja": "夏の「OVERDRIVE」ロードマップ最後となる第3弾アップデートです。ハイレフ族の狂戦士をコンセプトとした新ボス「ベローナ」が追加され、280レベル以上のキャラクターが最大3人パーティでイージー・ノーマル・ハードの3難易度に挑戦できます。ハード難易度の報酬として新たな光輝のボス装身具「飢える血色の怨霊(目装飾)」を入手でき、光輝装身具6セット効果を狙えます。同日にはチャレンジャーズワールドシーズン4の第2次事前ワールドリープも始まります。"
     },
     {
       "id": "trails-in-the-sky-2nd-20260917",
@@ -2983,7 +3274,10 @@
         "RPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4225980/header.jpg",
-      "source_url": "https://www.cloudedleopardent.com/kr/news/9568/"
+      "source_url": "https://www.cloudedleopardent.com/kr/news/9568/",
+      "description_en": "The second entry in Nihon Falcom's Trails in the Sky remake project, following the first chapter, which scored 88 on Metacritic. It follows Estelle's journey to find the missing Joshua, with modernized graphics and an improved battle system. Clouded Leopard Entertainment releases the Korean version worldwide on September 17, 2026 for Nintendo Switch 2, Switch, PS5 and Steam. A limited Ouroboros BOX edition arrives the same day.",
+      "description_ja": "日本ファルコムの『空の軌跡』リメイクプロジェクト第2弾で、メタスコア88点を獲得した前作『the 1st』の続編にあたります。姿を消したヨシュアを探すエステルの旅を描き、現代的に再構成されたグラフィックと改善された戦闘システムを採用しています。韓国語版はClouded Leopard Entertainmentが2026年9月17日に全世界同時発売し、Nintendo Switch 2・Switch・PS5・Steamに対応します。限定版「ウロボロスBOX」も同日発売されます。",
+      "name_ja": "空の軌跡 the 2nd"
     },
     {
       "id": "rayman-legends-retold-20261001",
@@ -3006,7 +3300,9 @@
         "액션"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4084710/header.jpg",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=304980"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=304980",
+      "description_en": "A remade version of 2013's Rayman Legends, a side-scrolling platformer marking the mainline series' return after roughly a decade. It reinterprets the visuals with Snowdrop-engine 3D graphics in place of the original's hand-drawn 2D art, while keeping the brisk side-scrolling feel intact. Content is expanded with a new sixth world and additional material on top of the existing stages. The PC version is sold through the Ubisoft Store, Steam and the Epic Games Store, and official Korean subtitles are not supported.",
+      "description_ja": "2013年の『レイマン レジェンド』を作り直した横スクロールプラットフォーマーで、メインシリーズとしては約10年ぶりの復帰作です。原作の手描き風2Dアートに代えてSnowdropエンジンによる3Dグラフィックでビジュアルを再解釈しつつ、軽快な横スクロールの操作感はそのまま維持しています。既存ステージに加えて新たな6番目の世界と追加コンテンツでボリュームを増やしました。PC版はUbisoft Store・Steam・Epic Games Storeで販売され、公式の韓国語字幕には対応していません。"
     },
     {
       "id": "star-wars-galactic-racer-20261006",
@@ -3027,7 +3323,9 @@
         "레이싱"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4078430/header.jpg",
-      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305086"
+      "source_url": "https://www.khgames.co.kr/news/articleView.html?idxno=305086",
+      "description_en": "A racing game continuing the lineage of Star Wars Episode I: Racer. Set in the underground Galactic League held in the lawless Outer Rim, you play as the reclusive master Shade competing against champion Kestar Bull. Beyond podracers, vehicles include landspeeders, speeder bikes and skim speeders, each with unique physics and customization. It supports both a story campaign and PvP multiplayer, releasing worldwide on October 6, 2026.",
+      "description_ja": "『スター・ウォーズ エピソード1 レーサー』の系譜を継ぐレーシングゲームです。無法地帯アウターリムで開催される地下レーシングリーグ「ギャラクティックリーグ」を舞台に、隠遁の達人「シェイド」となってチャンピオン「ケスター・ブル」に挑みます。ポッドレーサーだけでなくランドスピーダーやスピーダーバイク、スキムスピーダーなど多彩な乗り物が登場し、機体ごとに固有の物理特性とカスタマイズが用意されています。ストーリーキャンペーンとPvPマルチプレイの両方に対応し、2026年10月6日に全世界で発売されます。"
     },
     {
       "id": "dragons-dogma-2-dark-arisen-20261009",
@@ -3050,7 +3348,10 @@
         "DLC"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2054970/header.jpg",
-      "source_url": "https://www.capcom.co.jp/ir/english/news/html/e260610.html"
+      "source_url": "https://www.capcom.co.jp/ir/english/news/html/e260610.html",
+      "description_en": "The first major expansion DLC for 2024's Dragon's Dogma 2. It moves beyond the base game's setting to the snowy northernmost region of Norgan, adding a story involving new characters, powerful monsters suited to the polar environment, and new class skills and equipment. Capcom has also announced a large quality-of-life patch around the DLC's release, adding unlimited Portcrystals along with optimization and save system improvements. It releases October 9, 2026 on PC, PS5, Xbox Series X|S and Nintendo Switch 2.",
+      "description_ja": "2024年に発売された『ドラゴンズドグマ2』初の大型拡張DLCです。本編の舞台を離れ、大陸最北の雪山地域「ノルガン」を新たな舞台として、新登場人物が絡むストーリーや極地にふさわしい強力なモンスター、職業ごとの新スキルと装備を追加します。カプコンはDLC発売の前後に、無限の刹那の飛石の追加や最適化・セーブシステムの改善を含む大規模な利便性パッチも予告しています。2026年10月9日にPC・PS5・Xbox Series X|S・Nintendo Switch 2で発売されます。",
+      "name_ja": "ドラゴンズドグマ2"
     },
     {
       "id": "castlevania-belmonts-curse-20261015",
@@ -3073,7 +3374,9 @@
         "메트로배니아"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4231820/header.jpg",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317248"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317248",
+      "description_en": "A new 2D action adventure from Konami marking the Castlevania series' 40th anniversary. Set in Paris in 1499, twenty-three years after Castlevania III: Dracula's Curse, it follows Trevor Belmont's daughter Rose Belmont as she explores Dracula's castle with the Vampire Killer whip and battles monsters. Motion Twin, the studio behind Dead Cells, and Evil Empire took part in development, carrying classic gothic art into a modern form. It releases October 15, 2026.",
+      "description_ja": "コナミが『悪魔城ドラキュラ』シリーズ40周年に合わせて発売する2Dアクションアドベンチャーの新作です。『悪魔城伝説』から23年後にあたる1499年のフランス・パリを舞台に、トレヴァー・ベルモンドの娘ローズ・ベルモンドが鞭「ヴァンパイアキラー」を手にドラキュラ城を探索し、モンスターと戦います。『Dead Cells』の開発元Motion TwinとEvil Empireが制作に参加し、古典的なゴシックアートを現代的に継承しています。2026年10月15日に発売されます。"
     },
     {
       "id": "tales-of-eternia-remastered-20261015",
@@ -3097,7 +3400,10 @@
         "RPG"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/3470960/header.jpg",
-      "source_url": "https://www.gamemeca.com/view.php?gid=1776340"
+      "source_url": "https://www.gamemeca.com/view.php?gid=1776340",
+      "description_en": "A remaster of Tales of Eternia, the RPG that first appeared on PlayStation in 2000 and was later ported to PSP. It preserves the original's 2D Aggressive Linear Motion Battle System while adding conveniences such as destination markers, an option to disable enemy encounters and fast playback for auto-battle. Notably it is the first game in the series with official Korean support, which carries particular weight for Korean players. The Korean console version releases October 15, 2026, with the PC Steam version following a day later on October 16.",
+      "description_ja": "2000年にPSで発売され、その後PSPにも移植されたRPG『テイルズ オブ エターニア』のリマスター版です。原作の2Dバトルアクション「アグレッシブリニアモーションバトルシステム」をそのまま活かしつつ、目的地表示アイコン、敵とのエンカウント遮断設定、オートバトルの高速再生といった利便機能を追加しています。シリーズで初めて公式の韓国語に対応する点が韓国のプレイヤーにとって大きな意味を持ちます。韓国語版はコンソールが2026年10月15日、PCのSteam版は翌日の10月16日に発売されます。",
+      "name_ja": "テイルズ オブ エターニア リマスター"
     },
     {
       "id": "final-fantasy-resonance-20261022",
@@ -3120,7 +3426,9 @@
         "RPG"
       ],
       "image_url": null,
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=317317"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=317317",
+      "description_en": "A new Final Fantasy RPG and the first in the series to adopt HD-2D graphics. Built on season 1 of the mobile game Final Fantasy Brave Exvius with many elements remade for consoles, it recreates the feel of classic JRPGs through visuals that combine 3D backgrounds with pixel-art characters. At its core is the Vision system, which gathers series heroes such as Cloud and Terra and equips them like job classes. The Korean version releases October 22, 2026, with the Steam version a day later on October 23.",
+      "description_ja": "『ファイナルファンタジー』シリーズで初めてHD-2Dグラフィックを採用した新作RPGです。モバイルゲーム『ファイナルファンタジー ブレイブエクスヴィアス』のシーズン1を基に、コンソール環境に合わせて多くの要素を新たに制作しており、3D背景とドット絵キャラクターを組み合わせたビジュアルで古典的なJRPGの雰囲気を再現しています。クラウドやティナといった歴代シリーズの英雄を集め、ジョブのように装着する「ヴィジョン」システムが中核です。韓国語版は2026年10月22日、Steam版は翌日の10月23日に発売されます。"
     },
     {
       "id": "cabalred-server-saturn-force-gunner-20260804",
@@ -3146,7 +3454,9 @@
       "pre_registration": true,
       "pre_registration_date": "2026-07-14",
       "pre_registration_end_date": "2026-08-03",
-      "pre_registration_url": "https://pre.cabalred.com/"
+      "pre_registration_url": "https://pre.cabalred.com/",
+      "description_en": "Saturn is a new server opening on ESTgames' action MMORPG CABAL RED. It was prepared in response to increased player inflow and demand for new servers following Neptune, the previous new server that opened on May 15, 2026. The same day also brings Force Gunner, the first new class since the game entered full service — a ranged attacker that fires magic bullets, built around rapid movement and chained attacks. Pre-registration runs from July 14 to 23:59 on August 3, granting participants progression rewards including three kinds of rare-grade summon cards.",
+      "description_ja": "ESTgamesのアクションMMORPG『CABAL RED』に開設される新サーバー「サターン」です。2026年5月15日に開設された直前の新サーバー「ネプチューン」以降に増えたユーザー流入と新サーバー需要を反映して用意されました。同日には正式サービス開始以降で初となる新クラス「フォースガンナー」も追加され、魔力弾を使う遠距離攻撃型クラスとして素早い移動と連続攻撃を活かした戦闘が特徴です。事前予約は7月14日から8月3日23時59分まで実施され、参加者にはレア等級の召喚カード3種などの育成報酬が贈られます。"
     },
     {
       "id": "lineage-classic-server-antaras-forgotten-island-20260722",
@@ -3169,7 +3479,9 @@
       "source_url": "https://www.gametoc.co.kr/news/articleView.html?idxno=109965",
       "pre_registration": true,
       "pre_registration_date": "2026-07-15",
-      "pre_registration_end_date": "2026-08-19"
+      "pre_registration_end_date": "2026-08-19",
+      "description_en": "NCSoft's PC MMORPG Lineage Classic opens a new server, Antharas, alongside the new episode The Prelude to a Great Destiny: Forgotten Island. The new hunting ground Forgotten Island, located southeast of the Aden continent, features tougher field monsters including minotaurs, drakes, griffins and crocodiles. For the first time since launch a server transfer system is introduced, accepting individual or blood-pledge applications from July 22 to August 4, and an additional server, Gludio, is planned to absorb large-scale transfer demand. Pre-registration participants receive different progression rewards depending on whether they are on existing or new servers.",
+      "description_ja": "NCSoftのPC向けMMORPG『リネージュ クラシック』が、新エピソード「巨大な運命の序幕:忘れられた島」とともに新サーバー「アンタラス」を開設します。アデン大陸南東部に位置する新狩場「忘れられた島」には、ミノタウロスやドレイク、グリフォン、クロコダイルなど一段と強力なフィールドモンスターが登場します。サービス開始以降で初となるサーバー移転システムも導入され、7月22日から8月4日まで個人または血盟単位で申請でき、大規模な移転需要に備えた新サーバー「グルーディオ」も追加開設される予定です。事前予約の参加者は既存サーバーと新サーバーのどちらに所属するかに応じて、それぞれ異なる育成支援報酬を受け取ります。"
     },
     {
       "id": "nba-dunk-city-20260806",
@@ -3194,7 +3506,9 @@
       "source_url": "https://www.betanews.net/article/view/beta202607100036",
       "pre_registration": true,
       "pre_registration_date": "2026-05-28",
-      "pre_registration_url": "https://play.google.com/store/apps/details?id=com.netease.dunkcdjp"
+      "pre_registration_url": "https://play.google.com/store/apps/details?id=com.netease.dunkcdjp",
+      "description_en": "An officially NBA-licensed street basketball mobile game featuring all thirty active franchises and more than forty real NBA players including LeBron James and Stephen Curry. Unlike typical sports games it incorporates MOBA-style progression and tactical composition, so outcomes hinge on raising players and combining skills. It offers short-session modes such as 11-point matches, full-court 5-on-5 and ranked play, with court and shoe customization. The domestic release is August 6, with pre-registration currently underway.",
+      "description_ja": "NBAの公式ライセンスを取得したストリートバスケットボールのモバイルゲームで、現役30球団とレブロン・ジェームズ、ステフィン・カリーなど40人以上のNBA選手が実名で登場します。一般的なスポーツゲームとは異なりMOBA的な育成・戦術構成要素を取り入れており、選手を育ててスキルを組み合わせる方式で勝敗が決まる点が特徴です。11点マッチやフルコート5対5、ランクマッチなど短時間で区切って楽しめるモードを備え、コートやバスケットシューズのカスタマイズにも対応します。韓国での正式リリースは8月6日で、現在事前予約が実施されています。"
     },
     {
       "id": "once-human-console-20260826",
@@ -3216,7 +3530,9 @@
         "슈팅"
       ],
       "image_url": "https://play-lh.googleusercontent.com/0-94hjDsVyTjm0Jic6AP8wVbuSb4SCrrxcZnQDJ5YgNHukFjG-g6C1yMlGmuYDsJW3Pdva4Iqrp9ox5GPFpj-HU=s512",
-      "source_url": "https://www.inven.co.kr/webzine/news/?news=318329"
+      "source_url": "https://www.inven.co.kr/webzine/news/?news=318329",
+      "description_en": "The console port of Once Human, a multiplayer open-world survival game set in a post-apocalyptic world contaminated by Stardust. Following PC and mobile, it releases free on PS5 and Xbox Series X|S with a console-tuned first-person view and cross-play. From launch it includes six scenarios and a PvP spin-off, and supports both a 4K resolution mode and a 120fps performance mode. Existing hooks such as base building and Deviant collection carry over intact.",
+      "description_ja": "星屑(スターダスト)に汚染された終末後の世界を舞台とするマルチプレイのオープンワールドサバイバルゲーム『Once Human』のコンソール移植版です。PC・モバイルに続いてPS5とXbox Series X|Sで無料配信され、コンソールに合わせた一人称視点とクロスプレイに対応します。発売時点で6つのシナリオとPvPスピンオフを含むボリュームを提供し、4K解像度モードと120フレームのパフォーマンスモードの両方に対応します。拠点建設やデビアント収集といった従来の魅力もそのまま引き継がれています。"
     },
     {
       "id": "prinny-board-battle-20261112",
@@ -3239,7 +3555,9 @@
         "RPG"
       ],
       "image_url": null,
-      "source_url": "https://www.cloudedleopardent.com/kr/news/10861/"
+      "source_url": "https://www.cloudedleopardent.com/kr/news/10861/",
+      "description_en": "A party game headlined by Nippon Ichi Software's mascot Prinny, structured around moving across a board game map and fighting command-RPG-style battles. Defeating a boss is not the end — victory goes to whoever carries the fallen boss back to the starting point, so the core appeal is the psychological game of cooperating and then betraying at the last moment. Comeback elements such as building facilities and the Board Game Assembly are also included. It supports Korean subtitles and releases the same day as the Japanese, North American and European versions.",
+      "description_ja": "日本一ソフトウェアのマスコット「プリニー」を前面に押し出したパーティゲームで、ボードゲームの盤上を移動しながらコマンド式RPGの戦闘を繰り広げる構造が特徴です。ボスを倒して終わりではなく、倒れたボスをスタート地点まで運んだ人が勝利するため、協力しながら最後に裏切る心理戦が中心的な面白さとして設計されています。施設の建設や「ボードゲーム議会」といった逆転要素も盛り込まれています。韓国語字幕に対応し、日本語版・北米版・欧州版と同日に発売されます。"
     },
     {
       "id": "octopath-traveler-1-2-switch2-20261001",
@@ -3258,7 +3576,10 @@
         "RPG"
       ],
       "image_url": null,
-      "source_url": "https://bbs.ruliweb.com/news/read/226907"
+      "source_url": "https://bbs.ruliweb.com/news/read/226907",
+      "description_en": "Nintendo Switch 2 download versions of two Square Enix RPGs known for their HD-2D visuals blending pixel art with 3D. Each game keeps its structure of choosing one of eight travelers and unraveling stories with different origins and goals in any order you like. A bundle combining both titles is also available, and the series has surpassed seven million copies sold worldwide. Pre-orders began rolling out by region from July 13.",
+      "description_ja": "ドット絵と3Dを組み合わせた「HD-2D」ビジュアルで知られるスクウェア・エニックスのRPG2作品のNintendo Switch 2ダウンロード版です。それぞれ8人の旅人から一人を選び、出自も目的も異なる物語を自由な順序で進めていく構成をそのまま収録しています。2作品をまとめたバンドル版も同時に発売され、シリーズの累計販売本数は全世界で700万本を超えています。予約販売は7月13日から地域ごとに順次実施されています。",
+      "name_ja": "オクトパストラベラー"
     },
     {
       "id": "godok-broadcast-sim-20260814",
@@ -3280,7 +3601,9 @@
         "비주얼 노벨"
       ],
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/2106050/header.jpg",
-      "source_url": "https://bbs.ruliweb.com/news/read/227061"
+      "source_url": "https://bbs.ruliweb.com/news/read/227061",
+      "description_en": "The sequel to heXtreaming, a Korean indie horror game built around internet broadcasting. It is a 2D horror adventure in which you follow Suji, a streamer who does not believe in ghosts, as she explores a shuttered water park, and it was made with RPG Maker MV. It mixes visual-novel-style presentation with adventure exploration, continuing the predecessor's mix of scares and a light broadcasting premise. It releases simultaneously on Steam and STOVE for PC with Korean support.",
+      "description_ja": "インターネット放送を題材にした韓国産インディーホラーゲーム『孤独放送』の続編です。幽霊を信じない配信者スジとともに廃業したウォーターパークを探索する2Dホラーアドベンチャーで、RPGツクールMVで制作されました。ビジュアルノベル形式の演出とアドベンチャーの探索を組み合わせ、前作の怖さと軽快な放送コンセプトを引き継いでいます。PC向けにSteamとSTOVEで同時発売され、韓国語に対応します。"
     },
     {
       "id": "obakeidoro-2-chase-seek-20260806",
@@ -3302,7 +3625,9 @@
         "멀티플레이"
       ],
       "image_url": null,
-      "source_url": "https://bbs.ruliweb.com/news/read/227086"
+      "source_url": "https://bbs.ruliweb.com/news/read/227086",
+      "description_en": "The sequel to the popular asymmetrical tag action game OBAKEIDORO, splitting players into humans and ghosts for short matches of roughly three minutes. Up to eight players can join online or locally; ghosts use skills like passing through walls and rapid movement to catch humans, while humans briefly stun ghosts with lanterns to escape. It releases worldwide on Nintendo Switch and Switch 2 on August 6 with Korean subtitles.",
+      "description_ja": "人気の非対称鬼ごっこアクション『オバケイドロ！』の続編で、人間側とオバケ側に分かれて3分ほどの短い勝負を繰り広げます。最大8人がオンラインまたはローカルで一緒に遊べ、オバケは壁抜けや高速移動といったスキルで人間を捕まえ、人間はランタンでオバケを一時的に気絶させて逃げます。Nintendo SwitchおよびSwitch 2で8月6日に全世界同時発売され、韓国語字幕に対応します。"
     },
     {
       "id": "reverse1999-atomic-heart-collab-20260723",
@@ -3325,7 +3650,10 @@
         "대규모 업데이트"
       ],
       "image_url": null,
-      "source_url": "https://bbs.ruliweb.com/news/board/1004/read/2291378"
+      "source_url": "https://bbs.ruliweb.com/news/board/1004/read/2291378",
+      "description_en": "The turn-based subculture RPG Reverse: 1999 runs a collaboration update with Atomic Heart, the action game set in an alternate Soviet Union. It begins with the version update on July 23 and continues through August 13, introducing the new arcanist Twins via the Silver Dramaturgy banner. Logging in grants rewards including the collaboration four-star character Nora, ten free pulls and a monthly card.",
+      "description_ja": "ターン制のサブカルチャーRPG『リバース:1999』が、ロシアを舞台としたアクションゲーム『Atomic Heart』とのコラボアップデートを実施します。7月23日のバージョンアップデートと同時に始まり8月13日まで続き、新たな魔術師「双子」が銀のドラマツルギー募集に登場します。ログインするとコラボの星4キャラクター「ノラ」や無料10連ガチャ、月間カードなどさまざまな報酬が贈られます。",
+      "name_ja": "リバース:1999"
     },
     {
       "id": "arknights-endfield-abyss-update-20260716",
@@ -3349,7 +3677,9 @@
         "대규모 업데이트"
       ],
       "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/0c/0a/f0/0c0af0d2-123e-adc9-780b-cb1e2d8393af/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
-      "source_url": "https://www.betanews.net/article/view/beta202607130012"
+      "source_url": "https://www.betanews.net/article/view/beta202607130012",
+      "description_en": "A major update marking six months since the launch of Arknights: Endfield, applied on July 16. Main story regions expand with areas such as the Yinglong Gate, opened for the first time in the ten years since the disaster, and the miasma-covered Northern Forbidden Zone. New playable operators include the game's first caster, Jue, and the electric-attribute support idol Lino. The update also expands the Integrated Industry (AIC) system and delivers various quality-of-life improvements.",
+      "description_ja": "『アークナイツ:エンドフィールド』のリリース半周年を記念する大型アップデートで、7月16日に適用されました。災害から10年ぶりに開かれた「応龍関門」や瘴気に覆われた「北方禁止区域」など、メインストーリーの地域が拡張されます。新たなプレイアブルオペレーターとして初のキャスター「訣」と、電気属性のサポートアイドル「リノ」が追加されます。統合工業(AIC)システムの拡張や各種の利便性改善も併せて行われます。"
     },
     {
       "id": "rhythm-heaven-miracle-stars-20260702",
@@ -3370,7 +3700,9 @@
         "액션"
       ],
       "image_url": null,
-      "source_url": "https://www.nintendo.com/kr/news/article/2y13ExLonrYR1x5OzAWnhW"
+      "source_url": "https://www.nintendo.com/kr/news/article/2y13ExLonrYR1x5OzAWnhW",
+      "description_en": "A new entry in Nintendo's flagship rhythm game series, arriving roughly eleven years after the last one, where you keep time using only simple button inputs. Japanese producer Tsunku♂ returns to contribute a large set of short, distinctive rhythm minigames, and new additions include a multiplayer mode for group play and an RPG mode with progression elements. Korean is officially supported, and it also runs on Switch 2 through backward compatibility.",
+      "description_ja": "シンプルなボタン操作だけでリズムを合わせる任天堂の看板リズムゲームシリーズが、約11年ぶりに送り出す新作です。日本のプロデューサーであるつんく♂が再び参加し、短くも個性の強いリズムミニゲームを多数収録したほか、複数人で一緒に遊べるマルチプレイモードと育成要素を加えたRPGモードが新たに追加されました。韓国語に公式対応し、Switch 2でも下位互換で動作します。"
     },
     {
       "id": "steins-gate-reboot-20260820",
@@ -3395,7 +3727,9 @@
         "어드벤처"
       ],
       "image_url": null,
-      "source_url": "https://gematsu.com/2026/05/steinsgate-reboot-launches-august-20-for-ps5-xbox-series-switch-2-ps4-switch-and-pc"
+      "source_url": "https://gematsu.com/2026/05/steinsgate-reboot-launches-august-20-for-ps5-xbox-series-switch-2-ps4-switch-and-pc",
+      "description_en": "A full remake of STEINS;GATE, the 2009 release that became a defining time-travel visual novel. New world lines and endings are added on top of the existing scenario, all voice work has been newly recorded, and character illustrations now use E-mote motion technology so expressions and breathing animate. Note, however, that voice is Japanese-only and subtitles are limited to Japanese, English and Chinese — official Korean subtitles are not included.",
+      "description_ja": "2009年に発売され、時間移動を題材としたビジュアルノベルの代表作となった『STEINS;GATE』の全面リメイク版です。既存のシナリオに新たな世界線とエンディングが追加され、全ボイスが新規収録されたほか、キャラクターのイラストにE-moteモーション技術を適用し、表情や呼吸まで動くよう演出が刷新されました。ただし音声は日本語のみ、字幕は日本語・英語・中国語のみの対応で、公式の韓国語字幕は含まれていません。"
     }
   ]
 }
