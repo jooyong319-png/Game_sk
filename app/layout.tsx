@@ -103,6 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <symbol id="ic-refresh" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6M21 8a9 9 0 0 0-15-3.5L3 8M3 16a9 9 0 0 0 15 3.5l3-3.5" /></symbol>
           <symbol id="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></symbol>
           <symbol id="ic-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></symbol>
+          <symbol id="ic-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" /></symbol>
         </svg>
         <header className="site-header">
           <SiteWordmark />

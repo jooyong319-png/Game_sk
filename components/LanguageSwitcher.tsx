@@ -1,5 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import styles from './LanguageSwitcher.module.css';
 
 type PageLang = 'ko' | 'en' | 'ja';
@@ -45,30 +46,69 @@ function buildUrl(target: PageLang, p: Parsed): string {
   return target === 'ko' ? `/${p.rel}` : `/${target}/${p.rel}`;
 }
 
+const LANGS: { key: PageLang; label: string; short: string }[] = [
+  { key: 'ko', label: '한국어', short: 'KO' },
+  { key: 'en', label: 'English', short: 'EN' },
+  { key: 'ja', label: '日本語', short: 'JA' },
+];
+
 // 모든 페이지 헤더에 노출. 번역 라우트가 없는 페이지(쿠폰 상세·게임 허브·admin 등)에서는
 // 그 언어의 홈으로 안내(대상 페이지가 항상 존재하므로 dead link 없음).
 export function LanguageSwitcher() {
   const pathname = usePathname();
   const parsed = parsePath(pathname);
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const langs: { key: PageLang; label: string }[] = [
-    { key: 'ko', label: '한국어' },
-    { key: 'en', label: 'EN' },
-    { key: 'ja', label: '日本語' },
-  ];
+  // 바깥 클릭·Esc로 닫기 (HeaderNav ☰ 메뉴와 동일 패턴)
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  const current = LANGS.find(l => l.key === parsed.lang) ?? LANGS[0];
 
   return (
-    <div className={styles.wrap} role="group" aria-label="Language / 言語 / 언어">
-      {langs.map(l => (
-        <a
-          key={l.key}
-          href={buildUrl(l.key, parsed)}
-          className={`${styles.btn} ${parsed.lang === l.key ? styles.active : ''}`}
-          aria-current={parsed.lang === l.key ? 'page' : undefined}
-        >
-          {l.label}
-        </a>
-      ))}
+    <div className={styles.wrap} ref={ref}>
+      <button
+        type="button"
+        className={styles.trigger}
+        onClick={() => setOpen(o => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label="Language / 言語 / 언어"
+      >
+        <svg className="ic" aria-hidden="true"><use href="#ic-globe" /></svg>
+        <span className={styles.triggerLabel}>{current.short}</span>
+        <svg className={`ic ${styles.chevron} ${open ? styles.chevronOpen : ''}`} aria-hidden="true"><use href="#ic-chevron-down" /></svg>
+      </button>
+
+      {open && (
+        <ul className={styles.menu} role="listbox">
+          {LANGS.map(l => (
+            <li key={l.key} role="presentation">
+              <a
+                href={buildUrl(l.key, parsed)}
+                className={`${styles.item} ${parsed.lang === l.key ? styles.itemActive : ''}`}
+                role="option"
+                aria-selected={parsed.lang === l.key}
+                onClick={() => setOpen(false)}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
