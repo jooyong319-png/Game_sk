@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getActiveCouponGames } from '@/lib/coupons';
 import { PageShell } from '@/components/PageShell';
-import { LOCALES, termLabel, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, termLabel, couponGameName, type Locale } from '@/lib/i18nLabels';
 import styles from '@/app/coupons/coupons.module.css';
 
 interface Props { params: { lang: string }; }
@@ -71,7 +71,7 @@ export default async function Page({ params }: Props) {
                     ? <img className={styles.thumb} src={g.image_url} alt="" loading="lazy" />
                     : <span className={styles.thumbPlaceholder} aria-hidden="true">🎮</span>}
                   <span className={styles.body}>
-                    <span className={styles.name}>{g.name}</span>
+                    <span className={styles.name}>{couponGameName(g, lang)}</span>
                     <span className={styles.meta}>
                       <span className={styles.tagCoupon}>{termLabel(g.term, lang)} {g.active.length}</span>
                     </span>

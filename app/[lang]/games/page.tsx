@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllGameHubs } from '@/lib/game-hub';
 import { PageShell } from '@/components/PageShell';
-import { LOCALES, termLabel, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, termLabel, couponGameName, type Locale } from '@/lib/i18nLabels';
 import styles from '@/app/games/list.module.css';
 
 interface Props { params: { lang: string }; }
@@ -67,7 +67,7 @@ export default async function Page({ params }: Props) {
                     ? <img className={styles.thumb} src={g.image_url} alt="" loading="lazy" />
                     : <span className={styles.thumbPlaceholder} aria-hidden="true">🎮</span>}
                   <span className={styles.body}>
-                    <span className={styles.name}>{g.name}</span>
+                    <span className={styles.name}>{couponGameName(g, lang)}</span>
                     <span className={styles.meta}>
                       {g.activeCount > 0 && <span className={styles.tagCoupon}>{termLabel(g.term, lang)} {g.activeCount}</span>}
                       {g.relatedCount > 0 && <span className={styles.tagSched}>{SCHED[lang]} {g.relatedCount}</span>}

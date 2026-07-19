@@ -5,7 +5,7 @@ import { getCouponsLastUpdated, couponKeywords } from '@/lib/coupons';
 import { CouponList } from '@/components/CouponList';
 import { ViewCounter } from '@/components/ViewCounter';
 import { PageShell } from '@/components/PageShell';
-import { LOCALES, UI, CAL, termLabel, gameName, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, UI, CAL, termLabel, gameName, couponGameName, type Locale } from '@/lib/i18nLabels';
 import styles from '@/app/games/list.module.css';
 
 interface Props {
@@ -37,7 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const hub = await getGameHub(params.key);
   if (!hub) return { title: UI[lang].notFound };
   const { view } = hub;
-  const { name, term: rawTerm } = view;
+  const { term: rawTerm } = view;
+  const name = couponGameName(view, lang);
   const term = termLabel(rawTerm, lang);
   const url = `https://gcalen.com/${lang}/games/${view.key}`;
   const title = `${name} — ${term}, events & updates`;
@@ -69,7 +70,8 @@ export default async function LocaleGameHubPage({ params }: Props) {
   const hub = await getGameHub(params.key);
   if (!hub) notFound();
   const { view, related } = hub;
-  const { key, name, term: rawTerm, active, expired, image_url } = view;
+  const { key, term: rawTerm, active, expired, image_url } = view;
+  const name = couponGameName(view, lang);
   const term = termLabel(rawTerm, lang);
 
   if (active.length === 0 && expired.length === 0 && related.length === 0) notFound();

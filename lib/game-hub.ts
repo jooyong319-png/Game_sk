@@ -35,6 +35,8 @@ export async function getGameHubKeys(): Promise<string[]> {
 export interface GameHubSummary {
   key: string;
   name: string;
+  name_en: string | null;
+  name_ja: string | null;
   term: '리딤코드' | '쿠폰';
   image_url: string | null;
   activeCount: number;   // 유효 코드 수
@@ -50,6 +52,8 @@ export async function getAllGameHubs(): Promise<GameHubSummary[]> {
     .map(v => ({
       key: v.key,
       name: v.name,
+      name_en: v.name_en,
+      name_ja: v.name_ja,
       term: v.term,
       image_url: v.image_url,
       activeCount: v.active.length,

@@ -21,6 +21,14 @@ export function gameDescription(g: LocalizableGameDesc, lang: Locale | null): st
   return d || g.description;
 }
 
+// 쿠폰/게임 허브(data/coupons.json) 게임명 — name_en/name_ja가 있으면 그걸, 없으면 정리된 한국어 표기로 폴백.
+interface LocalizableCouponName { name: string; name_en?: string | null; name_ja?: string | null; }
+export function couponGameName(v: LocalizableCouponName, lang: Locale | null): string {
+  if (!lang) return v.name;
+  if (lang === 'ja') return v.name_ja || v.name_en || v.name;
+  return v.name_en || v.name;
+}
+
 // 게임쇼/할인/시즌 등 data/events.json 이벤트 제목 — 리서처가 채운 title_en/ja가 있으면 그걸, 없으면 한국어로 폴백.
 interface LocalizableEventTitle { title: string; title_en?: string | null; title_ja?: string | null; }
 export function eventTitle(e: LocalizableEventTitle, lang: Locale | null): string {

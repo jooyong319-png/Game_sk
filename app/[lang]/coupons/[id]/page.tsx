@@ -6,7 +6,7 @@ import {
 import { CouponList } from '@/components/CouponList';
 import { ViewCounter } from '@/components/ViewCounter';
 import { PageShell } from '@/components/PageShell';
-import { LOCALES, CAL, UI, termLabel, type Locale } from '@/lib/i18nLabels';
+import { LOCALES, CAL, UI, termLabel, couponGameName, type Locale } from '@/lib/i18nLabels';
 import styles from '@/app/coupons/coupons.module.css';
 
 interface Props {
@@ -42,7 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const g = await getCouponGame(params.id);
   if (!g || (g.active.length === 0 && g.expired.length === 0)) return { title: UI[lang].notFound };
 
-  const { name, term: rawTerm, active } = g;
+  const { term: rawTerm, active } = g;
+  const name = couponGameName(g, lang);
   const term = termLabel(rawTerm, lang);
   const lastUpdated = await getCouponsLastUpdated();
   const ym = yearMonth(lastUpdated, lang);
@@ -81,7 +82,8 @@ export default async function LocaleCouponPage({ params }: Props) {
   const g = await getCouponGame(params.id);
   if (!g || (g.active.length === 0 && g.expired.length === 0)) notFound();
 
-  const { key, name, term: rawTerm, active, expired, image_url, game_id, redeem_url } = g;
+  const { key, term: rawTerm, active, expired, image_url, game_id, redeem_url } = g;
+  const name = couponGameName(g, lang);
   const term = termLabel(rawTerm, lang);
   const url = `https://gcalen.com/${lang}/coupons/${key}`;
 
@@ -197,7 +199,7 @@ export default async function LocaleCouponPage({ params }: Props) {
             <div className={styles.chips}>
               {related.map(r => (
                 <a key={r.key} href={`/${lang}/coupons/${r.key}`} className={styles.chip}>
-                  {r.name} {termLabel(r.term, lang)}
+                  {couponGameName(r, lang)} {termLabel(r.term, lang)}
                 </a>
               ))}
             </div>

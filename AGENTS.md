@@ -220,6 +220,7 @@ new_server는 워치리스트(`data/server_watchlist.json`) 기반 + 공식 공�
     "<키=URL 슬러그>": {                    // 예: "genshin-impact" → /coupons/genshin-impact, /games/genshin-impact
       name_ko: "원신",                       // 기본 게임명(버전·업데이트 꼬리표 없이)
       name_en: "Genshin Impact",            // 선택
+      name_ja: "原神",                       // 선택: /en, /ja 쿠폰·게임 허브 페이지용(없으면 name_en→name_ko 순 폴백)
       image_url: "https://...",             // 선택(허브·목록 썸네일)
       game_id: "genshin-6-7-...",           // 선택: 연결된 games.json id(있으면 게임 상세에도 노출·상호링크)
       term: "리딤코드",                       // 선택: 주 용어 강제. 없으면 이름으로 자동('리딤코드'|'쿠폰')

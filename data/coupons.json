@@ -48,7 +48,8 @@
           "expires": "2026-07-31",
           "added": "2026-07-14"
         }
-      ]
+      ],
+      "name_ja": "原神"
     },
     "honkai-star-rail": {
       "name_ko": "붕괴: 스타레일",
@@ -88,7 +89,8 @@
           "expires": null,
           "added": "2026-07-14"
         }
-      ]
+      ],
+      "name_ja": "崩壊：スターレイル"
     },
     "wuthering-waves": {
       "name_ko": "명조",
@@ -113,7 +115,8 @@
           "expires": null,
           "added": "2026-07-14"
         }
-      ]
+      ],
+      "name_ja": "鳴潮"
     },
     "zenless-zone-zero": {
       "name_ko": "젠레스 존 제로",
@@ -170,7 +173,8 @@
           "expires": null,
           "added": "2026-07-14"
         }
-      ]
+      ],
+      "name_ja": "ゼンレスゾーンゼロ"
     },
     "neverness-to-everness": {
       "name_ko": "이환",
@@ -201,7 +205,8 @@
           "expires": null,
           "added": "2026-07-14"
         }
-      ]
+      ],
+      "name_ja": "NTE: Neverness to Everness"
     },
     "arknights-endfield": {
       "name_ko": "명일방주: 엔드필드",
@@ -227,7 +232,8 @@
           "expires": null,
           "added": "2026-07-14"
         }
-      ]
+      ],
+      "name_ja": "アークナイツ:エンドフィールド"
     },
     "lord-nine": {
       "name_ko": "로드나인",
@@ -350,7 +356,8 @@
           "expires": null,
           "added": "2026-07-16"
         }
-      ]
+      ],
+      "name_ja": "勝利の女神：NIKKE"
     }
   }
 }

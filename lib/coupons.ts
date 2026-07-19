@@ -18,6 +18,7 @@ export interface Coupon {
 export interface CouponGame {
   name_ko: string;
   name_en?: string | null;
+  name_ja?: string | null;
   image_url?: string | null;
   game_id?: string | null;   // 대응하는 games.json id(있으면). 상세 상호링크·게임 상세 노출용
   term?: '리딤코드' | '쿠폰'; // 주 용어 강제(없으면 이름으로 자동 판별)
@@ -141,6 +142,7 @@ export interface CouponGameView {
   key: string;               // coupons.json 키 = URL 슬러그(/coupons/{key}, /games/{key})
   name: string;              // 정리된 표기 게임명
   name_en: string | null;
+  name_ja: string | null;
   term: '리딤코드' | '쿠폰';
   image_url: string | null;
   game_id: string | null;    // 연결된 games.json id(있으면)
@@ -160,6 +162,7 @@ function toView(key: string, g: CouponGame, expiredWindowDays: number): CouponGa
     key,
     name,
     name_en: g.name_en ?? null,
+    name_ja: g.name_ja ?? null,
     term: g.term ?? couponTerm(g.name_ko, g.name_en),
     image_url: g.image_url ?? null,
     game_id: g.game_id ?? null,
