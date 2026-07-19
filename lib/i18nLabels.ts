@@ -103,7 +103,7 @@ interface UiStrings {
   privacy: string;
   terms: string;
   footerDisclaimer: string;
-  fullSiteNotice: string;
+  siteDescription: string;
 }
 
 export const UI: Record<Locale, UiStrings> = {
@@ -142,7 +142,7 @@ export const UI: Record<Locale, UiStrings> = {
     privacy: 'Privacy Policy',
     terms: 'Terms of Service',
     footerDisclaimer: 'Game names, images, and trademarks are property of their respective rights holders. This site exists to provide release-schedule information and will edit or remove content upon a rights holder’s request.',
-    fullSiteNotice: 'The calendar, game listings, and comments below are shown in Korean (the site’s primary data language). Page titles and navigation are in English.',
+    siteDescription: 'Track Korean and global game release dates, pre-registrations, new server openings, and events in one calendar — updated daily.',
   },
   ja: {
     siteName: 'Gcalen — ゲーム発売カレンダー',
@@ -179,7 +179,7 @@ export const UI: Record<Locale, UiStrings> = {
     privacy: 'プライバシーポリシー',
     terms: '利用規約',
     footerDisclaimer: 'ゲーム名・画像・商標等は各権利者の資産であり、本サイトは発売日程情報の提供を目的としています。権利者の要請があれば該当コンテンツを速やかに修正・削除します。',
-    fullSiteNotice: '以下のカレンダー・ゲーム一覧・コメントは韓国語(本サイトの基本データ言語)で表示されます。ページタイトルとナビゲーションは日本語です。',
+    siteDescription: '国内外のゲーム発売日程・事前予約・新規サーバー・イベント情報を一つのカレンダーにまとめて毎日更新しています。',
   },
 };
 

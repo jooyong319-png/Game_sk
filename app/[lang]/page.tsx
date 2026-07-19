@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://gcalen.com/${params.lang}`;
   return {
     title: ui.siteName,
-    description: ui.fullSiteNotice,
+    description: ui.siteDescription,
     alternates: {
       canonical: url,
       languages: { ko: 'https://gcalen.com/', en: 'https://gcalen.com/en', ja: 'https://gcalen.com/ja' },
     },
-    openGraph: { title: ui.siteName, description: ui.fullSiteNotice, url, type: 'website' },
+    openGraph: { title: ui.siteName, description: ui.siteDescription, url, type: 'website' },
   };
 }
 
@@ -58,7 +58,7 @@ export default async function LocaleHomePage({ params }: Props) {
     '@type': 'WebSite',
     name: ui.siteName,
     url: `https://gcalen.com/${lang}`,
-    description: ui.fullSiteNotice,
+    description: ui.siteDescription,
     inLanguage: lang,
   };
 
@@ -76,9 +76,6 @@ export default async function LocaleHomePage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
-      <p className="locale-notice" style={{ padding: '0.8rem 1rem', fontSize: '0.85rem', color: 'var(--text-faint)' }}>
-        {ui.fullSiteNotice}
-      </p>
       <Home initialGames={games} lastUpdated={lastUpdated} serverNow={serverNow} initialCalEvents={initialCalEvents} />
       <nav className="seo-nav" aria-label="Category shortcuts">
         {seoLinks.map(l => <a key={l.href} href={l.href}>{l.label}</a>)}
