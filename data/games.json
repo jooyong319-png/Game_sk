@@ -12,7 +12,7 @@
     {
       "id": "lineage-classic-server-haine-loengrin-20260311",
       "name_ko": "리니지 클래식 신규 서버 '하이네'·'로엔그린' 오픈",
-      "name_en": null,
+      "name_en": "Lineage Classic: New Servers 'Haine' & 'Loengrin' Open",
       "release_date": "2026-03-11",
       "release_date_approx": false,
       "category": "new_server",
@@ -34,7 +34,7 @@
     {
       "id": "lineage-m-server-kent-oren-20260318",
       "name_ko": "리니지M: 리부트 신규 서버 '켄트'·'오렌' 오픈",
-      "name_en": null,
+      "name_en": "Lineage M Reboot: New Servers 'Kent' & 'Oren' Open",
       "release_date": "2026-03-18",
       "release_date_approx": false,
       "category": "new_server",
@@ -128,7 +128,7 @@
     {
       "id": "lordnine-server-dinapheri-20260327",
       "name_ko": "로드나인: 성장 가속 서버 '디나페리' 오픈",
-      "name_en": null,
+      "name_en": "LORDNINE: Accelerated-Growth Server 'Dinapheri' Opens",
       "release_date": "2026-03-27",
       "release_date_approx": false,
       "category": "new_server",
@@ -152,7 +152,7 @@
     {
       "id": "nightcrows-server-philippus-20260423",
       "name_ko": "나이트 크로우: 신규 서버 '필리푸스' 오픈",
-      "name_en": null,
+      "name_en": "NIGHT CROWS: New Server 'Philippus' Opens",
       "release_date": "2026-04-23",
       "release_date_approx": false,
       "category": "new_server",
@@ -176,7 +176,7 @@
     {
       "id": "eos-black-server-sambaek-v-20260423",
       "name_ko": "에오스 블랙 신규 서버 '삼백V' 오픈",
-      "name_en": null,
+      "name_en": "EOS Black: New Server 'Sambaek V' Opens",
       "release_date": "2026-04-23",
       "release_date_approx": false,
       "category": "new_server",
@@ -199,7 +199,7 @@
     {
       "id": "arthdal-server-kravon-20260506",
       "name_ko": "아스달 연대기: 세 개의 세력 - 신규 서버 '크라본' 오픈",
-      "name_en": null,
+      "name_en": "Arthdal Chronicles: Three Factions — New Server 'Kravon' Opens",
       "release_date": "2026-05-06",
       "release_date_approx": false,
       "category": "new_server",
@@ -271,7 +271,7 @@
     {
       "id": "raven2-server-zero-20260527",
       "name_ko": "레이븐2: 특화 서버 'ZERO' 오픈",
-      "name_en": null,
+      "name_en": "RAVEN2: Specialized Server 'ZERO' Opens",
       "release_date": "2026-05-27",
       "release_date_approx": false,
       "category": "new_server",
@@ -294,7 +294,7 @@
     {
       "id": "bns-revolution-server-yuilmui-20260528",
       "name_ko": "블소 레볼루션: 신규 서버 '유일무이' 오픈",
-      "name_en": null,
+      "name_en": "Blade & Soul Revolution: New Server 'Yuilmui' Opens",
       "release_date": "2026-05-28",
       "release_date_approx": false,
       "category": "new_server",
@@ -341,7 +341,7 @@
     {
       "id": "raven2-server-zero2-20260601",
       "name_ko": "레이븐2: 특화 서버 'ZERO2' 오픈",
-      "name_en": null,
+      "name_en": "RAVEN2: Specialized Server 'ZERO2' Opens",
       "release_date": "2026-06-01",
       "release_date_approx": false,
       "category": "new_server",
@@ -388,7 +388,7 @@
     {
       "id": "mir-legend-jin-20260604",
       "name_ko": "미르의 전설: 진",
-      "name_en": null,
+      "name_en": "The Legend of Mir: Jin",
       "release_date": "2026-06-04",
       "release_date_approx": false,
       "category": "mobile_kr",
@@ -604,7 +604,7 @@
     {
       "id": "requiem-m-2026",
       "name_ko": "레퀴엠M",
-      "name_en": null,
+      "name_en": "Requiem M",
       "release_date": "2026-06-30",
       "release_date_approx": false,
       "category": "mobile_kr",
@@ -912,7 +912,8 @@
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3859630/31d5f5ef4a143bf915429e307f37cab6e2939678/header.jpg?t=1771200990",
       "source_url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/",
       "description_en": "The second Metal Gear Solid Master Collection compilation from Konami, bundling Metal Gear Solid 4: Guns of the Patriots, Peace Walker and the Game Boy Color title Metal Gear: Ghost Babel. It arrives August 27 on Switch, Switch 2, PS5, PC and Xbox Series, and includes supplementary material such as screenplay books, digital soundtracks and a database covering the series' lore.",
-      "description_ja": "コナミの『メタルギア ソリッド マスターコレクション』第2弾で、『メタルギア ソリッド4 ガンズ・オブ・ザ・パトリオット』『ピースウォーカー』、そしてゲームボーイカラー用タイトル『メタルギア ゴーストバベル』を収録しています。Switch・Switch 2・PS5・PC・Xbox Seriesで8月27日に発売され、脚本集やデジタルサウンドトラック、シリーズの世界観をまとめたデータベースなどの付属資料も同梱されます。"
+      "description_ja": "コナミの『メタルギア ソリッド マスターコレクション』第2弾で、『メタルギア ソリッド4 ガンズ・オブ・ザ・パトリオット』『ピースウォーカー』、そしてゲームボーイカラー用タイトル『メタルギア ゴーストバベル』を収録しています。Switch・Switch 2・PS5・PC・Xbox Seriesで8月27日に発売され、脚本集やデジタルサウンドトラック、シリーズの世界観をまとめたデータベースなどの付属資料も同梱されます。",
+      "name_ja": "メタルギアソリッド マスターコレクション Vol.2"
     },
     {
       "id": "marvels-wolverine-2026",
@@ -1459,7 +1460,7 @@
     {
       "id": "lineage-classic-server-oren-20260604",
       "name_ko": "리니지 클래식: 신규 PvP 서버 '오렌' 오픈",
-      "name_en": null,
+      "name_en": "Lineage Classic: New PvP Server 'Oren' Opens",
       "release_date": "2026-06-04",
       "release_date_approx": false,
       "category": "new_server",
@@ -1481,7 +1482,7 @@
     {
       "id": "odin-server-skadi-20260624",
       "name_ko": "오딘: 발할라 라이징 5주년 신규 서버 '스카디' 오픈",
-      "name_en": null,
+      "name_en": "ODIN: Valhalla Rising — 5th Anniversary New Server 'Skadi' Opens",
       "release_date": "2026-06-24",
       "release_date_approx": false,
       "category": "new_server",
@@ -1549,7 +1550,8 @@
       "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2172910/714df3514b1166414caef8c31b092f5786e8245d/header.jpg?t=1780655545",
       "source_url": "https://www.bandainamcoent.com/news/captain-tsubasa-2-world-fighters-takes-to-the-field-on-august-28-with-preorders-available-now",
       "description_en": "A new action soccer game based on the popular football manga Captain Tsubasa. It leans on arcade-style play that recreates the original's signature special shots and dramatic staging. It launches globally on August 27 for PS5, Switch and Xbox Series X|S, with the Steam version following on August 28.",
-      "description_ja": "人気サッカー漫画『キャプテン翼』のIPを基にしたアクションサッカーゲームの新作です。原作の必殺シュートや派手な演出を再現したアーケード感覚のプレイが特徴です。PS5・Switch・Xbox Series X|Sは8月27日、Steam版は8月28日に全世界で発売されます。"
+      "description_ja": "人気サッカー漫画『キャプテン翼』のIPを基にしたアクションサッカーゲームの新作です。原作の必殺シュートや派手な演出を再現したアーケード感覚のプレイが特徴です。PS5・Switch・Xbox Series X|Sは8月27日、Steam版は8月28日に全世界で発売されます。",
+      "name_ja": "キャプテン翼2 ワールドファイターズ"
     },
     {
       "id": "halo-campaign-evolved-20260728",
@@ -1602,7 +1604,7 @@
     {
       "id": "maplestory-challengers-world-s4-20260618",
       "name_ko": "메이플스토리 챌린저스 월드 시즌4 오픈 (OVERDRIVE)",
-      "name_en": null,
+      "name_en": "MapleStory: Challengers World Season 4 Opens (OVERDRIVE)",
       "release_date": "2026-06-18",
       "release_date_approx": false,
       "category": "new_server",
@@ -1624,7 +1626,7 @@
     {
       "id": "lostark-loaon-summer-20260620",
       "name_ko": "로스트아크 '2026 로아온 썸머' 온라인 쇼케이스",
-      "name_en": null,
+      "name_en": "Lost Ark 'LOA ON: Summer 2026' Online Showcase",
       "release_date": "2026-06-20",
       "release_date_approx": false,
       "category": "new_server",
@@ -1694,7 +1696,7 @@
     {
       "id": "lineage-m-server-phoenix-20260624",
       "name_ko": "리니지M: 'PHOENIX' 업데이트·신규 리부트 월드 오픈",
-      "name_en": null,
+      "name_en": "Lineage M: 'PHOENIX' Update & New Reboot World Opens",
       "release_date": "2026-06-24",
       "release_date_approx": false,
       "category": "new_server",
@@ -1717,7 +1719,7 @@
     {
       "id": "aion2-chapter1-sand-frost-20260701",
       "name_ko": "아이온2: 챕터1 '모래와 서리의 땅' 업데이트",
-      "name_en": null,
+      "name_en": "AION 2: Chapter 1 'Land of Sand and Frost' Update",
       "release_date": "2026-07-01",
       "release_date_approx": false,
       "category": "new_server",
@@ -1741,7 +1743,7 @@
     {
       "id": "mabinogi-mobile-season2-light-dark-20260625",
       "name_ko": "마비노기 모바일: 시즌2 '빛과 어둠' 업데이트",
-      "name_en": null,
+      "name_en": "Mabinogi Mobile: Season 2 'Light and Dark' Update",
       "release_date": "2026-06-25",
       "release_date_approx": false,
       "category": "new_server",
@@ -1759,12 +1761,13 @@
       "image_url": "https://play-lh.googleusercontent.com/ljE3Q4kOQj0UEjbJoANQpgQ4rxdDvI1h1wARGv6jFgel-5oDIFjfTx2S0nINT8agCEOB_V3C9y61RZFoyLZ4=s512",
       "source_url": "https://mabinogimobile.nexon.com/Events2026/0611/PreReservation_Season2?channel=2103",
       "description_en": "Light and Darkness is the new season update for Nexon devCAT's Mabinogi Mobile. It adds large-scale content including a new story and dungeons, with details revealed through the Big Campfire broadcast on June 19. The update extends the main narrative following season one, and participation rewards were announced via a pre-registration page. Playable on Android and iOS.",
-      "description_ja": "ネクソンdevCATの『マビノギモバイル』が展開する新シーズン「光と闇」アップデートです。新規ストーリーやダンジョンなど大規模なコンテンツが追加され、6月19日の「ビッグキャンプファイア」配信で詳細が公開されました。シーズン1に続く本編の物語を拡張する更新で、事前予約ページを通じて参加報酬も案内されました。Android・iOSでプレイできます。"
+      "description_ja": "ネクソンdevCATの『マビノギモバイル』が展開する新シーズン「光と闇」アップデートです。新規ストーリーやダンジョンなど大規模なコンテンツが追加され、6月19日の「ビッグキャンプファイア」配信で詳細が公開されました。シーズン1に続く本編の物語を拡張する更新で、事前予約ページを通じて参加報酬も案内されました。Android・iOSでプレイできます。",
+      "name_ja": "マビノギモバイル: シーズン2『光と闇』アップデート"
     },
     {
       "id": "dnf-empire-knight-female-infighter-20260604",
       "name_ko": "던전앤파이터: 신규 캐릭터 '제국기사'·전직 '여인파이터' 업데이트",
-      "name_en": null,
+      "name_en": "Dungeon&Fighter: New Character 'Imperial Knight' & Female Infighter Job Change Update",
       "release_date": "2026-06-04",
       "release_date_approx": false,
       "category": "new_server",
@@ -1812,7 +1815,7 @@
     {
       "id": "prasia-summer-festival-20260617",
       "name_ko": "프라시아 전기: '2026 여름 감사제' 시작",
-      "name_en": null,
+      "name_en": "Prasia Chronicles: '2026 Summer Thanksgiving Festival' Begins",
       "release_date": "2026-06-17",
       "release_date_approx": false,
       "category": "new_server",
@@ -1854,7 +1857,8 @@
       "image_url": "https://yt3.googleusercontent.com/f0PgbUq0tAdrt_rQxprZdPfgg96y54Ge-LCagXvPzc6gnMiw42w-J-wAZ2n-TfXgB3ASkxk2=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/",
       "description_en": "Rockstar Games' blockbuster open-world action adventure, set in Vice City. Its November 19, 2026 release on PS5 and Xbox Series X|S is confirmed, with pre-orders opening June 25. The date was reaffirmed in Rockstar's official announcement and Take-Two's May 21 earnings report. A PC version has yet to be detailed.",
-      "description_ja": "Rockstar Gamesの大作オープンワールドアクションアドベンチャーで、舞台はバイスシティです。2026年11月19日にPS5・Xbox Series X|Sでの発売が確定しており、予約は6月25日に開始されました。Rockstarの公式発表およびTake-Twoの決算発表(5/21)で日程が再確認されています。PC版については後日発表とされています。"
+      "description_ja": "Rockstar Gamesの大作オープンワールドアクションアドベンチャーで、舞台はバイスシティです。2026年11月19日にPS5・Xbox Series X|Sでの発売が確定しており、予約は6月25日に開始されました。Rockstarの公式発表およびTake-Twoの決算発表(5/21)で日程が再確認されています。PC版については後日発表とされています。",
+      "name_ja": "グランド・セフト・オートVI"
     },
     {
       "id": "the-mound-omen-of-cthulhu-20260715",
@@ -1911,7 +1915,7 @@
     {
       "id": "mapleland-burning-world-20260619",
       "name_ko": "메이플랜드 신규 월드 '버닝 월드' 오픈",
-      "name_en": null,
+      "name_en": "MapleLand: New World 'Burning World' Opens",
       "release_date": "2026-06-19",
       "release_date_approx": false,
       "category": "new_server",
@@ -1936,7 +1940,7 @@
     {
       "id": "lostark-class-dimensioner-20260708",
       "name_ko": "로스트아크: 신규 클래스 '차원술사' 출시",
-      "name_en": null,
+      "name_en": "Lost Ark: New Class 'Dimensioner' Launches",
       "release_date": "2026-07-08",
       "release_date_approx": false,
       "category": "new_server",
@@ -1961,7 +1965,7 @@
     {
       "id": "lostark-raid-belgardin-20260805",
       "name_ko": "로스트아크: 8인 그림자 레이드 '벨가르딘' 업데이트",
-      "name_en": null,
+      "name_en": "Lost Ark: 8-Player Shadow Raid 'Belgardin' Update",
       "release_date": "2026-08-05",
       "release_date_approx": false,
       "category": "new_server",
@@ -1983,7 +1987,7 @@
     {
       "id": "maplestory-class-rethe-20260618",
       "name_ko": "메이플스토리: 신규 직업 '레테' 출시 (여름 OVERDRIVE 1차)",
-      "name_en": null,
+      "name_en": "MapleStory: New Job 'Rethe' Launches (Summer OVERDRIVE Part 1)",
       "release_date": "2026-06-18",
       "release_date_approx": false,
       "category": "new_server",
@@ -2005,7 +2009,7 @@
     {
       "id": "hsr-fate-collab-holy-grail-20260724",
       "name_ko": "붕괴: 스타레일 × Fate 2차 콜라보 '환조: 성배전쟁'",
-      "name_en": null,
+      "name_en": "Honkai: Star Rail × Fate 2nd Collab 'Phantasmal Vision: Holy Grail War'",
       "release_date": "2026-07-24",
       "release_date_approx": false,
       "category": "new_server",
@@ -2031,7 +2035,7 @@
     {
       "id": "eos-black-server-maroon-ruth-camp-20260625",
       "name_ko": "에오스 블랙: 2주년 부스팅 서버 '마룬캠프'·'루스캠프' 오픈",
-      "name_en": null,
+      "name_en": "EOS Black: 2nd Anniversary Boost Servers 'Maroon Camp' & 'Ruth Camp' Open",
       "release_date": "2026-06-25",
       "release_date_approx": false,
       "category": "new_server",
@@ -2082,7 +2086,7 @@
     {
       "id": "zeus-god-of-arrogance-2026",
       "name_ko": "제우스: 오만의 신",
-      "name_en": null,
+      "name_en": "Zeus: God of Arrogance",
       "release_date": "2026-09-30",
       "release_date_approx": true,
       "category": "mobile_kr",
@@ -2350,7 +2354,7 @@
     {
       "id": "lordnine-2nd-anniv-5th-relic-20260708",
       "name_ko": "로드나인: 2주년 2차 업데이트 - 다섯 번째 성물 '고요의 성흔'·각성 파괴자 보스",
-      "name_en": null,
+      "name_en": "LORDNINE: 2nd Anniversary Update 2 — 5th Relic 'Sigil of Silence' & Awakened Destroyer Boss",
       "release_date": "2026-07-08",
       "release_date_approx": false,
       "category": "new_server",
@@ -2415,7 +2419,8 @@
       "image_url": "https://cdn.cloudflare.steamstatic.com/steam/apps/4449410/header.jpg",
       "source_url": "https://www.cloudedleopardent.com/kr/news/9238/",
       "description_en": "A brand-new entry in Nihon Falcom's Xanadu series. An action RPG set in Kyoto that revolves around the otherworldly realm of Xanadu, its Korean version releases simultaneously on Steam, PS5 and Nintendo Switch/Switch 2 on July 16, 2026. A Limited Edition with bonus items is available alongside the standard release.",
-      "description_ja": "日本ファルコムの『ザナドゥ』シリーズの完全新作です。京都を舞台に異界ザナドゥをめぐる物語を描くアクションRPGで、韓国語版が2026年7月16日にSteam・PS5・Nintendo Switch/Switch 2で同時発売されます。通常版に加えて特典を収録したリミテッドエディションも発売されます。"
+      "description_ja": "日本ファルコムの『ザナドゥ』シリーズの完全新作です。京都を舞台に異界ザナドゥをめぐる物語を描くアクションRPGで、韓国語版が2026年7月16日にSteam・PS5・Nintendo Switch/Switch 2で同時発売されます。通常版に加えて特典を収録したリミテッドエディションも発売されます。",
+      "name_ja": "亰都ザナドゥ -桜花幻舞-"
     },
     {
       "id": "higan-eruthyll-kr-2026",
@@ -2447,7 +2452,7 @@
     {
       "id": "rf-online-next-lavaron-20260701",
       "name_ko": "RF 온라인 넥스트 - 신규 지역 '라바론' 대규모 업데이트",
-      "name_en": null,
+      "name_en": "RF Online Next: New Region 'Lavaron' Major Update",
       "release_date": "2026-07-01",
       "release_date_approx": false,
       "category": "new_server",
@@ -2547,7 +2552,7 @@
     {
       "id": "arthdal-server-newworld-20260714",
       "name_ko": "아스달 연대기: 세 개의 세력 - 신규 서버 'NEW WORLD' 오픈",
-      "name_en": null,
+      "name_en": "Arthdal Chronicles: Three Factions — New Server 'NEW WORLD' Opens",
       "release_date": "2026-07-14",
       "release_date_approx": false,
       "category": "new_server",
@@ -2689,7 +2694,7 @@
     {
       "id": "maplestory-summer-2nd-6th-skill-core-20260723",
       "name_ko": "메이플스토리 여름 2차 업데이트 (세 번째 6차 스킬 코어)",
-      "name_en": null,
+      "name_en": "MapleStory: Summer Update 2 (3rd 6th-Job Skill Core)",
       "release_date": "2026-07-23",
       "release_date_approx": false,
       "category": "new_server",
@@ -2751,7 +2756,8 @@
       "image_url": "https://yt3.googleusercontent.com/HNg_MA3lYwk6JCHxftRxRUAcMFK0334jI3-G-ERWMnTe5vIT1fORQ2er531XI_eCnMl4v_Wtk38=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.nintendo.com/kr/games/switch2/aacsa/index.html",
       "description_en": "A new Fire Emblem entry revealed at a Nintendo Direct, releasing exclusively for Switch 2. Set around a grand gladiatorial tournament held in the capital of the Dagda Empire, it is structured so players choose among four different protagonists and follow their stories. It carries on the series' signature turn-based tactical combat built on class and weapon matchups. Korean is supported, and it releases September 17.",
-      "description_ja": "Nintendo Directで公開された『ファイアーエムブレム』シリーズの新作で、Switch 2専用タイトルとして発売されます。ダグダ帝国の首都で開かれる大剣闘祭を舞台に、異なる4人の主人公の物語を選んで進める構成が特徴です。兵種と武器の相性を活用するシリーズならではのターン制シミュレーション戦闘を継承しています。韓国語に対応し、9月17日に発売されます。"
+      "description_ja": "Nintendo Directで公開された『ファイアーエムブレム』シリーズの新作で、Switch 2専用タイトルとして発売されます。ダグダ帝国の首都で開かれる大剣闘祭を舞台に、異なる4人の主人公の物語を選んで進める構成が特徴です。兵種と武器の相性を活用するシリーズならではのターン制シミュレーション戦闘を継承しています。韓国語に対応し、9月17日に発売されます。",
+      "name_ja": "ファイアーエムブレム 萬紫千紅"
     },
     {
       "id": "xenoblade-chronicles-3-switch2-20261203",
@@ -2779,7 +2785,7 @@
     {
       "id": "mabinogi-reaction-1st-arcana-awakening-20260709",
       "name_ko": "마비노기: 여름 캠페인 RE:ACTION 1차 대규모 업데이트",
-      "name_en": null,
+      "name_en": "Mabinogi: Summer Campaign RE:ACTION Part 1 Major Update",
       "release_date": "2026-07-09",
       "release_date_approx": false,
       "category": "new_server",
@@ -2796,7 +2802,8 @@
       "image_url": "https://yt3.googleusercontent.com/xT5oTmdL-NJj2Axb4Y5dIERZr9wou5ypBRo5f-VTkQgqVdBIzmN2KyCRKvH-EWejTA9c2UE-Lg=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://mabinogi.nexon.com/page/event/2026/0709_update/index.asp",
       "description_en": "The first major update of RE:ACTION, the summer campaign for Mabinogi in its 22nd year. It introduces Arcana Awakening, raising the Arcana growth cap to level 30, and Ogham Words, which combine ancient letters to alter skill effects. Farming structures were also reworked — the Near system used for dungeon entry became a pass-based model and inheritance costs were made free — and a Fever Season event for new and returning players began alongside it. Raising the Arcana Awakening cap to level 50 is planned for the second update.",
-      "description_ja": "22周年を迎えた『マビノギ』の夏のキャンペーン「RE:ACTION」の第1弾大型アップデートです。アルカナの成長上限を30レベルまで開放する「アルカナ覚醒」と、古代文字を組み合わせてスキル効果を変える「オガム・ワード」が導入されました。ダンジョン入場に使われていたネアルシステムを通行証方式に変更し継承費用を無料化するなどファーミング構造も見直され、新規・復帰プレイヤー向けの「フィーバーシーズン」イベントも同時に始まりました。アルカナ覚醒の上限50レベル拡張は第2弾アップデートで予定されています。"
+      "description_ja": "22周年を迎えた『マビノギ』の夏のキャンペーン「RE:ACTION」の第1弾大型アップデートです。アルカナの成長上限を30レベルまで開放する「アルカナ覚醒」と、古代文字を組み合わせてスキル効果を変える「オガム・ワード」が導入されました。ダンジョン入場に使われていたネアルシステムを通行証方式に変更し継承費用を無料化するなどファーミング構造も見直され、新規・復帰プレイヤー向けの「フィーバーシーズン」イベントも同時に始まりました。アルカナ覚醒の上限50レベル拡張は第2弾アップデートで予定されています。",
+      "name_ja": "マビノギ: 夏キャンペーン RE:ACTION 第1弾大型アップデート"
     },
     {
       "id": "mortal-shell-2-20260820",
@@ -2846,7 +2853,8 @@
       "image_url": "https://yt3.googleusercontent.com/2gEQWk9ws0NNWIOva0M7NwU9LtIDHfNvY0nLGdhqNvDUn3Sk4kNsTZQZ_ILl70CQrjKSZjhqAP0=s512-c-k-c0x00ffffff-no-rj",
       "source_url": "https://www.minecraft.net/en-us/article/minecraft-dungeons-ii-date-announce",
       "description_en": "The sequel to the 2020 dungeon crawler Minecraft Dungeons. It remains a hack-and-slash action RPG in which up to four players cooperate through procedurally generated dungeons within the Minecraft universe. It leads with wider exploration segments than the original plus new equipment and loot systems, releasing September 29, 2026 across PC and all consoles, and joining Game Pass on day one.",
-      "description_ja": "2020年のダンジョンクローラー『Minecraft Dungeons』の続編です。マインクラフトの世界観を保ったまま、最大4人の協力プレイで手続き生成のダンジョンを攻略するハック&スラッシュのアクションRPGです。前作より広くなった探索区間と新しい装備・戦利品システムを打ち出しており、2026年9月29日にPC・コンソール全機種で発売され、初日からGame Passに含まれます。"
+      "description_ja": "2020年のダンジョンクローラー『Minecraft Dungeons』の続編です。マインクラフトの世界観を保ったまま、最大4人の協力プレイで手続き生成のダンジョンを攻略するハック&スラッシュのアクションRPGです。前作より広くなった探索区間と新しい装備・戦利品システムを打ち出しており、2026年9月29日にPC・コンソール全機種で発売され、初日からGame Passに含まれます。",
+      "name_ja": "マインクラフト ダンジョンズ II"
     },
     {
       "id": "hellraiser-revival-20261008",
@@ -2945,7 +2953,7 @@
     {
       "id": "lineage-m-void-temple-renewal-20260729",
       "name_ko": "리니지M: 공허의 사원 리뉴얼·기르타스 유일 무기",
-      "name_en": null,
+      "name_en": "Lineage M: Temple of the Void Renewal & Girtas Unique Weapon",
       "release_date": "2026-07-29",
       "release_date_approx": false,
       "category": "new_server",
@@ -3042,7 +3050,7 @@
     {
       "id": "vampir-global2-region-20260722",
       "name_ko": "뱀피르: 글로벌2 리전 오픈",
-      "name_en": null,
+      "name_en": "Vampir: Heir of Blood — Global2 Region Opens",
       "release_date": "2026-07-22",
       "release_date_approx": false,
       "category": "new_server",
@@ -3068,7 +3076,7 @@
     {
       "id": "eclipse-awakening-showcase-20260723",
       "name_ko": "이클립스: 더 어웨이크닝 - 라이브 쇼케이스",
-      "name_en": null,
+      "name_en": "Eclipse: The Awakening — Live Showcase",
       "release_date": "2026-07-23",
       "release_date_approx": false,
       "category": "new_server",
@@ -3162,7 +3170,8 @@
       "pre_registration": false,
       "pre_registration_date": null,
       "description_en": "A Digimon IP mobile raising RPG serviced by Bandai Namco, free to play on iOS and Android. Players partner with newly drawn 2D pixel-art Digimon, adventuring between the real and digital worlds, and raise and evolve them through strategic turn-based combat. A global launch on July 15, 2026 was confirmed alongside a pre-registration campaign, and it is available in Korea at the same time.",
-      "description_ja": "バンダイナムコが配信するデジモンIPのモバイル育成RPGで、iOS・Androidで無料で楽しめます。新たに描き起こされた2Dピクセルアートのデジモンをパートナーに現実とデジタルワールドを行き来して冒険し、戦略的なターン制バトルでデジモンを育成・進化させることが中心です。事前登録キャンペーンとともに2026年7月15日の全世界正式リリースが確定しており、韓国でも同時期に利用できます。"
+      "description_ja": "バンダイナムコが配信するデジモンIPのモバイル育成RPGで、iOS・Androidで無料で楽しめます。新たに描き起こされた2Dピクセルアートのデジモンをパートナーに現実とデジタルワールドを行き来して冒険し、戦略的なターン制バトルでデジモンを育成・進化させることが中心です。事前登録キャンペーンとともに2026年7月15日の全世界正式リリースが確定しており、韓国でも同時期に利用できます。",
+      "name_ja": "デジモンUP"
     },
     {
       "id": "ore-factory-squad-20260716",
@@ -3235,7 +3244,7 @@
     {
       "id": "maplestory-summer-3rd-boss-bellona-20260820",
       "name_ko": "메이플스토리 여름 3차 업데이트 (신규 보스 '벨로나')",
-      "name_en": null,
+      "name_en": "MapleStory: Summer Update 3 (New Boss 'Bellona')",
       "release_date": "2026-08-20",
       "release_date_approx": false,
       "category": "new_server",
@@ -3428,12 +3437,13 @@
       "image_url": null,
       "source_url": "https://www.inven.co.kr/webzine/news/?news=317317",
       "description_en": "A new Final Fantasy RPG and the first in the series to adopt HD-2D graphics. Built on season 1 of the mobile game Final Fantasy Brave Exvius with many elements remade for consoles, it recreates the feel of classic JRPGs through visuals that combine 3D backgrounds with pixel-art characters. At its core is the Vision system, which gathers series heroes such as Cloud and Terra and equips them like job classes. The Korean version releases October 22, 2026, with the Steam version a day later on October 23.",
-      "description_ja": "『ファイナルファンタジー』シリーズで初めてHD-2Dグラフィックを採用した新作RPGです。モバイルゲーム『ファイナルファンタジー ブレイブエクスヴィアス』のシーズン1を基に、コンソール環境に合わせて多くの要素を新たに制作しており、3D背景とドット絵キャラクターを組み合わせたビジュアルで古典的なJRPGの雰囲気を再現しています。クラウドやティナといった歴代シリーズの英雄を集め、ジョブのように装着する「ヴィジョン」システムが中核です。韓国語版は2026年10月22日、Steam版は翌日の10月23日に発売されます。"
+      "description_ja": "『ファイナルファンタジー』シリーズで初めてHD-2Dグラフィックを採用した新作RPGです。モバイルゲーム『ファイナルファンタジー ブレイブエクスヴィアス』のシーズン1を基に、コンソール環境に合わせて多くの要素を新たに制作しており、3D背景とドット絵キャラクターを組み合わせたビジュアルで古典的なJRPGの雰囲気を再現しています。クラウドやティナといった歴代シリーズの英雄を集め、ジョブのように装着する「ヴィジョン」システムが中核です。韓国語版は2026年10月22日、Steam版は翌日の10月23日に発売されます。",
+      "name_ja": "ファイナルファンタジー レゾナンス"
     },
     {
       "id": "cabalred-server-saturn-force-gunner-20260804",
       "name_ko": "카발RED 신규 서버 '새턴' 오픈 · 신규 클래스 '포스 거너'",
-      "name_en": null,
+      "name_en": "CABAL RED: New Server 'Saturn' Opens & New Class 'Force Gunner'",
       "release_date": "2026-08-04",
       "release_date_approx": false,
       "category": "new_server",
@@ -3461,7 +3471,7 @@
     {
       "id": "lineage-classic-server-antaras-forgotten-island-20260722",
       "name_ko": "리니지 클래식: 신규 서버 '안타라스' 오픈 · 신규 에피소드 '잊혀진 섬'",
-      "name_en": null,
+      "name_en": "Lineage Classic: New Server 'Antaras' Opens · New Episode 'Forgotten Island'",
       "release_date": "2026-07-22",
       "release_date_approx": false,
       "category": "new_server",
@@ -3702,7 +3712,8 @@
       "image_url": null,
       "source_url": "https://www.nintendo.com/kr/news/article/2y13ExLonrYR1x5OzAWnhW",
       "description_en": "A new entry in Nintendo's flagship rhythm game series, arriving roughly eleven years after the last one, where you keep time using only simple button inputs. Japanese producer Tsunku♂ returns to contribute a large set of short, distinctive rhythm minigames, and new additions include a multiplayer mode for group play and an RPG mode with progression elements. Korean is officially supported, and it also runs on Switch 2 through backward compatibility.",
-      "description_ja": "シンプルなボタン操作だけでリズムを合わせる任天堂の看板リズムゲームシリーズが、約11年ぶりに送り出す新作です。日本のプロデューサーであるつんく♂が再び参加し、短くも個性の強いリズムミニゲームを多数収録したほか、複数人で一緒に遊べるマルチプレイモードと育成要素を加えたRPGモードが新たに追加されました。韓国語に公式対応し、Switch 2でも下位互換で動作します。"
+      "description_ja": "シンプルなボタン操作だけでリズムを合わせる任天堂の看板リズムゲームシリーズが、約11年ぶりに送り出す新作です。日本のプロデューサーであるつんく♂が再び参加し、短くも個性の強いリズムミニゲームを多数収録したほか、複数人で一緒に遊べるマルチプレイモードと育成要素を加えたRPGモードが新たに追加されました。韓国語に公式対応し、Switch 2でも下位互換で動作します。",
+      "name_ja": "リズム天国 ミラクルスターズ"
     },
     {
       "id": "steins-gate-reboot-20260820",
@@ -3729,7 +3740,8 @@
       "image_url": null,
       "source_url": "https://gematsu.com/2026/05/steinsgate-reboot-launches-august-20-for-ps5-xbox-series-switch-2-ps4-switch-and-pc",
       "description_en": "A full remake of STEINS;GATE, the 2009 release that became a defining time-travel visual novel. New world lines and endings are added on top of the existing scenario, all voice work has been newly recorded, and character illustrations now use E-mote motion technology so expressions and breathing animate. Note, however, that voice is Japanese-only and subtitles are limited to Japanese, English and Chinese — official Korean subtitles are not included.",
-      "description_ja": "2009年に発売され、時間移動を題材としたビジュアルノベルの代表作となった『STEINS;GATE』の全面リメイク版です。既存のシナリオに新たな世界線とエンディングが追加され、全ボイスが新規収録されたほか、キャラクターのイラストにE-moteモーション技術を適用し、表情や呼吸まで動くよう演出が刷新されました。ただし音声は日本語のみ、字幕は日本語・英語・中国語のみの対応で、公式の韓国語字幕は含まれていません。"
+      "description_ja": "2009年に発売され、時間移動を題材としたビジュアルノベルの代表作となった『STEINS;GATE』の全面リメイク版です。既存のシナリオに新たな世界線とエンディングが追加され、全ボイスが新規収録されたほか、キャラクターのイラストにE-moteモーション技術を適用し、表情や呼吸まで動くよう演出が刷新されました。ただし音声は日本語のみ、字幕は日本語・英語・中国語のみの対応で、公式の韓国語字幕は含まれていません。",
+      "name_ja": "STEINS;GATE RE:BOOT"
     },
     {
       "id": "dnfm-season-2-0-archer-20260813",
