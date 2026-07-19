@@ -1,5 +1,5 @@
 'use client';
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { CalEvent } from '@/lib/types';
 import { EVENT_TYPE_META } from '@/lib/types';
 import { useLocale } from '@/hooks/useLocale';
@@ -11,6 +11,12 @@ export function EventRow({ event: e }: { event: CalEvent }) {
   const lang = useLocale();
   const t = lang ? CAL[lang] : null;
   const [imgError, setImgError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  // 하이드레이션 전에 이미 로드 실패한 이미지는 onError가 안 잡히므로 마운트 시 직접 확인.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setImgError(true);
+  }, [e.image]);
   const showImg = !!e.image && !imgError;
   const mmdd = e.date.slice(5).replace('-', '/');
   const meta = EVENT_TYPE_META[e.type];
@@ -34,7 +40,7 @@ export function EventRow({ event: e }: { event: CalEvent }) {
         {showImg ? (
           <>
             <img src={e.image!} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
-            <img src={e.image!} alt={e.label} className={styles.thumbFg} loading="lazy" onError={() => setImgError(true)} />
+            <img ref={imgRef} src={e.image!} alt={e.label} className={styles.thumbFg} loading="lazy" onError={() => setImgError(true)} />
           </>
         ) : (
           <div className={styles.thumbPh}>

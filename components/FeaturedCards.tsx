@@ -1,5 +1,5 @@
 'use client';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { Game, Category } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
@@ -103,6 +103,12 @@ function useCountdown(targetMs: number | null): { mounted: boolean; parts: Parts
 function FeaturedCard({ data }: { data: CardData }) {
   const { mounted, parts } = useCountdown(data.targetMs);
   const [imgError, setImgError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  // 하이드레이션 전에 이미 로드 실패한 이미지는 onError가 안 잡히므로 마운트 시 직접 확인.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setImgError(true);
+  }, [data.imageUrl]);
   const showTimer = data.targetMs != null && mounted && parts;
   const showSkeleton = data.targetMs != null && !mounted; // 마운트 전(카운트다운 대상 있음) → 스켈레톤
 
@@ -113,7 +119,7 @@ function FeaturedCard({ data }: { data: CardData }) {
           {data.imageUrl && !imgError ? (
             <>
               <img src={data.imageUrl} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
-              <img src={data.imageUrl} alt={data.name} className={styles.thumbFg} loading="lazy" onError={() => setImgError(true)} />
+              <img ref={imgRef} src={data.imageUrl} alt={data.name} className={styles.thumbFg} loading="lazy" onError={() => setImgError(true)} />
             </>
           ) : (
             <div className={styles.thumbPh}>

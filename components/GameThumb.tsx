@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocale } from '@/hooks/useLocale';
 import { CAL } from '@/lib/i18nLabels';
 import styles from './GameThumb.module.css';
@@ -12,13 +12,19 @@ export function GameThumb({ src, alt }: Props) {
   const lang = useLocale();
   const t = lang ? CAL[lang] : null;
   const [err, setErr] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  // 하이드레이션 전에 이미 로드 실패한 이미지는 onError가 안 잡히므로 마운트 시 직접 확인.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setErr(true);
+  }, [src]);
   const ok = src && !err;
   return (
     <div className={styles.thumb}>
       {ok ? (
         <>
           <img src={src} alt="" aria-hidden="true" className={styles.bg} loading="lazy" />
-          <img src={src} alt={alt} className={styles.fg} loading="lazy" onError={() => setErr(true)} />
+          <img ref={imgRef} src={src} alt={alt} className={styles.fg} loading="lazy" onError={() => setErr(true)} />
         </>
       ) : (
         <div className={styles.ph}>

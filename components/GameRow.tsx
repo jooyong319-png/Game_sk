@@ -1,5 +1,5 @@
 'use client';
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, getKoreanWeekday } from '@/lib/utils';
@@ -21,6 +21,12 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
   const ui = lang ? UI[lang] : null;
   const t = lang ? CAL[lang] : null;
   const [imgError, setImgError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  // 하이드레이션 전에 이미 로드 실패한 이미지는 onError가 안 잡히므로 마운트 시 직접 확인.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setImgError(true);
+  }, [g.image_url]);
   const showImg = !!g.image_url && !imgError;
   const diff = calcDayDiff(g.release_date, now);
   const released = diff < 0;
@@ -52,6 +58,7 @@ export function GameRow({ game: g, now, wishlist, onPick, preBadge }: Props) {
           <>
             <img src={g.image_url!} alt="" aria-hidden="true" className={styles.thumbBg} loading="lazy" />
             <img
+              ref={imgRef}
               src={g.image_url!}
               alt={displayName}
               className={styles.thumbFg}

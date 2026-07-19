@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Game } from '@/lib/types';
 import { CATEGORY_META } from '@/lib/types';
 import { calcDayDiff, formatKoreanDate, getKoreanWeekday } from '@/lib/utils';
@@ -20,6 +20,12 @@ export function GameModal({ game, onClose, wishlist }: Props) {
   const ui = lang ? UI[lang] : null;
   const t = lang ? CAL[lang] : null;
   const [imgError, setImgError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  // 하이드레이션 전에 이미 로드 실패한 이미지는 onError가 안 잡히므로 마운트 시 직접 확인.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setImgError(true);
+  }, [game.image_url]);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
@@ -55,7 +61,7 @@ export function GameModal({ game, onClose, wishlist }: Props) {
             {game.image_url && !imgError ? (
               <>
                 <img src={game.image_url} alt="" aria-hidden="true" className={styles.imageBg} loading="lazy" />
-                <img src={game.image_url} alt={displayName} className={styles.imageFg} loading="lazy" onError={() => setImgError(true)} />
+                <img ref={imgRef} src={game.image_url} alt={displayName} className={styles.imageFg} loading="lazy" onError={() => setImgError(true)} />
               </>
             ) : (
               <div className={styles.imagePh}>
