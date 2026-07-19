@@ -3730,6 +3730,32 @@
       "source_url": "https://gematsu.com/2026/05/steinsgate-reboot-launches-august-20-for-ps5-xbox-series-switch-2-ps4-switch-and-pc",
       "description_en": "A full remake of STEINS;GATE, the 2009 release that became a defining time-travel visual novel. New world lines and endings are added on top of the existing scenario, all voice work has been newly recorded, and character illustrations now use E-mote motion technology so expressions and breathing animate. Note, however, that voice is Japanese-only and subtitles are limited to Japanese, English and Chinese — official Korean subtitles are not included.",
       "description_ja": "2009年に発売され、時間移動を題材としたビジュアルノベルの代表作となった『STEINS;GATE』の全面リメイク版です。既存のシナリオに新たな世界線とエンディングが追加され、全ボイスが新規収録されたほか、キャラクターのイラストにE-moteモーション技術を適用し、表情や呼吸まで動くよう演出が刷新されました。ただし音声は日本語のみ、字幕は日本語・英語・中国語のみの対応で、公式の韓国語字幕は含まれていません。"
+    },
+    {
+      "id": "dnfm-season-2-0-archer-20260813",
+      "name_ko": "던전앤파이터 모바일 - 신규 시즌 '던파모바일 2.0'",
+      "name_en": "Dungeon & Fighter Mobile",
+      "release_date": "2026-08-13",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "Android",
+        "iOS"
+      ],
+      "developer": "네오플",
+      "publisher": "넥슨",
+      "description": "넥슨과 네오플의 액션 RPG '던전앤파이터 모바일'이 8월 13일부터 순차 적용하는 신규 시즌 대규모 업데이트다. '자유도'와 '가벼움'을 앞세운 '던파모바일 2.0'을 표방하며, 최고 레벨이 85에서 90으로 확장되고 마계로 향하는 관문 도시 '메트로센터'가 추가된다. 신규 캐릭터 '아처'(전직 뮤즈·트래블러)와 신규 정예 던전 '달빛의 정원', '루크' 레이드, 인챈트 슬롯 등 성장 시스템 개편이 함께 이뤄진다. 8월 12일까지 공식 홈페이지에서 신규 시즌 사전등록을 진행한다.",
+      "genres": [
+        "액션 RPG",
+        "대규모 업데이트"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/nithn0YhAhZ4z3zpKlGGPPFxK8NjHcSkV1q-S8L_CNA5LWwUVDaSQ5SHM-hBFgbjBYNkVq-GpiUyLweMdwMy=s512",
+      "source_url": "https://www.betanews.net/article/view/beta202607130045",
+      "pre_registration": true,
+      "pre_registration_end_date": "2026-08-12",
+      "pre_registration_url": "https://dnfm.nexon.com/",
+      "description_en": "A major new-season update for Nexon and Neople's action RPG Dungeon & Fighter Mobile, rolling out in stages from August 13. Branded 'DNF Mobile 2.0' around the values of freedom and lightness, it raises the level cap from 85 to 90 and adds Metro Center, a gateway city leading to the Netherworld. A new character, Archer (with the Muse and Traveler advancements), joins alongside the new elite dungeon Moonlight Garden, the Luke raid, and reworked growth systems such as enchant slots. New-season pre-registration runs through August 12 on the official website.",
+      "description_ja": "ネクソンとネオプルのアクションRPG『ダンジョン&ファイター モバイル』が8月13日から順次適用する新シーズンの大型アップデートです。「自由度」と「軽さ」を掲げた『DNFモバイル2.0』を打ち出し、最高レベルが85から90へ拡張され、魔界へ向かう関門都市「メトロセンター」が追加されます。新キャラクター「アーチャー」(転職:ミューズ・トラベラー)や新精鋭ダンジョン「月光の庭」、「ルーク」レイドなどが実装されます。新シーズンの事前登録は8月12日まで公式サイトで行われます。"
     }
   ]
 }
