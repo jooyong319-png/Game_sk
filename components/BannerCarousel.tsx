@@ -99,19 +99,22 @@ export function BannerCarousel({ games = [] }: Props) {
   const [failed, setFailed] = useState<Set<string>>(new Set()); // 깨진 배경 이미지 → 메시로 폴백
 
   useEffect(() => {
-    if (!isSupabaseReady() || !supabase) { setLoaded(true); return; }
-    let cancelled = false;
-    supabase
-      .from('banners')
-      .select('id,image_url,title,subtitle,link')
-      .eq('active', true)
-      .order('sort', { ascending: true })
-      .then(({ data, error }) => {
-        if (cancelled) return;
-        if (!error && data) setBanners(data as Banner[]);
-        setLoaded(true);
-      });
-    return () => { cancelled = true; };
+    // Supabase banners 테이블 배너는 다국어 필드가 없어 /en,/ja에서 항상 한국어로만
+    // 나오는 문제로 임시 비활성(나중에 다시 씀) — 코드 한글 배너(defaultBanners)는 계속 노출.
+    setLoaded(true);
+    // if (!isSupabaseReady() || !supabase) { setLoaded(true); return; }
+    // let cancelled = false;
+    // supabase
+    //   .from('banners')
+    //   .select('id,image_url,title,subtitle,link')
+    //   .eq('active', true)
+    //   .order('sort', { ascending: true })
+    //   .then(({ data, error }) => {
+    //     if (cancelled) return;
+    //     if (!error && data) setBanners(data as Banner[]);
+    //     setLoaded(true);
+    //   });
+    // return () => { cancelled = true; };
   }, []);
 
   const defaults = useMemo(() => decorateWithImages(games, defaultBanners(lang)), [games, lang]);

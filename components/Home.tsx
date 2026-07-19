@@ -5,7 +5,7 @@ import { EVENT_TYPE_META } from '@/lib/types';
 import { formatShortDate, kstDateOnly } from '@/lib/utils';
 // ── 사이드바 재작업 예정: 아래 import는 임시 주석(재사용 가능) ──
 // import { NextByCategory } from './NextByCategory';
-// import { BannerCarousel } from './BannerCarousel'; // 임시 비활성(Supabase banners 테이블에 다국어 필드 없음 — 나중에 사용)
+import { BannerCarousel } from './BannerCarousel';
 import { FeaturedCards } from './FeaturedCards';
 // import { PromoBanner } from './PromoBanner';
 // import { PopularGames } from './PopularGames';
@@ -190,7 +190,7 @@ export function Home({ initialGames, lastUpdated, serverNow, initialCalEvents = 
       <div className={styles.layout}>
         <div className={styles.main}>
           <div className={styles.hero}>
-            {/* <BannerCarousel games={initialGames} /> 임시 비활성(재사용 가능) */}
+            <BannerCarousel games={initialGames} />
             <FeaturedCards games={initialGames} now={now} />
           </div>
 
