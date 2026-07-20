@@ -4,8 +4,8 @@
   gap: 1rem;
   height: 100%;
 }
-/* 설치형 앱: 세로 적층 대신 가로 1줄 스크롤(스크롤바 숨김) + 다음 카드 오른쪽 살짝 보이게 */
-@media (display-mode: standalone) {
+/* 설치형 앱 + 모바일 웹: 세로 적층 대신 가로 1줄 스크롤(스크롤바 숨김) + 다음 카드 오른쪽 살짝 보이게 */
+@media (display-mode: standalone), (max-width: 760px) {
   .cards {
     flex-direction: row;
     gap: 0.7rem;
