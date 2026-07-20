@@ -225,7 +225,6 @@
   font-size: 0.78rem;
   color: var(--text-faint);
 }
-.legendTitle { font-weight: 700; color: var(--text-faint); }
 .legendGroup { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; }
 .legendItem { display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
 .legendDot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }

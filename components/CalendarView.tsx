@@ -287,7 +287,6 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
 
       {/* 색상 범례 — 셀 점·이벤트 칩에 쓰인 카테고리·이벤트 색이 뭘 뜻하는지 안내 */}
       <div className={styles.legend}>
-        <span className={styles.legendTitle}>{t ? t.colorLegend : '색상 안내'}</span>
         <div className={styles.legendGroup}>
           {LEGEND_CATS.map(c => (
             <span key={c} className={styles.legendItem}>
