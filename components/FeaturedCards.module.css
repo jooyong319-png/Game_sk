@@ -4,9 +4,22 @@
   gap: 1rem;
   height: 100%;
 }
-/* 설치형 앱에선 오른쪽 카드(위+아래) 숨김 — 배너만 노출 */
+/* 설치형 앱: 세로 적층 대신 가로 1줄 스크롤(스크롤바 숨김) + 다음 카드 오른쪽 살짝 보이게 */
 @media (display-mode: standalone) {
-  .cards { display: none; }
+  .cards {
+    flex-direction: row;
+    gap: 0.7rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .cards::-webkit-scrollbar { display: none; }
+  .card {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+  }
 }
 .card {
   display: block;
