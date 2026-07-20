@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-07-19",
+  "last_updated": "2026-07-20",
   "last_researched_by": "Researcher Claude",
   "categories": {
     "mobile_kr": "국내 모바일",
@@ -3768,6 +3768,33 @@
       "pre_registration_url": "https://dnfm.nexon.com/",
       "description_en": "A major new-season update for Nexon and Neople's action RPG Dungeon & Fighter Mobile, rolling out in stages from August 13. Branded 'DNF Mobile 2.0' around the values of freedom and lightness, it raises the level cap from 85 to 90 and adds Metro Center, a gateway city leading to the Netherworld. A new character, Archer (with the Muse and Traveler advancements), joins alongside the new elite dungeon Moonlight Garden, the Luke raid, and reworked growth systems such as enchant slots. New-season pre-registration runs through August 12 on the official website.",
       "description_ja": "ネクソンとネオプルのアクションRPG『ダンジョン&ファイター モバイル』が8月13日から順次適用する新シーズンの大型アップデートです。「自由度」と「軽さ」を掲げた『DNFモバイル2.0』を打ち出し、最高レベルが85から90へ拡張され、魔界へ向かう関門都市「メトロセンター」が追加されます。新キャラクター「アーチャー」(転職:ミューズ・トラベラー)や新精鋭ダンジョン「月光の庭」、「ルーク」レイドなどが実装されます。新シーズンの事前登録は8月12日まで公式サイトで行われます。"
+    },
+    {
+      "id": "genshin-7-0-snezhnaya-20260812",
+      "name_ko": "원신 7.0 '스네즈나야' 업데이트",
+      "name_en": "Genshin Impact 7.0 'Snezhnaya'",
+      "release_date": "2026-08-12",
+      "release_date_approx": false,
+      "category": "new_server",
+      "platforms": [
+        "PC",
+        "PS5",
+        "Android",
+        "iOS"
+      ],
+      "developer": "호요버스",
+      "publisher": "호요버스",
+      "description": "'원신'의 대형 신규 버전 7.0 업데이트로 2026년 8월 12일 전 세계 동시 적용된다. 티바트 대륙의 마지막 본편 국가이자 차르가 다스리는 얼음의 제국이며 파투이의 본거지인 '스네즈나야'가 처음으로 공개되어, 새로운 메인 스토리와 지역 탐험이 열린다. 신규 캐릭터 오데트와 알료샤가 등장하고 냉기 속성을 재편하는 새 전투 시스템 '스텔라 리액션'이 도입되며, 원신 6주년 기념 콘텐츠도 함께 진행된다.",
+      "description_en": "Genshin Impact's major Version 7.0 update launches worldwide on August 12, 2026. It unveils Snezhnaya, the frozen empire ruled by the Tsaritsa and homeland of the Fatui, as the final mainline nation of Teyvat, opening a new main story and region to explore. New characters Odette and Alyosha arrive alongside a reworked Cryo combat system called Stellar Reactions, plus 6th-anniversary content.",
+      "description_ja": "『原神』の大型アップデート バージョン7.0が2026年8月12日に全世界同時実装される。ティワットで最後のメイン国家であり、氷の女皇が治めファトゥスの本拠地となる新たな国が初公開され、新メインストーリーと新エリアの探索が始まる。新キャラクターの登場や氷元素を再編する新しい戦闘システムも追加される。",
+      "genres": [
+        "오픈월드",
+        "RPG",
+        "서브컬처",
+        "대규모 업데이트"
+      ],
+      "image_url": "https://play-lh.googleusercontent.com/YQqyKaXX-63krqsfIzUEJWUWLINxcb5tbS6QVySdxbS7eZV7YB2dUjUvX27xA0TIGtfxQ5v-tQjwlT5tTB-O=s512",
+      "source_url": "https://game8.co/games/Genshin-Impact/archives/596528"
     }
   ]
 }
