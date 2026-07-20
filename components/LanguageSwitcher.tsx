@@ -52,28 +52,33 @@ const LANGS: { key: PageLang; label: string; short: string }[] = [
   { key: 'ja', label: '日本語', short: 'JA' },
 ];
 
+interface Props {
+  // 헤더의 다른 드롭다운(☰ 메뉴)과 동시에 열리지 않도록 부모(HeaderNav)가 열림 상태를 관리·전달.
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
 // 모든 페이지 헤더에 노출. 번역 라우트가 없는 페이지(쿠폰 상세·게임 허브·admin 등)에서는
 // 그 언어의 홈으로 안내(대상 페이지가 항상 존재하므로 dead link 없음).
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ open, onOpenChange }: Props) {
   const pathname = usePathname();
   const parsed = parsePath(pathname);
-  const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   // 바깥 클릭·Esc로 닫기 (HeaderNav ☰ 메뉴와 동일 패턴)
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) onOpenChange(false);
     };
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onOpenChange(false); };
     document.addEventListener('mousedown', onDown);
     document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
     };
-  }, [open]);
+  }, [open, onOpenChange]);
 
   const current = LANGS.find(l => l.key === parsed.lang) ?? LANGS[0];
 
@@ -82,7 +87,7 @@ export function LanguageSwitcher() {
       <button
         type="button"
         className={styles.trigger}
-        onClick={() => setOpen(o => !o)}
+        onClick={() => onOpenChange(!open)}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Language / 言語 / 언어"
@@ -101,7 +106,7 @@ export function LanguageSwitcher() {
                 className={`${styles.item} ${parsed.lang === l.key ? styles.itemActive : ''}`}
                 role="option"
                 aria-selected={parsed.lang === l.key}
-                onClick={() => setOpen(false)}
+                onClick={() => onOpenChange(false)}
               >
                 {l.label}
               </a>

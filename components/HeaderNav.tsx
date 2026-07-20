@@ -66,25 +66,27 @@ function buildNav(lang: Locale | null): NavItem[] {
 export function HeaderNav() {
   const pathname = usePathname();
   const lang = detectLang(pathname);
-  const [open, setOpen] = useState(false);
+  // 헤더의 드롭다운 2개(언어 스위처 / ☰ 메뉴)가 동시에 열리지 않도록 단일 상태로 관리
+  const [openMenu, setOpenMenu] = useState<'lang' | 'nav' | null>(null);
+  const open = openMenu === 'nav';
   const ref = useRef<HTMLDivElement>(null);
   const ui = lang ? UI[lang] : null;
   const home = lang ? `/${lang}` : '/';
 
   // 바깥 클릭·Esc로 닫기
   useEffect(() => {
-    if (!open) return;
+    if (!openMenu) return;
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpenMenu(null);
     };
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpenMenu(null); };
     document.addEventListener('mousedown', onDown);
     document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
     };
-  }, [open]);
+  }, [openMenu]);
 
   const primary = buildPrimary(lang);
   const nav = buildNav(lang);
@@ -137,12 +139,15 @@ export function HeaderNav() {
 
       {/* 우측: 언어 스위처(게임/블로그/뉴스 상세에서만 노출) + 테마 토글 + ☰ 메뉴 */}
       <div className="header-right">
-      <LanguageSwitcher />
+      <LanguageSwitcher
+        open={openMenu === 'lang'}
+        onOpenChange={(v) => setOpenMenu(v ? 'lang' : null)}
+      />
       <ThemeToggle />
       <button
         type="button"
         className="menu-btn"
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpenMenu(m => m === 'nav' ? null : 'nav')}
         aria-expanded={open}
         aria-haspopup="true"
         aria-label={open ? (lang ? 'Close menu' : '메뉴 닫기') : (lang ? 'Open menu' : '메뉴 열기')}
@@ -162,7 +167,7 @@ export function HeaderNav() {
                 href={item.href}
                 className="menu-link menu-link-primary"
                 aria-current={active ? 'page' : undefined}
-                onClick={() => setOpen(false)}
+                onClick={() => setOpenMenu(null)}
               >
                 {item.label}
               </a>
@@ -178,7 +183,7 @@ export function HeaderNav() {
               href={item.href}
               className="menu-link"
               aria-current={active ? 'page' : undefined}
-              onClick={() => setOpen(false)}
+              onClick={() => setOpenMenu(null)}
             >
               {item.label}
             </a>
