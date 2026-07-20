@@ -1,15 +1,18 @@
 'use client';
 import { useMemo, useState, useEffect, useRef, type CSSProperties } from 'react';
-import type { Game, CalEvent, FilterKey } from '@/lib/types';
+import type { Category, EventType, Game, CalEvent, FilterKey } from '@/lib/types';
 // (Category는 셀 색에 CATEGORY_META로만 사용)
-import { CATEGORY_META } from '@/lib/types';
+import { CATEGORY_META, EVENT_TYPE_META } from '@/lib/types';
 import { calcDayDiff, formatShortDate, getKoreanWeekday } from '@/lib/utils';
 import { CategoryFilterBar } from './CategoryFilterBar';
 import { GameRow } from './GameRow';
 import { EventRow } from './EventRow';
 import { useLocale } from '@/hooks/useLocale';
-import { CAL, gameName, type Locale } from '@/lib/i18nLabels';
+import { CAL, CATEGORY_LABELS, EVENT_TYPE_LABELS, gameName, type Locale } from '@/lib/i18nLabels';
 import styles from './CalendarView.module.css';
+
+const LEGEND_CATS: Category[] = ['mobile_kr', 'pc_console_kr', 'global_aaa', 'new_server'];
+const LEGEND_EVENTS: EventType[] = ['game_show', 'sale', 'season', 'free_game'];
 
 interface Props {
   cursor: Date;
@@ -280,6 +283,27 @@ export function CalendarView({ cursor, onCursorChange, games, events = [], wishl
             </div>
           );
         })}
+      </div>
+
+      {/* 색상 범례 — 셀 점·이벤트 칩에 쓰인 카테고리·이벤트 색이 뭘 뜻하는지 안내 */}
+      <div className={styles.legend}>
+        <span className={styles.legendTitle}>{t ? t.colorLegend : '색상 안내'}</span>
+        <div className={styles.legendGroup}>
+          {LEGEND_CATS.map(c => (
+            <span key={c} className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: CATEGORY_META[c].color }} aria-hidden="true" />
+              {lang ? CATEGORY_LABELS[lang][c] : CATEGORY_META[c].short}
+            </span>
+          ))}
+        </div>
+        <div className={styles.legendGroup}>
+          {LEGEND_EVENTS.map(ev => (
+            <span key={ev} className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: EVENT_TYPE_META[ev].color }} aria-hidden="true" />
+              {lang ? EVENT_TYPE_LABELS[lang][ev] : EVENT_TYPE_META[ev].label}
+            </span>
+          ))}
+        </div>
       </div>
 
       {cells.every(c => c.entries.length === 0) && (

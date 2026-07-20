@@ -307,6 +307,7 @@ interface CalUiStrings {
   eventEnds: (title: string) => string;
   freeStarts: (title: string) => string;
   freeEnds: (title: string) => string;
+  colorLegend: string;
 }
 
 export const CAL: Record<Locale, CalUiStrings> = {
@@ -428,6 +429,7 @@ export const CAL: Record<Locale, CalUiStrings> = {
     eventEnds: (title) => `${title} ends`,
     freeStarts: (title) => `${title} free starts`,
     freeEnds: (title) => `${title} free ends`,
+    colorLegend: 'Color guide',
   },
   ja: {
     searchPlaceholder: 'ゲームを検索…',
@@ -547,5 +549,6 @@ export const CAL: Record<Locale, CalUiStrings> = {
     eventEnds: (title) => `${title} 終了`,
     freeStarts: (title) => `${title} 無料開始`,
     freeEnds: (title) => `${title} 無料終了`,
+    colorLegend: '色の説明',
   },
 };

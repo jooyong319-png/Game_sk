@@ -711,8 +711,8 @@ textarea:focus-visible,
 
 /* ─── 양옆 여백 고정 광고 (side rail) ─── */
 .side-rail { position: fixed; top: 110px; width: 160px; z-index: 5; }
-.side-rail-left  { left:  calc((100vw - 1260px) / 2 - 176px); }
-.side-rail-right { right: calc((100vw - 1260px) / 2 - 176px); }
+.side-rail-left  { left:  calc((100vw - 1440px) / 2 - 176px); }
+.side-rail-right { right: calc((100vw - 1440px) / 2 - 176px); }
 .side-rail-ph {
   width: 160px; height: 600px;
   display: flex; flex-direction: column; gap: 0.3rem;
